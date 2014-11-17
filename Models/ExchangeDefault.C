@@ -1,0 +1,636 @@
+/******************************************************************************/
+/*                                                                            */
+/* Module name:		ExchangeRateModel.C                                       */
+/* Contents:		Member functions of the class ExchangeRateModel           */
+/*					Whenever an equation is taken from the paper mentioned in */
+/*					the description of the class definition this is marked by */
+/*					(eq. equation number)                                     */
+/* Autor:		 	Michael Meyer											  */
+/*                                                                            */
+/* Last Modified: 	Don Mär 14 11:54:51 CET 2002							  */
+/* by:				Michael Meyer                           				  */	
+/* Modified:      														      */
+/*                                                                            */
+/******************************************************************************/
+
+#include "ExchangeRateModel.h"             
+#include "../error.h"
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: ExchangeRateModel                                         */
+/* Purpose:         constructor                                               */
+/* Last modified:   Don Mär 14 11:56:11 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+ExchangeRateModel::ExchangeRateModel() : baseModel(3)
+{
+    theta=NULL;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: ~ExchangeRateModel                                        */
+/* Purpose:         destructor                                                */
+/* Last modified:   Don Mär 14 11:57:22 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+ExchangeRateModel::~ExchangeRateModel()
+{
+    if( theta )
+	delete theta;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: initialize                                                */
+/* Purpose:         initialize the model, set the initial state               */
+/* Last modified:   09.11.1994 (Markus Lohmann)                               */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::initialize()
+{
+    theta_Init(theta);
+
+	alphat=alphat_0;
+	betat=betat_0;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: theta_et Init                                             */
+/* Purpose:         initialize the theta_et vector                            */
+/* Last modified:   Don Mär 14 11:58:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::theta_Init(real *theta)
+{
+    int i;
+
+    for( i=1; i<=tau+1; i++ )
+        theta[i] = 0.0;
+    theta[0]=1.0;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: expectedInflationRate                                     */
+/* Purpose:         computes the expected inflation rate          			  */
+/* Last modified:   Don Mär 14 11:58:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+real ExchangeRateModel::expectedInflationRate(const long t)
+{
+    long T,counter;
+    real help=0.0;
+    
+    T=MIN(t,tau);
+    for( counter=0; counter < T; counter++ )
+	help += theta[counter];
+    return( help / T );
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: expectedInterestRate                                      */
+/* Purpose:         computes the expected interest rate             		  */
+/* Last modified:   Don Mär 14 11:58:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+	
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: real exchange Rate                                        */
+/* Purpose:         shift the real exchange rate              				  */
+/* Last modified:   Don Mär 14 11:58:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+	
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: Maximum capacity output                                   */
+/* Purpose:         											     		  */
+/*                  	                		                      		  */
+/* Last modified:   Don Mär 14 11:58:03 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+real ExchangeRateModel::MaxCapacityOutput(const real& L)
+{
+	real result;
+	result=A/B * exp( B*log(L) );
+	return(result);
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: Notional Labor Demand                                     */
+/* Purpose:         											      		  */
+/*                  	                		                      		  */
+/* Last modified:   Don Mär 14 11:58:03 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::NotLaborDemand()
+
+{
+	real basis,exponent;
+	basis=A/alphat;
+	exponent=1/(1-B);
+
+	Lnt = exp( exponent*log(basis) );
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: Notional Output                                           */
+/* Purpose:         											       		  */
+/*                  	                		                      		  */
+/* Last modified:   Don Mär 14 11:58:03 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::NotOutput()
+
+{
+	yLt = A/B * exp( B*log(Lnt) );
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: effective aggregate demand                                */
+/* Purpose:         											 		      */
+/*                  	                		                      		  */
+/* Last modified:   Don Mär 14 11:58:03 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::effaggrdemand(real &theta_et)
+{
+	real expo1, expo2;
+	expo1=1/(1-rho);
+	expo2=rho/(1-rho);
+
+	if(rho==0){
+		c=1/(1+delta);
+	}	
+	else{
+		c=1/(1+pow(delta,expo1)*pow(theta_et,expo2));
+	}
+
+	ydt=(g+betat)/(1-c*(1-tax));
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: Output                                              	  */
+/* Purpose:             													  */
+/*																			  */
+/* Last modified:     Don Mär 14 11:58:03 CET 2002 (Michael Meyer)            */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::output(real &ydt, real &ymaxt, real &yLt)
+{
+    yt = MIN(MIN(ydt,yLt),ymaxt );
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: Employment                                             	  */
+/* Purpose:             													  */
+/*																			  */
+/* Last modified:     Don Mär 14 11:58:03 CET 2002 (Michael Meyer)            */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::employment()
+{
+	real expo1,expo2;
+	expo1=yt*B/A;
+	expo2=1/B;
+
+	if(yt==ymaxt)
+	Lt=Lmax;
+	else
+	Lt = pow(expo1,expo2);
+ 
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: bond price                                            	  */
+/* Purpose:             													  */
+/*																			  */
+/* Last modified:     Don Mär 14 11:58:03 CET 2002 (Michael Meyer)            */
+/*                                                                            */
+/******************************************************************************/
+
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: Rationing Regime                                          */
+/* Purpose:         					         							  */
+/*                                                                    		  */
+/* Last modified:   Don Mär 14 14:21:32 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::ratioRegime(real &ydt,real &yLt,char *x1)
+{
+    if( ydt > yLt ){
+        if( ymaxt > yLt)
+	    strcpy(x1,"C ");
+		else {
+	    	if( ymaxt == yLt )
+	        strcpy(x1,"CI");
+	    	else
+				strcpy(x1,"I ");
+		}
+    }
+    else {
+        if( ydt == yLt ) {
+	    	if( ymaxt > yLt )
+			strcpy(x1,"CK");
+	    	else {
+	        	if( ymaxt == yLt )
+		    	strcpy(x1,"WE");
+			else
+		    	strcpy(x1,"I ");
+	    	}
+		}	
+		else {
+	    	if( ydt < yLt ) {
+	        	if( ymaxt > ydt )
+		    	strcpy(x1,"K ");
+					else {
+		    			if( ymaxt == ydt )
+		        		strcpy(x1,"IK");
+		    	else
+		        	strcpy(x1,"I ");
+					}	
+	    	}
+		}
+    }
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: wageAndPrice                                              */
+/* Purpose:         wage and price adjustment                  				  */
+/*																			  */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::wageAndpriceAdjust(real &ydt, real &yLt, real &Lnt, char *state)
+{
+    if( !strcmp(state,"K ") )
+		part = 1+kappa*((yt-yLt)/yLt) ;
+	if ( !strcmp(state,"CK ") )
+		part = 0; 
+    else
+	part = 1+gamma*( (ydt-yt)/ydt ) ;
+    
+    if( (!strcmp(state,"I "))||(!strcmp(state,"IK ")))
+	wart =1+mu*((Lnt-Lt)/Lnt) ;
+    else
+	if(!strcmp(state,"CI "))
+		wart=0;
+	else
+	wart = 1+lambda*((Lt-Lmax)/Lmax) ;
+    
+    if (part<1e-5)
+	part=1e-5;
+    if (wart<1e-5)
+	wart=1e-5;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: dynamics                                                  */
+/* Purpose:         describes the dynamics of the system 					  */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::dynamics()
+{
+	real comp1,buffer;
+	buffer=betat+g;
+	comp1=MIN(yt,buffer);	
+
+	alphat=alphat*(wart/part);
+	betat=(comp1-tax*yt)/part;
+
+    for(int i=0; i<=tau; i++ )
+	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
+    theta[0]=part;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: iteration                                                 */
+/* Purpose:         describes one step of the dynamical system    			  */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::iteration(const long& t)
+{
+    real theta_et;
+    char state[5];
+
+    theta_et=expectedInflationRate(t);
+
+	ymaxt=MaxCapacityOutput(Lmax);
+	NotLaborDemand();
+	NotOutput();
+	effaggrdemand(theta_et);
+	output(ydt,ymaxt,yLt);
+	employment();
+	ratioRegime(ydt,yLt,state);
+	wageAndpriceAdjust(ydt,yLt,Lnt,state);            
+	dynamics();
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: setlabels                                                 */
+/* Purpose:         returns a pointer to a variable or parameter of the system*/
+/*                  that is specified by its name                             */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+real* ExchangeRateModel::setLabels(char *name)
+{
+    if( !strcmp(name,"xBundle") )
+	return &xBundle;
+    if( !strcmp(name,"yBundle") )
+	return &yBundle;
+    if( !strcmp(name,"g") )
+        return( &g );
+    if( !strcmp(name,"Lt") )
+        return( &Lt );
+    if( !strcmp(name,"A") )
+        return( &A );
+    if( !strcmp(name,"ymaxt") )
+        return( &ymaxt );
+    if( !strcmp(name,"B") )
+        return( &B );
+    if( !strcmp(name,"wart") )
+        return( &wart );
+    if( !strcmp(name,"part") )
+        return( &part );
+    if( !strcmp(name,"theta") )
+        return( theta );
+    if( !strcmp(name,"gamma") )
+        return( &gamma );
+    if( !strcmp(name,"kappa") )
+        return( &kappa );
+    if( !strcmp(name,"lambda") )
+        return( &lambda );
+    if( !strcmp(name,"mu") )
+        return( &mu );
+    if( !strcmp(name,"delta") )
+        return( &delta );
+    if( !strcmp(name,"rho") )
+        return( &rho );
+    if( !strcmp(name,"tax") )
+        return( &tax );
+    if( !strcmp(name,"Lmax") )
+        return( &Lmax );
+    if( !strcmp(name,"tau") )
+		return( (real*)(&tau) );
+    if( !strcmp(name,"betat") )
+		return( (real*)(&betat) );
+    if( !strcmp(name,"alphat") )
+		return( (real*)(&alphat) );
+    if( !strcmp(name,"yt") )
+		return( (real*)(&yt) );
+
+    return( NULL );
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: sendModelVar                                              */
+/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+real* ExchangeRateModel::sendModelVar()
+{
+    return &wart;
+	return &part;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: sendStateSpace                                            */
+/* Purpose:         returns pointers to the real balances and the real wage;  */
+/*                  returns the dimension of the system for rho=0             */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::sendStateSpace(int &quantity,const real*** stateSpace)
+{
+    if( *stateSpace )
+	delete *stateSpace;
+    *stateSpace= new const real* [dimension];
+    if( !(*stateSpace) )
+	fatalError("ExchangeRateModel::sendStateSpace",
+		   "Can't create state space vector");
+    quantity=dimension;
+    (*stateSpace)[0]=&wart;
+    (*stateSpace)[1]=&part;
+    (*stateSpace)[2]=theta;
+}
+    
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: loadParamset                                              */
+/* Purpose:         load a parameterset from a specified input file           */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::loadParamset(ifstream& inputFile)
+{
+    inputFile >> A >> B;
+    inputFile >> gamma>> kappa >> lambda >> mu;
+    inputFile >> tau >> length;
+    inputFile >> st_1_0 >> st_2_0 >> eerealt_1_0;
+    inputFile >> alphat_0 >> betat_0;
+    inputFile >> Lmax >> rho >> g >> tax;
+	inputFile >> delta >> deltaB >> d >> E >> fi;
+
+    if( theta )
+	delete theta;
+    theta = new real[tau+2];
+    if( !theta )
+	fatalError("ExchangeRateModel::loadParamset","Can't create theta vector");
+    
+    initialize();
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: saveParamset                                              */
+/* Purpose:         write parameterset into a file                            */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::saveParamset(ofstream& outputFile)
+{
+    outputFile << A << "\t" << B << "\t";
+    outputFile << gamma << "\t" << kappa << "\t" << lambda << "\t" << mu << "\t";
+    outputFile << tau << "\t" << length << "\t";
+    outputFile << st_1_0 << st_2_0 << eerealt_1_0 << "\t";
+    outputFile << alphat_0 << betat_0 << "\t";
+    outputFile << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\t";
+    outputFile << delta << "\t" << deltaB << "\t" 
+			   << d << "\t" << E << "\t"<< fi << endl;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: saveParamsetWithNames                                     */
+/* Purpose:         add  parameterset to printfile                            */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::saveParamsetWithNames(ofstream& outputFile)
+{    
+	outputFile << "ExchangeRateModel:\n\t";
+    outputFile << "A = " << A << "\tB = " << B << "\n\tgamma = ";
+    outputFile << gamma << "\tkappa = " << kappa << "\tlambda = ";
+    outputFile << lambda << "\tmu = " << mu << "\ttau = ";
+    outputFile << tau << "\n\tlength = " << length << "\n\tst_1_0 = ";
+	outputFile << st_1_0  << "\tst_2_0 = " << st_2_0 
+			   << "\teerealt_1_0 = " << eerealt_1_0 << "\n\talphat_0 = ";
+	outputFile << alphat_0 << "\tbetat_0 = " << betat_0 << "\n\tLmax =";
+	outputFile << Lmax << "\trho = " << rho << "\tg = ";
+    outputFile << g << "\ttax = " << tax << "\n\tdelta = ";
+    outputFile << delta << "\tdeltaB = " << deltaB << "\td = " 
+				<< d << "\tE = " << E << "\tfi= " << fi;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: printParamset                                             */
+/* Purpose:         print parameterset on the screen                          */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::printParamset()
+{
+    cout << A << "\t" << B << "\n";
+    cout << gamma << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
+    cout << tau << "\t" << length << "\n";
+    cout << st_1_0 << st_2_0 << eerealt_1_0 << "\n";
+    cout << alphat_0 << betat_0;
+    cout << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
+    cout << delta << "\t" << deltaB << "\t" 
+		 << d << "\t" << E << "\t"<< fi <<endl;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: sendParameters                                            */
+/* Purpose:         write all parameters into an array and return the numbers */
+/*                  of parameters                                             */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::sendParameters(int& amount,real** parameters)
+{
+    if( *parameters )
+	delete *parameters;
+    amount=17;
+    *parameters=new real[amount];
+    if( !(*parameters) )
+	fatalError("ExchangeRateModel::sendParameters",
+		   "Can't create array for parameters");
+    (*parameters)[0]=A;
+    (*parameters)[1]=B;
+    (*parameters)[2]=gamma;
+    (*parameters)[3]=kappa;
+    (*parameters)[4]=lambda;
+    (*parameters)[5]=mu;
+    (*parameters)[6]=tau;
+    (*parameters)[7]=length;
+    (*parameters)[8]=delta;
+    (*parameters)[9]=betat;
+    (*parameters)[13]=Lmax;
+    (*parameters)[14]=rho;
+    (*parameters)[15]=g;
+    (*parameters)[16]=tax;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      ExchangeRateModel                                         */
+/* Member function: receiveParameters                                         */
+/* Purpose:         receive parameter values                                  */
+/* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
+/*                                                                            */
+/******************************************************************************/
+
+void ExchangeRateModel::receiveParameters(const real* parameters)
+{
+    A=parameters[0];
+    B=parameters[1];
+    gamma=parameters[2];
+    kappa=parameters[3];
+    lambda=parameters[4];
+    mu=parameters[5];
+    tau=(int)(parameters[6]);
+    length=(long)(parameters[7]);
+    delta=parameters[8];
+    betat=parameters[9];
+    Lmax=parameters[13];
+    rho=parameters[14];
+    g=parameters[15];
+    tax=parameters[16];
+}

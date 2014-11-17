@@ -2,7 +2,101 @@ TEMPLATE = app
 
 QT += qml quick widgets
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    Models/adaptExp.C \
+    Models/affine1.C \
+    Models/affine2.C \
+    Models/affine3.C \
+    Models/armax.C \
+    Models/armax_eindim.C \
+    Models/Bankintermed.C \
+    Models/Bankintermed_old.C \
+    Models/Bankintermed_old_aktuell.C \
+    Models/baseModel.C \
+    Models/capOlg.C \
+    Models/cobweb_g_predictor.C \
+    Models/constantLag.C \
+    Models/defbudba.C \
+    Models/demog_model.C \
+    Models/det_var.C \
+    Models/distribution.C \
+    Models/dorn.C \
+    Models/dorn_1.C \
+    Models/dornbusch.C \
+    Models/Duopol.C \
+    Models/dynofin_rmv.C \
+    Models/ELS.C \
+    Models/EnRAss.C \
+    Models/EnRAssH.C \
+    Models/ExchangeDefault.C \
+    Models/ExchangeRateModel.C \
+    Models/ExchangeRateModel2.C \
+    Models/ExchangeRateModel_save.C \
+    Models/ExchangeSave.C \
+    Models/excOlg.C \
+    Models/finanzmarkt_2Dim.C \
+    Models/finanzmarkt_2Dim_1.C \
+    Models/finanzmarkt_gruppenswitch.C \
+    Models/finanzmarkt_Jan.C \
+    Models/finanzmarkt_JanE.C \
+    Models/finanzmarkt_JanE_Andi.C \
+    Models/finanzmarkt_wage.C \
+    Models/frepm.C \
+    Models/geoExp.C \
+    Models/getModel.C \
+    Models/growth_model.C \
+    Models/henon.C \
+    Models/hetoni.C \
+    Models/HicksModel.C \
+    Models/jan_model.C \
+    Models/Keener.C \
+    Models/laborMarketFirst.C \
+    Models/laborMarketFirstTax.C \
+    Models/leo.C \
+    Models/linDiff.C \
+    Models/linFima_basic.C \
+    Models/linFima_wage.C \
+    Models/linFimaErwRueck.C \
+    Models/logiDelay.C \
+    Models/logistic.C \
+    Models/manipulate.C \
+    Models/markov_chain.C \
+    Models/martin.C \
+    Models/martinNeu.C \
+    Models/MerA.C \
+    Models/michael.C \
+    Models/milano.C \
+    Models/milano2.C \
+    Models/milano3.C \
+    Models/milano_bcw.C \
+    Models/models2D.C \
+    Models/Monopol.C \
+    Models/newMacro.C \
+    Models/nicole.C \
+    Models/OlgRat.C \
+    Models/onozaki_et_al.C \
+    Models/pf_type.C \
+    Models/pureExchange.C \
+    Models/radio.C \
+    Models/rand_var.C \
+    Models/RBC_basic_model.C \
+    Models/rOLG_wt.C \
+    Models/rSolow.C \
+    Models/samuelson1.C \
+    Models/Samuelson_basic.C \
+    Models/Samuelson_basicAlt.C \
+    Models/test_model.C \
+    Models/toni2.C \
+    Models/toniadp.C \
+    Models/toniadp2.C \
+    Models/tonicapm.C \
+    Models/tonicapmLag.C \
+    Models/toniLag.C \
+    Models/toniRV.C \
+    PublicModels/cobweb.C \
+    PublicModels/defaultModel.C \
+    PublicModels/getPubModel.C \
+    PublicModels/perturbedDelayedLogisticMap.C
 
 RESOURCES += qml.qrc
 
@@ -110,4 +204,5 @@ HEADERS += \
     PublicModels/getPubModel.h \
     PublicModels/models2D.h \
     PublicModels/perturbedDelayedLogisticMap.h \
-    PublicModels/rand_var.h
+    PublicModels/rand_var.h \
+    sim.h

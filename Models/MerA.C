@@ -1,0 +1,483 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// Module name:	MerA.C
+// Contents:		Member functions of the classes MerA
+//
+// Author:		Marc Mueller
+// Last modified:	99/11/30
+//
+///////////////////////////////////////////////////////////////////////////////
+
+#include "../error.h"
+#include "MerA.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	MerA
+// Purpose:		constructor
+//
+// Author:		Marc Mueller
+// Last modified:	98/11/3ß
+///////////////////////////////////////////////////////////////////////////////
+MerA::MerA() : baseModel(1)
+{
+	zvar = NULL;
+	markov = NULL;
+	xAll = NULL;
+	p = NULL;
+	q = NULL;
+	qShift = NULL;
+	qmin = NULL;
+	qmax = NULL;
+	p0 = NULL;
+	q0 = NULL;
+	qOld = NULL;
+	ferr = NULL;
+	d = NULL;
+	d0 = NULL;
+	dmid = NULL;
+	dmin = NULL;
+	dmax = NULL;
+	tau1x = NULL;
+	
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	MerA
+// Purpose:		destructor
+//
+// Author:		Marc Mueller
+// Last modified:	98/11/30
+///////////////////////////////////////////////////////////////////////////////
+MerA::~MerA()
+{
+cout << "Model MerA destructor" << endl;
+
+	if( zvar ) delete zvar;
+	if( markov ) delete markov;
+	if ( xAll ) delete [] xAll;
+	if ( p ) delete [] p;
+	if ( q ) delete [] q;
+	if ( qShift ) delete [] qShift;
+	if ( qmin ) delete [] qmin;
+	if ( qmax ) delete [] qmax;
+	if ( p0 ) delete [] p0;
+	if ( q0 ) delete [] q0;
+	if ( d ) delete [] d;
+	if ( dmid ) delete [] dmid;
+	if ( d0 ) delete [] d0;
+	if ( dmin ) delete [] dmin;
+	if ( dmax ) delete [] dmax;
+	if ( tau1x ) delete [] tau1x;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	setLabels
+// Purpose:		return a pointer to a variable or a parameter specified
+//
+// Author:		Marc Mueller
+// Last modified:	98/11/30
+///////////////////////////////////////////////////////////////////////////////
+real* MerA::setLabels(char* label)
+{
+	char * labelp;
+	int num;
+//    if( !strcmp(label,"N") ) return( (real*)(&N) );
+	if( !strcmp(label,"R") ) return(&R);
+
+	if( !strcmp(label,"d") ) return(d);
+	if( !strncmp(label,"d_",2) ) {
+		labelp=label+2;
+		num=atoi(labelp);
+		return(&d[num]);
+	}
+	if( !strncmp(label,"d0_",3) ) {
+		labelp=label+3;
+		num=atoi(labelp);
+		return(&d0[num]);
+	}
+	if( !strncmp(label,"dmin_",5) ) {
+		labelp=label+5;
+		num=atoi(labelp);
+		return(&dmin[num]);
+	}
+	if( !strncmp(label,"dmax_",5) ) {
+		labelp=label+5;
+		num=atoi(labelp);
+		return(&dmax[num]);
+	}
+
+	if( !strcmp(label,"p") ) return(p);
+	if( !strncmp(label,"p_",2) ) {
+		labelp=label+2;
+		num=atoi(labelp);
+		return(&p[num]);
+	}
+
+	if( !strcmp(label,"q") ) return(q);
+	if( !strncmp(label,"q_",2) ) {
+		labelp=label+2;
+		num=atoi(labelp);
+		return(&q[num]);
+	}
+
+	if( !strcmp(label,"qOld") ) return(qShift);
+	if( !strncmp(label,"qOld_",5) ) {
+		labelp=label+5;
+		num=atoi(labelp);
+		return(&qShift[num]);
+	}
+	if( !strncmp(label,"p0_",3) ) {
+		labelp=label+3;
+		num=atoi(labelp);
+		return(&p0[num]);
+	}
+	if( !strncmp(label,"q0_",3) ) {
+		labelp=label+3;
+		num=atoi(labelp);
+		return(&q0[num]);
+	}
+	if( !strncmp(label,"qmin_",5) ) {
+		labelp=label+5;
+		num=atoi(labelp);
+		return(&qmin[num]);
+	}
+	if( !strncmp(label,"qmax_",5) ) {
+		labelp=label+5;
+		num=atoi(labelp);
+		return(&dmax[num]);
+	}
+
+  	if( !strncmp(label,"ferr_",5) ) {
+		labelp=label+5;
+		num=atoi(labelp);
+		return(&ferr[num]);
+	}
+  	if( !strcmp(label,"pOld") ) return(&pOld);
+  	if( !strcmp(label,"deltap") ) return(&deltap);
+	if( !strcmp(label,"deltaq") ) return(&deltaq);
+	if( !strcmp(label,"mef") ) return(&mef);
+
+  return NULL;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	get_new_d
+// Purpose:		get new d
+//
+// Author:		Marc Mueller
+// Last modified:	98/11/30
+// By:			Marc Mueller
+///////////////////////////////////////////////////////////////////////////////
+//real MerA::get_new_d(int & i) {
+real MerA::get_new_d(int & ) {
+//	return  (zvar->dice() * (dmax[0]-dmin[0]) + dmin[0]);
+	return  ( markov->dice() );
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	initialize
+// Purpose:		initialize the model, define the systems initial state
+//
+// Author:		Marc Mueller
+// Last modified:	98/11/30
+///////////////////////////////////////////////////////////////////////////////
+void MerA::initialize()
+{
+deltap=0;
+deltaq=0;
+mef=0;
+
+	for (int count=0;count<=K;count++) {
+		p[count]=p0[count];
+		q[count]=q0[count];
+		qShift[count]=q0[count];
+		qOld[count]=q0[count];
+		dmid[count] = ((dmax[count]-dmin[count])/2)+dmin[count] ;
+		d[count]=d0[count];
+	}
+
+
+	real DMAX;
+	for(int i=0;i<K;i++){
+		tau1x[i]= 0.05;
+
+		if(perfectPredictor) {//bed. perfekter praediktor
+			if(q0[i]<=((dmax[i]-dmin[i])/R)) {
+				cout <<"Asset "<<i<<" : q0["<<i<<"]="<<q0[i];
+				cout <<" <= (dmax-dmin)/R=";
+				cout <<((dmax[i]-dmin[i])/R)<<endl;
+				exit(-1);	
+			}
+			qmin[i]=(tau1x[i]-dmin[i])/(1-R);
+			qmax[i]=(tau1x[i]-dmax[i])/(1-R);
+
+			DMAX=((dmax[i]-dmin[i])/R)+dmin[i];
+			if(dmax[i]>DMAX)
+				DMAX=dmax[i];
+			if(tau1x[i]<=DMAX) {
+				cout << "Asset "<<i<<" : tau^-1x="<<tau1x[i];
+				cout <<" <= DMAX="<<DMAX<<endl;
+				exit(-1);
+			}
+		}
+	}
+
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	loadParamset
+// Purpose:		load a parameterset from a specified input file
+//
+// Author:		Marc Mueller
+// Last modified:	98/11/30
+///////////////////////////////////////////////////////////////////////////////
+void MerA::loadParamset(ifstream& inFile)
+{	char dummy[256];
+	int i;
+
+	inFile >> dummy;
+	if( strcmp(dummy,"V1.1"))
+	   fatalError("MerA::loadParamset - you need version V1.1 not",dummy);
+
+	inFile >> dummy;
+	if( !strcmp(dummy,"perfect"))
+		perfectPredictor=1; // YES
+	else perfectPredictor=0; // No
+	inFile >> R;
+
+	inFile >> K;
+	if ( xAll != NULL ) delete [] xAll;
+	xAll = new real[K+1];
+     if( !(xAll) )
+	   fatalError("macrodyn::MerA::loadParamset","can't create xAll");
+	if ( p0 != NULL ) delete [] p0;
+	p0 = new real[K+1];
+     if( !(p0) )
+	   fatalError("macrodyn::MerA::loadParamset","can't create p0");
+	if ( q0 != NULL ) delete [] q0;
+	q0 = new real[K+1];
+     if( !(q0) )
+	   fatalError("macrodyn::MerA::loadParamset","can't create q0");
+
+	if ( d0 != NULL ) delete [] d0;
+	d0 = new real[K+1];
+        if( !(d0) )
+	   fatalError("macrodyn::MerA::initialize","can't create d0");
+
+	if ( dmin != NULL ) delete [] dmin;
+	dmin = new real[K+1];
+     if( !(dmin) )
+	   fatalError("macrodyn::MerA::initialize","can't create dmin");
+
+	if ( dmax != NULL ) delete [] dmax;
+	dmax = new real[K+1];
+     if( !(dmax) )
+	   fatalError("macrodyn::MerA::initialize","can't create dmax");
+
+	char m_state[256];
+	char m_matrix[1024];
+	int statesNum,sn;
+	for(i=0;i<K;i++) {
+		inFile >> xAll[i];
+//		inFile >> d0[i];
+		inFile >> dmin[i] >> dmax[i];
+d0[i]=dmin[i];
+		inFile >> p0[i];
+		inFile >> q0[i];
+	}
+ 
+	inFile >> m_state;
+	statesNum = strnchr(m_state,';');
+	for (sn = 0; sn < statesNum; sn++) {
+		inFile >> dummy;	
+		strcat(m_matrix,dummy);
+		strcat(m_matrix," ");		
+	}
+
+
+	if ( zvar != NULL ) delete zvar;
+		zvar = new rand_var( this, "ranf", "1[0,1];" );
+	if( !(zvar) )
+	   fatalError("macrodyn::MerA::loadParamset","can't create rand_var");
+
+	if ( markov != NULL ) delete markov;
+		markov = new markov_chain (this,"ranf",m_state,m_matrix);
+	if( !(markov) )
+	   fatalError("macrodyn::MerA::loadParamset","can't create markov chain");
+
+	inFile >> length;
+
+	if ( p != NULL ) delete [] p;
+		p = new real[K+1];
+	if( !(p) )
+	   fatalError("macrodyn::MerA::initialize","can't create p");
+
+	if ( q != NULL ) delete [] q;
+		q = new real[K+1];
+	if( !(q) )
+	   fatalError("macrodyn::MerA::initialize","can't create q");
+
+	if ( qShift != NULL ) delete [] qShift;
+		qShift = new real[K+1];
+	if( !(qShift) )
+	   fatalError("macrodyn::MerA::initialize","can't create qShift");
+
+	if ( qOld != NULL ) delete [] qOld;
+		qOld = new real[K+1];
+	if( !(qOld) )
+	   fatalError("macrodyn::MerA::initialize","can't create qOld");
+
+	if ( qmin != NULL ) delete [] qmin;
+		qmin = new real[K+1];
+	if( !(qmin) )
+	   fatalError("macrodyn::MerA::initialize","can't create qmin");
+
+	if ( qmax != NULL ) delete [] qmax;
+		qmax = new real[K+1];
+	if( !(qmax) )
+	   fatalError("macrodyn::MerA::initialize","can't create qmax");
+
+	if ( ferr != NULL ) delete [] ferr;
+		ferr = new real[K+1];
+	if( !(ferr) )
+	   fatalError("macrodyn::MerA::initialize","can't create ferr");
+
+	if ( d != NULL ) delete [] d;
+		d = new real[K+1];
+	if( !(d) )
+	   fatalError("macrodyn::MerA::initialize","can't create d");
+
+	if ( dmid != NULL ) delete [] dmid;
+		dmid = new real[K+1];
+	if( !(dmid) )
+	   fatalError("macrodyn::MerA::initialize","can't create dmid");
+
+	if ( tau1x != NULL ) delete [] tau1x;
+		tau1x = new real[K+1];
+        if( !(tau1x) )
+	   fatalError("macrodyn::MerA::initialize","can't create tau1x");
+
+	initialize();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function: saveParamsetWithNames
+// Purpose:         add  parameterset to printfile
+//
+// Author:		Marc Mueller
+// Last modified:	
+///////////////////////////////////////////////////////////////////////////////
+void MerA::saveParamsetWithNames(ofstream& outputFile)
+{
+    outputFile << "\nModel MerA\n";
+    if(perfectPredictor)
+	outputFile << "perfectPredictor" << endl;
+    outputFile << "R = " << R << endl;
+    outputFile << "K = " << K << endl;
+    for(int i=0;i<K;i++) {
+     	outputFile << "xAll[" << i << "] = " << xAll[i] << " ";
+     	outputFile << "dmin[" << i << "] = " << dmin[i] << " ";
+     	outputFile << "dmax[" << i << "] = " << dmin[i] << " ";
+     	outputFile << "p0[" << i << "] = " << p0[i] << " ";
+     	outputFile << "q0[" << i << "] = " << q0[i] << " ";
+	outputFile << endl;
+	}
+    outputFile << "length = "<< length << endl;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	sendStateSpace
+// Purpose:		return pointers to the state variables
+//	
+// Author:		Marc Mueller
+// Last modified:	
+///////////////////////////////////////////////////////////////////////////////
+void MerA::sendStateSpace(int &quantity,const real*** stateSpace)
+{
+    if( stateSpace )
+	delete stateSpace;
+    *stateSpace= new const real* [K]; // K assets in Model MerA
+    if( !(*stateSpace) )
+	fatalError("MerA::sendStateSpace","Can't create state space vector");
+    quantity=K; // K assets in Model MerA
+    for(int i=0;i<K;i++)
+	    (*stateSpace)[i]=&p[i];
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// Class name:		MerA
+// Member function:	iteration
+// Purpose:		perform one iteration of the system
+//
+// Author:		Marc Mueller
+// Last modified:	98/11/30
+///////////////////////////////////////////////////////////////////////////////
+void MerA::iteration(const long& t)
+{ 
+pOld=p[0];
+real dOld=d[0];
+	int i;
+	for(i=0;i<K;i++) {
+		if(perfectPredictor)
+			q[i]=R*q[i]+tau1x[i]-d[i];			
+		        //else do not do a prediction
+	//q[i]=p[i];
+
+		qOld[i]=qShift[i];
+		qShift[i]=q[i];
+
+		d[i]=get_new_d(i);
+		p[i]=(d[i]+q[i]-tau1x[i])/R;
+		if(p[i]<0)
+			cout <<"period="<<t<<" p["<<i<<"]="<<p[i]<<"!"<<endl;
+		ferr[i]=p[i]-qOld[i];
+	}
+
+mef = ( dOld + q[0] - tau1x[0] )/ R - qOld[0];
+deltaq = q[0]-qOld[0];
+deltap = p[0]-pOld;
+
+expectation_ferr *= (t-1)/t; expectation_ferr += ferr[0]/t;
+variance_ferr *= (t-1)/t; variance_ferr += (ferr[0]-expectation_ferr)*(ferr[0]-expectation_ferr)/t;
+standardDeviation_ferr = sqrt(variance_ferr);
+mean_ferr *= t-1; mean_ferr+=ferr[0]; mean_ferr/=t;
+
+expectation_deltaq *= (t-1)/t; expectation_deltaq += deltaq/t;
+variance_deltaq *= (t-1)/t; variance_deltaq += (deltaq-expectation_deltaq)*(deltaq-expectation_deltaq)/t;
+standardDeviation_deltaq = sqrt(variance_deltaq);
+mean_deltaq *= t-1; mean_deltaq+=deltaq; mean_deltaq/=t;
+
+expectation_deltap *= (t-1)/t; expectation_deltap += deltap/t;
+variance_deltap *= (t-1)/t; variance_deltap += (deltap-expectation_deltap)*(deltap-expectation_deltap)/t;
+standardDeviation_deltap = sqrt(variance_deltap);
+mean_deltap *= t-1; mean_deltap+=deltap; mean_deltap/=t;
+
+expectation_p *= (t-1)/t; expectation_p += p[0]/t;
+variance_p *= (t-1)/t; variance_p += (p[0]-expectation_p)*(p[0]-expectation_p)/t;
+standardDeviation_p = sqrt(variance_p);
+mean_p *= t-1; mean_p+=p[0]; mean_p/=t;
+
+expectation_d *= (t-1)/t; expectation_d += d[0]/t;
+variance_d *= (t-1)/t; variance_d += (d[0]-expectation_d)*(d[0]-expectation_d)/t;
+standardDeviation_d = sqrt(variance_d);
+mean_d *= t-1; mean_d+=d[0]; mean_d/=t;
+
+cout << t << " d=" << d[0];
+cout << " q=" << q[0] << " qOld=" << qOld[0] << " p=" << p[0] << endl;
+cout << " d=" << d[0] << " Mean_d="  << mean_d << " SD_d="  << standardDeviation_d << endl;
+//cout << " p=" << p[0] << " Mean_p="  << mean_p << " SD_p="  << standardDeviation_p << endl;
+//cout << " ferr=" << ferr[0] << " Mean_ferr="  << mean_ferr << " SD_ferr="  << standardDeviation_ferr << endl;
+//cout << " deltaq=" << deltaq << " Mean_deltaq="  << mean_deltaq << " SD_deltaq="  << standardDeviation_deltaq << endl;
+//cout << " deltap=" << deltap << " Mean_deltap="  << mean_deltap << " SD_deltap="  << standardDeviation_deltap << endl;
+
+//cout << " q=" << q[0] << " qOld=" << qOld[0] << " mef" << mef << endl ;
+
+}

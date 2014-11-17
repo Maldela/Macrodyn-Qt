@@ -1,0 +1,433 @@
+//$Header: /home/vwlt1/mmeyer/macrodyn_dmdyn/src/Models/RCS/laborMarketFirstTax.C,v 1.1 2000/08/31 15:58:25 mmeyer Exp $
+/******************************************************************************/
+/*                                                                            */
+/* Module name:  laborMarketFirstTax.C                                        */
+/* Contents:     Member functions of the class laborMarketFirstTax            */
+/*               This model is derived from the Model labormarketfirst.       */
+/*               The difference is that taxS and taxW are set by tax          */
+/*                                                                            */
+/* Last Modified: 06.03.1996 (Marc Mueller)                                   */
+/* Modified:      18.03.1996 (Marc Mueller)                                   */
+/*                                                                            */
+/******************************************************************************/
+
+#include "laborMarketFirstTax.h"             
+#include "../error.h"
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: laborMarketFirstTax                                       */
+/* Purpose:         constructor                                               */
+/* Last modified:   06.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+laborMarketFirstTax::laborMarketFirstTax() 
+{
+}
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: loadParamset                                              */
+/* Purpose:         load a parameterset from a specified input file           */
+/* Last modified:   18.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::loadParamset(ifstream& inputFile)
+{
+    inputFile >> A >> B >> deltaP >> Lmax ;
+    inputFile >> betaS >> betaW >> rhoS >> rhoW ;
+    inputFile >> deltaS >> deltaW >> tauS >> tauW ;
+    inputFile >> g >> tax ; 
+    inputFile >> gamm >> kappa >> lambda >> mu ;
+    inputFile >> length ;
+    inputFile >> w0 >> mS0 >> mW0 >> omega0 >> d0 >> theta0 ;
+
+    if( theta )
+	delete theta;
+    if( tauS > tauW ) 
+        theta = new real[tauS+2];
+      else
+        theta = new real[tauW+2];
+    if( !theta )
+	fatalError("defaultModel::loadParamset","Can't create theta vector");
+    
+    initialize();
+}
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: saveParamset                                              */
+/* Purpose:         write parameterset into a file                            */
+/* Last modified:   18.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::saveParamset(ofstream& outputFile)
+{
+    outputFile << A << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\t";
+    outputFile << betaS << "\t" << betaW << "\t";
+    outputFile << rhoS << "\t" << rhoW << "\t";
+    outputFile << deltaS << "\t" << deltaW << "\t";
+    outputFile << tauS << "\t" << tauW << "\t";
+    outputFile << g << "\t" << tax << "\t"; 
+    outputFile << gamm << "\t" << kappa << "\t";
+    outputFile << lambda << "\t" << mu << "\t";
+    outputFile << length << "\t";
+    outputFile << w0 << "\t" << mS0 << "\t" << mW0 << "\t";
+    outputFile << omega0 << "\t" << d0 << "\t" << theta0;
+}
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: saveParamsetWithNames                                     */
+/* Purpose:         add  parameterset to printfile                            */
+/* Last modified:                                   */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::saveParamsetWithNames(ofstream& outputFile)
+{
+    outputFile << "LaborMarketFirstTax:\n\t";
+    outputFile << "A = " << A << "\tB = " << B << "\tdeltaP = " << deltaP << "\tLmax = " << Lmax << "\tbetaS = ";
+    outputFile << betaS << "\tbetaW = " << betaW << "\trhoS = ";
+    outputFile << rhoS << "\trhoW = " << rhoW << "\tdeltaS = ";
+    outputFile << deltaS << "\tdeltaW = " << deltaW << "\ttauS = ";
+    outputFile << tauS << "\ttauW = " << tauW << "\tg = ";
+    outputFile << g << "\ttax = " << tax << "\tgamma = "; 
+    outputFile << gamm << "\tkappa = " << kappa << "\tlambda = ";
+    outputFile << lambda << "\tmu = " << mu << "\tlength = ";
+    outputFile << length << "\tw0 = ";
+    outputFile << w0 << "\tmS0 = " << mS0 << "\tmW0 = " << mW0 << "\tomega0 = ";
+    outputFile << omega0 << "\td0 = " << d0 << "\ttheta0 = " << theta0;
+    outputFile << "\n";
+}
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: printParamset                                             */
+/* Purpose:         print parameterset on the screen                          */
+/* Last modified:   18.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::printParamset()
+{
+    cout << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
+    cout << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
+    cout << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
+    cout << g << "\t" << tax << "\n"; 
+    cout << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
+    cout << length << "\n";
+    cout << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
+    cout << d0 << "\t" << theta0 << endl;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: sendParameters                                            */
+/* Purpose:         write all parameters into an array and return the numbers */
+/*                  of parameters                                             */
+/* Last modified:   18.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::sendParameters(int& amount,real** parameters)
+{
+    if( *parameters )
+	delete *parameters;
+    amount=25;
+    *parameters=new real[amount];
+    if( !(*parameters) )
+	fatalError("defaultModel::sendParameters",
+		   "Can't create array for parameters");
+    (*parameters)[0]=A;
+    (*parameters)[1]=B;
+    (*parameters)[2]=deltaP;
+    (*parameters)[3]=Lmax;
+    (*parameters)[4]=betaS;
+    (*parameters)[5]=betaW;
+    (*parameters)[6]=rhoS;
+    (*parameters)[7]=rhoW;
+    (*parameters)[8]=deltaS;
+    (*parameters)[9]=deltaW;
+    (*parameters)[10]=tauS;
+    (*parameters)[11]=tauW;
+    (*parameters)[12]=g;
+    (*parameters)[13]=tax;
+    (*parameters)[14]=gamm;
+    (*parameters)[15]=kappa;
+    (*parameters)[16]=lambda;
+    (*parameters)[17]=mu;
+    (*parameters)[18]=length;
+    (*parameters)[19]=w0;
+    (*parameters)[20]=mS0;
+    (*parameters)[21]=mW0;
+    (*parameters)[22]=omega0;
+    (*parameters)[23]=d0;
+    (*parameters)[24]=theta0;
+}
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: receiveParameters                                         */
+/* Purpose:         receive parameter values                                  */
+/* Last modified:   18.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::receiveParameters(const real* parameters)
+{
+    A=parameters[0];
+    B=parameters[1];
+    deltaP=parameters[2];
+    Lmax=parameters[3];
+    betaS=parameters[4];
+    betaW=parameters[5];
+    rhoS=parameters[6];
+    rhoW=parameters[7];
+    deltaS=parameters[8];
+    deltaW=parameters[9];
+    tauS=(int)(parameters[10]);
+    tauW=(int)(parameters[11]);
+    g=parameters[12];
+    tax=parameters[13];
+    gamm=parameters[14];
+    kappa=parameters[15];
+    lambda=parameters[16];
+    mu=parameters[17];
+    length=(long)(parameters[18]);
+    w0=parameters[19];
+    mS0=parameters[20];
+    mW0=parameters[21];
+    omega0=parameters[22];
+    d0=parameters[23];
+    theta0=parameters[24];
+}
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: setlabels                                                 */
+/* Purpose:         returns a pointer to a variable or parameter of the system*/
+/*                  that is specified by its name                             */
+/* Last modified:   18.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+real* laborMarketFirstTax::setLabels(char *name)
+{
+    if( !strcmp(name,"xBundle") )
+	return &xBundle;
+    if( !strcmp(name,"yBundle") )
+	return &yBundle;
+
+    if( !strcmp(name,"A") )
+        return( &A );
+    if( !strcmp(name,"B") )
+        return( &B );
+    if( !strcmp(name,"deltaP") )
+        return( &deltaP );
+    if( !strcmp(name,"Lmax") )
+        return( &Lmax );
+
+    if( !strcmp(name,"betaS") )
+        return( &betaS );
+    if( !strcmp(name,"betaW") )
+        return( &betaW );
+    if( !strcmp(name,"rhoS") )
+        return( &rhoS );
+    if( !strcmp(name,"rhoW") )
+        return( &rhoW );
+    if( !strcmp(name,"deltaS") )
+        return( &deltaS );
+    if( !strcmp(name,"deltaW") )
+        return( &deltaW );
+    if( !strcmp(name,"tauS") )
+	return( (real*)(&tauS) );
+    if( !strcmp(name,"tauW") )
+	return( (real*)(&tauW) );
+
+    if( !strcmp(name,"g") )
+        return( &g );
+    if( !strcmp(name,"tax") )
+        return( &tax );
+
+    if( !strcmp(name,"gamma") )
+        return( &gamm );
+    if( !strcmp(name,"kappa") )
+        return( &kappa );
+    if( !strcmp(name,"lambda") )
+        return( &lambda );
+    if( !strcmp(name,"mu") )
+        return( &mu );
+
+    if( !strcmp(name,"w0") )
+	return( &w0 );
+    if( !strcmp(name,"mS0") )
+	return( &mS0 );
+    if( !strcmp(name,"mW0") )
+	return( &mW0 );
+    if( !strcmp(name,"omega0") )
+	return( &omega0 );
+    if( !strcmp(name,"d0") )
+	return( &d0 );
+    if( !strcmp(name,"theta0") )
+        return( &theta0 );
+
+    if( !strcmp(name,"wtreal") )
+        return( &wtreal );
+    if( !strcmp(name,"mtrealS") )
+        return( &mtrealS );
+    if( !strcmp(name,"mtrealW") )
+        return( &mtrealW );
+    if( !strcmp(name,"omegat") )
+        return( &omegat );
+    if( !strcmp(name,"dt") )
+        return( &dt );
+    if( !strcmp(name,"L") )
+        return( &employment );
+
+    if( !strcmp(name,"theta") )
+        return( theta );
+
+    return( NULL );
+}
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: setTax                                                    */
+/* Purpose:         taxS,taxW is set by tax                                   */
+/* Last modified:   18.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::setTax()
+{
+	taxS = tax;
+	taxW = tax;
+}
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      laborMarketFirstTax                                       */
+/* Member function: iteration                                                 */
+/* Purpose:         describes one step of the dynamical system                */
+/* Last modified:   06.03.1996 (Marc Mueller)                                 */
+/*                                                                            */
+/******************************************************************************/
+void laborMarketFirstTax::iteration(const long& t)
+{
+  real ztnot;		// labor demand
+  real sigmaL;		// labor market imbalance
+  real sigmaC;		// supply-demand imbalance
+  real ptrateexW;	// expected inflationrate Worker         
+  real ptrateexS;	// expected inflationrate Shareholder
+  real cpsW,cpsS;	// consumptionpropensity Worker,Shareholder   
+  real ytW,ytS;		// demand young Workers,Shareholder
+  real ytD;		// aggregate Demand    
+  real yteff;		// effectiv production
+  real xYoung;		// what the young may consume 
+  real xtS,xtW;		// actual consum of the young S and W
+     
+  setTax();				//()
+  ztnot=laborDemand();		        //(A,B,wtreal)
+  employment=actualEmployment(ztnot);	//(ztnot,Lmax)
+  sigmaL=detSigmaL(ztnot);		//(ztnot,Lmax,employment)
+  wtrate=detWtRate(sigmaL);		//(sigmaL,Lmax,employment,lambda,mu)
+  ptrateexW=expectedInflationRateW(t);  //(t,tauW,theta)
+  cpsW=consumptionPropensityW(ptrateexW);//(ptrateexW,rhoTildaW,deltaW)
+  ytW=demandYoungW(cpsW);	        //(cpsW,taxW,wtreal,employment)
+  ptrateexS=expectedInflationRateS(t);  //(t,tauS,theta)                
+  cpsS=consumptionPropensityS(ptrateexS);//(ptrateexS,rhoTildaS,deltaS)
+  ytS=demandYoungS(cpsS);	        //(cpsS,taxS,dt)
+  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtrealW,mtrealS,g,ytW,ytS)
+  yteff=productionFunction(employment);	//(A,B,employment,deltaP,omagat)
+  output=actualOutput(ytD,yteff);	//(ytD,yteff)
+  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtrealW,mtrealS)
+  xtS=actualConsumptionYoungS(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
+  xtW=actualConsumptionYoungW(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
+  sigmaC=detSigmaC(yteff,ytD);	        //(yteff,ytD,output)
+  ptrate=actualInflationrate(sigmaC,ytD);//(sigmaC,ytD,gamm,kappa)
+
+  dynamics(yteff,xtS,xtW);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+// Class name:          rlaborMarketFirstTax
+// Member function:     rlaborMarketFirstTax
+// Purpose:             constructor
+//
+// Author:              Uli Middelberg
+// Last modified:       Fri Jul 25 17:00:06 1997
+// By:                  Uli Middelberg
+//
+///////////////////////////////////////////////////////////////////////////////
+
+rlaborMarketFirstTax::rlaborMarketFirstTax() : laborMarketFirstTax()
+{
+  zvar = NULL;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+// Class name:          rlaborMarketFirstTax
+// Member function:     iteration
+// Purpose:             perform one iteration of the system
+//
+// Author:              Uli Middelberg
+// Last modified:       Fri Jul 25 16:59:54 1997
+// By:                  Uli Middelberg
+//
+///////////////////////////////////////////////////////////////////////////////
+
+void rlaborMarketFirstTax::iteration(const long& t)
+{
+  * zvar_ptr = zvar->dice();	// Set a new random value for the Parameter
+  laborMarketFirstTax::iteration(t);	// iterate as usual
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+// Class name:          rlaborMarketFirstTax
+// Member function:     loadParamset
+// Purpose:             load a parameterset from a specified input file
+//
+// Author:              Uli Middelberg
+// Last modified:       Fri Jul 25 16:59:31 1997
+// By:                  Uli Middelberg
+//
+///////////////////////////////////////////////////////////////////////////////
+
+void rlaborMarketFirstTax::loadParamset(ifstream& inputFile)
+{
+  inputFile >> zvar_name;		// read the name of the stochastic parameter
+  inputFile >> zvar_expr;		// read the definition
+  laborMarketFirstTax::loadParamset(inputFile);// read the parameters for the default
+  					// model as usual and initialize
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+// Class name:          rlaborMarketFirstTax
+// Member function:     initialize
+// Purpose:             initialize the model, define the systems initial state
+//
+// Author:              Uli Middelberg
+// Last modified:       Fri Jul 25 16:59:21 1997
+// By:                  Uli Middelberg
+//
+///////////////////////////////////////////////////////////////////////////////
+
+void rlaborMarketFirstTax::initialize()
+{
+    zvar_ptr = setLabels(zvar_name); 	// get a pointer to the parameter
+    if ( zvar != NULL ) {		// delete the old zvar
+      delete zvar;
+    }
+    
+    zvar = new rand_var( this, "ranf", zvar_expr);
+    					// initialize the random number generator
+
+    laborMarketFirstTax::initialize();	// initialize the default model as usual
+}
+
+// eof
