@@ -15,10 +15,10 @@
 
 class newMacro : public defaultModel {
 protected:
-    void notProd(real&,real&);
-    void notCom(real&,real&,real&);                         
-    void empAndOut(real&,real&,real&,real&);
-    void wageAndPrice(real&,real&,real&,char*);            
+    void notProd(qreal&,qreal&);
+    void notCom(qreal&,qreal&,qreal&);                         
+    void empAndOut(qreal&,qreal&,qreal&,qreal&);
+    void wageAndPrice(qreal&,qreal&,qreal&,char*);            
     void dynamics();                        
 public:
     void iteration(const long&);

@@ -35,43 +35,43 @@ class michael : public baseModel {
 
 protected:
     			// original state variables
-    real K;		// kapital
-    real L;		// labour
-    real k;		// transformed state variable k:=K/L
+    qreal K;		// kapital
+    qreal L;		// labour
+    qreal k;		// transformed state variable k:=K/L
 
-    real k_0;		// initial value
-    real z;
-    real z_0;
-    real tau;
-    real gamma;
-    real rho;
+    qreal k_0;		// initial value
+    qreal z;
+    qreal z_0;
+    qreal tau;
+    qreal gamma;
+    qreal rho;
     
     
     			// derived state variables
-    real y;		// output
-    real w;		// wage
-    real r;		// rent
+    qreal y;		// output
+    qreal w;		// wage
+    qreal r;		// rent
 
 
 				// production function
-    real ( * pf ) ( real k, real z, real b, real r );	
+    qreal ( * pf ) ( qreal k, qreal z, qreal b, qreal r );	
     				// a pointer to the production function
-    real ( * pf_prime) ( real k, real z, real b, real r );
+    qreal ( * pf_prime) ( qreal k, qreal z, qreal b, qreal r );
     				// and its derivative
 
-    real pf_type;		// the current type of the production function
-    real a, b, c, alpha;	// original parameters
-    real A, B, C, D;		// parameters as ][0,1][ normalized input
+    qreal pf_type;		// the current type of the production function
+    qreal a, b, c, alpha;	// original parameters
+    qreal A, B, C, D;		// parameters as ][0,1][ normalized input
     void pf_init ( void );	// maps (A,B,C) -> (a,b,c) and sets pf, pf_prime
     
-    virtual real sf_y ( real );	// savings function for the entire economy
-    real syr;			// parameter for sf_y
+    virtual qreal sf_y ( qreal );	// savings function for the entire economy
+    qreal syr;			// parameter for sf_y
     
     
      			
-    real sav_y;		// savings w.r.t. the output
+    qreal sav_y;		// savings w.r.t. the output
 
-    real n;		// exogenous growth of labour suppling people
+    qreal n;		// exogenous growth of labour suppling people
    
      
 
@@ -82,12 +82,12 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
 
-    real* sendModelVar();		// for compatibity reasons only
-    void sendParameters(int&,real**);
-    void receiveParameters(const real*);
+    qreal* sendModelVar();		// for compatibity reasons only
+    void sendParameters(int&,qreal**);
+    void receiveParameters(const qreal*);
     virtual ~michael(void);
 };
 

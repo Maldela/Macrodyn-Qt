@@ -47,7 +47,7 @@ onozaki_et_al::onozaki_et_al() : baseModel(1)
 
 void onozaki_et_al::iteration(const long& )
 { 
-  real z_n;				// value of z for the next period
+  qreal z_n;				// value of z for the next period
 	z_n = (1-alpha)*z + alpha/exp(log(z)*beta); 
  	// z_n=(1-alpha)z+alpha/zt^beta
   z = z_n;
@@ -84,7 +84,7 @@ void onozaki_et_al::initialize()
 // By:	
 /////////////////////////////////////////////////////////////////////////////
 
-real* onozaki_et_al::setLabels(char* label)
+qreal* onozaki_et_al::setLabels(char* label)
 {
    
     if( !strcmp(label,"z") ) return(&z);
@@ -108,11 +108,11 @@ real* onozaki_et_al::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::sendStateSpace(int &quantity,const real*** stateSpace)
+void onozaki_et_al::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("onozaki_et_al::sendStateSpace",
 		   "Can't create state space vector");
@@ -180,11 +180,11 @@ void onozaki_et_al::saveParamset(ofstream& outFile)
 
 void onozaki_et_al::printParamset()
 {
-    cout << z_0 << endl;
-    cout << alpha << endl;
-    cout << beta << endl;
+    Log::log() << z_0 << endl;
+    Log::log() << alpha << endl;
+    Log::log() << beta << endl;
     
-    cout << length << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -219,14 +219,14 @@ void onozaki_et_al::saveParamsetWithNames(ofstream& outputFile)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* onozaki_et_al::sendModelVar(void)
+qreal* onozaki_et_al::sendModelVar(void)
 { error("macrodyn::onozaki_et_al::sendModelVar is not implemented");
   return NULL;
 }
-void onozaki_et_al::sendParameters(int& ,real** )
+void onozaki_et_al::sendParameters(int& ,qreal** )
 { error("macrodyn::onozaki_et_al::sendParameters is not implemented");
 }
-void onozaki_et_al::receiveParameters(const real* )
+void onozaki_et_al::receiveParameters(const qreal* )
 { error("macrodyn::onozaki_et_al::receiveParameters is not implemented");
 }
 

@@ -31,16 +31,16 @@
 class test_model : public baseModel {
 
 protected:
-	real Ed;			// Variable für den Erwartungswert
-	real Vd;			// Variable für die Varianz
-	real d;				// Variable für die Zufallsvariable
-	real d2;
+    qreal Ed;			// Variable für den Erwartungswert
+    qreal Vd;			// Variable für die Varianz
+    qreal d;				// Variable für die Zufallsvariable
+    qreal d2;
 	distribution distri;
 	normal_Distri distri2;
 	
-	real U,s1,s2;
+    qreal U,s1,s2;
 	
-	real x,y,z,a,b,c,x0,y0,z0,dx,dy,dz;
+    qreal x,y,z,a,b,c,x0,y0,z0,dx,dy,dz;
 
 public:
     test_model();			// constructor
@@ -51,14 +51,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values
 };
 
 #endif	// _LOGISTICMAP_INCLUDED

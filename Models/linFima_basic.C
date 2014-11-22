@@ -59,7 +59,7 @@ void linFima_basic::initialize()
 // Beschreibung:	return a pointer to the main model variable
 ///////////////////////////////////////////////////////////////////////////////
 
-real* linFima_basic::sendModelVar()
+qreal* linFima_basic::sendModelVar()
 {
 	return &x;
 	return &y;
@@ -70,7 +70,7 @@ real* linFima_basic::sendModelVar()
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-real* linFima_basic::setLabels(char* label)
+qreal* linFima_basic::setLabels(char* label)
 {
 	
 	if( !strcmp(label,"xBundle")  	) return(&xBundle);
@@ -116,11 +116,11 @@ real* linFima_basic::setLabels(char* label)
 // Funktionsname:	sendStateSpace
 // Beschreibung:		return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::sendStateSpace(int &quantity,const real*** stateSpace)
+void linFima_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension]; // 1 asset in Model linFima_basic
+    *stateSpace= new const qreal* [dimension]; // 1 asset in Model linFima_basic
     if( !stateSpace )
 	fatalError("linFima_basic::sendStateSpace","Speicherfehler");
     quantity=dimension; // 1 asset in Model linFima_basic
@@ -171,15 +171,15 @@ void linFima_basic::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 void linFima_basic::printParamset()
 {
-	cout << "\nlinFima_basic:"<<"\t";
-	cout << MODELL <<endl;
-	cout << x0     << "\t" << y0     <<endl; 
-	cout << alpha  << "\t" << beta   <<endl;
-	cout << d0     << "\t" << psi    <<endl;
-	cout << xi_min << "\t" << xi_max <<endl;
-	cout << gamma  <<endl;
-	cout << L      <<endl;
-	cout << length <<endl;
+	Log::log() << "\nlinFima_basic:"<<"\t";
+	Log::log() << MODELL <<endl;
+	Log::log() << x0     << "\t" << y0     <<endl; 
+	Log::log() << alpha  << "\t" << beta   <<endl;
+	Log::log() << d0     << "\t" << psi    <<endl;
+	Log::log() << xi_min << "\t" << xi_max <<endl;
+	Log::log() << gamma  <<endl;
+	Log::log() << L      <<endl;
+	Log::log() << length <<endl;
 
 };
 
@@ -187,12 +187,12 @@ void linFima_basic::printParamset()
 // Funktionsname: sendParameters
 // Beschreibung:        write all parameters into an array and return the number//                      of  parameters
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::sendParameters(int& amount,real** parameters)
+void linFima_basic::sendParameters(int& amount,qreal** parameters)
 {
 	if( *parameters )
 		delete *parameters;
 	amount=11;
-	*parameters=new real[amount];
+	*parameters=new qreal[amount];
 	if( !parameters )
 		fatalError("linFima_basic::sendParameters",
 			   "Can't create array for parameters");
@@ -213,7 +213,7 @@ void linFima_basic::sendParameters(int& amount,real** parameters)
 // Funktionsname: receiveParameters
 // Beschreibung:         receive parameter values
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::receiveParameters(const real* parameters)
+void linFima_basic::receiveParameters(const qreal* parameters)
 {
 	x0	= parameters[0];
 	y0	= parameters[1];
@@ -281,11 +281,11 @@ void linFima_basic::iteration(const long& t)
 // Beschreibung: Berechnet den rekursiven Mittelwert von Beobachtungen
 ///////////////////////////////////////////////////////////////////////////////
 
-real linFima_basic::rekursiverMittelwertx(const long t)
+qreal linFima_basic::rekursiverMittelwertx(const long t)
 {
 	// lokale Typen und Initialisierung
 	double ttx    =0;	
-	real mxx 	= summex;
+	qreal mxx 	= summex;
 		summe1x = summex;
 		summex  = x+summe1x;
 
@@ -296,11 +296,11 @@ real linFima_basic::rekursiverMittelwertx(const long t)
 	return(mxx);
 }
 
-real linFima_basic::rekursiverMittelwerty(const long t)
+qreal linFima_basic::rekursiverMittelwerty(const long t)
 {
 	// lokale Typen und Initialisierung
 	double tty    =0;	
-	real myy     = summey;
+	qreal myy     = summey;
 		summe1y = summey;
 		summey  = y+summe1y;
 

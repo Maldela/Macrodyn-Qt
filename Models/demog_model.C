@@ -221,7 +221,7 @@ void demog_model::iteration(const long& time)
 		}
 	break;
 	default:
-		cout << "error in iteration!";
+        Log::log() << "error in iteration!";
 		exit(-1);
 	};
 	theta_K = K_t;
@@ -306,7 +306,7 @@ void demog_model::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* demog_model::sendModelVar()
+qreal* demog_model::sendModelVar()
 {
     return &k_t;
 }
@@ -322,7 +322,7 @@ real* demog_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* demog_model::setLabels(char* label)
+qreal* demog_model::setLabels(char* label)
 {
 	if ( !strcmp(label, "xBundle") ) return( &xBundle );
 	if ( !strcmp(label, "yBundle") ) return( &yBundle );
@@ -392,11 +392,11 @@ real* demog_model::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::sendStateSpace(int &quantity,const real*** stateSpace)
+void demog_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace = new const real* [1];
+    *stateSpace = new const qreal* [1];
     if( !(*stateSpace) )
 	fatalError("demog_model::sendStateSpace",
 		   "Can't create state space vector");
@@ -464,7 +464,7 @@ void demog_model::loadParamset(ifstream& inFile)
 		inFile >> tax_rate_0 >> tax_rate_1 >> tax_rate_2;
 	break;
 	default: 
-		cout << "demog_model::loadParamset unknown model type";
+        Log::log() << "demog_model::loadParamset unknown model type";
 		exit(-1);
 	};
 
@@ -524,8 +524,8 @@ void demog_model::saveParamsetWithNames(ofstream& outFile)
 
 void demog_model::printParamset()
 {
-	cout << "no. generations = " << k_t << endl;
-	cout << "length = " << length << endl;
+    Log::log() << "no. generations = " << k_t << endl;
+    Log::log() << "length = " << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -540,12 +540,12 @@ void demog_model::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::sendParameters(int& amount,real** parameters)
+void demog_model::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=2;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("demog_model::sendParameters",
 		   "Can't create array for parameters");
@@ -565,7 +565,7 @@ void demog_model::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::receiveParameters(const real* parameters)
+void demog_model::receiveParameters(const qreal* parameters)
 {
     k_t=parameters[0];
     length=long(parameters[1]);

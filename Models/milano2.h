@@ -20,33 +20,33 @@
 class milano2 : public baseModel {
 protected:
     int n1;                             // number of producers
-    real a,b;                           // production function parameters    
-    real psi1,psi2;                     // price adjustment parameters
-    real nu1,nu2;                       // wage adjustment parameters      
-    real omikron1,omikron2;             // interest rate adjustment parameters
-    real alfa0,mreal0,pg0,rreal0,z0;    // initial values                  
-    real alfa,mreal,pgt,rreal,zt,mtr,wtr,rtr;       // wage, money stock, price, profit,interest,interest rate   
-    real Ls;                            // maximal aggregate labour supply
-    real h;                             // utility function parameters
-    real G,tax;                         // government demand, tax rate
-    real empl;                          // actual employment
-    real output;                        // actual output 
-    real capital;                       // actual capital stock
-    real teta;
-    real epsilon;                       // structural parameter
-    real f;                             // interest rate adjustment
-    void system_1(const real&);
-    void system_2(const real&);   
-    void system_4(const real&);
-    void system_6(const real&);
-    real virtual_s1employment();
-    real virtual_s4employment(); 
-    real labour_demand();
-    real mu_function(const real& mu, const real& epsilon, 
-                     const real& b, const real& c);
-    real regfal(int max_iter, real start_left, real start_right,
-                real c); 
-    void diseq_regime(const real&,const real&,const real&);
+    qreal a,b;                           // production function parameters    
+    qreal psi1,psi2;                     // price adjustment parameters
+    qreal nu1,nu2;                       // wage adjustment parameters      
+    qreal omikron1,omikron2;             // interest rate adjustment parameters
+    qreal alfa0,mqreal0,pg0,rqreal0,z0;    // initial values                  
+    qreal alfa,mqreal,pgt,rqreal,zt,mtr,wtr,rtr;       // wage, money stock, price, profit,interest,interest rate   
+    qreal Ls;                            // maximal aggregate labour supply
+    qreal h;                             // utility function parameters
+    qreal G,tax;                         // government demand, tax rate
+    qreal empl;                          // actual employment
+    qreal output;                        // actual output 
+    qreal capital;                       // actual capital stock
+    qreal teta;
+    qreal epsilon;                       // structural parameter
+    qreal f;                             // interest rate adjustment
+    void system_1(const qreal&);
+    void system_2(const qreal&);   
+    void system_4(const qreal&);
+    void system_6(const qreal&);
+    qreal virtual_s1employment();
+    qreal virtual_s4employment(); 
+    qreal labour_demand();
+    qreal mu_function(const qreal& mu, const qreal& epsilon, 
+                     const qreal& b, const qreal& c);
+    qreal regfal(int max_iter, qreal start_left, qreal start_right,
+                qreal c); 
+    void diseq_regime(const qreal&,const qreal&,const qreal&);
 public:
     milano2();
     virtual ~milano2();
@@ -56,19 +56,19 @@ public:
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const long&);    // perform one iteration 
-    real* setLabels(char*);		    // return a pointer to a variable
+    qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
     void initialize();			    // initialize the model, define
 					    // the initial state
-    real* sendModelVar();		    // return the main model variable
-    void sendStateSpace(int &,const real***); // return pointers to all model
+    qreal* sendModelVar();		    // return the main model variable
+    void sendStateSpace(int &,const qreal***); // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*); // receive parameter values 
+    void receiveParameters(const qreal*); // receive parameter values 
 };
 
 #endif

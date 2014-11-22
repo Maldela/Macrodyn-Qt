@@ -28,18 +28,18 @@
 class cobweb : public baseModel {
 
 protected:
-	real p;		//real price
-	real p_e;	//expected price
-	real p_e_old;	//old expected price
-	real p_e_0;	//initial expectation
-	real q;		//equiblibrium quantity
-	real e_t;	//prediction error
-	real dummy;	//differing pupose dummy variable
+    qreal p;		//qreal price
+    qreal p_e;	//expected price
+    qreal p_e_old;	//old expected price
+    qreal p_e_0;	//initial expectation
+    qreal q;		//equiblibrium quantity
+    qreal e_t;	//prediction error
+    qreal dummy;	//differing pupose dummy variable
 	
-	real lambda;	
-	real a;
-	real b;
-	real w;
+    qreal lambda;
+    qreal a;
+    qreal b;
+    qreal w;
 
 public:
     cobweb();			// constructor
@@ -49,14 +49,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values
 };
 
 
@@ -73,19 +73,19 @@ public:
 
 class cobweb_RLS : public cobweb {
 private:
-	real theta_0;
-	real theta_t;
-	real X_0;
-	real X_t;
-	real lambda_t;
-	real p_0;
-	real p_t1;
+    qreal theta_0;
+    qreal theta_t;
+    qreal X_0;
+    qreal X_t;
+    qreal lambda_t;
+    qreal p_0;
+    qreal p_t1;
 
 public:
 	void loadParamset( ifstream& inFile );
 	void initialize();
 	void iteration( const long& );
-	real* setLabels(char*);
+    qreal* setLabels(char*);
 };
 
 
@@ -105,8 +105,8 @@ private:
 	char zvar_expr[256];		//expression which defines a random variable
 	rand_var *zvar;			//a random variable
 	char zvar_name[256];		//name of the stochastified parameter
-	real *zvar_ptr;			//pointer to the org/stoch parameter
-	real buffer_a;			//buffer to store original value
+    qreal *zvar_ptr;			//pointer to the org/stoch parameter
+    qreal buffer_a;			//buffer to store original value
 	
 public:
 	rdemand_cobweb();			//constructor

@@ -117,7 +117,7 @@ void dornbusch::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* dornbusch::setLabels(char* label)
+qreal* dornbusch::setLabels(char* label)
 {
     if( !strcmp(label,"it") ) return(&it);
     if( !strcmp(label,"xetr") ) return(&xetr);
@@ -151,11 +151,11 @@ real* dornbusch::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dornbusch::sendStateSpace(int &quantity,const real*** stateSpace)
+void dornbusch::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("dornbusch::sendStateSpace",
 		   "Can't create state space vector");
@@ -269,14 +269,14 @@ void dornbusch::printParamset()
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* dornbusch::sendModelVar(void)
+qreal* dornbusch::sendModelVar(void)
 { error("macrodyn::dornbusch::sendModelVar is not implemented");
   return NULL;
 }
-void dornbusch::sendParameters(int& ,real** )
+void dornbusch::sendParameters(int& ,qreal** )
 { error("macrodyn::dornbusch::sendParameters is not implemented");
 }
-void dornbusch::receiveParameters(const real* )
+void dornbusch::receiveParameters(const qreal* )
 { error("macrodyn::dornbusch::receiveParameters is not implemented");
 }
 

@@ -24,13 +24,13 @@
 
 void logiDelay::iteration(const long&)
 {
-    real oldX=x;
+    qreal oldX=x;
        
     x=alpha*x*(1-y)+beta;
     y=oldX;
 }
 
-real logLogDelay::delayFunc(const real& argOne, const real& argTwo)
+qreal logLogDelay::delayFunc(const qreal& argOne, const qreal& argTwo)
 {
     return( (1-beta)*argTwo + beta*argOne );
 }
@@ -38,7 +38,7 @@ real logLogDelay::delayFunc(const real& argOne, const real& argTwo)
 void logLogDelay::iteration(const long&)
 {
 
-    real w=delayFunc(x,y);
+    qreal w=delayFunc(x,y);
 
     x=y;
     y=alpha*w * (1-w);

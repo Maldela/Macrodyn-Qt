@@ -10,8 +10,6 @@ SOURCES += main.cpp \
     Models/armax.C \
     Models/armax_eindim.C \
     Models/Bankintermed.C \
-    Models/Bankintermed_old.C \
-    Models/Bankintermed_old_aktuell.C \
     Models/baseModel.C \
     Models/capOlg.C \
     Models/cobweb_g_predictor.C \
@@ -21,24 +19,19 @@ SOURCES += main.cpp \
     Models/det_var.C \
     Models/distribution.C \
     Models/dorn.C \
-    Models/dorn_1.C \
     Models/dornbusch.C \
     Models/Duopol.C \
     Models/dynofin_rmv.C \
     Models/ELS.C \
     Models/EnRAss.C \
     Models/EnRAssH.C \
-    Models/ExchangeDefault.C \
     Models/ExchangeRateModel.C \
     Models/ExchangeRateModel2.C \
-    Models/ExchangeRateModel_save.C \
-    Models/ExchangeSave.C \
     Models/excOlg.C \
     Models/finanzmarkt_2Dim.C \
     Models/finanzmarkt_2Dim_1.C \
     Models/finanzmarkt_gruppenswitch.C \
     Models/finanzmarkt_Jan.C \
-    Models/finanzmarkt_JanE.C \
     Models/finanzmarkt_JanE_Andi.C \
     Models/finanzmarkt_wage.C \
     Models/frepm.C \
@@ -84,7 +77,6 @@ SOURCES += main.cpp \
     Models/rSolow.C \
     Models/samuelson1.C \
     Models/Samuelson_basic.C \
-    Models/Samuelson_basicAlt.C \
     Models/test_model.C \
     Models/toni2.C \
     Models/toniadp.C \
@@ -96,7 +88,28 @@ SOURCES += main.cpp \
     PublicModels/cobweb.C \
     PublicModels/defaultModel.C \
     PublicModels/getPubModel.C \
-    PublicModels/perturbedDelayedLogisticMap.C
+    PublicModels/perturbedDelayedLogisticMap.C \
+    matrix_neu.C \
+    matrix.C \
+    log.cpp \
+    distri/cauchy_distri.C \
+    distri/chi_square_distri.C \
+    distri/discrete_distri.C \
+    distri/error.C \
+    distri/exponential_distri.C \
+    distri/finite_distri.C \
+    distri/gamma_distri.C \
+    distri/geometric_distri.C \
+    distri/multi_normal_distri.C \
+    distri/normal_distri.C \
+    distri/pareto_distri.C \
+    distri/prob_distri.C \
+    distri/random_bits.C \
+    distri/uniform_distri.C \
+    error.C \
+    eval_expr.C \
+    get_expr.C \
+    strnchr.C
 
 RESOURCES += qml.qrc
 
@@ -114,7 +127,6 @@ HEADERS += \
     Models/armax.h \
     Models/armax_eindim.h \
     Models/Bankintermed.h \
-    Models/Bankintermed_old.h \
     Models/baseModel.h \
     Models/capOlg.h \
     Models/cobweb_g_predictor.h \
@@ -125,7 +137,6 @@ HEADERS += \
     Models/det_var.h \
     Models/distribution.h \
     Models/dorn.h \
-    Models/dorn_1.h \
     Models/dornbusch.h \
     Models/Duopol.h \
     Models/dynofin_rmv.h \
@@ -205,4 +216,27 @@ HEADERS += \
     PublicModels/models2D.h \
     PublicModels/perturbedDelayedLogisticMap.h \
     PublicModels/rand_var.h \
-    sim.h
+    sim.h \
+    error.h \
+    matrix_neu.h \
+    matrix.h \
+    log.h \
+    distri/cauchy_distri.h \
+    distri/chi_square_distri.h \
+    distri/discrete_distri.h \
+    distri/error.h \
+    distri/exponential_distri.h \
+    distri/finite_distri.h \
+    distri/gamma_distri.h \
+    distri/geometric_distri.h \
+    distri/machine.h \
+    distri/multi_normal_distri.h \
+    distri/normal_distri.h \
+    distri/pareto_distri.h \
+    distri/prob_distri.h \
+    distri/random_bits.h \
+    distri/uniform_distri.h \
+    eval_expr.h \
+    get_expr.h \
+    strnchr.h \
+    Random/ranlib.h

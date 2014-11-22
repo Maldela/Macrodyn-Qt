@@ -54,18 +54,18 @@ void tonicapm::initialize()
 {
 	for(int k=0;k<=L;k++) pp[k]=pp0[k];
 
-	real wsum=0;
-	for(k=0;k<=L;k++)
+    qreal wsum=0;
+    for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-		//cout << "k=" << k  << " wsum=" << wsum << "\n";   
+        //Log::log() << "k=" << k  << " wsum=" << wsum << "\n";
 	   }
-	//real ko=0;
+    //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-		//cout << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";   
+        //Log::log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
 	   }
 }
 /******************************************************************************/
@@ -85,24 +85,24 @@ void tonicapm::loadParamset(ifstream& inputFile)
     L=(int)L0;
     if( pp0 )
 	delete [] pp0;
-        pp0 = new real[L+1];
+        pp0 = new qreal[L+1];
     if( !pp0 )
 	fatalError("tonicapm::loadParamset","Can't create initprice vector");
  
     for(int k=0;k<=L;k++)
         {
     	inputFile >> pp0[k] ;
-    	//cout << "L=" << L << "k=" << k  << "po=" << pp0[k];
+        //Log::log() << "L=" << L << "k=" << k  << "po=" << pp0[k];
     	}
 
     if( pp )
 	delete [] pp;
-        pp = new real[L+1];
+        pp = new qreal[L+1];
     if( !pp )
 	fatalError("tonicapm::loadParamset","Can't create price vector");
     if( vv )
 	delete [] vv;
-        vv = new real[L+1];
+        vv = new qreal[L+1];
     if( !vv )
 	fatalError("tonicapm::loadParamset","Can't create weight vector");
     	
@@ -139,7 +139,7 @@ void tonicapm::saveParamsetWithNames(ofstream& outputFile)
     outputFile << "\tlambda = " << lambda << "\tsigma = " << sigma << "\tL = " << L0 << "\tlength = "<< length << "\t";
     for(int k=0;k<=L;k++)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
-    for(k=0;k<=L;k++)
+    for (int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
     outputFile << "\n";
 }
@@ -153,11 +153,11 @@ void tonicapm::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void tonicapm::printParamset()
 {
-  cout << a  << "\t" << b << "\t" << c << "\t" << d << "\t";
-  cout << lambda << "\t" << sigma << "\t" << w << "\t" << L0 << "\n";
-    cout << length << "\n";
+  Log::log() << a  << "\t" << b << "\t" << c << "\t" << d << "\t";
+  Log::log() << lambda << "\t" << sigma << "\t" << w << "\t" << L0 << "\n";
+    Log::log() << length << "\n";
     for(int k=0;k<=L;k++)
-        cout << pp0[k] << "\t";
+        Log::log() << pp0[k] << "\t";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -168,12 +168,12 @@ void tonicapm::printParamset()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapm::sendParameters(int& amount,real** parameters)
+void tonicapm::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=L+10;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("tonicapm::sendParameters",
 		   "Can't create array for parameters");
@@ -184,7 +184,7 @@ void tonicapm::sendParameters(int& amount,real** parameters)
     (*parameters)[4]=lambda;
     (*parameters)[5]=sigma;
     (*parameters)[6]=w;
-    (*parameters)[7]=(real)L;
+    (*parameters)[7]=(qreal)L;
     (*parameters)[8]=length;
     for(int k=9;k<=(L+9);k++)
         (*parameters)[k]=pp0[k];
@@ -197,7 +197,7 @@ void tonicapm::sendParameters(int& amount,real** parameters)
 /* Last modified:   30.01.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapm::receiveParameters(const real* parameters)
+void tonicapm::receiveParameters(const qreal* parameters)
 {
     a=parameters[0];
     b=parameters[1];
@@ -220,7 +220,7 @@ void tonicapm::receiveParameters(const real* parameters)
 /* Last modified:   09.03.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* tonicapm::setLabels(char *name)
+qreal* tonicapm::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -260,11 +260,11 @@ real* tonicapm::setLabels(char *name)
 /*                                                                            */
 /* Class name:      tonicapm                                                  */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* tonicapm::sendModelVar()
+qreal* tonicapm::sendModelVar()
 {
     return pp;
 }
@@ -272,17 +272,17 @@ real* tonicapm::sendModelVar()
 /*                                                                            */
 /* Class name:      tonicapm                                                  */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapm::sendStateSpace(int &quantity,const real*** stateSpace)
+void tonicapm::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-    //cout << "tonicapm sendStateSpace";
+    //Log::log() << "tonicapm sendStateSpace";
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("tonicapm::sendStateSpace",
 		   "Can't create state space vector");
@@ -297,9 +297,9 @@ void tonicapm::sendStateSpace(int &quantity,const real*** stateSpace)
 /* Last modified:   28.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real tonicapm::hoch(real &x,int &i)
+qreal tonicapm::hoch(qreal &x,int &i)
 {
-	real count=1.0;
+    qreal count=1.0;
 	for (int k=i;k>0;k--)
 		count*=x;
 	return count;
@@ -312,7 +312,7 @@ real tonicapm::hoch(real &x,int &i)
 /* Last modified:   10.08.1997 (Anton Stiefenhofer)                           */
 /*                                                                            */
 /******************************************************************************/
-real tonicapm::fFunction(real &x)
+qreal tonicapm::fFunction(qreal &x)
 {
  return ( (a/b) - (x - c)/( b * lambda * ( (x - c)*(x - c) + sigma * sigma * x * x)) );
 }
@@ -324,12 +324,12 @@ real tonicapm::fFunction(real &x)
 /* Last modified:   04.02.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapm::dynamics(real &a)
+void tonicapm::dynamics(qreal &a)
 {
 	for (int i=1;i<=L;i++) 
 		pp[L+1-i]=pp[L-i];
 	pp[0]=fFunction(a);				
-	//cout << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
+    //Log::log() << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
 	v=pp[0]-a;
 }
 /******************************************************************************/
@@ -342,9 +342,9 @@ void tonicapm::dynamics(real &a)
 /******************************************************************************/
 void tonicapm::iteration(const long& t)
 {
-	real add=0;
-	real ev=0;
-	real abw=0;
+    qreal add=0;
+    qreal ev=0;
+    qreal abw=0;
 
 	for (int i=0;i<=L;i++) 
 	{
@@ -353,12 +353,12 @@ void tonicapm::iteration(const long& t)
 	}
 	ev*=(L+1);		//Everage
 
-	for (i=0;i<=L;i++) 
+    for (int i=0;i<=L;i++)
 		abw+=((pp[i]-ev)*(pp[i]-ev));
 	s=sqrt(abw)/L;
 
 	dynamics(add);
 
-	//cout << "\nPeriod " << ii << "\t";
-	//for(int k=0;k<=L;k++) cout << pp[k] << "\t";
+    //Log::log() << "\nPeriod " << ii << "\t";
+    //for(int k=0;k<=L;k++) Log::log() << pp[k] << "\t";
 }

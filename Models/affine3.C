@@ -59,24 +59,24 @@ void affine3::iteration(const long&)
 {   
 	urv_p = zvar1->dice();	// pick iteration function according to p
 	urv_e = zvar2->dice();	// get distortion value in t
-	real oldX = x;
+	qreal oldX = x;
 	
 	if(urv_p < p){
-		//cout << "map1 is chosen" << endl;
+		//Log::log() << "map1 is chosen" << endl;
 		count1++;
 		x = (a+urv_e)*oldX;
 	} else {
-		//cout << "map2 is chosen" << endl;
+		//Log::log() << "map2 is chosen" << endl;
 		count2++;
 		x = (a-1+urv_e)*oldX + 1;
 	}
 
-	/*cout << "oldX = " << oldX << endl;
-	cout << "urv_p = " << urv_p << endl;
-	cout << "urv_e = " << urv_e << endl;
-	cout << "x = " << x << endl;
-	cout << "count1 = " << count1 << endl;
-	cout << "count2 = " << count2 << endl;*/
+	/*Log::log() << "oldX = " << oldX << endl;
+	Log::log() << "urv_p = " << urv_p << endl;
+	Log::log() << "urv_e = " << urv_e << endl;
+	Log::log() << "x = " << x << endl;
+	Log::log() << "count1 = " << count1 << endl;
+	Log::log() << "count2 = " << count2 << endl;*/
 }
     
     
@@ -120,7 +120,7 @@ void affine3::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* affine3::sendModelVar()
+qreal* affine3::sendModelVar()
 {
     return &x;
 }
@@ -138,7 +138,7 @@ real* affine3::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* affine3::setLabels(char* label)
+qreal* affine3::setLabels(char* label)
 {
 	if( !strcmp(label,"a") )
 		return( &a);
@@ -175,11 +175,11 @@ real* affine3::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::sendStateSpace(int &quantity,const real*** stateSpace)
+void affine3::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
 	if( stateSpace )
 		delete stateSpace;
-	*stateSpace = new const real* [dimension];
+	*stateSpace = new const qreal* [dimension];
 	if( !(*stateSpace) )
 		fatalError("affine3::sendStateSpace",
 			   "Can't create state space vector");
@@ -203,9 +203,9 @@ void affine3::sendStateSpace(int &quantity,const real*** stateSpace)
 void affine3::loadParamset(ifstream& inFile)
 {
  	inFile >> zvar_expr1;
-	//cout << zvar_expr1 << endl;
+	//Log::log() << zvar_expr1 << endl;
 	//inFile >> zvar_expr2;
-	//cout << zvar_expr2 << endl;
+	//Log::log() << zvar_expr2 << endl;
 	inFile >> eta;
 	inFile >> a;
 	if( (a<0) || (a>1)) fatalError("affine3::loadParamset","Parameter a out of range");
@@ -214,11 +214,11 @@ void affine3::loadParamset(ifstream& inFile)
 	inFile >> p;
 	inFile >> length;
 
-	/*cout << "eta = " << eta << endl;
-	cout << "a = " << a << endl;
-	cout << "x0 = " << x0 << endl;
-	cout << "p = " << p << endl;
-	cout << "length = " << length << endl;*/
+	/*Log::log() << "eta = " << eta << endl;
+	Log::log() << "a = " << a << endl;
+	Log::log() << "x0 = " << x0 << endl;
+	Log::log() << "p = " << p << endl;
+	Log::log() << "length = " << length << endl;*/
  	
     	initialize();
 }
@@ -260,11 +260,11 @@ void affine3::saveParamset(ofstream& outFile)
 
 void affine3::printParamset()
 {
-	cout << eta << endl;
-	cout << a << endl;
-	cout << x0 << endl;
-	cout << p << endl;
-	cout << length << endl;
+	Log::log() << eta << endl;
+	Log::log() << a << endl;
+	Log::log() << x0 << endl;
+	Log::log() << p << endl;
+	Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -280,12 +280,12 @@ void affine3::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::sendParameters(int& amount,real** parameters)
+void affine3::sendParameters(int& amount,qreal** parameters)
 {   
 	if( *parameters )
 		delete *parameters;
 	amount=5;
-	*parameters=new real[amount];
+	*parameters=new qreal[amount];
 	if( !(*parameters) )
 		fatalError("affine3::sendParameters",
 			   "Can't create array for parameters");
@@ -309,7 +309,7 @@ void affine3::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::receiveParameters(const real* parameters)
+void affine3::receiveParameters(const qreal* parameters)
 {	
 	eta=parameters[0];
 	a=parameters[1];

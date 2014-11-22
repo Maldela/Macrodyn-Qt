@@ -112,9 +112,9 @@ void Bankintermed::initialize()
 	S=(1-nu)*e*s;
 
 	df_min=-(S+nu*e);
-cout << "df_min=" << df_min << endl;
+Log::log() << "df_min=" << df_min << endl;
 	df_max=nu*I_ini-S;
-cout << "df_max=" << df_max << endl;
+Log::log() << "df_max=" << df_max << endl;
 
 	df_crit_min=-alpha/(1+e/I_min-alpha)*df_min;
 	df_crit_max=-alpha/(1+e/I-alpha)*df_min;
@@ -171,7 +171,7 @@ void Bankintermed::I_G_Fktn()
 
 void Bankintermed::R_Fktn()
 {
-	real buffer, buffer1;
+    qreal buffer, buffer1;
 	
 	if(I/e <= temp2){
 		R=(1+I_G)*y/(e+I)*(q_max+q_min)/2;
@@ -199,7 +199,7 @@ void Bankintermed::R_Fktn()
 
 void Bankintermed::R_min_Fktn()
 {
-	real buffer, buffer1;
+    qreal buffer, buffer1;
 	
 	if(I/e <= temp2){
 		R_min=(1+nu)*y/(e+I)*(q_max+q_min)/2;
@@ -227,7 +227,7 @@ void Bankintermed::R_min_Fktn()
 
 void Bankintermed::R_reg_Fktn(){
 
-	real buffer,buffer1,buffer2;
+    qreal buffer,buffer1,buffer2;
 
 	if(df<df_reg){
 	    
@@ -270,7 +270,7 @@ void Bankintermed::R_reg_Fktn(){
 
 void Bankintermed::R_c_Fktn(){
 
-	real buffer, buffer1;
+    qreal buffer, buffer1;
 
 	if(I/e <= temp2)
 		R_c = (1+I_G)*y/I*(q_max+q_min)/2 - e/I*R_reg;
@@ -296,7 +296,7 @@ void Bankintermed::R_c_Fktn(){
 
 void Bankintermed::I_B_Fktn(){
 
-	real buffer1,buffer2;
+    qreal buffer1,buffer2;
 
 	buffer1=I/y*R_c/q -1;
 	buffer2=MAX(I_G,buffer1);
@@ -368,7 +368,7 @@ if(0<=df && df <=df_crit_min){
 
 void Bankintermed::iteration(const long& t){
 
-	real buffer;
+    qreal buffer;
 
 //	q = zvar->dice();						// get random number in [q_min,q_max]
 	q = q_min;
@@ -425,7 +425,7 @@ void Bankintermed::iteration(const long& t){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* Bankintermed::setLabels(char* label){
+qreal* Bankintermed::setLabels(char* label){
     
 	if( !strcmp(label,"R") ) return(&R);
 	if( !strcmp(label,"R_min") ) return(&R_min);
@@ -508,24 +508,24 @@ void Bankintermed::saveParamset(ofstream& outFile){
 
 void Bankintermed::printParamset(){
 
-    cout <<	e_0 << endl;
-    cout <<	e_alpha << endl;
-    cout <<	e_beta << endl;
-    cout <<	I << endl;
-    cout << s << endl;	
-    cout <<	nu << endl;
-    cout <<	alpha << endl;
-    cout <<	beta << endl;	
-    cout <<	gamma << endl;
-    cout <<	delta << endl;
-    cout <<	q_min << endl;
-    cout <<	q_max << endl;
-    cout <<	a << endl;
-    cout <<	b << endl;
-    cout <<	c << endl;
-    cout <<	df_0 << endl;
+    Log::log() <<	e_0 << endl;
+    Log::log() <<	e_alpha << endl;
+    Log::log() <<	e_beta << endl;
+    Log::log() <<	I << endl;
+    Log::log() << s << endl;
+    Log::log() <<	nu << endl;
+    Log::log() <<	alpha << endl;
+    Log::log() <<	beta << endl;
+    Log::log() <<	gamma << endl;
+    Log::log() <<	delta << endl;
+    Log::log() <<	q_min << endl;
+    Log::log() <<	q_max << endl;
+    Log::log() <<	a << endl;
+    Log::log() <<	b << endl;
+    Log::log() <<	c << endl;
+    Log::log() <<	df_0 << endl;
 
-    cout << length << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -542,11 +542,11 @@ void Bankintermed::printParamset(){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Bankintermed::sendStateSpace(int &quantity,const real*** stateSpace){
+void Bankintermed::sendStateSpace(int &quantity,const qreal*** stateSpace){
 
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("Bankintermed::sendStateSpace",
 		   "Can't create state space vector");
@@ -566,13 +566,13 @@ void Bankintermed::sendStateSpace(int &quantity,const real*** stateSpace){
 // By:					Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* Bankintermed::sendModelVar(void){
+qreal* Bankintermed::sendModelVar(void){
  error("macrodyn::Bankintermed::sendModelVar is not implemented");
   return NULL;
 } 
-void Bankintermed::sendParameters(int& ,real** ){
+void Bankintermed::sendParameters(int& ,qreal** ){
  error("macrodyn::Bankintermed::sendParameters is not implemented");
 }
-void Bankintermed::receiveParameters(const real* ){
+void Bankintermed::receiveParameters(const qreal* ){
  error("macrodyn::Bankintermed::receiveParameters is not implemented");
 }

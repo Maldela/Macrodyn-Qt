@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "finanzmarkt_JanE.h"
+#include "finanzmarkt_JanE_Andi.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -326,7 +326,7 @@ void finanzmarkt_JanE::loadParamset(ifstream& inFile)
 	(*Rho[i])(j,j) = (*Rho[i])(0,0);	
 	}
 
-	for(i=0;i<2;i++)
+    for(int i=0;i<2;i++)
 		inFile >> (*q0)(i,0);						//Verzoegerte cd-Preise auf Startwert gesetzt		
     
 	inFile >> a1 >> b1 >> c1;						//Parameter fuer die Dreieicksverteilung,
@@ -378,7 +378,7 @@ if(zvar2) delete zvar2;
 
 void finanzmarkt_JanE::initialize()
 {	
-	real var1, var2;
+    qreal var1, var2;
 	int i;
 	R = 1+r;
 
@@ -481,25 +481,25 @@ Ed2 = gamma1*d2;
 	(*T_inv)(1,0) = delta;
 	(*T_inv)(1,1) = 1;
 
-	delete T;
-	T = T_inv->inverse();
+//	delete T;
+    *T = T_inv->inverse();
 
 	// Transformierter Stoerprozess 
 
-	delete E_epsilon;
-	E_epsilon = (*T)*(*E_xi);
+//	delete E_epsilon;
+    *E_epsilon = (*T)*(*E_xi);
 	
 
 	//Berechnung der VCV-Matrix der transformierten Stoerung
 
-	delete temp1_2_2;
-	temp1_2_2 = (*T) * (*V_xi); 
-	delete V_epsilon;
-	V_epsilon = (*temp1_2_2) * (*T); 
+//	delete temp1_2_2;
+    *temp1_2_2 = (*T) * (*V_xi);
+//	delete V_epsilon;
+    *V_epsilon = (*temp1_2_2) * (*T);
 	//Achtung: Geht da T_inv symmetrisch!!!	
 
-	delete V_epsilon_inv;
-	V_epsilon_inv = V_epsilon->inverse();
+//	delete V_epsilon_inv;
+    *V_epsilon_inv = V_epsilon->inverse();
 
 	//Berechnung der subjektiven VCV Matrizen: gleich unbedingter Varianz der Dividenden
 
@@ -512,22 +512,22 @@ Ed2 = gamma1*d2;
 
 	(*V_C) = (*V_F);	//Spezialfall: Alle Investoren haben identische VCV-Matrizen
 	(*V_N) = (*V_F);	//Spezialfall: Alle Investoren haben identische VCV-Matrize
-	delete V_C_inv;
-	V_C_inv = V_C->inverse();
-	delete V_F_inv;
-	V_F_inv = V_F->inverse();
-	delete V_N_inv;
-	V_N_inv = V_N->inverse();
+//	delete V_C_inv;
+    *V_C_inv = V_C->inverse();
+//	delete V_F_inv;
+    *V_F_inv = V_F->inverse();
+//	delete V_N_inv;
+    *V_N_inv = V_N->inverse();
 
 
 	//Startwerte für Vorhersagen und cumdividend-Preise, Achtung: Vorhersagen jetzt auf ex-dividend Preise!
 	(*q) = (*q0);
-	delete p;
-	p = (*q0)-(*d);
+//	delete p;
+    *p = (*q0)-(*d);
 	(*q_F) = (*p);
 	(*q_C) = (*p);
-	delete q_N;
-	q_N = (*q_F) - (*E_xi);
+//	delete q_N;
+    *q_N = (*q_F) - (*E_xi);
 	
 
 	//Initialisierung für Moving Average
@@ -601,8 +601,8 @@ if(zvar4) delete zvar4;
 
 void finanzmarkt_JanE::iteration(const long& t)
 { 	
-	real a_F,a_C, a_N;					//gruppenspezifische Risikotoleranz
-	real temp1,temp2;
+    qreal a_F,a_C, a_N;					//gruppenspezifische Risikotoleranz
+    qreal temp1,temp2;
 	int i;
 
 	//cout.precision(16);
@@ -646,50 +646,50 @@ void finanzmarkt_JanE::iteration(const long& t)
 	//Spezialfall: V_C = V_F = const
 
 	//A=(a_F*(V_F^-1) + a_C*(V_C^-1) + a_N*(V_N^-1))^-1
-	delete temp1_2_2;
-	temp1_2_2 = V_C_inv->multiplyScalar(a_C); 
-	delete temp2_2_2;
-	temp2_2_2 = V_F_inv->multiplyScalar(a_F); 
-	delete temp3_2_2;
-	temp3_2_2 = V_N_inv->multiplyScalar(a_N); 
-	delete temp4_2_2;
-	temp4_2_2 = (*((*temp1_2_2) + (*temp2_2_2))) + (*temp3_2_2);
-	delete A;
-	A = temp4_2_2->inverse();
+//	delete temp1_2_2;
+    *temp1_2_2 = V_C_inv->multiplyScalar(a_C);
+//	delete temp2_2_2;
+    *temp2_2_2 = V_F_inv->multiplyScalar(a_F);
+//	delete temp3_2_2;
+    *temp3_2_2 = V_N_inv->multiplyScalar(a_N);
+//	delete temp4_2_2;
+    *temp4_2_2 = ((*temp1_2_2) + (*temp2_2_2)) + (*temp3_2_2);
+//    delete A;
+    *A = temp4_2_2->inverse();
 
 	//function: adjusted_VCV();
 
 	//A_F=a_F*(V_F*A^-1)^-1
-	delete temp1_2_2;
-	temp1_2_2 = (*V_F) * (*temp4_2_2);  //temp3_2_2 = A^-1
-	delete temp2_2_2;
-	temp2_2_2 = temp1_2_2->inverse();
-	delete A_F;
-	A_F = temp2_2_2->multiplyScalar(a_F);
+//	delete temp1_2_2;
+    *temp1_2_2 = (*V_F) * (*temp4_2_2);  //temp3_2_2 = A^-1
+//  delete temp2_2_2;
+    *temp2_2_2 = temp1_2_2->inverse();
+//	delete A_F;
+    *A_F = temp2_2_2->multiplyScalar(a_F);
 
 	//A_C=a_C*(V_C*A^-1)^-1
-	delete temp1_2_2;
-	temp1_2_2 = (*V_C) * (*temp4_2_2);
-	delete temp2_2_2;
-	temp2_2_2 = temp1_2_2->inverse();
-	delete A_C;
-	A_C = temp2_2_2->multiplyScalar(a_C);
+//	delete temp1_2_2;
+    *temp1_2_2 = (*V_C) * (*temp4_2_2);
+//	delete temp2_2_2;
+    *temp2_2_2 = temp1_2_2->inverse();
+    /*delete*/ A_C;
+    *A_C = temp2_2_2->multiplyScalar(a_C);
 
 	//New: Noisetraders werden wie Investorgruppe behandelt
 
  	//A_N=a_N*(V_N*A^-1)^-1
-	delete temp1_2_2;
-	temp1_2_2 = (*V_N) * (*temp4_2_2);
-	delete temp2_2_2;
-	temp2_2_2 = temp1_2_2->inverse();
-	delete A_N;
-	A_N = temp2_2_2->multiplyScalar(a_N);
+//	delete temp1_2_2;
+    *temp1_2_2 = (*V_N) * (*temp4_2_2);
+//	delete temp2_2_2;
+    *temp2_2_2 = temp1_2_2->inverse();
+//	delete A_N;
+    *A_N = temp2_2_2->multiplyScalar(a_N);
 
 	//New:
 
  	//A2_F = A_F + A_N
-	delete A2_F;
-	A2_F =  (*A_F) + (*A_N);
+//	delete A2_F;
+    *A2_F =  (*A_F) + (*A_N);
 
 
 	// Generierung der Dreiecksverteilung für den Noise-Prozess
@@ -730,8 +730,8 @@ void finanzmarkt_JanE::iteration(const long& t)
 //	(*temp2_2_1) = (*T) * (*temp1_2_1);
 //	(*epsilon) = (*temp2_2_1) + (*E_epsilon);
 
-	delete epsilon;
-	epsilon = (*T) * (*xi);
+//	delete epsilon;
+    *epsilon = (*T) * (*xi);
 	epsilon1 = (*epsilon)(0,0);
 	epsilon2 = (*epsilon)(1,0);
  
@@ -741,7 +741,7 @@ void finanzmarkt_JanE::iteration(const long& t)
 
 	temp1_2_1->set_to_zero();	
 	for(i=0;i<L;i++) {
-		temp1_2_1 = (*temp1_2_1) + (*((*Rho[i]) * (*q_MA[i])));	
+        *temp1_2_1 = *temp1_2_1 + (*Rho[i]) * (*q_MA[i]);
 		}
 	(*q_C) = (*temp1_2_1);
 
@@ -751,99 +751,99 @@ void finanzmarkt_JanE::iteration(const long& t)
 	(*q_Fold) = (*q_F);
 
 	// q_F = A2_F^-1*[R*q_F- Ed - A_C*q_C + A*x_all + A_N*epsilon)] 
-	delete temp1_2_1;
-	temp1_2_1 = (*((*((*A)*(*x_all))) + (*((*A_N)*(*epsilon))))) - (*((*((*A_C)*(*q_C))) - (*Ed)));
+//	delete temp1_2_1;
+    *temp1_2_1 = (((*A)*(*x_all)) + ((*A_N)*(*epsilon))) - (((*A_C)*(*q_C)) - *Ed);
     	(*temp2_2_1) = (*q_F);
-    	delete temp3_2_1;
-	temp3_2_1 = temp2_2_1->multiplyScalar(R);
-	delete temp2_2_1;
-	temp2_2_1 = (*temp3_2_1) + (*temp1_2_1);
-	delete temp1_2_2;
-	temp1_2_2 = A2_F->inverse();
-	delete q_F;
-	q_F = (*temp1_2_2) * (*temp2_2_1);
+//    	delete temp3_2_1;
+    *temp3_2_1 = temp2_2_1->multiplyScalar(R);
+//	delete temp2_2_1;
+    *temp2_2_1 = (*temp3_2_1) + (*temp1_2_1);
+//	delete temp1_2_2;
+    *temp1_2_2 = A2_F->inverse();
+//	delete q_F;
+    *q_F = (*temp1_2_2) * (*temp2_2_1);
 
 	//Vorhersage der Noisetraders, q_N (Fehler auf q_F)
 	// q_N = q_F - epsilon
-	delete q_N;
- 	q_N = (*q_F) - (*epsilon);
+//	delete q_N;
+    *q_N = (*q_F) - (*epsilon);
 
 
 	//Preisprozess:
 	// p=1/R * [A_C*q_C + A_F*q_F + A_N*q_N - A*x_all + Ed] 
-	delete temp1_2_1;
-	temp1_2_1 = (*A) * (*x_all);
-	delete temp2_2_1;
-	temp2_2_1 = (*((*((*A_F) * (*q_F))) + (*((*A_C)*(*q_C))))) + (*((*((*A_N)*(*q_N))) + (*Ed)));
-	delete temp3_2_1;
-	temp3_2_1 = (*temp2_2_1) - (*temp1_2_1);
-	delete p;
-	p = temp3_2_1->multiplyScalar(1/R);
+//	delete temp1_2_1;
+    *temp1_2_1 = (*A) * (*x_all);
+//	delete temp2_2_1;
+    *temp2_2_1 = (((*A_F) * (*q_F)) + ((*A_C)*(*q_C))) + (((*A_N)*(*q_N)) + (*Ed));
+//	delete temp3_2_1;
+    *temp3_2_1 = (*temp2_2_1) - (*temp1_2_1);
+//	delete p;
+    *p = temp3_2_1->multiplyScalar(1/R);
 
 	//cumdividend-Preis: q=p+d
-	delete q;
-	q = (*p) + (*d);	
+//	delete q;
+    *q = (*p) + (*d);
 
-	//Berechnung der nach dem Handel realisierten Aktienportefeuilles:
+    //Berechnung der nach dem Handel qrealisierten Aktienportefeuilles:
 	
 	//Aktienportefeuille der Fundamentalisten: x_F=a_F*(V_F)^-1(q_F-R*p)
-	delete temp1_2_1;
-	temp1_2_1 = p->multiplyScalar(R);
-	delete temp2_2_1;
-	temp2_2_1 = (*q_F) - (*temp1_2_1);
-	delete temp3_2_1;
-	temp3_2_1 = (*V_F_inv) * (*temp2_2_1);
-	delete x_F;
-	x_F = temp3_2_1->multiplyScalar(a_F);
+//	delete temp1_2_1;
+    *temp1_2_1 = p->multiplyScalar(R);
+//	delete temp2_2_1;
+    *temp2_2_1 = (*q_F) - (*temp1_2_1);
+//	delete temp3_2_1;
+    *temp3_2_1 = (*V_F_inv) * (*temp2_2_1);
+//	delete x_F;
+    *x_F = temp3_2_1->multiplyScalar(a_F);
 
 	//Aktienportefeuille der Chartisten: x_C=a_C*(V_C)^-1(q_C-R*p)
-	delete temp1_2_1;
-	temp1_2_1 = p->multiplyScalar(R);
-	delete temp2_2_1;
-	temp2_2_1 = (*q_C) - (*temp1_2_1);
-	delete temp3_2_1;
-	temp3_2_1 = (*V_C_inv) * (*temp2_2_1);
-	delete x_C;
-	x_C = temp3_2_1->multiplyScalar(a_C);
+//	delete temp1_2_1;
+    *temp1_2_1 = p->multiplyScalar(R);
+//	delete temp2_2_1;
+    *temp2_2_1 = (*q_C) - (*temp1_2_1);
+//	delete temp3_2_1;
+    *temp3_2_1 = (*V_C_inv) * (*temp2_2_1);
+//	delete x_C;
+    *x_C = temp3_2_1->multiplyScalar(a_C);
 	
 	//Aktienportefeuille der Noise-Traders: 
-	delete temp1_2_1;
- 	temp1_2_1 = p->multiplyScalar(R);
-	delete temp2_2_1;
-	temp2_2_1 = (*q_N) - (*temp1_2_1);
-	delete temp3_2_1;
-	temp3_2_1 = (*V_N_inv) * (*temp2_2_1);
-	delete x_N;
-	x_N = temp3_2_1->multiplyScalar(a_N);
+//	delete temp1_2_1;
+    *temp1_2_1 = p->multiplyScalar(R);
+//	delete temp2_2_1;
+    *temp2_2_1 = (*q_N) - (*temp1_2_1);
+//	delete temp3_2_1;
+    *temp3_2_1 = (*V_N_inv) * (*temp2_2_1);
+//	delete x_N;
+    *x_N = temp3_2_1->multiplyScalar(a_N);
 
 
-	//Berechnung der in Periode t realisierten Renditen der Investoren
+    //Berechnung der in Periode t qrealisierten Renditen der Investoren
 
-	//Realisiert Renditen der Fundamentalisten	
+    //qrealisiert Renditen der Fundamentalisten
 	//wealth_F=(q-R*p_old)*x_Fold
 
 	w_F = eta1_F*e_1 + eta2_F*e_2 + eta3_F*e_3;
-	delete temp1_2_1;
-	temp1_2_1 = p_old->multiplyScalar(R);
-	delete temp2_2_1;
-	temp2_2_1 = (*q) - (*temp1_2_1);
-	delete temp1_1_1;
-	temp1_1_1 = temp2_2_1->multiplyATB(*x_Fold);
+//	delete temp1_2_1;
+    *temp1_2_1 = p_old->multiplyScalar(R);
+//	delete temp2_2_1;
+    *temp2_2_1 = (*q) - (*temp1_2_1);
+//	delete temp1_1_1;
+    *temp1_1_1 = temp2_2_1->multiplyATB(*x_Fold);
 	wealth_F = (*temp1_1_1)(0,0);
 	if(w_F == 0)
 	rend_F=0;
 	else 
 	rend_F=(wealth_F/w_F)+(R-1);
 
-	//Realisierte Renditen der Chartisten 
+    //qrealisierte Renditen der Chartisten
 	//wealth_C=(q-R*p_old)*x_Cold
 	w_C = eta1_C*e_1 + eta2_C*e_2 + eta3_C*e_3;
-	delete temp1_2_1;
-	temp1_2_1 = p_old->multiplyScalar(R);
-	delete temp2_2_1;
-	temp2_2_1 = (*q) - (*temp1_2_1);
-	delete temp1_1_1;
-	temp1_1_1 = temp2_2_1->multiplyATB(*x_Cold);
+//	delete temp1_2_1;
+    *temp1_2_1 = p_old->multiplyScalar(R);
+//	delete temp2_2_1;
+    *temp2_2_1 = (*q) - (*temp1_2_1);
+//	delete temp1_1_1;
+    *temp1_1_1 = temp2_2_1->multiplyATB(*x_Cold);
 	wealth_C = (*temp1_1_1)(0,0);
 	rend_C=(wealth_C/w_C)+(R-1);
 	if(w_C == 0)
@@ -851,15 +851,15 @@ void finanzmarkt_JanE::iteration(const long& t)
 	else 
 	rend_C=(wealth_C/w_C)+(R-1);
 
-	//Realisierte Renditen der Noise-Traders 
+    //qrealisierte Renditen der Noise-Traders
 	//wealth_N=(q-R*p_old)*x_Nold
 	w_N = eta1_N*e_1 + eta2_N*e_2 + eta3_N*e_3;
-	delete temp1_2_1;
-	temp1_2_1 = p_old->multiplyScalar(R);
-	delete temp2_2_1;
-	temp2_2_1 = (*q) - (*temp1_2_1);
-	delete temp1_1_1;
-	temp1_1_1 = temp2_2_1->multiplyATB(*x_Nold);
+//	delete temp1_2_1;
+    *temp1_2_1 = p_old->multiplyScalar(R);
+//	delete temp2_2_1;
+    *temp2_2_1 = (*q) - (*temp1_2_1);
+//	delete temp1_1_1;
+    *temp1_1_1 = temp2_2_1->multiplyATB(*x_Nold);
 	wealth_N = (*temp1_1_1)(0,0);
 	rend_N=(wealth_N/w_N)+(R-1);
 	if(w_N == 0)
@@ -867,25 +867,25 @@ void finanzmarkt_JanE::iteration(const long& t)
 	else 
 	rend_N=(wealth_N/w_N)+(R-1);
 
-	//Rekursive Momente der bisher realisierten Renditen der Investoren  	
+    //Rekursive Momente der bisher qrealisierten Renditen der Investoren
 	//mean and standard deviation of return of fundamentalists
 
-	mu_F = switch_F*(1/real(t+1)) * (rend_F + t*mu_F);
-	temp1 = ((rend_F - mu_F)*(rend_F - mu_F))/real(t+1);
-	temp2 = (t/real(t+1)) * sigma_F*sigma_F;
+    mu_F = switch_F*(1/qreal(t+1)) * (rend_F + t*mu_F);
+    temp1 = ((rend_F - mu_F)*(rend_F - mu_F))/qreal(t+1);
+    temp2 = (t/qreal(t+1)) * sigma_F*sigma_F;
 	sigma_F = switch_F*sqrt(temp1 + temp2);
 
 	//mean and standard deviation of return of chartists
-	mu_C = switch_C*(1/real(t+1)) * (rend_C + t*mu_C);
-	temp1 = ((rend_C - mu_C)*(rend_C - mu_C))/real(t+1);
-	temp2 = (t/real(t+1)) * sigma_C*sigma_C;
+    mu_C = switch_C*(1/qreal(t+1)) * (rend_C + t*mu_C);
+    temp1 = ((rend_C - mu_C)*(rend_C - mu_C))/qreal(t+1);
+    temp2 = (t/qreal(t+1)) * sigma_C*sigma_C;
 	sigma_C = switch_C*sqrt(temp1 + temp2);
 
 
 	//mean and standard deviation of return of noise traders
-	mu_N = switch_N*(1/real(t+1)) * (rend_N + t*mu_N);
-	temp1 = ((rend_N - mu_N)*(rend_N - mu_N))/real(t+1);
-	temp2 = (t/real(t+1)) * sigma_N*sigma_N;
+    mu_N = switch_N*(1/qreal(t+1)) * (rend_N + t*mu_N);
+    temp1 = ((rend_N - mu_N)*(rend_N - mu_N))/qreal(t+1);
+    temp2 = (t/qreal(t+1)) * sigma_N*sigma_N;
 	sigma_N = switch_N*sqrt(temp1 + temp2);
 
 
@@ -959,9 +959,9 @@ void finanzmarkt_JanE::iteration(const long& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real finanzmarkt_JanE::sharpe_ratio(real &mu, real &sigma, real &sw)
+qreal finanzmarkt_JanE::sharpe_ratio(qreal &mu, qreal &sigma, qreal &sw)
 {
-	real sr;
+    qreal sr;
 	if(sw==0)
 	sr =0;
 	else
@@ -982,9 +982,9 @@ real finanzmarkt_JanE::sharpe_ratio(real &mu, real &sigma, real &sw)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real finanzmarkt_JanE::risk_tolerance(real &eta_1, real &eta_2, real &eta_3)
+qreal finanzmarkt_JanE::risk_tolerance(qreal &eta_1, qreal &eta_2, qreal &eta_3)
 {
-	real a;
+    qreal a;
 	a =  (eta_1/alpha_1) +(eta_2/alpha_2) + (eta_3/alpha_3) ; 
 	return(a); 
 }
@@ -1004,7 +1004,7 @@ real finanzmarkt_JanE::risk_tolerance(real &eta_1, real &eta_2, real &eta_3)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* finanzmarkt_JanE::setLabels(char* label)
+qreal* finanzmarkt_JanE::setLabels(char* label)
 {	
 	if( !strcmp(label,"xBundle") ) return(&xBundle);
 	if( !strcmp(label,"eta1_F") ) return(&eta1_F);
@@ -1114,7 +1114,7 @@ void finanzmarkt_JanE::saveParamset(ofstream& outFile)
 	
 	for(int i=0;i<L;i++)
 		outFile << (*Rho[i])(0,0);	
-	for(i=0;i<2;i++)
+    for(int i=0;i<2;i++)
 		outFile << (*q0)(i,0);
 
 	outFile << 	a1 << b1 << c1;
@@ -1157,7 +1157,7 @@ void finanzmarkt_JanE::printParamset()
 	
 	for(int i=0;i<L;i++)
 		cout << (*Rho[i])(0,0) << endl;	
-	for(i=0;i<2;i++)
+    for(int i=0;i<2;i++)
 		cout << (*q0)(i,0) << endl;
 	
 	cout << a1 << b1 << c1 << endl;
@@ -1184,11 +1184,11 @@ void finanzmarkt_JanE::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_JanE::sendStateSpace(int &quantity,const real*** stateSpace)
+void finanzmarkt_JanE::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("finanzmarkt_JanE::sendStateSpace",
 		   "Can't create state space vector");
@@ -1210,18 +1210,18 @@ void finanzmarkt_JanE::sendStateSpace(int &quantity,const real*** stateSpace)
 // By:				mhoffman			
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* finanzmarkt_JanE::sendModelVar(void)
+qreal* finanzmarkt_JanE::sendModelVar(void)
 { 
   return &p1;
 }
 
-void finanzmarkt_JanE::sendParameters(int& amount ,real** parameters)
+void finanzmarkt_JanE::sendParameters(int& amount ,qreal** parameters)
 { 
    cout << "Warning: function sendParameters() is in use" << endl;
    if( *parameters )
 	delete *parameters;
     amount=47;
-    *parameters= new real[amount];
+    *parameters= new qreal[amount];
     if( !parameters )
 	fatalError("finanzmarkt_JanE::sendParameters","Can't create array for parameters");
     (*parameters[0])=eta1_F_0;
@@ -1273,7 +1273,7 @@ void finanzmarkt_JanE::sendParameters(int& amount ,real** parameters)
     (*parameters[46])=length;
 }
 
-void finanzmarkt_JanE::receiveParameters(const real* parameters)
+void finanzmarkt_JanE::receiveParameters(const qreal* parameters)
 {
   cout << "Warning: function receiveParameters() is in use" << endl;
    eta1_F_0 = parameters[0];

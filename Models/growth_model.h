@@ -37,51 +37,51 @@ class growth_model : public baseModel {
 
 protected:
     			// original state variables
-    real K;		// kapital
-    real L;		// labour
-    real ln_K;		// ln of K
-    real ln_L;		// ln of L
-    real d_K_kL;	// difference K_t - k_fix L_t
-    real k;		// transformed state variable k:=K/L
-    real k_fix;		// fixed point of k
+    qreal K;		// kapital
+    qreal L;		// labour
+    qreal ln_K;		// ln of K
+    qreal ln_L;		// ln of L
+    qreal d_K_kL;	// difference K_t - k_fix L_t
+    qreal k;		// transformed state variable k:=K/L
+    qreal k_fix;		// fixed point of k
 
-    real k_0;		// initial value
+    qreal k_0;		// initial value
     
     			// derived state variables
-    real y;		// output
-    real w;		// wage
-    real r;		// rent
-    real xBundle;
+    qreal y;		// output
+    qreal w;		// wage
+    qreal r;		// rent
+    qreal xBundle;
 
 				// production function
-    real ( * pf ) ( real k, real a, real b, real c, real alpha );	
+    qreal ( * pf ) ( qreal k, qreal a, qreal b, qreal c, qreal alpha );
     				// a pointer to the production function
-    real ( * pf_prime) ( real k, real a, real b, real c, real alpha );
+    qreal ( * pf_prime) ( qreal k, qreal a, qreal b, qreal c, qreal alpha );
     				// and its derivative
-    real ( * pf_second_prime) ( real k, real a, real b, real c, real alpha );
+    qreal ( * pf_second_prime) ( qreal k, qreal a, qreal b, qreal c, qreal alpha );
     				// and its derivative
-    real pf_type;		// the current type of the production function
-    real a, b, c, alpha;	// original parameters
-    real A, B, C, D;		// parameters as ][0,1][ normalized input
+    qreal pf_type;		// the current type of the production function
+    qreal a, b, c, alpha;	// original parameters
+    qreal A, B, C, D;		// parameters as ][0,1][ normalized input
     void pf_init ( void );	// maps (A,B,C) -> (a,b,c) and sets pf, pf_prime
     
-    virtual real sf_y ( real );	// savings function for the entire economy
-    real syr;			// parameter for sf_y
-    virtual real sf_w ( real ); // savings function for the worker w.r.t the wage
-    real swr;			// parameter for sf_w
-    virtual real sf_r ( real ); // savings function for the shareholder w.r.t the rent
-    real srr;			// parameter for sf_r
+    virtual qreal sf_y ( qreal );	// savings function for the entire economy
+    qreal syr;			// parameter for sf_y
+    virtual qreal sf_w ( qreal ); // savings function for the worker w.r.t the wage
+    qreal swr;			// parameter for sf_w
+    virtual qreal sf_r ( qreal ); // savings function for the shareholder w.r.t the rent
+    qreal srr;			// parameter for sf_r
     
      			// derived state variables
-    real sav_y;		// savings w.r.t. the output
-    real sav_w;		// savings w.r.t. the wage
-    real sav_r;		// savings w.r.t. the rent
+    qreal sav_y;		// savings w.r.t. the output
+    qreal sav_w;		// savings w.r.t. the wage
+    qreal sav_r;		// savings w.r.t. the rent
 
-    real n;		// exogenous growth of labour suppling people
+    qreal n;		// exogenous growth of labour suppling people
    
-    real delta_p;	// depreciation of kapital
-	real s_hat;
-	real Ef_sc;
+    qreal delta_p;	// depreciation of kapital
+    qreal s_hat;
+    qreal Ef_sc;
 
 public:
     growth_model();			// constructor
@@ -90,12 +90,12 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
 
-    real* sendModelVar();		// for compatibity reasons only
-    void sendParameters(int&,real**);
-    void receiveParameters(const real*);
+    qreal* sendModelVar();		// for compatibity reasons only
+    void sendParameters(int&,qreal**);
+    void receiveParameters(const qreal*);
 
 };
 
@@ -117,7 +117,7 @@ private:
     char zvar_expr[256];        // expression which defines a random variable
     rand_var * zvar;            // a random variable    
     char zvar_name[256];        // name of the stochastified parameter
-    real * zvar_ptr;		// pointer to the stochastic parameter
+    qreal * zvar_ptr;		// pointer to the stochastic parameter
     
 public:
     rgrowth_model();			// constructor
@@ -145,25 +145,25 @@ const int trans_x_max=100; 		// max. number of i in trans_x[i]
 class depreciate : public growth_model {
 
 private:
-    real _z;				// variable for the original process
-    real _z_0;				// initial value for z
+    qreal _z;				// variable for the original process
+    qreal _z_0;				// initial value for z
     char _z_var_name[256];		// lexical name of the stochastified parameter
-    real * _z_var_ptr;			// pointer to the stochastified parameter
+    qreal * _z_var_ptr;			// pointer to the stochastified parameter
 
-    real trans(real z,real* x,real* a,real* b); // transforms z to delta_p
-    real * trans_x;			// pointer to array classes
-    real * trans_a;			// parameter for the transformation
-    real * trans_b;			// parameter for the transformation
+    qreal trans(qreal z,qreal* x,qreal* a,qreal* b); // transforms z to delta_p
+    qreal * trans_x;			// pointer to array classes
+    qreal * trans_a;			// parameter for the transformation
+    qreal * trans_b;			// parameter for the transformation
 
-    real (* theta) (real z, real m);	// theta defines the basic dynamic for z
-    real theta_type;			// the current type of the theta function
-    real my;				// parameters for theta
+    qreal (* theta) (qreal z, qreal m);	// theta defines the basic dynamic for z
+    qreal theta_type;			// the current type of the theta function
+    qreal my;				// parameters for theta
     void theta_init (void);		// sets theta to a specific type
     
 public:
     depreciate();			// constructor
-    void sendStateSpace(int &,const real***);
-    real * setLabels(char*);		// get a variable by a name
+    void sendStateSpace(int &,const qreal***);
+    qreal * setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
     void loadParamset(ifstream&);	// load parameterset from a file
     void saveParamset(ofstream&);
@@ -189,47 +189,47 @@ public:
 class pasinetti : public growth_model {
 private:
     //// k_0                               initial value shareholder
-    real k_1;                           // initial value worker
-    real kr,kw,lohn,kap_an,kap_ka,eink_an,kap_ges;		//Kapital KA, Kapital AN, Lohn AN
-    real lohn_od,kap_an_od,kap_ka_od;
-    real Q_r;
-    real Q_w;
-    real Q_r_n;
-    real Q_w_n;
-    real Quot_kr;
-    real Quot_kw; 
-    real k_pas;
-    real E;
-    real E_n;
-	real E_f_pr_n, bif_point;
-	real E_steady_leon;
-	real E_steady_quad; 
- 	real E_steady_leon_prime;
-	real E_steady_quad_prime;     
-	real y_ini,y_ini_prime;
-    real y_quad,y_quad_prime,y_quad_prime2;
-    real y_leon,y_leon_prime,y_leon_prime2;
-    real xBundle;
-	real YBundle;
-    real steady_quad;
-	real steady_leon;
-	real steady_kc_leon;
-	real steady_kw_leon;
-	real steady_kc_quad;
-	real steady_kw_quad;
-    real steady_kc;
-    real steady_kw;
-	real steady_cd;
-	real steady_kc_cd;
-	real steady_kw_cd;
-	real steady_ces;
-	real y_steady;
-	real y_prime_steady;
-	real E_f;
+    qreal k_1;                           // initial value worker
+    qreal kr,kw,lohn,kap_an,kap_ka,eink_an,kap_ges;		//Kapital KA, Kapital AN, Lohn AN
+    qreal lohn_od,kap_an_od,kap_ka_od;
+    qreal Q_r;
+    qreal Q_w;
+    qreal Q_r_n;
+    qreal Q_w_n;
+    qreal Quot_kr;
+    qreal Quot_kw;
+    qreal k_pas;
+    qreal E;
+    qreal E_n;
+    qreal E_f_pr_n, bif_point;
+    qreal E_steady_leon;
+    qreal E_steady_quad;
+    qreal E_steady_leon_prime;
+    qreal E_steady_quad_prime;
+    qreal y_ini,y_ini_prime;
+    qreal y_quad,y_quad_prime,y_quad_prime2;
+    qreal y_leon,y_leon_prime,y_leon_prime2;
+    qreal xBundle;
+    qreal YBundle;
+    qreal steady_quad;
+    qreal steady_leon;
+    qreal steady_kc_leon;
+    qreal steady_kw_leon;
+    qreal steady_kc_quad;
+    qreal steady_kw_quad;
+    qreal steady_kc;
+    qreal steady_kw;
+    qreal steady_cd;
+    qreal steady_kc_cd;
+    qreal steady_kw_cd;
+    qreal steady_ces;
+    qreal y_steady;
+    qreal y_prime_steady;
+    qreal E_f;
 	
 
-	real Q;
-	real Konsum_C, Konsum_K, Konsum_A, Konsum_C_n, Konsum_A_n, Z, Z2;
+    qreal Q;
+    qreal Konsum_C, Konsum_K, Konsum_A, Konsum_C_n, Konsum_A_n, Z, Z2;
 
 public:
     pasinetti();			// constructor
@@ -237,7 +237,7 @@ public:
     void loadParamset(ifstream&);	// load parameterset from a file
     void saveParamset(ofstream&);
     void printParamset();
-    real * setLabels(char*);		// get a variable by a name
+    qreal * setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const long&);	// perform one iteration 
 };

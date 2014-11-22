@@ -50,7 +50,7 @@
 // By:			Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_gam ( real , real , real )
+static qreal pf_gam ( qreal , qreal , qreal )
 { 
   return (0.5);  
 }
@@ -65,7 +65,7 @@ static real pf_gam ( real , real , real )
 // By:			Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_var (real , real , real )
+static qreal pf_var (qreal , qreal , qreal )
 { 
   return (0.5);  
 }
@@ -80,7 +80,7 @@ static real pf_var (real , real , real )
 // By:			Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_exp (real , real , real )
+static qreal pf_exp (qreal , qreal , qreal )
 {
   return (10.5);  
 }
@@ -112,7 +112,7 @@ st_fin_paramset *d_fin_paramset = new st_fin_paramset;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real Trans(real z, real* x, real* a, real* b)
+qreal Trans(qreal z, qreal* x, qreal* a, qreal* b)
 {
     int i=0;
     while(x[i]<1) {
@@ -138,11 +138,11 @@ real Trans(real z, real* x, real* a, real* b)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-static real theta_logistic ( real d, real m)
+static qreal theta_logistic ( qreal d, qreal m)
 { return (m * d * (1-d)) ;
 }
 
-static real theta_tent ( real d, real m)
+static qreal theta_tent ( qreal d, qreal m)
 { 
   
   if( d<=m ) {
@@ -152,7 +152,7 @@ static real theta_tent ( real d, real m)
   }
 }
 
-static real theta_saw ( real d, real m)
+static qreal theta_saw ( qreal d, qreal m)
 { if( d<m ) {
     return (1/m * d);
   } else {
@@ -240,7 +240,7 @@ dynofin_rmv::~dynofin_rmv(void) {
 void dynofin_rmv::noise_iteration(st_fin_paramset *temp_paramset)
 { 
 
-real z_1,z_2;
+qreal z_1,z_2;
 
 z_1 = 0;
 z_2 = 0;
@@ -313,15 +313,15 @@ switch  (temp_paramset->type) {
 
 void dynofin_rmv::iteration(const long& )
 { 
-  real w1_n;
-  real w2_n;
-  real thetaA1_n;
-  real thetaA2_n;     
-  real thetaB1_n;
-  real thetaB2_n;    	
-  real p_n;
-  real p_count_1=0;
-  real p_count_2=0;
+  qreal w1_n;
+  qreal w2_n;
+  qreal thetaA1_n;
+  qreal thetaA2_n;     
+  qreal thetaB1_n;
+  qreal thetaB2_n;    	
+  qreal p_n;
+  qreal p_count_1=0;
+  qreal p_count_2=0;
   
   
   if (r_fin_paramset->type > -1) {
@@ -431,7 +431,7 @@ d_fin_paramset->z_0 = d_fin_0;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* dynofin_rmv::setLabels(char* label)
+qreal* dynofin_rmv::setLabels(char* label)
 {
     if( !strcmp(label,"w1") ) return(&w1);
     if( !strcmp(label,"w2") ) return(&w2);
@@ -466,11 +466,11 @@ real* dynofin_rmv::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::sendStateSpace(int &quantity,const real*** stateSpace)
+void dynofin_rmv::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	error("dynofin_rmc::sendStateSpace",
 		   "Can't create state space vector");
@@ -528,11 +528,11 @@ void dynofin_rmv::read_sim(ifstream& inFile, st_fin_paramset *temp_paramset){
 	      "the number i of x[i] must be less trans_x_Max");
 
         // length of trans_a and trans_b = trans_x - 1
-        for(j=0;j<i;j++) {
+        for (int j=0;j<i;j++) {
 	 inFile >> temp_paramset->trans_a[j];
 	//printf("a[%j]=%f\n",i,trans_a[j]); 
  	}
-        for(j=0;j<i;j++) {
+        for (int j=0;j<i;j++) {
 	 inFile >> temp_paramset->trans_b[j];
 	//printf("b[%j]=%f\n",i,trans_b[j]); 
 	}
@@ -625,14 +625,14 @@ void dynofin_rmv::loadParamset(ifstream& inFile){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* dynofin_rmv::sendModelVar(void)
+qreal* dynofin_rmv::sendModelVar(void)
 { error("macrodyn::dynofin_rmv::sendModelVar is not implemented");
   return NULL;
 }
-void dynofin_rmv::sendParameters(int& ,real** )
+void dynofin_rmv::sendParameters(int& ,qreal** )
 { error("macrodyn::dynofin_rmv::sendParameters is not implemented");
 }
-void dynofin_rmv::receiveParameters(const real* )
+void dynofin_rmv::receiveParameters(const qreal* )
 { error("macrodyn::dynofin_rmv::receiveParameters is not implemented");
 }  
 ///////////////////////////////////////////////////////////////////////////////
@@ -675,11 +675,11 @@ void dynofin_rmv::save_st_fin_paramset(ofstream& outFile, st_fin_paramset *temp_
 	      i++;
 	}
        outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << temp_paramset->trans_a[j] << "\t";
 	}
 	outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << temp_paramset->trans_b[j] << "\t";
 	}
         outFile << "\t";
@@ -792,11 +792,11 @@ void dynofin_rmv::save_st_fin_paramsetWithNames(ofstream& outFile, st_fin_params
 	      i++;
 	}
        outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << "trans_a = " << temp_paramset->trans_a[j] << "\t";
 	}
 	outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << "trans_b = " << temp_paramset->trans_b[j] << "\t";
 	}
         outFile << "\t";
@@ -829,47 +829,47 @@ void dynofin_rmv::print_st_fin_paramset(st_fin_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      cout << temp_paramset->type << "\n";
+      Log::log() << temp_paramset->type << "\n";
       
       switch  (temp_paramset->type) {
       case -1:
- 	cout << temp_paramset->z_0 << "\n";  
+ 	Log::log() << temp_paramset->z_0 << "\n";  
       break;
       case 0 :	
-    	cout << temp_paramset->z_0 << "\n";	 
+    	Log::log() << temp_paramset->z_0 << "\n";	 
       break;
 	
       case 1 :		
-	cout << temp_paramset->theta_type << "\n";
-	cout << temp_paramset->my << "\n";
-    	cout << temp_paramset->z_0 << "\n"; 
+	Log::log() << temp_paramset->theta_type << "\n";
+	Log::log() << temp_paramset->my << "\n";
+    	Log::log() << temp_paramset->z_0 << "\n"; 
 	
         i=0;
         while(i<Trans_x_Max) {
-	      cout << temp_paramset->trans_x[i] << "\n";
+	      Log::log() << temp_paramset->trans_x[i] << "\n";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       cout << "\n";
-       for(j=0;j<i;j++) {
-	 cout << temp_paramset->trans_a[j] << "\n";
+       Log::log() << "\n";
+       for (int j=0;j<i;j++) {
+	 Log::log() << temp_paramset->trans_a[j] << "\n";
 	}
-	cout << "\n";
-       for(j=0;j<i;j++) {
-	 cout << temp_paramset->trans_b[j] << "\n";
+	Log::log() << "\n";
+       for (int j=0;j<i;j++) {
+	 Log::log() << temp_paramset->trans_b[j] << "\n";
 	}
-        cout << "\n";
+        Log::log() << "\n";
         break;
    
       case 2:
-        cout << temp_paramset->zvar_expr << "\n";
+        Log::log() << temp_paramset->zvar_expr << "\n";
 	  if( temp_paramset->mc_flag == 1) {
-	     cout << temp_paramset->mc_matrix << "\n";
+	     Log::log() << temp_paramset->mc_matrix << "\n";
           }
        break;
 	
-    cout << "\n";  
+    Log::log() << "\n";  
     }
 
  }
@@ -890,24 +890,24 @@ void dynofin_rmv::print_st_fin_paramset(st_fin_paramset *temp_paramset){
 void dynofin_rmv::printParamset()
 
 {     
-    cout << w1_0 << "\n" ;				
-    cout << w2_0 << "\n";			
-    cout << gam_0 << "\n" ;				
-    cout << var_0 << "\n";
-    cout << expe_0 << "\n" ;				
-    cout << p_0 << "\n";    
-    cout << thetaA1_0 << "\n" ;				
-    cout << thetaA2_0 << "\n";	
-    cout << thetaB1_0 << "\n" ;				
-    cout << thetaB2_0 << "\n";
+    Log::log() << w1_0 << "\n" ;				
+    Log::log() << w2_0 << "\n";			
+    Log::log() << gam_0 << "\n" ;				
+    Log::log() << var_0 << "\n";
+    Log::log() << expe_0 << "\n" ;				
+    Log::log() << p_0 << "\n";    
+    Log::log() << thetaA1_0 << "\n" ;				
+    Log::log() << thetaA2_0 << "\n";	
+    Log::log() << thetaB1_0 << "\n" ;				
+    Log::log() << thetaB2_0 << "\n";
     
     print_st_fin_paramset(r_fin_paramset);
  
     print_st_fin_paramset(d_fin_paramset);
  
-    cout << length << "\n";
+    Log::log() << length << "\n";
     
-    cout << "\n";  
+    Log::log() << "\n";  
          
     baseModel::printParamset();
 }   

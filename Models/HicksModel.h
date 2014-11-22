@@ -28,24 +28,24 @@
 class HicksModel : public baseModel {
 
 protected:
-	real y1_0;			// parameter
-	real y2_0;
-	real If;
-	real Iaut;
-	real Yc;
-	real v;
-	real m;
+	qreal y1_0;			// parameter
+	qreal y2_0;
+	qreal If;
+	qreal Iaut;
+	qreal Yc;
+	qreal v;
+	qreal m;
 	
 	distribution distri;
-	real lambda;
-	real noise;
+	qreal lambda;
+	qreal noise;
 	long myseed;
 	
-	real y2;			// state variable
-	real y1;			// old state
-	real Iind;
-	real It;
-	real Ct;
+	qreal y2;			// state variable
+	qreal y1;			// old state
+	qreal Iind;
+	qreal It;
+	qreal Ct;
 
 public:
     HicksModel();			// constructor
@@ -56,14 +56,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 #endif	

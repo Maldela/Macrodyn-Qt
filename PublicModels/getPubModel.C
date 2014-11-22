@@ -11,19 +11,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "defaultModel.h"
-#include "logistic.h"
-#include "henon.h"
+#include "../Models/logistic.h"
+#include "../Models/henon.h"
 #include "perturbedDelayedLogisticMap.h"
 #include "cobweb.h"
 
-#include <affine1.h>
-#include <affine2.h>
-#include <affine3.h>
-#include <HicksModel.h>
-#include <Keener.h>
-#include <logiDelay.h>
-#include <onozaki_et_al.h>
-#include <rSolow.h>
+#include "../Models/affine1.h"
+#include "../Models/affine2.h"
+#include "../Models/affine3.h"
+#include "../Models/HicksModel.h"
+#include "../Models/Keener.h"
+#include "../Models/logiDelay.h"
+#include "../Models/onozaki_et_al.h"
+#include "../Models/rSolow.h"
 
 #include "../error.h"
 
@@ -38,12 +38,12 @@
 void PrintPubModelDate(void) {
       #ifdef __DATE__
         #ifdef __TIME__
-          cout << "public macrodyn  built on " << __DATE__ << " (" << __TIME__ << ")\n";
+          Log::log() << "public macrodyn  built on " << __DATE__ << " (" << __TIME__ << ")\n";
         #else
-          cout << "public macrodyn  built on " << __DATE__ << "\n";
+          Log::log() << "public macrodyn  built on " << __DATE__ << "\n";
         #endif
       #else
-        cout << "Sorry, no build date stored of public macrodyn.\n";
+        Log::log() << "Sorry, no build date stored of public macrodyn.\n";
       #endif
 };
 

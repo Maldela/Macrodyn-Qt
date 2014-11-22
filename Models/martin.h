@@ -29,23 +29,23 @@ class martin : public baseModel {
 protected:
     rand_var * zvar;		// ptr random function   
     
-    real theta;			// parameters
-    real rho;
-    real beta;			// state variables
-    real oldBeta;
-    real k;
-    real g;
-    real beta0;			// initial values
-    real k0;
-    real g0;
+    qreal theta;			// parameters
+    qreal rho;
+    qreal beta;			// state variables
+    qreal oldBeta;
+    qreal k;
+    qreal g;
+    qreal beta0;			// initial values
+    qreal k0;
+    qreal g0;
 				// derived variables
-    real p;			// prices derived from beta
-    real p0;			// initial value for p
-    real perr;                  // prediction error inflation
-    real perrp;			// prediction error prices
-    real perrlnp;		// prediction error prices (log)
+    qreal p;			// prices derived from beta
+    qreal p0;			// initial value for p
+    qreal perr;                  // prediction error inflation
+    qreal perrp;			// prediction error prices
+    qreal perrlnp;		// prediction error prices (log)
     
-    virtual real savings(const real&);	// function for the savings
+    virtual qreal savings(const qreal&);	// function for the savings
 public:
     martin();			// constructor
     virtual ~martin();		// destructor;
@@ -55,13 +55,13 @@ public:
     virtual void printParamset();
     void initialize();
     virtual void iteration(const long&);
-    real* sendModelVar();
-    virtual real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    virtual void sendParameters(int&,real**); // write all parameters
+    qreal* sendModelVar();
+    virtual qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    virtual void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    virtual void receiveParameters(const real*);// receive parameter values 
+    virtual void receiveParameters(const qreal*);// receive parameter values 
 };
 
 
@@ -77,15 +77,15 @@ public:
 
 class martin2 : public martin {
 protected:
-    real lambda;				// Another parameter
-    virtual real savings(const real&);
+    qreal lambda;				// Another parameter
+    virtual qreal savings(const qreal&);
 public:
     virtual void loadParamset(ifstream&);	
     virtual void saveParamset(ofstream&);
     virtual void printParamset();
-    virtual real* setLabels(char*);
-    virtual void sendParameters(int&,real**);		// as above
-    virtual void receiveParameters(const real*);	// as above 
+    virtual qreal* setLabels(char*);
+    virtual void sendParameters(int&,qreal**);		// as above
+    virtual void receiveParameters(const qreal*);	// as above 
 };
 
 /******************************************************************************/
@@ -100,7 +100,7 @@ public:
 
 class martin3 : public martin2 {
 protected:
-    real savings(const real&);
+    qreal savings(const qreal&);
 };
 
 
@@ -116,15 +116,15 @@ protected:
 
 class martin4 : public martin2 {
 protected:
-    real a,b,c;			// parameters for the savings function
-    real savings(const real&);
+    qreal a,b,c;			// parameters for the savings function
+    qreal savings(const qreal&);
 public:
     void loadParamset(ifstream&);	
     void saveParamset(ofstream&);
     void printParamset();
-    real* setLabels(char*);
-    void sendParameters(int&,real**);		// as above
-    void receiveParameters(const real*);	// as above 
+    qreal* setLabels(char*);
+    void sendParameters(int&,qreal**);		// as above
+    void receiveParameters(const qreal*);	// as above 
 };
 
 #endif

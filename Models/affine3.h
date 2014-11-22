@@ -31,14 +31,14 @@
 class affine3: public baseModel {
 
 protected:
-	real a;		// x_1 = f1(x_0)=(a+e)x_0 with p
+	qreal a;		// x_1 = f1(x_0)=(a+e)x_0 with p
 			// x_1 = f2(x_0)=(a-1+e)x_0+1 with 1-p
-	real x;		// state variable
-	real x0;	// initial value for x
-	real p;		// parametric probability that map 1 is chosen
-	real eta;	// parametric value for e~[-eta,eta]
-	real urv_p;	// the random variable p
-	real urv_e;	// the random variable e
+	qreal x;		// state variable
+	qreal x0;	// initial value for x
+	qreal p;		// parametric probability that map 1 is chosen
+	qreal eta;	// parametric value for e~[-eta,eta]
+	qreal urv_p;	// the random variable p
+	qreal urv_e;	// the random variable e
 	int count1, count2;	// counter for map1 and map2
 	rand_var *zvar1;
 	rand_var *zvar2;
@@ -53,11 +53,11 @@ public:
 	void printParamset();
 	void iteration(const long&);
 	void initialize();
-	real* sendModelVar();
-	real* setLabels(char*);
-	void sendStateSpace(int &,const real***);
-	void sendParameters(int&,real**); 	// write all parameters
+	qreal* sendModelVar();
+	qreal* setLabels(char*);
+	void sendStateSpace(int &,const qreal***);
+	void sendParameters(int&,qreal**); 	// write all parameters
                          	       		// into an array and return the 
                                 		// numbers of parameters                                	
-	void receiveParameters(const real*);	// receive parameter values 
+	void receiveParameters(const qreal*);	// receive parameter values 
 };

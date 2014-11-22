@@ -25,36 +25,36 @@ class linFima_basic : public baseModel
 protected:
 
 	// state variable - Preis p 
-   		real x0;		// Initialisierung
-		real x;
-    		real x1;		// Lag 1
-		real x2;		// Lag 2
+        qreal x0;		// Initialisierung
+        qreal x;
+            qreal x1;		// Lag 1
+        qreal x2;		// Lag 2
 
 	// state variable - Erwartungen qe	
-       		real y0;                // Initialisierung
-        	real y;
-		real y1;		// Lag 1
-		real y2;		// Lag 2
+            qreal y0;                // Initialisierung
+            qreal y;
+        qreal y1;		// Lag 1
+        qreal y2;		// Lag 2
 	
 	// noise
-		real xi0;		// Initialisierung
+        qreal xi0;		// Initialisierung
 		rand_var *zvar;		// Zufallsvariable
-		real xi_min, xi_max;    // Grenzen der Störgröße
+        qreal xi_min, xi_max;    // Grenzen der Störgröße
 				
 
 	// Dividendenprozess d = psi * d + xi
-		real d0;      		// Initialisierung 
-		real d;			// Zufallsvariable Dividende
-		real d1;		// Lag1
-		real d2;		// Lag2
-		real psi;		// Parameter des Dividendenprozesses
+        qreal d0;      		// Initialisierung
+        qreal d;			// Zufallsvariable Dividende
+        qreal d1;		// Lag1
+        qreal d2;		// Lag2
+        qreal psi;		// Parameter des Dividendenprozesses
 
 	// Parameter	
-		real alpha;		// Zinsrate (R)
-		real beta;		// Heterogenitäten der Ökonomie(invphi)
+        qreal alpha;		// Zinsrate (R)
+        qreal beta;		// Heterogenitäten der Ökonomie(invphi)
 	
-		real gamma;		// Fehlerkorrekturfaktor der Naiven Erwartungen
-		real L;			// Lag der Durchschnittlichen Erwartungen
+        qreal gamma;		// Fehlerkorrekturfaktor der Naiven Erwartungen
+        qreal L;			// Lag der Durchschnittlichen Erwartungen
 	
 	// Iterationen
 	   // geschützte Variable aus baseModel
@@ -65,16 +65,16 @@ protected:
 					// 3= durchschnittliche Erwartungen(AE)
 	
 	// Berechnung
-		real summex;
-		real summe1x;
-		real summey;
-		real summe1y;
-		real mx;		// Rekursiver Mittelwert Preis
-		real my;		// Rekursiver Mittelwert cum Dividenden Preis
+        qreal summex;
+        qreal summe1x;
+        qreal summey;
+        qreal summe1y;
+        qreal mx;		// Rekursiver Mittelwert Preis
+        qreal my;		// Rekursiver Mittelwert cum Dividenden Preis
 		
 	//Funktionen
-		real rekursiverMittelwertx(const long);
-		real rekursiverMittelwerty(const long);
+        qreal rekursiverMittelwertx(const long);
+        qreal rekursiverMittelwerty(const long);
 
 
 public:
@@ -84,11 +84,11 @@ public:
 	void saveParamset(ofstream&);
 	void printParamset();
 	void initialize();
-	real* sendModelVar();
-	real* setLabels(char*);
-	void sendStateSpace(int &,const real***);
-	void sendParameters(int&, real**);
-	void receiveParameters(const real*);
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&, qreal**);
+    void receiveParameters(const qreal*);
 	void iteration(const long&t);
 
 };

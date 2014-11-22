@@ -23,7 +23,7 @@
 
 void linDiff::iteration(const long&)
 {
-    real oldX=x;
+    qreal oldX=x;
 
     x=alpha*oldX+beta*y;
     y=oldX;

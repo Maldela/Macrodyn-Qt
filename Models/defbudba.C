@@ -55,9 +55,9 @@ defbudba::~defbudba()
 /*                                                                            */
 /******************************************************************************/
 
-real defbudba::prodFunction(const real& L)
+qreal defbudba::prodFunction(const qreal& L)
 {
-	real result;
+    qreal result;
 
 	result= A/B * exp( B*log(L) );              
 	return(result);
@@ -72,7 +72,7 @@ real defbudba::prodFunction(const real& L)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::thetaInit(real *theta)
+void defbudba::thetaInit(qreal *theta)
 {
     int i;
 
@@ -93,8 +93,8 @@ void defbudba::thetaInit(real *theta)
 void defbudba::initialize()
 {
     thetaInit(theta);
-    mtreal=m0/p0;
-    wtreal=w0/p0;
+    mtqreal=m0/p0;
+    wtqreal=w0/p0;
     g=g0;
     ymax=prodFunction(Lmax);
     rhoTilda=1-rho/(1-rho);
@@ -110,10 +110,10 @@ void defbudba::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real defbudba::expectedInflationRate(const long t)
+qreal defbudba::expectedInflationRate(const long t)
 {
     long T,counter;
-    real help=0.0;
+    qreal help=0.0;
     
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ )
@@ -131,9 +131,9 @@ real defbudba::expectedInflationRate(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::notProd(real &ztnot,real &ytnot)
+void defbudba::notProd(qreal &ztnot,qreal &ytnot)
 {
-    ztnot= exp( log(A/wtreal) / (1-B) ) ;
+    ztnot= exp( log(A/wtqreal) / (1-B) ) ;
     ytnot= prodFunction(ztnot);
 }
 
@@ -147,15 +147,15 @@ void defbudba::notProd(real &ztnot,real &ytnot)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::notCom(real &xtnot,real &ct,real &ptratex)
+void defbudba::notCom(qreal &xtnot,qreal &ct,qreal &ptratex)
 {
-    real sigma = rhoTilda / (rhoTilda-1);
+    qreal sigma = rhoTilda / (rhoTilda-1);
   
  /*    ct =   1/ ( 1 + exp( log(delta)/(1-rhoTilda) + sigma*log(ptratex) ) );*/
      ct = 0.5;   // Änderung von Leo (kann mir den Einfluss von rho, tau nicht 
  		 // erklären !!)   27.2.97  
      
-    xtnot=( g + beta * mtreal ) / (1 - ct * (1-tax) ) ;
+    xtnot=( g + beta * mtqreal ) / (1 - ct * (1-tax) ) ;
 }
 
 /******************************************************************************/
@@ -167,7 +167,7 @@ void defbudba::notCom(real &xtnot,real &ct,real &ptratex)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::empAndOut(real &xtnot, real &ytnot)
+void defbudba::empAndOut(qreal &xtnot, qreal &ytnot)
 {
     y = MIN( MIN(xtnot,ytnot), ymax );
     if( y == ymax )
@@ -186,7 +186,7 @@ void defbudba::empAndOut(real &xtnot, real &ytnot)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::detDiseq(real &xtnot,real &ytnot,char *x1)
+void defbudba::detDiseq(qreal &xtnot,qreal &ytnot,char *x1)
 {
     if( xtnot > ytnot ) {
         if( ymax > ytnot)
@@ -233,8 +233,8 @@ void defbudba::detDiseq(real &xtnot,real &ytnot,char *x1)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::wageAndPrice(real &xtnot, real &ytnot,
-				real &ztnot, char *state)
+void defbudba::wageAndPrice(qreal &xtnot, qreal &ytnot,
+                qreal &ztnot, char *state)
 
 {
     if( !strcmp(state,"K ") )
@@ -264,8 +264,8 @@ void defbudba::wageAndPrice(real &xtnot, real &ytnot,
 
 void defbudba::dynamics()
 {
-    mtreal  = ( MIN( y,g+mtreal) - tax*y ) / ptrate;
-    wtreal  = wtreal * (wtrate / ptrate);
+    mtqreal  = ( MIN( y,g+mtqreal) - tax*y ) / ptrate;
+    wtqreal  = wtqreal * (wtrate / ptrate);
     g       = tax*y/ptrate; // NEW Tue Jul 16 10:42:51 MESZ 1996
     for(int i=0; i<=tau; i++ )
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
@@ -283,12 +283,12 @@ void defbudba::dynamics()
 
 void defbudba::iteration(const long& t)
 {
-    real ptratex;
+    qreal ptratex;
     char state[5];
-    real ztnot;
-    real ytnot;
-    real xtnot;
-    real ct;
+    qreal ztnot;
+    qreal ytnot;
+    qreal xtnot;
+    qreal ct;
 
     ptratex=expectedInflationRate(t);
     notProd(ztnot,ytnot);
@@ -309,7 +309,7 @@ void defbudba::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* defbudba::setLabels(char *name)
+qreal* defbudba::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -325,10 +325,10 @@ real* defbudba::setLabels(char *name)
         return( &A );
     if( !strcmp(name,"B") )
         return( &B );
-    if( !strcmp(name,"wtreal") )
-        return( &wtreal );
-    if( !strcmp(name,"mtreal") )
-        return( &mtreal );
+    if( !strcmp(name,"wtqreal") )
+        return( &wtqreal );
+    if( !strcmp(name,"mtqreal") )
+        return( &mtqreal );
     if( !strcmp(name,"theta") )
         return( theta );
     if( !strcmp(name,"gamma") )
@@ -354,7 +354,7 @@ real* defbudba::setLabels(char *name)
     if( !strcmp(name,"w0") )
 	return( &w0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+    return( (qreal*)(&tau) );
     return( NULL );
 }
 
@@ -367,7 +367,7 @@ real* defbudba::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::setTheta(real *newTheta)
+void defbudba::setTheta(qreal *newTheta)
 {
     for(int i=0;i<tau+2;i++) 
         theta[i]=newTheta[i];
@@ -382,7 +382,7 @@ void defbudba::setTheta(real *newTheta)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::getTheta(real* newTheta)
+void defbudba::getTheta(qreal* newTheta)
 {
     for(int i=0;i<tau+2;i++) 
         newTheta[i]=theta[i];
@@ -392,37 +392,37 @@ void defbudba::getTheta(real* newTheta)
 /*                                                                            */
 /* Class name:      defbudba                                              */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-real* defbudba::sendModelVar()
+qreal* defbudba::sendModelVar()
 {
-    return &wtreal;
+    return &wtqreal;
 }
 
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      defbudba                                              */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::sendStateSpace(int &quantity,const real*** stateSpace)
+void defbudba::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("defbudba::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
-    (*stateSpace)[0]=&mtreal;
-    (*stateSpace)[1]=&wtreal;
+    (*stateSpace)[0]=&mtqreal;
+    (*stateSpace)[1]=&wtqreal;
     (*stateSpace)[2]=theta;
     (*stateSpace)[3]=&g;
 }
@@ -447,7 +447,7 @@ void defbudba::loadParamset(ifstream& inputFile)
 
     if( theta )
 	delete theta;
-    theta = new real[tau+2];
+    theta = new qreal[tau+2];
     if( !theta )
 	fatalError("defbudba::loadParamset","Can't create theta vector");
     
@@ -484,12 +484,12 @@ void defbudba::saveParamset(ofstream& outputFile)
 
 void defbudba::printParamset()
 {
-    cout << A << "\t" << B << "\n";
-    cout << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    cout << tau << "\t" << length << "\n";
-    cout << delta << "\t" << beta << "\n";
-    cout << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    cout << Lmax << "\t" << rho << "\t" << g0 << "\t" << tax << endl;
+    Log::log() << A << "\t" << B << "\n";
+    Log::log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << delta << "\t" << beta << "\n";
+    Log::log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
+    Log::log() << Lmax << "\t" << rho << "\t" << g0 << "\t" << tax << endl;
 }
 
 /******************************************************************************/
@@ -502,12 +502,12 @@ void defbudba::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::sendParameters(int& amount,real** parameters)
+void defbudba::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=17;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("defbudba::sendParameters",
 		   "Can't create array for parameters");
@@ -539,7 +539,7 @@ void defbudba::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::receiveParameters(const real* parameters)
+void defbudba::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];

@@ -46,7 +46,7 @@ laborMarketFirst::~laborMarketFirst()
 /* Last modified:   29.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::thetaInit(real *theta)
+void laborMarketFirst::thetaInit(qreal *theta)
 {
     int i,tau;
 
@@ -65,12 +65,12 @@ void laborMarketFirst::thetaInit(real *theta)
 /******************************************************************************/
 void laborMarketFirst::initialize()
 {
-    wtreal=w0;
+    wtqreal=w0;
     omegat=omega0;
     thetaInit(theta);
     dt=d0;
-    mtrealW=mW0;
-    mtrealS=mS0;
+    mtqrealW=mW0;
+    mtqrealS=mS0;
     rhoTildaW=1-rhoW/(1-rhoW);
     rhoTildaS=1-rhoS/(1-rhoS);
 }
@@ -95,9 +95,9 @@ void laborMarketFirst::loadParamset(ifstream& inputFile)
     if( theta )
 	delete theta;
     if( tauS > tauW ) 
-        theta = new real[tauS+2];
+        theta = new qreal[tauS+2];
       else
-        theta = new real[tauW+2];
+        theta = new qreal[tauW+2];
     if( !theta )
 	fatalError("defaultModel::loadParamset","Can't create theta vector");
     
@@ -135,14 +135,14 @@ void laborMarketFirst::saveParamset(ofstream& outputFile)
 /******************************************************************************/
 void laborMarketFirst::printParamset()
 {
-    cout << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
-    cout << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
-    cout << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
-    cout << g << "\t" << taxS << "\t" << taxW << "\n"; 
-    cout << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
-    cout << length << "\n";
-    cout << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
-    cout << d0 << "\t" << theta0 << endl;
+    Log::log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
+    Log::log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
+    Log::log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
+    Log::log() << g << "\t" << taxS << "\t" << taxW << "\n"; 
+    Log::log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
+    Log::log() << length << "\n";
+    Log::log() << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
+    Log::log() << d0 << "\t" << theta0 << endl;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -153,12 +153,12 @@ void laborMarketFirst::printParamset()
 /* Last modified:   29.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::sendParameters(int& amount,real** parameters)
+void laborMarketFirst::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=26;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("defaultModel::sendParameters",
 		   "Can't create array for parameters");
@@ -197,7 +197,7 @@ void laborMarketFirst::sendParameters(int& amount,real** parameters)
 /* Last modified:   29.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::receiveParameters(const real* parameters)
+void laborMarketFirst::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -235,7 +235,7 @@ void laborMarketFirst::receiveParameters(const real* parameters)
 /* Last modified:   08.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* laborMarketFirst::setLabels(char *name)
+qreal* laborMarketFirst::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -264,9 +264,9 @@ real* laborMarketFirst::setLabels(char *name)
     if( !strcmp(name,"deltaW") )
         return( &deltaW );
     if( !strcmp(name,"tauS") )
-	return( (real*)(&tauS) );
+	return( (qreal*)(&tauS) );
     if( !strcmp(name,"tauW") )
-	return( (real*)(&tauW) );
+	return( (qreal*)(&tauW) );
 
     if( !strcmp(name,"g") )
         return( &g );
@@ -297,12 +297,12 @@ real* laborMarketFirst::setLabels(char *name)
     if( !strcmp(name,"theta0") )
         return( &theta0 );
 
-    if( !strcmp(name,"wtreal") )
-        return( &wtreal );
-    if( !strcmp(name,"mtrealS") )
-        return( &mtrealS );
-    if( !strcmp(name,"mtrealW") )
-        return( &mtrealW );
+    if( !strcmp(name,"wtqreal") )
+        return( &wtqreal );
+    if( !strcmp(name,"mtqrealS") )
+        return( &mtqrealS );
+    if( !strcmp(name,"mtqrealW") )
+        return( &mtqrealW );
     if( !strcmp(name,"omegat") )
         return( &omegat );
     if( !strcmp(name,"dt") )
@@ -319,38 +319,38 @@ real* laborMarketFirst::setLabels(char *name)
 /*                                                                            */
 /* Class name:      laborMarketFirst                                          */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   29.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* laborMarketFirst::sendModelVar()
+qreal* laborMarketFirst::sendModelVar()
 {
-    return &wtreal;
+    return &wtqreal;
 }
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      laborMarketFirst                                          */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   29.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::sendStateSpace(int &quantity,const real*** stateSpace)
+void laborMarketFirst::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("defaultModel::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
-    (*stateSpace)[0]=&wtreal;
+    (*stateSpace)[0]=&wtqreal;
     (*stateSpace)[1]=&omegat;
     (*stateSpace)[2]=theta;
     (*stateSpace)[3]=&dt;
-    (*stateSpace)[4]=&mtrealS;
-    (*stateSpace)[5]=&mtrealW;
+    (*stateSpace)[4]=&mtqrealS;
+    (*stateSpace)[5]=&mtqrealW;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -360,9 +360,9 @@ void laborMarketFirst::sendStateSpace(int &quantity,const real*** stateSpace)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::laborDemand()
+qreal laborMarketFirst::laborDemand()
 {
-	return( exp(log(A/wtreal) /(1-B)) ); 
+	return( exp(log(A/wtqreal) /(1-B)) ); 
 }
 /******************************************************************************/
 /*                                                                            */
@@ -372,7 +372,7 @@ real laborMarketFirst::laborDemand()
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::actualEmployment(real& ztnot)
+qreal laborMarketFirst::actualEmployment(qreal& ztnot)
 {
 	return( MIN(ztnot,Lmax) );
 }
@@ -384,7 +384,7 @@ real laborMarketFirst::actualEmployment(real& ztnot)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::detSigmaL(real& ztnot)
+qreal laborMarketFirst::detSigmaL(qreal& ztnot)
 {
     if ( Lmax > employment )
 	return( (employment-Lmax)/Lmax );
@@ -398,7 +398,7 @@ real laborMarketFirst::detSigmaL(real& ztnot)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::detWtRate(real& sigmaL)
+qreal laborMarketFirst::detWtRate(qreal& sigmaL)
 {
 	if ( Lmax > employment )
 		return( (1+lambda*sigmaL) );
@@ -412,10 +412,10 @@ real laborMarketFirst::detWtRate(real& sigmaL)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::expectedInflationRateW(const long t)
+qreal laborMarketFirst::expectedInflationRateW(const long t)
 {
 	long I,index;
-	real help=0.0;
+	qreal help=0.0;
 
 	I=MIN(t,tauW);
 	for ( index=0; index < I; index++ )
@@ -430,10 +430,10 @@ real laborMarketFirst::expectedInflationRateW(const long t)
 /* Last modified:   08.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::consumptionPropensityW(real& ptrateexW)
+qreal laborMarketFirst::consumptionPropensityW(qreal& ptrateexW)
 {
-    real cpW;
-    real sigma = rhoTildaW / (rhoTildaW-1);
+    qreal cpW;
+    qreal sigma = rhoTildaW / (rhoTildaW-1);
   
     cpW = 1/ ( 1 + exp( log(deltaW)/(1-rhoTildaW) + sigma*log(ptrateexW) ) );
     return( cpW );
@@ -446,9 +446,9 @@ real laborMarketFirst::consumptionPropensityW(real& ptrateexW)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::demandYoungW(real& cpsW)
+qreal laborMarketFirst::demandYoungW(qreal& cpsW)
 {
-	return( cpsW*(1-taxW)*wtreal*employment );
+	return( cpsW*(1-taxW)*wtqreal*employment );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -458,10 +458,10 @@ real laborMarketFirst::demandYoungW(real& cpsW)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::expectedInflationRateS(const long t)
+qreal laborMarketFirst::expectedInflationRateS(const long t)
 {
 	long I,index;
-	real help=0.0;
+	qreal help=0.0;
 
 	I=MIN(t,tauS);
 	for ( index=0; index < I; index++ )
@@ -476,10 +476,10 @@ real laborMarketFirst::expectedInflationRateS(const long t)
 /* Last modified:   08.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::consumptionPropensityS(real& ptrateexS)
+qreal laborMarketFirst::consumptionPropensityS(qreal& ptrateexS)
 {
-    real cpS;
-    real sigma = rhoTildaS / (rhoTildaS-1);
+    qreal cpS;
+    qreal sigma = rhoTildaS / (rhoTildaS-1);
   
     cpS = 1/ ( 1 + exp( log(deltaS)/(1-rhoTildaS) + sigma*log(ptrateexS) ) );
     return( cpS );
@@ -492,7 +492,7 @@ real laborMarketFirst::consumptionPropensityS(real& ptrateexS)
 /* Last modified:   20.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::demandYoungS(real& cpsS)
+qreal laborMarketFirst::demandYoungS(qreal& cpsS)
 {
 	return( cpsS*dt );
 }
@@ -504,9 +504,9 @@ real laborMarketFirst::demandYoungS(real& cpsS)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::aggregateDemand(real& ytW,real& ytS)
+qreal laborMarketFirst::aggregateDemand(qreal& ytW,qreal& ytS)
 {
-	return( betaW*mtrealW + betaS*mtrealS + g + ytW + ytS );
+	return( betaW*mtqrealW + betaS*mtqrealS + g + ytW + ytS );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -516,7 +516,7 @@ real laborMarketFirst::aggregateDemand(real& ytW,real& ytS)
 /* Last modified:   08.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::productionFunction(const real& L)
+qreal laborMarketFirst::productionFunction(const qreal& L)
 {
 	return( (A/B)*exp(B*log(L)) + deltaP*omegat );
 }
@@ -528,7 +528,7 @@ real laborMarketFirst::productionFunction(const real& L)
 /* Last modified:   01.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::actualOutput(real& ytD,real& yteff)
+qreal laborMarketFirst::actualOutput(qreal& ytD,qreal& yteff)
 {
 	return( MIN(ytD,yteff) ); 
 }
@@ -540,9 +540,9 @@ real laborMarketFirst::actualOutput(real& ytD,real& yteff)
 /* Last modified:   01.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::remainingOutputYoung()
+qreal laborMarketFirst::remainingOutputYoung()
 {
-	return( MAX( 0,( output - g - betaS*mtrealS - betaW*mtrealW ) ) );
+	return( MAX( 0,( output - g - betaS*mtqrealS - betaW*mtqrealW ) ) );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -552,7 +552,7 @@ real laborMarketFirst::remainingOutputYoung()
 /* Last modified:   01.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::actualConsumptionYoungS(real& ytW,real& ytS,real& xYoung)
+qreal laborMarketFirst::actualConsumptionYoungS(qreal& ytW,qreal& ytS,qreal& xYoung)
 {
 	return( ( ytS / ( ytS+ytW ) ) * xYoung );
 }
@@ -564,7 +564,7 @@ real laborMarketFirst::actualConsumptionYoungS(real& ytW,real& ytS,real& xYoung)
 /* Last modified:   01.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::actualConsumptionYoungW(real& ytW,real& ytS,real& xYoung)
+qreal laborMarketFirst::actualConsumptionYoungW(qreal& ytW,qreal& ytS,qreal& xYoung)
 {
 	return( ( ytW / ( ytW + ytS ) ) * xYoung ); 
 }
@@ -576,7 +576,7 @@ real laborMarketFirst::actualConsumptionYoungW(real& ytW,real& ytS,real& xYoung)
 /* Last modified:   01.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::detSigmaC(real& yteff,real& ytD)
+qreal laborMarketFirst::detSigmaC(qreal& yteff,qreal& ytD)
 {
 	if ( yteff > output )
 		return( ( output - yteff ) / yteff );
@@ -590,7 +590,7 @@ real laborMarketFirst::detSigmaC(real& yteff,real& ytD)
 /* Last modified:   01.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real laborMarketFirst::actualInflationrate(real& sigmaC,real& ytD)
+qreal laborMarketFirst::actualInflationrate(qreal& sigmaC,qreal& ytD)
 {
 	if ( ytD > output )
 		return( 1 + gamm * sigmaC );
@@ -604,7 +604,7 @@ real laborMarketFirst::actualInflationrate(real& sigmaC,real& ytD)
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::dynamics(real& yteff,real& xtS,real& xtW)
+void laborMarketFirst::dynamics(qreal& yteff,qreal& xtS,qreal& xtW)
 {
 	int i,tau;
 	
@@ -613,10 +613,10 @@ void laborMarketFirst::dynamics(real& yteff,real& xtS,real& xtW)
 		theta[tau+1-i]=theta[tau-i];
 	theta[0]=ptrate;
 	omegat = yteff-output;
-	mtrealW = ( (1-taxW)*wtreal*employment - xtW )/ptrate;
-	mtrealS = ( dt - xtS )/ptrate;
-	dt = (1-taxS)*(MAX(0,(output-wtreal*employment)) /ptrate);
-	wtreal *= wtrate/ptrate;
+	mtqrealW = ( (1-taxW)*wtqreal*employment - xtW )/ptrate;
+	mtqrealS = ( dt - xtS )/ptrate;
+	dt = (1-taxS)*(MAX(0,(output-wtqreal*employment)) /ptrate);
+	wtqreal *= wtrate/ptrate;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -628,32 +628,32 @@ void laborMarketFirst::dynamics(real& yteff,real& xtS,real& xtW)
 /******************************************************************************/
 void laborMarketFirst::iteration(const long& t)
 {
-  real ztnot;		// labor demand
-  real sigmaL;		// labor market imbalance
-  real sigmaC;		// supply-demand imbalance
-  real ptrateexW;	// expected inflationrate Worker         
-  real ptrateexS;	// expected inflationrate Shareholder
-  real cpsW,cpsS;	// consumptionpropensity Worker,Shareholder   
-  real ytW,ytS;		// demand young Workers,Shareholder
-  real ytD;		// aggregate Demand    
-  real yteff;		// effectiv production
-  real xYoung;		// what the young may consume 
-  real xtS,xtW;		// actual consum of the young S and W
+  qreal ztnot;		// labor demand
+  qreal sigmaL;		// labor market imbalance
+  qreal sigmaC;		// supply-demand imbalance
+  qreal ptrateexW;	// expected inflationrate Worker         
+  qreal ptrateexS;	// expected inflationrate Shareholder
+  qreal cpsW,cpsS;	// consumptionpropensity Worker,Shareholder   
+  qreal ytW,ytS;		// demand young Workers,Shareholder
+  qreal ytD;		// aggregate Demand    
+  qreal yteff;		// effectiv production
+  qreal xYoung;		// what the young may consume 
+  qreal xtS,xtW;		// actual consum of the young S and W
      
-  ztnot=laborDemand();		         //(A,B,wtreal)
+  ztnot=laborDemand();		         //(A,B,wtqreal)
   employment=actualEmployment(ztnot);	 //(ztnot,Lmax)
   sigmaL=detSigmaL(ztnot);		 //(ztnot,Lmax,employment)
   wtrate=detWtRate(sigmaL);		 //(sigmaL,Lmax,employment,lambda,mu)
   ptrateexW=expectedInflationRateW(t);   //(t,tauW,theta)
   cpsW=consumptionPropensityW(ptrateexW);//(ptrateexW,rhoTildaW,deltaW)
-  ytW=demandYoungW(cpsW);	         //(cpsW,taxW,wtreal,employment)
+  ytW=demandYoungW(cpsW);	         //(cpsW,taxW,wtqreal,employment)
   ptrateexS=expectedInflationRateS(t);   //(t,tauS,theta)                
   cpsS=consumptionPropensityS(ptrateexS);//(ptrateexS,rhoTildaS,deltaS)
   ytS=demandYoungS(cpsS);	         //(cpsS,taxS,dt)
-  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtrealW,mtrealS,g,ytW,ytS)
+  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtqrealW,mtqrealS,g,ytW,ytS)
   yteff=productionFunction(employment);	 //(A,B,employment,deltaP,omagat)
   output=actualOutput(ytD,yteff);	 //(ytD,yteff)
-  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtrealW,mtrealS)
+  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtqrealW,mtqrealS)
   xtS=actualConsumptionYoungS(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   xtW=actualConsumptionYoungW(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   sigmaC=detSigmaC(yteff,ytD);	         //(yteff,ytD,output)

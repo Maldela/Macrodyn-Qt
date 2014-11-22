@@ -23,14 +23,14 @@ const int mc_states_Max=10;
 
 struct st_fin_paramset 
 {
-	real z_0;
+	qreal z_0;
 	int type;
 	int theta_type;
-	real my;
-	real z_trans;
-	real trans_x[Trans_x_Max];
-	real trans_a[Trans_x_Max];
-	real trans_b[Trans_x_Max];		
+	qreal my;
+	qreal z_trans;
+	qreal trans_x[Trans_x_Max];
+	qreal trans_a[Trans_x_Max];
+	qreal trans_b[Trans_x_Max];		
         int mc_flag;
 	char* zvar_expr;
 	char mc_matrix[256];
@@ -41,25 +41,25 @@ class dynofin_rmv : public baseModel {
 
 protected:
 
-	real w1;
-	real w2;
-	real thetaA1;
-	real thetaA2;	
-	real thetaA1_t;
-	real thetaA2_t;	
-	real thetaB1;
-	real thetaB2;	
-	real p;
-	real gam_1;
-	real var_1;
-	real exp_1;
-	real gam_2;
-	real var_2;
-	real exp_2;	
-	real ( * pf ) (real w, real d, real p);		
-	real r_fin, r_fin_0;
-	real d_fin, d_fin_0;
-	real w1_0, w2_0, thetaA1_0, thetaA2_0, thetaB1_0, thetaB2_0, p_0, gam_0, var_0, expe_0;
+	qreal w1;
+	qreal w2;
+	qreal thetaA1;
+	qreal thetaA2;	
+	qreal thetaA1_t;
+	qreal thetaA2_t;	
+	qreal thetaB1;
+	qreal thetaB2;	
+	qreal p;
+	qreal gam_1;
+	qreal var_1;
+	qreal exp_1;
+	qreal gam_2;
+	qreal var_2;
+	qreal exp_2;	
+	qreal ( * pf ) (qreal w, qreal d, qreal p);		
+	qreal r_fin, r_fin_0;
+	qreal d_fin, d_fin_0;
+	qreal w1_0, w2_0, thetaA1_0, thetaA2_0, thetaB1_0, thetaB2_0, p_0, gam_0, var_0, expe_0;
 	int n_states;
     	char in_string[256];
 public:	
@@ -76,11 +76,11 @@ public:
     	void delete_st_fin_paramset_stochptr(st_fin_paramset*);
     	void iteration(const long&);
     	void initialize();
-    	real* setLabels(char*);
-    	void sendStateSpace(int &,const real***);
-    	real* sendModelVar();		
-    	void sendParameters(int&,real**);
-  	void receiveParameters(const real*);
+    	qreal* setLabels(char*);
+    	void sendStateSpace(int &,const qreal***);
+    	qreal* sendModelVar();		
+    	void sendParameters(int&,qreal**);
+  	void receiveParameters(const qreal*);
         virtual ~dynofin_rmv(void);            //destructor
 };
 #endif //  _DYNOFIN_RMV_INCLUDED

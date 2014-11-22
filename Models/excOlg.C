@@ -50,7 +50,7 @@ excOlg::~excOlg()
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::thetaInit(real *thetaVec)
+void excOlg::thetaInit(qreal *thetaVec)
 {
     int i;
 
@@ -84,10 +84,10 @@ void excOlg::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real excOlg::expInflRateYoung(const long t)
+qreal excOlg::expInflRateYoung(const long t)
 {
     long T,counter;
-    real help=0.0;
+    qreal help=0.0;
     
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ )
@@ -104,10 +104,10 @@ real excOlg::expInflRateYoung(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-real excOlg::expInflRateOld(const long t)
+qreal excOlg::expInflRateOld(const long t)
 {
     long T,counter;
-    real help=0.0;
+    qreal help=0.0;
     
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ )
@@ -124,9 +124,9 @@ real excOlg::expInflRateOld(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-real excOlg::savingsFuncYoung(real& thetaE)
+qreal excOlg::savingsFuncYoung(qreal& thetaE)
 {
-    real thetaTerm=exp(rho/(1-rho)*log(thetaE));
+    qreal thetaTerm=exp(rho/(1-rho)*log(thetaE));
     
     return( 1/(1+delta*thetaTerm) );
 }
@@ -140,9 +140,9 @@ real excOlg::savingsFuncYoung(real& thetaE)
 /*                                                                            */
 /******************************************************************************/
 
-real excOlg::savingsFuncOld(real& thetaE)
+qreal excOlg::savingsFuncOld(qreal& thetaE)
 {
-    real thetaTerm=exp(rho/(1-rho)*log(thetaE));
+    qreal thetaTerm=exp(rho/(1-rho)*log(thetaE));
     
     return( 1/(1+delta*thetaTerm) );
 }
@@ -174,7 +174,7 @@ void excOlg::thetaShift()
 
 void excOlg::iteration(const long& t)
 {
-    real ptratex;
+    qreal ptratex;
 
     ptratex=expInflRateYoung(t);
     savYoung=savingsFuncYoung(ptratex);
@@ -196,7 +196,7 @@ void excOlg::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* excOlg::setLabels(char *name)
+qreal* excOlg::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -213,7 +213,7 @@ real* excOlg::setLabels(char *name)
     if( !strcmp(name,"theta0") )
 	return( &theta0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+	return( (qreal*)(&tau) );
     return( NULL );
 }
 
@@ -226,7 +226,7 @@ real* excOlg::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::setTheta(real *newTheta)
+void excOlg::setTheta(qreal *newTheta)
 {
     for(int i=0;i<tau+2;i++) 
         thetaVec[i]=newTheta[i];
@@ -241,7 +241,7 @@ void excOlg::setTheta(real *newTheta)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::getTheta(real* newTheta)
+void excOlg::getTheta(qreal* newTheta)
 {
     for(int i=0;i<tau+2;i++) 
         newTheta[i]=thetaVec[i];
@@ -251,12 +251,12 @@ void excOlg::getTheta(real* newTheta)
 /*                                                                            */
 /* Class name:      excOlg                                               */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-real* excOlg::sendModelVar()
+qreal* excOlg::sendModelVar()
 {
     return &thetat;
 }
@@ -265,17 +265,17 @@ real* excOlg::sendModelVar()
 /*                                                                            */
 /* Class name:      excOlg                                               */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::sendStateSpace(int &quantity,const real*** stateSpace)
+void excOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("excOlg::sendStateSpace",
 		   "Can't create state space vector");
@@ -300,7 +300,7 @@ void excOlg::loadParamset(ifstream& inputFile)
 
     if( thetaVec )
 	delete thetaVec;
-    thetaVec = new real[tau+2];
+    thetaVec = new qreal[tau+2];
     if( !thetaVec )
 	fatalError("excOlg::loadParamset","Can't create theta vector");
     
@@ -334,9 +334,9 @@ void excOlg::saveParamset(ofstream& outputFile)
 
 void excOlg::printParamset()
 {
-    cout << delta << "\t" << rho << endl;
-    cout << tau << "\t" << length << "\n";
-    cout << theta0 << endl;
+    Log::log() << delta << "\t" << rho << endl;
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << theta0 << endl;
 }
 
 /******************************************************************************/
@@ -349,12 +349,12 @@ void excOlg::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::sendParameters(int& amount,real** parameters)
+void excOlg::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=5;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("excOlg::sendParameters",
 		   "Can't create array for parameters");
@@ -374,7 +374,7 @@ void excOlg::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::receiveParameters(const real* parameters)
+void excOlg::receiveParameters(const qreal* parameters)
 {
     delta=parameters[0];
     rho=parameters[1];
@@ -407,9 +407,9 @@ excOlgAdapt::excOlgAdapt()
 /*                                                                            */
 /******************************************************************************/
 
-real excOlgAdapt::expInflRateYoung(const long)
+qreal excOlgAdapt::expInflRateYoung(const long)
 {
-    real expInflRate;
+    qreal expInflRate;
 
     expInflRate=etaYoung*oldExpectationsYoung + (1-etaYoung)*thetaVec[0];
     oldExpectationsYoung=expInflRate;
@@ -426,9 +426,9 @@ real excOlgAdapt::expInflRateYoung(const long)
 /*                                                                            */
 /******************************************************************************/
 
-real excOlgAdapt::expInflRateOld(const long)
+qreal excOlgAdapt::expInflRateOld(const long)
 {
-    real expInflRate;
+    qreal expInflRate;
 
     expInflRate=etaOld*oldExpectationsOld + (1-etaOld)*thetaVec[0];
     oldExpectationsOld=expInflRate;
@@ -447,7 +447,7 @@ real excOlgAdapt::expInflRateOld(const long)
 
 void excOlgAdapt::iteration(const long& t)
 {
-    real ptratex;
+    qreal ptratex;
 
     ptratex=expInflRateYoung(t);
     savYoung=savingsFuncYoung(ptratex);
@@ -469,7 +469,7 @@ void excOlgAdapt::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* excOlgAdapt::setLabels(char *name)
+qreal* excOlgAdapt::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -486,7 +486,7 @@ real* excOlgAdapt::setLabels(char *name)
     if( !strcmp(name,"theta0") )
 	return( &theta0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+	return( (qreal*)(&tau) );
     if( !strcmp(name,"etaYoung") )
 	return( &etaYoung );
     if( !strcmp(name,"etaOld") )
@@ -512,7 +512,7 @@ void excOlgAdapt::loadParamset(ifstream& inputFile)
 
     if( thetaVec )
 	delete thetaVec;
-    thetaVec = new real[tau+2];
+    thetaVec = new qreal[tau+2];
     if( !thetaVec )
 	fatalError("excOlgAdapt::loadParamset","Can't create theta vector");
     
@@ -547,10 +547,10 @@ void excOlgAdapt::saveParamset(ofstream& outputFile)
 
 void excOlgAdapt::printParamset()
 {
-    cout << delta << "\t" << rho << endl;
-    cout << tau << "\t" << length << "\n";
-    cout << etaYoung << "\t" << etaOld << "\n";
-    cout << theta0 << endl;
+    Log::log() << delta << "\t" << rho << endl;
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << etaYoung << "\t" << etaOld << "\n";
+    Log::log() << theta0 << endl;
 }
 
 /******************************************************************************/
@@ -563,12 +563,12 @@ void excOlgAdapt::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::sendParameters(int& amount,real** parameters)
+void excOlgAdapt::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=7;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("excOlgAdapt::sendParameters",
 		   "Can't create array for parameters");
@@ -590,7 +590,7 @@ void excOlgAdapt::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::receiveParameters(const real* parameters)
+void excOlgAdapt::receiveParameters(const qreal* parameters)
 {
     delta=parameters[0];
     rho=parameters[1];
@@ -641,13 +641,13 @@ void excOlgGeoExp::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real excOlgGeoExp::expInflRateYoung(const long t)
+qreal excOlgGeoExp::expInflRateYoung(const long t)
 {
     long T,counter;
-    real help=0.0;
-    real etaSum=0.0;
-    real exponent=0.0;
-    real logEta=log(etaTildaYoung);
+    qreal help=0.0;
+    qreal etaSum=0.0;
+    qreal exponent=0.0;
+    qreal logEta=log(etaTildaYoung);
 
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ ) {
@@ -667,13 +667,13 @@ real excOlgGeoExp::expInflRateYoung(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-real excOlgGeoExp::expInflRateOld(const long t)
+qreal excOlgGeoExp::expInflRateOld(const long t)
 {
     long T,counter;
-    real help=0.0;
-    real etaSum=0.0;
-    real exponent=0.0;
-    real logEta=log(etaTildaOld);
+    qreal help=0.0;
+    qreal etaSum=0.0;
+    qreal exponent=0.0;
+    qreal logEta=log(etaTildaOld);
 
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ ) {
@@ -695,7 +695,7 @@ real excOlgGeoExp::expInflRateOld(const long t)
 
 void excOlgGeoExp::iteration(const long& t)
 {
-    real ptratex;
+    qreal ptratex;
 
     ptratex=expInflRateYoung(t);
     savYoung=savingsFuncYoung(ptratex);
@@ -717,7 +717,7 @@ void excOlgGeoExp::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* excOlgGeoExp::setLabels(char *name)
+qreal* excOlgGeoExp::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -734,7 +734,7 @@ real* excOlgGeoExp::setLabels(char *name)
     if( !strcmp(name,"theta0") )
 	return( &theta0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+	return( (qreal*)(&tau) );
     if( !strcmp(name,"etaYoung") )
 	return( &etaYoung );
     if( !strcmp(name,"etaOld") )
@@ -760,7 +760,7 @@ void excOlgGeoExp::loadParamset(ifstream& inputFile)
 
     if( thetaVec )
 	delete thetaVec;
-    thetaVec = new real[tau+2];
+    thetaVec = new qreal[tau+2];
     if( !thetaVec )
 	fatalError("excOlgGeoExp::loadParamset","Can't create theta vector");
     
@@ -795,10 +795,10 @@ void excOlgGeoExp::saveParamset(ofstream& outputFile)
 
 void excOlgGeoExp::printParamset()
 {
-    cout << delta << "\t" << rho << endl;
-    cout << tau << "\t" << length << "\n";
-    cout << etaYoung << "\t" << etaOld << "\n";
-    cout << theta0 << endl;
+    Log::log() << delta << "\t" << rho << endl;
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << etaYoung << "\t" << etaOld << "\n";
+    Log::log() << theta0 << endl;
 }
 
 /******************************************************************************/
@@ -811,12 +811,12 @@ void excOlgGeoExp::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::sendParameters(int& amount,real** parameters)
+void excOlgGeoExp::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=7;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("excOlgGeoExp::sendParameters",
 		   "Can't create array for parameters");
@@ -838,7 +838,7 @@ void excOlgGeoExp::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::receiveParameters(const real* parameters)
+void excOlgGeoExp::receiveParameters(const qreal* parameters)
 {
     delta=parameters[0];
     rho=parameters[1];

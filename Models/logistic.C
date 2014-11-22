@@ -49,7 +49,7 @@ logistic::logistic() : baseModel(1)
 
 void logistic::iteration(const long&)
 {
-    real oldX=x;
+    qreal oldX=x;
 
     x       = alpha * oldX * (1-oldX);
     x_prime = alpha * (1 - 2 * x);
@@ -89,7 +89,7 @@ void logistic::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* logistic::sendModelVar()
+qreal* logistic::sendModelVar()
 {
     return &x;
 }
@@ -107,7 +107,7 @@ real* logistic::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* logistic::setLabels(char* label)
+qreal* logistic::setLabels(char* label)
 {
     if( !strcmp(label,"alpha") )
 	return( &alpha);
@@ -134,11 +134,11 @@ real* logistic::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::sendStateSpace(int &quantity,const real*** stateSpace)
+void logistic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("logistic::sendStateSpace",
 		   "Can't create state space vector");
@@ -203,9 +203,9 @@ void logistic::saveParamset(ofstream& outFile)
 
 void logistic::printParamset()
 {
-    cout << x0 << endl;
-    cout << alpha << endl;
-    cout << length << endl;
+    Log::log() << x0 << endl;
+    Log::log() << alpha << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -221,12 +221,12 @@ void logistic::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::sendParameters(int& amount,real** parameters)
+void logistic::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=3;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("logistic::sendParameters",
 		   "Can't create array for parameters");
@@ -248,7 +248,7 @@ void logistic::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::receiveParameters(const real* parameters)
+void logistic::receiveParameters(const qreal* parameters)
 {
     x0=parameters[0];
     alpha=parameters[1];
@@ -396,7 +396,7 @@ void rlogistic::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* rlogistic::setLabels(char* label)
+qreal* rlogistic::setLabels(char* label)
 {
     if( !strcmp(label,"a") )
 	return( &a);
@@ -444,10 +444,10 @@ void rlogistic::saveParamset(ofstream& outFile)
 
 void rlogistic::printParamset()
 {
-    cout << zvar_name << endl;
-    cout << zvar_expr << endl;
-    cout << a << endl;
-    cout << b << endl;
+    Log::log() << zvar_name << endl;
+    Log::log() << zvar_expr << endl;
+    Log::log() << a << endl;
+    Log::log() << b << endl;
     logistic::printParamset();
 }
 

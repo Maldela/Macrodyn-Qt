@@ -111,11 +111,11 @@ void distribution::setseed( unsigned int val )
 //																			//
 //////////////////////////////////////////////////////////////////////////////
 
-real distribution::rectangular(){
-	static real random;
+qreal distribution::rectangular(){
+	static qreal random;
 
 	do {
-		random = rand()/real(RAND_MAX);
+		random = rand()/qreal(RAND_MAX);
 	} while((random==0)||(random==1));
 
 	return random;
@@ -136,10 +136,10 @@ real distribution::rectangular(){
 //																			//
 //////////////////////////////////////////////////////////////////////////////
 
-real distribution::triangular(const real a, const real b, const real c)
+qreal distribution::triangular(const qreal a, const qreal b, const qreal c)
 {
-	static real random;
-	static real width, FL;
+	static qreal random;
+	static qreal width, FL;
 	
 	random = rectangular();
 	width = b-a;
@@ -178,9 +178,9 @@ real distribution::triangular(const real a, const real b, const real c)
 //																			//
 //////////////////////////////////////////////////////////////////////////////
 
-real distribution::st_normal(){
-	static real rec1;
-	static real rec2;
+qreal distribution::st_normal(){
+	static qreal rec1;
+	static qreal rec2;
 	rec1 = rectangular();
 	rec2 = rectangular();
 
@@ -210,10 +210,10 @@ real distribution::st_normal(){
 //																			//
 //////////////////////////////////////////////////////////////////////////////
 
-real distribution::chi_square(const int degree) {	
-	static real chi;
+qreal distribution::chi_square(const int degree) {	
+	static qreal chi;
 	chi=0;
-	static real norm;
+	static qreal norm;
 
 	if (degree <= 0) 
 		fatalError("distribution::chi_square: ","degrees of freedom <= 0");
@@ -245,8 +245,8 @@ real distribution::chi_square(const int degree) {
 
 //bis pi/2 - 9e+15 und -pi/2 + 9e+15 rechnet der tan noch genau
 
-real distribution::st_cauchy(){
-	static real rec1;
+qreal distribution::st_cauchy(){
+	static qreal rec1;
 
 	do {
 		rec1=rectangular();
@@ -274,9 +274,9 @@ real distribution::st_cauchy(){
 //																			//
 //////////////////////////////////////////////////////////////////////////////
 
-real distribution::student_t(const int degree){
-	static real norm;
-	static real chi;
+qreal distribution::student_t(const int degree){
+	static qreal norm;
+	static qreal chi;
 
 	if (degree >= 150) return st_normal();
 	norm=st_normal();
@@ -301,8 +301,8 @@ real distribution::student_t(const int degree){
 //																			//
 //////////////////////////////////////////////////////////////////////////////
 
-real distribution::exponential(const real b){
-	static real rec1;
+qreal distribution::exponential(const qreal b){
+	static qreal rec1;
 
 	if (b <= 0) 
 		fatalError("distribution::exponential: ","b <= 0");
@@ -327,9 +327,9 @@ real distribution::exponential(const real b){
 //																			//
 //////////////////////////////////////////////////////////////////////////////
 
-real distribution::pareto(const real a, const real c){
-	static real rec1;
-	static real buffer;
+qreal distribution::pareto(const qreal a, const qreal c){
+	static qreal rec1;
+	static qreal buffer;
 
 	if (a <= 0) 
 		fatalError("distribution::pareto: ","a <= 0");

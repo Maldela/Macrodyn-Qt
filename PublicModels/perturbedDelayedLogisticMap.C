@@ -22,7 +22,7 @@
 
 void perturbedDelayedLogisticMap::iteration(const long&)
 {
-    real oldX=x;
+    qreal oldX=x;
 
     x=y;
     y=alpha*y*(1-oldX)+beta;

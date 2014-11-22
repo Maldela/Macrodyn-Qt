@@ -55,7 +55,7 @@ if(zvar) delete zvar;
 
 void RBC_basic_model::iteration(const long&)
 {
-real Z_old;
+qreal Z_old;
 
 // Determine random shock for current period
 
@@ -90,20 +90,20 @@ K = k;
 //k_ln = log(k);
 
 /*
-cout << "********************************" << endl;
-cout << " New iteration " << endl;
-cout << "********************************" << endl;
-cout << "k = "  << k << endl;
-cout << "k_old = "  << k_old << endl;
-cout << "k_diff = "  << k_diff << endl;
-cout << "k_rate = "  << k_rate << endl;
-cout << "epsilon = "  << epsilon << endl;
-cout << "eta = "  << eta << endl;
-cout << "Z = "  << Z << endl;
-cout << "Z_old = "  << Z_old << endl;
-cout << "y = "  << y << endl;
-cout << "c = "  << c << endl;
-cout << endl;
+Log::log() << "********************************" << endl;
+Log::log() << " New iteration " << endl;
+Log::log() << "********************************" << endl;
+Log::log() << "k = "  << k << endl;
+Log::log() << "k_old = "  << k_old << endl;
+Log::log() << "k_diff = "  << k_diff << endl;
+Log::log() << "k_rate = "  << k_rate << endl;
+Log::log() << "epsilon = "  << epsilon << endl;
+Log::log() << "eta = "  << eta << endl;
+Log::log() << "Z = "  << Z << endl;
+Log::log() << "Z_old = "  << Z_old << endl;
+Log::log() << "y = "  << y << endl;
+Log::log() << "c = "  << c << endl;
+Log::log() << endl;
 */
  
 
@@ -166,16 +166,16 @@ void RBC_basic_model::initialize()
 	r = Z*alpha*pow(k,alpha-1);
 	
 
-	cout << "********************************" << endl;
-	cout << "Parameters of the simulation" << endl;
-	cout << "********************************" << endl;
-	cout << "epsilon_param = " << epsilon_param << endl;
-	cout << "alpha = " << alpha << endl;
-	cout << "beta  = " << beta << endl;
-	cout << "gamma  = " << gamma << endl;
-	cout << "mu  = " << mu << endl;
-	cout << "k_0  = " << k_0 << endl;
-	cout << "Z_0  = " << Z_0 << endl;
+	Log::log() << "********************************" << endl;
+	Log::log() << "Parameters of the simulation" << endl;
+	Log::log() << "********************************" << endl;
+	Log::log() << "epsilon_param = " << epsilon_param << endl;
+	Log::log() << "alpha = " << alpha << endl;
+	Log::log() << "beta  = " << beta << endl;
+	Log::log() << "gamma  = " << gamma << endl;
+	Log::log() << "mu  = " << mu << endl;
+	Log::log() << "k_0  = " << k_0 << endl;
+	Log::log() << "Z_0  = " << Z_0 << endl;
 
 
 }
@@ -194,13 +194,13 @@ void RBC_basic_model::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* RBC_basic_model::sendModelVar()
+qreal* RBC_basic_model::sendModelVar()
 {
-	//cout << "This is function 'sendModelVar()' in RBC_basic_model.C" << endl;
+	//Log::log() << "This is function 'sendModelVar()' in RBC_basic_model.C" << endl;
     
 	return &k;
 	
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -216,9 +216,9 @@ real* RBC_basic_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* RBC_basic_model::setLabels(char* label)
+qreal* RBC_basic_model::setLabels(char* label)
 {
-	//cout << "This is function 'setLabels()' in RBC_basic_model.C ." << endl;
+	//Log::log() << "This is function 'setLabels()' in RBC_basic_model.C ." << endl;
     if( !strcmp(label,"k") )
 	return( &k);
     if( !strcmp(label,"k_rate") )
@@ -276,7 +276,7 @@ real* RBC_basic_model::setLabels(char* label)
     if( !strcmp(label,"yBundle") )
 	return &yBundle;
    	return NULL;
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -293,18 +293,18 @@ real* RBC_basic_model::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::sendStateSpace(int &quantity,const real*** stateSpace)
+void RBC_basic_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-	//cout << "This is function 'sendStateSpace()' in RBC_basic_model.C ." << endl; 
+	//Log::log() << "This is function 'sendStateSpace()' in RBC_basic_model.C ." << endl; 
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("RBC_basic_model::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
     (*stateSpace)[0]=&k;
- 	cout << "Now returning...." << endl; 
+ 	Log::log() << "Now returning...." << endl; 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -322,7 +322,7 @@ void RBC_basic_model::sendStateSpace(int &quantity,const real*** stateSpace)
 
 void RBC_basic_model::loadParamset(ifstream& inFile)
 {
-//cout << "This is function 'loadParamset()' in 'RBC_basic_model.C' ." << endl; 
+//Log::log() << "This is function 'loadParamset()' in 'RBC_basic_model.C' ." << endl; 
  
  	inFile >> zvar_expr;
 
@@ -356,7 +356,7 @@ void RBC_basic_model::loadParamset(ifstream& inFile)
 
 void RBC_basic_model::saveParamset(ofstream& outFile)
 {
-	//cout << "This is function 'saveParamset()' in 'AFFINE1.C' ." << endl; 
+	//Log::log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << endl; 
  	outFile << zvar_expr; 
 	outFile << alpha;
 	outFile << beta;
@@ -366,7 +366,7 @@ void RBC_basic_model::saveParamset(ofstream& outFile)
 	outFile << Z_0;
 	outFile << length;
 
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -384,18 +384,18 @@ void RBC_basic_model::saveParamset(ofstream& outFile)
 
 void RBC_basic_model::printParamset()
 {
-    //cout << "This is function 'printParamset()' in 'AFFINE.C' ." << endl; 
-	cout << zvar_expr << endl; 
-	cout << alpha << endl;
-	cout << beta << endl;
-	cout << gamma << endl;
-	cout << mu << endl;
-	cout << k_0 << endl;
-	cout << Z_0 << endl;
-	cout << length << endl;
+    //Log::log() << "This is function 'printParamset()' in 'AFFINE.C' ." << endl; 
+	Log::log() << zvar_expr << endl; 
+	Log::log() << alpha << endl;
+	Log::log() << beta << endl;
+	Log::log() << gamma << endl;
+	Log::log() << mu << endl;
+	Log::log() << k_0 << endl;
+	Log::log() << Z_0 << endl;
+	Log::log() << length << endl;
   
 
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -411,14 +411,14 @@ void RBC_basic_model::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::sendParameters(int& amount,real** parameters)
+void RBC_basic_model::sendParameters(int& amount,qreal** parameters)
 {
- 	//cout << "This is function 'sendParameters()' in 'RBC_basic_model.C' ." << endl; 
+ 	//Log::log() << "This is function 'sendParameters()' in 'RBC_basic_model.C' ." << endl; 
     
     if( *parameters )
 	delete *parameters;
     amount=7;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("RBC_basic_model::sendParameters",
 		   "Can't create array for parameters");
@@ -430,7 +430,7 @@ void RBC_basic_model::sendParameters(int& amount,real** parameters)
 	(*parameters[5])= Z_0;
 	(*parameters[6])= length;
 
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -446,9 +446,9 @@ void RBC_basic_model::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::receiveParameters(const real* parameters)
+void RBC_basic_model::receiveParameters(const qreal* parameters)
 {	
-	//cout << "This is function 'receiveParameters()' in 'RBC_basic_model.C' ." << endl; 
+	//Log::log() << "This is function 'receiveParameters()' in 'RBC_basic_model.C' ." << endl; 
 	alpha = parameters[0];
 	beta  = parameters[1];
 	gamma = parameters[2];
@@ -456,6 +456,6 @@ void RBC_basic_model::receiveParameters(const real* parameters)
 	k_0	  = parameters[4];
 	Z_0	  = parameters[5];
 	length= (long) parameters[6];
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 

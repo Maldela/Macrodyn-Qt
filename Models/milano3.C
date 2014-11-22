@@ -35,9 +35,9 @@ milano3::~milano3()
 /*                                                                            */
 /******************************************************************************/
 
-real milano3::Zins_1()
+qreal milano3::Zins_1()
 {
-    real r1;
+    qreal r1;
    r1=(Ls*alfa*b)/(a*(1-h)*((1-tax)*pgt+zt)+a*(1-h)*alfa*Ls);
     return r1;
 }
@@ -51,10 +51,10 @@ real milano3::Zins_1()
 /*                                                                        */   
 /*****************************************************************************/
 
-real milano3::Zins_2()
+qreal milano3::Zins_2()
 {
-     real r2;
- 	r2=(b*(h*((1-tax)*pgt+zt)+G+mreal))/((1-h)*((1-tax)*pgt+zt)+(a-a*h)*(G+mreal));
+     qreal r2;
+ 	r2=(b*(h*((1-tax)*pgt+zt)+G+mqreal))/((1-h)*((1-tax)*pgt+zt)+(a-a*h)*(G+mqreal));
     
      return r2;
 }    
@@ -69,7 +69,7 @@ real milano3::Zins_2()
 /******************************************************************************/
 
 
-real milano3::zins_3_function(const real& r)
+qreal milano3::zins_3_function(const qreal& r)
 {
     return (1-h)*((1-tax)*pgt+zt)*exp(((1-a)/(1-a-b))*log(r))-n1*exp((a/(1-a-b))*\
     log(a))*exp(((1-a)/(1-a-b))*log(b))*exp(((-a)/(1-a-b))*log(alfa))+\
@@ -78,30 +78,30 @@ real milano3::zins_3_function(const real& r)
 }
 
 
-real milano3::Zins_3(const real& r1, const real& r2)
+qreal milano3::Zins_3(const qreal& r1, const qreal& r2)
 {
-  //  real r3;
+  //  qreal r3;
     
   //  clog << setprecision(16);
 
- real pol(( b/a/(1-h)) );
+ qreal pol(( b/a/(1-h)) );
 
  
-  real oldzero;
-  real zero=0;
+  qreal oldzero;
+  qreal zero=0;
 
 
-  real left(0.001);
+  qreal left(0.001);
      int i; 
-  for (i=1; i<= (int) pow(10,(double)iter_prec); ++i)
+  for (int i=1; i<= (int) pow(10,(double)iter_prec); ++i)
     {
       if ( zins_3_function(i*pol/pow(10.0,(double) iter_prec) )>0 ) break;
     }
   left=pol*((i-1)/pow(10.0,(double)iter_prec) );
   
   
-  real right( pol*0.99999 );
-  for (i=1; i<=pow(10,(double)iter_prec); ++i)
+  qreal right( pol*0.99999 );
+  for (int i=1; i<=pow(10,(double)iter_prec); ++i)
     {
       if ( zins_3_function(pol*(pow(10,(double)iter_prec)-i)/pow(10.0,(double)iter_prec) )<0 ) break;
     }
@@ -109,20 +109,20 @@ real milano3::Zins_3(const real& r1, const real& r2)
   right*=1.1;
   int iter=0;
 
-  real m;
+  qreal m;
   do
     {
       iter++;
       oldzero=zero;
-      real value_left( zins_3_function(left) );
-      real value_right( zins_3_function(right) );
+      qreal value_left( zins_3_function(left) );
+      qreal value_right( zins_3_function(right) );
       m=( value_left-value_right )/(left-right);    
       zero=left-value_left/m;
 
      
       assert(zero>=left && zero<=right);
 
-      real value_zero( zins_3_function(zero) );
+      qreal value_zero( zins_3_function(zero) );
 
       if ( value_left*value_zero < 0 )
 	{
@@ -134,7 +134,7 @@ real milano3::Zins_3(const real& r1, const real& r2)
 	  left=zero;
 	}
     }
-	while (   ( left<r1 && left<r2 ) && iter < max_iter  && abs(zero-oldzero) > 1E-8);
+    while (   ( left<r1 && left<r2 ) && iter < max_iter  && qAbs(zero-oldzero) > 1E-8);
 
   return zero;
 }
@@ -152,8 +152,8 @@ real milano3::Zins_3(const real& r1, const real& r2)
 /*                                                                            */
 /******************************************************************************/
 
-void milano3::diseq_regime(const real& r1, const real& r2,
-const real& r3)
+void milano3::diseq_regime(const qreal& r1, const qreal& r2,
+const qreal& r3)
 {
 	    if(r1<=r2)
       if(r1<=r3)
@@ -167,23 +167,23 @@ const real& r3)
 	system_G6(r3);
 
 
-    real rr1( Zins_1() );
-    real rr2( Zins_2() );
-    real rr3( Zins_3(rr1,rr2) );
+    qreal rr1( Zins_1() );
+    qreal rr2( Zins_2() );
+    qreal rr3( Zins_3(rr1,rr2) );
 
     if ( rr1<=rr2 )
       {
 	if (rr1<=rr3) 
-	  rreal=rr1;
+	  rqreal=rr1;
 	else
-	  rreal=rr3;
+	  rqreal=rr3;
       }
     else
       {
 	if (rr2<=rr3)
-	  rreal=rr2;
+	  rqreal=rr2;
 	else
-	  rreal=rr3;
+	  rqreal=rr3;
       }
 }
    
@@ -200,45 +200,45 @@ const real& r3)
 /*                                                                            */
 /******************************************************************************/
 
-void milano3::system_3(const real& r2)
+void milano3::system_3(const qreal& r2)
                       
 {
-    real lambdas;
-    real gammas;
-    real oldpgt=pgt;
-    real oldzt=zt;
-//    real teta;
+    qreal lambdas;
+    qreal gammas;
+    qreal oldpgt=pgt;
+    qreal oldzt=zt;
+//    qreal teta;
 
- //   cout << "Hi! System 3" << endl;
+ //   Log::log() << "Hi! System 3" << endl;
     
-   rreal=r2;
-    empl=1/(alfa*(1/a-h))*(h*((1-tax)*pgt+zt)+mreal+G);
+   rqreal=r2;
+    empl=1/(alfa*(1/a-h))*(h*((1-tax)*pgt+zt)+mqreal+G);
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rreal*a);
+    capital=alfa*b*empl/(rqreal*a);
     lambdas=empl/Ls;
     gammas=exp((1-a-b)*log(output/n1))*exp((-a)*log(a/alfa))*exp((-b)*
-    log(b/rreal));
-    mtr=mreal;
+    log(b/rqreal));
+    mtr=mqreal;
     wtr=alfa;
-    rtr=rreal;
+    rtr=rqreal;
     teta=exp(psi1*log(gammas));
-    pgt=(output-alfa*empl-rreal*capital)/teta;
-    zt=capital*rreal/teta;
-    mreal=(mreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
+    pgt=(output-alfa*empl-rqreal*capital)/teta;
+    zt=capital*rqreal/teta;
+    mqreal=(mqreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
    
 
     
-/*    cout << ":3: empl   =" << empl<<endl;
-    cout << ":3: output =" << output<<endl;
-    cout << ":3: capital=" << capital<<endl;
-    cout << ":3: lambdas=" << lambdas<<endl;
-    cout << ":3: gammas =" << gammas<<endl;
-    cout << ":3: teta   =" << teta<<endl;
+/*    Log::log() << ":3: empl   =" << empl<<endl;
+    Log::log() << ":3: output =" << output<<endl;
+    Log::log() << ":3: capital=" << capital<<endl;
+    Log::log() << ":3: lambdas=" << lambdas<<endl;
+    Log::log() << ":3: gammas =" << gammas<<endl;
+    Log::log() << ":3: teta   =" << teta<<endl;
    
 */
-    if (pgt<0) cout << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) cout << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -254,22 +254,22 @@ void milano3::system_3(const real& r2)
 /*                                                                            */
 /******************************************************************************/
 
-void milano3::system_G6(const real& r3)
+void milano3::system_G6(const qreal& r3)
 {
-    real lambdas;
-    real gammad;
-    real delta;
-    real beta;
-    real oldpgt=pgt;
-    real oldzt=zt;
-//    real teta;
+    qreal lambdas;
+    qreal gammad;
+    qreal delta;
+    qreal beta;
+    qreal oldpgt=pgt;
+    qreal oldzt=zt;
+//    qreal teta;
 
-  //  cout << "Hi! System G6" << endl;
+  //  Log::log() << "Hi! System G6" << endl;
 
-    rreal=r3;
-    empl=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rreal));
+    rqreal=r3;
+    empl=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rqreal));
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rreal*a);
+    capital=alfa*b*empl/(rqreal*a);
     lambdas=empl/Ls;
     if (output<G){
 	beta=output/G;
@@ -279,37 +279,37 @@ void milano3::system_G6(const real& r3)
     else{
 	
 	beta=1;
-	if (output<(G+mreal)){
-	    delta=(output-G)/mreal;
+	if (output<(G+mqreal)){
+	    delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
+	    gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
 	}
     }
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
-    rtr=rreal;
+    rtr=rqreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-   pgt=(output-alfa*empl-rreal*capital)/teta;
-    zt=capital*rreal/teta;
-    mreal=(delta*mreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
+   pgt=(output-alfa*empl-rqreal*capital)/teta;
+    zt=capital*rqreal/teta;
+    mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
    
     
-/*    cout << ":G6: empl   =" << empl<<endl; 
-    cout << ":G6: output =" << output<<endl;
-    cout << ":G6: capital=" << capital<<endl;
-    cout << ":G6: lambdas=" << lambdas<<endl;
-    cout << ":G6: beta   =" << beta<<endl;
-    cout << ":G6: delta  =" << delta<<endl;
-    cout << ":G6: gammad =" << gammad<<endl;
-    cout << ":G6: teta   =" << teta<<endl;
+/*    Log::log() << ":G6: empl   =" << empl<<endl; 
+    Log::log() << ":G6: output =" << output<<endl;
+    Log::log() << ":G6: capital=" << capital<<endl;
+    Log::log() << ":G6: lambdas=" << lambdas<<endl;
+    Log::log() << ":G6: beta   =" << beta<<endl;
+    Log::log() << ":G6: delta  =" << delta<<endl;
+    Log::log() << ":G6: gammad =" << gammad<<endl;
+    Log::log() << ":G6: teta   =" << teta<<endl;
  */   
 
-    if (pgt<0) cout << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) cout << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
 }
 
 
@@ -324,24 +324,24 @@ void milano3::system_G6(const real& r3)
 /*                                                                            */
 /******************************************************************************/
 
-void milano3::system_8(const real& r1)
+void milano3::system_8(const qreal& r1)
 {
-    real lambdad;
-    real gammad;
-    real delta;
-    real beta;
-    real oldpgt=pgt;
-    real oldzt=zt;
-//    real teta;
+    qreal lambdad;
+    qreal gammad;
+    qreal delta;
+    qreal beta;
+    qreal oldpgt=pgt;
+    qreal oldzt=zt;
+//    qreal teta;
 
-//    cout << "Hi! System 8" << endl;
+//    Log::log() << "Hi! System 8" << endl;
     
-    rreal=r1;
+    rqreal=r1;
     empl=Ls;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rreal*a);
+    capital=alfa*b*empl/(rqreal*a);
     lambdad=empl/(n1*exp((1-b)/(1-a-b)*log(a/alfa))*
-            exp(b/(1-a-b)*log(b/rreal)));
+            exp(b/(1-a-b)*log(b/rqreal)));
 
     if (output<G){
 	beta=output/G;
@@ -350,38 +350,38 @@ void milano3::system_8(const real& r1)
     }
     else{
 	beta=1;
-	if (output<(G+mreal)){
-	    delta=(output-G)/mreal;
+	if (output<(G+mqreal)){
+	    delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
+	    gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
 	}
     }
 
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
-    rtr=rreal;
+    rtr=rqreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rreal*capital)/teta;
-    zt=capital*rreal/teta;
-    mreal=(delta*mreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
+    pgt=(output-alfa*empl-rqreal*capital)/teta;
+    zt=capital*rqreal/teta;
+    mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(-nu2*log(lambdad))*alfa)/teta;
   
 
-/*  cout << ":8: empl   =" << empl<<endl;
-    cout << ":8: output =" << output<<endl;
-    cout << ":8: capital=" << capital<<endl;
-    cout << ":8: lambdad=" << lambdad<<endl;
-    cout << ":8: gammad =" << gammad<<endl;
-    cout << ":8: delta  =" << delta<<endl;
-    cout << ":8: beta   =" << beta<<endl;
-    cout << ":8: teta   =" << teta<<endl;
+/*  Log::log() << ":8: empl   =" << empl<<endl;
+    Log::log() << ":8: output =" << output<<endl;
+    Log::log() << ":8: capital=" << capital<<endl;
+    Log::log() << ":8: lambdad=" << lambdad<<endl;
+    Log::log() << ":8: gammad =" << gammad<<endl;
+    Log::log() << ":8: delta  =" << delta<<endl;
+    Log::log() << ":8: beta   =" << beta<<endl;
+    Log::log() << ":8: teta   =" << teta<<endl;
   */
 
-    if (pgt<0) cout << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) cout << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -399,9 +399,9 @@ void milano3::system_8(const real& r1)
 void milano3::iteration(const long& t)
 {
 /*
-    real r1;
-    real r2;
-    real r3;
+    qreal r1;
+    qreal r2;
+    qreal r3;
 	
     r1=Zins_1();
     r2=Zins_2();
@@ -409,7 +409,7 @@ void milano3::iteration(const long& t)
 
     diseq_regime(r1,r2,r3);
 */
-cout << "model not active - contact A. Foerster" << endl;
+Log::log() << "model not active - contact A. Foerster" << endl;
 }
 
 
@@ -422,9 +422,9 @@ void milano3::loadParamset(ifstream& inFile)
   inFile >> a >> b;
   inFile >> psi1 >> psi2 >> nu1 >> nu2;
   inFile >> n1 >> simd;
-  inFile >> h >> pg0 >> alfa0 >> mreal0 >> z0;
+  inFile >> h >> pg0 >> alfa0 >> mqreal0 >> z0;
   inFile >> Ls >> G >> tax;
-// printf("%f %f \n %f %f\n  %f %f \n %d \n %d \n %f \n %f %f %f \n %f %f\n  %f %f \n %f" ,a,b,psi1,psi2,nu1,nu2,n1,simd,h,pg0,alfa0,mreal0,p0,z0,Ls,G,tax);
+// printf("%f %f \n %f %f\n  %f %f \n %d \n %d \n %f \n %f %f %f \n %f %f\n  %f %f \n %f" ,a,b,psi1,psi2,nu1,nu2,n1,simd,h,pg0,alfa0,mqreal0,p0,z0,Ls,G,tax);
 
     initialize();
 }
@@ -441,15 +441,15 @@ void milano3::loadParamset(ifstream& inFile)
 
 void milano3::printParamset()
 {
-    cout << "a      :  " << a <<"\talpha0 : " << alfa0 << endl;
-    cout << "b      :  " << b <<"\tmreal0 : " << mreal0 << endl;
-    cout << "z0 : " << z0 << endl;
-    cout << "n1     :  " << n1 << endl;
-    cout << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << endl;
-    cout << "nu1    :  " << nu1 << "\tG   : " << G << endl;
-    cout << "nu2    :  " << nu2 << "\ttax : " << tax << endl;
-    cout << "h      :  " << h << "\tsimd: " << simd << endl;
-    cout << "pg0    :  " << pg0 << "\tLs  : " << Ls << endl;
+    Log::log() << "a      :  " << a <<"\talpha0 : " << alfa0 << endl;
+    Log::log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
+    Log::log() << "z0 : " << z0 << endl;
+    Log::log() << "n1     :  " << n1 << endl;
+    Log::log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << endl;
+    Log::log() << "nu1    :  " << nu1 << "\tG   : " << G << endl;
+    Log::log() << "nu2    :  " << nu2 << "\ttax : " << tax << endl;
+    Log::log() << "h      :  " << h << "\tsimd: " << simd << endl;
+    Log::log() << "pg0    :  " << pg0 << "\tLs  : " << Ls << endl;
 }
 
 /******************************************************************************/
@@ -466,7 +466,7 @@ void milano3::saveParamset(ofstream& outFile)
     outFile << nu1 << " " << nu2 << endl;
     outFile << n1 << " " << simd << endl;
     outFile << h << endl;
-    outFile << pg0 << " " << alfa0 << " " << mreal0 << " " << z0 << endl;
+    outFile << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0 << endl;
     outFile << Ls << " " << G << " " << tax << endl;
 }
 
@@ -481,7 +481,7 @@ void milano3::saveParamset(ofstream& outFile)
 /*                                                                            */
 /******************************************************************************/
 
-real* milano3::setLabels(char* name)
+qreal* milano3::setLabels(char* name)
 {
     if( !strcmp(name,"G") )
 	return( &G );
@@ -497,12 +497,12 @@ real* milano3::setLabels(char* name)
 	return( &b );
     if( !strcmp(name,"alfa") )
 	return( &alfa );
-   if( !strcmp(name,"mreal") )
-	return( &mreal );
+   if( !strcmp(name,"mqreal") )
+	return( &mqreal );
     if( !strcmp(name,"pgt") )
 	return( &pgt );
-    if( !strcmp(name,"rreal") )
-        return( &rreal );
+    if( !strcmp(name,"rqreal") )
+        return( &rqreal );
     if( !strcmp(name,"teta") )
          return( &teta );
     if( !strcmp(name,"zt") )
@@ -529,14 +529,14 @@ real* milano3::setLabels(char* name)
 	return( &Ls );
     if( !strcmp(name,"alfa0") )
 	return( &alfa0 );
-    if( !strcmp(name,"mreal0") )
-	return( &mreal0 );
+    if( !strcmp(name,"mqreal0") )
+	return( &mqreal0 );
     if( !strcmp(name,"pg0") )
 	return( &pg0 );
     if( !strcmp(name,"z0") )
         return( &z0 );
     if( !strcmp(name,"n1") )
-	return( (real*) &n1 );
+	return( (qreal*) &n1 );
     return( NULL );
 }
 
@@ -544,63 +544,63 @@ void milano3::initialize()
 {
     alfa=alfa0;
     pgt=pg0;
-    mreal=mreal0;
+    mqreal=mqreal0;
     zt=z0;
 
-    real r1( Zins_1() );
-    real r2( Zins_2() );
-    real r3( Zins_3(r1,r2) );
+    qreal r1( Zins_1() );
+    qreal r2( Zins_2() );
+    qreal r3( Zins_3(r1,r2) );
 
     if ( r1<=r2 )
       {
 	if (r1<=r3) 
-	  rreal=r1;
+	  rqreal=r1;
 	else
-	  rreal=r3;
+	  rqreal=r3;
       }
     else
       {
 	if (r2<=r3)
-	  rreal=r2;
+	  rqreal=r2;
 	else
-	  rreal=r3;
+	  rqreal=r3;
       }
 }
 
 
-real* milano3::sendModelVar()
+qreal* milano3::sendModelVar()
 {
     return &alfa; // return the main model variable
 }
 
-void milano3::sendStateSpace(int &quantity,const real*** stateSpace)
+void milano3::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("milano3::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
 
 
-	(*stateSpace)[0]=&mreal;
+	(*stateSpace)[0]=&mqreal;
         (*stateSpace)[1]=&alfa;
         (*stateSpace)[2]=&pgt;
-        (*stateSpace)[3]=&rreal;
+        (*stateSpace)[3]=&rqreal;
         (*stateSpace)[4]=&zt;      
 
 }
 // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-void milano3::sendParameters(int&,real**)
+void milano3::sendParameters(int&,qreal**)
 {
 } // write all parameters
                    
                              // into an array and return the numbers
 				// of parameters
-void milano3::receiveParameters(const real*)
+void milano3::receiveParameters(const qreal*)
 {
 }
 // receive parameter values 

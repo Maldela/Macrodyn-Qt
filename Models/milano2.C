@@ -31,20 +31,20 @@ milano2::~milano2()
 /*   Last modified:                                                          */
 /*                                                                            */
 /******************************************************************************/
-real milano2::mu_function(const real& mu, const real& epsilon, const real& b,
-		 const real& c)
+qreal milano2::mu_function(const qreal& mu, const qreal& epsilon, const qreal& b,
+         const qreal& c)
 {
   return ( epsilon*pow(mu,1-b) 
 	   + pow(1-epsilon*mu,1-b)/pow(1-epsilon,-b)
 	   -c );
 }
 
-real milano2::regfal(int max_iter, real start_left, real start_right, real c)
+qreal milano2::regfal(int max_iter, qreal start_left, qreal start_right, qreal c)
 {
-  real oldzero;
-  real zero(start_left);
-  real left(start_left);
-  real right(start_right);
+  qreal oldzero;
+  qreal zero(start_left);
+  qreal left(start_left);
+  qreal right(start_right);
 
   int iter=0;
 
@@ -52,14 +52,14 @@ real milano2::regfal(int max_iter, real start_left, real start_right, real c)
     {
       iter++;
       oldzero=zero;
-      real value_left( mu_function(left,epsilon,b,c) );
-      real value_right( mu_function(right,epsilon,b,c) );
-      real m=( value_left-value_right )/(left-right);    
+      qreal value_left( mu_function(left,epsilon,b,c) );
+      qreal value_right( mu_function(right,epsilon,b,c) );
+      qreal m=( value_left-value_right )/(left-right);
       zero=left-value_left/m;
 
       // assert(zero>=left && zero<=right);
 
-      real value_zero(mu_function(zero,epsilon,b,c));
+      qreal value_zero(mu_function(zero,epsilon,b,c));
 
       if ( value_left*value_zero < 0 )
 	{
@@ -71,7 +71,7 @@ real milano2::regfal(int max_iter, real start_left, real start_right, real c)
 	  left=zero;
 	}
     }
-  while ( iter < max_iter && abs(zero-oldzero) > 1E-4);
+  while ( iter < max_iter && qAbs(zero-oldzero) > 1E-4);
 
   // clog << "regfal: needed " << iter << " iterations." << endl;
 
@@ -88,11 +88,11 @@ real milano2::regfal(int max_iter, real start_left, real start_right, real c)
 /*                                                                            */
 /******************************************************************************/
 
-real milano2::virtual_s1employment()
+qreal milano2::virtual_s1employment()
 {
-    real s1_emp;
+    qreal s1_emp;
 
-    s1_emp=1/(alfa*(1/a-h))*(h*((1-tax)*pgt+zt)+mreal+G);
+    s1_emp=1/(alfa*(1/a-h))*(h*((1-tax)*pgt+zt)+mqreal+G);
     return s1_emp;
 }
 
@@ -105,12 +105,12 @@ real milano2::virtual_s1employment()
 /*                                                                        */   
 /*****************************************************************************/
 
-real milano2::virtual_s4employment()
+qreal milano2::virtual_s4employment()
 {
-     real s4_emp;
+     qreal s4_emp;
 
-     if(b/(a*(1-h))>rreal)
-        s4_emp=((1-h)*((1-tax)*pgt+zt))/((alfa*b)/(rreal*a)-(1-h)*alfa);
+     if(b/(a*(1-h))>rqreal)
+        s4_emp=((1-h)*((1-tax)*pgt+zt))/((alfa*b)/(rqreal*a)-(1-h)*alfa);
      else
         s4_emp=Ls+1;
      return s4_emp;
@@ -125,11 +125,11 @@ real milano2::virtual_s4employment()
 /*                                                                            */
 /******************************************************************************/
 
-real milano2::labour_demand()
+qreal milano2::labour_demand()
 {
-    real l_dem;
+    qreal l_dem;
     
-    l_dem=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rreal));
+    l_dem=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rqreal));
     return l_dem;
 }
 
@@ -143,8 +143,8 @@ real milano2::labour_demand()
 /*                                                                            */
 /******************************************************************************/
 
-void milano2::diseq_regime(const real& s1_emp, const real& s4_emp,
-const real& l_dem)
+void milano2::diseq_regime(const qreal& s1_emp, const qreal& s4_emp,
+const qreal& l_dem)
 {
     if(s1_emp<=Ls)
         if(s1_emp<=l_dem)
@@ -182,33 +182,33 @@ const real& l_dem)
 /*                                                                            */
 /******************************************************************************/
 
-void milano2::system_1(const real& s1_emp)
+void milano2::system_1(const qreal& s1_emp)
 {
-    real lambdas;
-    real mus;
-    real gammas;
-    real oldpgt=pgt;
-    real oldzt=zt;
- //   real teta;
+    qreal lambdas;
+    qreal mus;
+    qreal gammas;
+    qreal oldpgt=pgt;
+    qreal oldzt=zt;
+ //   qreal teta;
 
     empl=s1_emp;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rreal*a);
+    capital=alfa*b*empl/(rqreal*a);
     lambdas=empl/Ls;
     mus=capital/((1-h)*(alfa*empl+(1-tax)*pgt+zt));
     gammas=exp((1-a-b)*log(output/n1))*exp((-a)*log(a/alfa))*exp((-b)*
-    log(b/rreal));
-    mtr=mreal;
+    log(b/rqreal));
+    mtr=mqreal;
     wtr=alfa;
-    rtr=rreal;
+    rtr=rqreal;
     teta=exp(psi1*log(gammas));
-    pgt=(output-alfa*empl-rreal*capital)/teta;
-    zt=capital*rreal/teta;
-    mreal=(mreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
+    pgt=(output-alfa*empl-rqreal*capital)/teta;
+    zt=capital*rqreal/teta;
+    mqreal=(mqreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
-    rreal=(exp(omikron1*log(mus))*rreal)/teta;
-    if (pgt<0) cout << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) cout << "  Anfangsausstattung ist negativ." << endl;
+    rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
+    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -224,20 +224,20 @@ void milano2::system_1(const real& s1_emp)
 /*                                                                            */
 /******************************************************************************/
 
-void milano2::system_2(const real& l_dem)
+void milano2::system_2(const qreal& l_dem)
 {
-    real lambdas;
-    real mus;
-    real gammad;
-    real delta;
-    real beta;
-    real oldpgt=pgt;
-    real oldzt=zt;
- //   real teta;
+    qreal lambdas;
+    qreal mus;
+    qreal gammad;
+    qreal delta;
+    qreal beta;
+    qreal oldpgt=pgt;
+    qreal oldzt=zt;
+ //   qreal teta;
 
     empl=l_dem;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rreal*a);
+    capital=alfa*b*empl/(rqreal*a);
     lambdas=empl/Ls;
     mus=capital/((1-h)*(alfa*empl+(1-tax)*pgt+zt));
     if (output<G){
@@ -248,26 +248,26 @@ void milano2::system_2(const real& l_dem)
     else{
 	
 	beta=1;
-	if (output<(G+mreal)){
-	    delta=(output-G)/mreal;
+    if (output<(G+mqreal)){
+        delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
+        gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
 	}
     }
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
-    rtr=rreal;
+    rtr=rqreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rreal*capital)/teta;
-    zt=capital*rreal/teta;
-    mreal=(delta*mreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
+    pgt=(output-alfa*empl-rqreal*capital)/teta;
+    zt=capital*rqreal/teta;
+    mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
-    rreal=(exp(omikron1*log(mus))*rreal)/teta;
-    if (pgt<0) cout << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) cout << "  Anfangsausstattung ist negativ." << endl;
+    rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
+    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -282,29 +282,29 @@ void milano2::system_2(const real& l_dem)
 /*                                                                            */
 /******************************************************************************/
 
-void milano2::system_4(const real& s4_emp)
+void milano2::system_4(const qreal& s4_emp)
 {
-    real lambdas;
-    real mud;
-    real gammad;
-    real delta;
-    real beta;
-    real oldpgt=pgt;
-    real oldzt=zt;
-//    real teta;
-    real c;
+    qreal lambdas;
+    qreal mud;
+    qreal gammad;
+    qreal delta;
+    qreal beta;
+    qreal oldpgt=pgt;
+    qreal oldzt=zt;
+//    qreal teta;
+    qreal c;
 
     empl=s4_emp;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rreal*a);
+    capital=alfa*b*empl/(rqreal*a);
     lambdas=empl/Ls;
 
-    c=exp((1-a-b)*log(capital/n1))*exp((-1+a)*log(b/rreal))*
+    c=exp((1-a-b)*log(capital/n1))*exp((-1+a)*log(b/rqreal))*
     exp(-a*log(a/alfa));
 
     if(c>=exp(b*log(1-epsilon)) && c<=1)
       {
-	/* real mudxxx=(1-epsilon-exp(2*log(c)))/epsilon+2*exp(2*log(c))-2*
+    /* qreal mudxxx=(1-epsilon-exp(2*log(c)))/epsilon+2*exp(2*log(c))-2*
 	  exp(0.5*log((exp(2*log(c)))/epsilon-(exp(4*log(c)))/epsilon-
 		      exp(2*log(c))+exp(4*log(c))));
 		      */
@@ -314,18 +314,18 @@ void milano2::system_4(const real& s4_emp)
       }
     else
       {
-	if ( n1*exp(b/(1-a-b)*log(b/rreal))
+    if ( n1*exp(b/(1-a-b)*log(b/rqreal))
 	     *exp((1-b)/(1-a-b)*log(a/alfa))
 	     *exp(b/(1-a-b)*log(1-epsilon)) > s4_emp
 	     )
 	  {
-	    rreal=f*rreal;
+        rqreal=f*rqreal;
 	    return;
 	  }
 	else
 	  {
 	    // clog << "milano2::system_4: unzulaessiger Parameterwert fuer c" << endl;
-	    error("milano2::system_4: unzulaessiger Parameterwert fuer c: %lf", c);
+        error("milano2::system_4: unzulaessiger Parameterwert fuer c: %lf", QString::number(c));
 	    // exit(1);
 	  }
       }      
@@ -338,26 +338,26 @@ void milano2::system_4(const real& s4_emp)
     }
     else{
 	beta=1;
-	if (output<(G+mreal)){
-	    delta=(output-G)/mreal;
+    if (output<(G+mqreal)){
+        delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
+        gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
 	}
     }
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
-    rtr=rreal;
+    rtr=rqreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rreal*capital)/teta;
-    zt=capital*rreal/teta;
-    mreal=(delta*mreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
+    pgt=(output-alfa*empl-rqreal*capital)/teta;
+    zt=capital*rqreal/teta;
+    mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
-    rreal=(exp(-omikron2*log(mud))*rreal)/teta;
-    if (pgt<0) cout << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) cout << "  Anfangsausstattung ist negativ." << endl;
+    rqreal=(exp(-omikron2*log(mud))*rqreal)/teta;
+    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -372,20 +372,20 @@ void milano2::system_4(const real& s4_emp)
 /*                                                                            */
 /******************************************************************************/
 
-void milano2::system_6(const real& l_dem)
+void milano2::system_6(const qreal& l_dem)
 {
-    real lambdad;
-    real mus;
-    real gammad;
-    real delta;
-    real beta;
-    real oldpgt=pgt;
-    real oldzt=zt;
-//    real teta;
+    qreal lambdad;
+    qreal mus;
+    qreal gammad;
+    qreal delta;
+    qreal beta;
+    qreal oldpgt=pgt;
+    qreal oldzt=zt;
+//    qreal teta;
     
     empl=Ls;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rreal*a);
+    capital=alfa*b*empl/(rqreal*a);
     lambdad=empl/l_dem;
     mus=capital/((1-h)*(alfa*empl+(1-tax)*pgt+zt));
     if (output<G){
@@ -395,26 +395,26 @@ void milano2::system_6(const real& l_dem)
     }
     else{
 	beta=1;
-	if (output<(G+mreal)){
-	    delta=(output-G)/mreal;
+    if (output<(G+mqreal)){
+        delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
+        gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
 	}
     }
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
-    rtr=rreal;
+    rtr=rqreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rreal*capital)/teta;
-    zt=capital*rreal/teta;
-    mreal=(delta*mreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
+    pgt=(output-alfa*empl-rqreal*capital)/teta;
+    zt=capital*rqreal/teta;
+    mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(-nu2*log(lambdad))*alfa)/teta;
-    rreal=(exp(omikron1*log(mus))*rreal)/teta;
-    if (pgt<0) cout << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) cout << "  Anfangsausstattung ist negativ." << endl;
+    rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
+    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -433,16 +433,16 @@ void milano2::system_6(const real& l_dem)
 void milano2::iteration(const long& t)
 {
 /*
-    real s1_emp;
-    real s4_emp;
-    real l_dem;
+    qreal s1_emp;
+    qreal s4_emp;
+    qreal l_dem;
 
     s1_emp=virtual_s1employment();
     s4_emp=virtual_s4employment();
     l_dem=labour_demand();
     diseq_regime(s1_emp,s4_emp,l_dem);
 */
-cout << "model not active - contact A. Foerster" << endl;
+Log::log() << "model not active - contact A. Foerster" << endl;
 
 }
 
@@ -455,7 +455,7 @@ void milano2::loadParamset(ifstream& inFile)
     inFile >> a >> b;
     inFile >> psi1 >> psi2 >> nu1 >> nu2 >> omikron1 >> omikron2;
     inFile >> n1 >> simd;
-    inFile >> h >> pg0 >> alfa0 >> mreal0 >> rreal0 >> z0;
+    inFile >> h >> pg0 >> alfa0 >> mqreal0 >> rqreal0 >> z0;
     inFile >> Ls >> G >> tax >> epsilon >> f;
 
     initialize();
@@ -473,18 +473,18 @@ void milano2::loadParamset(ifstream& inFile)
 
 void milano2::printParamset()
 {
-    cout << "a      :  " << a <<"\talpha0 : " << alfa0 << endl;
-    cout << "b      :  " << b <<"\tmreal0 : " << mreal0 << endl;
-    cout << "rreal0 :  " << rreal0 <<"\tz0 : " << z0 << endl;
-    cout << "epsilon : " << epsilon << endl;
-    cout << "f      :  " << f << endl;
-    cout << "n1     :  " << n1 << endl;
-    cout << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << endl;
-    cout << "omikron1 : " << omikron1 << "\tomikron2 : " << omikron2 << endl;
-    cout << "nu1    :  " << nu1 << "\tG   : " << G << endl;
-    cout << "nu2    :  " << nu2 << "\ttax : " << tax << endl;
-    cout << "h      :  " << h << "\tsimd: " << simd << endl;
-    cout << "pg0    :  " << pg0 << "\tLs  : " << Ls << endl;
+    Log::log() << "a      :  " << a <<"\talpha0 : " << alfa0 << endl;
+    Log::log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
+    Log::log() << "rqreal0 :  " << rqreal0 <<"\tz0 : " << z0 << endl;
+    Log::log() << "epsilon : " << epsilon << endl;
+    Log::log() << "f      :  " << f << endl;
+    Log::log() << "n1     :  " << n1 << endl;
+    Log::log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << endl;
+    Log::log() << "omikron1 : " << omikron1 << "\tomikron2 : " << omikron2 << endl;
+    Log::log() << "nu1    :  " << nu1 << "\tG   : " << G << endl;
+    Log::log() << "nu2    :  " << nu2 << "\ttax : " << tax << endl;
+    Log::log() << "h      :  " << h << "\tsimd: " << simd << endl;
+    Log::log() << "pg0    :  " << pg0 << "\tLs  : " << Ls << endl;
 }
 
 /******************************************************************************/
@@ -501,7 +501,7 @@ void milano2::saveParamset(ofstream& outFile)
     outFile << nu1 << " " << nu2 << " " << omikron1 << " " << omikron2 << endl;
     outFile << n1 << " " << simd << endl;
     outFile << h << " " << epsilon << " " << f << endl;
-    outFile << rreal0 << " " << pg0 << " " << alfa0 << " " << mreal0 << " " << z0 << endl;
+    outFile << rqreal0 << " " << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0 << endl;
     outFile << Ls << " " << G << " " << tax << endl;
 }
 
@@ -516,7 +516,7 @@ void milano2::saveParamset(ofstream& outFile)
 /*                                                                            */
 /******************************************************************************/
 
-real* milano2::setLabels(char* name)
+qreal* milano2::setLabels(char* name)
 {
     if( !strcmp(name,"G") )
 	return( &G );
@@ -532,12 +532,12 @@ real* milano2::setLabels(char* name)
 	return( &b );
     if( !strcmp(name,"alfa") )
 	return( &alfa );
-    if( !strcmp(name,"mreal") )
-	return( &mreal );
+    if( !strcmp(name,"mqreal") )
+    return( &mqreal );
     if( !strcmp(name,"pgt") )
 	return( &pgt );
-    if( !strcmp(name,"rreal") )
-        return( &rreal );
+    if( !strcmp(name,"rqreal") )
+        return( &rqreal );
     if( !strcmp(name,"teta") )
          return( &teta );
    if( !strcmp(name,"zt") )
@@ -568,12 +568,12 @@ real* milano2::setLabels(char* name)
 	return( &Ls );
     if( !strcmp(name,"alfa0") )
 	return( &alfa0 );
-    if( !strcmp(name,"mreal0") )
-	return( &mreal0 );
+    if( !strcmp(name,"mqreal0") )
+    return( &mqreal0 );
     if( !strcmp(name,"pg0") )
 	return( &pg0 );
-    if( !strcmp(name,"rreal0") )
-        return( &rreal0 );
+    if( !strcmp(name,"rqreal0") )
+        return( &rqreal0 );
     if( !strcmp(name,"z0") )
         return( &z0 );
     if( !strcmp(name,"epsilon") )
@@ -581,7 +581,7 @@ real* milano2::setLabels(char* name)
     if( !strcmp(name,"f") )
         return( &f );
     if( !strcmp(name,"n1") )
-	return( (real*) &n1 );
+    return( (qreal*) &n1 );
     return( NULL );
 }
 
@@ -589,33 +589,33 @@ void milano2::initialize()
 {
     alfa=alfa0;
     pgt=pg0;
-    mreal=mreal0;
-    rreal=rreal0;
+    mqreal=mqreal0;
+    rqreal=rqreal0;
     zt=z0;
 }
 
 
-real* milano2::sendModelVar()
+qreal* milano2::sendModelVar()
 {
     return &alfa; // return the main model variable
 }
 
-void milano2::sendStateSpace(int &quantity,const real*** stateSpace)
+void milano2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("milano2::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
 
 
-    (*stateSpace)[0]=&mreal;
+    (*stateSpace)[0]=&mqreal;
     (*stateSpace)[1]=&alfa;
 /*    (*stateSpace)[2]=&pt;*/
     (*stateSpace)[2]=&pgt;
-    (*stateSpace)[3]=&rreal;
+    (*stateSpace)[3]=&rqreal;
     (*stateSpace)[4]=&zt; 
 }
 
@@ -623,13 +623,13 @@ void milano2::sendStateSpace(int &quantity,const real*** stateSpace)
 // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-void milano2::sendParameters(int&,real**)
+void milano2::sendParameters(int&,qreal**)
 {
 } // write all parameters
                    
                              // into an array and return the numbers
 				// of parameters
-void milano2::receiveParameters(const real*)
+void milano2::receiveParameters(const qreal*)
 {
 }
 // receive parameter values 

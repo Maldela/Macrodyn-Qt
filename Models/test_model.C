@@ -70,20 +70,20 @@ void test_model::iteration(const long& time)
 // weiche Parameterwerte
 // l1=1 l2=1.4 A=10 B=0.5 delta=0.9 varphi=0.45 alpha_max=1.0697564
 // kein Rentensystem
-/*	real A = 10.0;
-	real B = 0.1;
-	real l_1 = 1.0;
-	real l_2 = 1.71;
-	real delta = 0.9;
-	real varphi = 0.45;
-	real alpha_max = 1.0697564;
+/*	qreal A = 10.0;
+    qreal B = 0.1;
+    qreal l_1 = 1.0;
+    qreal l_2 = 1.71;
+    qreal delta = 0.9;
+    qreal varphi = 0.45;
+    qreal alpha_max = 1.0697564;
 
-	real w = A*(1.0-B)*pow(d,B);
-	real R = 1.0+A*B*pow(d,B-1.0);
-	//real R=1.0;
+    qreal w = A*(1.0-B)*pow(d,B);
+    qreal R = 1.0+A*B*pow(d,B-1.0);
+    //qreal R=1.0;
 	
 	s1 = l_1*w-1.0/(1.0+delta+delta*delta)*(l_1*w+l_2*w/R);
-	cout << "w: " << w <<"\tR: " << R << "\ts1: " << s1 << "\ts2: " << s2 << endl;	
+    Log::log() << "w: " << w <<"\tR: " << R << "\ts1: " << s1 << "\ts2: " << s2 << endl;
 	s2 = delta/(1.0+delta)*(l_2*w+R*s1);
 	d2 = 1.0/(l_2*(1.0+sqrt(l_2/l_1)))*(sqrt(l_2/l_1)*s1+s2)-d;
 
@@ -135,7 +135,7 @@ void test_model::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* test_model::sendModelVar()
+qreal* test_model::sendModelVar()
 {
     return &d;
 }
@@ -151,7 +151,7 @@ real* test_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* test_model::setLabels(char* label)
+qreal* test_model::setLabels(char* label)
 {
 	if( !strcmp(label,"Ed") )
 		return( &Ed);
@@ -208,11 +208,11 @@ real* test_model::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::sendStateSpace(int &quantity,const real*** stateSpace)
+void test_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("test_model::sendStateSpace",
 		   "Can't create state space vector");
@@ -293,7 +293,7 @@ void test_model::saveParamsetWithNames(ofstream& outFile)
 void test_model::printParamset()
 {
 
-	cout << d << "\t" << length << endl;
+    Log::log() << d << "\t" << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -308,12 +308,12 @@ void test_model::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::sendParameters(int& amount,real** parameters)
+void test_model::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=2;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("test_model::sendParameters",
 		   "Can't create array for parameters");
@@ -333,7 +333,7 @@ void test_model::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::receiveParameters(const real* parameters)
+void test_model::receiveParameters(const qreal* parameters)
 {
     d=parameters[0];
     length=long(parameters[1]);

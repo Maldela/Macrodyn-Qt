@@ -28,17 +28,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 det_var::det_var() : rSolow()
 {
-    trans_x= new real[trans_x_max];
-    if( !trans_x )
-	fatalError("det_var::det_var","Can't create trans_x vector");
+//    trans_x= new qreal[trans_x_max];
+//    if( !trans_x )
+//	fatalError("det_var::det_var","Can't create trans_x vector");
 
-    trans_a= new real[trans_x_max-1];
-    if( !trans_a )
-	fatalError("det_var::det_var","Can't create trans_a vector");
+//    trans_a= new qreal[trans_x_max-1];
+//    if( !trans_a )
+//	fatalError("det_var::det_var","Can't create trans_a vector");
 
-    trans_b= new real[trans_x_max-1];
-    if( !trans_b )
-	fatalError("det_var::det_var","Can't create trans_b vector");
+//    trans_b= new qreal[trans_x_max-1];
+//    if( !trans_b )
+//	fatalError("det_var::det_var","Can't create trans_b vector");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -54,11 +54,11 @@ det_var::det_var() : rSolow()
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-void det_var::sendStateSpace(int &quantity,const real*** stateSpace)
+void det_var::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("det_var::sendStateSpace",
 		   "Can't create state space vector");
@@ -80,7 +80,7 @@ void det_var::sendStateSpace(int &quantity,const real*** stateSpace)
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* det_var::setLabels(char* label)
+qreal* det_var::setLabels(char* label)
 {
     if( !strcmp(label,"_z_0") ) return(&_z_0);
     if( !strcmp(label,"_z") ) return(&_z);
@@ -104,7 +104,7 @@ real* det_var::setLabels(char* label)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////
-real  det_var::trans(real z, real* x, real* a, real* b)
+qreal  det_var::trans(qreal z, qreal* x, qreal* a, qreal* b)
 {
     int i=0;
     while(x[i]<1) {
@@ -118,7 +118,7 @@ real  det_var::trans(real z, real* x, real* a, real* b)
 	i++;
 //printf("\ni=%i\t",i);
 	}
-    error("macrodyn::det_var::trans: can not compute z.  (i=%i) \n",i);
+    error("macrodyn::det_var::trans: can not compute z.  (i=%i) \n", QString::number(i));
     return(-1);
 }
 
@@ -134,11 +134,11 @@ real  det_var::trans(real z, real* x, real* a, real* b)
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real theta_logistic ( real d, real m)
+static qreal theta_logistic ( qreal d, qreal m)
 { return (m * d * (1-d)) ;
 }
 
-static real theta_tent ( real d, real m)
+static qreal theta_tent ( qreal d, qreal m)
 { 
   
   if( d<=m ) {
@@ -148,7 +148,7 @@ static real theta_tent ( real d, real m)
   }
 }
 
-static real theta_saw ( real d, real m)
+static qreal theta_saw ( qreal d, qreal m)
 { if( d<m ) {
     return (1/m * d);
   } else {
@@ -182,7 +182,7 @@ void det_var::theta_init ( void )
       theta=theta_saw;
     break;
     default :
-      error("macrodyn::det_var::theta_init: theta type %d not yet implemented : ", int(theta_type));
+      error("macrodyn::det_var::theta_init: theta type %d not yet implemented : ", QString::number(theta_type));
   }
 }
 
@@ -202,7 +202,7 @@ void det_var::theta_init ( void )
 void det_var::initialize()
 {
     _z      = _z_0;			// initialize the underlying process
-    _z_var_ptr = setLabels(label);// get a pointer to the parameter
+    _z_var_ptr = setLabels(_z_var_name);// get a pointer to the parameter
     if (_z_var_ptr == NULL) 
        fatalError("det_var::initialize","Var Name not known");
     * _z_var_ptr = trans(_z,trans_x,trans_a,trans_b);	// initialize _z_var_ptr

@@ -62,7 +62,7 @@ void Samuelson_basic::iteration(const long&)
 	if (v_0noise < v_0prob){
 	v_0=v_0min;}
 	else {v_0=v_0max;}  
-	//cout << v_0noise << endl;
+    //Log::log() << v_0noise << endl;
 	y2 = y1;
 	y1 = y;
 	y = m_0+v_0+(m+v)*y1-v*y2+noise;
@@ -106,7 +106,7 @@ void Samuelson_basic::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* Samuelson_basic::sendModelVar()
+qreal* Samuelson_basic::sendModelVar()
 {
     return &y;
 }
@@ -123,7 +123,7 @@ real* Samuelson_basic::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* Samuelson_basic::setLabels(char* label)
+qreal* Samuelson_basic::setLabels(char* label)
 {
 	if( !strcmp(label,"xBundle") )
 		return( &xBundle );
@@ -168,11 +168,11 @@ real* Samuelson_basic::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::sendStateSpace(int &quantity,const real*** stateSpace)
+void Samuelson_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("Samuelson_basic::sendStateSpace",
 		   "Can't create state space vector");
@@ -259,8 +259,8 @@ void Samuelson_basic::saveParamsetWithNames(ofstream& outFile)
 
 void Samuelson_basic::printParamset()
 {
-	cout << y1_0 << "\t" << y2_0 << "\t" << m_0 << "\t" << v_0 << "\t";
-	cout << m << "\t" << v << "\t" <<  lambda << "\t" << myseed << "\t" << length << endl;
+    Log::log() << y1_0 << "\t" << y2_0 << "\t" << m_0 << "\t" << v_0 << "\t";
+    Log::log() << m << "\t" << v << "\t" <<  lambda << "\t" << myseed << "\t" << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -275,12 +275,12 @@ void Samuelson_basic::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::sendParameters(int& amount,real** parameters)
+void Samuelson_basic::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=8;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("Samuelson_basic::sendParameters",
 		   "Can't create array for parameters");
@@ -306,7 +306,7 @@ void Samuelson_basic::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::receiveParameters(const real* parameters)
+void Samuelson_basic::receiveParameters(const qreal* parameters)
 {
     y1_0=parameters[0];
     y2_0=parameters[1];
@@ -389,9 +389,9 @@ void Samuelson_ar1::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* Samuelson_ar1::setLabels(char* label)
+qreal* Samuelson_ar1::setLabels(char* label)
 {
-	real *plab = NULL;
+    qreal *plab = NULL;
 	plab = Samuelson_basic::setLabels( label );
 	if ( plab != NULL ) return plab;
 

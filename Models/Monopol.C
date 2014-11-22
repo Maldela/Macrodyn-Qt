@@ -58,7 +58,7 @@ void Monopol::initialize()
 /******************************************************************************/
 
 
-real* Monopol::sendModelVar()
+qreal* Monopol::sendModelVar()
 {
     return &m;
 }
@@ -75,7 +75,7 @@ real* Monopol::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-real* Monopol::setLabels(char* label)
+qreal* Monopol::setLabels(char* label)
 {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
@@ -128,11 +128,11 @@ real* Monopol::setLabels(char* label)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::sendStateSpace(int &quantity,const real*** stateSpace)
+void Monopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !stateSpace )
 	fatalError("Monopol::sendStateSpace",
 		   "Can't create state space vector");
@@ -195,12 +195,12 @@ void Monopol::saveParamset(ofstream& outFile)
 
 void Monopol::printParamset()
 {
-    cout << beta0 << "\t" << M0 << "\t" << w0 << endl;
-    cout << z0 << "\t" << g << "\t" << tau << endl;
-    cout << B << "\t" << eta << "\t" << alpha << endl;
-    cout << Lmax << "\t" << lambda << "\t" << mu << endl;        
-    cout << delta << "\t" << cert << endl;
-    cout << length << endl;
+    Log::log() << beta0 << "\t" << M0 << "\t" << w0 << endl;
+    Log::log() << z0 << "\t" << g << "\t" << tau << endl;
+    Log::log() << B << "\t" << eta << "\t" << alpha << endl;
+    Log::log() << Lmax << "\t" << lambda << "\t" << mu << endl;        
+    Log::log() << delta << "\t" << cert << endl;
+    Log::log() << length << endl;
 }
 
 
@@ -214,12 +214,12 @@ void Monopol::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::sendParameters(int& amount,real** parameters)
+void Monopol::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=14;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !parameters )
 	fatalError("Monopol::sendParameters",
 		   "Can't create array for parameters");
@@ -251,7 +251,7 @@ void Monopol::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::receiveParameters(const real* parameters)
+void Monopol::receiveParameters(const qreal* parameters)
 {
     beta0=parameters[0];
     M0=parameters[1];
@@ -280,9 +280,9 @@ void Monopol::receiveParameters(const real* parameters)
 /*                                                                            */
 /******************************************************************************/
 
-real Monopol::FF(const real L)
+qreal Monopol::FF(const qreal L)
 {
-	real result;
+	qreal result;
 
 	result= 1/B * exp( B*log(L) );              
 	return(result);
@@ -298,9 +298,9 @@ real Monopol::FF(const real L)
 /*                                                                            */
 /******************************************************************************/
 
-real Monopol::Finv(const real y)
+qreal Monopol::Finv(const qreal y)
 {
-	real result;
+	qreal result;
 
 	result= exp( 1/B*log(B*y) );              
 	return(result);
@@ -317,9 +317,9 @@ real Monopol::Finv(const real y)
 /*                                                                            */
 /******************************************************************************/
 
-real Monopol::gamma(void)
+qreal Monopol::gamma(void)
 {
-	real result;
+	qreal result;
 	if(cert == 1)
 		{
 		result = 1/(alpha-1);
@@ -342,10 +342,10 @@ real Monopol::gamma(void)
 /*                                                                            */
 /******************************************************************************/
 
-real Monopol::cpar(void)
+qreal Monopol::cpar(void)
 {
-	real result;
-	real gam;
+	qreal result;
+	qreal gam;
 	
 	gam=gamma();	
 	if(cert == 1)
@@ -374,10 +374,10 @@ real Monopol::cpar(void)
 /*                                                                            */
 /******************************************************************************/
 
-real Monopol::xnot(void)
+qreal Monopol::xnot(void)
 {
-	real result;
-	real cpa;
+	qreal result;
+	qreal cpa;
 	cpa = cpar();
 	result = exp(B*eta/(eta+B-B*eta)*log((1-1/eta)*zeta*
 		  cpa*exp((1-1/B)*log(B))));              
@@ -394,10 +394,10 @@ real Monopol::xnot(void)
 /*                                                                            */
 /******************************************************************************/
 
-real Monopol::rewa(const real x)
+qreal Monopol::rewa(const qreal x)
 {
-	real result;
-	real gam;
+	qreal result;
+	qreal gam;
 	gam=gamma();
 	result = pow(x/gam,1/eta)/zeta;              
 	return(result);
@@ -415,12 +415,12 @@ real Monopol::rewa(const real x)
 
 void Monopol::iteration(const long&)
 {
-    real Ltdem;          //  notional labor demand
-    real Lt;		 //  actual employment level
-    real rewat;		 //  monopolist's price
-    real ytdem;		 //  goods demand
-    real xt;             //  goods trade
-    real gam;
+    qreal Ltdem;          //  notional labor demand
+    qreal Lt;		 //  actual employment level
+    qreal rewat;		 //  monopolist's price
+    qreal ytdem;		 //  goods demand
+    qreal xt;             //  goods trade
+    qreal gam;
     
     gam=gamma();
     Ltdem= Finv(MAX(0,xnot()-z));

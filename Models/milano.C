@@ -29,12 +29,12 @@ milano::~milano()
 /*                                                                            */
 /******************************************************************************/
 
-real milano::virtual_Kemployment()
+qreal milano::virtual_Kemployment()
 {
-    real K_emp;
+    qreal K_emp;
 
     if (h*b<1)
-	K_emp=b/(alfa*(1-h*b))*(h*(1-tax)*pgt+mreal+G);
+	K_emp=b/(alfa*(1-h*b))*(h*(1-tax)*pgt+mqreal+G);
     else
 	K_emp=Ls+1;
     return K_emp;
@@ -50,9 +50,9 @@ real milano::virtual_Kemployment()
 /*                                                                            */
 /******************************************************************************/
 
-real milano::labour_demand()
+qreal milano::labour_demand()
 {
-    real l_dem;
+    qreal l_dem;
     
     l_dem=n1*exp(1/(b-1)*log(alfa/(a*b)));
     return l_dem;
@@ -68,7 +68,7 @@ real milano::labour_demand()
 /*                                                                            */
 /******************************************************************************/
 
-void milano::diseq_regime(const real& K_emp, const real& l_dem)
+void milano::diseq_regime(const qreal& K_emp, const qreal& l_dem)
 {
     if (K_emp<=l_dem)
 	if (K_emp<=Ls)
@@ -92,22 +92,22 @@ void milano::diseq_regime(const real& K_emp, const real& l_dem)
 /*                                                                            */
 /******************************************************************************/
 
-void milano::keynesian_unemployment(const real& K_emp)
+void milano::keynesian_unemployment(const qreal& K_emp)
 {
-    real lambdas;
-    real gammas;
-    real oldpgt=pgt;
-    real teta;
+    qreal lambdas;
+    qreal gammas;
+    qreal oldpgt=pgt;
+    qreal teta;
 
     empl=K_emp;
     output=alfa*empl/b;
     lambdas=empl/Ls;
     gammas=exp((1-b)*log(output/(n1*a)))*exp(b*log(alfa/(a*b)));
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
     teta=exp(mu1*log(gammas));
     pgt=(output-alfa*empl)/teta;
-    mreal=(mreal+G+(1-tax)*oldpgt)/teta-pgt;
+    mqreal=(mqreal+G+(1-tax)*oldpgt)/teta-pgt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
 }
 
@@ -121,14 +121,14 @@ void milano::keynesian_unemployment(const real& K_emp)
 /*                                                                            */
 /******************************************************************************/
 
-void milano::repressed_inflation (const real& l_dem)
+void milano::repressed_inflation (const qreal& l_dem)
 {
-    real lambdad;
-    real gammad;
-    real delta;
-    real epsilon;
-    real oldpgt=pgt;
-    real teta;
+    qreal lambdad;
+    qreal gammad;
+    qreal delta;
+    qreal epsilon;
+    qreal oldpgt=pgt;
+    qreal teta;
 
     empl=Ls;
     output=alfa*empl/b;
@@ -141,20 +141,20 @@ void milano::repressed_inflation (const real& l_dem)
     else{
 	
 	epsilon=1;
-	if (output<G+(mreal)){
-	    delta=(output-G)/mreal;
+	if (output<G+(mqreal)){
+	    delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
+	    gammad=(output-mqreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
 	}
     }
     teta=exp(-mu2*log((gammad+epsilon+delta)/3.0));
     pgt=(output-alfa*empl)/teta;
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
-    mreal=(delta*mreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
+    mqreal=(delta*mqreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
     alfa=(exp(-nu2*log(lambdad))*alfa)/teta;
 }
 
@@ -168,14 +168,14 @@ void milano::repressed_inflation (const real& l_dem)
 /*                                                                            */
 /******************************************************************************/
 
-void milano::classical_unemployment(const real& l_dem)
+void milano::classical_unemployment(const qreal& l_dem)
 {
-    real lambdas;
-    real gammad;
-    real delta;
-    real epsilon;
-    real oldpgt=pgt;
-    real teta;
+    qreal lambdas;
+    qreal gammad;
+    qreal delta;
+    qreal epsilon;
+    qreal oldpgt=pgt;
+    qreal teta;
     
     empl=l_dem;
     output=alfa*empl/b;
@@ -187,20 +187,20 @@ void milano::classical_unemployment(const real& l_dem)
     }
     else{
 	epsilon=1;
-	if (output<G+(mreal)){
-	    delta=(output-G)/mreal;
+	if (output<G+(mqreal)){
+	    delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
+	    gammad=(output-mqreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
 	}
     }
     teta=exp(-mu2*log((delta+epsilon+gammad)/3.0));
     pgt=(output-alfa*empl)/teta;
-    mtr=mreal;
+    mtr=mqreal;
     wtr=alfa;
-    mreal=(delta*mreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
+    mqreal=(delta*mqreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
 }
 
@@ -216,8 +216,8 @@ void milano::classical_unemployment(const real& l_dem)
 
 void milano::iteration(const long& t)
 {
-    real K_emp;
-    real l_dem;
+    qreal K_emp;
+    qreal l_dem;
 
     K_emp=virtual_Kemployment();
     l_dem=labour_demand();
@@ -233,7 +233,7 @@ void milano::loadParamset(ifstream& inFile)
     inFile >> a >> b;
     inFile >> mu1 >> mu2 >> nu1 >> nu2;
     inFile >> n1 >> simd;
-    inFile >> h >> pg0 >> alfa0 >> mreal0;
+    inFile >> h >> pg0 >> alfa0 >> mqreal0;
     inFile >> Ls >> G >> tax;
 
     initialize();
@@ -249,14 +249,14 @@ void milano::loadParamset(ifstream& inFile)
 
 void milano::printParamset()
 {
-    cout << "a     :  " << a <<"\talpha0 : " << alfa0 << endl;
-    cout << "b     :  " << b <<"\tmreal0 : " << mreal0 << endl;
-    cout << "n1    :  " << n1 << endl;
-    cout << "mu1   :  " << mu1 << "\tmu2 : " << mu2 << endl;
-    cout << "nu1   :  " << nu1 << "\tG   : " << G << endl;
-    cout << "nu2   :  " << nu2 << "\ttax : " << tax << endl;
-    cout << "h     :  " << h << "\tsimd: " << simd << endl;
-    cout << "pg0   :  " << pg0 << "\tLs  : " << Ls << endl;
+    Log::log() << "a     :  " << a <<"\talpha0 : " << alfa0 << endl;
+    Log::log() << "b     :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
+    Log::log() << "n1    :  " << n1 << endl;
+    Log::log() << "mu1   :  " << mu1 << "\tmu2 : " << mu2 << endl;
+    Log::log() << "nu1   :  " << nu1 << "\tG   : " << G << endl;
+    Log::log() << "nu2   :  " << nu2 << "\ttax : " << tax << endl;
+    Log::log() << "h     :  " << h << "\tsimd: " << simd << endl;
+    Log::log() << "pg0   :  " << pg0 << "\tLs  : " << Ls << endl;
 }
 
 /******************************************************************************/
@@ -271,7 +271,7 @@ void milano::saveParamset(ofstream& outFile)
     outFile << a << " " << b << endl;
     outFile << mu1 << " " << mu2 << " " << nu1 << " " << nu2 << endl;
     outFile << n1 << " " << simd << endl;
-    outFile << h << " " << pg0 << " " << alfa0 << " " << mreal0 << endl;
+    outFile << h << " " << pg0 << " " << alfa0 << " " << mqreal0 << endl;
     outFile << Ls << " " << G << " " << tax << endl;
 }
 
@@ -286,7 +286,7 @@ void milano::saveParamset(ofstream& outFile)
 /*                                                                            */
 /******************************************************************************/
 
-real* milano::setLabels(char* name)
+qreal* milano::setLabels(char* name)
 {
     if( !strcmp(name,"G") )
 	return( &G );
@@ -300,8 +300,8 @@ real* milano::setLabels(char* name)
 	return( &b );
     if( !strcmp(name,"alfa") )
 	return( &alfa );
-    if( !strcmp(name,"mreal") )
-	return( &mreal );
+    if( !strcmp(name,"mqreal") )
+	return( &mqreal );
     if( !strcmp(name,"pgt") )
 	return( &pgt );
     if( !strcmp(name,"mtr") ) 
@@ -324,12 +324,12 @@ real* milano::setLabels(char* name)
 	return( &Ls );
     if( !strcmp(name,"alfa0") )
 	return( &alfa0 );
-    if( !strcmp(name,"mreal0") )
-	return( &mreal0 );
+    if( !strcmp(name,"mqreal0") )
+	return( &mqreal0 );
     if( !strcmp(name,"pg0") )
 	return( &pg0 );
     if( !strcmp(name,"n1") )
-	return( (real*) &n1 );
+	return( (qreal*) &n1 );
     return( NULL );
 }
 
@@ -337,25 +337,25 @@ void milano::initialize()
 {
     alfa=alfa0;
     pgt=pg0;
-    mreal=mreal0;
+    mqreal=mqreal0;
 }
 
 
-real* milano::sendModelVar()
+qreal* milano::sendModelVar()
 {
     return &alfa; // return the main model variable
 }
 
-void milano::sendStateSpace(int &quantity,const real*** stateSpace)
+void milano::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("milano::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
-    (*stateSpace)[0]=&mreal;
+    (*stateSpace)[0]=&mqreal;
     (*stateSpace)[1]=&alfa;
 /*    (*stateSpace)[2]=&pt;*/
     (*stateSpace)[2]=&pgt;
@@ -365,12 +365,12 @@ void milano::sendStateSpace(int &quantity,const real*** stateSpace)
 // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-void milano::sendParameters(int&,real**)
+void milano::sendParameters(int&,qreal**)
 {
 } // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-void milano::receiveParameters(const real*)
+void milano::receiveParameters(const qreal*)
 {
 }
 // receive parameter values 

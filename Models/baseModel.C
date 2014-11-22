@@ -65,13 +65,13 @@ void baseModel::printParamset() {
 void baseModel::saveParamset(ofstream&) {
 	error("macrodyn::baseModel::saveParamset is not implemented");
 	}
-real* baseModel::sendModelVar(void) {
+qreal* baseModel::sendModelVar(void) {
 	error("macrodyn::baseModel::sendModelVar is not implemented");
 	return NULL;
 	}
-void baseModel::sendParameters(int&,real**) {
+void baseModel::sendParameters(int&,qreal**) {
 	error("macrodyn::baseModel::sendParameters is not implemented");
 	}
-void baseModel::receiveParameters(const real*) {
+void baseModel::receiveParameters(const qreal*) {
 	error("macrodyn::baseModel::receiveParameters is not implemented");
 	}

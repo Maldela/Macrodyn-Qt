@@ -17,67 +17,67 @@
 class laborMarketFirst : public baseModel {
   protected:
   //Parameters
-    real A,B;                             // production function parameters
-    real deltaP;			  // depreciationrate
-    real Lmax;                            // maximum labour supply
+    qreal A,B;                             // production function parameters
+    qreal deltaP;			  // depreciationrate
+    qreal Lmax;                            // maximum labour supply
   //Consumer
-    real betaS,betaW;
-    real rhoS,rhoW,deltaS,deltaW;         // utility function parameters   
-    real rhoTildaS,rhoTildaW;
+    qreal betaS,betaW;
+    qreal rhoS,rhoW,deltaS,deltaW;         // utility function parameters   
+    qreal rhoTildaS,rhoTildaW;
     int  tauS,tauW;                       // length of expectations memory
   //Government
-    real g,taxS,taxW;                     // government demand, tax rates   
+    qreal g,taxS,taxW;                     // government demand, tax rates   
   //Velocity
-    real gamm,kappa;                      // price adjustment parameters   
-    real lambda,mu;                       // wage adjustment parameters    
+    qreal gamm,kappa;                      // price adjustment parameters   
+    qreal lambda,mu;                       // wage adjustment parameters    
   //Initial state
-    real w0,mS0,mW0,omega0,d0,theta0;     // initial values                
+    qreal w0,mS0,mW0,omega0,d0,theta0;     // initial values                
   //Condition variables
-    real wtreal;			// real wage
-    real mtrealS,mtrealW;	        // real moneybalance ShareholderWorker
-    real omegat,dt;    			// unsold output,real dividend
-    real ptrate,wtrate;                 // real wage, real balance       
-    real employment;                    // actual employment   
-    real output;                        // actual sold output
-    real *theta;			// pointer on recent inflationrates
+    qreal wtqreal;			// qreal wage
+    qreal mtqrealS,mtqrealW;	        // qreal moneybalance ShareholderWorker
+    qreal omegat,dt;    			// unsold output,qreal dividend
+    qreal ptrate,wtrate;                 // qreal wage, qreal balance       
+    qreal employment;                    // actual employment   
+    qreal output;                        // actual sold output
+    qreal *theta;			// pointer on recent inflationrates
   //Model functions
-    real laborDemand();                 // national demand for Labor
-    real actualEmployment(real&);
-    real detSigmaL(real&);              // percentage surplus of the labormarket
-    real detWtRate(real&);	        // wage adjustment 
-    virtual real expectedInflationRateW(const long);
-    real consumptionPropensityW(real&); 
-    real demandYoungW(real&);           // desired consum of the young workers
-    virtual real expectedInflationRateS(const long);                
-    real consumptionPropensityS(real&);
-    real demandYoungS(real&); 
-    real aggregateDemand(real&,real&);
-    real productionFunction(const real&);// compute effectiv production
-    real actualOutput(real&,real&);      // actual sold output
-    real remainingOutputYoung();
-    real actualConsumptionYoungS(real&,real&,real&);
-    real actualConsumptionYoungW(real&,real&,real&);
-    real detSigmaC(real&,real&);      //percentage signal for price modification
-    real actualInflationrate(real&,real&);    
-    void dynamics(real&,real&,real&);                        
+    qreal laborDemand();                 // national demand for Labor
+    qreal actualEmployment(qreal&);
+    qreal detSigmaL(qreal&);              // percentage surplus of the labormarket
+    qreal detWtRate(qreal&);	        // wage adjustment 
+    virtual qreal expectedInflationRateW(const long);
+    qreal consumptionPropensityW(qreal&); 
+    qreal demandYoungW(qreal&);           // desired consum of the young workers
+    virtual qreal expectedInflationRateS(const long);                
+    qreal consumptionPropensityS(qreal&);
+    qreal demandYoungS(qreal&); 
+    qreal aggregateDemand(qreal&,qreal&);
+    qreal productionFunction(const qreal&);// compute effectiv production
+    qreal actualOutput(qreal&,qreal&);      // actual sold output
+    qreal remainingOutputYoung();
+    qreal actualConsumptionYoungS(qreal&,qreal&,qreal&);
+    qreal actualConsumptionYoungW(qreal&,qreal&,qreal&);
+    qreal detSigmaC(qreal&,qreal&);      //percentage signal for price modification
+    qreal actualInflationrate(qreal&,qreal&);    
+    void dynamics(qreal&,qreal&,qreal&);                        
 public:
     laborMarketFirst();			 // constructor
     virtual ~laborMarketFirst();	 // destructor
 
-    void thetaInit(real*);		 // vector of recent inflationrates
+    void thetaInit(qreal*);		 // vector of recent inflationrates
     void initialize();			 // initialize the model, define
 					 // the initial state
     void loadParamset(ifstream&);	 // load parameterset from a file
     void saveParamset(ofstream&);	 // write parameterset into a file
     void printParamset();		 // print parameterset on the screen
-    void sendParameters(int&,real**);    // write all parameters into an array
+    void sendParameters(int&,qreal**);    // write all parameters into an array
                                          // and return the numbers of parameters
-    void receiveParameters(const real*); // receive parameter values 
+    void receiveParameters(const qreal*); // receive parameter values 
 
-    real* setLabels(char*);		 // return a pointer to a variable or
+    qreal* setLabels(char*);		 // return a pointer to a variable or
 					 // a parameter specified by its name
-    real* sendModelVar();		 // return the main model variable
-    void sendStateSpace(int &,const real***); // return pointers to all model
+    qreal* sendModelVar();		 // return the main model variable
+    void sendStateSpace(int &,const qreal***); // return pointers to all model
 					 // variables and the dimension
 					 // of the model
     virtual void iteration(const long&); // perform one iteration 

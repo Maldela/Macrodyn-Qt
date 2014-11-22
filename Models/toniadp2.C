@@ -10,7 +10,6 @@
 
 #include "toniadp2.h"             
 
-extern void fatalError(const char*, const char*);
 
 /******************************************************************************/
 /*                                                                            */
@@ -55,18 +54,18 @@ void toniadp2::initialize()
 {
 	for(int k=0;k<=L;k++) pp[k]=pp0[k];
 
-	real wsum=0;
-	for(k=0;k<=L;k++)
+    qreal wsum=0;
+    for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-		//cout << "k=" << k  << " wsum=" << wsum << "\n";   
+        //Log::log() << "k=" << k  << " wsum=" << wsum << "\n";
 	   }
-	//real ko=0;
+    //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-		//cout << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";   
+        //Log::log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
 	   }
 }
 /******************************************************************************/
@@ -86,24 +85,24 @@ void toniadp2::loadParamset(ifstream& inputFile)
     L=(int)L0;
     if( pp0 )
 	delete [] pp0;
-        pp0 = new real[L+1];
+        pp0 = new qreal[L+1];
     if( !pp0 )
 	fatalError("toniadp2::loadParamset","Can't create initprice vector");
  
     for(int k=0;k<=L;k++)
         {
     	inputFile >> pp0[k] ;
-    	//cout << "L=" << L << "k=" << k  << "po=" << pp0[k];
+        //Log::log() << "L=" << L << "k=" << k  << "po=" << pp0[k];
     	}
 
     if( pp )
 	delete [] pp;
-        pp = new real[L+1];
+        pp = new qreal[L+1];
     if( !pp )
 	fatalError("toniadp2::loadParamset","Can't create price vector");
     if( vv )
 	delete [] vv;
-        vv = new real[L+1];
+        vv = new qreal[L+1];
     if( !vv )
 	fatalError("toniadp2::loadParamset","Can't create weight vector");
     	
@@ -139,7 +138,7 @@ void toniadp2::saveParamsetWithNames(ofstream& outputFile)
     outputFile << "\tL = " << L0 << "\tlength = "<< length << "\t";
     for(int k=0;k<=L;k++)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
-    for(k=0;k<=L;k++)
+    for (int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
     outputFile << "\n";
 }
@@ -153,10 +152,10 @@ void toniadp2::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void toniadp2::printParamset()
 {
-    cout << gamma  << "\t" << beta << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
-    cout << length << "\n";
+    Log::log() << gamma  << "\t" << beta << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
+    Log::log() << length << "\n";
     for(int k=0;k<=L;k++)
-        cout << pp0[k] << "\t";
+        Log::log() << pp0[k] << "\t";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -167,12 +166,12 @@ void toniadp2::printParamset()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp2::sendParameters(int& amount,real** parameters)
+void toniadp2::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=L+7;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("toniadp2::sendParameters",
 		   "Can't create array for parameters");
@@ -180,7 +179,7 @@ void toniadp2::sendParameters(int& amount,real** parameters)
     (*parameters)[1]=beta;
     (*parameters)[2]=alpha;
     (*parameters)[3]=w;
-    (*parameters)[4]=(real)L;
+    (*parameters)[4]=(qreal)L;
     (*parameters)[5]=length;
     for(int k=6;k<=(L+6);k++)
         (*parameters)[k]=pp0[k];
@@ -193,7 +192,7 @@ void toniadp2::sendParameters(int& amount,real** parameters)
 /* Last modified:   30.01.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp2::receiveParameters(const real* parameters)
+void toniadp2::receiveParameters(const qreal* parameters)
 {
     gamma=parameters[0];
     beta=parameters[1];
@@ -213,7 +212,7 @@ void toniadp2::receiveParameters(const real* parameters)
 /* Last modified:   09.03.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* toniadp2::setLabels(char *name)
+qreal* toniadp2::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -247,11 +246,11 @@ real* toniadp2::setLabels(char *name)
 /*                                                                            */
 /* Class name:      toniadp2                                                  */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* toniadp2::sendModelVar()
+qreal* toniadp2::sendModelVar()
 {
     return pp;
 }
@@ -259,17 +258,17 @@ real* toniadp2::sendModelVar()
 /*                                                                            */
 /* Class name:      toniadp2                                                  */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp2::sendStateSpace(int &quantity,const real*** stateSpace)
+void toniadp2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-    //cout << "toniadp2 sendStateSpace";
+    //Log::log() << "toniadp2 sendStateSpace";
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("toniadp2::sendStateSpace",
 		   "Can't create state space vector");
@@ -284,9 +283,9 @@ void toniadp2::sendStateSpace(int &quantity,const real*** stateSpace)
 /* Last modified:   28.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real toniadp2::hoch(real &x,int &i)
+qreal toniadp2::hoch(qreal &x,int &i)
 {
-	real count=1.0;
+    qreal count=1.0;
 	for (int k=i;k>0;k--)
 		count*=x;
 	return count;
@@ -299,7 +298,7 @@ real toniadp2::hoch(real &x,int &i)
 /* Last modified:   19.03.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real toniadp2::fFunction(real &x)
+qreal toniadp2::fFunction(qreal &x)
 {
   return ( (1.0 - w)*(alpha-(x - 1.0)/(beta*((x-1.0)*(x-1.0)+gamma*gamma*x*x))) + w*x );
 }
@@ -311,12 +310,12 @@ real toniadp2::fFunction(real &x)
 /* Last modified:   04.02.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp2::dynamics(real &a)
+void toniadp2::dynamics(qreal &a)
 {
 	for (int i=1;i<=L;i++) 
 		pp[L+1-i]=pp[L-i];
 	pp[0]=fFunction(a);				
-	//cout << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
+    //Log::log() << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
 	v=pp[0]-a;
 }
 /******************************************************************************/
@@ -329,9 +328,9 @@ void toniadp2::dynamics(real &a)
 /******************************************************************************/
 void toniadp2::iteration(const long& t)
 {
-	real add=0;
-	real ev=0;
-	real abw=0;
+    qreal add=0;
+    qreal ev=0;
+    qreal abw=0;
 
 	for (int i=0;i<=L;i++) 
 	{
@@ -340,12 +339,12 @@ void toniadp2::iteration(const long& t)
 	}
 	ev*=(L+1);		//Everage
 
-	for (i=0;i<=L;i++) 
+    for (int i=0;i<=L;i++)
 		abw+=((pp[i]-ev)*(pp[i]-ev));
 	s=sqrt(abw)/L;
 
 	dynamics(add);
 
-	//cout << "\nPeriod " << ii << "\t";
-	//for(int k=0;k<=L;k++) cout << pp[k] << "\t";
+    //Log::log() << "\nPeriod " << ii << "\t";
+    //for(int k=0;k<=L;k++) Log::log() << pp[k] << "\t";
 }

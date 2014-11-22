@@ -55,29 +55,29 @@ if(zvar) delete zvar;
 
 void affine2::iteration(const long&)
 {
-	//cout << "This is function 'iteration()' in affine2.C" << endl;
+	//Log::log() << "This is function 'iteration()' in affine2.C" << endl;
     
  	urv = zvar->dice();	// Set a new random value for the Parameter
-    real oldX=x;
+    qreal oldX=x;
 	
 	if(urv < p) 
 	{
-	//cout << "map1 is chosen" << endl;
+	//Log::log() << "map1 is chosen" << endl;
 	count1 = count1 + 1;
 	x = a1*oldX;
 	}
 	else
 	{
-	//cout << "map2 is chosen" << endl;
+	//Log::log() << "map2 is chosen" << endl;
 	x = a2*oldX + 1;
 	count2 = count2 + 1;
 	}
 
-	/*cout << "oldX = " << oldX << endl;
-	cout << "urv  = " << urv << endl;
-	cout << "x = " << x << endl;
-	cout << "count1 = " << count1 << endl;
-	cout << "count2 = " << count2 << endl;*/
+	/*Log::log() << "oldX = " << oldX << endl;
+	Log::log() << "urv  = " << urv << endl;
+	Log::log() << "x = " << x << endl;
+	Log::log() << "count1 = " << count1 << endl;
+	Log::log() << "count2 = " << count2 << endl;*/
 
 }
     
@@ -97,30 +97,30 @@ void affine2::iteration(const long&)
 
 void affine2::initialize()
 {
-	//cout << "This is function 'initialize()' in AFFINE2.C ."<< endl; 
-   	//cout << incase1 << endl;;
+	//Log::log() << "This is function 'initialize()' in AFFINE2.C ."<< endl; 
+   	//Log::log() << incase1 << endl;;
 	x=x0;
 	count1=0;
 	count2=0;
     zvar = new rand_var(this,"ranf",zvar_expr);
 	if(!zvar)	
 	fatalError("randvar::initialize stoch_ar", "can't create rand_var");
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 	if(incase1==1) 
 	{
-	//cout << "case1 is valid:" << endl;
+	//Log::log() << "case1 is valid:" << endl;
 	a1 = a;
 	a2 = a-1;
-	/*cout << "a = " << a << endl;
-	cout << "a1= a = " << a1 << endl;
-	cout << "a2= a-1 = " << a2 << endl;*/
+	/*Log::log() << "a = " << a << endl;
+	Log::log() << "a1= a = " << a1 << endl;
+	Log::log() << "a2= a-1 = " << a2 << endl;*/
 	}
 else
 	{
-	/*cout << "case2 or case 3 is valid:" << endl;
-	cout << "a = " << a << endl;
-	cout << "a1= a = " << a1 << endl;
-	cout << "a2= a-1 = " << a2 << endl;*/
+	/*Log::log() << "case2 or case 3 is valid:" << endl;
+	Log::log() << "a = " << a << endl;
+	Log::log() << "a1= a = " << a1 << endl;
+	Log::log() << "a2= a-1 = " << a2 << endl;*/
 	}
 
 
@@ -140,11 +140,11 @@ else
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* affine2::sendModelVar()
+qreal* affine2::sendModelVar()
 {
-	//cout << "This is function 'sendModelVar()' in AFFINE2.C" << endl;
+	//Log::log() << "This is function 'sendModelVar()' in AFFINE2.C" << endl;
     return &x;
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -160,9 +160,9 @@ real* affine2::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* affine2::setLabels(char* label)
+qreal* affine2::setLabels(char* label)
 {
-	//cout << "This is function 'setLabels()' in AFFINE2.C ." << endl;
+	//Log::log() << "This is function 'setLabels()' in AFFINE2.C ." << endl;
 	if( !strcmp(label,"a") )
 	return( &a);
     if( !strcmp(label,"a1") )
@@ -182,7 +182,7 @@ real* affine2::setLabels(char* label)
 	if( !strcmp(label,"yBundle") )
 	return( &yBundle );
     return NULL;
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -199,18 +199,18 @@ real* affine2::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine2::sendStateSpace(int &quantity,const real*** stateSpace)
+void affine2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-	//cout << "This is function 'sendStateSpace()' in AFFINE2.C ." << endl; 
+	//Log::log() << "This is function 'sendStateSpace()' in AFFINE2.C ." << endl; 
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("affine2::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
     (*stateSpace)[0]=&x;
- 	cout << "Now returning...." << endl; 
+ 	Log::log() << "Now returning...." << endl; 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -228,17 +228,17 @@ void affine2::sendStateSpace(int &quantity,const real*** stateSpace)
 
 void affine2::loadParamset(ifstream& inFile)
 {
-//cout << "This is function 'loadParamset()' in 'AFFINE2.C' ." << endl; 
+//Log::log() << "This is function 'loadParamset()' in 'AFFINE2.C' ." << endl; 
  
  	inFile >> zvar_expr;  
-	//cout << zvar_expr << endl;
+	//Log::log() << zvar_expr << endl;
 	inFile >> incase1;
-	//cout << incase1 << endl;
+	//Log::log() << incase1 << endl;
 	inFile >> a;
-	//cout << a << endl;
+	//Log::log() << a << endl;
 	if(a<0 || a > 1) fatalError("affine2::loadParamset","Parameter a out of range");
 	inFile >> a1;
-	//cout << a1 << endl;
+	//Log::log() << a1 << endl;
 	if((a1<=0) || (a1>=1)) fatalError("affine2::loadParamset","Parameter a1 out of range");
 	inFile >> a2;
     if(a2<=-1 || a2 >= 0) fatalError("affine2::loadParamset","Parameter a2 out of range");
@@ -247,9 +247,9 @@ void affine2::loadParamset(ifstream& inFile)
 	inFile >> p;
 	inFile >> length;
 
-	/*cout << "a = " << a << endl;
-	cout << "a1= " << a1 << endl;
-	cout << "a2= " << a2 << endl;*/
+	/*Log::log() << "a = " << a << endl;
+	Log::log() << "a1= " << a1 << endl;
+	Log::log() << "a2= " << a2 << endl;*/
  	
     	initialize();
 }
@@ -269,14 +269,14 @@ void affine2::loadParamset(ifstream& inFile)
 
 void affine2::saveParamset(ofstream& outFile)
 {
-	//cout << "This is function 'saveParamset()' in 'AFFINE1.C' ." << endl; 
+	//Log::log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << endl; 
    	outFile << a  << "\t";
 	outFile << a1  << "\t";
 	outFile << a2  << "\t";
 	outFile << x0  << "\t";
 	outFile << p  << "\t";
     outFile << length;
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -294,14 +294,14 @@ void affine2::saveParamset(ofstream& outFile)
 
 void affine2::printParamset()
 {
-    //cout << "This is function 'printParamset()' in 'AFFINE.C' ." << endl; 
-    cout << a << endl;
-	cout << a1 << endl;
-	cout << a2 << endl;
-	cout << x0 << endl;
-    cout << p << endl;
-    cout << length << endl;
-	//cout << "Now returning...." << endl; 
+    //Log::log() << "This is function 'printParamset()' in 'AFFINE.C' ." << endl; 
+    Log::log() << a << endl;
+	Log::log() << a1 << endl;
+	Log::log() << a2 << endl;
+	Log::log() << x0 << endl;
+    Log::log() << p << endl;
+    Log::log() << length << endl;
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -317,14 +317,14 @@ void affine2::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine2::sendParameters(int& amount,real** parameters)
+void affine2::sendParameters(int& amount,qreal** parameters)
 {
- 	//cout << "This is function 'sendParameters()' in 'AFFINE2.C' ." << endl; 
+ 	//Log::log() << "This is function 'sendParameters()' in 'AFFINE2.C' ." << endl; 
     
     if( *parameters )
 	delete *parameters;
     amount=6;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("affine2::sendParameters",
 		   "Can't create array for parameters");
@@ -334,7 +334,7 @@ void affine2::sendParameters(int& amount,real** parameters)
 	(*parameters[3])=x0;
 	(*parameters[4])=p;
     (*parameters[5])=length;
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -350,15 +350,15 @@ void affine2::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine2::receiveParameters(const real* parameters)
+void affine2::receiveParameters(const qreal* parameters)
 {	
-	//cout << "This is function 'receiveParameters()' in 'AFFINE2.C' ." << endl; 
+	//Log::log() << "This is function 'receiveParameters()' in 'AFFINE2.C' ." << endl; 
 	a=parameters[0];
 	a1=parameters[1];
 	a2=parameters[2];
 	x0=parameters[3];
 	p=parameters[4];
     length=(long)(parameters[5]);
-	//cout << "Now returning...." << endl; 
+	//Log::log() << "Now returning...." << endl; 
 }
 

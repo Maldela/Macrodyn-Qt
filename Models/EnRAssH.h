@@ -20,46 +20,46 @@
 class EnRAssH : public baseModel {
 
 protected:
-	real	N;			// finite number of consumers
-	real	e;			// initial endowment
-	real	R;			// risk free rate of return
-	real	x_;			// fixed number of shares
-	real	c_a;			// consum of a
-	real	alpha,alphamin;		// risk aversion
-	real	theta0,theta,thetaOld;	// price expectation
-	real	*thetaPtr;
-	real	thetaE,thetaDiff;	// error free theta
-	real	dmax,d,dOld,dmid;	// random dividend
-	real	*dPtr;
-	real	p0,pmax,p,pOld,pmid;	// stockprice
-	real	*pPtr;
-	real	MEP;			// 
-	real	eps,epsmid,avEps,relEps,avRelEps;// error function
+	qreal	N;			// finite number of consumers
+	qreal	e;			// initial endowment
+	qreal	R;			// risk free rate of return
+	qreal	x_;			// fixed number of shares
+	qreal	c_a;			// consum of a
+	qreal	alpha,alphamin;		// risk aversion
+	qreal	theta0,theta,thetaOld;	// price expectation
+	qreal	*thetaPtr;
+	qreal	thetaE,thetaDiff;	// error free theta
+	qreal	dmax,d,dOld,dmid;	// random dividend
+	qreal	*dPtr;
+	qreal	p0,pmax,p,pOld,pmid;	// stockprice
+	qreal	*pPtr;
+	qreal	MEP;			// 
+	qreal	eps,epsmid,avEps,relEps,avRelEps;// error function
 	char	learntype[32];		// Name of update function
 	int	mem;			// Memory length
 
 	rand_var * zvar;		// ptr random function   
 
-	real get_new_d();		// get new random dividend
+	qreal get_new_d();		// get new random dividend
 
-	real (*_learnAgols) (real*,real*,int&,long&);
-	real (EnRAssH::*learn) (real*,real*,int&,long&);
+	qreal (*_learnAgols) (qreal*,qreal*,int&,long&);
+	qreal (EnRAssH::*learn) (qreal*,qreal*,int&,long&);
 	void learn_init ();
-	real  learnAgols (real*,real*,int&,long&);
-	real  seroError (real*,real*,int&,long&);
-	real  constTheta (real*,real*,int&,long&);
-	real  rational (real*,real*,int&,long&);
+	qreal  learnAgols (qreal*,qreal*,int&,long&);
+	qreal  seroError (qreal*,qreal*,int&,long&);
+	qreal  constTheta (qreal*,qreal*,int&,long&);
+	qreal  rational (qreal*,qreal*,int&,long&);
 
 public:
 
 	EnRAssH();
 	~EnRAssH();
-	real* setLabels(char*);
+	qreal* setLabels(char*);
 	void initialize();
 	void loadParamset(ifstream&);	
 	void saveParamsetWithNames(ofstream&); 
 //	void printParamset();
-	void sendStateSpace(int &,const real***);
+	void sendStateSpace(int &,const qreal***);
 	void iteration(const long&);
 
 };

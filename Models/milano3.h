@@ -20,27 +20,27 @@
 class milano3 : public baseModel {
 protected:
     int n1;                             // number of producers
-    real a,b;                           // production function parameters    
-    real psi1,psi2;                     // price adjustment parameters
-    real nu1,nu2;                       // wage adjustment parameters      
-    real alfa0,mreal0,pg0,z0;    // initial values                  
-    real alfa,mreal,pgt,rreal,zt,mtr,wtr,rtr;       // wage, money stock,profit,interest,interest rate   
-    real Ls;                            // maximal aggregate labour supply
-    real h;                             // utility function parameters
-    real G,tax;                         // government demand, tax rate
-    real empl;                          // actual employment
-    real output;                        // actual output 
-    real capital;                       // actual capital stock
-    real teta;
+    qreal a,b;                           // production function parameters    
+    qreal psi1,psi2;                     // price adjustment parameters
+    qreal nu1,nu2;                       // wage adjustment parameters      
+    qreal alfa0,mqreal0,pg0,z0;    // initial values                  
+    qreal alfa,mqreal,pgt,rqreal,zt,mtr,wtr,rtr;       // wage, money stock,profit,interest,interest rate   
+    qreal Ls;                            // maximal aggregate labour supply
+    qreal h;                             // utility function parameters
+    qreal G,tax;                         // government demand, tax rate
+    qreal empl;                          // actual employment
+    qreal output;                        // actual output 
+    qreal capital;                       // actual capital stock
+    qreal teta;
 	
-    void system_3(const real&);
-    void system_G6(const real&);   
-    void system_8(const real&);
-    real Zins_1();
-    real Zins_2(); 
-    real Zins_3(const real&, const real&);
-    real zins_3_function(const real& r);
-    void diseq_regime(const real&,const real&,const real&);
+    void system_3(const qreal&);
+    void system_G6(const qreal&);   
+    void system_8(const qreal&);
+    qreal Zins_1();
+    qreal Zins_2(); 
+    qreal Zins_3(const qreal&, const qreal&);
+    qreal zins_3_function(const qreal& r);
+    void diseq_regime(const qreal&,const qreal&,const qreal&);
 public:
     milano3();
     virtual ~milano3();
@@ -50,19 +50,19 @@ public:
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const long&);    // perform one iteration 
-    real* setLabels(char*);		    // return a pointer to a variable
+    qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
     void initialize();			    // initialize the model, define
 					    // the initial state
-    real* sendModelVar();		    // return the main model variable
-    void sendStateSpace(int &,const real***); // return pointers to all model
+    qreal* sendModelVar();		    // return the main model variable
+    void sendStateSpace(int &,const qreal***); // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*); // receive parameter values 
+    void receiveParameters(const qreal*); // receive parameter values 
 };
 
 #endif

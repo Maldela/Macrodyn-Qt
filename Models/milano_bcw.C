@@ -17,25 +17,25 @@ milano_bcw::milano_bcw() : baseModel(3) {		    // default constructor
 //  milano_bcw::~milano_bcw();		            // destructor
 
 /******************************************************************************/
-real milano_bcw::virtual_Kemployment() {
+qreal milano_bcw::virtual_Kemployment() {
 	 double K_emp;
 
 	 if (h*b<1)
-		  K_emp=b/(alfa*(1-h*b))*(h*(1-tax)*pgt+mreal+G);
+		  K_emp=b/(alfa*(1-h*b))*(h*(1-tax)*pgt+mqreal+G);
 	 else
 		  K_emp=Ls+1;
 	 return K_emp;
 }
 
 /******************************************************************************/
-real milano_bcw::labour_demand() {
+qreal milano_bcw::labour_demand() {
 	 double l_dem;
 	 l_dem=n1*exp(1/(b-1)*log(alfa/(a*b)));
 	 return l_dem;
 }
 
 /******************************************************************************/
-void milano_bcw::diseq_regime(real K_emp, real l_dem) {
+void milano_bcw::diseq_regime(qreal K_emp, qreal l_dem) {
 	 if (K_emp<=l_dem)
 
 		 if (K_emp<=Ls)
@@ -53,7 +53,7 @@ void milano_bcw::diseq_regime(real K_emp, real l_dem) {
 }
 
 /******************************************************************************/
-void milano_bcw::keynesian_unemployment(real K_emp) {
+void milano_bcw::keynesian_unemployment(qreal K_emp) {
 	  double lambdas;
 	  double gammas;
 	  double oldpgt=pgt;
@@ -64,11 +64,11 @@ void milano_bcw::keynesian_unemployment(real K_emp) {
 	  output=alfa*empl/b;
 	  lambdas=empl/Ls;
 	  gammas=exp((1-b)*log(output/(n1*a)))*exp(b*log(alfa/(a*b)));
-//	  mtr=mreal;
+//	  mtr=mqreal;
 //	  wtr=alfa;
 	  teta=1-mu1*(1-gammas);
 	  pgt=(output-alfa*empl)/teta;
-	  mreal=(mreal+G+(1-tax)*oldpgt)/teta-pgt;
+	  mqreal=(mqreal+G+(1-tax)*oldpgt)/teta-pgt;
 	  alfa=(1-nu1*(1-lambdas))*alfa/teta;
           unemp=((Ls-empl)/Ls)*100;
 //	  teta1=(teta-1)*100;
@@ -76,7 +76,7 @@ void milano_bcw::keynesian_unemployment(real K_emp) {
 }
 
 /******************************************************************************/
-void milano_bcw::repressed_inflation (real l_dem) {
+void milano_bcw::repressed_inflation (qreal l_dem) {
 	  double lambdad;
 	  double gammad;
 	  double delta;
@@ -95,20 +95,20 @@ void milano_bcw::repressed_inflation (real l_dem) {
 	  }
 	  else{
 			epsilon=1;
-			if (output<G+(mreal)){
-				delta=(output-G)/mreal;
+			if (output<G+(mqreal)){
+				delta=(output-G)/mqreal;
 				gammad=0;
 			}
 			else{
 				delta=1;
-				gammad=(output-mreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
+				gammad=(output-mqreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
 			}
 	  }
 	  teta=1+mu2*(1-(gammad+epsilon+delta)/3.0);
 	  pgt=(output-alfa*empl)/teta;
-//	  mtr=mreal;
+//	  mtr=mqreal;
 //	  wtr=alfa;
-	  mreal=(delta*mreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
+	  mqreal=(delta*mqreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
 	  alfa=(1+nu2*(1-lambdad))*alfa/teta;
           unemp=((Ls-empl)/Ls)*100;
 //	  teta1=(teta-1)*100;
@@ -116,7 +116,7 @@ void milano_bcw::repressed_inflation (real l_dem) {
 }
 
 /******************************************************************************/
-void milano_bcw::classical_unemployment(real l_dem) {
+void milano_bcw::classical_unemployment(qreal l_dem) {
 	  double lambdas;
 	  double gammad;
 	  double delta;
@@ -135,20 +135,20 @@ void milano_bcw::classical_unemployment(real l_dem) {
 	  }
 	  else{
 		  epsilon=1;
-		  if (output<G+(mreal)){
-				delta=(output-G)/mreal;
+		  if (output<G+(mqreal)){
+				delta=(output-G)/mqreal;
 				gammad=0;
 		  }
 		  else{
 				delta=1;
-				gammad=(output-mreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
+				gammad=(output-mqreal-G)/(h*(1-tax)*pgt+h*alfa*empl);
 			}
 	  }
 	  teta=1+mu2*(1-(gammad+epsilon+delta)/3.0);
 	  pgt=(output-alfa*empl)/teta;
-//	  mtr=mreal;
+//	  mtr=mqreal;
 //	  wtr=alfa;
-	  mreal=(delta*mreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
+	  mqreal=(delta*mqreal+epsilon*G+(1-tax)*oldpgt)/teta-pgt;
 	  alfa=(1-nu1*(1-lambdas))*alfa/teta;
           unemp=((Ls-empl)/Ls)*100;
 //	  teta1=(teta-1)*100;
@@ -156,7 +156,7 @@ void milano_bcw::classical_unemployment(real l_dem) {
 }
 
 /******************************************************************************/
-real* milano_bcw::setLabels(char *name) {       // return a pointer to a variable or
+qreal* milano_bcw::setLabels(char *name) {       // return a pointer to a variable or
 					// a parameter specified by its name
 	 if( !strcmp(name,"G") )
 		  return( &G );
@@ -176,8 +176,8 @@ real* milano_bcw::setLabels(char *name) {       // return a pointer to a variabl
 		  return( &b );
 	 if( !strcmp(name,"alfa") )
 		  return( &alfa );
-	 if( !strcmp(name,"mreal") )
-		  return( &mreal );
+	 if( !strcmp(name,"mqreal") )
+		  return( &mqreal );
 	 if( !strcmp(name,"pgt") )
 		  return( &pgt );
 	 if( !strcmp(name,"mtr") ) 
@@ -200,12 +200,12 @@ real* milano_bcw::setLabels(char *name) {       // return a pointer to a variabl
 		  return( &Ls );
 	 if( !strcmp(name,"alfa0") )
 		  return( &alfa0 );
-	 if( !strcmp(name,"mreal0") )
-		  return( &mreal0 );
+	 if( !strcmp(name,"mqreal0") )
+		  return( &mqreal0 );
 	 if( !strcmp(name,"pg0") )
 		  return( &pg0 );
 	 if( !strcmp(name,"n1") )
-		  return( (real*) &n1 );
+		  return( (qreal*) &n1 );
 	 return( NULL );
 }
 
@@ -213,7 +213,7 @@ real* milano_bcw::setLabels(char *name) {       // return a pointer to a variabl
 void milano_bcw::initialize() {	    // initialize the model
     alfa=alfa0;
     pgt=pg0;
-    mreal=mreal0;
+    mqreal=mqreal0;
 }
 
 /******************************************************************************/
@@ -221,7 +221,7 @@ void milano_bcw::loadParamset(ifstream& inputFile) { // load parameterset from a
     inputFile >> a >> b;
     inputFile >> mu1 >> mu2 >> nu1 >> nu2;
     inputFile >> n1 >> length;
-    inputFile >> h >> pg0 >> alfa0 >> mreal0;
+    inputFile >> h >> pg0 >> alfa0 >> mqreal0;
     inputFile >> Ls >> G >> tax;
     initialize();
 }
@@ -234,21 +234,21 @@ void milano_bcw::saveParamsetWithNames(ofstream& outputFile) {  // add parametse
     outputFile << "nu1 = " << nu1 << "\tnu2 = " << nu2 << "\n\t";
     outputFile << "n1 = " << n1 << "\tlength = " << length << "\n\t";
     outputFile << "h = " << h << "\tpg0 = " << pg0 << "\t";
-    outputFile << "alfa0 = " << alfa0 << "\tmreal0 = " << mreal0 << "\n\t";
+    outputFile << "alfa0 = " << alfa0 << "\tmqreal0 = " << mqreal0 << "\n\t";
     outputFile << "Ls = " << Ls << "\tG = " << G << "\ttax = " << tax << "\n";
 }
 
 /******************************************************************************/
-void milano_bcw::sendStateSpace(int &quantity,const real*** stateSpace) {
+void milano_bcw::sendStateSpace(int &quantity,const qreal*** stateSpace) {
 //return pointers to all model variables and the dimension of the model
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("milano_bcw::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
-    (*stateSpace)[0]=&mreal;
+    (*stateSpace)[0]=&mqreal;
     (*stateSpace)[1]=&alfa;
     (*stateSpace)[2]=&pgt;
 }
@@ -261,5 +261,5 @@ void milano_bcw::iteration(const long&) {  // perform one iteration
 	K_emp=virtual_Kemployment();
 	l_dem=labour_demand();
 	diseq_regime(K_emp,l_dem);
-//cout << "teta1=" << teta1 << "\tunemp=" << unemp << endl;
+//Log::log() << "teta1=" << teta1 << "\tunemp=" << unemp << endl;
 }

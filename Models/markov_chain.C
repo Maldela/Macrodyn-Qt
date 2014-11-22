@@ -41,7 +41,7 @@
 markov_chain::markov_chain
     ( baseModel  * model, 	// to resolve names
       const char * gen, 	// the basic random generator
-      const char * states, 	// definition of the states and their realisations
+      const char * states, 	// definition of the states and their qrealisations
       const char * matrix )	// the transition matrix 
 {
     const char * pos    = states;
@@ -52,14 +52,14 @@ markov_chain::markov_chain
   r_gen = strdup(gen);
 
   n_states = strnchr(states, ';');	// get the numbet of states
-  realization = new double [n_states];
+  qrealization = new double [n_states];
   trans = new rand_var * [n_states];
   state = 0;
   
   pos = get_expr(pos,token,'{');	// skip the leading {
 
   for( n=0; n < n_states && (pos = get_expr(pos,token,';')) ; n ++ ) {
-    realization[n] = eval_expr(b_model, token);
+    qrealization[n] = eval_expr(b_model, token);
     trans[n] = NULL;
   }
 
@@ -94,7 +94,7 @@ markov_chain::~markov_chain ( void )
   for( int n=0; n < n_states; n ++ ) {
     delete trans[n];
   }
-  delete [] realization;
+  delete [] qrealization;
   delete [] trans;
   free(r_gen);
 }
@@ -123,7 +123,7 @@ void markov_chain::set_row ( int row, const char * expr)
     char * buf = new char [1024];
 
   if( row < 0 || row >=n_states ) {
-    error("markov_chain::set_row: value for row %d is not in 0..%d", row, n_states);
+    error("markov_chain::set_row: value for row %d is not in 0..%d", QString::number(row) += QString::number(n_states));
   }
 
   zvar_expr[0]='\0';
@@ -149,7 +149,7 @@ void markov_chain::set_row ( int row, const char * expr)
 //
 // Class name:		markov_chain
 // Member function:	dice
-// Purpose:		computes the next realisation of the markov chain
+// Purpose:		computes the next qrealisation of the markov chain
 //
 // Author:		Uli Middelberg
 // Last modified:	Wed Jul  9 12:33:18 1997
@@ -162,7 +162,7 @@ double markov_chain::dice ( void )
   state = (int) trans[state]->dice();	// set the new state by taking the dice
   					// of the corresponding random variable
   					
-  return realization[state];		// return the realization
+  return qrealization[state];		// return the qrealization
 
 }
 

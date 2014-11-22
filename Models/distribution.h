@@ -42,14 +42,14 @@ class distribution {
 		~distribution();
 		void newseed();
 		void setseed(unsigned int val);
-		real rectangular();
-		real triangular(const real, const real, const real);
-		real st_normal();
-		real chi_square(const int);
-		real st_cauchy();
-		real student_t(const int);
-		real exponential(const real);
-		real pareto(const real, const real);
+		qreal rectangular();
+		qreal triangular(const qreal, const qreal, const qreal);
+		qreal st_normal();
+		qreal chi_square(const int);
+		qreal st_cauchy();
+		qreal student_t(const int);
+		qreal exponential(const qreal);
+		qreal pareto(const qreal, const qreal);
 };
 #endif	// _DISTRIBUTION_INCLUDED
 // eof

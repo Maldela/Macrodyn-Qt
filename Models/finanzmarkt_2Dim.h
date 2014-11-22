@@ -23,38 +23,38 @@ class finanzmarkt_2Dim : public baseModel {
 protected:
 	
 	
-	real R;
-	real F, N, alphaf, alphan, aF, aN;
-	real aFzuaN;				//Variable fuer aN/aF
-	real z1uaF;				//Variable fuer 1/aF
-	real AbZins;				//Variable fuer 1/R
-	real ef, en, eF, eN;			//einzelne bzw. aggregierte Grundaustattungen
-	real xAll1, xAll2, xF1, xF2, xN1, xN2;	//aggregierte Aktien-/Portfolioanzahl
-	real xf1, xf2, xn1, xn2;		//einzelne Portfolioanzahl
-	real p1, p2, pF1, pF2, pN1, pN2;	//Preise, Preisvorhersagen
-	real p01, p02, pF01, pF02, pN01, pN02;	//Startwerte fuer Preise und Vorhersagen
-	real zetamin1, zetamax1, gamma1;	//Parameter fuer Dividendenprozeﬂ 1
-	real zetamin2, zetamax2,gamma2;		//Parameter fuer Dividendenprozeﬂ 2	
-	real d1, d2;				//Dividendenzufallsvariablen
-	real Ed1, Ed2, var1, var2, cov12;	//Momente der Dividendenprozesse
-	real zetamin3, zetamax3;		//Parameter fuer Fehleinschaetzung
-	real zetamin4, zetamax4;		//Parameter fuer Fehleinschaetzung
-	real rho1, rho2;			//Fehleinschaetzung der Noise--Trader
-	real p1_old, p2_old;			//Auswertungsvariable
-	real xF1_old, xF2_old, xN1_old, xN2_old;
-	real quote_F1, quote_F2, quote_N1, quote_N2; //Quoten von Anteilsscheinen (aggregiert)
-	real quote_f1, quote_f2, quote_n1, quote_n2; //Quoten von Anteilsscheinen
-	real return_F, return_N, return_f, return_n; //Realisierter Return (aggregiert und einzeln)
-	real cF, cN, cf, cn;			//Realisierter Konsum (aggregiert und einzeln)
-	real rend_F, rend_N, rend_diff;		//Renditen der Fundamentalisten/ Noise--Trader
-	real quote_rF, quote_rN;		//Rendite--Quoten
+    qreal R;
+    qreal F, N, alphaf, alphan, aF, aN;
+    qreal aFzuaN;				//Variable fuer aN/aF
+    qreal z1uaF;				//Variable fuer 1/aF
+    qreal AbZins;				//Variable fuer 1/R
+    qreal ef, en, eF, eN;			//einzelne bzw. aggregierte Grundaustattungen
+    qreal xAll1, xAll2, xF1, xF2, xN1, xN2;	//aggregierte Aktien-/Portfolioanzahl
+    qreal xf1, xf2, xn1, xn2;		//einzelne Portfolioanzahl
+    qreal p1, p2, pF1, pF2, pN1, pN2;	//Preise, Preisvorhersagen
+    qreal p01, p02, pF01, pF02, pN01, pN02;	//Startwerte fuer Preise und Vorhersagen
+    qreal zetamin1, zetamax1, gamma1;	//Parameter fuer Dividendenprozeﬂ 1
+    qreal zetamin2, zetamax2,gamma2;		//Parameter fuer Dividendenprozeﬂ 2
+    qreal d1, d2;				//Dividendenzufallsvariablen
+    qreal Ed1, Ed2, var1, var2, cov12;	//Momente der Dividendenprozesse
+    qreal zetamin3, zetamax3;		//Parameter fuer Fehleinschaetzung
+    qreal zetamin4, zetamax4;		//Parameter fuer Fehleinschaetzung
+    qreal rho1, rho2;			//Fehleinschaetzung der Noise--Trader
+    qreal p1_old, p2_old;			//Auswertungsvariable
+    qreal xF1_old, xF2_old, xN1_old, xN2_old;
+    qreal quote_F1, quote_F2, quote_N1, quote_N2; //Quoten von Anteilsscheinen (aggregiert)
+    qreal quote_f1, quote_f2, quote_n1, quote_n2; //Quoten von Anteilsscheinen
+    qreal return_F, return_N, return_f, return_n; //qrealisierter Return (aggregiert und einzeln)
+    qreal cF, cN, cf, cn;			//qrealisierter Konsum (aggregiert und einzeln)
+    qreal rend_F, rend_N, rend_diff;		//Renditen der Fundamentalisten/ Noise--Trader
+    qreal quote_rF, quote_rN;		//Rendite--Quoten
 	
 	
 	matrixFn *point;
 	matrixDef *A;		//2x2 Martix fuer Initialisierung
 	matrixDef *B;		//2x2 Martix fuer Initialisierung
 	matrixDef *C;		//2x1 Vektor fuer Initialisierung
-	matrixDef *D;		//2x1 Vektor der realisierten Dividenden	
+    matrixDef *D;		//2x1 Vektor der qrealisierten Dividenden
 	matrixDef *ED;		//2x1 Vektor der Dividendenerwartungswerte
 	matrixDef *Id; 		//2x2 Identitaet
 	matrixDef *P;		//2x1 Vektor der Wertpapierpreise
@@ -87,11 +87,11 @@ protected:
 public:
 	finanzmarkt_2Dim();
 	virtual ~finanzmarkt_2Dim();
-	real* setLabels(char*);
+    qreal* setLabels(char*);
 	void initialize();
 	void loadParamset(ifstream&);	
 /*	void saveParamsetWithNames(ofstream&);*/ 
-	void sendStateSpace(int &,const real***);
+    void sendStateSpace(int &,const qreal***);
 	void iteration(const long&);
 /*	void saveParamset();	
 	void printParamset();

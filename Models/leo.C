@@ -37,7 +37,7 @@ leo::leo()
 /*                                                                            */
 /******************************************************************************/
 
-real* leo::setLabels(char *name)
+qreal* leo::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -51,10 +51,10 @@ real* leo::setLabels(char *name)
         return( &A );
     if( !strcmp(name,"B") )
         return( &B );
-    if( !strcmp(name,"wtreal") )
-        return( &wtreal );
-    if( !strcmp(name,"mtreal") )
-        return( &mtreal );
+    if( !strcmp(name,"wtqreal") )
+        return( &wtqreal );
+    if( !strcmp(name,"mtqreal") )
+        return( &mtqreal );
     if( !strcmp(name,"theta") )
         return( theta );
     if( !strcmp(name,"gamma") )
@@ -105,7 +105,7 @@ void leo::loadParamset(ifstream& inputFile)
 
     if( theta )
 	delete theta;
-    theta = new real[tau+2];
+    theta = new qreal[tau+2];
     if( !theta )
 	fatalError("leo::loadParamset","Can't create theta vector");
     
@@ -142,12 +142,12 @@ void leo::saveParamset(ofstream& outputFile)
 
 void leo::printParamset()
 {
-    cout << A << "\t" << B << "\n";
-    cout << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    cout << tau << "\t" << length << "\n";
-    cout << delta << "\t" << beta << "\t" << eta << "\t" << zeta << "\n";
-    cout << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    cout << Lmax << "\t" << rho << "\t" << g << "\t" << tax << endl;
+    Log::log() << A << "\t" << B << "\n";
+    Log::log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << delta << "\t" << beta << "\t" << eta << "\t" << zeta << "\n";
+    Log::log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
+    Log::log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << endl;
 }
 
 /******************************************************************************/
@@ -160,12 +160,12 @@ void leo::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void leo::sendParameters(int& amount,real** parameters)
+void leo::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=19;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("leo::sendParameters",
 		   "Can't create array for parameters");
@@ -199,7 +199,7 @@ void leo::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void leo::receiveParameters(const real* parameters)
+void leo::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -237,9 +237,9 @@ void leo::leoDynamics()
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
     theta[0]=eta*theta[0]+(1-eta)*(ptrate*exp(zeta*log(theta[0])));
 
-    wtreal  = wtreal * (wtrate / ptrate);
+    wtqreal  = wtqreal * (wtrate / ptrate);
 
-    mtreal  = ( MIN(output,g+mtreal) -tax*output ) / ptrate /
+    mtqreal  = ( MIN(output,g+mtqreal) -tax*output ) / ptrate /
                                                 exp(zeta*log(theta[0]));
 }
 
@@ -254,12 +254,12 @@ void leo::leoDynamics()
 
 void leo::iteration(const long& t)
 {
-    real ptratex;
+    qreal ptratex;
     char state[5];
-    real ztnot;
-    real ytnot;
-    real xtnot;
-    real ct;
+    qreal ztnot;
+    qreal ytnot;
+    qreal xtnot;
+    qreal ct;
 
     ptratex=expectedInflationRate(t);
     notProd(ztnot,ytnot);

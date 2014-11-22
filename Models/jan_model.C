@@ -48,7 +48,7 @@ jan_model::jan_model() : baseModel(1) //  1 fuer 1-dimensionalen Phasenraum;
 
 void jan_model::iteration(const long&)
 {
-    real oldX=x;
+    qreal oldX=x;
 
     x       = (1/alpha)*exp(alpha*log(oldX)) +(1-delta)*oldX;
   }
@@ -86,7 +86,7 @@ void jan_model::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* jan_model::sendModelVar()
+qreal* jan_model::sendModelVar()
 {
     return &x;
 }
@@ -104,7 +104,7 @@ real* jan_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* jan_model::setLabels(char* label)
+qreal* jan_model::setLabels(char* label)
 {
     if( !strcmp(label,"alpha") )
 	return( &alpha);
@@ -131,11 +131,11 @@ real* jan_model::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::sendStateSpace(int &quantity,const real*** stateSpace)
+void jan_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("jan_model::sendStateSpace",
 		   "Can't create state space vector");
@@ -204,10 +204,10 @@ void jan_model::saveParamset(ofstream& outFile)
 
 void jan_model::printParamset()
 {
-    cout << x0 << endl;
-    cout << alpha << endl;
-    cout << delta << endl;
-    cout << length << endl;
+    Log::log() << x0 << endl;
+    Log::log() << alpha << endl;
+    Log::log() << delta << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -223,12 +223,12 @@ void jan_model::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::sendParameters(int& amount,real** parameters)
+void jan_model::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=4;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("jan_model::sendParameters",
 		   "Can't create array for parameters");
@@ -251,7 +251,7 @@ void jan_model::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::receiveParameters(const real* parameters)
+void jan_model::receiveParameters(const qreal* parameters)
 {
     x0=parameters[0];
     alpha=parameters[1];

@@ -55,12 +55,12 @@ EnRAss::~EnRAss()
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-real* EnRAss::setLabels(char* label)
+qreal* EnRAss::setLabels(char* label)
 {
-    if( !strcmp(label,"N") ) return( (real*)(&N) );
+    if( !strcmp(label,"N") ) return( (qreal*)(&N) );
     if( !strcmp(label,"e") ) return(&e);
     if( !strcmp(label,"R") ) return(&R);
-    if( !strcmp(label,"x_") ) return( (real*)(&x_) );
+    if( !strcmp(label,"x_") ) return( (qreal*)(&x_) );
     if( !strcmp(label,"c_a") ) return(&c_a);
     if( !strcmp(label,"alpha") ) return(&alpha);
     if( !strcmp(label,"alphamin") ) return(&alphamin);
@@ -94,7 +94,7 @@ real* EnRAss::setLabels(char* label)
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-real EnRAss::get_new_d()
+qreal EnRAss::get_new_d()
 {
 	return  (zvar->dice() * dmax);
 }
@@ -108,24 +108,24 @@ real EnRAss::get_new_d()
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-static real last_k(real *y, real *,int &k,long&) {
+static qreal last_k(qreal *y, qreal *,int &k,long&) {
 	return ( y[k-1] );
 }
-static real diff_k(real *y, real *,int &k,long&) {
+static qreal diff_k(qreal *y, qreal *,int &k,long&) {
 	return ( y[0]+(y[0]-y[k-1]) );
 }
-static real ma_k(real *y, real *,int &k,long&) {
-	real	value=0;
+static qreal ma_k(qreal *y, qreal *,int &k,long&) {
+    qreal	value=0;
 	for (int count=0;count<k;count++) value+=y[count];
 	return ( value/k );
 }
-static real ols_k(real *y, real *,int &k,long&) {
-	real	a,b;
-	real	x_=0;
-	real	x2_=0;
-	real	xy_=0;
-	real	y_=0;
-	real	term;
+static qreal ols_k(qreal *y, qreal *,long &k,int) {
+    qreal	a,b;
+    qreal	x_=0;
+    qreal	x2_=0;
+    qreal	xy_=0;
+    qreal	y_=0;
+    qreal	term;
 	for (int count=0;count<k;count++) {
 		y_+=y[count];
 		x_+=count;
@@ -137,48 +137,50 @@ static real ols_k(real *y, real *,int &k,long&) {
 	x2_/=k;
 	xy_/=k;
 	term=(x2_-(x_*x_));
-//cout << "\ny_=" << y_ << " x_=" << x_ << " x2_=" << x2_;
-//cout << " xy_=" << xy_ << " term=" << term;
+//Log::log() << "\ny_=" << y_ << " x_=" << x_ << " x2_=" << x2_;
+//Log::log() << " xy_=" << xy_ << " term=" << term;
 	if (term!=0) b=(xy_-x_*y_)/term;
 		else b=0;
 	a=y_-b*x_;
-//cout << " a=" << a << " b=" << b << " count=" << count << endl;
-	return ( a+b*count );
+//Log::log() << " a=" << a << " b=" << b << " count=" << count << endl;
+    //Hä? return ( a+b*count );
+    return a+b;
 }
-static real ols(real *y, real *,int &,long &t) {
+static qreal ols(qreal *y, qreal *,int &,long &t) {
 
-//cout << "t=" << t << " " << ols_k(y,NULL,t,0);
+//Log::log() << "t=" << t << " " << ols_k(y,NULL,t,0);
 	if(t<2) return(y[0]);
-	 else return ( ols_k(y,NULL,t,0) );
+     else return ( ols_k(y,NULL,t,0) );
 }
 
-real  EnRAss::learnAgols(real *y,real *w,int &i,long &t) {
+qreal  EnRAss::learnAgols(qreal *y,qreal *w,int &i,long &t) {
 	return ( _learnAgols(y,w,i,t) );
 }
-real  EnRAss::seroError(real *, real *,int &,long&) {
+qreal  EnRAss::seroError(qreal *, qreal *,int &,long&) {
 	return (thetaE);
 }
-real  EnRAss::constTheta(real *, real *,int &,long&) {
+qreal  EnRAss::constTheta(qreal *, qreal *,int &,long&) {
 	return (theta0);
 }
-real  EnRAss::rational(real *, real *,int &,long&) {
+qreal  EnRAss::rational(qreal *, qreal *,int &,long&) {
 	return ((R*thetaOld-dmid)/(1-((alpha*x_/N)*(R*thetaOld-dmid))));
 }
 //	theta = pOld + 0.5 * (pOld-thetaOld) ;			// lernen
 
 void EnRAss::learn_init () {
 
-	if (strcmp(learntype,"seroError")==0) learn=seroError;	
-	else if (strcmp(learntype,"constTheta")==0) learn=constTheta;	
-	else if (strcmp(learntype,"rational")==0) learn=rational;	
+//Hä?
+//	if (strcmp(learntype,"seroError")==0) learn=seroError;
+//	else if (strcmp(learntype,"constTheta")==0) learn=constTheta;
+//	else if (strcmp(learntype,"rational")==0) learn=rational;
 
-	else if (strcmp(learntype,"last_k")==0) {learn=learnAgols;_learnAgols=last_k;}
-	else if (strcmp(learntype,"diff_k")==0) {learn=learnAgols;_learnAgols=diff_k;}
-	else if (strcmp(learntype,"ma_k")==0) {learn=learnAgols;_learnAgols=ma_k;}
-	else if (strcmp(learntype,"ols_k")==0) {learn=learnAgols;_learnAgols=ols_k;}
-	else if (strcmp(learntype,"ols")==0) {learn=learnAgols;_learnAgols=ols;}
+//	else if (strcmp(learntype,"last_k")==0) {learn=learnAgols;_learnAgols=last_k;}
+//	else if (strcmp(learntype,"diff_k")==0) {learn=learnAgols;_learnAgols=diff_k;}
+//	else if (strcmp(learntype,"ma_k")==0) {learn=learnAgols;_learnAgols=ma_k;}
+//	else if (strcmp(learntype,"ols_k")==0) {learn=learnAgols;_learnAgols=ols_k;}
+//	else if (strcmp(learntype,"ols")==0) {learn=learnAgols;_learnAgols=ols;}
 
-	else error("macrodyn::EnRAss::learn_init: no learn type %s", learntype);
+//	else error("macrodyn::EnRAss::learn_init: no learn type %s", learntype);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -202,7 +204,7 @@ void EnRAss::initialize()
 	              "can't create new rand_var");
 
 	if ( pPtr != NULL ) delete [] pPtr;
-	pPtr = new real[mem+1];
+    pPtr = new qreal[mem+1];
         if( !(pPtr) )
 	   fatalError("macrodyn::EnRAss::initialize",
 	              "can't create pPtr");
@@ -277,11 +279,11 @@ void EnRAss::saveParamsetWithNames(ofstream& outputFile)
 // Last modified:	
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void EnRAss::sendStateSpace(int &quantity,const real*** stateSpace)
+void EnRAss::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("EnRAss::sendStateSpace",
 		   "Can't create state space vector");
@@ -308,36 +310,37 @@ void EnRAss::iteration(const long& t)
 
 	if (alpha<alphamin) {
 		alpha=alphamin;
-		cout << "alpha=alphamin=" << alphamin << endl;
+        Log::log() << "alpha=alphamin=" << alphamin << endl;
 	}
 
-	real dmaxAbs =(  (N/x_) * ( (R*e) - (1/alpha) )  );
+    qreal dmaxAbs =(  (N/x_) * ( (R*e) - (1/alpha) )  );
 	if ( dmax > dmaxAbs )  {
-	  cout << "\n time=" << t << " dmax=" << dmax << " > ";
-	  cout << dmaxAbs << "=N/x_ * (R*e - 1/alpha) \n";
+      Log::log() << "\n time=" << t << " dmax=" << dmax << " > ";
+      Log::log() << dmaxAbs << "=N/x_ * (R*e - 1/alpha) \n";
 	  exit (-1);
 	  }
 
-	real	alphax = alpha*x_;
-	real	Ralphax = R*alphax;
+    qreal	alphax = alpha*x_;
+    qreal	Ralphax = R*alphax;
 	
 	d = get_new_d();
-	real	term = (N*(R-1))/(2*Ralphax) - (dmid/(2*R));
-	real	term2 = term*term;
+    qreal	term = (N*(R-1))/(2*Ralphax) - (dmid/(2*R));
+    qreal	term2 = term*term;
 	thetaE = sqrt( (N*dmid)/Ralphax + term2 ) - term;
 
-	theta = learn(pPtr,thetaPtr,mem,t);
+//Hä?
+//	theta = learn(pPtr,thetaPtr,mem,t);
 	
-//cout  << "\n time=" << t << " thetaE="<< thetaE << " theta="<< theta;
+//Log::log()  << "\n time=" << t << " thetaE="<< thetaE << " theta="<< theta;
 	if (theta < 0) theta=0;	// billiger als geschenkt geht nicht
 
 	p = (N*theta)/(R*(alphax*theta+N)) + (d/R);
-	real	min = N*e/x_ ;
+    qreal	min = N*e/x_ ;
 	if (p > min) {
 		p = min;
-		cout << " min=" << p;
+        Log::log() << " min=" << p;
 		}
-//		else cout << " p=" << p;
+//		else Log::log() << " p=" << p;
 
 //	MEP = ( (alphax* thetaOld + N) * ( d + (R-1) * dOld ) ) / ( N*thetaOld + (alphax*thetaOld+N) * dOld ) +1 - R ;
 

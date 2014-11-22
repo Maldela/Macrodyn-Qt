@@ -57,32 +57,32 @@ void hetoni::initialize()
 {
 	for(int k=0;k<=L;k++) pp[k]=pp0[k];
 
-	real wsum=0;
-	real wwsum=0;
-	for(k=0;k<=L;k++)
+    qreal wsum=0;
+    qreal wwsum=0;
+    for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-		//cout << "k=" << k  << " wsum=" << wsum << "\n";   
+        //Log::log() << "k=" << k  << " wsum=" << wsum << "\n";
 	   }
-	//real ko=0;
-	for(k=0;k<=Ls;k++)
+    //qreal ko=0;
+    for (int k=0;k<=Ls;k++)
 	   {
 		wwsum+=hoch(w,k);
-		//cout << "k=" << k  << " wsum=" << wsum << "\n";   
+        //Log::log() << "k=" << k  << " wsum=" << wsum << "\n";
 	   }
-	//real ko=0;
+    //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-		//cout << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";   
+        //Log::log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
 	   }
 
-	for( i=0;i<=Ls;i++)
+    for(int i=0;i<=Ls;i++)
 	   {
 		vvs[i]=hoch(w,i)/wwsum;
 		//ko+=vv[i];
-		//cout << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";   
+        //Log::log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
 	   }
 }
 /******************************************************************************/
@@ -105,29 +105,29 @@ void hetoni::loadParamset(ifstream& inputFile)
 	fatalError("hetoni::loadParamset","ERROR: L < Ls !");
     if( pp0 )
 	delete [] pp0;
-        pp0 = new real[L+1];
+        pp0 = new qreal[L+1];
     if( !pp0 )
 	fatalError("hetoni::loadParamset","Can't create initprice vector");
  
     for(int k=0;k<=L;k++)
         {
     	inputFile >> pp0[k] ;
-    	//cout << "L=" << L << "k=" << k  << "po=" << pp0[k];
+        //Log::log() << "L=" << L << "k=" << k  << "po=" << pp0[k];
     	}
 
     if( pp )
 	delete [] pp;
-        pp = new real[L+1];
+        pp = new qreal[L+1];
     if( !pp )
 	fatalError("hetoni::loadParamset","Can't create price vector");
     if( vv )
 	delete [] vv;
-        vv = new real[L+1];
+        vv = new qreal[L+1];
     if( !vv )
 	fatalError("hetoni::loadParamset","Can't create short weight vector");
     if( vvs )
 	delete [] vvs;
-        vvs = new real[L+1];
+        vvs = new qreal[L+1];
     if( !vvs )
 	fatalError("hetoni::loadParamset","Can't create short weight vector");
     	
@@ -164,7 +164,7 @@ void hetoni::saveParamsetWithNames(ofstream& outputFile)
     outputFile << "\tshr = " << shr << "\tlength = "<< length << "\t";
     for(int k=0;k<=L;k++)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
-    for(k=0;k<=L;k++)
+    for (int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
     outputFile << "\n";
 }
@@ -178,10 +178,10 @@ void hetoni::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void hetoni::printParamset()
 {
-    cout << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
-    cout << Ls << "\t" << shr << "\t" << length << "\n";
+    Log::log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
+    Log::log() << Ls << "\t" << shr << "\t" << length << "\n";
     for(int k=0;k<=L;k++)
-        cout << pp0[k] << "\t";
+        Log::log() << pp0[k] << "\t";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -192,12 +192,12 @@ void hetoni::printParamset()
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::sendParameters(int& amount,real** parameters)
+void hetoni::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=L+9;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("hetoni::sendParameters",
 		   "Can't create array for parameters");
@@ -205,8 +205,8 @@ void hetoni::sendParameters(int& amount,real** parameters)
     (*parameters)[1]=b;
     (*parameters)[2]=alpha;
     (*parameters)[3]=w;
-    (*parameters)[4]=(real)L;
-    (*parameters)[5]=(real)Ls;
+    (*parameters)[4]=(qreal)L;
+    (*parameters)[5]=(qreal)Ls;
     (*parameters)[6]=shr;
     (*parameters)[7]=length;
     for(int k=8;k<=(L+8);k++)
@@ -220,7 +220,7 @@ void hetoni::sendParameters(int& amount,real** parameters)
 /* Last modified:   20.04.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::receiveParameters(const real* parameters)
+void hetoni::receiveParameters(const qreal* parameters)
 {
     a=parameters[0];
     b=parameters[1];
@@ -242,7 +242,7 @@ void hetoni::receiveParameters(const real* parameters)
 /* Last modified:   09.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* hetoni::setLabels(char *name)
+qreal* hetoni::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -279,11 +279,11 @@ real* hetoni::setLabels(char *name)
 /*                                                                            */
 /* Class name:      hetoni                                                    */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* hetoni::sendModelVar()
+qreal* hetoni::sendModelVar()
 {
     return pp;
 }
@@ -296,12 +296,12 @@ real* hetoni::sendModelVar()
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::sendStateSpace(int &quantity,const real*** stateSpace)
+void hetoni::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-    //cout << "hetoni sendStateSpace";
+    //Log::log() << "hetoni sendStateSpace";
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("hetoni::sendStateSpace",
 		   "Can't create state space vector");
@@ -316,9 +316,9 @@ void hetoni::sendStateSpace(int &quantity,const real*** stateSpace)
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real hetoni::hoch(real &x,int &i)
+qreal hetoni::hoch(qreal &x,int &i)
 {
-	real count=1.0;
+    qreal count=1.0;
 	for (int k=i;k>0;k--)
 		count*=x;
 	return count;
@@ -331,9 +331,9 @@ real hetoni::hoch(real &x,int &i)
 /* Last modified:   20.04.1997 (Marc Mueller, Toni Stiefenhofer)              */
 /*                                                                            */
 /******************************************************************************/
-real hetoni::fFunction(real &x, real &y)
+qreal hetoni::fFunction(qreal &x, qreal &y)
 {
-        real loshr=1.0-shr;
+        qreal loshr=1.0-shr;
   
 	return ( a - b*( loshr*atan(alpha*x) + shr*atan(alpha*y) )/M_PI_2 );
 }
@@ -345,12 +345,12 @@ real hetoni::fFunction(real &x, real &y)
 /* Last modified:   20.04.1997 (Marc Mueller. Toni Stiefenhofer)              */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::dynamics(real &a, real &b)
+void hetoni::dynamics(qreal &a, qreal &b)
 {
 	for (int i=1;i<=L;i++) 
 		pp[L+1-i]=pp[L-i];
 	pp[0]=fFunction(a,b);				
-	//cout << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
+    //Log::log() << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
 	v=pp[0]-a;
 }
 /******************************************************************************/
@@ -363,10 +363,10 @@ void hetoni::dynamics(real &a, real &b)
 /******************************************************************************/
 void hetoni::iteration(const long& t)
 {
-        real addlo=0;
-	real addso=0;
-	real ev=0;
-	real abw=0;
+    qreal addlo=0;
+    qreal addso=0;
+    qreal ev=0;
+    qreal abw=0;
 
 	for (int i=0;i<=L;i++) 
 	{
@@ -375,17 +375,17 @@ void hetoni::iteration(const long& t)
 	}
 	ev*=(L+1);		//Average
 
-	for ( i=0;i<=Ls;i++) 
+    for (int i=0;i<=Ls;i++)
 	{
 		addso+=vvs[i]*pp[i];
 	}
 	
-	for (i=0;i<=L;i++) 
+    for (int i=0;i<=L;i++)
 		abw+=((pp[i]-ev)*(pp[i]-ev));
 	s=sqrt(abw)/L;
 
 	dynamics(addlo, addso);
 
-	//cout << "\nPeriod " << ii << "\t";
-	//for(int k=0;k<=L;k++) cout << pp[k] << "\t";
+    //Log::log() << "\nPeriod " << ii << "\t";
+    //for(int k=0;k<=L;k++) Log::log() << pp[k] << "\t";
 }

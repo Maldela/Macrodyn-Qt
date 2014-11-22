@@ -25,14 +25,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-static real pf_cd ( real k, real z, real b, real r )
+static qreal pf_cd ( qreal k, qreal z, qreal b, qreal r )
 { return exp( r *log( z/b * exp( b * log(k) ) ) );
   //
   // expression:	z/b * e^(b * log(k) )
   // constraints:	z > 0, 0<b<=1
 }
 
-static real pf_cd_prime ( real k, real z, real b, real r )
+static qreal pf_cd_prime ( qreal k, qreal z, qreal b, qreal r )
 { return ( z/k * exp( b * log(k) ) ) * (r * exp( (r-1) *log( z/b * exp( b * log(k) ) ) ) );
   //
   // expression:	z/k * e^(b * log(k) )
@@ -82,7 +82,7 @@ void michael::pf_init ( void )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real michael::sf_y ( real ) {
+qreal michael::sf_y ( qreal ) {
  return syr;
 }
 
@@ -135,8 +135,8 @@ michael::~michael(void) {
 
 void michael::iteration(const long& )
 { 
-  real k_n;             // value of k for the next period
-  real z_n;		// value of z for the next period
+  qreal k_n;             // value of k for the next period
+  qreal z_n;		// value of z for the next period
 
   y = (*pf)(k,z,b,r);
 //  ren = (*pf_prime)(k,z,b,r);
@@ -184,7 +184,7 @@ void michael::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* michael::setLabels(char* label)
+qreal* michael::setLabels(char* label)
 {
     if( !strcmp(label,"K") ) return(&K);
     if( !strcmp(label,"L") ) return(&L);
@@ -215,11 +215,11 @@ real* michael::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void michael::sendStateSpace(int &quantity,const real*** stateSpace)
+void michael::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("michael::sendStateSpace",
 		   "Can't create state space vector");
@@ -326,14 +326,14 @@ void michael::printParamset()
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* michael::sendModelVar(void)
+qreal* michael::sendModelVar(void)
 { error("macrodyn::michael::sendModelVar is not implemented");
   return NULL;
 }
-void michael::sendParameters(int& ,real** )
+void michael::sendParameters(int& ,qreal** )
 { error("macrodyn::michael::sendParameters is not implemented");
 }
-void michael::receiveParameters(const real* )
+void michael::receiveParameters(const qreal* )
 { error("macrodyn::michael::receiveParameters is not implemented");
 }
 

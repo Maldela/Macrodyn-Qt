@@ -29,12 +29,12 @@
 
 class models2D : public baseModel {
   protected:
-    real alpha;			        // parameter
-    real beta;
-    real x;			        // state variable
-    real y;                           
-    real x0;				// initial value for x
-    real y0;				// initial value for y
+    qreal alpha;			        // parameter
+    qreal beta;
+    qreal x;			        // state variable
+    qreal y;                           
+    qreal x0;				// initial value for x
+    qreal y0;				// initial value for y
 public:
     models2D();		    	        // constructor
     virtual ~models2D()=0;
@@ -42,13 +42,13 @@ public:
     void saveParamset(ofstream&);
     void printParamset();
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); // write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
    
 #endif

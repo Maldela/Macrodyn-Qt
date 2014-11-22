@@ -35,10 +35,10 @@
 class logistic : public baseModel {
 
 protected:
-    real alpha;				// parameter
-    real x;				// state variable
-    real x0;				// initial value for x
-    real x_prime;			// the first derivation at x
+    qreal alpha;				// parameter
+    qreal x;				// state variable
+    qreal x0;				// initial value for x
+    qreal x_prime;			// the first derivation at x
     					// used for the calculation of
     					// lyapunov exponents
 
@@ -49,14 +49,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,34 +75,34 @@ public:
 class rlogistic : public logistic {
 
 protected:
-    real a,b;			// parameter
-    real beta;			// parameter used in case of additive noise
+    qreal a,b;			// parameter
+    qreal beta;			// parameter used in case of additive noise
  
     char zvar_expr[256];        // expression which defines a random variable
     rand_var * zvar;            // a random variable 
 
     int  mc_flag;		// flag if either markov chain or zvar
     
-    char mc_states[265];	// states and realization for each state
+    char mc_states[265];	// states and qrealization for each state
     char mc_matrix[1024];	// the transision matrix
     markov_chain * mc;		// a markov chain
 
     char zvar_name[256];        // name of the stochastified parameter
-    real * zvar_ptr;		// pointer to the stochastic parameter
+    qreal * zvar_ptr;		// pointer to the stochastic parameter
 
 public:
     rlogistic();				// constructor
     void iteration(const long&);
     void initialize();
-//    real* sendModelVar();			// obsolete and unused
-    real* setLabels(char*);
-//  void sendStateSpace(int &,const real***);	// obsolete
+//    qreal* sendModelVar();			// obsolete and unused
+    qreal* setLabels(char*);
+//  void sendStateSpace(int &,const qreal***);	// obsolete
     void loadParamset(ifstream&);	
     void saveParamset(ofstream&);
     void printParamset();
 
-//    void sendParameters(int&,real**); 	// unused
-//    void receiveParameters(const real*);	// unused 
+//    void sendParameters(int&,qreal**); 	// unused
+//    void receiveParameters(const qreal*);	// unused 
 }; 
 
 #endif	// _LOGISTICMAP_INCLUDED

@@ -81,7 +81,7 @@ armax::armax() : baseModel(1)
 		if( !y_old_ini[l] )
 			fatalError("matrix_neu::matrix_neu","Can't allocate memory");
 	}
-	for (l=0;l<L+1;l++){	
+    for (int l=0;l<L+1;l++){
 		As_e[l] = new matrix_neu(N1+0,M+0);
 		if( !As_e[l])
 			fatalError("matrix_neu::matrix_neu","Can't allocate memory");
@@ -101,7 +101,7 @@ armax::armax() : baseModel(1)
 		if( !u_old_ini[k] )
 			fatalError("matrix_neu::matrix_neu","Can't allocate memory");
 	}
-	for (k=0;k<K-1;k++){			
+    for (int k=0;k<K-1;k++){
 		Bs_e[k] = new matrix_neu(N1+0,N1+0);
 		if( !Bs_e[k])
 			fatalError("matrix_neu::matrix_neu","Can't allocate memory");	
@@ -234,15 +234,15 @@ void armax::loadParamset(ifstream& inFile)
   	for (int r=0;r<R;r++)
  		for (int n2=0;n2<N2;n2++)
 			inFile >> (*v_old_ini[r])(n2,0);
-	for (l=0;l<L;l++)
+    for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
  			for (int mm=0;mm<M;mm++)
 				inFile >> (*A[l])(m,mm);
-	for (k=0;k<K;k++)
+    for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
 				inFile >> (*B[k])(m,n1);
- 	for (r=0;r<R;r++)
+    for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
  			for (int n2=0;n2<N2;n2++)
 				inFile >> (*C[r])(m,n2);
@@ -253,15 +253,15 @@ void armax::loadParamset(ifstream& inFile)
 	if (H==1)
 		for (int m=0;m<M;m++)
 			inFile >> (*E)(m,0);
-	for (l=0;l<L;l++)
+    for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
 			for (int mm=0;mm<M;mm++)
 				inFile >> (*A_e[l])(m,mm);
-	for (k=0;k<K;k++)
+    for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
 				inFile >> (*B_e[k])(m,n1);
- 	for (r=0;r<R;r++)
+    for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
 				inFile >> (*C_e[r])(m,n2);
@@ -338,15 +338,15 @@ void armax::initialize()
 		fatalError("matrix_neu::matrix_neu","Can't allocate memory");
 	
 	(*B_inv) = B[0]->inverse();
-	cout<<"-------------------------------------------------------------------";
-	cout << (*B_inv);
+    Log::log()<<"-------------------------------------------------------------------";
+    Log::log() << (*B_inv);
 	(*B_inv) = B_inv->multiplyScalar(-1);		
-	for(l=1;l<L+1;l++)
-		cout << (*B_inv) * (*A[l-1]);
-	for(k=0;k<K-1;k++)
-		cout<< (*B_inv) * (*B[k+1]);
+    for (int l=1;l<L+1;l++)
+        Log::log() << (*B_inv) * (*A[l-1]);
+    for (int k=0;k<K-1;k++)
+        Log::log()<< (*B_inv) * (*B[k+1]);
 	delete(B_inv);
-	cout<<"-------------------------------------------------------------------";
+    Log::log()<<"-------------------------------------------------------------------";
 	
 */	
 	
@@ -357,11 +357,11 @@ void armax::initialize()
 	(*As_e[0]) = (*B_1_inv);
 
 	(*B_1_inv) = B_1_inv->multiplyScalar(-1);	
-	for(l=1;l<L+1;l++)
+    for(int l=1;l<L+1;l++)
 		*As_e[l] = (*B_1_inv) * (*A_e[l-1]);
-	for(k=0;k<K-1;k++)
+    for(int k=0;k<K-1;k++)
 		*Bs_e[k] = (*B_1_inv) * (*B_e[k+1]);
-	for(r=0;r<R;r++)
+    for(int r=0;r<R;r++)
 		*Cs_e[r] = (*B_1_inv) * (*C_e[r]);
 	if(G==1)
 		*Ds_e = (*B_1_inv) * (*D_e);
@@ -372,15 +372,15 @@ void armax::initialize()
 
 
 //Theta_0 (= Theta_tm1):	
-	for (l=0;l<L+1;l++)
+    for (int l=0;l<L+1;l++)
 		for (int n1=0;n1<N1;n1++)
 			for (int m=0;m<M;m++)
 				(*Theta)(n1,l*M + m) = (*As_e[l])(n1,m);		
-	for(k=0;k<K-1;k++)
+    for(int k=0;k<K-1;k++)
 		for (int n1=0;n1<N1;n1++)		
 			for (int n1_2=0;n1_2<N1;n1_2++)
 				(*Theta)(n1,(L+1)*M + k*N1 + n1_2) = (*Bs_e[k])(n1,n1_2);			
-	for(r=0;r<R;r++)
+    for(int r=0;r<R;r++)
 		for (int n1=0;n1<N1;n1++)
 			for (int n2=0;n2<N2;n2++)
 				(*Theta)(n1,(L+1)*M + (K-1)*N1 + r*N2 + n2) = (*Cs_e[r])(n1,n2);
@@ -398,13 +398,13 @@ void armax::initialize()
 		
 	for(int m=0;m<M;m++)
 		(*x_tm1)(0,m) = 0;		//y_t isn't calculated yet (done in the iteration)
-	for(l=0;l<L;l++)
+    for(int l=0;l<L;l++)
 		for(int m=0;m<M;m++)
 			(*x_tm1)(0,M + l*M + m) = (*y_old[l])(m,0);
-	for(k=0;k<K-1;k++)
+    for(int k=0;k<K-1;k++)
 		for(int n1=0;n1<N1;n1++)
 			(*x_tm1)(0,(L+1)*M + k*N1 + n1) = (*u_old[k+1])(n1,0);
-	for(r=0;r<R;r++)
+    for(int r=0;r<R;r++)
 		for(int n2=0;n2<N2;n2++)
 			(*x_tm1)(0,(L+1)*M + (K-1)*N1 + r*N2 + n2) = (*v_old[r])(n2,0);
 	if (G==1)
@@ -436,11 +436,11 @@ void armax::initialize()
 void armax::iteration(const long& t)
 { 	
 
-//	real temp_max = ((L>K) ? L : K);	//max of L,K
-//	const real maxLKR = ((temp_max>R) ? temp_max : R);	//max of L,K,R
-//	const real eps_max = 1/(4*(maxLKR + L*1));	// if m is changed, update
+//	qreal temp_max = ((L>K) ? L : K);	//max of L,K
+//	const qreal maxLKR = ((temp_max>R) ? temp_max : R);	//max of L,K,R
+//	const qreal eps_max = 1/(4*(maxLKR + L*1));	// if m is changed, update
 											// this calculation
-	const real eps_max=1.0/12.0;
+    const qreal eps_max=1.0/12.0;
 	if((eps<=0)||(eps>=eps_max))
 		fatalError("armax::iteration","eps out of range");	
 	
@@ -535,15 +535,15 @@ void armax::iteration(const long& t)
 	Temp4 = new matrix_neu(N1+0,M + L*M + (K-1)*N1 + R*N2 + N3*G + 1*H);
 	if( !Temp4)
 		fatalError("matrix_neu::iteration","Can't allocate memory");		
-	for(l=0;l<L+1;l++)
+    for(int l=0;l<L+1;l++)
 		for(int n1=0;n1<N1;n1++)
 			for(int m=0;m<M;m++)
 				(*Temp1)(n1,0) = (*Temp1)(n1,0) + ((*Theta)(n1,l*M + m) * (*x_tm1)(0,l*M + m));				
-	for(k=0;k<K-1;k++)
+    for(int k=0;k<K-1;k++)
 		for(int n1=0;n1<N1;n1++)
 			for(int n1_2=0;n1_2<N1;n1_2++)
 				(*Temp1)(n1,0) = (*Temp1)(n1,0) + ((*Theta)(n1,(L+1)*M + n1_2) * (*x_tm1)(0,(L+1)*M + n1_2));				
-	for(r=0;r<R;r++)
+    for(int r=0;r<R;r++)
 		for(int n1=0;n1<N1;n1++)
 			for(int n2=0;n2<N2;n2++)
 				(*Temp1)(n1,0) = (*Temp1)(n1,0) + ((*Theta)(n1,(L+1)*M + (K-1)*N1 + r) * (*x_tm1)(0,(L+1)*M + (K-1)*N1 + r));				
@@ -562,15 +562,15 @@ void armax::iteration(const long& t)
 	
 //Temp3 ist jetzt (LKR..xN1)-Matrix. Theta aber (N1xLKR..). Einfach transponieren geht bei Blockmatrizen nicht.
 //also von Hand umschreiben:
-	for(l=0;l<L+1;l++)
+    for(int l=0;l<L+1;l++)
 		for(int n1=0;n1<N1;n1++)
 			for(int m=0;m<M;m++)
 				(*Temp4)(n1,l*M + m) = (*Temp3)(l*N1 + n1,m);		
-	for(k=0;k<K-1;k++)
+    for(int k=0;k<K-1;k++)
 		for(int n1=0;n1<N1;n1++)
 			for(int n1_2=0;n1_2<N1;n1_2++)
 				(*Temp4)(n1,(L+1)*M + k*N1 + n1_2) = (*Temp3)((L+1)*N1 + k*N1 + n1,n1_2);			
-	for(r=0;r<R;r++)
+    for(int r=0;r<R;r++)
 		for(int n1=0;n1<N1;n1++)
 			for(int n2=0;n2<N2;n2++)
 				(*Temp4)(n1,(L+1)*M + (K-1)*N1 + r*N2 + n2) = (*Temp3)((L+1)*N1 + (K-1)*N1 + r*N1 + n1,n2);			
@@ -607,21 +607,21 @@ void armax::iteration(const long& t)
 		(*x_tm1)(0,(L+1)*M-1-i) = (*x_tm1)(0,(L+1)*M-1-i-M);
 //	for(int n1=0;n1<N1;n1++)
 //		(*x_tm1)(0,n1) = (*u_old[K-2])(n1,0); 	//u_t-q+1 is the new target value for y_tp1 =(y*_tp1)
-	for(n1=0;n1<N1;n1++){
+    for(int n1=0;n1<N1;n1++){
 //		(*x_tm1)(0,n1) = 0.5;		//fuer konstante Kontrolle									
 		rand_rec = rand_dis->rectangular(); 	// iid-Prozess als Kontrolle: generate rectangular unit variate in (0,1)
 		(*x_tm1)(0,n1) = rand_rec/2 - 0.25;		// get random number in (-0.25,0.25)	
 	}	
 	
-	for(i=0;i<(K-2)*N1;i++)
+    for(int i=0;i<(K-2)*N1;i++)
 		(*x_tm1)(0,(L+1)*M + (K-1)*N1-1-i) = (*x_tm1)(0,(L+1)*M + (K-1)*N1-1-i-N1);
 	if(K>1)
-		for(n1=0;n1<N1;n1++)
+        for(int n1=0;n1<N1;n1++)
 			(*x_tm1)(0,(L+1)*M + n1) = (*u_old[0])(n1,0);		
-	for(i=0;i<(R-1)*N2;i++)
+    for(int i=0;i<(R-1)*N2;i++)
 		(*x_tm1)(0,(L+1)*M + (K-1)*N1 + R*N2-1-i) = (*x_tm1)(0,(L+1)*M + (K-1)*N1 + R*N2-1-i-N2);
 	if(R>0)
-		for(n2=0;n2<N2;n2++)
+        for(int n2=0;n2<N2;n2++)
 			(*x_tm1)(0,(L+1)*M + (K-1)*N1 + n2) = (*v_t)(n2,0);
 	if(G==1)
 		for(int n3=0;n3<N3;n3++)
@@ -633,15 +633,15 @@ void armax::iteration(const long& t)
 	Temp1 = new matrix_neu(N1+0,1);
 	if( !Temp1)
 		fatalError("matrix_neu::iteration","Can't allocate memory");		
-	for(l=0;l<L+1;l++)
+    for(int l=0;l<L+1;l++)
 		for(int n1=0;n1<N1;n1++)
 			for(int m=0;m<M;m++)
 				(*Temp1)(n1,0) = (*Temp1)(n1,0) + ((*Theta)(n1,l*M + m) * (*x_tm1)(0,l*M + m));				
-	for(k=0;k<K-1;k++)
+    for(int k=0;k<K-1;k++)
 		for(int n1=0;n1<N1;n1++)
 			for(int n1_2=0;n1_2<N1;n1_2++)
 				(*Temp1)(n1,0) = (*Temp1)(n1,0) + ((*Theta)(n1,(L+1)*M + n1_2) * (*x_tm1)(0,(L+1)*M + n1_2));				
-	for(r=0;r<R;r++)
+    for(int r=0;r<R;r++)
 		for(int n1=0;n1<N1;n1++)
 			for(int n2=0;n2<N2;n2++)
 				(*Temp1)(n1,0) = (*Temp1)(n1,0) + ((*Theta)(n1,(L+1)*M + (K-1)*N1 + r) * (*x_tm1)(0,(L+1)*M + (K-1)*N1 + r));				
@@ -669,32 +669,32 @@ void armax::iteration(const long& t)
 		*Temp2= dif->multiplyATB(*Temp1);
 		delete(Temp1);		
 		sum_var1 += (*Temp2)(0,0);
-		var1 = (1.0/real(t-49)) * sum_var1;
+        var1 = (1.0/qreal(t-49)) * sum_var1;
 		Temp1 = new matrix_neu(N2+0,1);
 		if( !Temp1)
 			fatalError("matrix_neu::iteration","Can't allocate memory");		
 		*Temp1 = *v_t;
 		*Temp2 = v_t->multiplyATB(*Temp1);
 		sum_var2 += (*Temp2)(0,0);
-//		var2 = 1/real(t-49) * sum_var2;
+//		var2 = 1/qreal(t-49) * sum_var2;
 		var2=(0.2 * 0.2 * 0.2)/12.0;	//for iid: var=(b-a)³/12
 		delete(Temp1);delete(Temp2);
 		dif_var = var1 - var2;	//should converge to zero
 	}
 
 
-//cout << "\ny_t:"<<*y_t;	
-//cout << "\nu_t:"<<*u_t;
-//cout << "\nTheta:" << *Theta;
-//cout << "\nx_tm1:" << *x_tm1;
+//Log::log() << "\ny_t:"<<*y_t;
+//Log::log() << "\nu_t:"<<*u_t;
+//Log::log() << "\nTheta:" << *Theta;
+//Log::log() << "\nx_tm1:" << *x_tm1;
 
 /*
-cout << "\ndif"<<*dif;
-cout << "\nsum_var1="<<sum_var1;
-cout << "\nsum_var2="<<sum_var2;
-cout << "\nvar1="<<var1;
-cout << "\nvar2="<<var2;
-cout << "\ndif_var="<<dif_var;
+Log::log() << "\ndif"<<*dif;
+Log::log() << "\nsum_var1="<<sum_var1;
+Log::log() << "\nsum_var2="<<sum_var2;
+Log::log() << "\nvar1="<<var1;
+Log::log() << "\nvar2="<<var2;
+Log::log() << "\ndif_var="<<dif_var;
 */
 /*		
 
@@ -716,13 +716,13 @@ cout << "\ndif_var="<<dif_var;
 // shifting for next period
 
 	(*P_tm1) = (*P_t);			
-	for (l=1;l<L;l++)
+    for (int l=1;l<L;l++)
 		*y_old[L-l] = *y_old[L-1-l];
 	*y_old[0] = *y_t;
-	for (k=1;k<K;k++)
+    for (int k=1;k<K;k++)
 		*u_old[K-k] = *u_old[K-1-k];
 	*u_old[0] = *u_t;
-	for (r=1;r<R;r++)
+    for (int r=1;r<R;r++)
 		*v_old[R-r] = *v_old[R-1-r];
 	if (R>0)
 		*v_old[0] = *v_t;
@@ -746,21 +746,21 @@ cout << "\ndif_var="<<dif_var;
 		if (H==1)
 			error_es_e = ((-1/b[0]) * e) - es_e;		
 // output on screen in the last period
-		cout << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << endl;	
+        Log::log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << endl;
 		for (l=1;l<L+1;l++)
-			cout << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << endl;
+            Log::log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << endl;
 		for (k=0;k<K-1;k++)
-			cout << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << endl;
+            Log::log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << endl;
 		for (r=0;r<R;r++)
-			cout << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << endl;
+            Log::log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << endl;
 		if (G==1)
-			cout << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << endl;
+            Log::log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << endl;
 		if (H==1)
-			cout << "es - es_e = " << ((-1/b[0]) * e) - es_e << endl;		
-		cout << "last dif_var=" << dif_var << endl;		
-		cout << "var1 = " << var1 << endl;
-		cout << "var2 = " << var2 << endl;
-		cout << "sum_var1 = " << sum_var1 << endl;
+            Log::log() << "es - es_e = " << ((-1/b[0]) * e) - es_e << endl;
+        Log::log() << "last dif_var=" << dif_var << endl;
+        Log::log() << "var1 = " << var1 << endl;
+        Log::log() << "var2 = " << var2 << endl;
+        Log::log() << "sum_var1 = " << sum_var1 << endl;
 	}
 */
 
@@ -779,22 +779,22 @@ cout << "\ndif_var="<<dif_var;
   		(*As_e[0])(1,0) = (*Theta)(1,0);
   		(*As_e[0])(0,1) = (*Theta)(0,1);
   		(*As_e[0])(1,1) = (*Theta)(1,1);
-//  	    cout << "As_e0:"<<*As_e[0];	
+//  	    Log::log() << "As_e0:"<<*As_e[0];
  		(*As_e[1])(0,0) = (*Theta)(0,2);
   		(*As_e[1])(1,0) = (*Theta)(1,2);
   		(*As_e[1])(0,1) = (*Theta)(0,3);
   		(*As_e[1])(1,1) = (*Theta)(1,3);
-//  	 	cout << "As_e1:"<<*As_e[1];
+//  	 	Log::log() << "As_e1:"<<*As_e[1];
 		(*As_e[2])(0,0) = (*Theta)(0,4);
   		(*As_e[2])(1,0) = (*Theta)(1,4);
   		(*As_e[2])(0,1) = (*Theta)(0,5);
   		(*As_e[2])(1,1) = (*Theta)(1,5);  	 					
-// 	 	cout << "As_e2:"<<*As_e[2];		
+// 	 	Log::log() << "As_e2:"<<*As_e[2];
 		(*Bs_e[0])(0,0) = (*Theta)(0,6);
   		(*Bs_e[0])(1,0) = (*Theta)(1,6);
   		(*Bs_e[0])(0,1) = (*Theta)(0,7);
   		(*Bs_e[0])(1,1) = (*Theta)(1,7);  		
-//	 	cout << "Bs_e0:"<<*Bs_e[0];	 	
+//	 	Log::log() << "Bs_e0:"<<*Bs_e[0];
 
  		(*B_1_inv) = B[0]->inverse();
 		(*Temp1) = (*B_1_inv);
@@ -805,7 +805,7 @@ cout << "\ndif_var="<<dif_var;
      	normA1 +=  (*difA)(1,0) * (*difA)(1,0);
         normA1 +=  (*difA)(1,1) * (*difA)(1,1);
         normA1 = sqrt(normA1);
-        cout << "\nnormA_inv_1="<<normA1;		
+        Log::log() << "\nnormA_inv_1="<<normA1;
 		
 		(*B_1_inv) = B_1_inv->multiplyScalar(-1);	
 		*Temp1 = (*B_1_inv) * (*A[0]);
@@ -815,7 +815,7 @@ cout << "\ndif_var="<<dif_var;
      	normA2 +=  (*difA)(1,0) * (*difA)(1,0);
         normA2 +=  (*difA)(1,1) * (*difA)(1,1);
         normA2 = sqrt(normA2);
-        cout << "\nnormA_inv_2="<<normA2;
+        Log::log() << "\nnormA_inv_2="<<normA2;
 
  	    *Temp1 = (*B_1_inv) * (*A[1]);
 		(*difA) = (*As_e[2]) - (*Temp1);		
@@ -824,7 +824,7 @@ cout << "\ndif_var="<<dif_var;
      	normA3 +=  (*difA)(1,0) * (*difA)(1,0);
         normA3 +=  (*difA)(1,1) * (*difA)(1,1);
         normA3 = sqrt(normA3);
-        cout << "\nnormA_inv_3="<<normA3;
+        Log::log() << "\nnormA_inv_3="<<normA3;
 
 	    *Temp1 = (*B_1_inv) * (*B[1]);
 		(*difA) = (*Bs_e[0]) - (*Temp1);		
@@ -833,7 +833,7 @@ cout << "\ndif_var="<<dif_var;
      	normB1 +=  (*difA)(1,0) * (*difA)(1,0);
         normB1 +=  (*difA)(1,1) * (*difA)(1,1);
         normB1 = sqrt(normB1);
-        cout << "\nnormB_inv_1="<<normB1<<endl;	
+        Log::log() << "\nnormB_inv_1="<<normB1<<endl;
 	
 		delete(Temp1);	
 	
@@ -871,7 +871,7 @@ cout << "\ndif_var="<<dif_var;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* armax::setLabels(char* label)
+qreal* armax::setLabels(char* label)
 {
     if( !strcmp(label,"dif_var") ) return(&dif_var);
     if( !strcmp(label,"var1") ) return(&var1);
@@ -917,15 +917,15 @@ void armax::saveParamset(ofstream& outFile)
   	for (int r=0;r<R;r++)
  		for (int n2=0;n2<N2;n2++)
 			outFile << (*v_old_ini[r])(n2,0) << "\t";
-	for (l=0;l<L;l++)
+    for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
  			for (int mm=0;mm<M;mm++)
 				outFile << (*A[l])(m,mm) << "\t";
-	for (k=0;k<K;k++)
+    for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
 				outFile << (*B[k])(m,n1) << "\t";
- 	for (r=0;r<R;r++)
+    for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
 				outFile << (*C[r])(m,n2) << "\t";
@@ -936,15 +936,15 @@ void armax::saveParamset(ofstream& outFile)
 	if (H==1)
 		for (int m=0;m<M;m++)
 			outFile << (*E)(m,0) << "\t";
-	for (l=0;l<L;l++)
+    for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
  			for (int mm=0;mm<M;mm++)
 				outFile << (*A_e[l])(m,mm) << "\t";
-	for (k=0;k<K;k++)
+    for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
 				outFile << (*B_e[k])(m,n1) << "\t";
- 	for (r=0;r<R;r++)
+    for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
 				outFile << (*C_e[n2])(m,n2) << "\t";
@@ -981,56 +981,56 @@ void armax::printParamset()
 { 	
  	for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
- 			cout << (*y_old_ini[l])(m,0) << endl;
+            Log::log() << (*y_old_ini[l])(m,0) << endl;
  	for (int k=0;k<K;k++)
  		for (int n1=0;n1<N1;n1++)	
-			cout << (*u_old_ini[k])(n1,0) << endl;
+            Log::log() << (*u_old_ini[k])(n1,0) << endl;
   	for (int r=0;r<R;r++)
  		for (int n2=0;n2<N2;n2++)
-			cout << (*v_old_ini[r])(n2,0) << endl;
-	for (l=0;l<L;l++)
+            Log::log() << (*v_old_ini[r])(n2,0) << endl;
+    for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
  			for (int mm=0;mm<M;mm++)
-				cout << (*A[l])(m,mm) << endl;
-	for (k=0;k<K;k++)
+                Log::log() << (*A[l])(m,mm) << endl;
+    for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
-				cout << (*B[k])(m,n1) << endl;
- 	for (r=0;r<R;r++)
+                Log::log() << (*B[k])(m,n1) << endl;
+    for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
-				cout << (*C[r])(m,n2) << endl;
+                Log::log() << (*C[r])(m,n2) << endl;
 	if (G==1)
 		for (int m=0;m<M;m++)	
 			for (int n3=0;n3<N3;n3++)	
-				cout << (*D)(m,n3) << endl;
+                Log::log() << (*D)(m,n3) << endl;
 	if (H==1)
 		for (int m=0;m<M;m++)
-			cout << (*E)(m,0) << endl;
-	for (l=0;l<L;l++)
+            Log::log() << (*E)(m,0) << endl;
+    for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
 			for (int mm=0;mm<M;mm++)
-				cout << (*A_e[l])(m,mm) << endl;
-	for (k=0;k<K;k++)
+                Log::log() << (*A_e[l])(m,mm) << endl;
+    for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
-				cout << (*B_e[k])(m,n1) << endl;
- 	for (r=0;r<R;r++)
+                Log::log() << (*B_e[k])(m,n1) << endl;
+    for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
-				cout << (*C_e[r])(m,n2) << endl;
+                Log::log() << (*C_e[r])(m,n2) << endl;
 	if (G==1)
 		for (int m=0;m<M;m++)	
 			for (int n3=0;n3<N3;n3++)	
-				cout << (*D_e)(m,n3) << endl;
+                Log::log() << (*D_e)(m,n3) << endl;
 	if (H==1)
 		for (int m=0;m<M;m++)
-			cout << (*E_e)(m,0) << endl;
-	cout << eps;
-	cout << sigma_eps;
+            Log::log() << (*E_e)(m,0) << endl;
+    Log::log() << eps;
+    Log::log() << sigma_eps;
 
 			
-	cout << length << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1047,11 +1047,11 @@ void armax::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax::sendStateSpace(int &quantity,const real*** stateSpace)
+void armax::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("armax::sendStateSpace",
 		   "Can't create state space vector");
@@ -1072,13 +1072,13 @@ void armax::sendStateSpace(int &quantity,const real*** stateSpace)
 // By:				mhoffman			
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* armax::sendModelVar(void)
+qreal* armax::sendModelVar(void)
 { error("macrodyn::armax::sendModelVar is not implemented");
   return NULL;
 } 
-void armax::sendParameters(int& ,real** )
+void armax::sendParameters(int& ,qreal** )
 { error("macrodyn::armax::sendParameters is not implemented");
 }
-void armax::receiveParameters(const real* )
+void armax::receiveParameters(const qreal* )
 { error("macrodyn::armax::receiveParameters is not implemented");
 } 

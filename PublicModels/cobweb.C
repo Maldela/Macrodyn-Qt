@@ -86,7 +86,7 @@ void cobweb::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* cobweb::sendModelVar()
+qreal* cobweb::sendModelVar()
 {
     return &p;
 }
@@ -103,7 +103,7 @@ real* cobweb::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* cobweb::setLabels(char* label)
+qreal* cobweb::setLabels(char* label)
 {
 	if( !strcmp(label,"xBundle") )
 		return( &xBundle );
@@ -148,11 +148,11 @@ real* cobweb::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::sendStateSpace(int &quantity,const real*** stateSpace)
+void cobweb::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("cobweb::sendStateSpace",
 		   "Can't create state space vector");
@@ -197,7 +197,7 @@ void cobweb::loadParamset(ifstream& inFile)
 
 void cobweb::saveParamset(ofstream& outFile)
 {
-/*	outFile << c0 << "\t" << c1 << "\t" << real_money << "\t";
+/*	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
 	outFile << "\t" << length;*/
 }
@@ -219,7 +219,7 @@ void cobweb::saveParamsetWithNames(ofstream& outFile)
 {
 /*	outFile << "c0 = " << c0;
 	outFile << "\nc1 = " << c1;
-	outFile << "\nreal_money = " << real_money;
+    outFile << "\nqreal_money = " << qreal_money;
 	outFile << "\nG = " << G << "\tT = " << T;
 	outFile << "\nalpha = " << alpha << "\ty0 = " << y0;
 	outFile << "length = " << length << endl;*/
@@ -239,9 +239,9 @@ void cobweb::saveParamsetWithNames(ofstream& outFile)
 
 void cobweb::printParamset()
 {
-/*	cout << c0 << "\t" << c1 << "\t" << real_money << "\t";
-	cout << G << "\t" << T << "\t" << alpha  << "\t" << y0;
-	cout << "\t" << length << endl;*/
+/*	Log::log() << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
+    Log::log() << G << "\t" << T << "\t" << alpha  << "\t" << y0;
+    Log::log() << "\t" << length << endl;*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -256,12 +256,12 @@ void cobweb::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::sendParameters(int& amount,real** parameters)
+void cobweb::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=2;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("cobweb::sendParameters",
 		   "Can't create array for parameters");
@@ -281,7 +281,7 @@ void cobweb::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::receiveParameters(const real* parameters)
+void cobweb::receiveParameters(const qreal* parameters)
 {
     p=parameters[0];
     length=long(parameters[1]);
@@ -447,7 +447,7 @@ void cobweb_RLS::iteration(const long& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* cobweb_RLS::setLabels(char* label)
+qreal* cobweb_RLS::setLabels(char* label)
 {
 	if( !strcmp(label,"theta_t") )
 		return( &theta_t );

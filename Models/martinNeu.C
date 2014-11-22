@@ -28,7 +28,7 @@ martinNeu::~martinNeu() {
 /* Purpose:         return a pointer to a variable or a parameter specified   */
 /*                  by its name                                               */
 /******************************************************************************/
-real* martinNeu::setLabels(char* label) {
+qreal* martinNeu::setLabels(char* label) {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
     if( !strcmp(label,"yBundle") )
@@ -106,10 +106,10 @@ void martinNeu::loadParamset(ifstream& inFile) {
 /* Purpose:         return pointers to the state variables and inform about   */
 /*                  the systems dimension                                     */
 /******************************************************************************/
-void martinNeu::sendStateSpace(int &quantity,const real*** stateSpace) {
+void martinNeu::sendStateSpace(int &quantity,const qreal*** stateSpace) {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !stateSpace )
       fatalError("martinNeu::sendStateSpace","Can't create state space vector");
     quantity=dimension;
@@ -124,21 +124,21 @@ void martinNeu::sendStateSpace(int &quantity,const real*** stateSpace) {
 /* Purpose:                                                                   */
 /******************************************************************************/
 
-real martinNeu::savings(const real& x) {  // irr (martin)
-    real r=rho/(rho-1);
+qreal martinNeu::savings(const qreal& x) {  // irr (martin)
+    qreal r=rho/(rho-1);
     return( 1/exp( cos(10/(1+exp(r*log(x))))));
 }
 /*
-real martinNeu::savings(const real& x) { //cobbD (martin2)
+qreal martinNeu::savings(const qreal& x) { //cobbD (martin2)
     return( 1-lambda*x);
 }
 
-real martinNeu::savings(const real& x) { // ces (martin3)
-    real r=rho/(rho-1);
+qreal martinNeu::savings(const qreal& x) { // ces (martin3)
+    qreal r=rho/(rho-1);
     return( 2-(2+2*lambda*x)/(1+exp(r*log(x))) );
 }
 
-real martinNeu::savings(const real& x) { // (martin4)
+qreal martinNeu::savings(const qreal& x) { // (martin4)
     return( (1/x) - a * ((x-b)*(x-b)+c));
 }
 */
@@ -151,7 +151,7 @@ real martinNeu::savings(const real& x) { // (martin4)
 void martinNeu::iteration(const long& t) {
 
 //    theta_e_tp1 = theta_e_t + g_tm1 * ( theta_tm1 - theta_e_t ) ;
-//    real dummy = g_tm1 * theta_tm1 * theta_tm1 ;
+//    qreal dummy = g_tm1 * theta_tm1 * theta_tm1 ;
 //    g_t = dummy / (dummy + 1.0) ;
 
 //    theta_e_tp1=zvar->dice(); 

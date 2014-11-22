@@ -29,21 +29,21 @@
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_ces ( real k, real a, real b, real c, real )
+static qreal pf_ces ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( exp ( log ( a + b * exp(log(k)*c) ) * 1/c) );
   //
   // expression:	[ a + b * k^c ] ^ {1/c}
   // constraints:	c <= 1, c # 0	
 }
 
-static real pf_ces_prime ( real k, real a, real b, real c, real )
+static qreal pf_ces_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( (1/c) * exp ( log ( a + b * exp(log(k)*c) ) * (1/c - 1) ) * \
                              b * c * exp(log(k)*(c-1)) );
   //
   // expression:	(1/c) [ a + b * k^c ] ^ (1/c-1) * [ b * c * k^(c-1) ]
   // constraints:	c <= 1, c # 0
 }
-static real pf_ces_second_prime ( real k, real a, real b, real c, real )
+static qreal pf_ces_second_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( (1/c-1) * exp ( log ( a + b * exp(log(k)*c) ) * (1/c - 2) ) * \
 			( a + b*c * exp(log(k)*(c-1)) )*b*exp(log(k)*(c-1))+ \
 			( exp ( log ( a + b * exp(log(k)*c) ) * (1/c-1)) )* \
@@ -63,7 +63,7 @@ static real pf_ces_second_prime ( real k, real a, real b, real c, real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_ces2 ( real k, real a, real b, real c, real )
+static qreal pf_ces2 ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( c==0 ? a * exp(log(k)*b) : exp ( log ( a * ( (1-b) + b * exp(log(k)*c) ) ) * 1/c) );
   //
   // expression:	a * [ (1-b) + b * k^c ] ^ {1/c}		c != 0
@@ -71,7 +71,7 @@ static real pf_ces2 ( real k, real a, real b, real c, real )
   // constraints:	c <= 1	
 }
 
-static real pf_ces2_prime ( real k, real a, real b, real c, real )
+static qreal pf_ces2_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( c==0 ? b * a * exp(log(k)*(b-1)) : \
                 (1/c) * exp(log( a * ((1-b) + b * exp(log(k)*c)) ) * (1/c - 1) ) * \
                       a * b * c * exp(log(k)*(c-1)) );
@@ -92,20 +92,20 @@ static real pf_ces2_prime ( real k, real a, real b, real c, real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_leo ( real k, real a, real b, real , real alpha )
+static qreal pf_leo ( qreal k, qreal a, qreal b, qreal , qreal alpha )
 { return ( a / b * ( 1 - exp (-b * k) +alpha ) );
   //
   // expression:	a/b * ( 1 - e^(-b * k) )
   // constraints:	a,b >= 0
 }
 
-static real pf_leo_prime ( real k, real a, real b, real , real )
+static qreal pf_leo_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a * exp (-b * k) );
   //
   // expression:	a * e^(-b * k)
   // constraints:	a,b >= 0
 }
-static real pf_leo_second_prime ( real k, real a, real b, real , real )
+static qreal pf_leo_second_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( -b * a * exp (-b * k) );
   //
   // expression:	-b * a * e^(-b * k)
@@ -123,14 +123,14 @@ static real pf_leo_second_prime ( real k, real a, real b, real , real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_cd ( real k, real a, real b, real , real )
+static qreal pf_cd ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a/b * exp( b * log(k) ) );
   //
   // expression:	a/b * e^(b * log(k) )
   // constraints:	a > 0, 0<b<=1
 }
 
-static real pf_cd_prime ( real k, real a, real b, real , real )
+static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a/k * exp( b * log(k) ) );
   //
   // expression:	a/k * e^(b * log(k) )
@@ -148,13 +148,13 @@ static real pf_cd_prime ( real k, real a, real b, real , real )
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_leontiev ( real k, real a, real b, real , real alpha)
+static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal , qreal alpha)
 { return ( a*k<b ? a*k+alpha : b+alpha );
   //
   // expression:	min{a*k,b}+c
 }
 
-static real pf_leontiev_prime ( real k, real a, real b, real , real )
+static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( k<=b/a ? a : 0);
   //
   // expression:	a	k<=b/a
@@ -172,12 +172,12 @@ static real pf_leontiev_prime ( real k, real a, real b, real , real )
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_app ( real k, real a, real b, real c, real alpha )
+static qreal pf_app ( qreal k, qreal a, qreal b, qreal c, qreal alpha )
 {
  return (a*k+c*a*(log((1+exp(-b/(c*a)))/(1+exp((1/c)*(k-b/a)))))+alpha);
 }
 
-static real pf_app_prime ( real k, real a, real b, real c, real )
+static qreal pf_app_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 {
  return ( a/( 1+exp( (1/c)*(k-b/a) ) ) );
 }
@@ -193,19 +193,19 @@ static real pf_app_prime ( real k, real a, real b, real c, real )
 // By:			Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_quad ( real k, real a, real b, real c, real alpha)
+static qreal pf_quad ( qreal k, qreal a, qreal b, qreal c, qreal alpha)
 {
  return ((k<=exp(log(1/a)*(1/(b-1)))) ? c*(k-(a/b*exp(log(k)*b)))+alpha : 
  
                         c*(exp(log(1/a)*(1/(b-1)))-(a/b*exp(log(exp(log(1/a)*(1/(b-1))))*b)))+alpha);
 }
 
-static real pf_quad_prime ( real k, real a, real b, real c , real  )
+static qreal pf_quad_prime ( qreal k, qreal a, qreal b, qreal c , qreal  )
 {
  return ((k<=exp(log(1/a)*(1/(b-1)))) ? c*(1-(a*exp(log(k)*(b-1)))) : 0);
 }
 
-static real pf_quad_second_prime ( real k, real a, real b, real c , real  )
+static qreal pf_quad_second_prime ( qreal k, qreal a, qreal b, qreal c , qreal  )
 {
  return ((k<=exp(log(1/a)*(1/(b-1)))) ? -c*((b-1)*(a*exp(log(k)*(b-2)))) : 0);
 }
@@ -222,12 +222,12 @@ static real pf_quad_second_prime ( real k, real a, real b, real c , real  )
 // By:			Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_log ( real k, real a, real b, real , real alpha)
+static qreal pf_log ( qreal k, qreal a, qreal b, qreal , qreal alpha)
 {
  return a/b*log(exp(log(k)*b)+1+alpha);                        
 }
 
-static real pf_log_prime ( real k, real a, real b, real , real alpha  )
+static qreal pf_log_prime ( qreal k, qreal a, qreal b, qreal , qreal alpha  )
 {
  return a*exp(log(k)*(b-1))/(exp(log(k)*b)+1+alpha);
 } 
@@ -242,12 +242,12 @@ static real pf_log_prime ( real k, real a, real b, real , real alpha  )
 // By:			Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_gcd ( real k, real a, real b, real c, real alpha)
+static qreal pf_gcd ( qreal k, qreal a, qreal b, qreal c, qreal alpha)
 {
  return a/b*(exp(log(k+exp(log(c)*(1/b)))*b)-c)+alpha;                        
 }
 
-static real pf_gcd_prime ( real k, real a, real b, real c, real )
+static qreal pf_gcd_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 {
  return a/b*exp(log(k+exp(log(c)*(1/c)))*(b-1));
 }
@@ -264,7 +264,7 @@ static real pf_gcd_prime ( real k, real a, real b, real c, real )
 // By:					Michael Meyer
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_michael ( real k, real a, real b, real c, real alpha)
+static qreal pf_michael ( qreal k, qreal a, qreal b, qreal c, qreal alpha)
 {
 	return ((k<=exp(log(1/a)*(1/(b-1)))) ? alpha*(c*(k-(a/b*exp(log(k)*b))))+
 											(1-alpha)*(a*k+c*a*(log((1+exp(-b/(c*a)))/(1+exp((1/c)*(k-b/a)))))) :
@@ -273,7 +273,7 @@ static real pf_michael ( real k, real a, real b, real c, real alpha)
 				(1-alpha)*(a*k+c*a*(log((1+exp(-b/(c*a)))/(1+exp((1/c)*(k-b/a)))))));
 }
 
-static real pf_michael_prime ( real k, real a, real b, real c, real alpha  )
+static qreal pf_michael_prime ( qreal k, qreal a, qreal b, qreal c, qreal alpha  )
 {
  return ((k<=exp(log(1/a)*(1/(b-1)))) ? (alpha*c*(1-(a*exp(log(k)*(b-1)))))
 					+((1-alpha)*( a/( 1+exp( (1/c)*(k-b/a) ) ) )) : (1-alpha)*( a/( 1+exp( (1/c)*(k-b/a) ) ) ) );
@@ -339,7 +339,7 @@ void growth_model::pf_init ( void )
     break;
 
     default :
-      error("macrodyn::growth_model::pf_init: pf type %d not yet implemented : ", pf_type);
+      error("macrodyn::growth_model::pf_init: pf type %d not yet implemented : ", QString::number(pf_type));
   }
 }
 
@@ -355,7 +355,7 @@ void growth_model::pf_init ( void )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real growth_model::sf_y ( real ) {
+qreal growth_model::sf_y ( qreal ) {
  return syr;
 }
 
@@ -371,7 +371,7 @@ real growth_model::sf_y ( real ) {
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real growth_model::sf_w ( real ) {
+qreal growth_model::sf_w ( qreal ) {
  return swr; }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -386,7 +386,7 @@ real growth_model::sf_w ( real ) {
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real growth_model::sf_r ( real ) {
+qreal growth_model::sf_r ( qreal ) {
  return srr; }
 
 
@@ -422,7 +422,7 @@ growth_model::growth_model() : baseModel(1)
 
 void growth_model::iteration(const long& )
 { 
-  real k_n;		// value of k for the next period
+  qreal k_n;		// value of k for the next period
 //  y = (*pf)(k,a,b,c,alpha);
 //  w = (*pf)(k,a,b,c,alpha) - k * (*pf_prime)(k,a,b,c,alpha);
 //  r = (*pf_prime)(k,a,b,c,alpha);
@@ -437,16 +437,16 @@ void growth_model::iteration(const long& )
   k_n = 1 / (1+n) * ( (1-delta_p) * k + sav_w + sav_r + sav_y);
   k = k_n;
   
-// How about the real model?!?!
-//  real K_old = K;
+// How about the qreal model?!?!
+//  qreal K_old = K;
   K = (1-delta_p)*K+ sav_w *L + sav_r * L + sav_y * L;
   L *= 1+n;
   ln_K = log(K);
   ln_L = log(L);
   d_K_kL = K - k_fix*L;
-//cout << a << " " << b << " " << c << " " << alpha << " : ";
-//cout << syr << " " << swr << " " << srr << " : ";
-//cout << sav_y << " " << sav_w << " " << sav_r << " " << k_n << endl;
+//Log::log() << a << " " << b << " " << c << " " << alpha << " : ";
+//Log::log() << syr << " " << swr << " " << srr << " : ";
+//Log::log() << sav_y << " " << sav_w << " " << sav_r << " " << k_n << endl;
 }
     
 ///////////////////////////////////////////////////////////////////////////////
@@ -486,7 +486,7 @@ void growth_model::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* growth_model::setLabels(char* label)
+qreal* growth_model::setLabels(char* label)
 {
     if( !strcmp(label,"K") ) return(&K);
     if( !strcmp(label,"L") ) return(&L);
@@ -536,11 +536,11 @@ real* growth_model::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void growth_model::sendStateSpace(int &quantity,const real*** stateSpace)
+void growth_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("growth_model::sendStateSpace",
 		   "Can't create state space vector");
@@ -624,19 +624,19 @@ void growth_model::saveParamset(ofstream& outFile)
 
 void growth_model::printParamset()
 {
-    cout << k_0 << endl;
-    cout << pf_type << endl;
-    cout << A << endl;
-    cout << B << endl;
-    cout << C << endl;
-    cout << D << endl;
-    cout << syr << endl;
-    cout << swr << endl;
-    cout << srr << endl;
-    cout << n << endl;
-    cout << delta_p << endl;
+    Log::log() << k_0 << endl;
+    Log::log() << pf_type << endl;
+    Log::log() << A << endl;
+    Log::log() << B << endl;
+    Log::log() << C << endl;
+    Log::log() << D << endl;
+    Log::log() << syr << endl;
+    Log::log() << swr << endl;
+    Log::log() << srr << endl;
+    Log::log() << n << endl;
+    Log::log() << delta_p << endl;
     
-    cout << length << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -651,14 +651,14 @@ void growth_model::printParamset()
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* growth_model::sendModelVar(void)
+qreal* growth_model::sendModelVar(void)
 { error("macrodyn::growth_model::sendModelVar is not implemented");
   return NULL;
 }
-void growth_model::sendParameters(int& ,real** )
+void growth_model::sendParameters(int& ,qreal** )
 { error("macrodyn::growth_model::sendParameters is not implemented");
 }
-void growth_model::receiveParameters(const real* )
+void growth_model::receiveParameters(const qreal* )
 { error("macrodyn::growth_model::receiveParameters is not implemented");
 }
 
@@ -785,15 +785,15 @@ void rgrowth_model::initialize()
 ///////////////////////////////////////////////////////////////////////////////
 depreciate::depreciate() : growth_model()
 {
-    trans_x= new real[trans_x_max];
+    trans_x= new qreal[trans_x_max];
     if( !trans_x )
 	fatalError("depreciate::depreciate","Can't create trans_x vector");
 
-    trans_a= new real[trans_x_max-1];
+    trans_a= new qreal[trans_x_max-1];
     if( !trans_a )
 	fatalError("depreciate::depreciate","Can't create trans_a vector");
 
-    trans_b= new real[trans_x_max-1];
+    trans_b= new qreal[trans_x_max-1];
     if( !trans_b )
 	fatalError("depreciate::depreciate","Can't create trans_b vector");
 }
@@ -811,11 +811,11 @@ depreciate::depreciate() : growth_model()
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-void depreciate::sendStateSpace(int &quantity,const real*** stateSpace)
+void depreciate::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("depreciate::sendStateSpace",
 		   "Can't create state space vector");
@@ -836,7 +836,7 @@ void depreciate::sendStateSpace(int &quantity,const real*** stateSpace)
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* depreciate::setLabels(char* label)
+qreal* depreciate::setLabels(char* label)
 {
     if( !strcmp(label,"_z_0") ) return(&_z_0);
     if( !strcmp(label,"_z") ) return(&_z);
@@ -860,7 +860,7 @@ real* depreciate::setLabels(char* label)
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-real  depreciate::trans(real z, real* x, real* a, real* b)
+qreal  depreciate::trans(qreal z, qreal* x, qreal* a, qreal* b)
 {
     int i=0;
     while(x[i]<1) {
@@ -874,7 +874,7 @@ real  depreciate::trans(real z, real* x, real* a, real* b)
 	i++;
 //printf("\ni=%i\t",i);
 	}
-    error("macrodyn::depreciate::trans: can not compute z.  (i=%i) \n",i);
+    error("macrodyn::depreciate::trans: can not compute z.  (i=%i) \n", QString::number(i));
     return(-1);
 }
 
@@ -890,11 +890,11 @@ real  depreciate::trans(real z, real* x, real* a, real* b)
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real theta_logistic ( real d, real m)
+static qreal theta_logistic ( qreal d, qreal m)
 { return (m * d * (1-d)) ;
 }
 
-static real theta_tent ( real d, real m)
+static qreal theta_tent ( qreal d, qreal m)
 { 
   
   if( d<=m ) {
@@ -904,7 +904,7 @@ static real theta_tent ( real d, real m)
   }
 }
 
-static real theta_saw ( real d, real m)
+static qreal theta_saw ( qreal d, qreal m)
 { if( d<m ) {
     return (1/m * d);
   } else {
@@ -937,7 +937,7 @@ void depreciate::theta_init ( void )
       theta=theta_saw;
     break;
     default :
-      error("macrodyn::depreciate::theta_init: theta type %d not yet implemented : ", int(theta_type));
+      error("macrodyn::depreciate::theta_init: theta type %d not yet implemented : ", QString::number(theta_type));
   }
 }
 
@@ -999,11 +999,11 @@ void depreciate::loadParamset(ifstream& inputFile)
 	      "the number i of x[i] must be less trans_x_max");
 
   // remember that a,b have one number less than x
-  for(j=0;j<i;j++) {
+  for (int j=0;j<i;j++) {
 	 inputFile >> trans_a[j];
 	//printf("a[%j]=%f\n",i,trans_a[j]); 
 	}
-  for(j=0;j<i;j++) {
+  for (int j=0;j<i;j++) {
 	 inputFile >> trans_b[j];
 	//printf("b[%j]=%f\n",i,trans_b[j]); 
 	}
@@ -1038,11 +1038,11 @@ void depreciate::saveParamset(ofstream& outFile)
 	 i++;
 	}
     outFile << "\n";
-    for(j=0;j<i;j++) {
+    for (int j=0;j<i;j++) {
 	 outFile << trans_a[i] << "\t";
 	}
     outFile << "\n";
-    for(j=0;j<i;j++) {
+    for (int j=0;j<i;j++) {
 	 outFile << trans_b[i] << "\t";
 	}
     outFile << "\n";
@@ -1064,25 +1064,25 @@ void depreciate::saveParamset(ofstream& outFile)
 void depreciate::printParamset()
 {
     int i,j;
-    cout << theta_type << endl;
-    cout << my << endl;
-    cout << _z_0 << endl;
-    cout << _z_var_name << endl;
+    Log::log() << theta_type << endl;
+    Log::log() << my << endl;
+    Log::log() << _z_0 << endl;
+    Log::log() << _z_var_name << endl;
     i=0;
     while(i<trans_x_max) {
-	 cout << trans_x[i] << "\t";
+     Log::log() << trans_x[i] << "\t";
 	 if(trans_x[i]==1) break;
 	 i++;
 	}
-    cout << "\n";
-    for(j=0;j<i;j++) {
-	 cout << trans_a[i] << "\t";
+    Log::log() << "\n";
+    for (int j=0;j<i;j++) {
+     Log::log() << trans_a[i] << "\t";
 	}
-    cout << "\n";
-    for(j=0;j<i;j++) {
-	 cout << trans_b[i] << "\t";
+    Log::log() << "\n";
+    for (int j=0;j<i;j++) {
+     Log::log() << trans_b[i] << "\t";
 	}
-    cout << "\n";
+    Log::log() << "\n";
     growth_model::printParamset();
 }
 
@@ -1203,7 +1203,7 @@ void pasinetti::saveParamset(ofstream& outFile)
 
 void pasinetti::printParamset()
 {
-    cout << k_1 << endl;
+    Log::log() << k_1 << endl;
     growth_model::printParamset();
 }
 
@@ -1220,7 +1220,7 @@ void pasinetti::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* pasinetti::setLabels(char* label)
+qreal* pasinetti::setLabels(char* label)
 {
     if( !strcmp(label,"k_1") ) return(&k_1);
     if( !strcmp(label,"kw_0") ) return(&k_1);
@@ -1316,8 +1316,8 @@ void pasinetti::iteration(const long& t)
 
 	growth_model::iteration(t);
 	
-	real kr_n;		// shareholders value of k for the next period
-	real kw_n;		// workers value of k for the next period
+    qreal kr_n;		// shareholders value of k for the next period
+    qreal kw_n;		// workers value of k for the next period
 	
 ////Einkommensquoten im Allgemeinen ohne Dynamik/////
 	y_ini = (*pf)(k_pas,a,b,c,alpha);
@@ -1372,8 +1372,8 @@ void pasinetti::iteration(const long& t)
 ////						Elastizität im Steady-State							
 if(pf_type==2){
 
-	real dummy=(n+delta_p)/(srr*a);
-	real dummy1=1/(b-1);
+    qreal dummy=(n+delta_p)/(srr*a);
+    qreal dummy1=1/(b-1);
 
 	steady_cd=pow(dummy,dummy1);
 
@@ -1398,10 +1398,10 @@ if(pf_type==2){
 
 if(pf_type==0){
 
-	real dummy=(n+delta_p)/srr;
-	real dummy1=c/(1-c);
-	real dummy2=pow(dummy,dummy1);
-	real dummy3=-1/c;
+    qreal dummy=(n+delta_p)/srr;
+    qreal dummy1=c/(1-c);
+    qreal dummy2=pow(dummy,dummy1);
+    qreal dummy3=-1/c;
 
 	dummy=(dummy2-pow(b,2))/a*b;
 	steady_ces=pow(dummy,dummy3);
@@ -1414,14 +1414,14 @@ if(pf_type==0){
 	
 	E_f_pr_n=steady_ces*(*pf_second_prime)(steady_ces,a,b,c,alpha)/(*pf_prime)(steady_ces,a,b,c,alpha);
 	bif_point=-2*(n+1)/(n+delta_p);	
-//cout << "point =" << bif_point << endl;
+//Log::log() << "point =" << bif_point << endl;
 	
 	s_hat=srr*(E_f_pr_n + bif_point)/(  E_f_pr_n/E_f-2*((1+n)/(2+n+delta_p) )  )  ;
    
 	Konsum_A=(1-swr)*(srr*y_steady-steady_ces*(n+delta_p))/(srr-swr);
 	Konsum_C=(1-srr)*(n+delta_p)/(srr-swr)*steady_ces*(1-swr/(E_f*srr));
 
-//cout << "CES Fixpunkt =" << steady_ces << endl;
+//Log::log() << "CES Fixpunkt =" << steady_ces << endl;
 }
 
 ////Leontief Technologie:
@@ -1443,10 +1443,10 @@ if(pf_type==5){
 	Konsum_C=(1-srr)*(n+delta_p)/(srr-swr)*steady_leon*(1-swr/(E_f*srr));
 
 //		if(t==length){
-//			cout << "Leontief Steady-State =" << steady_leon << endl;
-//			cout << "Leontief Steady-State_kc =" << steady_kc_leon << endl;
-//			cout << "Leontief Steady-State_kw =" << steady_kw_leon << endl;
-//			cout << "Leontief Elastiziaet von f' =" << E_steady_leon_prime << endl;
+//			Log::log() << "Leontief Steady-State =" << steady_leon << endl;
+//			Log::log() << "Leontief Steady-State_kc =" << steady_kc_leon << endl;
+//			Log::log() << "Leontief Steady-State_kw =" << steady_kw_leon << endl;
+//			Log::log() << "Leontief Elastiziaet von f' =" << E_steady_leon_prime << endl;
 //		}
 }
 }  	

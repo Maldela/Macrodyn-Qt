@@ -28,15 +28,15 @@
 class Keener : public baseModel {
 
 protected:
-	real	x_0;
-	real	a;
-	real	b;
-	real	Modulo;
-	real	lambda;
-	real	bias;
+	qreal	x_0;
+	qreal	a;
+	qreal	b;
+	qreal	Modulo;
+	qreal	lambda;
+	qreal	bias;
 	long	myseed;
 	
-	real x;			// state variable
+	qreal x;			// state variable
 	distribution	distri;
 
 public:
@@ -48,14 +48,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 #endif	

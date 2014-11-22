@@ -52,7 +52,7 @@ void models2D::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real* models2D::sendModelVar()
+qreal* models2D::sendModelVar()
 {
     return &x;
 }
@@ -67,7 +67,7 @@ real* models2D::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-real* models2D::setLabels(char* label)
+qreal* models2D::setLabels(char* label)
 {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
@@ -99,11 +99,11 @@ real* models2D::setLabels(char* label)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::sendStateSpace(int &quantity,const real*** stateSpace)
+void models2D::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !stateSpace )
 	fatalError("models2D::sendStateSpace",
 		   "Can't create state space vector");
@@ -157,9 +157,9 @@ void models2D::saveParamset(ofstream& outFile)
 
 void models2D::printParamset()
 {
-    cout << x0 << "\t" << y0 << endl;
-    cout << alpha << "\t" << beta << endl;
-    cout << length << endl;
+    Log::log() << x0 << "\t" << y0 << endl;
+    Log::log() << alpha << "\t" << beta << endl;
+    Log::log() << length << endl;
 }
 
 /******************************************************************************/
@@ -172,12 +172,12 @@ void models2D::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::sendParameters(int& amount,real** parameters)
+void models2D::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=5;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !parameters )
 	fatalError("models2D::sendParameters",
 		   "Can't create array for parameters");
@@ -197,7 +197,7 @@ void models2D::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::receiveParameters(const real* parameters)
+void models2D::receiveParameters(const qreal* parameters)
 {
     x0=parameters[0];
     y0=parameters[1];

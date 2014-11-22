@@ -34,9 +34,9 @@ class onozaki_et_al : public baseModel {
 
 protected:
     			
-    real z_0;		// initial value
-    real z;			// argument
-    real alpha, beta;	// original parameters
+    qreal z_0;		// initial value
+    qreal z;			// argument
+    qreal alpha, beta;	// original parameters
     
 public:
     onozaki_et_al();			// constructor
@@ -46,12 +46,12 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
 
-    real* sendModelVar();		// for compatibity reasons only
-    void sendParameters(int&,real**);
-    void receiveParameters(const real*);
+    qreal* sendModelVar();		// for compatibity reasons only
+    void sendParameters(int&,qreal**);
+    void receiveParameters(const qreal*);
 
 };
 

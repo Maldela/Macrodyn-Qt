@@ -55,7 +55,7 @@ void OlgRat::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real* OlgRat::sendModelVar()
+qreal* OlgRat::sendModelVar()
 {
     return &m;
 }
@@ -71,7 +71,7 @@ real* OlgRat::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-real* OlgRat::setLabels(char* label)
+qreal* OlgRat::setLabels(char* label)
 {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
@@ -104,11 +104,11 @@ real* OlgRat::setLabels(char* label)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::sendStateSpace(int &quantity,const real*** stateSpace)
+void OlgRat::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !stateSpace )
 	fatalError("OlgRat::sendStateSpace",
 		   "Can't create state space vector");
@@ -164,9 +164,9 @@ void OlgRat::saveParamset(ofstream& outFile)
 
 void OlgRat::printParamset()
 {
-    cout << m0 << "\t" << g << "\t" << tau << endl;
-    cout << s << "\t" << lambda << endl;
-    cout << length << endl;
+    Log::log() << m0 << "\t" << g << "\t" << tau << endl;
+    Log::log() << s << "\t" << lambda << endl;
+    Log::log() << length << endl;
 }
 
 
@@ -180,12 +180,12 @@ void OlgRat::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::sendParameters(int& amount,real** parameters)
+void OlgRat::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=6;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !parameters )
 	fatalError("OlgRat::sendParameters",
 		   "Can't create array for parameters");
@@ -207,7 +207,7 @@ void OlgRat::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::receiveParameters(const real* parameters)
+void OlgRat::receiveParameters(const qreal* parameters)
 {
     m0=parameters[0];
     g=parameters[1];
@@ -229,9 +229,9 @@ void OlgRat::receiveParameters(const real* parameters)
 
 void OlgRat::iteration(const long&)
 {
-    real mg=m+g;
-    real min;
-    real max;
+    qreal mg=m+g;
+    qreal min;
+    qreal max;
     
     if( s <= mg ) {
       min=s; max=mg;
@@ -244,9 +244,9 @@ void OlgRat::iteration(const long&)
 
 void OlgRat2::iteration(const long&)
 {
-    real mg=m+g;
-    real min;
-    real max;
+    qreal mg=m+g;
+    qreal min;
+    qreal max;
     
     if( s <= mg ) {
       min=s; max=mg;

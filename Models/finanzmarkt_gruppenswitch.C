@@ -155,7 +155,7 @@ finanzmarkt_gruppenswitch::~finanzmarkt_gruppenswitch() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-real* finanzmarkt_gruppenswitch::setLabels(char* label)
+qreal* finanzmarkt_gruppenswitch::setLabels(char* label)
 {
 	if( !strcmp(label,"R") ) return(&R);
 	
@@ -373,11 +373,11 @@ void finanzmarkt_gruppenswitch::loadParamset(ifstream& inFile)
 // Funktionsname:	sendStateSpace
 // Beschreibung:	return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_gruppenswitch::sendStateSpace(int &quantity,const real*** stateSpace)
+void finanzmarkt_gruppenswitch::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [2]; // 2 asset in Model finanzmarkt_gruppenswitch
+    *stateSpace= new const qreal* [2]; // 2 asset in Model finanzmarkt_gruppenswitch
     if( !(*stateSpace) )
 	fatalError("finanzmarkt_gruppenswitch::sendStateSpace","Speicherfehler");
     quantity=2; // 2 asset in Model finanzmarkt_gruppenswitch
@@ -391,7 +391,7 @@ void finanzmarkt_gruppenswitch::sendStateSpace(int &quantity,const real*** state
 ///////////////////////////////////////////////////////////////////////////////
 void finanzmarkt_gruppenswitch::iteration(const long& t)
 {
-cout << "epsilon=" << epsilon << endl;
+Log::log() << "epsilon=" << epsilon << endl;
 
 //die Abfragen finden statt, um nichtdefierte Werte abzufangen
 
@@ -552,7 +552,7 @@ else {
 	p2=P->m[1][0];
 
 
-//Realisierter Return der "alten" Fundamentalisten
+//qrealisierter Return der "alten" Fundamentalisten
 
 //	return_F=(P+D-R*P_old)^(T)*XF_old	
 
@@ -569,7 +569,7 @@ else {
 	return_F=(return_F/(mu*ef))+(R-1);
 	}
 
-//Realisierter Return der "alten" Noise--Trader
+//qrealisierter Return der "alten" Noise--Trader
 
 //	return_N=(P+D-R*P_old)^(T)*XN_old	
 
@@ -595,10 +595,10 @@ else {
 //U^F=(mean_f-(alpha/2)variance_f)
 //U^N=(mean_n-(alpha/2)variance_n)
 
-cout << "Periode:" << t << endl;
-cout << "mu:" << mu << endl;
-cout << "return_F:" << return_F << endl;
-cout << "return_N:" << return_N << endl;
+Log::log() << "Periode:" << t << endl;
+Log::log() << "mu:" << mu << endl;
+Log::log() << "return_F:" << return_F << endl;
+Log::log() << "return_N:" << return_N << endl;
 
 mean_f=((t-1)*mean_f+return_F)/t;
 variance_f=((t-1)*variance_f+(return_F-mean_f)*(return_F-mean_f))/t;
@@ -632,11 +632,11 @@ mu=1/(1+z1);
 //	z1=mu+z1;	
 //	z1=MIN(1,z1);
 //	
-//	cout << "z1=" << z1 << endl;	
+//	Log::log() << "z1=" << z1 << endl;
 //	
 //	mu=MAX(0,z1);
 //
-//	cout << "mu=" << mu << endl;
+//	Log::log() << "mu=" << mu << endl;
 ////////////////////////////////////////////////////////////////////////////////////
 
 }

@@ -80,11 +80,11 @@ cout << "Model MerA destructor" << endl;
 // Author:		Marc Mueller
 // Last modified:	98/11/30
 ///////////////////////////////////////////////////////////////////////////////
-real* MerA::setLabels(char* label)
+qreal* MerA::setLabels(char* label)
 {
 	char * labelp;
 	int num;
-//    if( !strcmp(label,"N") ) return( (real*)(&N) );
+//    if( !strcmp(label,"N") ) return( (qreal*)(&N) );
 	if( !strcmp(label,"R") ) return(&R);
 
 	if( !strcmp(label,"d") ) return(d);
@@ -172,8 +172,8 @@ real* MerA::setLabels(char* label)
 // Last modified:	98/11/30
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-//real MerA::get_new_d(int & i) {
-real MerA::get_new_d(int & ) {
+//qreal MerA::get_new_d(int & i) {
+qreal MerA::get_new_d(int & ) {
 //	return  (zvar->dice() * (dmax[0]-dmin[0]) + dmin[0]);
 	return  ( markov->dice() );
 }
@@ -202,7 +202,7 @@ mef=0;
 	}
 
 
-	real DMAX;
+    qreal DMAX;
 	for(int i=0;i<K;i++){
 		tau1x[i]= 0.05;
 
@@ -253,30 +253,30 @@ void MerA::loadParamset(ifstream& inFile)
 
 	inFile >> K;
 	if ( xAll != NULL ) delete [] xAll;
-	xAll = new real[K+1];
+    xAll = new qreal[K+1];
      if( !(xAll) )
 	   fatalError("macrodyn::MerA::loadParamset","can't create xAll");
 	if ( p0 != NULL ) delete [] p0;
-	p0 = new real[K+1];
+    p0 = new qreal[K+1];
      if( !(p0) )
 	   fatalError("macrodyn::MerA::loadParamset","can't create p0");
 	if ( q0 != NULL ) delete [] q0;
-	q0 = new real[K+1];
+    q0 = new qreal[K+1];
      if( !(q0) )
 	   fatalError("macrodyn::MerA::loadParamset","can't create q0");
 
 	if ( d0 != NULL ) delete [] d0;
-	d0 = new real[K+1];
+    d0 = new qreal[K+1];
         if( !(d0) )
 	   fatalError("macrodyn::MerA::initialize","can't create d0");
 
 	if ( dmin != NULL ) delete [] dmin;
-	dmin = new real[K+1];
+    dmin = new qreal[K+1];
      if( !(dmin) )
 	   fatalError("macrodyn::MerA::initialize","can't create dmin");
 
 	if ( dmax != NULL ) delete [] dmax;
-	dmax = new real[K+1];
+    dmax = new qreal[K+1];
      if( !(dmax) )
 	   fatalError("macrodyn::MerA::initialize","can't create dmax");
 
@@ -314,52 +314,52 @@ d0[i]=dmin[i];
 	inFile >> length;
 
 	if ( p != NULL ) delete [] p;
-		p = new real[K+1];
+        p = new qreal[K+1];
 	if( !(p) )
 	   fatalError("macrodyn::MerA::initialize","can't create p");
 
 	if ( q != NULL ) delete [] q;
-		q = new real[K+1];
+        q = new qreal[K+1];
 	if( !(q) )
 	   fatalError("macrodyn::MerA::initialize","can't create q");
 
 	if ( qShift != NULL ) delete [] qShift;
-		qShift = new real[K+1];
+        qShift = new qreal[K+1];
 	if( !(qShift) )
 	   fatalError("macrodyn::MerA::initialize","can't create qShift");
 
 	if ( qOld != NULL ) delete [] qOld;
-		qOld = new real[K+1];
+        qOld = new qreal[K+1];
 	if( !(qOld) )
 	   fatalError("macrodyn::MerA::initialize","can't create qOld");
 
 	if ( qmin != NULL ) delete [] qmin;
-		qmin = new real[K+1];
+        qmin = new qreal[K+1];
 	if( !(qmin) )
 	   fatalError("macrodyn::MerA::initialize","can't create qmin");
 
 	if ( qmax != NULL ) delete [] qmax;
-		qmax = new real[K+1];
+        qmax = new qreal[K+1];
 	if( !(qmax) )
 	   fatalError("macrodyn::MerA::initialize","can't create qmax");
 
 	if ( ferr != NULL ) delete [] ferr;
-		ferr = new real[K+1];
+        ferr = new qreal[K+1];
 	if( !(ferr) )
 	   fatalError("macrodyn::MerA::initialize","can't create ferr");
 
 	if ( d != NULL ) delete [] d;
-		d = new real[K+1];
+        d = new qreal[K+1];
 	if( !(d) )
 	   fatalError("macrodyn::MerA::initialize","can't create d");
 
 	if ( dmid != NULL ) delete [] dmid;
-		dmid = new real[K+1];
+        dmid = new qreal[K+1];
 	if( !(dmid) )
 	   fatalError("macrodyn::MerA::initialize","can't create dmid");
 
 	if ( tau1x != NULL ) delete [] tau1x;
-		tau1x = new real[K+1];
+        tau1x = new qreal[K+1];
         if( !(tau1x) )
 	   fatalError("macrodyn::MerA::initialize","can't create tau1x");
 
@@ -400,11 +400,11 @@ void MerA::saveParamsetWithNames(ofstream& outputFile)
 // Author:		Marc Mueller
 // Last modified:	
 ///////////////////////////////////////////////////////////////////////////////
-void MerA::sendStateSpace(int &quantity,const real*** stateSpace)
+void MerA::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [K]; // K assets in Model MerA
+    *stateSpace= new const qreal* [K]; // K assets in Model MerA
     if( !(*stateSpace) )
 	fatalError("MerA::sendStateSpace","Can't create state space vector");
     quantity=K; // K assets in Model MerA
@@ -423,7 +423,7 @@ void MerA::sendStateSpace(int &quantity,const real*** stateSpace)
 void MerA::iteration(const long& t)
 { 
 pOld=p[0];
-real dOld=d[0];
+qreal dOld=d[0];
 	int i;
 	for(i=0;i<K;i++) {
 		if(perfectPredictor)

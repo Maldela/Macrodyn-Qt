@@ -25,31 +25,31 @@
 
 class Monopol : public baseModel {
 protected:
-    real g;			// parameters
-    real tau;			//
-    real B;			//
-    real eta;			//
-    real alpha;			//
-    real Lmax;			//
-    real lambda;		//
-    real mu;			//
-    real delta;			//
-    real cert;                  //
+    qreal g;			// parameters
+    qreal tau;			//
+    qreal B;			//
+    qreal eta;			//
+    qreal alpha;			//
+    qreal Lmax;			//
+    qreal lambda;		//
+    qreal mu;			//
+    qreal delta;			//
+    qreal cert;                  //
     
-    real zeta;			// state variables
-    real m;			//
-    real z;
-    real beta0;			// initial values
-    real M0;			//
-    real w0;
-    real z0;
+    qreal zeta;			// state variables
+    qreal m;			//
+    qreal z;
+    qreal beta0;			// initial values
+    qreal M0;			//
+    qreal w0;
+    qreal z0;
     
-    real FF(const real L);	//
-    real Finv(const real y);    //
-    real gamma(void);		//
-    real cpar(void);		//
-    real xnot(void);		//
-    real rewa(const real x);	//
+    qreal FF(const qreal L);	//
+    qreal Finv(const qreal y);    //
+    qreal gamma(void);		//
+    qreal cpar(void);		//
+    qreal xnot(void);		//
+    qreal rewa(const qreal x);	//
 
 
 
@@ -62,14 +62,14 @@ public:
     virtual void printParamset();
     void initialize();
     virtual void iteration(const long&);
-    real* sendModelVar();
-    virtual real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    virtual void sendParameters(int&,real**);   // write all parameters into an 
+    qreal* sendModelVar();
+    virtual qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    virtual void sendParameters(int&,qreal**);   // write all parameters into an 
                                                 // array and return the numbers
 				                // of parameters
 
-    virtual void receiveParameters(const real*);// receive parameter values 
+    virtual void receiveParameters(const qreal*);// receive parameter values 
 };
 
 

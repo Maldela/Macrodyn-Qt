@@ -18,7 +18,7 @@
 
 class constantLag : public defaultModel {
 protected:
-    real expectedInflationRate(const long);
+    qreal expectedInflationRate(const long);
 public:
     void iteration(const long&);            // perform one iteration 
 };

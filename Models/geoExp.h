@@ -19,21 +19,21 @@
 
 class geoExp : public defaultModel {
 protected:
-    real expectedInflationRate(const long);
-    real eta;                             // parameter of the geometric lag
+    qreal expectedInflationRate(const long);
+    qreal eta;                             // parameter of the geometric lag
 				            // distribution
-    real etaTilda;
+    qreal etaTilda;
     void initialize();
 public:
     geoExp();                          // default constructor
     void iteration(const long&);            // perform one iteration 
-    real* setLabels(char*);
+    qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 #endif

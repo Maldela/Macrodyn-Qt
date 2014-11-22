@@ -26,14 +26,14 @@ const int mc_states_max=10;
 
 struct st_paramset 
 {
-	real z_0;
+    qreal z_0;
 	int type;
 	int theta_type;
-	real my;
-	real z_trans;
-	real trans_x[trans_x_Max];
-	real trans_a[trans_x_Max];
-	real trans_b[trans_x_Max];		
+    qreal my;
+    qreal z_trans;
+    qreal trans_x[trans_x_Max];
+    qreal trans_a[trans_x_Max];
+    qreal trans_b[trans_x_Max];
         int mc_flag;
 	char* zvar_expr;
 	char mc_matrix[256];
@@ -57,40 +57,40 @@ st_paramset *n_paramset;
 st_paramset *s_paramset ;
 st_paramset *delta_p_paramset;
 
-    real K;		// kapital
-    real L;		// labour
-    real k;		// transformed state variable k:=K/L
-    real consumption;   // consumption
-    real av_cons;       // average consumption
+    qreal K;		// kapital
+    qreal L;		// labour
+    qreal k;		// transformed state variable k:=K/L
+    qreal consumption;   // consumption
+    qreal av_cons;       // average consumption
     
-    real k_0;		// initial value
+    qreal k_0;		// initial value
     
     			// derived state variables
-    real y;		// output
-    real w;		// wage
-    real r;		// rent
+    qreal y;		// output
+    qreal w;		// wage
+    qreal r;		// rent
 
 				// production function
-    real ( * pf ) ( real k, real a, real b, real c, real alpha );	
+    qreal ( * pf ) ( qreal k, qreal a, qreal b, qreal c, qreal alpha );
     				// a pointer to the production function
-    real ( * pf_prime) ( real k, real a, real b, real c, real alpha );
+    qreal ( * pf_prime) ( qreal k, qreal a, qreal b, qreal c, qreal alpha );
     				// and its derivative
 
-    real pf_type;		// the current type of the production function
-    real a, b, c, alpha;	// original parameters
-    real A, B, C, D;		// parameters as ][0,1][ normalized input
+    qreal pf_type;		// the current type of the production function
+    qreal a, b, c, alpha;	// original parameters
+    qreal A, B, C, D;		// parameters as ][0,1][ normalized input
     void pf_init ( void );	// maps (A,B,C) -> (a,b,c) and sets pf, pf_prime
     
-    real s;			// Savings
+    qreal s;			// Savings
     
-    real n;		// exogenous growth of labour suppling people
+    qreal n;		// exogenous growth of labour suppling people
    
-    real delta_p;	// depreciation of kapital
+    qreal delta_p;	// depreciation of kapital
     int n_states;
     char in_string[256];
    
-    real a_0, b_0, c_0, d_0, n_0, s_0, delta_p_0;	// original parameters
-    real cons_sum;
+    qreal a_0, b_0, c_0, d_0, n_0, s_0, delta_p_0;	// original parameters
+    qreal cons_sum;
     int time_t;       
 
 public:
@@ -107,12 +107,12 @@ public:
     void delete_st_paramset_stochptr(st_paramset*);
     void iteration(const long&);
     void initialize();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
 
-    real* sendModelVar();		// for compatibity reasons only
-    void sendParameters(int&,real**);
-    void receiveParameters(const real*);
+    qreal* sendModelVar();		// for compatibity reasons only
+    void sendParameters(int&,qreal**);
+    void receiveParameters(const qreal*);
     virtual ~rSolow(void);            //destructor
 
 };
@@ -136,17 +136,17 @@ protected:
 	st_paramset *epsilon_paramset; 
 	st_paramset *alpha_paramset; 
 
-	real l_RBC;
-	real z_RBC;
-	real c_RBC;
-	real k_RBC;
-	real beta;
-	real theta_RBC;
-	real rho;
-	real epsilon;
-	real alpha_RBC;
-	real z_RBC_0, c_RBC_0, k_RBC_0;
-	real beta_0, theta_RBC_0, rho_0, epsilon_0, alpha_RBC_0;
+    qreal l_RBC;
+    qreal z_RBC;
+    qreal c_RBC;
+    qreal k_RBC;
+    qreal beta;
+    qreal theta_RBC;
+    qreal rho;
+    qreal epsilon;
+    qreal alpha_RBC;
+    qreal z_RBC_0, c_RBC_0, k_RBC_0;
+    qreal beta_0, theta_RBC_0, rho_0, epsilon_0, alpha_RBC_0;
 	
 public:
 	RBC_delta_1();			//constructor
@@ -157,7 +157,7 @@ public:
    	void iteration(const long&);
    	void initialize();
     	virtual ~RBC_delta_1(void);            //destructor
-	real* setLabels(char*);
+    qreal* setLabels(char*);
 };
 #endif //  _RSOLOW_INCLUDED
 

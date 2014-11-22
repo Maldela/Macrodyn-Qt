@@ -64,7 +64,7 @@ void martin::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real* martin::sendModelVar()
+qreal* martin::sendModelVar()
 {
     return &beta;
 }
@@ -80,7 +80,7 @@ real* martin::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-real* martin::setLabels(char* label)
+qreal* martin::setLabels(char* label)
 {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
@@ -133,11 +133,11 @@ real* martin::setLabels(char* label)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::sendStateSpace(int &quantity,const real*** stateSpace)
+void martin::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !stateSpace )
 	fatalError("martin::sendStateSpace",
 		   "Can't create state space vector");
@@ -195,9 +195,9 @@ void martin::saveParamset(ofstream& outFile)
 
 void martin::printParamset()
 {
-    cout << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << endl;
-    cout << theta << "\t" << rho << endl;
-    cout << length << endl;
+    Log::log() << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << endl;
+    Log::log() << theta << "\t" << rho << endl;
+    Log::log() << length << endl;
 }
 
 
@@ -211,12 +211,12 @@ void martin::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void martin::sendParameters(int& amount,real** parameters)
+void martin::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=7;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !parameters )
 	fatalError("martin::sendParameters",
 		   "Can't create array for parameters");
@@ -239,7 +239,7 @@ void martin::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::receiveParameters(const real* parameters)
+void martin::receiveParameters(const qreal* parameters)
 {
     beta0=parameters[0];
     k0=parameters[1];
@@ -250,17 +250,17 @@ void martin::receiveParameters(const real* parameters)
     length=(long)(parameters[6]);
 }
 
-real martin::savings(const real& x)
+qreal martin::savings(const qreal& x)
 {
-    real r=rho/(rho-1);
+    qreal r=rho/(rho-1);
     return( 1/exp( cos(10/(1+exp(r*log(x))))));
 }
 
 void martin::iteration(const long&)
 {
-    real oldP=p;
-    real term;
-    real term2;
+    qreal oldP=p;
+    qreal term;
+    qreal term2;
     oldBeta=beta;
  
 //	beta=zvar->dice();
@@ -295,7 +295,7 @@ void martin::iteration(const long&)
 /*                                                                            */
 /******************************************************************************/
 
-real* martin2::setLabels(char* label)
+qreal* martin2::setLabels(char* label)
 {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
@@ -377,9 +377,9 @@ void martin2::saveParamset(ofstream& outFile)
 
 void martin2::printParamset()
 {
-    cout << beta0 << "\t" << k0 << "\t" << g0 << endl;
-    cout << theta << "\t" << rho << "\t" << lambda << endl;
-    cout << length << endl;
+    Log::log() << beta0 << "\t" << k0 << "\t" << g0 << endl;
+    Log::log() << theta << "\t" << rho << "\t" << lambda << endl;
+    Log::log() << length << endl;
 }
 
 
@@ -393,12 +393,12 @@ void martin2::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void martin2::sendParameters(int& amount,real** parameters)
+void martin2::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=8;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !parameters )
 	fatalError("martin::sendParameters",
 		   "Can't create array for parameters");
@@ -422,7 +422,7 @@ void martin2::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void martin2::receiveParameters(const real* parameters)
+void martin2::receiveParameters(const qreal* parameters)
 {
     beta0=parameters[0];
     k0=parameters[1];
@@ -435,15 +435,15 @@ void martin2::receiveParameters(const real* parameters)
 }
 
 
-real martin2::savings(const real& x)
+qreal martin2::savings(const qreal& x)
 {
     return( 1-lambda*x);
 }
 
 
-real martin3::savings(const real& x)
+qreal martin3::savings(const qreal& x)
 {
-    real r=rho/(rho-1);
+    qreal r=rho/(rho-1);
 
     return( 2-(2+2*lambda*x)/(1+exp(r*log(x))) );
 }
@@ -459,7 +459,7 @@ real martin3::savings(const real& x)
 /*                                                                            */
 /******************************************************************************/
 
-real* martin4::setLabels(char* label)
+qreal* martin4::setLabels(char* label)
 {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
@@ -549,10 +549,10 @@ void martin4::saveParamset(ofstream& outFile)
 
 void martin4::printParamset()
 {
-    cout << beta0 << "\t" << k0 << "\t" << g0 << endl;
-    cout << theta << "\t" << rho << "\t" << lambda << endl;
-    cout << a << "\t" << b << "\t" << c << endl;
-    cout << length << endl;
+    Log::log() << beta0 << "\t" << k0 << "\t" << g0 << endl;
+    Log::log() << theta << "\t" << rho << "\t" << lambda << endl;
+    Log::log() << a << "\t" << b << "\t" << c << endl;
+    Log::log() << length << endl;
 }
 
 
@@ -566,12 +566,12 @@ void martin4::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void martin4::sendParameters(int& amount,real** parameters)
+void martin4::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=11;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !parameters )
 	fatalError("martin::sendParameters",
 		   "Can't create array for parameters");
@@ -598,7 +598,7 @@ void martin4::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void martin4::receiveParameters(const real* parameters)
+void martin4::receiveParameters(const qreal* parameters)
 {
     beta0=parameters[0];
     k0=parameters[1];
@@ -614,7 +614,7 @@ void martin4::receiveParameters(const real* parameters)
 }
 
 
-real martin4::savings(const real& x)
+qreal martin4::savings(const qreal& x)
 {
     return( (1/x) - a * ((x-b)*(x-b)+c));
 }

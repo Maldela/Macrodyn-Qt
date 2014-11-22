@@ -33,10 +33,10 @@
 class jan_model : public baseModel {
 
 protected:
-    real alpha;				// parameter
-    real delta;                         // parameter 
-    real x;				// state variable
-    real x0;				// initial value for x
+    qreal alpha;				// parameter
+    qreal delta;                         // parameter 
+    qreal x;				// state variable
+    qreal x0;				// initial value for x
    
 
 public:
@@ -46,14 +46,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 

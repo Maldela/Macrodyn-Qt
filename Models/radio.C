@@ -21,7 +21,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-real radio::logisticMap(real& in)
+qreal radio::logisticMap(qreal& in)
 {
     return alpha*in*(1-in);
 }
@@ -37,8 +37,8 @@ real radio::logisticMap(real& in)
 
 void radio::iteration(const long&)
 {
-    real oldX=x;
-    real oldY=y;
+    qreal oldX=x;
+    qreal oldY=y;
     
     x=beta*oldY;
     y=(logisticMap(oldX)+logisticMap(oldY))/(1+beta);

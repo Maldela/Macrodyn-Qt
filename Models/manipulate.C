@@ -58,7 +58,7 @@ manipulate::manipulate() : baseModel(0) { // dimension is set zero! do not use
 // Last modified:	2000/6/20
 ///////////////////////////////////////////////////////////////////////////////
 manipulate::~manipulate() {
-cout << "manipulate destructor" << endl;
+Log::log() << "manipulate destructor" << endl;
 
 	if( model ) delete model;
 	if( manipulateTag ) delete [] manipulateTag;
@@ -90,9 +90,9 @@ cout << "manipulate destructor" << endl;
 // Last modified:	2000/2/12  Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
 
-real* manipulate::setLabels(char* label) {
+qreal* manipulate::setLabels(char* label) {
 	char* labelp;
-	if( !strcmp(label,"102[0]k") ) return((real*)(&ma_k_a_ptr[0].k));
+	if( !strcmp(label,"102[0]k") ) return((qreal*)(&ma_k_a_ptr[0].k));
 	if( !strcmp(label,"102[0]a") ) return(&ma_k_a_ptr[0].a);
 	if( !strcmp(label,"MA_Trend") ) return(&ma_k_a_ptr[0].a);
 
@@ -156,10 +156,10 @@ real* manipulate::setLabels(char* label) {
 }
 
 long  manipulate::getLength() const {return model->getLength();}
-real* manipulate::sendModelVar() {return model->sendModelVar();}
-void  manipulate::sendStateSpace(int &i,const real*** r) {model->sendStateSpace(i,r);}
-void  manipulate::receiveParameters(const real* r) {model->receiveParameters(r);} 
-void  manipulate::sendParameters(int& i,real** r) {model->sendParameters(i,r);}
+qreal* manipulate::sendModelVar() {return model->sendModelVar();}
+void  manipulate::sendStateSpace(int &i,const qreal*** r) {model->sendStateSpace(i,r);}
+void  manipulate::receiveParameters(const qreal* r) {model->receiveParameters(r);} 
+void  manipulate::sendParameters(int& i,qreal** r) {model->sendParameters(i,r);}
 void  manipulate::printParamset() {model->printParamset();}
 void  manipulate::saveParamset(ofstream& os) {model->saveParamset(os);}
 
@@ -208,7 +208,7 @@ void manipulate::loadParamset(ifstream& inFile) {
 
 	for (int hm=0;hm<howMany;hm++) {
 		inFile >> manipulateTag[hm];
-cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
+Log::log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 		switch( manipulateTag[hm] ) {
 
 		  case stoch_uni:
@@ -230,8 +230,8 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 			//	 0.0;1.0;0.0;
 			// auslesen der Zustaende und der Uebergangsmatrix
 			// 	statesNum	Anzahl der Zustaende
-			// 	states[32]	Zustaende als real-Feld angeordnent
-			// 	umatrix[32][32]	Uebergangsmatrix als real-Matrix
+			// 	states[32]	Zustaende als qreal-Feld angeordnent
+			// 	umatrix[32][32]	Uebergangsmatrix als qreal-Matrix
 			// wegen Uli Middelberg wird fuer die Schnittstelle noch benoetigt
 			// 	m_state[256]	Zustaende als Zeichenkette
 			// 	m_matrix[1024]	Uebergangsmatrix als Zeichenkette
@@ -256,13 +256,13 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 			char * pos;
 			char * pos2;
 			pos=m_state;
-			for (i = 0; i < statesNum; i++) { // konvertiere States aus char in real
+			for (i = 0; i < statesNum; i++) { // konvertiere States aus char in qreal
 				pos2=sdummy;
 				while(*++pos!=';')
 					*pos2++ = *pos;
 				*pos2 = '\0';
 				states[i]=atof(sdummy); // trage States in vektor ein
-				//cout << sdummy << " " << states[i] << endl;
+				//Log::log() << sdummy << " " << states[i] << endl;
 			}
 			for (j = 0; j < statesNum; j++) { // Uli liest Uebergangsmatrix zeilenweise ein!
 				inFile >> dummy;	
@@ -273,7 +273,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 						*pos2++ = *pos;
 					*pos2 = '\0';
 					umatrix[j][i]=atof(sdummy); // trage Uebergangsmatrix ein
-					//cout << sdummy << " " << umatrix[j][i] << endl;
+					//Log::log() << sdummy << " " << umatrix[j][i] << endl;
 				}
 				strcat(m_matrix,dummy); // anhaengen der Zeilen !
 				strcat(m_matrix," ");		
@@ -305,7 +305,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 			errcor_ptr=new struct_errcor[errcor_num];
 			if(!errcor_ptr)
 				fatalError("manipulate::loadParamset ","Can't allocate errcor_prt");
-			for(j=0;j<errcor_num;j++) {
+			for (int j=0;j<errcor_num;j++) {
 				inFile >> varname;			
 				errcor_ptr[j].forecast = model->setLabels(varname);
 				if( !errcor_ptr[j].forecast )
@@ -323,7 +323,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 			if(!ma_ptr)
 				fatalError("manipulate::loadParamset ",
 					   "Can't allocate ma_prt");
-			for(j=0;j<ma_num;j++) {
+			for (int j=0;j<ma_num;j++) {
 				inFile >> varname;			
 				ma_ptr[j].mname = model->setLabels(varname);
 				if( !ma_ptr[j].mname )
@@ -342,7 +342,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 			if(!ma_k_ptr)
 				fatalError("manipulate::loadParamset ",
 					   "Can't allocate ma_k_prt");
-			for(j=0;j<ma_k_num;j++) {
+			for (int j=0;j<ma_k_num;j++) {
 				inFile >> varname;			
 				ma_k_ptr[j].mname = model->setLabels(varname);
 				if( !ma_k_ptr[j].mname )
@@ -354,7 +354,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 				if( !ma_k_ptr[j].vname )
 				    fatalError("manipulate::loadParamset ma_k can't find ",
 						varname);
-				ma_k_ptr[j].vn_k=new real[ma_k_ptr[j].k];
+				ma_k_ptr[j].vn_k=new qreal[ma_k_ptr[j].k];
 				if( !ma_k_ptr[j].vn_k )
 				    fatalError("manipulate::loadParamset ma_k ",
 						"Can't allocate ma_k_ptr[j].vn_k");				
@@ -366,7 +366,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 			if(!ma_k_a_ptr)
 				fatalError("manipulate::loadParamset ",
 					   "Can't allocate ma_k_a_prt");
-			for(j=0;j<ma_k_a_num;j++) {
+			for (int j=0;j<ma_k_a_num;j++) {
 				inFile >> varname;			
 				ma_k_a_ptr[j].mname = model->setLabels(varname);
 				if( !ma_k_a_ptr[j].mname )
@@ -378,7 +378,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 				if( !ma_k_a_ptr[j].vname )
 				    fatalError("manipulate::loadParamset ma_k_a can't find ",
 						varname);
-				ma_k_a_ptr[j].vn_k=new real[ma_k_a_ptr[j].k];
+				ma_k_a_ptr[j].vn_k=new qreal[ma_k_a_ptr[j].k];
 				if( !ma_k_a_ptr[j].vn_k )
 				    fatalError("manipulate::loadParamset ma_k_a ",
 						"Can't allocate ma_k_a_ptr[j].vn_k");				
@@ -516,9 +516,9 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 				// convert data string into array
 				pos=dummy2;
 				int cnum=0;
-				for(i=0;i<(int)strlen(dummy2);i++)
+				for (int i=0;i<(int)strlen(dummy2);i++)
 					if(!strncmp(pos++,",",1)) cnum++;
-				tstart= new real[cnum+1];
+				tstart= new qreal[cnum+1];
 				if( !tstart )
 					fatalError("manipulate::loadParamset case sg",
 						"Can't allocate tstart");
@@ -526,7 +526,7 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 				char* posS;
 				pos=dummy2; //start
 				posS=dummy2; //stop
-				for(i=1;i<=cnum;i++) {
+				for (int i=1;i<=cnum;i++) {
 					while( strncmp(posS,",",1) )
 						posS++;
 					strcpy(posS,"\000"); // put in line end
@@ -570,8 +570,8 @@ cout << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::initialize() {
 	int i,j,hM;
-	real exp_0=0;			
-	real exp2_0=0;
+	qreal exp_0=0;			
+	qreal exp2_0=0;
 
 	for (hM=0;hM<howMany;hM++) {
 		switch( manipulateTag[hM] ) {
@@ -590,7 +590,7 @@ void manipulate::initialize() {
 			if( !(markov) )
 			   fatalError("manipulate::initialize stoch_markov ",
 					"can't create markov chain");
-			for(j=0;j<statesNum;j++) {// compute expectation
+			for (int j=0;j<statesNum;j++) {// compute expectation
 				exp_0+=umatrix[0][j]*states[j];
 				exp2_0+=umatrix[0][j]*states[j]*states[j];
 			}
@@ -641,14 +641,14 @@ void manipulate::initialize() {
 			for( j=0;j<ma_k_a_num;j++)
 			   if( ma_k_a_ptr[j].vn_k ) {
 				delete [] ma_k_a_ptr[j].vn_k;
-				ma_k_a_ptr[j].vn_k=new real[ma_k_a_ptr[j].k];
+				ma_k_a_ptr[j].vn_k=new qreal[ma_k_a_ptr[j].k];
 				if( !ma_k_a_ptr[j].vn_k )
 					fatalError("manipulate::initialize ma_k_a ",
 						"Can't allocate ma_k_a_ptr[].vn_k");
 				for ( i = 0; i < ma_k_a_ptr[j].k ; i++ )
 					ma_k_a_ptr[j].vn_k[i] = *ma_k_a_ptr[j].vname;
 			}
-			//cout << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a << endl;
+			//Log::log() << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a << endl;
 			break;									
 		   case rls0:
 			beta_tm1 = 0 ;
@@ -724,18 +724,18 @@ void manipulate::F_stoch_uni() {
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_stoch_markov() {
 	int j,jj=0;
-	for(j=0;j<statesNum;j++) // find state
+	for (int j=0;j<statesNum;j++) // find state
 		if(states[j]==*randname) jj=j;
-	real exp=0;			
-	real exp2=0;			
-	for(j=0;j<statesNum;j++) {// compute expectation
+	qreal exp=0;			
+	qreal exp2=0;			
+	for (int j=0;j<statesNum;j++) {// compute expectation
 		exp+=umatrix[jj][j]*states[j];
 		exp2+=umatrix[jj][j]*states[j]*states[j];
 	}
 	*expname=exp;
 	*variancename=exp2-(exp*exp);
 	*randname=markov->dice();
-//cout << "F_stoch_markov() " << *randname << endl;
+//Log::log() << "F_stoch_markov() " << *randname << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -799,7 +799,7 @@ void manipulate::F_ma(const long& t) {
 // Last modified:	Tue Jul 13 15:01:38 CEST 1999
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_ma_k() {
-	real dummy;
+	qreal dummy;
 	for(int j=0;j<ma_k_num;j++) { // for all named variables
 		for ( int i = (ma_k_ptr[j].k -1); i>0; i-- )
 			ma_k_ptr[j].vn_k[i] = ma_k_ptr[j].vn_k[i-1];
@@ -822,7 +822,7 @@ void manipulate::F_ma_k() {
 // Last modified:	2000/2/12
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_ma_k_a() {
-	real dummy;
+	qreal dummy;
 	for(int j=0;j<ma_k_a_num;j++) { // for all named variables
 		for ( int i = ((ma_k_a_ptr[j].k) -1); i>0; i-- )
 			ma_k_a_ptr[j].vn_k[i] = ma_k_a_ptr[j].vn_k[i-1];
@@ -845,9 +845,9 @@ void manipulate::F_ma_k_a() {
 // Last modified:	Dec 08 1999
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_rls0() {
-    real theta_tm1,theta2;
-//cout << " *p_tm1=" << *p_tm1 << " p_tm2=" << p_tm2;
-//cout << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 << endl;
+    qreal theta_tm1,theta2;
+//Log::log() << " *p_tm1=" << *p_tm1 << " p_tm2=" << p_tm2;
+//Log::log() << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 << endl;
 
     theta_tm1= *p_tm1 / p_tm2; // calculate inflation factor
     beta_tm1 += g_tm1 * ( theta_tm1 - beta_tm1 ) ;  // recursiv estimate
@@ -869,9 +869,9 @@ void manipulate::F_rls0() {
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_rls1() {
     *theta_e_tp1 = *theta_e_t + g_tm1 * ( *theta_tm1 - *theta_e_t ) ;
-    real dummy = g_tm1 * *theta_tm1 * *theta_tm1 ;
+    qreal dummy = g_tm1 * *theta_tm1 * *theta_tm1 ;
     g_tm1 = dummy / (dummy + 1.0) ;
-//cout <<"99rls1: g_tm1="<<g_tm1<<" *theta_tm1="<<*theta_tm1<<" *theta_e_t="<<*theta_e_t<<" *theta_e_tp1="<<*theta_e_tp1<<endl;
+//Log::log() <<"99rls1: g_tm1="<<g_tm1<<" *theta_tm1="<<*theta_tm1<<" *theta_e_t="<<*theta_e_t<<" *theta_e_tp1="<<*theta_e_tp1<<endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -883,12 +883,12 @@ void manipulate::F_rls1() {
 // Last modified:	3.Jan.2000 Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_rls1d() {
-//cout <<"121rls1d: oldp="<<oldp<<" pe="<<theta*oldp;
-//cout <<" fe="<<( *p - theta*oldp ) <<endl;
+//Log::log() <<"121rls1d: oldp="<<oldp<<" pe="<<theta*oldp;
+//Log::log() <<" fe="<<( *p - theta*oldp ) <<endl;
 
     theta += ((oldp*P)/(1+oldp*oldp*P)) * ( *p - theta*oldp ) ;
 
-//cout <<"121rls1d: p="<<*p<<" lPp="<<((oldp*P)/(1+oldp*oldp*P))<<" theta="<<theta<<endl;
+//Log::log() <<"121rls1d: p="<<*p<<" lPp="<<((oldp*P)/(1+oldp*oldp*P))<<" theta="<<theta<<endl;
 
     P /= ( 1+oldp*oldp*P );
 
@@ -896,7 +896,7 @@ void manipulate::F_rls1d() {
 	*q=theta*theta * *p; //forecast2
      else
 	*q=theta * *p; //forecast
-//cout <<"121rls1d: P="<<P<<" theta="<<theta<<" oldp="<<oldp<<" p="<<*p<<" pe="<<*q<<endl;
+//Log::log() <<"121rls1d: P="<<P<<" theta="<<theta<<" oldp="<<oldp<<" p="<<*p<<" pe="<<*q<<endl;
     oldp=*p;
 }
 
@@ -963,7 +963,7 @@ void manipulate::F_sg() {
 //////////////////////////////////////////////////////////////////////////////////
 // Class name:		manipulate													//
 // Member function:	Sequper														//
-// Purpose:		    Given the realization generated at time t, i.e. xt, and the //
+// Purpose:		    Given the qrealization generated at time t, i.e. xt, and the //
 //					moments mr as well as phi computed at instance t-1 the 		//
 //					function updates the moments mr, it calculates the central	//
 //					moments mc, skewness and kurtosis as well as an estimate	//
@@ -973,7 +973,7 @@ void manipulate::F_sg() {
 // Last modified:	Thu Sep 21 11:51:02 METDST 2000								//
 ///////////////////////////////////////////////////////////////////////////////	//
 void manipulate::Sequper(const long& t) {
-	const real lnC = -706.893623549172;
+	const qreal lnC = -706.893623549172;
 	const int tbi = 5;
 
 	if (t < tbi) {
@@ -1019,9 +1019,9 @@ void manipulate::Sequper(const long& t) {
 void manipulate::Bisec() {
 	const int 	a = -4,
 				b = 4;
-	const real e = exp(-5*log(double(10)));
+	const qreal e = exp(-5*log(double(10)));
 	double tmp_FXa, tmp_FXm;
-	real j[2], m;
+	qreal j[2], m;
 
 	x = m = 0.5*(a + b);
 	j[0] = a; j[1] = b;
@@ -1055,15 +1055,16 @@ void manipulate::FXRoot() {
 			fx1 = 0,
 			fx2 = 0;
 	const double eps1 = exp(-103*log(4.64));
-	const real eps2 = exp(-10*log(double(10)));
+	const qreal eps2 = exp(-10*log(double(10)));
 
 	x_old = x_save = x;
-	for (int i=1; i<=100; i++) {
+    int i;
+    for (i=1; i<=100; i++) {
 		fx0 = FX();
 		fx1 = FX1();
 		fx2 = FX2();
 		if (eps1 > fabs(fx1)) {
-			cout << "FXROOT::First derivative at current root estitmate extremely small" << endl;
+			Log::log() << "FXROOT::First derivative at current root estitmate extremely small" << endl;
 			x = x_save ;
 			break;
 		}
@@ -1071,8 +1072,8 @@ void manipulate::FXRoot() {
 		x = x_old - (fx0/fx1) + 0.5*fx2*((fx0*fx0) / (fx1*fx1*fx1));
 		if (eps2 >= fabs(x - x_old)) break;  		
 	}
-	if (i==101) {
-		cout << "FXROOT::No convergence under current conditions (100, 10^(-10))" << endl;
+    if (i==101) {
+		Log::log() << "FXROOT::No convergence under current conditions (100, 10^(-10))" << endl;
 		x = x_save;
 	}
 }
@@ -1166,10 +1167,10 @@ double manipulate::FX2() {
 //////////////////////////////////////////////////////////////////////////////////
 double manipulate::PHIX() {
 	double phi = 0;
-	const real 	c1 = 0.4361836,
+	const qreal 	c1 = 0.4361836,
 				c2 = -0.1201676,
 				c3 = 0.987298;
-	real scalar;
+	qreal scalar;
 
 	if (x < -37) return phi;  
 	if (x == 0) return phi = 0.5;
@@ -1210,7 +1211,7 @@ void manipulate::ZX() {
 //////////////////////////////////////////////////////////////////////////////
 void manipulate::iteration(const long& t) {
 	int i,j;
-	for (i=0;i<howMany;i++) {
+	for (int i=0;i<howMany;i++) {
 		switch( manipulateTag[i] ) {
 		   case errcor: F_errcor(); break;
 		   case ma: F_ma(t); break;
@@ -1220,7 +1221,7 @@ void manipulate::iteration(const long& t) {
 		}
 	}
 	model->iteration(t);
-	for (i=0;i<howMany;i++) {
+	for (int i=0;i<howMany;i++) {
 		switch( manipulateTag[i] ) {
 //Aenderung A.Starke 12.07.2004: Warum sollte die Stoerung erst nach der
 //ersten Iteration einsetzen? nicht logisch und nicht kohaerent mit den
@@ -1247,7 +1248,7 @@ void manipulate::iteration(const long& t) {
 			    sharpeRatio = (mean + 0.01)/standardDeviation;
 			}
 			if(t==length)
-				cout <<"mean="<<mean<<" variance="<<variance
+				Log::log() <<"mean="<<mean<<" variance="<<variance
 					 <<"standardDeviation="<<standardDeviation
 					 <<"Variationskoeffizient="<<variationskoeff<<endl
 					 <<"sharpeRatio="<<sharpeRatio<<endl;

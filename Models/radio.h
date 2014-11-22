@@ -31,7 +31,7 @@
 /******************************************************************************/
 
 class radio : public models2D {
-    real logisticMap(real&);	// logistic map computing with
+    qreal logisticMap(qreal&);	// logistic map computing with
 					// parameter alpha
 public:
     void iteration(const long&);

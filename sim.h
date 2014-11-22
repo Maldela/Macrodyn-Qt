@@ -104,13 +104,10 @@ enum colors { White, Yellow, Magenta, Red, Cyan, Green, Blue, CompBlack, Black};
 #define MAX(X,Y) ( (X) > (Y) ? (X) : (Y) )
 #define MIN(X,Y) ( (X) < (Y) ? (X) : (Y) )
 
-#ifdef KSR
-#define real float
-#else
-#define real double
-#define __shared
-#define __private
-#endif
+//#ifndef KSR
+//#define __shared
+//#define __private
+//#endif
 
 #endif
 

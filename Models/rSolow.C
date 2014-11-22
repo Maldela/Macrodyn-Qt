@@ -39,14 +39,14 @@
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_ces ( real k, real a, real b, real c, real )
+static qreal pf_ces ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( exp ( log ( a + b * exp(log(k)*c) ) * 1/c) );
   //
   // expression:	[ a + b * k^c ] ^ {1/c}
   // constraints:	c <= 1, c # 0	
 }
 
-static real pf_ces_prime ( real k, real a, real b, real c, real )
+static qreal pf_ces_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( (1/c) * exp ( log ( a + b * exp(log(k)*c) ) * (1/c - 1) ) * \
                              b * c * exp(log(k)*(c-1)) );
   //
@@ -65,7 +65,7 @@ static real pf_ces_prime ( real k, real a, real b, real c, real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_ces2 ( real k, real a, real b, real c, real )
+static qreal pf_ces2 ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( c==0 ? a * exp(log(k)*b) : exp ( log ( a * ( (1-b) + b * exp(log(k)*c) ) ) * 1/c) );
   //
   // expression:	a * [ (1-b) + b * k^c ] ^ {1/c}		c != 0
@@ -73,7 +73,7 @@ static real pf_ces2 ( real k, real a, real b, real c, real )
   // constraints:	c <= 1	
 }
 
-static real pf_ces2_prime ( real k, real a, real b, real c, real )
+static qreal pf_ces2_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( c==0 ? b * a * exp(log(k)*(b-1)) : \
                 (1/c) * exp(log( a * ((1-b) + b * exp(log(k)*c)) ) * (1/c - 1) ) * \
                       a * b * c * exp(log(k)*(c-1)) );
@@ -94,14 +94,14 @@ static real pf_ces2_prime ( real k, real a, real b, real c, real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_leo ( real k, real a, real b, real c, real )
+static qreal pf_leo ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( a / b * ( 1 + c - exp (-b * k) ) );
   //
   // expression:	a/b * ( 1 - e^(-b * k) )
   // constraints:	a,b >= 0
 }
 
-static real pf_leo_prime ( real k, real a, real b, real , real )
+static qreal pf_leo_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a * exp (-b * k) );
   //
   // expression:	a * e^(-b * k)
@@ -113,14 +113,14 @@ static real pf_leo_prime ( real k, real a, real b, real , real )
 // Purpose:		production function and its derivative: cobb-douglas
 ///////////////////////////////////////////////////////////////////////////////
 
-static real pf_cd ( real k, real a, real b, real , real )
+static qreal pf_cd ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a/b * exp( b * log(k) ) );
   //
   // expression:	a/b * e^(b * log(k) )
   // constraints:	a > 0, 0<b<=1
 }
 
-static real pf_cd_prime ( real k, real a, real b, real , real )
+static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a/k * exp( b * log(k) ) );
   //
   // expression:	a/k * e^(b * log(k) )
@@ -134,13 +134,13 @@ static real pf_cd_prime ( real k, real a, real b, real , real )
 // Purpose:		production function and its derivative: fraction
 ///////////////////////////////////////////////////////////////////////////////
 
-static real pf_leontiev ( real k, real a, real b, real c, real )
+static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( a*k<b ? a*k+c : b+c );
   //
   // expression:	min{a*k,b}+c
 }
 
-static real pf_leontiev_prime ( real k, real a, real b, real , real )
+static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( k<=b/a ? a : 0);
   //
   // expression:	a	k<=b/a
@@ -158,12 +158,12 @@ static real pf_leontiev_prime ( real k, real a, real b, real , real )
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_app ( real k, real a, real b, real c, real alpha )
+static qreal pf_app ( qreal k, qreal a, qreal b, qreal c, qreal alpha )
 {
  return (a*k+alpha*a*(log((1+exp(-b/(alpha*a)))/(1+exp((1/alpha)*(k-b/a)))))+c);
 }
 
-static real pf_app_prime ( real k, real a, real b, real , real alpha )
+static qreal pf_app_prime ( qreal k, qreal a, qreal b, qreal , qreal alpha )
 {
  return ( a/( 1+exp( (1/alpha)*(k-b/a) ) ) );
 }
@@ -173,13 +173,13 @@ static real pf_app_prime ( real k, real a, real b, real , real alpha )
 // Purpose:		production function and its derivative: fraction
 ///////////////////////////////////////////////////////////////////////////////
 
-static real pf_klaus ( real k, real a, real b, real , real )
+static qreal pf_klaus ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a * exp( b * log(k) ) );
   //
   // constraints:	a > 0, 0<b<=1
 }
 
-static real pf_klaus_prime ( real k, real a, real b, real , real )
+static qreal pf_klaus_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 {
  return ( a * b * exp( (b-1) * log(k) ) );
 }
@@ -189,13 +189,13 @@ static real pf_klaus_prime ( real k, real a, real b, real , real )
 // Purpose:		production function and its derivative: fraction
 ///////////////////////////////////////////////////////////////////////////////
 
-static real pf_klaus_2 ( real k, real a, real b, real , real )
+static qreal pf_klaus_2 ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a * (exp( b * log(k)) + k ));
   //
   // constraints:	a > 0, 0<b<=1
 }
 
-static real pf_klaus_prime_2 ( real k, real a, real b, real , real )
+static qreal pf_klaus_prime_2 ( qreal k, qreal a, qreal b, qreal , qreal )
 {
  return ( a * ( b*exp( (b-1)*log(k)) +1) );
 }
@@ -227,7 +227,7 @@ static real pf_klaus_prime_2 ( real k, real a, real b, real , real )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real trans(real z, real* x, real* a, real* b)
+qreal trans(qreal z, qreal* x, qreal* a, qreal* b)
 {
     int i=0;
     while(x[i]<1) {
@@ -253,11 +253,11 @@ real trans(real z, real* x, real* a, real* b)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-static real theta_logistic ( real d, real m)
+static qreal theta_logistic ( qreal d, qreal m)
 { return (m * d * (1-d)) ;
 }
 
-static real theta_tent ( real d, real m)
+static qreal theta_tent ( qreal d, qreal m)
 { 
   
   if( d<=m ) {
@@ -267,7 +267,7 @@ static real theta_tent ( real d, real m)
   }
 }
 
-static real theta_saw ( real d, real m)
+static qreal theta_saw ( qreal d, qreal m)
 { if( d<m ) {
     return (1/m * d);
   } else {
@@ -317,7 +317,7 @@ void rSolow::pf_init ( void )
     break;
 
     default :
-      error("macrodyn::growth_model::pf_init: pf type %d not yet implemented : ", pf_type);
+      error("macrodyn::growth_model::pf_init: pf type %d not yet implemented : ", QString::number(pf_type));
   }
 }
 
@@ -409,8 +409,8 @@ if(delta_p_paramset) delete delta_p_paramset;
 
 void rSolow::noise_iteration(st_paramset *temp_paramset){ 
 
-real z_1=0;
-real z_2=0;
+qreal z_1=0;
+qreal z_2=0;
 
 switch  (temp_paramset->type) {
   case -1 :
@@ -480,7 +480,7 @@ switch  (temp_paramset->type) {
 
 void rSolow::iteration(const long& )
 { 
-  real k_n;		// value of k for the next period
+  qreal k_n;		// value of k for the next period
 
   if (a_paramset->type > -1) {
     noise_iteration(a_paramset);
@@ -602,7 +602,7 @@ delta_p_paramset->z_0 = delta_p_0;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* rSolow::setLabels(char* label)
+qreal* rSolow::setLabels(char* label)
 {
     if( !strcmp(label,"K") ) return(&K);
     if( !strcmp(label,"L") ) return(&L);
@@ -644,11 +644,11 @@ real* rSolow::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::sendStateSpace(int &quantity,const real*** stateSpace)
+void rSolow::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	error("rSolow::sendStateSpace",
 		   "Can't create state space vector");
@@ -708,11 +708,11 @@ void rSolow::read_sim(ifstream& inFile, st_paramset *temp_paramset){
 	      "the number i of x[i] must be less trans_x_Max");
 
         // length of trans_a and trans_b = trans_x - 1
-        for(j=0;j<i;j++) {
+        for (int j=0;j<i;j++) {
 	 inFile >> temp_paramset->trans_a[j];
 	//printf("a[%j]=%f\n",i,trans_a[j]); 
  	}
-        for(j=0;j<i;j++) {
+        for (int j=0;j<i;j++) {
 	 inFile >> temp_paramset->trans_b[j];
 	//printf("b[%j]=%f\n",i,trans_b[j]); 
 	}
@@ -817,14 +817,14 @@ delta_p_0 = delta_p_paramset->z_0;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* rSolow::sendModelVar(void)
+qreal* rSolow::sendModelVar(void)
 { error("macrodyn::rSolow::sendModelVar is not implemented");
   return NULL;
 }
-void rSolow::sendParameters(int& ,real** )
+void rSolow::sendParameters(int& ,qreal** )
 { error("macrodyn::rSolow::sendParameters is not implemented");
 }
-void rSolow::receiveParameters(const real* )
+void rSolow::receiveParameters(const qreal* )
 { error("macrodyn::rSolow::receiveParameters is not implemented");
 }
 
@@ -868,11 +868,11 @@ void rSolow::save_st_Paramset(ofstream& outFile, st_paramset *temp_paramset){
 	      i++;
 	}
        outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << temp_paramset->trans_a[j] << "\t";
 	}
 	outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << temp_paramset->trans_b[j] << "\t";
 	}
         outFile << "\t";
@@ -991,11 +991,11 @@ void rSolow::save_st_ParamsetWithNames(ofstream& outFile, st_paramset *temp_para
 	      i++;
 	}
        outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << "trans_a = " << temp_paramset->trans_a[j] << "\t";
 	}
 	outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << "trans_b = " << temp_paramset->trans_b[j] << "\t";
 	}
         outFile << "\t";
@@ -1028,47 +1028,47 @@ void rSolow::print_st_Paramset(st_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      cout << temp_paramset->type << "\n";
+      Log::log() << temp_paramset->type << "\n";
       
       switch  (temp_paramset->type) {
       case -1:
- 	cout << temp_paramset->z_0 << "\n";  
+    Log::log() << temp_paramset->z_0 << "\n";
       break;
       case 0 :	
-    	cout << temp_paramset->z_0 << "\n";	 
+        Log::log() << temp_paramset->z_0 << "\n";
       break;
 	
       case 1 :		
-	cout << temp_paramset->theta_type << "\n";
-	cout << temp_paramset->my << "\n";
-    	cout << temp_paramset->z_0 << "\n"; 
+    Log::log() << temp_paramset->theta_type << "\n";
+    Log::log() << temp_paramset->my << "\n";
+        Log::log() << temp_paramset->z_0 << "\n";
 	
         i=0;
         while(i<trans_x_Max) {
-	      cout << temp_paramset->trans_x[i] << "\n";
+          Log::log() << temp_paramset->trans_x[i] << "\n";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       cout << "\n";
-       for(j=0;j<i;j++) {
-	 cout << temp_paramset->trans_a[j] << "\n";
+       Log::log() << "\n";
+       for (int j=0;j<i;j++) {
+     Log::log() << temp_paramset->trans_a[j] << "\n";
 	}
-	cout << "\n";
-       for(j=0;j<i;j++) {
-	 cout << temp_paramset->trans_b[j] << "\n";
+    Log::log() << "\n";
+       for (int j=0;j<i;j++) {
+     Log::log() << temp_paramset->trans_b[j] << "\n";
 	}
-        cout << "\n";
+        Log::log() << "\n";
         break;
    
       case 2:
-        cout << temp_paramset->zvar_expr << "\n";
+        Log::log() << temp_paramset->zvar_expr << "\n";
 	  if( temp_paramset->mc_flag == 1) {
-	     cout << temp_paramset->mc_matrix << "\n";
+         Log::log() << temp_paramset->mc_matrix << "\n";
           }
        break;
 	
-    cout << "\n";  
+    Log::log() << "\n";
     }
 
  }
@@ -1089,8 +1089,8 @@ void rSolow::print_st_Paramset(st_paramset *temp_paramset){
 void rSolow::printParamset()
 
 {     
-    cout << k_0 << "\n" ;				
-    cout << pf_type << "\n";			
+    Log::log() << k_0 << "\n" ;
+    Log::log() << pf_type << "\n";
 
     print_st_Paramset(a_paramset);
  
@@ -1106,9 +1106,9 @@ void rSolow::printParamset()
     
     print_st_Paramset(delta_p_paramset);
  
-    cout << length << "\n";
+    Log::log() << length << "\n";
     
-    cout << "\n";       
+    Log::log() << "\n";
     baseModel::printParamset();
 } 
 //*******************************************************************************   
@@ -1208,9 +1208,9 @@ if(alpha_paramset) delete alpha_paramset;
 
 void RBC_delta_1::iteration(const long&)
 { 
-  real k_RBC_n;
-  real z_RBC_n;
-  real c_RBC_n;
+  qreal k_RBC_n;
+  qreal z_RBC_n;
+  qreal c_RBC_n;
   if (beta_paramset->type > -1) {
     rSolow::noise_iteration(beta_paramset);
     beta = beta_paramset->z_trans;}
@@ -1284,7 +1284,7 @@ void RBC_delta_1::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* RBC_delta_1::setLabels(char* label)
+qreal* RBC_delta_1::setLabels(char* label)
 {
     if( !strcmp(label,"k_RBC") ) return(&k_RBC);
     if( !strcmp(label,"l_RBC") ) return(&l_RBC);
@@ -1423,11 +1423,11 @@ outFile << "Length = " << length << "\n";
 void RBC_delta_1::printParamset()
 {
    
-    cout << k_RBC_0 << "\n" ;    
+    Log::log() << k_RBC_0 << "\n" ;
     
-    cout << z_RBC_0 << "\n" ;
+    Log::log() << z_RBC_0 << "\n" ;
 		
-    cout << c_RBC_0 << "\n" ;	
+    Log::log() << c_RBC_0 << "\n" ;
 
     rSolow::print_st_Paramset(beta_paramset);
     
@@ -1439,9 +1439,9 @@ void RBC_delta_1::printParamset()
     
     rSolow::print_st_Paramset(alpha_paramset);
     
-    cout << length << "\n";
+    Log::log() << length << "\n";
     
-    cout << "\n";   
+    Log::log() << "\n";
         
     baseModel::printParamset();
 }

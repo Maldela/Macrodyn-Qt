@@ -63,21 +63,22 @@ static double ranf_d ( void )		// a wrapper for the ranlib function
 
 extern "C" { void inrgcm(void); }
 
-static base_gen_t identify ( const char * gen )
-{   
-    if( !strcmp(gen,"drand48") ) {
-      return drand48;
-    }
-    if( !strcmp(gen,"ranf") ) {
-      (void) ignlgi(); 		// initialize the generator
-      #ifdef INIT_RANDOM_TIME
-      srand( time(NULL) );
-      #endif
-      setall(sd1,sd2);		// set the default seed values
-      return ranf_d;
-    }
-   return NULL;
-}
+//TODO
+//static base_gen_t identify ( const char * gen )
+//{
+//    if( !strcmp(gen,"drand48") ) {
+//      return drand48;
+//    }
+//    if( !strcmp(gen,"ranf") ) {
+//      (void) ignlgi(); 		// initialize the generator
+//      #ifdef INIT_RANDOM_TIME
+//      srand( time(NULL) );
+//      #endif
+//      setall(sd1,sd2);		// set the default seed values
+//      return ranf_d;
+//    }
+//   return NULL;
+//}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,7 +106,8 @@ rand_var::rand_var ( baseModel * model, const char * gen, const char * zvar_expr
 
     double sum = 0.0;
 
-  base_gen = identify(gen);
+    //TODO
+  //base_gen = identify(gen);
   
   n_events=strnchr(zvar_expr, ';');
   prob = new double[n_events];
@@ -164,9 +166,10 @@ rand_var::rand_var ( baseModel * model, const char * gen, const char * zvar_expr
 // Last modified:	24.01.1999 by Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-rand_var::rand_var(const char * gen,const real& probab,const real& min,const real& max) {
+rand_var::rand_var(const char * gen,const qreal& probab,const qreal& min,const qreal& max) {
 
-	base_gen = identify(gen);
+    //TODO
+//	base_gen = identify(gen);
 	prob = new double[1];
 	range_min = new double[1];
 	range_max = new double[1];
@@ -202,7 +205,7 @@ rand_var::~rand_var ( void )
 //
 // Class name:		rand_var
 // Member function:	dice
-// Purpose:		computes the next realisation of the random variable
+// Purpose:		computes the next qrealisation of the random variable
 //
 // Author:		Uli Middelberg
 // Last modified:	Mon Jan 13 15:48:01 MET 1997

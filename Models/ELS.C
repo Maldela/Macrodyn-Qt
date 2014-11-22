@@ -43,9 +43,9 @@ ELS::ELS() : baseModel(1)
 
 void ELS::iteration(const long&)
 {
-    real oldY=y;
+    qreal oldY=y;
 
-    y = c0+c1*oldY+pow(real_money,alpha)*pow(oldY,1-alpha)+G-c1*T;
+    y = c0+c1*oldY+pow(qreal_money,alpha)*pow(oldY,1-alpha)+G-c1*T;
 }
     
     
@@ -79,7 +79,7 @@ void ELS::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* ELS::sendModelVar()
+qreal* ELS::sendModelVar()
 {
     return &y;
 }
@@ -96,7 +96,7 @@ real* ELS::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* ELS::setLabels(char* label)
+qreal* ELS::setLabels(char* label)
 {
 	if( !strcmp(label,"xBundle") )
 		return( &xBundle );
@@ -112,8 +112,8 @@ real* ELS::setLabels(char* label)
 		return( &c0 );
 	if( !strcmp(label,"c1") )
 		return( &c1 );
-	if( !strcmp(label,"real_money") )
-		return( &real_money );
+	if( !strcmp(label,"qreal_money") )
+		return( &qreal_money );
 	if( !strcmp(label,"G") )
 		return( &G );
 	if( !strcmp(label,"T") )
@@ -135,11 +135,11 @@ real* ELS::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::sendStateSpace(int &quantity,const real*** stateSpace)
+void ELS::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("ELS::sendStateSpace",
 		   "Can't create state space vector");
@@ -161,7 +161,7 @@ void ELS::sendStateSpace(int &quantity,const real*** stateSpace)
 
 void ELS::loadParamset(ifstream& inFile)
 {
-	inFile >> c0 >> c1 >> real_money >> G >> T;
+	inFile >> c0 >> c1 >> qreal_money >> G >> T;
 	inFile >> alpha >> y0;
 	inFile >> length;
    
@@ -182,7 +182,7 @@ void ELS::loadParamset(ifstream& inFile)
 
 void ELS::saveParamset(ofstream& outFile)
 {
-	outFile << c0 << "\t" << c1 << "\t" << real_money << "\t";
+	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
 	outFile << "\t" << length;
 }
@@ -204,7 +204,7 @@ void ELS::saveParamsetWithNames(ofstream& outFile)
 {
 	outFile << "c0 = " << c0;
 	outFile << "\nc1 = " << c1;
-	outFile << "\nreal_money = " << real_money;
+	outFile << "\nqreal_money = " << qreal_money;
 	outFile << "\nG = " << G << "\tT = " << T;
 	outFile << "\nalpha = " << alpha << "\ty0 = " << y0;
 	outFile << "length = " << length << endl;
@@ -224,9 +224,9 @@ void ELS::saveParamsetWithNames(ofstream& outFile)
 
 void ELS::printParamset()
 {
-	cout << c0 << "\t" << c1 << "\t" << real_money << "\t";
-	cout << G << "\t" << T << "\t" << alpha  << "\t" << y0;
-	cout << "\t" << length << endl;
+	Log::log() << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
+	Log::log() << G << "\t" << T << "\t" << alpha  << "\t" << y0;
+	Log::log() << "\t" << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -241,18 +241,18 @@ void ELS::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::sendParameters(int& amount,real** parameters)
+void ELS::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=8;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("ELS::sendParameters",
 		   "Can't create array for parameters");
     (*parameters[0])=c0;
     (*parameters[1])=c1;
-    (*parameters[2])=real_money;
+    (*parameters[2])=qreal_money;
     (*parameters[3])=G;
     (*parameters[4])=T;
     (*parameters[5])=alpha;
@@ -272,11 +272,11 @@ void ELS::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::receiveParameters(const real* parameters)
+void ELS::receiveParameters(const qreal* parameters)
 {
     c0=parameters[0];
     c1=parameters[1];
-    real_money=parameters[2];
+    qreal_money=parameters[2];
     G=parameters[3];
     T=parameters[4];
     alpha=parameters[5];

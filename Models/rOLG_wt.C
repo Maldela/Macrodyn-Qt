@@ -42,7 +42,7 @@ st_olg_paramset *z_st_paramset = new st_olg_paramset;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real TRANS(real z, real* x, real* a, real* b)
+qreal TRANS(qreal z, qreal* x, qreal* a, qreal* b)
 {
     int i=0;
     while(x[i]<1) {
@@ -67,11 +67,11 @@ real TRANS(real z, real* x, real* a, real* b)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-static real theta_logistic ( real d, real m)
+static qreal theta_logistic ( qreal d, qreal m)
 { return (m * d * (1-d)) ;
 }
 
-static real theta_tent ( real d, real m)
+static qreal theta_tent ( qreal d, qreal m)
 { 
   
   if( d<=m ) {
@@ -81,7 +81,7 @@ static real theta_tent ( real d, real m)
   }
 }
 
-static real theta_saw ( real d, real m)
+static qreal theta_saw ( qreal d, qreal m)
 { if( d<m ) {
     return (1/m * d);
   } else {
@@ -141,7 +141,7 @@ rOLG_wt::~rOLG_wt(void)
 void rOLG_wt::noise_iteration(st_olg_paramset *temp_paramset)
 { 
 
-real z_1,z_2;
+qreal z_1,z_2;
 
 z_1 = 0;
 z_2 = 0;
@@ -213,18 +213,18 @@ switch  (temp_paramset->type) {
 
 void rOLG_wt::iteration(const long& )
 { 
-  real K_olg_n;	   // value of k for the next period
-  real K_olg_count;
-  real Y_olg_count;
-  real W_olg_count;
-  real M_olg_count;
-  real r_count;
-  real av_Ez_n;
-  real K_olg_V_n;
-  real Y_olg_V_n;
-  real W_olg_V_n; 
-  real M_olg_V_n;  
-  real r_V_n;
+  qreal K_olg_n;	   // value of k for the next period
+  qreal K_olg_count;
+  qreal Y_olg_count;
+  qreal W_olg_count;
+  qreal M_olg_count;
+  qreal r_count;
+  qreal av_Ez_n;
+  qreal K_olg_V_n;
+  qreal Y_olg_V_n;
+  qreal W_olg_V_n;
+  qreal M_olg_V_n;
+  qreal r_V_n;
 
   if (z_st_paramset->type > -1) {
     noise_iteration(z_st_paramset);
@@ -251,11 +251,11 @@ void rOLG_wt::iteration(const long& )
   c1=M_olg-S_olg;
   c2=(1-delta_olg+r)*(1-alpha_olg)*S_olg;  
 
-real x2;
+qreal x2;
 ran_rec = rand_dis->rectangular();
 
 
-//cout << "a"<<ran_rec<<"b"<<endl;
+//Log::log() << "a"<<ran_rec<<"b"<<endl;
 ran_norm = rand_dis->st_normal();
 ran_chi = rand_dis->chi_square(dof);
 ran_cauchy = rand_dis->st_cauchy();
@@ -378,7 +378,7 @@ if ( rand_dis != NULL ) delete rand_dis;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* rOLG_wt::setLabels(char* label)
+qreal* rOLG_wt::setLabels(char* label)
 {
     if( !strcmp(label,"K_olg") ) return(&K_olg);
     if( !strcmp(label,"K_olg_0") ) return(&K_olg_0);    
@@ -432,11 +432,11 @@ real* rOLG_wt::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::sendStateSpace(int &quantity,const real*** stateSpace)
+void rOLG_wt::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	error("rOLG_wt::sendStateSpace",
 		   "Can't create state space vector");
@@ -494,11 +494,11 @@ void rOLG_wt::read_sim(ifstream& inFile, st_olg_paramset *temp_paramset){
 	      "the number i of x[i] must be less trans_x_Max");
 
         // length of trans_a and trans_b = trans_x - 1
-        for(j=0;j<i;j++) {
+        for (int j=0;j<i;j++) {
 	 inFile >> temp_paramset->trans_a[j];
 	//printf("a[%j]=%f\n",i,trans_a[j]); 
  	}
-        for(j=0;j<i;j++) {
+        for (int j=0;j<i;j++) {
 	 inFile >> temp_paramset->trans_b[j];
 	//printf("b[%j]=%f\n",i,trans_b[j]); 
 	}
@@ -588,14 +588,14 @@ void rOLG_wt::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* rOLG_wt::sendModelVar(void)
+qreal* rOLG_wt::sendModelVar(void)
 { error("macrodyn::rOLG_wt::sendModelVar is not implemented");
   return NULL;
 }
-void rOLG_wt::sendParameters(int& ,real** )
+void rOLG_wt::sendParameters(int& ,qreal** )
 { error("macrodyn::rOLG_wt::sendParameters is not implemented");
 }
-void rOLG_wt::receiveParameters(const real* )
+void rOLG_wt::receiveParameters(const qreal* )
 { error("macrodyn::rOLG_wt::receiveParameters is not implemented");
 }
 
@@ -639,11 +639,11 @@ void rOLG_wt::save_st_olg_Paramset(ofstream& outFile, st_olg_paramset *temp_para
 	      i++;
 	}
        outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << temp_paramset->trans_a[j] << "\t";
 	}
 	outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << temp_paramset->trans_b[j] << "\t";
 	}
         outFile << "\t";
@@ -746,11 +746,11 @@ void rOLG_wt::save_st_olg_ParamsetWithNames(ofstream& outFile, st_olg_paramset *
 	      i++;
 	}
        outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << "trans_a = " << temp_paramset->trans_a[j] << "\t";
 	}
 	outFile << "\t";
-       for(j=0;j<i;j++) {
+       for (int j=0;j<i;j++) {
 	 outFile << "trans_b = " << temp_paramset->trans_b[j] << "\t";
 	}
         outFile << "\t";
@@ -783,47 +783,47 @@ void rOLG_wt::print_st_olg_Paramset(st_olg_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      cout << temp_paramset->type << "\n";
+      Log::log() << temp_paramset->type << "\n";
       
       switch  (temp_paramset->type) {
       case -1:
- 	cout << temp_paramset->z_0 << "\n";  
+    Log::log() << temp_paramset->z_0 << "\n";
       break;
       case 0 :	
-    	cout << temp_paramset->z_0 << "\n";	 
+        Log::log() << temp_paramset->z_0 << "\n";
       break;
 	
       case 1 :		
-	cout << temp_paramset->theta_type << "\n";
-	cout << temp_paramset->my << "\n";
-    	cout << temp_paramset->z_0 << "\n"; 
+    Log::log() << temp_paramset->theta_type << "\n";
+    Log::log() << temp_paramset->my << "\n";
+        Log::log() << temp_paramset->z_0 << "\n";
 	
         i=0;
         while(i<trans_x_MAX) {
-	      cout << temp_paramset->trans_x[i] << "\n";
+          Log::log() << temp_paramset->trans_x[i] << "\n";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       cout << "\n";
-       for(j=0;j<i;j++) {
-	 cout << temp_paramset->trans_a[j] << "\n";
+       Log::log() << "\n";
+       for (int j=0;j<i;j++) {
+     Log::log() << temp_paramset->trans_a[j] << "\n";
 	}
-	cout << "\n";
-       for(j=0;j<i;j++) {
-	 cout << temp_paramset->trans_b[j] << "\n";
+    Log::log() << "\n";
+       for (int j=0;j<i;j++) {
+     Log::log() << temp_paramset->trans_b[j] << "\n";
 	}
-        cout << "\n";
+        Log::log() << "\n";
         break;
    
       case 2:
-        cout << temp_paramset->zvar_expr << "\n";
+        Log::log() << temp_paramset->zvar_expr << "\n";
 	  if( temp_paramset->mc_flag == 1) {
-	     cout << temp_paramset->mc_matrix << "\n";
+         Log::log() << temp_paramset->mc_matrix << "\n";
           }
        break;
 	
-    cout << "\n";  
+    Log::log() << "\n";
     }
 
  }
@@ -843,14 +843,14 @@ void rOLG_wt::print_st_olg_Paramset(st_olg_paramset *temp_paramset){
 
 void rOLG_wt::printParamset()
 {     
-    cout << K_olg_0 << "\n" ;				
-    cout << Ez_0 << "\n";			
+    Log::log() << K_olg_0 << "\n" ;
+    Log::log() << Ez_0 << "\n";
     print_st_olg_Paramset(z_st_paramset);			
-    cout << A_olg << "\n";			
-    cout << delta_olg << "\n" ;				
-    cout << n_olg << "\n";			 				
-    cout << alpha_olg << "\n";			
-    cout << length << "\n";
-    cout << "\n";       
+    Log::log() << A_olg << "\n";
+    Log::log() << delta_olg << "\n" ;
+    Log::log() << n_olg << "\n";
+    Log::log() << alpha_olg << "\n";
+    Log::log() << length << "\n";
+    Log::log() << "\n";
     baseModel::printParamset();
 } 

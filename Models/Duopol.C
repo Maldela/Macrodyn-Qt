@@ -63,7 +63,7 @@ void Duopol::initialize()
 /******************************************************************************/
 
 
-real* Duopol::sendModelVar()
+qreal* Duopol::sendModelVar()
 {
     return &m;
 }
@@ -80,7 +80,7 @@ real* Duopol::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-real* Duopol::setLabels(char* label)
+qreal* Duopol::setLabels(char* label)
 {
     if( !strcmp(label,"xBundle") )
 	return &xBundle;
@@ -156,11 +156,11 @@ real* Duopol::setLabels(char* label)
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol::sendStateSpace(int &quantity,const real*** stateSpace)
+void Duopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !stateSpace )
 	fatalError("Duopol::sendStateSpace",
 		   "Can't create state space vector");
@@ -228,13 +228,13 @@ void Duopol::saveParamset(ofstream& outFile)
 
 void Duopol::printParamset()
 {
-    cout << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20 << endl;
-    cout << M0 << "\t" << w0 << "\t" << Pi0 << endl;
-    cout << g << "\t" << tau << "\t" << B1 << "\t" << B2 << endl;
-    cout << eta1 << "\t" << eta2 << "\t" << alpha1 << "\t" << alpha2 << endl;    
-    cout << lambda1 << "\t" << lambda2 << "\t" << Lmax << "\t" << mu << endl;
-    cout << dep << "\t" << rho << "\t" << delta << endl;
-    cout << cert << "\t" << length << endl;
+    Log::log() << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20 << endl;
+    Log::log() << M0 << "\t" << w0 << "\t" << Pi0 << endl;
+    Log::log() << g << "\t" << tau << "\t" << B1 << "\t" << B2 << endl;
+    Log::log() << eta1 << "\t" << eta2 << "\t" << alpha1 << "\t" << alpha2 << endl;    
+    Log::log() << lambda1 << "\t" << lambda2 << "\t" << Lmax << "\t" << mu << endl;
+    Log::log() << dep << "\t" << rho << "\t" << delta << endl;
+    Log::log() << cert << "\t" << length << endl;
 
 }
 
@@ -249,12 +249,12 @@ void Duopol::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol::sendParameters(int& amount,real** parameters)
+void Duopol::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=14;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !parameters )
 	fatalError("Duopol::sendParameters",
 		   "Can't create array for parameters");
@@ -295,7 +295,7 @@ void Duopol::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol::receiveParameters(const real* parameters)
+void Duopol::receiveParameters(const qreal* parameters)
 {
     beta10=parameters[0];
     beta20=parameters[1];
@@ -333,10 +333,10 @@ void Duopol::receiveParameters(const real* parameters)
 /*                                                                            */
 /******************************************************************************/
 
-real Duopol::FF(const real L, const int firm)
+qreal Duopol::FF(const qreal L, const int firm)
 {
-	real result;
-   real B;
+	qreal result;
+   qreal B;
    if(firm == 1)
       B=B1;
    else
@@ -358,10 +358,10 @@ real Duopol::FF(const real L, const int firm)
 /*                                                                            */
 /******************************************************************************/
 
-real Duopol::Finv(const real y, const int firm)
+qreal Duopol::Finv(const qreal y, const int firm)
 {
-	real result;
-   real B;
+	qreal result;
+   qreal B;
    if(firm == 1)
       B=B1;
    else
@@ -381,7 +381,7 @@ real Duopol::Finv(const real y, const int firm)
 /*                                                                            */
 /******************************************************************************/
 
-real Duopol::nullst(const real gamc, const real alpha, const real eta)
+qreal Duopol::nullst(const qreal gamc, const qreal alpha, const qreal eta)
 		{
 		return (pow((1+gamc),alpha)-gamc*(alpha*eta-1)/(eta-1))-1;
 		}
@@ -398,10 +398,10 @@ real Duopol::nullst(const real gamc, const real alpha, const real eta)
 /******************************************************************************/
 
 		
-real Duopol::Gamma(const int firm)
+qreal Duopol::Gamma(const int firm)
 {	
-    real eta; real alpha;
-    real result, gamit, eps, h; 
+    qreal eta; qreal alpha;
+    qreal result, gamit, eps, h; 
     int i, Nmax;
 
     if(firm == 1)
@@ -431,7 +431,7 @@ else
 	else
 		{
 		gamit = pow((alpha*eta-1)/(eta-1),1/(alpha-1))-1;
-		for(i=1;(i<Nmax && (pow(nullst(gamit,alpha,eta),2) > pow(eps,2))) ;i++)
+		for (int i=1;(i<Nmax && (pow(nullst(gamit,alpha,eta),2) > pow(eps,2))) ;i++)
 			{
 			gamit=gamit-h*nullst(gamit,alpha,eta)/(nullst(gamit+h,alpha,eta)
 					-nullst(gamit,alpha,eta));
@@ -457,12 +457,12 @@ else
 /*                                                                            */
 /******************************************************************************/
 
-real Duopol::cpar(const int firm)
+qreal Duopol::cpar(const int firm)
 {
-	real result;
-	real gam;
-   real eta;
-   real alpha;
+	qreal result;
+	qreal gam;
+   qreal eta;
+   qreal alpha;
 
    if(firm == 1)
       {
@@ -501,13 +501,13 @@ real Duopol::cpar(const int firm)
 /*                                                                            */
 /******************************************************************************/
 
-real Duopol::xnot(const int firm)
+qreal Duopol::xnot(const int firm)
 {
-	real result;
-	real cpa;
-    real eta;
-    real B;
-    real zeta;
+	qreal result;
+	qreal cpa;
+    qreal eta;
+    qreal B;
+    qreal zeta;
 	
 	cpa = cpar(firm);
    if(firm == 1)
@@ -534,18 +534,18 @@ real Duopol::xnot(const int firm)
 /*                                                                            */
 /* Class name:      Duopol                                                    */
 /* Member function: rewa                                                      */
-/* Purpose:         computes the duopolist's real wage at given output level  */
+/* Purpose:         computes the duopolist's qreal wage at given output level  */
 /*                                                                            */
 /* Last modified:   Thu     Oct  3 13:55:56 MEZ 1996  (Leo Kaas)              */
 /*                                                                            */
 /******************************************************************************/
 
-real Duopol::rewa(const real x, const int firm)
+qreal Duopol::rewa(const qreal x, const int firm)
 {
-	real result;
-	real gam;
-   real zeta;
-   real eta;
+	qreal result;
+	qreal gam;
+   qreal zeta;
+   qreal eta;
    if(firm == 1)
       {
       eta=eta1;
@@ -572,9 +572,9 @@ real Duopol::rewa(const real x, const int firm)
 /*                                                                            */
 /******************************************************************************/
 
-real Duopol::cprop(const real theta)
+qreal Duopol::cprop(const qreal theta)
 {
-	real result;
+	qreal result;
 	result= 1/(1+pow(delta,rho)*pow(theta,(1-rho)));              
 	return(result);
 }
@@ -595,37 +595,37 @@ real Duopol::cprop(const real theta)
 
 void Duopol::iteration(const long&)
 {
-   real Ltdem1;          //  notional labor demand firm 1
-   real Ltdem2;          //  notional labor demand firm 2
-   real Ltdem;           //  aggregate labor demand
-   real Lt1;		 //  actual employment level firm 1
-   real rewa1;		 //  real wage of firm 1
-   real xtS1;       //  supply of firm 1
-   real Lt2;		 //  actual employment level firm 2
-   real rewa2;		 //  price of firm 2
-   real xtS2;       //  supply of firm 2
-   real gam1;       //  constant Gamma of firm 1
-   real gam2;       //  constant Gamma of firm 2    
+   qreal Ltdem1;          //  notional labor demand firm 1
+   qreal Ltdem2;          //  notional labor demand firm 2
+   qreal Ltdem;           //  aggregate labor demand
+   qreal Lt1;		 //  actual employment level firm 1
+   qreal rewa1;		 //  qreal wage of firm 1
+   qreal xtS1;       //  supply of firm 1
+   qreal Lt2;		 //  actual employment level firm 2
+   qreal rewa2;		 //  price of firm 2
+   qreal xtS2;       //  supply of firm 2
+   qreal gam1;       //  constant Gamma of firm 1
+   qreal gam2;       //  constant Gamma of firm 2    
 
-   real it;        // real (per labor unit) income of young household
-   real ctdY1;     // demand y.h. at firm 1 
-   real ctdY2;     // demand y.h. at firm 2
-   real ctdO1;     // demand o.h. at firm 1
-   real ctdO2;     // demand o.h. at firm 2
-   real gtd1;      // demand gov. at firm 1
-   real gtd2;      // demand gov. at firm 2
+   qreal it;        // qreal (per labor unit) income of young household
+   qreal ctdY1;     // demand y.h. at firm 1 
+   qreal ctdY2;     // demand y.h. at firm 2
+   qreal ctdO1;     // demand o.h. at firm 1
+   qreal ctdO2;     // demand o.h. at firm 2
+   qreal gtd1;      // demand gov. at firm 1
+   qreal gtd2;      // demand gov. at firm 2
 
-   real ytdem1;		 //  agg. goods demand at firm 1
-   real ytdem2;		 //  agg. goods demand at firm 2
+   qreal ytdem1;		 //  agg. goods demand at firm 1
+   qreal ytdem2;		 //  agg. goods demand at firm 2
 
-   real ctY1;      // consumption y.h. at firm 1
-   real ctY2;      // consumption y.h. at firm 2
-   real ctO1;      // consumption o.h. at firm 1 
-   real ctO2;      // consumption o.h. at firm 2
-   real gt1;       // consumption gov. at firm 1
-   real gt2;       // consumption gov. at firm 2
-   real xt1;       // trade firm 1
-   real xt2;       // trade firm 2
+   qreal ctY1;      // consumption y.h. at firm 1
+   qreal ctY2;      // consumption y.h. at firm 2
+   qreal ctO1;      // consumption o.h. at firm 1 
+   qreal ctO2;      // consumption o.h. at firm 2
+   qreal gt1;       // consumption gov. at firm 1
+   qreal gt2;       // consumption gov. at firm 2
+   qreal xt1;       // trade firm 1
+   qreal xt2;       // trade firm 2
  
 
    
@@ -738,32 +738,32 @@ void Duopol::iteration(const long&)
 
 void Duopol2::iteration(const long&)
 {
-   real Ltdem1;          //  notional labor demand firm 1
-   real Ltdem2;          //  notional labor demand firm 2
-   real Ltdem;           //  aggregate labor demand
-   real Lt1;		 //  actual employment level firm 1
-   real rewa1;		 //  real wage of firm 1
-   real xtS1;       //  supply of firm 1
-   real Lt2;		 //  actual employment level firm 2
-   real rewa2;		 //  real wage of firm 2
-   real xtS2;       //  supply of firm 2
-   real gam1;       //  constant Gamma of firm 1 
-   real gam2;       //  constant Gamma of firm 2
+   qreal Ltdem1;          //  notional labor demand firm 1
+   qreal Ltdem2;          //  notional labor demand firm 2
+   qreal Ltdem;           //  aggregate labor demand
+   qreal Lt1;		 //  actual employment level firm 1
+   qreal rewa1;		 //  qreal wage of firm 1
+   qreal xtS1;       //  supply of firm 1
+   qreal Lt2;		 //  actual employment level firm 2
+   qreal rewa2;		 //  qreal wage of firm 2
+   qreal xtS2;       //  supply of firm 2
+   qreal gam1;       //  constant Gamma of firm 1 
+   qreal gam2;       //  constant Gamma of firm 2
     
-   real ctd1;     // demand o.h. at firm 1
-   real ctd2;     // demand o.h. at firm 2
-   real gtd1;      // demand gov. at firm 1
-   real gtd2;      // demand gov. at firm 2
+   qreal ctd1;     // demand o.h. at firm 1
+   qreal ctd2;     // demand o.h. at firm 2
+   qreal gtd1;      // demand gov. at firm 1
+   qreal gtd2;      // demand gov. at firm 2
 
-   real ytdem1;		 //  agg. goods demand at firm 1
-   real ytdem2;		 //  agg. goods demand at firm 2
+   qreal ytdem1;		 //  agg. goods demand at firm 1
+   qreal ytdem2;		 //  agg. goods demand at firm 2
 
-   real ct1;      // consumption o.h. at firm 1 
-   real ct2;      // consumption o.h. at firm 2
-   real gt1;       // consumption gov. at firm 1
-   real gt2;       // consumption gov. at firm 2
-   real xt1;       // trade firm 1
-   real xt2;       // trade firm 2
+   qreal ct1;      // consumption o.h. at firm 1 
+   qreal ct2;      // consumption o.h. at firm 2
+   qreal gt1;       // consumption gov. at firm 1
+   qreal gt2;       // consumption gov. at firm 2
+   qreal xt1;       // trade firm 1
+   qreal xt2;       // trade firm 2
  
 /*   labor market   */
 

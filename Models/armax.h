@@ -45,7 +45,7 @@ protected:
 
 
 	distribution *rand_dis;	//needed for pseudo-random number
-	real rand_rec;          //generates a rectangular unit variate
+    qreal rand_rec;          //generates a rectangular unit variate
 	
 	matrix_neu* y_t;			//value of y in period t
 	matrix_neu* y_old_ini[L];  //stores values of sim-file
@@ -62,15 +62,15 @@ protected:
 	matrix_neu* C[R];			//true parameter for c loaded from sim-file
     matrix_neu* D;             //true parameter for d loaded from sim-file
     matrix_neu* E;             //true parameter for e loaded from sim-file
-    real u;
-    real y;
-    real norm_u;               //euklidische Norm² von u
-    real norm_y;               //        "            y
-    real sum_u;                //1/n * SUM (norm_u)
-    real sum_y;
-    real sum_uy;
-    real normA1, normA2, normA3;
-    real normB1;
+    qreal u;
+    qreal y;
+    qreal norm_u;               //euklidische Norm² von u
+    qreal norm_y;               //        "            y
+    qreal sum_u;                //1/n * SUM (norm_u)
+    qreal sum_y;
+    qreal sum_uy;
+    qreal normA1, normA2, normA3;
+    qreal normB1;
 
 
         		
@@ -96,16 +96,16 @@ protected:
 	matrix_neu* Es_e;		//estimateted parameter for es
 	
 
-	real lambda_tm1;			
-	real eps_t;		
-	real eps;      		
-	real sigma_eps;
-	real s_t;
-	real var1;
-	real var2;
-	real sum_var1;
-	real sum_var2;
-	real dif_var;
+    qreal lambda_tm1;
+    qreal eps_t;
+    qreal eps;
+    qreal sigma_eps;
+    qreal s_t;
+    qreal var1;
+    qreal var2;
+    qreal sum_var1;
+    qreal sum_var2;
+    qreal dif_var;
 	matrix_neu* dif;
 	
 //used for ELS:	
@@ -134,13 +134,13 @@ public:
     void loadParamset(ifstream&);	// load parameterset from a file
     void saveParamset(ofstream&);
     void printParamset();
-    void sendParameters(int &,real**);
-    real* sendModelVar(void);
-    void receiveParameters(const real*);
-    real* setLabels(char*);		// get a variable by a name
+    void sendParameters(int &,qreal**);
+    qreal* sendModelVar(void);
+    void receiveParameters(const qreal*);
+    qreal* setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const long&);	// perform one iteration 	
-    void sendStateSpace(int &,const real***);
+    void sendStateSpace(int &,const qreal***);
 
 };
 

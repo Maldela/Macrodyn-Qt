@@ -18,21 +18,21 @@
 
 class adaptExp : public defaultModel {
 protected:
-    real expectedInflationRate(const long);
-    real oldExpectations;                 // used to save the expected 
+    qreal expectedInflationRate(const long);
+    qreal oldExpectations;                 // used to save the expected
 				            // inflation rate for the last
 				            // period
-    real eta;                             // weight parameter
+    qreal eta;                             // weight parameter
 public:
     adaptExp();                        // default constructor
     void iteration(const long &);           // perform one iteration
-    real* setLabels(char*);
+    qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values
 };
 #endif

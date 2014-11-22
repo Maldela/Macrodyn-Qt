@@ -22,7 +22,7 @@ class markov_chain {
   protected:
     int          n_states;	// number of states of the process
     int          state;		// the current state
-    double     * realization;	// the realization for each state
+    double     * qrealization;	// the qrealization for each state
     rand_var * * trans;		// transition matrix
     baseModel  * b_model;	// to resolve names
     char       * r_gen;		//
@@ -34,7 +34,7 @@ class markov_chain {
     markov_chain			// constructor 
              ( baseModel* model, 	// to resolve names
                const char * gen, 	// the basic random generator
-               const char * states,	// definition of the states and their realisations
+               const char * states,	// definition of the states and their qrealisations
                const char * matrix);    // the transition matrix 
                				
     ~markov_chain ( void );		//  distructor

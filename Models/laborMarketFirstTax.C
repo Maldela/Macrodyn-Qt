@@ -45,9 +45,9 @@ void laborMarketFirstTax::loadParamset(ifstream& inputFile)
     if( theta )
 	delete theta;
     if( tauS > tauW ) 
-        theta = new real[tauS+2];
+        theta = new qreal[tauS+2];
       else
-        theta = new real[tauW+2];
+        theta = new qreal[tauW+2];
     if( !theta )
 	fatalError("defaultModel::loadParamset","Can't create theta vector");
     
@@ -109,14 +109,14 @@ void laborMarketFirstTax::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void laborMarketFirstTax::printParamset()
 {
-    cout << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
-    cout << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
-    cout << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
-    cout << g << "\t" << tax << "\n"; 
-    cout << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
-    cout << length << "\n";
-    cout << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
-    cout << d0 << "\t" << theta0 << endl;
+    Log::log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
+    Log::log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
+    Log::log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
+    Log::log() << g << "\t" << tax << "\n"; 
+    Log::log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
+    Log::log() << length << "\n";
+    Log::log() << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
+    Log::log() << d0 << "\t" << theta0 << endl;
 }
 
 /******************************************************************************/
@@ -128,12 +128,12 @@ void laborMarketFirstTax::printParamset()
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::sendParameters(int& amount,real** parameters)
+void laborMarketFirstTax::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=25;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("defaultModel::sendParameters",
 		   "Can't create array for parameters");
@@ -171,7 +171,7 @@ void laborMarketFirstTax::sendParameters(int& amount,real** parameters)
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::receiveParameters(const real* parameters)
+void laborMarketFirstTax::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -208,7 +208,7 @@ void laborMarketFirstTax::receiveParameters(const real* parameters)
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* laborMarketFirstTax::setLabels(char *name)
+qreal* laborMarketFirstTax::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -237,9 +237,9 @@ real* laborMarketFirstTax::setLabels(char *name)
     if( !strcmp(name,"deltaW") )
         return( &deltaW );
     if( !strcmp(name,"tauS") )
-	return( (real*)(&tauS) );
+	return( (qreal*)(&tauS) );
     if( !strcmp(name,"tauW") )
-	return( (real*)(&tauW) );
+	return( (qreal*)(&tauW) );
 
     if( !strcmp(name,"g") )
         return( &g );
@@ -268,12 +268,12 @@ real* laborMarketFirstTax::setLabels(char *name)
     if( !strcmp(name,"theta0") )
         return( &theta0 );
 
-    if( !strcmp(name,"wtreal") )
-        return( &wtreal );
-    if( !strcmp(name,"mtrealS") )
-        return( &mtrealS );
-    if( !strcmp(name,"mtrealW") )
-        return( &mtrealW );
+    if( !strcmp(name,"wtqreal") )
+        return( &wtqreal );
+    if( !strcmp(name,"mtqrealS") )
+        return( &mtqrealS );
+    if( !strcmp(name,"mtqrealW") )
+        return( &mtqrealW );
     if( !strcmp(name,"omegat") )
         return( &omegat );
     if( !strcmp(name,"dt") )
@@ -310,33 +310,33 @@ void laborMarketFirstTax::setTax()
 /******************************************************************************/
 void laborMarketFirstTax::iteration(const long& t)
 {
-  real ztnot;		// labor demand
-  real sigmaL;		// labor market imbalance
-  real sigmaC;		// supply-demand imbalance
-  real ptrateexW;	// expected inflationrate Worker         
-  real ptrateexS;	// expected inflationrate Shareholder
-  real cpsW,cpsS;	// consumptionpropensity Worker,Shareholder   
-  real ytW,ytS;		// demand young Workers,Shareholder
-  real ytD;		// aggregate Demand    
-  real yteff;		// effectiv production
-  real xYoung;		// what the young may consume 
-  real xtS,xtW;		// actual consum of the young S and W
+  qreal ztnot;		// labor demand
+  qreal sigmaL;		// labor market imbalance
+  qreal sigmaC;		// supply-demand imbalance
+  qreal ptrateexW;	// expected inflationrate Worker         
+  qreal ptrateexS;	// expected inflationrate Shareholder
+  qreal cpsW,cpsS;	// consumptionpropensity Worker,Shareholder   
+  qreal ytW,ytS;		// demand young Workers,Shareholder
+  qreal ytD;		// aggregate Demand    
+  qreal yteff;		// effectiv production
+  qreal xYoung;		// what the young may consume 
+  qreal xtS,xtW;		// actual consum of the young S and W
      
   setTax();				//()
-  ztnot=laborDemand();		        //(A,B,wtreal)
+  ztnot=laborDemand();		        //(A,B,wtqreal)
   employment=actualEmployment(ztnot);	//(ztnot,Lmax)
   sigmaL=detSigmaL(ztnot);		//(ztnot,Lmax,employment)
   wtrate=detWtRate(sigmaL);		//(sigmaL,Lmax,employment,lambda,mu)
   ptrateexW=expectedInflationRateW(t);  //(t,tauW,theta)
   cpsW=consumptionPropensityW(ptrateexW);//(ptrateexW,rhoTildaW,deltaW)
-  ytW=demandYoungW(cpsW);	        //(cpsW,taxW,wtreal,employment)
+  ytW=demandYoungW(cpsW);	        //(cpsW,taxW,wtqreal,employment)
   ptrateexS=expectedInflationRateS(t);  //(t,tauS,theta)                
   cpsS=consumptionPropensityS(ptrateexS);//(ptrateexS,rhoTildaS,deltaS)
   ytS=demandYoungS(cpsS);	        //(cpsS,taxS,dt)
-  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtrealW,mtrealS,g,ytW,ytS)
+  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtqrealW,mtqrealS,g,ytW,ytS)
   yteff=productionFunction(employment);	//(A,B,employment,deltaP,omagat)
   output=actualOutput(ytD,yteff);	//(ytD,yteff)
-  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtrealW,mtrealS)
+  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtqrealW,mtqrealS)
   xtS=actualConsumptionYoungS(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   xtW=actualConsumptionYoungW(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   sigmaC=detSigmaC(yteff,ytD);	        //(yteff,ytD,output)

@@ -101,7 +101,7 @@ void Keener::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* Keener::sendModelVar()
+qreal* Keener::sendModelVar()
 {
     return &x;
 }
@@ -118,7 +118,7 @@ real* Keener::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* Keener::setLabels(char* label)
+qreal* Keener::setLabels(char* label)
 {
 	if( !strcmp(label,"xBundle") )
 		return( &xBundle );
@@ -155,11 +155,11 @@ real* Keener::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::sendStateSpace(int &quantity,const real*** stateSpace)
+void Keener::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("Keener::sendStateSpace",
 		   "Can't create state space vector");
@@ -244,8 +244,8 @@ void Keener::saveParamsetWithNames(ofstream& outFile)
 
 void Keener::printParamset()
 {
-	cout << x_0 << "\t" << a << "\t" << b << "\t" << Modulo << "\t";
-	cout << lambda << "\t" << myseed << "\t" << length << endl;
+	Log::log() << x_0 << "\t" << a << "\t" << b << "\t" << Modulo << "\t";
+	Log::log() << lambda << "\t" << myseed << "\t" << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -260,12 +260,12 @@ void Keener::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::sendParameters(int& amount,real** parameters)
+void Keener::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=6;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("Keener::sendParameters",
 		   "Can't create array for parameters");
@@ -289,7 +289,7 @@ void Keener::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::receiveParameters(const real* parameters)
+void Keener::receiveParameters(const qreal* parameters)
 {
     x_0=parameters[0];
     a=parameters[1];

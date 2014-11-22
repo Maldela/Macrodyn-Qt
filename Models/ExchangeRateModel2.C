@@ -28,10 +28,10 @@
 ExchangeRateModel2::ExchangeRateModel2() : baseModel(5)
 {
 	theta=NULL;
-    st_shift=new real[3];
+    st_shift=new qreal[3];
     if( !st_shift )
 	fatalError("ExchangeRateModel2::loadParamset","Can't create st vector");
-	part_array = new real[3];
+    part_array = new qreal[3];
 	if( !part_array)
 	fatalError("ExchangeRateModel2::loadParamset","Can't create part_array vector");
 
@@ -75,7 +75,7 @@ void ExchangeRateModel2::initialize()
 	
     st=st_1_0;
 
-	eerealt_1=eerealt_1_0;
+    eerealt_1=eerealt_1_0;
 	alphat=alphat_0;
 	betat=betat_0;
 
@@ -91,7 +91,7 @@ void ExchangeRateModel2::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::theta_Init(real *theta)
+void ExchangeRateModel2::theta_Init(qreal *theta)
 {
     int i;
 
@@ -110,7 +110,7 @@ void ExchangeRateModel2::theta_Init(real *theta)
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::st_Init(real *st_shift)
+void ExchangeRateModel2::st_Init(qreal *st_shift)
 {
     int i;
 
@@ -128,7 +128,7 @@ void ExchangeRateModel2::st_Init(real *st_shift)
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::part_array_Init(real *part_array)
+void ExchangeRateModel2::part_array_Init(qreal *part_array)
 {
     int i;
 
@@ -139,7 +139,7 @@ void ExchangeRateModel2::part_array_Init(real *part_array)
 
 
 //for( i=0; i<=2; i++ )
-//    cout << "part_array element" << i << " = "	<< part_array[i] << endl;
+//    Log::log() << "part_array element" << i << " = "	<< part_array[i] << endl;
 
 }
 /******************************************************************************/
@@ -151,10 +151,10 @@ void ExchangeRateModel2::part_array_Init(real *part_array)
 /*                                                                            */
 /******************************************************************************/
 
-real ExchangeRateModel2::expectedInflationRate(const long t)
+qreal ExchangeRateModel2::expectedInflationRate(const long t)
 {
     long T,counter;
-    real help=0.0;
+    qreal help=0.0;
     
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ )
@@ -178,16 +178,16 @@ void ExchangeRateModel2::expectedInterestRate()
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      ExchangeRateModel2                                        */
-/* Member function: real exchange Rate                                        */
-/* Purpose:         shift the real exchange rate              				  */
+/* Member function: qreal exchange Rate                                        */
+/* Purpose:         shift the qreal exchange rate              				  */
 /* Last modified:   Don Mär 14 11:58:07 CET 2002 (Michael Meyer)              */
 /*                                                                            */
 /******************************************************************************/
-void ExchangeRateModel2::realExchangeRate()
+void ExchangeRateModel2::qrealExchangeRate()
 {
-	erealt=eerealt_1;
+    eqrealt=eerealt_1;
 
-// cout<<"erealt"<<erealt<<endl;
+// Log::log()<<"eqrealt"<<eqrealt<<endl;
 
 }
 	
@@ -201,9 +201,9 @@ void ExchangeRateModel2::realExchangeRate()
 /*                                                                            */
 /******************************************************************************/
 
-real ExchangeRateModel2::MaxCapacityOutput(const real& L)
+qreal ExchangeRateModel2::MaxCapacityOutput(const qreal& L)
 {
-	real result;
+    qreal result;
 	result=A/B * exp( B*log(L) );
 	return(result);
 }
@@ -221,7 +221,7 @@ real ExchangeRateModel2::MaxCapacityOutput(const real& L)
 void ExchangeRateModel2::NotLaborDemand()
 
 {
-	real basis,exponent;
+    qreal basis,exponent;
 	basis=A/alphat;
 	exponent=1/(1-B);
 
@@ -254,9 +254,9 @@ void ExchangeRateModel2::NotOutput()
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::effaggrdemand(real &theta_et)
+void ExchangeRateModel2::effaggrdemand(qreal &theta_et)
 {
-	real expo1, expo2;
+    qreal expo1, expo2;
 	expo1=1/(1-rho);
 	expo2=rho/(1-rho);
 
@@ -269,7 +269,7 @@ void ExchangeRateModel2::effaggrdemand(real &theta_et)
 	}
 
 
-	ydt=(1+deltaB)*(betat*d+g+E*erealt)/(tax+deltaB*(1-c*(1-tax)));
+    ydt=(1+deltaB)*(betat*d+g+E*eqrealt)/(tax+deltaB*(1-c*(1-tax)));
 
 }
 
@@ -283,9 +283,9 @@ void ExchangeRateModel2::effaggrdemand(real &theta_et)
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::output(real &ydt, real &ymaxt, real &yLt)
+void ExchangeRateModel2::output(qreal &ydt, qreal &ymaxt, qreal &yLt)
 {
-	real yt_save;
+    qreal yt_save;
 
 	yt_save=yt;
 
@@ -297,7 +297,7 @@ void ExchangeRateModel2::output(real &ydt, real &ymaxt, real &yLt)
 
 	
 
-//cout << "yt" << yt << endl;
+//Log::log() << "yt" << yt << endl;
 }
 
 /******************************************************************************/
@@ -312,8 +312,8 @@ void ExchangeRateModel2::output(real &ydt, real &ymaxt, real &yLt)
 
 void ExchangeRateModel2::employment()
 {	
-	real expo1,expo2;
-	real Lt_save;
+    qreal expo1,expo2;
+    qreal Lt_save;
 	expo1=yt*B/A;
 	expo2=1/B;
 
@@ -352,9 +352,9 @@ void ExchangeRateModel2::bondprice()
 //young first
 
 
-real spoint= (yt-d*betat-g-E*erealt)/betat;
-real salpha1=(1-tax)*yt/(betat*(1+deltaB));
-real salpha2=(d*betat+g+E*erealt-tax*yt)/(betat*deltaB);
+qreal spoint= (yt-d*betat-g-E*eqrealt)/betat;
+qreal salpha1=(1-tax)*yt/(betat*(1+deltaB));
+qreal salpha2=(d*betat+g+E*eqrealt-tax*yt)/(betat*deltaB);
 
 
 st_1=st;
@@ -368,13 +368,13 @@ else
 st=salpha2;
 }
 else
-st=(1-c)*(1-tax)*(betat*d+g+E*erealt)/( betat*(tax+deltaB*( 1-c*(1-tax) ) ) );
+st=(1-c)*(1-tax)*(betat*d+g+E*eqrealt)/( betat*(tax+deltaB*( 1-c*(1-tax) ) ) );
 
 
-	yefft=yt*(1-tax)*c+(st+d)*betat+g+E*erealt;
+    yefft=yt*(1-tax)*c+(st+d)*betat+g+E*eqrealt;
 
 
-//cout<<"st"<<st<<endl;
+//Log::log()<<"st"<<st<<endl;
 
 
 }
@@ -391,9 +391,9 @@ st=(1-c)*(1-tax)*(betat*d+g+E*erealt)/( betat*(tax+deltaB*( 1-c*(1-tax) ) ) );
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::ratioRegime(real &ydt,real &yLt,char *x1)
+void ExchangeRateModel2::ratioRegime(qreal &ydt,qreal &yLt,char *x1)
 {
-cout << "Unused" << endl;
+Log::log() << "Unused" << endl;
 }
 
 /******************************************************************************/
@@ -406,7 +406,7 @@ cout << "Unused" << endl;
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::wageAndpriceAdjust(real &ydt, real &yLt, real &Lnt, char *state)
+void ExchangeRateModel2::wageAndpriceAdjust(qreal &ydt, qreal &yLt, qreal &Lnt, char *state)
 {
 
 // Pyperbolic Tangent Function
@@ -493,24 +493,24 @@ void ExchangeRateModel2::dynamics()
 
 
 
-//    cout<<"betat"<<betat<<endl;
+//    Log::log()<<"betat"<<betat<<endl;
 
 
 
 	iet = (d+st)/st_1 - 1;
 
-//    cout<<"st"<<st<<endl;
+//    Log::log()<<"st"<<st<<endl;
 
- //   cout<<"st_1"<<st_1<<endl;
+ //   Log::log()<<"st_1"<<st_1<<endl;
 
-	eerealt_1=1/part*erealt*(1+iet)/(1+fi);
+    eerealt_1=1/part*eqrealt*(1+iet)/(1+fi);
 
 
 
-    xtrate=eerealt_1/erealt*part; 
-	rxtrate=eerealt_1/erealt;
+    xtrate=eerealt_1/eqrealt*part;
+    rxtrate=eerealt_1/eqrealt;
 
-//	cout<<"xtrate"<<xtrate<<endl;
+//	Log::log()<<"xtrate"<<xtrate<<endl;
 
 	
     for(int i=0; i<=tau; i++ )
@@ -529,11 +529,11 @@ void ExchangeRateModel2::dynamics()
 	part_2 = part_array[2];
 
 	delta_part = part_array[1] - part_array[2];
-/*	cout << "part = " << part_array[0] << endl;
-	cout << "part = " << part << endl;
-	cout << "part_1 = " << part_array[1] << endl;
-	cout << "part_2 = " << part_array[2] << endl;
-	cout << "delta_part = " << delta_part << endl;
+/*	Log::log() << "part = " << part_array[0] << endl;
+    Log::log() << "part = " << part << endl;
+    Log::log() << "part_1 = " << part_array[1] << endl;
+    Log::log() << "part_2 = " << part_array[2] << endl;
+    Log::log() << "delta_part = " << delta_part << endl;
 */
 }
 
@@ -548,13 +548,13 @@ void ExchangeRateModel2::dynamics()
 
 void ExchangeRateModel2::iteration(const long& t)
 {
-    real theta_et;
+    qreal theta_et;
     char state[5];
 
 	theta_et=expectedInflationRate(t);
 
 	expectedInterestRate();
-	realExchangeRate();
+    qrealExchangeRate();
 	ymaxt=MaxCapacityOutput(Lmax);
 
 	NotLaborDemand();
@@ -577,7 +577,7 @@ void ExchangeRateModel2::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* ExchangeRateModel2::setLabels(char *name)
+qreal* ExchangeRateModel2::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 		return &xBundle;
@@ -624,61 +624,61 @@ real* ExchangeRateModel2::setLabels(char *name)
     if( !strcmp(name,"Lmax") )
         return( &Lmax );
     if( !strcmp(name,"tau") )
-		return( (real*)(&tau) );
+        return( (qreal*)(&tau) );
     if( !strcmp(name,"betat") )
-		return( (real*)(&betat) );
+        return( (qreal*)(&betat) );
     if( !strcmp(name,"betat_0") )
-		return( (real*)(&betat_0) );
+        return( (qreal*)(&betat_0) );
     if( !strcmp(name,"alphat") )
-		return( (real*)(&alphat) );
+        return( (qreal*)(&alphat) );
     if( !strcmp(name,"alphat_0") )
-		return( (real*)(&alphat_0) );
+        return( (qreal*)(&alphat_0) );
     if( !strcmp(name,"yt") )
-		return( (real*)(&yt) );
+        return( (qreal*)(&yt) );
     if( !strcmp(name,"st") )
-		return( (real*)(&st) );
+        return( (qreal*)(&st) );
     if( !strcmp(name,"yefft") )
-		return( (real*)(&yefft) );
+        return( (qreal*)(&yefft) );
     if( !strcmp(name,"st_1") )
-		return( (real*)(&st_1) );
+        return( (qreal*)(&st_1) );
     if( !strcmp(name,"st_1_0") )
-		return( (real*)(&st_1_0) );
+        return( (qreal*)(&st_1_0) );
     if( !strcmp(name,"st_2") )
-		return( (real*)(&st_2) );
+        return( (qreal*)(&st_2) );
     if( !strcmp(name,"st_2_0") )
-		return( (real*)(&st_2_0) );
-    if( !strcmp(name,"erealt") )
-		return( (real*)(&erealt) );
+        return( (qreal*)(&st_2_0) );
+    if( !strcmp(name,"eqrealt") )
+        return( (qreal*)(&eqrealt) );
     if( !strcmp(name,"eerealt_1") )
-		return( (real*)(&eerealt_1) );
+        return( (qreal*)(&eerealt_1) );
     if( !strcmp(name,"eerealt_1_0") )
-		return( (real*)(&eerealt_1_0) );
+        return( (qreal*)(&eerealt_1_0) );
     if( !strcmp(name,"ydt") )
-		return( (real*)(&ydt) );
+        return( (qreal*)(&ydt) );
     if( !strcmp(name,"yt") )
-		return( (real*)(&yt) );
+        return( (qreal*)(&yt) );
     if( !strcmp(name,"d") )
-		return( (real*)(&d) );
+        return( (qreal*)(&d) );
     if( !strcmp(name,"iet") )
-		return( (real*)(&iet) );
+        return( (qreal*)(&iet) );
     if( !strcmp(name,"fi") )
-		return( (real*)(&fi) );
+        return( (qreal*)(&fi) );
     if( !strcmp(name,"xtrate") )
-		return( (real*)(&xtrate) );
+        return( (qreal*)(&xtrate) );
     if( !strcmp(name,"rxtrate") )
-		return( (real*)(&rxtrate) );
+        return( (qreal*)(&rxtrate) );
     if( !strcmp(name,"ytrate") )
-		return( (real*)(&ytrate) );     
+        return( (qreal*)(&ytrate) );
 	if( !strcmp(name,"Ltrate") )
-		return( (real*)(&Ltrate) );   
+        return( (qreal*)(&Ltrate) );
 	
 	if( !strcmp(name,"deltaB") )
-		return( (real*)(&deltaB) );
+        return( (qreal*)(&deltaB) );
 	if( !strcmp(name,"uerate") )
-		return( (real*)(&uerate) );
+        return( (qreal*)(&uerate) );
 
     if( !strcmp(name,"st_1") )
-		return( (real*)(&st_1) );
+        return( (qreal*)(&st_1) );
 
 return( NULL );
 }
@@ -687,12 +687,12 @@ return( NULL );
 /*                                                                            */
 /* Class name:      ExchangeRateModel2                                        */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
 /*                                                                            */
 /******************************************************************************/
 
-real* ExchangeRateModel2::sendModelVar()
+qreal* ExchangeRateModel2::sendModelVar()
 {
     return &wart;
 	return &part;
@@ -702,17 +702,17 @@ real* ExchangeRateModel2::sendModelVar()
 /*                                                                            */
 /* Class name:      ExchangeRateModel2                                        */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   Don Mär 14 14:29:07 CET 2002 (Michael Meyer)              */
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::sendStateSpace(int &quantity,const real*** stateSpace)
+void ExchangeRateModel2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("ExchangeRateModel2::sendStateSpace",
 		   "Can't create state space vector");
@@ -721,7 +721,7 @@ void ExchangeRateModel2::sendStateSpace(int &quantity,const real*** stateSpace)
     (*stateSpace)[1]=&part;
     (*stateSpace)[2]=theta;
     (*stateSpace)[3]=st_shift;
-    (*stateSpace)[4]=&erealt;
+    (*stateSpace)[4]=&eqrealt;
 
 }
     
@@ -746,7 +746,7 @@ void ExchangeRateModel2::loadParamset(ifstream& inputFile)
 
     if( theta )
 	delete theta;
-    theta = new real[tau+2];
+    theta = new qreal[tau+2];
     if( !theta )
 	fatalError("ExchangeRateModel2::loadParamset","Can't create theta vector");
     
@@ -791,7 +791,7 @@ void ExchangeRateModel2::saveParamsetWithNames(ofstream& outputFile)
     outputFile << lambda << "\tmu = " << mu << "\ttau = ";
     outputFile << tau << "\n\tlength = " << length << "\n\tst_1_0 = ";
 	outputFile << st_1_0  << "\tst_2_0 = " << st_2_0 
-			   << "\teerealt_1_0 = " << eerealt_1_0 << "\n\talphat_0 = ";
+               << "\teerealt_1_0 = " << eerealt_1_0 << "\n\talphat_0 = ";
 	outputFile << alphat_0 << "\tbetat_0 = " << betat_0 << "\n\tLmax =";
 	outputFile << Lmax << "\trho = " << rho << "\tg = ";
     outputFile << g << "\ttax = " << tax << "\n\tdelta = ";
@@ -810,13 +810,13 @@ void ExchangeRateModel2::saveParamsetWithNames(ofstream& outputFile)
 
 void ExchangeRateModel2::printParamset()
 {
-    cout << A << "\t" << B << "\n";
-    cout << gamma << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
-    cout << tau << "\t" << length << "\n";
-    cout << st_1_0 << st_2_0 << eerealt_1_0 << "\n";
-    cout << alphat_0 << betat_0;
-    cout << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
-    cout << delta << "\t" << deltaB<< "\t"  
+    Log::log() << A << "\t" << B << "\n";
+    Log::log() << gamma << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << st_1_0 << st_2_0 << eerealt_1_0 << "\n";
+    Log::log() << alphat_0 << betat_0;
+    Log::log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
+    Log::log() << delta << "\t" << deltaB<< "\t"
 		 << d << "\t" << E << "\t"<< fi << "\t" <<endl;
 }
 
@@ -830,12 +830,12 @@ void ExchangeRateModel2::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::sendParameters(int& amount,real** parameters)
+void ExchangeRateModel2::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=22;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("ExchangeRateModel2::sendParameters",
 		   "Can't create array for parameters");
@@ -873,7 +873,7 @@ void ExchangeRateModel2::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::receiveParameters(const real* parameters)
+void ExchangeRateModel2::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];

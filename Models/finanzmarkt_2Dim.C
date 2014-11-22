@@ -155,7 +155,7 @@ finanzmarkt_2Dim::~finanzmarkt_2Dim() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-real* finanzmarkt_2Dim::setLabels(char* label)
+qreal* finanzmarkt_2Dim::setLabels(char* label)
 {
 	if( !strcmp(label,"R") ) return(&R);
 	
@@ -395,11 +395,11 @@ void finanzmarkt_2Dim::loadParamset(ifstream& inFile)
 // Funktionsname:	sendStateSpace
 // Beschreibung:	return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim::sendStateSpace(int &quantity,const real*** stateSpace)
+void finanzmarkt_2Dim::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [2]; // 2 asset in Model finanzmarkt_2Dim
+    *stateSpace= new const qreal* [2]; // 2 asset in Model finanzmarkt_2Dim
     if( !(*stateSpace) )
 	fatalError("finanzmarkt_2Dim::sendStateSpace","Speicherfehler");
     quantity=2; // 2 asset in Model finanzmarkt_2Dim
@@ -559,7 +559,7 @@ else{
 	p2=P->m[1][0];
 
 
-//Realisierter Return der "alten" Fundamentalisten (aggregiert und einzeln)
+//qrealisierter Return der "alten" Fundamentalisten (aggregiert und einzeln)
 
 //	return_F=(P+D-R*P_old)^(T)*XF_old	
 
@@ -571,7 +571,7 @@ else{
 	return_F=Return_F->m[0][0];
 	return_f=return_F/F;
 
-//Realisierter Konsum der "alten" Fundamentalisten (aggregiert und einzeln)
+//qrealisierter Konsum der "alten" Fundamentalisten (aggregiert und einzeln)
 
 	cF=(R*eF)+return_F;			//cF=R*eF+(P+D-R*P_old)^(T)*XF_old
 	cf=cF/F;
@@ -580,7 +580,7 @@ else{
 
 	rend_F=(cF-eF)/eF;
 
-//Realisierter Return der "alten" Noise--Trader (aggregiert und einzeln)
+//qrealisierter Return der "alten" Noise--Trader (aggregiert und einzeln)
 
 //	return_N=(P+D-R*P_old)^(T)*XN_old	
 
@@ -592,7 +592,7 @@ else{
 	return_N=Return_N->m[0][0];
 	return_n=return_N/N;
 
-//Realisierter Konsum der "alten" Noise--Trader (aggregiert und einzeln)
+//qrealisierter Konsum der "alten" Noise--Trader (aggregiert und einzeln)
 
 	cN=(R*eN)+return_N;				//cN=R*eN+(P+D-R*P_old)^(T)*XN_old
 	cn=cN/N;

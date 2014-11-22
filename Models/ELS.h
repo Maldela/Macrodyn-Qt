@@ -29,15 +29,15 @@
 class ELS : public baseModel {
 
 protected:
-	real c0;			// parameter
-	real c1;
-	real real_money;
-	real G;
-	real T;
-	real alpha;
-	real y0;
+	qreal c0;			// parameter
+	qreal c1;
+	qreal qreal_money;
+	qreal G;
+	qreal T;
+	qreal alpha;
+	qreal y0;
 	
-	real y;				// state variable
+	qreal y;				// state variable
 
 public:
     ELS();			// constructor
@@ -47,14 +47,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 #endif	// _LOGISTICMAP_INCLUDED

@@ -26,12 +26,12 @@
 
 class OlgRat : public baseModel {
 protected:
-    real g;			// parameters
-    real tau;
-    real s;
-    real lambda;
-    real m;			// state variable
-    real m0;			// initial values
+    qreal g;			// parameters
+    qreal tau;
+    qreal s;
+    qreal lambda;
+    qreal m;			// state variable
+    qreal m0;			// initial values
 
 public:
     OlgRat();			// constructor
@@ -42,14 +42,14 @@ public:
     virtual void printParamset();
     void initialize();
     virtual void iteration(const long&);
-    real* sendModelVar();
-    virtual real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    virtual void sendParameters(int&,real**);   // write all parameters into an 
+    qreal* sendModelVar();
+    virtual qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    virtual void sendParameters(int&,qreal**);   // write all parameters into an 
                                                 // array and return the numbers
 				                // of parameters
 
-    virtual void receiveParameters(const real*);// receive parameter values 
+    virtual void receiveParameters(const qreal*);// receive parameter values 
 };
 
 class OlgRat2 : public OlgRat {

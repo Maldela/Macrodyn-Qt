@@ -16,21 +16,21 @@
 
 class excOlg : public baseModel {
   protected:
-    real theta0;                          // initial value                
-    real rho, delta;                      // utility function parameters   
+    qreal theta0;                          // initial value                
+    qreal rho, delta;                      // utility function parameters   
     int tau;                              // length of expectations memory
-    real rhoTilda;
-    real thetat;		          // inflation rate
-    real oldThetat;		          // old inflation rate
-    real oldThetaE;
-    real savOld;
-    real savYoung;
-    real *thetaVec;
+    qreal rhoTilda;
+    qreal thetat;		          // inflation rate
+    qreal oldThetat;		          // old inflation rate
+    qreal oldThetaE;
+    qreal savOld;
+    qreal savYoung;
+    qreal *thetaVec;
     
-    virtual real expInflRateYoung(const long);                
-    virtual real expInflRateOld(const long);                
-    real savingsFuncYoung(real&);                         
-    real savingsFuncOld(real&);                         
+    virtual qreal expInflRateYoung(const long);                
+    virtual qreal expInflRateOld(const long);                
+    qreal savingsFuncYoung(qreal&);                         
+    qreal savingsFuncOld(qreal&);                         
     void thetaShift();
 public:
     excOlg();			    // default constructor
@@ -41,44 +41,44 @@ public:
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const long&);    // perform one iteration 
-    real* setLabels(char*);		    // return a pointer to a variable
+    qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
     void initialize();			    // initialize the model, define
 					    // the initial state
-    void thetaInit(real*);
-    void getTheta(real*);
-    void setTheta(real*);
-    real* sendModelVar();		    // return the main model variable
-    void sendStateSpace(int &,const real***); // return pointers to all model
+    void thetaInit(qreal*);
+    void getTheta(qreal*);
+    void setTheta(qreal*);
+    qreal* sendModelVar();		    // return the main model variable
+    void sendStateSpace(int &,const qreal***); // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*); // receive parameter values 
+    void receiveParameters(const qreal*); // receive parameter values 
 };
 
 
 class excOlgAdapt : public excOlg {
 protected:
-    real expInflRateYoung(const long);
-    real expInflRateOld(const long);
-    real oldExpectationsYoung;              // used to save the expected 
-    real oldExpectationsOld;                // return rate for the last period
-    real etaYoung;                          // weight parameter young
-    real etaOld;                            // weight parameter old
+    qreal expInflRateYoung(const long);
+    qreal expInflRateOld(const long);
+    qreal oldExpectationsYoung;              // used to save the expected 
+    qreal oldExpectationsOld;                // return rate for the last period
+    qreal etaYoung;                          // weight parameter young
+    qreal etaOld;                            // weight parameter old
 public:
     excOlgAdapt();                          // default constructor
     void iteration(const long&);            // perform one iteration 
-    real* setLabels(char*);
+    qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 
@@ -96,23 +96,23 @@ public:
 
 class excOlgGeoExp : public excOlg {
 protected:
-    real expInflRateYoung(const long);
-    real expInflRateOld(const long);
-    real etaYoung;                          // parameter of the geometric lag
-    real etaOld;    		            // distribution
-    real etaTildaYoung;
-    real etaTildaOld;
+    qreal expInflRateYoung(const long);
+    qreal expInflRateOld(const long);
+    qreal etaYoung;                          // parameter of the geometric lag
+    qreal etaOld;    		            // distribution
+    qreal etaTildaYoung;
+    qreal etaTildaOld;
     void initialize();
 public:
     excOlgGeoExp();                         // default constructor
     void iteration(const long&);            // perform one iteration 
-    real* setLabels(char*);
+    qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
-    void sendParameters(int&,real**);       // write all parameters
+    void sendParameters(int&,qreal**);       // write all parameters
 				// into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 #endif

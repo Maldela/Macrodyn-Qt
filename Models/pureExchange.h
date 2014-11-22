@@ -15,28 +15,28 @@
 
 class pureExchange : public baseModel {
   protected:
-	real job_type;				// current type of job (used for jbo 83)
-	real err;					// error function : theta_t - theE_Old
-	real sf_type;				// the current type of the savings function
-    real theta_e_m1;            // initial inflation rate for period -1                
-	real theta_e_null;			// initial inflation rate for period 0
-	real gamma;					// gross rate of currency growth
-	real p0;					// initial price
-	real w1, w2;				// initial endowment for t,t+1	
-	real g0;					// initial parameter for exp.Infl.rate OLS
-	real g_tm1;					// parameter for exp.Infl.rate OLS
-	real rho, delta;			// parameter for the savings function
-    real theta_tm1;		        // inflation rate in t-1
-    real theta_t;		        // inflation rate in t
-	real theE_Old;				// expected inflation rate for period t
-	real theE_You;			// expected inflation rate for period t+1
-	real thetaOld;
-	real theE_Old2;
-	real theE_You2;
-	real pt;					// price in t
-	real p_tm1;					// price in t-1
+	qreal job_type;				// current type of job (used for jbo 83)
+	qreal err;					// error function : theta_t - theE_Old
+	qreal sf_type;				// the current type of the savings function
+    qreal theta_e_m1;            // initial inflation rate for period -1                
+	qreal theta_e_null;			// initial inflation rate for period 0
+	qreal gamma;					// gross rate of currency growth
+	qreal p0;					// initial price
+	qreal w1, w2;				// initial endowment for t,t+1	
+	qreal g0;					// initial parameter for exp.Infl.rate OLS
+	qreal g_tm1;					// parameter for exp.Infl.rate OLS
+	qreal rho, delta;			// parameter for the savings function
+    qreal theta_tm1;		        // inflation rate in t-1
+    qreal theta_t;		        // inflation rate in t
+	qreal theE_Old;				// expected inflation rate for period t
+	qreal theE_You;			// expected inflation rate for period t+1
+	qreal thetaOld;
+	qreal theE_Old2;
+	qreal theE_You2;
+	qreal pt;					// price in t
+	qreal p_tm1;					// price in t-1
     void expInflRateYoung();  	// algorithm for theE_You                      
-    real (*savingsFunc)(real,real,real,real,real);    //pointer to the savings function  
+    qreal (*savingsFunc)(qreal,qreal,qreal,qreal,qreal);    //pointer to the savings function  
 	void sf_init ();			// sets savingsFunc
 
 public:
@@ -46,19 +46,19 @@ public:
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    	// print parameterset on the screen
     void iteration(const long&);    	// perform one iteration    
-	real* setLabels(char*);		    	// return a pointer to a variable
+	qreal* setLabels(char*);		    	// return a pointer to a variable
 					    				// or a parameter specified by its
 					    				// name
     void initialize();			    	// initialize the model, define
 					    				// the initial state
-    real* sendModelVar();		    	// return the main model variable
-    void sendStateSpace(int &,const real***); 	// return pointers to all model
+    qreal* sendModelVar();		    	// return the main model variable
+    void sendStateSpace(int &,const qreal***); 	// return pointers to all model
 					    						// variables and the dimension
 					    						// of the model
-    void sendParameters(int&,real**); 	// write all parameters
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 		// into an array and return the numbers
 										// of parameters
-    void receiveParameters(const real*); 		// receive parameter values 
+    void receiveParameters(const qreal*); 		// receive parameter values 
 };
 
 #endif // PUREEXCHANGE_H

@@ -37,10 +37,10 @@ protected:
 				quantiles=210 };
 	// case stoch_uni
 		void F_stoch_uni();
-   	    real * zvar_ptr;		// pointer to the stochastic parameter
+   	    qreal * zvar_ptr;		// pointer to the stochastic parameter
 		rand_var * zvar;		// ptr random function   
 		char zvar_expr[256];
-		real *randname;		    // Modellvariable in die die gezogene Zufallsvariable eingetragen wird
+		qreal *randname;		    // Modellvariable in die die gezogene Zufallsvariable eingetragen wird
 
 	// case stoch_markov
 		void F_stoch_markov();
@@ -48,44 +48,44 @@ protected:
 		int statesNum;		// Anzahl der Zustaende
 		char m_state[256];	// Zustaende als Zeichenkette fuer
 		char m_matrix[1024];	// Uebergangsmatrix als Zeichenkette
-		real states[32];	// Zustaende als real-Feld angeordnent
-		real umatrix[32][32];	// Uebergangsmatrix als real-Matrix
-		real zetamin;
-		real zetamax;
-		real* expname;		// Modellvariable in die der Erwartungswert eingetragen wird
-		real* variancename; 		// Modellvariable in die die Varianz eingetragen wird
-		//real* randname;		// Modellvariable in die die gezogene Zufallsvariable eingetragen wird
+		qreal states[32];	// Zustaende als qreal-Feld angeordnent
+		qreal umatrix[32][32];	// Uebergangsmatrix als qreal-Matrix
+		qreal zetamin;
+		qreal zetamax;
+		qreal* expname;		// Modellvariable in die der Erwartungswert eingetragen wird
+		qreal* variancename; 		// Modellvariable in die die Varianz eingetragen wird
+		//qreal* randname;		// Modellvariable in die die gezogene Zufallsvariable eingetragen wird
 
 	// case stoch_markov
 		void F_stoch_ar();
 		//rand_var * zvar;	// ptr random function   
-		real gamma;
-		//real zetamin;
-		//real zetamax;
-		//real* expname;		// Modellvariable in die der Erwartungswert eingetragen wird
-		//real* variancename;		// Modellvariable in die die Varianz eingetragen wird
-		//real* randname;		// Modellvariable in die die gezogene Zufallsvariable eingetragen wird
+		qreal gamma;
+		//qreal zetamin;
+		//qreal zetamax;
+		//qreal* expname;		// Modellvariable in die der Erwartungswert eingetragen wird
+		//qreal* variancename;		// Modellvariable in die die Varianz eingetragen wird
+		//qreal* randname;		// Modellvariable in die die gezogene Zufallsvariable eingetragen wird
 
 	// case errcor  forcast a new price with weighted last error  50 num price preiceForecast alpha
 		// Period t-1 is just done: pF(t)=p(t-1)+alpha*(pF(t-2)-p(t-1))
 		void F_errcor();
-		struct struct_errcor {real* price;real* forecast;real forecastOld;real forecastOld2;real alpha;};
+		struct struct_errcor {qreal* price;qreal* forecast;qreal forecastOld;qreal forecastOld2;qreal alpha;};
 		struct_errcor* errcor_ptr;
 		int errcor_num;
 
 	// case ma total average  100 1 q p
 		void F_ma(const long int &);
-		struct struct_ma {real* mname;real* vname;real vn;};
+		struct struct_ma {qreal* mname;qreal* vname;qreal vn;};
 		struct_ma* ma_ptr;
 		int ma_num;
 	// case ma_k	101 1 q 5 p
 		void F_ma_k();
-		struct struct_ma_k {real* mname;real* vname;int k;real* vn_k;};
+		struct struct_ma_k {qreal* mname;qreal* vname;int k;qreal* vn_k;};
 		struct_ma_k* ma_k_ptr;
 		int ma_k_num;
 	// case ma_k_a	102 1 q 5 p	// vname=a/k*sum_vn_k//
 		void F_ma_k_a();
-		struct struct_ma_k_a {real* mname;real* vname;int k;real* vn_k;real a;};
+		struct struct_ma_k_a {qreal* mname;qreal* vname;int k;qreal* vn_k;qreal a;};
 		struct_ma_k_a* ma_k_a_ptr;
 		int ma_k_a_num;
 
@@ -93,20 +93,20 @@ protected:
 		// 98 g_0 p_tm1 p_e_tp1
 		// from Jan
 		void F_rls0();
-		real g_0;	// init value
-		real g_tm1;	//
-  		real* p_tm1;	// pointer to price of last period
- 		real* p_e_tp1;	// vector to set in forecast
-                real beta_tm1;	// estimator
-		real p_tm2;	// save old price for next period
+		qreal g_0;	// init value
+		qreal g_tm1;	//
+  		qreal* p_tm1;	// pointer to price of last period
+ 		qreal* p_e_tp1;	// vector to set in forecast
+                qreal beta_tm1;	// estimator
+		qreal p_tm2;	// save old price for next period
 	// case rls1 99 g_0 theta_eNew theta_e theta
 		//	   99 0.5 thetaEtp1 thetaEt thetatm1
 		// from Model Martin
 		void F_rls1();
-		//real g_tm1; // already defined in rls0
-		real* theta_tm1;
-		real* theta_e_tp1;
-		real* theta_e_t;
+		//qreal g_tm1; // already defined in rls0
+		qreal* theta_tm1;
+		qreal* theta_e_tp1;
+		qreal* theta_e_t;
 	// case ols	110 val yPointer y_num  varphi_num  varphiPointer_i vpP_length_i vpP_lag_i
 		//		110  0 thetaEtp1 1  2  theta1 1 1 thetaEt 1 1
 		olsClass* OLS;
@@ -124,9 +124,9 @@ protected:
 		void F_rls();
 	// case rls1d	121 helpvar expectedPrice price Forecast
 		//	121 helpvar q p F2
-		real oldp,P,theta;
-		real* q;
-		real* p;
+		qreal oldp,P,theta;
+		qreal* q;
+		qreal* p;
 		void F_rls1d();
 	// case rls	130 val yPointer y_num  varphi_num  varphiPointer_i vpP_length_i vpP_lag_i  mum  Forecast
 		//	130 100000 q 1  2  p 1 3  d 1 1  2  F1
@@ -151,20 +151,20 @@ protected:
 		// remark: in Ux case the second inputvector will be used for initializing and replaced internal with ye!!!
 		// remark: in Ux case the third inputvector can be replaced with varname in function unbasiasedForecast
 		sgClass* SG;
-		real firstperiod,sigma,epsilon;
-		real* ipointer; // input pointer
-		real* tstart; // theta start matrix
+		qreal firstperiod,sigma,epsilon;
+		qreal* ipointer; // input pointer
+		qreal* tstart; // theta start matrix
 		void F_sg();
 
 	// case statistics 200 inputvarname
 		char  statvarname[40];
-		real* statvar;
-		real  mean,variance,standardDeviation,meansum,variationskoeff,sharpeRatio;
+		qreal* statvar;
+		qreal  mean,variance,standardDeviation,meansum,variationskoeff,sharpeRatio;
 
 	// case quantiles 210 inputvarname
 		char quanvarname[40];
 		double x, zx, sk, ku, xi, mr[4], mc[4], *quanvar, sd;
-		real u;
+		qreal u;
 		void Sequper(const long&);
 		void Bisec();
 		void FXRoot();
@@ -178,12 +178,12 @@ public:
 		manipulate();
 		virtual ~manipulate();
 
-		real* setLabels(char*);
+		qreal* setLabels(char*);
 		long getLength() const;
-		real* sendModelVar();
-		void sendStateSpace(int &,const real***);
-		void receiveParameters(const real*);
-		void sendParameters(int&,real**);
+		qreal* sendModelVar();
+		void sendStateSpace(int &,const qreal***);
+		void receiveParameters(const qreal*);
+		void sendParameters(int&,qreal**);
 		void printParamset();
 		void saveParamset(ofstream&);
 

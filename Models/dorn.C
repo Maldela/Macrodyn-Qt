@@ -50,7 +50,7 @@ dorn::~dorn()
 /* Last modified:   31.3.2000                          			      */
 /*                                                                            */
 /******************************************************************************/
-void dorn::pInit(real *p)
+void dorn::pInit(qreal *p)
 {
     int i;
 
@@ -84,7 +84,7 @@ void dorn::initialize()
     
 //    if (p!=0) { delete [] p; }
 //
-//    p=new real [tau];
+//    p=new qreal [tau];
 //    p[0]=p0;
 }
 
@@ -122,7 +122,7 @@ void dorn::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::dynamics(real *p,const long t)
+void dorn::dynamics(qreal *p,const long t)
 {  
   assert(t>0);
   if (t>tau)
@@ -150,10 +150,10 @@ void dorn::dynamics(real *p,const long t)
 /*                                                                            */
 /******************************************************************************/
 
-real dorn::pexpBerechnung(const long t)
+qreal dorn::pexpBerechnung(const long t)
 {
     long T, counter;
-    real sum=0.0;
+    qreal sum=0.0;
     
     assert(t>0);
     T=MIN(t,tau);
@@ -440,101 +440,101 @@ void dorn::pwBerechnung()
 /*                                                                            */
 /******************************************************************************/
 
-real* dorn::setLabels(char *name)
+qreal* dorn::setLabels(char *name)
 {
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+	return( (qreal*)(&tau) );
     if( !strcmp(name,"pt") )
-	return( (real*)(&pt) );
+	return( (qreal*)(&pt) );
     if( !strcmp(name,"wt") )
-	return( (real*)(&wt) );
+	return( (qreal*)(&wt) );
     if( !strcmp(name,"st") )
-	return( (real*)(&st) );
+	return( (qreal*)(&st) );
     if( !strcmp(name,"stv") )
-	return( (real*)(&stv) );
+	return( (qreal*)(&stv) );
     if( !strcmp(name,"xt") )
-	return( (real*)(&xt) );
+	return( (qreal*)(&xt) );
     if( !strcmp(name,"it") )
-	return( (real*)(&it) );
+	return( (qreal*)(&it) );
     if( !strcmp(name,"Bt") )
-	return( (real*)(&Bt) );
+	return( (qreal*)(&Bt) );
     if( !strcmp(name,"Lt") )
-	return( (real*)(&Lt) );
+	return( (qreal*)(&Lt) );
     if( !strcmp(name,"yt") )
-	return( (real*)(&yt) );
+	return( (qreal*)(&yt) );
     if( !strcmp(name,"iet") )
-	return( (real*)(&iet) );
+	return( (qreal*)(&iet) );
     if( !strcmp(name,"Lmax") )
-	return( (real*)(&Lmax) );
+	return( (qreal*)(&Lmax) );
     if( !strcmp(name,"tax") )
-	return( (real*)(&tax) );
+	return( (qreal*)(&tax) );
     if( !strcmp(name,"d") )
-	return( (real*)(&d) );
+	return( (qreal*)(&d) );
     if( !strcmp(name,"deltaB") )
-	return( (real*)(&deltaB) );
+	return( (qreal*)(&deltaB) );
     if( !strcmp(name,"pe") )
-	return( (real*)(&pe) );
+	return( (qreal*)(&pe) );
     if( !strcmp(name,"g") )
-	return( (real*)(&g) );
+	return( (qreal*)(&g) );
     if( !strcmp(name,"ytf") )
-	return( (real*)(&ytf) );
+	return( (qreal*)(&ytf) );
     if( !strcmp(name,"ytz") )
-	return( (real*)(&ytz) );
+	return( (qreal*)(&ytz) );
     if( !strcmp(name,"Im") )
-	return( (real*)(&Im) ); 
+	return( (qreal*)(&Im) ); 
     if( !strcmp(name,"fi") )
-	return( (real*)(&fi) );
+	return( (qreal*)(&fi) );
     if( !strcmp(name,"xet") )
-	return( (real*)(&xet) );
+	return( (qreal*)(&xet) );
     if( !strcmp(name,"B") )
-	return( (real*)(&B) );
+	return( (qreal*)(&B) );
     if( !strcmp(name,"zt") )
-	return( (real*)(&zt) );
+	return( (qreal*)(&zt) );
     if( !strcmp(name,"A") )
-	return( (real*)(&A) );
+	return( (qreal*)(&A) );
     if( !strcmp(name,"delta") )
-	return( (real*)(&delta) );
+	return( (qreal*)(&delta) );
     if( !strcmp(name,"rho") )
-	return( (real*)(&rho) );
+	return( (qreal*)(&rho) );
     if( !strcmp(name,"xtdy") )
-	return( (real*)(&xtdy) );
+	return( (qreal*)(&xtdy) );
     if( !strcmp(name,"gamma") )
-	return( (real*)(&gamma) );
+	return( (qreal*)(&gamma) );
     if( !strcmp(name,"kappa") )
-	return( (real*)(&kappa) );
+	return( (qreal*)(&kappa) );
     if( !strcmp(name,"lambda") )
-	return( (real*)(&lambda) );
+	return( (qreal*)(&lambda) );
     if( !strcmp(name,"mu") )
-	return( (real*)(&mu) );
+	return( (qreal*)(&mu) );
     if( !strcmp(name,"V") )
-	return( (real*)(&V) );
+	return( (qreal*)(&V) );
     if( !strcmp(name,"W") )
-	return( (real*)(&W) );
+	return( (qreal*)(&W) );
     if( !strcmp(name,"xetv") )
-	return( (real*)(&xetv) );
+	return( (qreal*)(&xetv) );
     if( !strcmp(name,"B0") )
-	return( (real*)(&B0) );
+	return( (qreal*)(&B0) );
     if( !strcmp(name,"xBundle") )
-	return( (real*)(&xBundle) );
+	return( (qreal*)(&xBundle) );
     if( !strcmp(name,"yBundle") )
-	return( (real*)(&yBundle) );
+	return( (qreal*)(&yBundle) );
     return( NULL );
 }
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      dornModel                                                 */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:  31.3.2000                          			      */
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::sendStateSpace(int &quantity,const real*** stateSpace)
+void dorn::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("defaultModel::sendStateSpace",
 		   "Can't create state space vector");
@@ -569,7 +569,7 @@ void dorn::loadParamset(ifstream& inputFile)
     {
       delete [] p;
     }
-    p = new real[tau];
+    p = new qreal[tau];
     if( !p )
 	fatalError("defaultModel::loadParamset","Can't create p vector");
     initialize();
@@ -642,7 +642,7 @@ void dorn::saveParamsetWithNames(ofstream& outputFile)
 
 void dorn::printParamset()
 {
-    cout << tau << "\t" << p0 << "\t" << w0 << "\t" << s0 << "\t"
+    Log::log() << tau << "\t" << p0 << "\t" << w0 << "\t" << s0 << "\t"
          << B0 << "\t" << x0 << "\t" 
          << A << "\t" << B << "\t" << Lmax << "\t" << tax << "\t"
          << delta << "\t" << rho << "\t" << d << "\t" << deltaB << "\t"  
@@ -659,7 +659,7 @@ void dorn::printParamset()
 /* Last modified:   31.3.2000                                                 */
 /*                                                                            */
 /******************************************************************************/
-void dorn::receiveParameters(const real* parameters)
+void dorn::receiveParameters(const qreal* parameters)
 {
   tau=parameters[0];
   p0=parameters[1];
@@ -695,12 +695,12 @@ void dorn::receiveParameters(const real* parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::sendParameters(int& amount,real** parameters)
+void dorn::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=2;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("defaultModel::sendParameters",
 		   "Can't create array for parameters");

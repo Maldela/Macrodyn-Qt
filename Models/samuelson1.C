@@ -137,7 +137,7 @@ void samuelson1::loadParamset(ifstream& inFile)
 
 void samuelson1::initialize()
 {
-	real sum_p=0;
+    qreal sum_p=0;
 
 	V = new matrixDef(N,5);
 	if( !V )
@@ -197,27 +197,27 @@ void samuelson1::check()
 	flag=1;						// flag==1  =>  everything is ok
 	for (int i=0;i<=N-1;i++) {
 		if ((V->m[i][0]<0) || (V->m[i][0]>1)) {
-			cout << "probability out of range!";
+            Log::log() << "probability out of range!";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][1]<0) || (V->m[i][1]>=1)) {
-			cout << "m out of range";
+            Log::log() << "m out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][2]<0) || (V->m[i][2]>4)) {
-			cout << "v out of range";
+            Log::log() << "v out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][3]<0) {
-			cout << "m0 out of range";
+            Log::log() << "m0 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][4]<0) {
-			cout << "v0 out of range";
+            Log::log() << "v0 out of range";
 			flag=0;
 			break;
 		}
@@ -237,7 +237,7 @@ void samuelson1::check()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* samuelson1::setLabels(char* label)
+qreal* samuelson1::setLabels(char* label)
 {
     if( !strcmp(label,"x01") ) return(&x01);
     if( !strcmp(label,"x02") ) return(&x02);
@@ -314,7 +314,7 @@ real* samuelson1::setLabels(char* label)
 void samuelson1::iteration(const long& )
 { 
 if (flag) {					// all values are in range	
-	real sum=V->m[0][0];	// sum is used to find out which intervall was hit
+    qreal sum=V->m[0][0];	// sum is used to find out which intervall was hit
 
 	z = zvar->dice();				// get random number in [0,1]
 	for(int i=0;i<=N-1;i++) {
@@ -436,17 +436,17 @@ void samuelson1::saveParamset(ofstream& outFile)
 
 void samuelson1::printParamset()
 {
-    cout << N  << endl;
-    cout << x01 << endl;
-    cout << x02 << endl;
+    Log::log() << N  << endl;
+    Log::log() << x01 << endl;
+    Log::log() << x02 << endl;
 
 	for(int i=0; i<=N-1;i++) {
 		for(int j=0;j<=4;j++) {
-			cout << V->m[i][j] << "\t";
+            Log::log() << V->m[i][j] << "\t";
 		}	
 	}
 
-    cout << length << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -463,11 +463,11 @@ void samuelson1::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void samuelson1::sendStateSpace(int &quantity,const real*** stateSpace)
+void samuelson1::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("samuelson1::sendStateSpace",
 		   "Can't create state space vector");
@@ -488,13 +488,13 @@ void samuelson1::sendStateSpace(int &quantity,const real*** stateSpace)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* samuelson1::sendModelVar(void)
+qreal* samuelson1::sendModelVar(void)
 { error("macrodyn::samuelson1::sendModelVar is not implemented");
   return NULL;
 } 
-void samuelson1::sendParameters(int& ,real** )
+void samuelson1::sendParameters(int& ,qreal** )
 { error("macrodyn::samuelson1::sendParameters is not implemented");
 }
-void samuelson1::receiveParameters(const real* )
+void samuelson1::receiveParameters(const qreal* )
 { error("macrodyn::samuelson1::receiveParameters is not implemented");
 } 

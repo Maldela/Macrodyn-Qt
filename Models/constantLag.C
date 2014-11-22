@@ -25,7 +25,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-real constantLag::expectedInflationRate(const long t)
+qreal constantLag::expectedInflationRate(const long t)
 {
     long T=MIN(t,tau);
     if( !tau )
@@ -44,12 +44,12 @@ real constantLag::expectedInflationRate(const long t)
 
 void constantLag::iteration(const long& t)
 {
-    real ptratex;
+    qreal ptratex;
     char state[5];
-    real ztnot;
-    real ytnot;
-    real xtnot;
-    real ct;
+    qreal ztnot;
+    qreal ytnot;
+    qreal xtnot;
+    qreal ct;
 
     ptratex=expectedInflationRate(t);
     notProd(ztnot,ytnot);

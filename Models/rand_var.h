@@ -41,7 +41,7 @@ class rand_var {
     
   public:
     rand_var ( baseModel* model,const char* gen,const char* zvar_expr);// constructor
-    rand_var ( const char* gen,const real& probab,const real& min,const real& max);
+    rand_var ( const char* gen,const qreal& probab,const qreal& min,const qreal& max);
     ~rand_var ( void );			// distructor
 
     double dice (void);			// returns the next dice

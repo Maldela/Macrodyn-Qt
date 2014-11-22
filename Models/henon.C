@@ -29,7 +29,7 @@
 
 void henon::iteration(const long&)
 {
-    real oldY=y;
+    qreal oldY=y;
 
     y= alpha - beta * x - y * y;
     x= oldY;
@@ -50,7 +50,7 @@ void henon::iteration(const long&)
 
 void quadHenon::iteration(const long&)
 {
-    real oldX=x;
+    qreal oldX=x;
 
     x = (1.0/beta)*(alpha - y - x*x);
     y = oldX;

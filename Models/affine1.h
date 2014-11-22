@@ -29,10 +29,10 @@
 class affine1: public baseModel {
 
 protected:
-    real x;					// state variable
-    real x0;				// initial value for x
-	real r;					//intercept
-   	real a;					// f_a(x) = a*(x+r)
+    qreal x;					// state variable
+    qreal x0;				// initial value for x
+	qreal r;					//intercept
+   	qreal a;					// f_a(x) = a*(x+r)
 
 	rand_var *zvar;
     char zvar_expr[256];
@@ -45,14 +45,14 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 

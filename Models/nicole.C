@@ -104,9 +104,9 @@ void nicole::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void nicole::printParamset()
 {
-    cout << pi << "\t" << dl << "\t" << dh << "\t" << d0 << "\t" << e  << "\t" << alpha ;
-    cout << "\t" << xhat << "\t";
-    cout << theta << "\t" << R << "\n" << length << "\n";
+    Log::log() << pi << "\t" << dl << "\t" << dh << "\t" << d0 << "\t" << e  << "\t" << alpha ;
+    Log::log() << "\t" << xhat << "\t";
+    Log::log() << theta << "\t" << R << "\n" << length << "\n";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -115,7 +115,7 @@ void nicole::printParamset()
 /* Purpose:         unused                                                    */
 /*                                                                            */
 /******************************************************************************/
-void nicole::sendParameters(int& amount,real** parameters)
+void nicole::sendParameters(int& amount,qreal** parameters)
 {
 }
 /******************************************************************************/
@@ -125,7 +125,7 @@ void nicole::sendParameters(int& amount,real** parameters)
 /* Purpose:         unused                                                    */
 /*                                                                            */
 /******************************************************************************/
-void nicole::receiveParameters(const real* parameters)
+void nicole::receiveParameters(const qreal* parameters)
 {
 }
 /******************************************************************************/
@@ -137,7 +137,7 @@ void nicole::receiveParameters(const real* parameters)
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-real* nicole::setLabels(char *name)
+qreal* nicole::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -178,7 +178,7 @@ real* nicole::setLabels(char *name)
 /* Purpose:         unused                                                    */
 /*                                                                            */
 /******************************************************************************/
-real* nicole::sendModelVar()
+qreal* nicole::sendModelVar()
 {
 	return( &p );
 }
@@ -190,7 +190,7 @@ real* nicole::sendModelVar()
 /*                  returns the dimension of the system for rho=0             */
 /*                                                                            */
 /******************************************************************************/
-void nicole::sendStateSpace(int &quantity,const real*** stateSpace)
+void nicole::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
 }
 /******************************************************************************/
@@ -203,7 +203,7 @@ void nicole::sendStateSpace(int &quantity,const real*** stateSpace)
 /******************************************************************************/
 void nicole::getD()
 {
-   real rand;
+   qreal rand;
    
    rand=zvar->dice();
    if( d == dl )

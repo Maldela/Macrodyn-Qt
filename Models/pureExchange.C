@@ -21,22 +21,22 @@
 /*                                                                            */
 /******************************************************************************/
 
-static real sf_1 (real theta_e, real w1, real w2, real delta, real rho)
+static qreal sf_1 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal rho)
 {
 
-	real theta_aut = delta*w1/w2;
+    qreal theta_aut = delta*w1/w2;
 
 	if (0 <= theta_e < theta_aut)
 		return 1/delta*(w1 - theta_e*w2);
 	else return 0;
 }
 
-static real sf_2 (real theta_e, real w1, real w2, real delta, real rho)
+static qreal sf_2 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal rho)
 {
 	return w1-(w1+w2*theta_e) / (1+exp ((rho/(rho-1))*log(theta_e/delta))    ) ;
 }
 
-static real sf_3 (real theta_e, real w1, real w2, real delta, real rho)
+static qreal sf_3 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal rho)
 {
 
  	return 1/(exp(cos(10/(1+exp(rho/(rho-1)*log(theta_e))))));
@@ -67,7 +67,7 @@ void pureExchange::sf_init()
    		break;
 
     default :
-      	error("macrodyn::pureExchange::sf_init: sf type %d not yet implemented : ", sf_type);
+        error("macrodyn::pureExchange::sf_init: sf type %d not yet implemented : ", QString::number(sf_type));
   }
 }
 
@@ -141,7 +141,7 @@ void pureExchange::initialize()
 
 void pureExchange::expInflRateYoung()
 {
-	real dummy;
+    qreal dummy;
 	theE_You = theE_Old + g_tm1 * ( theta_tm1 - theE_Old );
     dummy = g_tm1 * theta_tm1 * theta_tm1;
     g_tm1 = dummy / (dummy + 1.0);
@@ -197,7 +197,7 @@ if (job_type != 83)
 /*                                                                            */
 /******************************************************************************/
 
-real* pureExchange::setLabels(char *name)
+qreal* pureExchange::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 		return &xBundle;
@@ -233,7 +233,7 @@ real* pureExchange::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-real* pureExchange::sendModelVar()
+qreal* pureExchange::sendModelVar()
 {
    return &theta_t;
 }
@@ -249,12 +249,12 @@ real* pureExchange::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::sendStateSpace(int &quantity,const real*** stateSpace)
+void pureExchange::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-    cout << "sendStateSpace" << endl; 
+    Log::log() << "sendStateSpace" << endl;
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("pureExchange::sendStateSpace",
 		   "Can't create state space vector");
@@ -311,13 +311,13 @@ void pureExchange::saveParamset(ofstream& outputFile)
 
 void pureExchange::printParamset()
 {
-    cout << sf_type << endl;
-    cout << theta_e_m1 << "\t" << theta_e_null << endl;
-    cout << gamma << "\t" << p0 << endl;
-    cout << w1 << "\t" << w2 << endl;
-	cout << g0 << "\t" << delta << endl;
-	cout << rho << "\t" << job_type << endl;
-	cout << length << endl;
+    Log::log() << sf_type << endl;
+    Log::log() << theta_e_m1 << "\t" << theta_e_null << endl;
+    Log::log() << gamma << "\t" << p0 << endl;
+    Log::log() << w1 << "\t" << w2 << endl;
+    Log::log() << g0 << "\t" << delta << endl;
+    Log::log() << rho << "\t" << job_type << endl;
+    Log::log() << length << endl;
 }
 
 /******************************************************************************/
@@ -330,12 +330,12 @@ void pureExchange::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::sendParameters(int& amount,real** parameters)
+void pureExchange::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=12;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("pureExchange::sendParameters",
 		   "Can't create array for parameters");
@@ -362,7 +362,7 @@ void pureExchange::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::receiveParameters(const real* parameters)
+void pureExchange::receiveParameters(const qreal* parameters)
 {
     sf_type=parameters[0];
     theta_e_m1=parameters[1];

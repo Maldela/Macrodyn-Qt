@@ -37,7 +37,7 @@ public:
 
 class logLogDelay : public models2D {
 protected:
-    real delayFunc(const real&, const real&);
+    qreal delayFunc(const qreal&, const qreal&);
 public:
     void iteration(const long&);
 };

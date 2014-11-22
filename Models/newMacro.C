@@ -21,9 +21,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-void newMacro::notProd(real &ztnot,real &yteff)
+void newMacro::notProd(qreal &ztnot,qreal &yteff)
 {
-    ztnot= exp( log(A/wtreal) / (1-B) );
+    ztnot= exp( log(A/wtqreal) / (1-B) );
     employment=MIN(Lmax,ztnot);
     yteff= prodFunction(employment);
 }
@@ -38,12 +38,12 @@ void newMacro::notProd(real &ztnot,real &yteff)
 /*                                                                            */
 /******************************************************************************/
 
-void newMacro::notCom(real &xteff,real &ct,real &ptratex)
+void newMacro::notCom(qreal &xteff,qreal &ct,qreal &ptratex)
 {
-    real sigma = rho / (rho-1);
+    qreal sigma = rho / (rho-1);
   
     ct =  1/ ( 1 + exp( log(delta)/(1-rho) + sigma*log(ptratex) ) );
-    xteff=( g + beta * mtreal ) +  ct*wtreal*employment*(1-tax);
+    xteff=( g + beta * mtqreal ) +  ct*wtqreal*employment*(1-tax);
 }
 
 /******************************************************************************/
@@ -55,12 +55,12 @@ void newMacro::notCom(real &xteff,real &ct,real &ptratex)
 /*                                                                            */
 /******************************************************************************/
 
-void newMacro::wageAndPrice(real &xteff, real &yteff,real &ztnot,
+void newMacro::wageAndPrice(qreal &xteff, qreal &yteff,qreal &ztnot,
 				 char *)
 
 {
-    real yDiff=xteff-yteff;
-    real lDiff=ztnot-Lmax;
+    qreal yDiff=xteff-yteff;
+    qreal lDiff=ztnot-Lmax;
     
     if( yDiff < 0 )
 	ptrate= 1 + kappa*(yDiff/yteff) ;
@@ -89,9 +89,9 @@ void newMacro::wageAndPrice(real &xteff, real &yteff,real &ztnot,
 
 void newMacro::dynamics()
 {
-    mtreal  = ( MIN(output,g+mtreal) + (1-tax)*wtreal*employment - output )
+    mtqreal  = ( MIN(output,g+mtqreal) + (1-tax)*wtqreal*employment - output )
 	      / ptrate;
-    wtreal  = wtreal * (wtrate / ptrate);
+    wtqreal  = wtqreal * (wtrate / ptrate);
     for(int i=0; i<=tau; i++ )
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
     theta[0]=ptrate;
@@ -108,11 +108,11 @@ void newMacro::dynamics()
 
 void newMacro::iteration(const long& t)
 {
-    real ptratex;
-    real ztnot;
-    real yteff;
-    real xteff;
-    real ct;
+    qreal ptratex;
+    qreal ztnot;
+    qreal yteff;
+    qreal xteff;
+    qreal ct;
     
     notProd(ztnot,yteff);
     ptratex=expectedInflationRate(t);

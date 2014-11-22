@@ -100,7 +100,7 @@ void HicksModel::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* HicksModel::sendModelVar()
+qreal* HicksModel::sendModelVar()
 {
     return &y2;
 }
@@ -117,7 +117,7 @@ real* HicksModel::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* HicksModel::setLabels(char* label)
+qreal* HicksModel::setLabels(char* label)
 {
 	if( !strcmp(label,"xBundle") )
 		return( &xBundle );
@@ -168,11 +168,11 @@ real* HicksModel::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::sendStateSpace(int &quantity,const real*** stateSpace)
+void HicksModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("HicksModel::sendStateSpace",
 		   "Can't create state space vector");
@@ -260,8 +260,8 @@ void HicksModel::saveParamsetWithNames(ofstream& outFile)
 
 void HicksModel::printParamset()
 {
-	cout << y1_0 << "\t" << y2_0 << "\t" << If << "\t" << Iaut << "\t";
-	cout << Yc << "\t" << v << "\t" << m  << "\t" << lambda << "\t" << myseed << "\t" << length << endl;
+    Log::log() << y1_0 << "\t" << y2_0 << "\t" << If << "\t" << Iaut << "\t";
+    Log::log() << Yc << "\t" << v << "\t" << m  << "\t" << lambda << "\t" << myseed << "\t" << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -276,12 +276,12 @@ void HicksModel::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::sendParameters(int& amount,real** parameters)
+void HicksModel::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=9;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("HicksModel::sendParameters",
 		   "Can't create array for parameters");
@@ -308,7 +308,7 @@ void HicksModel::sendParameters(int& amount,real** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::receiveParameters(const real* parameters)
+void HicksModel::receiveParameters(const qreal* parameters)
 {
     y1_0=parameters[0];
     y2_0=parameters[1];

@@ -35,24 +35,24 @@ class dornbusch : public baseModel {
 
 protected:
    
-   real M;
-   real Yr;
-   real pA;
-   real iA;
-   real it;
-   real pt;
-   real ptr;
-   real pt_0;
-   real xet_0;
-   real xet;
-   real xetr;
-   real pi;
-   real u;
-   real delta;
-   real gamma;
-   real sigma;
-   real lambda;
-   real theta;
+   qreal M;
+   qreal Yr;
+   qreal pA;
+   qreal iA;
+   qreal it;
+   qreal pt;
+   qreal ptr;
+   qreal pt_0;
+   qreal xet_0;
+   qreal xet;
+   qreal xetr;
+   qreal pi;
+   qreal u;
+   qreal delta;
+   qreal gamma;
+   qreal sigma;
+   qreal lambda;
+   qreal theta;
 
 public:
     dornbusch();			// constructor
@@ -61,12 +61,12 @@ public:
     void printParamset();
     void iteration(const long&);
     void initialize();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
 
-    real* sendModelVar();		// for compatibity reasons only
-    void sendParameters(int&,real**);
-    void receiveParameters(const real*);
+    qreal* sendModelVar();		// for compatibity reasons only
+    void sendParameters(int&,qreal**);
+    void receiveParameters(const qreal*);
     virtual ~dornbusch(void);
 };
 

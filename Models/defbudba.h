@@ -20,30 +20,30 @@
 
 class defbudba : public baseModel {
   protected:
-    real A,B;                             // production function parameters
-    real gamm,kappa;                      // price adjustment parameters   
-    real my,lambda;                       // wage adjustment parameters    
-    real w0,p0,m0;                        // initial values                
-    real wtreal,mtreal,ptrate,wtrate;     // real wage, real balance       
-    real Lmax;                            // maximum labour supply
-    real ymax;                            // maximum capacity output
-    real rho, delta;                      // utility function parameters   
+    qreal A,B;                             // production function parameters
+    qreal gamm,kappa;                      // price adjustment parameters   
+    qreal my,lambda;                       // wage adjustment parameters    
+    qreal w0,p0,m0;                        // initial values                
+    qreal wtqreal,mtqreal,ptrate,wtrate;     // qreal wage, qreal balance       
+    qreal Lmax;                            // maximum labour supply
+    qreal ymax;                            // maximum capacity output
+    qreal rho, delta;                      // utility function parameters   
     int tau;                                // length of expectations memory
-    real rhoTilda;
-    real g,tax;                           // government demand, tax rate   
-    real g0;				  // initial value for g
-    real employment;                      // actual employment             
-    real beta;
-    real *theta;
-    real y;                          // actual output
+    qreal rhoTilda;
+    qreal g,tax;                           // government demand, tax rate   
+    qreal g0;				  // initial value for g
+    qreal employment;                      // actual employment             
+    qreal beta;
+    qreal *theta;
+    qreal y;                          // actual output
     
-    real prodFunction(const real&);
-    virtual real expectedInflationRate(const long);                
-    void notProd(real&,real&);                        
-    void notCom(real&,real&,real&);                         
-    void empAndOut(real&,real&);
-    void detDiseq(real&,real&,char*);                 
-    void wageAndPrice(real&,real&,real&,char*);            
+    qreal prodFunction(const qreal&);
+    virtual qreal expectedInflationRate(const long);                
+    void notProd(qreal&,qreal&);                        
+    void notCom(qreal&,qreal&,qreal&);                         
+    void empAndOut(qreal&,qreal&);
+    void detDiseq(qreal&,qreal&,char*);                 
+    void wageAndPrice(qreal&,qreal&,qreal&,char*);            
     void dynamics();                        
 public:
     defbudba();			    // default constructor
@@ -54,22 +54,22 @@ public:
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const long&);    // perform one iteration 
-    real* setLabels(char*);		    // return a pointer to a variable
+    qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
     void initialize();			    // initialize the model, define
 					    // the initial state
-    void thetaInit(real*);
-    void getTheta(real*);
-    void setTheta(real*);
-    real* sendModelVar();		    // return the main model variable
-    void sendStateSpace(int &,const real***); // return pointers to all model
+    void thetaInit(qreal*);
+    void getTheta(qreal*);
+    void setTheta(qreal*);
+    qreal* sendModelVar();		    // return the main model variable
+    void sendStateSpace(int &,const qreal***); // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*); // receive parameter values 
+    void receiveParameters(const qreal*); // receive parameter values 
 };
 
 #endif

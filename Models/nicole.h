@@ -20,10 +20,10 @@ class nicole : public baseModel {
     char zvar_expr[256];	// expression which defines a random variable
     rand_var * zvar;		// a random variable    
   //Parameters
-    real pi,dl,dh,d0,e,alpha,xhat,theta,R;
+    qreal pi,dl,dh,d0,e,alpha,xhat,theta,R;
   //Condition variable
-    real p;				//price vector
-    real d;				//stochastic
+    qreal p;				//price vector
+    qreal d;				//stochastic
   //Model functions
     void getD();                        
     void dynamics();                        
@@ -35,11 +35,11 @@ public:
     void saveParamset(ofstream&);	 // write parameterset into a file
     void printParamset();		 // print parameterset on the screen
     void saveParamsetWithNames(ofstream&);// add parametset to printerfile
-    real* setLabels(char*);		 // return a pointer to a variable
+    qreal* setLabels(char*);		 // return a pointer to a variable
     virtual void iteration(const long&); // perform one iteration 
-    real* sendModelVar();		 // obsolete and unused
-    void sendStateSpace(int &,const real***);// obsolete
-    void sendParameters(int&,real**); 	 // unused
-    void receiveParameters(const real*); // unused 
+    qreal* sendModelVar();		 // obsolete and unused
+    void sendStateSpace(int &,const qreal***);// obsolete
+    void sendParameters(int&,qreal**); 	 // unused
+    void receiveParameters(const qreal*); // unused 
 };
 #endif

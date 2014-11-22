@@ -26,14 +26,14 @@ const int mc_states_MAX=10;
 
 struct st_olg_paramset 
 {
-	real z_0;
+    qreal z_0;
 	int type;
 	int theta_type;
-	real my;
-	real z_trans;
-	real trans_x[trans_x_MAX];
-	real trans_a[trans_x_MAX];
-	real trans_b[trans_x_MAX];		
+    qreal my;
+    qreal z_trans;
+    qreal trans_x[trans_x_MAX];
+    qreal trans_a[trans_x_MAX];
+    qreal trans_b[trans_x_MAX];
         int mc_flag;
 	char* zvar_expr;
 	char mc_matrix[256];
@@ -46,45 +46,45 @@ class  rOLG_wt : public baseModel {
 protected:
 
 	int dof;
-	real b_exponential;
-	real a_pareto;
-	real c_pareto;
+    qreal b_exponential;
+    qreal a_pareto;
+    qreal c_pareto;
 
-    real Y_olg;
-    real Y_olg_E,Y_olg_V,Y_olg_S;
-    real W_olg; 
-    real W_olg_E,W_olg_V,W_olg_S;
-    real M_olg;
-    real M_olg_E,M_olg_V,M_olg_S;
-    real K_olg_0;               // initial value  
-    real Ez_0;		    // initial value  
-    real K_olg;
-    real K_olg_E,K_olg_V,K_olg_S;
-    real K_olg_V_n; 
-    real K_olg_zaehl;
-    real av_Ez;		
-    real Ez;		      			
-    real R_olg;		
-    real a_m;		 
-    real b_m;		
-    real c_olg;
-    real m_olg;		    
-    real A_olg;		
-    real delta_olg;	
-    real n_olg;
-    real alpha_olg;
-    real z_st;
-    real r;
-    real r_E,r_V,r_S;
-    real S_olg;
-    real c1;
-    real c2;
+    qreal Y_olg;
+    qreal Y_olg_E,Y_olg_V,Y_olg_S;
+    qreal W_olg;
+    qreal W_olg_E,W_olg_V,W_olg_S;
+    qreal M_olg;
+    qreal M_olg_E,M_olg_V,M_olg_S;
+    qreal K_olg_0;               // initial value
+    qreal Ez_0;		    // initial value
+    qreal K_olg;
+    qreal K_olg_E,K_olg_V,K_olg_S;
+    qreal K_olg_V_n;
+    qreal K_olg_zaehl;
+    qreal av_Ez;
+    qreal Ez;
+    qreal R_olg;
+    qreal a_m;
+    qreal b_m;
+    qreal c_olg;
+    qreal m_olg;
+    qreal A_olg;
+    qreal delta_olg;
+    qreal n_olg;
+    qreal alpha_olg;
+    qreal z_st;
+    qreal r;
+    qreal r_E,r_V,r_S;
+    qreal S_olg;
+    qreal c1;
+    qreal c2;
     int n_states;
     char in_string[256];
-    real z_st_n;
-    real z_st_0;              // original parameter
-    real T;
-    real TT;  
+    qreal z_st_n;
+    qreal z_st_0;              // original parameter
+    qreal T;
+    qreal TT;
  
 	distribution *rand_dis;
 
@@ -109,14 +109,14 @@ public:
     void read_sim(ifstream&,st_olg_paramset*);
     void delete_st_olg_paramset_stochptr(st_olg_paramset*);
     void iteration(const long&);
-    void expection(real,real);
+    void expection(qreal,qreal);
     void initialize();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
 
-    real* sendModelVar();		// for compatibity reasons only
-    void sendParameters(int&,real**);
-    void receiveParameters(const real*);
+    qreal* sendModelVar();		// for compatibity reasons only
+    void sendParameters(int&,qreal**);
+    void receiveParameters(const qreal*);
     virtual ~rOLG_wt(void);            //destructor
 
 };

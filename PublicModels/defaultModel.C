@@ -57,9 +57,9 @@ defaultModel::~defaultModel()
 /*                                                                            */
 /******************************************************************************/
 
-real defaultModel::prodFunction(const real& L)
+qreal defaultModel::prodFunction(const qreal& L)
 {
-	real result;
+    qreal result;
 
 	result= A/B * exp( B*log(L) );              
 	return(result);
@@ -74,7 +74,7 @@ real defaultModel::prodFunction(const real& L)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::thetaInit(real *theta)
+void defaultModel::thetaInit(qreal *theta)
 {
     int i;
 
@@ -95,8 +95,8 @@ void defaultModel::thetaInit(real *theta)
 void defaultModel::initialize()
 {
     thetaInit(theta);
-    mtreal=m0/p0;
-    wtreal=w0/p0;
+    mtqreal=m0/p0;
+    wtqreal=w0/p0;
     ymax=prodFunction(Lmax);
     rhoTilda=1-rho/(1-rho);
 //    kappa=lambda=my=gamm;
@@ -111,10 +111,10 @@ void defaultModel::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real defaultModel::expectedInflationRate(const long t)
+qreal defaultModel::expectedInflationRate(const long t)
 {
     long T,counter;
-    real help=0.0;
+    qreal help=0.0;
     
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ )
@@ -132,9 +132,9 @@ real defaultModel::expectedInflationRate(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::notProd(real &ztnot,real &ytnot)
+void defaultModel::notProd(qreal &ztnot,qreal &ytnot)
 {
-    ztnot= exp( log(A/wtreal) / (1-B) ) ;
+    ztnot= exp( log(A/wtqreal) / (1-B) ) ;
     ytnot= prodFunction(ztnot);
 }
 
@@ -148,12 +148,12 @@ void defaultModel::notProd(real &ztnot,real &ytnot)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::notCom(real &xtnot,real &ct,real &ptratex)
+void defaultModel::notCom(qreal &xtnot,qreal &ct,qreal &ptratex)
 {
-    real sigma = rhoTilda / (rhoTilda-1);
+    qreal sigma = rhoTilda / (rhoTilda-1);
   
     ct =   1/ ( 1 + exp( log(delta)/(1-rhoTilda) + sigma*log(ptratex) ) );
-    xtnot=( g + beta * mtreal ) / (1 - ct * (1-tax) ) ;
+    xtnot=( g + beta * mtqreal ) / (1 - ct * (1-tax) ) ;
 }
 
 /******************************************************************************/
@@ -165,7 +165,7 @@ void defaultModel::notCom(real &xtnot,real &ct,real &ptratex)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::empAndOut(real &xtnot, real &ytnot)
+void defaultModel::empAndOut(qreal &xtnot, qreal &ytnot)
 {
     output = MIN( MIN(xtnot,ytnot), ymax );
 
@@ -185,7 +185,7 @@ void defaultModel::empAndOut(real &xtnot, real &ytnot)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::detDiseq(real &xtnot,real &ytnot,char *x1)
+void defaultModel::detDiseq(qreal &xtnot,qreal &ytnot,char *x1)
 {
     if( xtnot > ytnot ) {
         if( ymax > ytnot)
@@ -232,8 +232,8 @@ void defaultModel::detDiseq(real &xtnot,real &ytnot,char *x1)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::wageAndPrice(real &xtnot, real &ytnot,
-				real &ztnot, char *state)
+void defaultModel::wageAndPrice(qreal &xtnot, qreal &ytnot,
+                qreal &ztnot, char *state)
 
 {
     if( !strcmp(state,"K ") )
@@ -263,8 +263,8 @@ void defaultModel::wageAndPrice(real &xtnot, real &ytnot,
 
 void defaultModel::dynamics()
 {
-    mtreal  = ( MIN( output,g+mtreal) - tax*output ) / ptrate;
-    wtreal  = wtreal * (wtrate / ptrate);
+    mtqreal  = ( MIN( output,g+mtqreal) - tax*output ) / ptrate;
+    wtqreal  = wtqreal * (wtrate / ptrate);
     for(int i=0; i<=tau; i++ )
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
     theta[0]=ptrate;
@@ -281,12 +281,12 @@ void defaultModel::dynamics()
 
 void defaultModel::iteration(const long& t)
 {
-    real ptratex;
+    qreal ptratex;
     char state[5];
-    real ztnot;
-    real ytnot;
-    real xtnot;
-    real ct;
+    qreal ztnot;
+    qreal ytnot;
+    qreal xtnot;
+    qreal ct;
 
     ymax=prodFunction(Lmax);
     ptratex=expectedInflationRate(t);
@@ -308,7 +308,7 @@ void defaultModel::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* defaultModel::setLabels(char *name)
+qreal* defaultModel::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -324,12 +324,12 @@ real* defaultModel::setLabels(char *name)
         return( &ymax );
     if( !strcmp(name,"B") )
         return( &B );
-    if( !strcmp(name,"wtreal") )
-        return( &wtreal );
+    if( !strcmp(name,"wtqreal") )
+        return( &wtqreal );
     if( !strcmp(name,"wtrate") )
         return( &wtrate );
-    if( !strcmp(name,"mtreal") )
-        return( &mtreal );
+    if( !strcmp(name,"mtqreal") )
+        return( &mtqreal );
     if( !strcmp(name,"theta") )
         return( theta );
     if( !strcmp(name,"gamma") )
@@ -353,9 +353,9 @@ real* defaultModel::setLabels(char *name)
     if( !strcmp(name,"w0") )
 	return( &w0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+    return( (qreal*)(&tau) );
     if( !strcmp(name,"output") )
-	return( (real*)(&output) );
+    return( (qreal*)(&output) );
     return( NULL );
 }
 
@@ -368,7 +368,7 @@ real* defaultModel::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::setTheta(real *newTheta)
+void defaultModel::setTheta(qreal *newTheta)
 {
     for(int i=0;i<tau+2;i++) 
         theta[i]=newTheta[i];
@@ -383,7 +383,7 @@ void defaultModel::setTheta(real *newTheta)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::getTheta(real* newTheta)
+void defaultModel::getTheta(qreal* newTheta)
 {
     for(int i=0;i<tau+2;i++) 
         newTheta[i]=theta[i];
@@ -393,37 +393,37 @@ void defaultModel::getTheta(real* newTheta)
 /*                                                                            */
 /* Class name:      defaultModel                                              */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-real* defaultModel::sendModelVar()
+qreal* defaultModel::sendModelVar()
 {
-    return &wtreal;
+    return &wtqreal;
 }
 
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      defaultModel                                              */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::sendStateSpace(int &quantity,const real*** stateSpace)
+void defaultModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("defaultModel::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
-    (*stateSpace)[0]=&mtreal;
-    (*stateSpace)[1]=&wtreal;
+    (*stateSpace)[0]=&mtqreal;
+    (*stateSpace)[1]=&wtqreal;
     (*stateSpace)[2]=theta;
 }
     
@@ -447,7 +447,7 @@ void defaultModel::loadParamset(ifstream& inputFile)
 
     if( theta )
 	delete theta;
-    theta = new real[tau+2];
+    theta = new qreal[tau+2];
     if( !theta )
 	fatalError("defaultModel::loadParamset","Can't create theta vector");
     
@@ -506,12 +506,12 @@ void defaultModel::saveParamsetWithNames(ofstream& outputFile)
 
 void defaultModel::printParamset()
 {
-    cout << A << "\t" << B << "\n";
-    cout << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    cout << tau << "\t" << length << "\n";
-    cout << delta << "\t" << beta << "\n";
-    cout << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    cout << Lmax << "\t" << rho << "\t" << g << "\t" << tax << endl;
+    Log::log() << A << "\t" << B << "\n";
+    Log::log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << delta << "\t" << beta << "\n";
+    Log::log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
+    Log::log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << endl;
 }
 
 /******************************************************************************/
@@ -524,12 +524,12 @@ void defaultModel::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::sendParameters(int& amount,real** parameters)
+void defaultModel::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=17;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("defaultModel::sendParameters",
 		   "Can't create array for parameters");
@@ -561,7 +561,7 @@ void defaultModel::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::receiveParameters(const real* parameters)
+void defaultModel::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];

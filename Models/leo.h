@@ -18,19 +18,19 @@
 
 class leo : public defaultModel {
 protected:
-    real eta;				// weight parameter
-    real zeta;				// weight parameter
+    qreal eta;				// weight parameter
+    qreal zeta;				// weight parameter
     void leoDynamics();			// leos dynamics
 public:
     leo();				// constructor
     void iteration(const long&);	// perform one iteration
-    real* setLabels(char*);
+    qreal* setLabels(char*);
     void loadParamset(ifstream&);	// load parameterset from a file
     void saveParamset(ofstream&);	// write parameterset into a file
     void printParamset();		// print parameterset on the screen
-    void sendParameters(int&,real**);	// write all parameters
+    void sendParameters(int&,qreal**);	// write all parameters
 					// into an array and return the numbers
 					// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 #endif

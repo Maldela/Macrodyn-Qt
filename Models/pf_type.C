@@ -7,7 +7,7 @@
 // Contents:		Class definition of the class rSolow
 //			
 //
-// Author:		Michael Meyer & Stefan Lüke
+// Author:		Michael Meyer & Stefan Lï¿½ke
 // Last modified:	Mon May 11 12:40:17 METDST 1998
 // By:			
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,16 +25,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "pf_type.h"
 
 
-static real pf_ces ( real k, real a, real b, real c, real )
+static qreal pf_ces ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( exp ( log ( a + b * exp(log(k)*c) ) * 1/c) );
   //
   // expression:	[ a + b * k^c ] ^ {1/c}
   // constraints:	c <= 1, c # 0	
 }
 
-static real pf_ces_prime ( real k, real a, real b, real c, real )
+static qreal pf_ces_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( (1/c) * exp ( log ( a + b * exp(log(k)*c) ) * (1/c - 1) ) * \
                              b * c * exp(log(k)*(c-1)) );
   //
@@ -53,7 +54,7 @@ static real pf_ces_prime ( real k, real a, real b, real c, real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_ces2 ( real k, real a, real b, real c, real )
+static qreal pf_ces2 ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( c==0 ? a * exp(log(k)*b) : exp ( log ( a * ( (1-b) + b * exp(log(k)*c) ) ) * 1/c) );
   //
   // expression:	a * [ (1-b) + b * k^c ] ^ {1/c}		c != 0
@@ -61,7 +62,7 @@ static real pf_ces2 ( real k, real a, real b, real c, real )
   // constraints:	c <= 1	
 }
 
-static real pf_ces2_prime ( real k, real a, real b, real c, real )
+static qreal pf_ces2_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( c==0 ? b * a * exp(log(k)*(b-1)) : \
                 (1/c) * exp(log( a * ((1-b) + b * exp(log(k)*c)) ) * (1/c - 1) ) * \
                       a * b * c * exp(log(k)*(c-1)) );
@@ -82,14 +83,14 @@ static real pf_ces2_prime ( real k, real a, real b, real c, real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_leo ( real k, real a, real b, real c, real )
+static qreal pf_leo ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( a / b * ( 1 + c - exp (-b * k) ) );
   //
   // expression:	a/b * ( 1 - e^(-b * k) )
   // constraints:	a,b >= 0
 }
 
-static real pf_leo_prime ( real k, real a, real b, real , real )
+static qreal pf_leo_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a * exp (-b * k) );
   //
   // expression:	a * e^(-b * k)
@@ -107,14 +108,14 @@ static real pf_leo_prime ( real k, real a, real b, real , real )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_cd ( real k, real a, real b, real , real )
+static qreal pf_cd ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a/b * exp( b * log(k) ) );
   //
   // expression:	a/b * e^(b * log(k) )
   // constraints:	a > 0, 0<b<=1
 }
 
-static real pf_cd_prime ( real k, real a, real b, real , real )
+static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( a/k * exp( b * log(k) ) );
   //
   // expression:	a/k * e^(b * log(k) )
@@ -132,13 +133,13 @@ static real pf_cd_prime ( real k, real a, real b, real , real )
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_leontiev ( real k, real a, real b, real c, real )
+static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( a*k<b ? a*k+c : b+c );
   //
   // expression:	min{a*k,b}+c
 }
 
-static real pf_leontiev_prime ( real k, real a, real b, real , real )
+static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 { return ( k<=b/a ? a : 0);
   //
   // expression:	a	k<=b/a
@@ -156,12 +157,12 @@ static real pf_leontiev_prime ( real k, real a, real b, real , real )
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static real pf_app ( real k, real a, real b, real c, real alpha )
+static qreal pf_app ( qreal k, qreal a, qreal b, qreal c, qreal alpha )
 {
  return (a*k+alpha*a*(log((1+exp(-b/(alpha*a)))/(1+exp((1/alpha)*(k-b/a)))))+c);
 }
 
-static real pf_app_prime ( real k, real a, real b, real , real alpha )
+static qreal pf_app_prime ( qreal k, qreal a, qreal b, qreal , qreal alpha )
 {
  return ( a/( 1+exp( (1/alpha)*(k-b/a) ) ) );
 }

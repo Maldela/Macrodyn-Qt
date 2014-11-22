@@ -22,56 +22,67 @@
 
 class dorn: public baseModel {
   protected:
-    real p0,w0,s0,B0,x0,i0,xe0;				                                                            
+    qreal p0,w0,s0,B0,x0,i0,xe0,ie0;
     int tau; 
-    real *p;
-    real pexp_t;                      
-    real Im;      // import            
-    real ytz;     // notional production
-    real ytf;     // production for full employment   
-    real zt;      // labor demand
-    real xt;      // actuell exchange rate
-    real pt;      // goods price
-    real A;       // scaling parameter of the production function
-    real B;       // elasticity of production
-    real wt;      // nominal wage
-    real Lmax;    // constant labor supply
-    real Lt;      // employment
-    real yt;      // production 
-    real tax;     // proportional tax rate
-    real iet;     // expected interest rate
-    real delta;   // discount factor of the utility function
-    real rho;     // parameter of substitution (utility function)
-    real st;      // equilibrium bond price
-    real d;       // interest payment
-    real Bt;      // bonds at the end of period t-1
-    real deltaB;  // new bonds
-    real pe;      // expected goods price 
-    real xtdy;    // goods demanded by the young household 
-    real stv;     // old equilibrium bond price
-    real it;      // interest rate  
-    real g;       // government demand
-    real xet;      // expected exchange rate
-    real fi;      // foreign interest                 
-    real V;
-    real W;
-    real xetv;
-    real gamma; 
-    real kappa;
-    real lambda;
-    real mu;
+    qreal *p;
+    qreal pexp_t;                      
+    qreal Im;      // import            
+    qreal ytz;     // notional production
+    qreal ytf;     // production for full employment
+    qreal ytd;
+    qreal zt;      // labor demand
+    qreal xt;      // actuell exchange rate
+    qreal pt;      // goods price
+    qreal A;       // scaling parameter of the production function
+    qreal B;       // elasticity of production
+    qreal wt;      // nominal wage
+    qreal Lmax;    // constant labor supply
+    qreal Lt;      // employment
+    qreal yt;      // production 
+    qreal tax;     // proportional tax rate
+    qreal iet;     // expected interest rate
+    qreal delta;   // discount factor of the utility function
+    qreal rho;     // parameter of substitution (utility function)
+    qreal st;      // equilibrium bond price
+    qreal d;       // interest payment
+    qreal Bt;      // bonds at the end of period t-1
+    qreal deltaB;  // new bonds
+    qreal pe;      // expected goods price 
+    qreal xtdy;    // goods demanded by the young household 
+    qreal stv;     // old equilibrium bond price
+    qreal it;      // interest rate  
+    qreal g;       // government demand
+    qreal xet;      // expected exchange rate
+    qreal fi;      // foreign interest                 
+    qreal V;
+    qreal W;
+    qreal Pit;
+    qreal Ytnet;
+    qreal Yt;
+    qreal deltayt;
+    qreal xetv;
+    qreal gamma; 
+    qreal kappa;
+    qreal lambda;
+    qreal mu;
                
 public:
     dorn();			       // default constructor
     virtual ~dorn();                   // destructor
-    void pInit(real*);		       
-    real pexpBerechnung(const long);
-    void dynamics(real *,const long);
+    void pInit(qreal*);		       
+    qreal pexpBerechnung(const long);
+    void dynamics(qreal *,const long);
     void labordemand ();
+    void profit();
+    void income();
+    void aggregateDemand();
     void employment();
     void fullProduction();
     void notionalProduction();
     void production();
+    void output();
+    void pBerechnung();
+    void WageAdjustment();
     void newBonds();
     void ExpectedInterestRate();
     void goodsDemand();
@@ -81,18 +92,18 @@ public:
     void loadParamset(ifstream&);	      // load parameterset from a file
     void saveParamset(ofstream&);	      // write parameterset into a file
     void saveParamsetWithNames(ofstream&);    // add parametset to printerfile (so far only for xpm)
-    void receiveParameters(const real*);      // receive parameter values
+    void receiveParameters(const qreal*);      // receive parameter values
     void printParamset();		      // print parameterset on the screen    
     virtual void iteration(const long&);      // perform one iteration 
-    real* setLabels(char*);		      // return a pointer to a variable
+    qreal* setLabels(char*);		      // return a pointer to a variable
 					      // or a parameter specified by its
 					      // name
     void initialize();			      // initialize the model, define
 					      // the initial state
-    void sendStateSpace(int &,const real***); // return pointers to all model
+    void sendStateSpace(int &,const qreal***); // return pointers to all model
 					      // variables and the dimension
 					      // of the model
-    void sendParameters(int&,real**);         // write all parameters
+    void sendParameters(int&,qreal**);         // write all parameters
                                               // into an array and return the numbers
 				              // of parameters
 };

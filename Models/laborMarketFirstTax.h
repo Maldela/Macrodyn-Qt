@@ -19,18 +19,18 @@
 
 class laborMarketFirstTax : public laborMarketFirst {
 protected:
-    real tax;
+    qreal tax;
     void setTax();			// set taxS,taxW by tax
 public:
     void loadParamset(ifstream&);	// load parameterset from a file
     void saveParamset(ofstream&);	// write parameterset into a file
     void saveParamsetWithNames(ofstream&); // add parametset to printerfile (so far only for xpm)
     void printParamset();		// print parameterset on the screen
-    void sendParameters(int&,real**);   // write all parameters into an array
+    void sendParameters(int&,qreal**);   // write all parameters into an array
                                         // and return the numbers of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 
-    real* setLabels(char*);		 // return a pointer to a variable or
+    qreal* setLabels(char*);		 // return a pointer to a variable or
     laborMarketFirstTax();		// constructor
     void iteration(const long&);	// perform one iteration
 };
@@ -53,7 +53,7 @@ private:
     char zvar_expr[256];        // expression which defines a random variable
     rand_var * zvar;            // a random variable    
     char zvar_name[256];        // name of the stochastified parameter
-    real * zvar_ptr;		// pointer to the stochastic parameter
+    qreal * zvar_ptr;		// pointer to the stochastic parameter
     
 public:
     rlaborMarketFirstTax();		// constructor

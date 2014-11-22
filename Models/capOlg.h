@@ -14,23 +14,23 @@
 
 class capOlg : public baseModel {
   protected:
-    real A,B,d;                           // production function parameters
-    real k0,r0;                           // initial values                
-    real wt;                              // real wage
-    real n;      
-    real ymax;                            // maximum capacity output
-    real rho, delta;                      // utility function parameters   
+    qreal A,B,d;                           // production function parameters
+    qreal k0,r0;                           // initial values                
+    qreal wt;                              // qreal wage
+    qreal n;      
+    qreal ymax;                            // maximum capacity output
+    qreal rho, delta;                      // utility function parameters   
     int tau;                              // length of expectations memory
-    real rhoTilda;
-    real rt;		                  // return rate
-    real kt;                              // capital
-    real st;
-    real *rVec;
-    real indivSave;                       // individual savings
+    qreal rhoTilda;
+    qreal rt;		                  // return rate
+    qreal kt;                              // capital
+    qreal st;
+    qreal *rVec;
+    qreal indivSave;                       // individual savings
     
-    real prodFunction(const real&);
-    virtual real expReturnRate(const long);                
-    real savingsFunc(real&);                         
+    qreal prodFunction(const qreal&);
+    virtual qreal expReturnRate(const long);                
+    qreal savingsFunc(qreal&);                         
     void rShift();
 public:
     capOlg();			    // default constructor
@@ -41,39 +41,39 @@ public:
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const long&);    // perform one iteration 
-    real* setLabels(char*);		    // return a pointer to a variable
+    qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
     void initialize();			    // initialize the model, define
 					    // the initial state
-    void rInit(real*);
-    real* sendModelVar();		    // return the main model variable
-    void sendStateSpace(int &,const real***); // return pointers to all model
+    void rInit(qreal*);
+    qreal* sendModelVar();		    // return the main model variable
+    void sendStateSpace(int &,const qreal***); // return pointers to all model
 					    // variables and the dimension
 					    // of the model
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*); // receive parameter values 
+    void receiveParameters(const qreal*); // receive parameter values 
 };
 
 class capOlgAdapt : public capOlg {
 protected:
-    real expectedReturnRate(const long);
-    real oldExpectations;                   // used to save the expected 
+    qreal expectedReturnRate(const long);
+    qreal oldExpectations;                   // used to save the expected 
 				            // return rate for the last period
-    real eta;                               // weight parameter
+    qreal eta;                               // weight parameter
 public:
     capOlgAdapt();                          // default constructor
-    real* setLabels(char*);
+    qreal* setLabels(char*);
     void iteration(const long&);    // perform one iteration 
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 
 
@@ -91,21 +91,21 @@ public:
 
 class capOlgGeoExp : public capOlg {
 protected:
-    real expectedReturnRate(const long);
-    real eta;                               // parameter of the geometric lag
+    qreal expectedReturnRate(const long);
+    qreal eta;                               // parameter of the geometric lag
 				            // distribution
-    real etaTilda;
+    qreal etaTilda;
     void initialize();
 public:
     capOlgGeoExp();                         // default constructor
     void iteration(const long&);    // perform one iteration 
-    real* setLabels(char*);
+    qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
-    void sendParameters(int&,real**); // write all parameters
+    void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values 
 };
 #endif

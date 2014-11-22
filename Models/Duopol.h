@@ -25,46 +25,46 @@
 
 class Duopol : public baseModel {
 protected:
-    real g;			// parameters
-    real tau;			//
-    real B1;			//
-    real B2;			//
-    real eta1;			//
-    real eta2;			//
-    real alpha1;		//
-    real alpha2;		//
-    real lambda1;		//
-    real lambda2;		//
-    real Lmax;			//  
-    real mu;			//
-    real dep;                   //
-    real rho;                   //
-    real delta;			//
-    real cert;                  //
+    qreal g;			// parameters
+    qreal tau;			//
+    qreal B1;			//
+    qreal B2;			//
+    qreal eta1;			//
+    qreal eta2;			//
+    qreal alpha1;		//
+    qreal alpha2;		//
+    qreal lambda1;		//
+    qreal lambda2;		//
+    qreal Lmax;			//  
+    qreal mu;			//
+    qreal dep;                   //
+    qreal rho;                   //
+    qreal delta;			//
+    qreal cert;                  //
     
-    real zeta1;			// state variables (real)
-    real zeta2;
-    real z1;
-    real z2;
-    real m;			//
-    real pi;
+    qreal zeta1;			// state variables (qreal)
+    qreal zeta2;
+    qreal z1;
+    qreal z2;
+    qreal m;			//
+    qreal pi;
     
-    real beta10;		// initial values (nominal)
-    real beta20;
-    real z10;
-    real z20;
-    real M0;			//
-    real w0;
-    real Pi0;
+    qreal beta10;		// initial values (nominal)
+    qreal beta20;
+    qreal z10;
+    qreal z20;
+    qreal M0;			//
+    qreal w0;
+    qreal Pi0;
     
-    real FF(const real L, const int firm);      
-    real Finv(const real y, const int firm); 
-    real nullst(const real gamc, const real alpha, const real eta);   
-    real Gamma(const int firm);		
-    real cpar(const int firm);		
-    real xnot(const int firm);		
-    real rewa(const real x, const int firm);
-    real cprop(const real theta);
+    qreal FF(const qreal L, const int firm);      
+    qreal Finv(const qreal y, const int firm); 
+    qreal nullst(const qreal gamc, const qreal alpha, const qreal eta);   
+    qreal Gamma(const int firm);		
+    qreal cpar(const int firm);		
+    qreal xnot(const int firm);		
+    qreal rewa(const qreal x, const int firm);
+    qreal cprop(const qreal theta);
     
 
 public:
@@ -76,14 +76,14 @@ public:
     virtual void printParamset();
     virtual void initialize();
     virtual void iteration(const long&);
-    virtual real* sendModelVar();
-    virtual real* setLabels(char*);
-    virtual void sendStateSpace(int &,const real***);
-    virtual void sendParameters(int&,real**);   // write all parameters into an 
+    virtual qreal* sendModelVar();
+    virtual qreal* setLabels(char*);
+    virtual void sendStateSpace(int &,const qreal***);
+    virtual void sendParameters(int&,qreal**);   // write all parameters into an 
                                                 // array and return the numbers
 				                // of parameters
 
-    virtual void receiveParameters(const real*);// receive parameter values 
+    virtual void receiveParameters(const qreal*);// receive parameter values 
 };
 
 class Duopol2 : public Duopol {

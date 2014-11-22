@@ -28,20 +28,20 @@
 class Samuelson_basic : public baseModel {
 
 protected:
-	real	m_0;
-	real	v_0;
-	real	m;
-	real	v;
-	real	y1_0;
-	real	y2_0;
-	real	lambda;
-	real	noise;
-	real	v_0noise, v_0prob, v_0max, v_0min;
+    qreal	m_0;
+    qreal	v_0;
+    qreal	m;
+    qreal	v;
+    qreal	y1_0;
+    qreal	y2_0;
+    qreal	lambda;
+    qreal	noise;
+    qreal	v_0noise, v_0prob, v_0max, v_0min;
 	long	myseed;
 	
-	real y;			// state variable
-	real y1;
-	real y2;
+    qreal y;			// state variable
+    qreal y1;
+    qreal y2;
 	distribution	distri;
 
 public:
@@ -53,28 +53,28 @@ public:
     void printParamset();
     virtual void iteration(const long&);
     void initialize();
-    real* sendModelVar();
-    real* setLabels(char*);
-    void sendStateSpace(int &,const real***);
-    void sendParameters(int&,real**); 	// write all parameters
+    qreal* sendModelVar();
+    qreal* setLabels(char*);
+    void sendStateSpace(int &,const qreal***);
+    void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const real*);// receive parameter values 
+    void receiveParameters(const qreal*);// receive parameter values
 };
 
 
 class Samuelson_ar1 : public Samuelson_basic {
 
 protected:
-	real a;
-	real xi;
+    qreal a;
+    qreal xi;
 
 public:
 	void iteration(const long& );
 	void loadParamset(ifstream& );
 	void initialize();
-	real* setLabels(char* label);
+    qreal* setLabels(char* label);
 };
 
 #endif	

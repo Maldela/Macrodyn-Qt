@@ -191,7 +191,7 @@ finanzmarkt_2Dim_1::~finanzmarkt_2Dim_1() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-real* finanzmarkt_2Dim_1::setLabels(char* label)
+qreal* finanzmarkt_2Dim_1::setLabels(char* label)
 {
 	if( !strcmp(label,"R") ) return(&R);
 	
@@ -510,11 +510,11 @@ else {
 // Funktionsname:	sendStateSpace
 // Beschreibung:	return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim_1::sendStateSpace(int &quantity,const real*** stateSpace)
+void finanzmarkt_2Dim_1::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [2]; // 2 asset in Model finanzmarkt_2Dim_1
+    *stateSpace= new const qreal* [2]; // 2 asset in Model finanzmarkt_2Dim_1
     if( !(*stateSpace) )
 	fatalError("finanzmarkt_2Dim_1::sendStateSpace","Speicherfehler");
     quantity=2; // 2 asset in Model finanzmarkt_2Dim_1

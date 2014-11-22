@@ -53,9 +53,9 @@ capOlg::~capOlg()
 /*                                                                            */
 /******************************************************************************/
 
-real capOlg::prodFunction(const real& k)
+qreal capOlg::prodFunction(const qreal& k)
 {
-	real result;
+	qreal result;
 
 	result= A/B * exp( (1-B)*log(k) );              
 	return(result);
@@ -70,7 +70,7 @@ real capOlg::prodFunction(const real& k)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::rInit(real *rVec)
+void capOlg::rInit(qreal *rVec)
 {
     int i;
 
@@ -105,10 +105,10 @@ void capOlg::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real capOlg::expReturnRate(const long t)
+qreal capOlg::expReturnRate(const long t)
 {
     long T,counter;
-    real help=0.0;
+    qreal help=0.0;
     
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ )
@@ -125,10 +125,10 @@ real capOlg::expReturnRate(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-real capOlg::savingsFunc(real& rE)
+qreal capOlg::savingsFunc(qreal& rE)
 {
-    real deltaTerm=exp(1/(1-rho)*log(delta));
-    real rTerm=exp(rho/(1-rho)*log(rE));
+    qreal deltaTerm=exp(1/(1-rho)*log(delta));
+    qreal rTerm=exp(rho/(1-rho)*log(rE));
     
     return( deltaTerm*rTerm/(1+deltaTerm*rTerm) );
 }
@@ -160,8 +160,8 @@ void capOlg::rShift()
 
 void capOlg::iteration(const long& t)
 {
-    real rE;
-    real term;
+    qreal rE;
+    qreal term;
 
     rE=expReturnRate(t);
     wt=prodFunction(kt);
@@ -183,7 +183,7 @@ void capOlg::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* capOlg::setLabels(char *name)
+qreal* capOlg::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -212,7 +212,7 @@ real* capOlg::setLabels(char *name)
     if( !strcmp(name,"r0") )
 	return( &r0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+	return( (qreal*)(&tau) );
     return( NULL );
 }
 
@@ -220,12 +220,12 @@ real* capOlg::setLabels(char *name)
 /*                                                                            */
 /* Class name:      capOlg                                              */
 /* Member function: sendModelVar                                              */
-/* Purpose:         returns a pointer to the real wage, the main model var.   */
+/* Purpose:         returns a pointer to the qreal wage, the main model var.   */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-real* capOlg::sendModelVar()
+qreal* capOlg::sendModelVar()
 {
     return &kt;
 }
@@ -234,17 +234,17 @@ real* capOlg::sendModelVar()
 /*                                                                            */
 /* Class name:      capOlg                                              */
 /* Member function: sendStateSpace                                            */
-/* Purpose:         returns pointers to the real balances and the real wage;  */
+/* Purpose:         returns pointers to the qreal balances and the qreal wage;  */
 /*                  returns the dimension of the system for rho=0             */
 /* Last modified:   24.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::sendStateSpace(int &quantity,const real*** stateSpace)
+void capOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
 	delete *stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("capOlg::sendStateSpace",
 		   "Can't create state space vector");
@@ -271,7 +271,7 @@ void capOlg::loadParamset(ifstream& inputFile)
 
     if( rVec )
 	delete rVec;
-    rVec = new real[tau+2];
+    rVec = new qreal[tau+2];
     if( !rVec )
 	fatalError("capOlg::loadParamset","Can't create r vector");
     
@@ -306,10 +306,10 @@ void capOlg::saveParamset(ofstream& outputFile)
 
 void capOlg::printParamset()
 {
-    cout << A << "\t" << B <<  "\t" << d << "\n";
-    cout << n << "\t" << delta << "\t" << rho << endl;
-    cout << tau << "\t" << length << "\n";
-    cout << k0 << "\t" << r0 << endl;
+    Log::log() << A << "\t" << B <<  "\t" << d << "\n";
+    Log::log() << n << "\t" << delta << "\t" << rho << endl;
+    Log::log() << tau << "\t" << length << "\n";
+    Log::log() << k0 << "\t" << r0 << endl;
 }
 
 /******************************************************************************/
@@ -322,12 +322,12 @@ void capOlg::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::sendParameters(int& amount,real** parameters)
+void capOlg::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=10;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("capOlg::sendParameters",
 		   "Can't create array for parameters");
@@ -352,7 +352,7 @@ void capOlg::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::receiveParameters(const real* parameters)
+void capOlg::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -389,9 +389,9 @@ capOlgAdapt::capOlgAdapt()
 /*                                                                            */
 /******************************************************************************/
 
-real capOlgAdapt::expectedReturnRate(const long)
+qreal capOlgAdapt::expectedReturnRate(const long)
 {
-    real expReturnRate;
+    qreal expReturnRate;
 
     expReturnRate=eta*oldExpectations + (1-eta)*rVec[0];
     oldExpectations=expReturnRate;
@@ -410,8 +410,8 @@ real capOlgAdapt::expectedReturnRate(const long)
 
 void capOlgAdapt::iteration(const long& t)
 {
-    real rE;
-    real term;
+    qreal rE;
+    qreal term;
 
     rE=expReturnRate(t);
     wt=prodFunction(kt);
@@ -433,7 +433,7 @@ void capOlgAdapt::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* capOlgAdapt::setLabels(char *name)
+qreal* capOlgAdapt::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -462,7 +462,7 @@ real* capOlgAdapt::setLabels(char *name)
     if( !strcmp(name,"r0") )
 	return( &r0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+	return( (qreal*)(&tau) );
     if( !strcmp(name,"eta") ) 
 	return( &eta );
 
@@ -487,7 +487,7 @@ void capOlgAdapt::loadParamset(ifstream& inputFile)
 
     if( rVec )
 	delete rVec;
-    rVec = new real[tau+2];
+    rVec = new qreal[tau+2];
     if( !rVec )
 	fatalError("capOlgAdapt::loadParamset","Can't create r vector");
     
@@ -522,10 +522,10 @@ void capOlgAdapt::saveParamset(ofstream& outputFile)
 
 void capOlgAdapt::printParamset()
 {
-    cout << A << "\t" << B <<  "\t" << d << "\n";
-    cout << n << "\t" << delta << "\t" << rho << endl;
-    cout << tau << "\t" << eta << "\t" << length << "\n";
-    cout << k0 << "\t" << r0 << endl;
+    Log::log() << A << "\t" << B <<  "\t" << d << "\n";
+    Log::log() << n << "\t" << delta << "\t" << rho << endl;
+    Log::log() << tau << "\t" << eta << "\t" << length << "\n";
+    Log::log() << k0 << "\t" << r0 << endl;
 }
 
 /******************************************************************************/
@@ -538,12 +538,12 @@ void capOlgAdapt::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::sendParameters(int& amount,real** parameters)
+void capOlgAdapt::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=11;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("capOlg::sendParameters",
 		   "Can't create array for parameters");
@@ -569,7 +569,7 @@ void capOlgAdapt::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::receiveParameters(const real* parameters)
+void capOlgAdapt::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -624,13 +624,13 @@ void capOlgGeoExp::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-real capOlgGeoExp::expectedReturnRate(const long t)
+qreal capOlgGeoExp::expectedReturnRate(const long t)
 {
     long T,counter;
-    real help=0.0;
-    real etaSum=0.0;
-    real exponent=0.0;
-    real logEta=log(etaTilda);
+    qreal help=0.0;
+    qreal etaSum=0.0;
+    qreal exponent=0.0;
+    qreal logEta=log(etaTilda);
 
     T=MIN(t,tau);
     for( counter=0; counter < T; counter++ ) {
@@ -652,8 +652,8 @@ real capOlgGeoExp::expectedReturnRate(const long t)
 
 void capOlgGeoExp::iteration(const long& t)
 {
-    real rE;
-    real term;
+    qreal rE;
+    qreal term;
 
     rE=expReturnRate(t);
     wt=prodFunction(kt);
@@ -675,7 +675,7 @@ void capOlgGeoExp::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-real* capOlgGeoExp::setLabels(char *name)
+qreal* capOlgGeoExp::setLabels(char *name)
 {
     if( !strcmp(name,"xBundle") )
 	return &xBundle;
@@ -704,7 +704,7 @@ real* capOlgGeoExp::setLabels(char *name)
     if( !strcmp(name,"r0") )
 	return( &r0 );
     if( !strcmp(name,"tau") )
-	return( (real*)(&tau) );
+	return( (qreal*)(&tau) );
     if( !strcmp(name,"eta") ) 
 	return( &eta );
 
@@ -729,7 +729,7 @@ void capOlgGeoExp::loadParamset(ifstream& inputFile)
 
     if( rVec )
 	delete rVec;
-    rVec = new real[tau+2];
+    rVec = new qreal[tau+2];
     if( !rVec )
 	fatalError("capOlgGeoExp::loadParamset","Can't create r vector");
     
@@ -764,10 +764,10 @@ void capOlgGeoExp::saveParamset(ofstream& outputFile)
 
 void capOlgGeoExp::printParamset()
 {
-    cout << A << "\t" << B <<  "\t" << d << "\n";
-    cout << n << "\t" << delta << "\t" << rho << endl;
-    cout << tau << "\t" << eta << "\t" << length << "\n";
-    cout << k0 << "\t" << r0 << endl;
+    Log::log() << A << "\t" << B <<  "\t" << d << "\n";
+    Log::log() << n << "\t" << delta << "\t" << rho << endl;
+    Log::log() << tau << "\t" << eta << "\t" << length << "\n";
+    Log::log() << k0 << "\t" << r0 << endl;
 }
 
 /******************************************************************************/
@@ -780,12 +780,12 @@ void capOlgGeoExp::printParamset()
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::sendParameters(int& amount,real** parameters)
+void capOlgGeoExp::sendParameters(int& amount,qreal** parameters)
 {
     if( *parameters )
 	delete *parameters;
     amount=11;
-    *parameters=new real[amount];
+    *parameters=new qreal[amount];
     if( !(*parameters) )
 	fatalError("capOlgGeoExp::sendParameters",
 		   "Can't create array for parameters");
@@ -811,7 +811,7 @@ void capOlgGeoExp::sendParameters(int& amount,real** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::receiveParameters(const real* parameters)
+void capOlgGeoExp::receiveParameters(const qreal* parameters)
 {
     A=parameters[0];
     B=parameters[1];

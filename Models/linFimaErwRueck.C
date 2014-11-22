@@ -29,9 +29,9 @@ linFimaErwRueck::~linFimaErwRueck() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-real* linFimaErwRueck::setLabels(char* label)
+qreal* linFimaErwRueck::setLabels(char* label)
 {
-//	if( !strcmp(label,"intVarName") ) return( (real*)(&intVarName) );
+//	if( !strcmp(label,"intVarName") ) return( (qreal*)(&intVarName) );
 	if( !strcmp(label,"R") ) return(&R);
 	if( !strcmp(label,"x") ) return(&xAll);
 
@@ -126,10 +126,10 @@ void linFimaErwRueck::initialize()
 	b=xAll/((rC/VC)+(rF/VF));
 //	b=((1-r)*VF*xAll)/rF;     // Problem bei rF=0 !!!
 
-cout <<"Ed=" << Ed <<"Vd=" << Vd <<"d=" << d <<endl;
-cout <<"r=" << r << endl;
-cout <<"b=" << b << endl;
-real beta=1.03;real L=2;
+Log::log() <<"Ed=" << Ed <<"Vd=" << Vd <<"d=" << d <<endl;
+Log::log() <<"r=" << r << endl;
+Log::log() <<"b=" << b << endl;
+qreal beta=1.03;qreal L=2;
 printf("THETA=%10.10f %10.10f %10.10f %10.10f %10.10f \n",
 	(beta/(L*R))*rC/(rC+rF), (beta/(L*R))*rC/(rC+rF), ((1-r)/R), 1/R, -b/R );
 
@@ -148,7 +148,7 @@ void linFimaErwRueck::getString(ifstream& inFile,char* dummy) {
 		inFile >> dummy;	
 	}
 }
-real linFimaErwRueck::getReal(ifstream& inFile) {
+qreal linFimaErwRueck::getqreal(ifstream& inFile) {
 	char dummy[1024];
 	inFile >> dummy;
 	while( !strcmp(dummy,"/*") ) {
@@ -186,19 +186,19 @@ void linFimaErwRueck::loadParamset(ifstream& inFile) {
 		DividendenErwartung=bekannt;
 	 else	DividendenErwartung=unbekannt;
 
-	vc=getReal(inFile); // Skalierung der erw. Div.Varianz der C
+	vc=getqreal(inFile); // Skalierung der erw. Div.Varianz der C
 
-	R=getReal(inFile);
+	R=getqreal(inFile);
 
-	rF=getReal(inFile); // Risikotoleranz
-	rC=getReal(inFile);
+	rF=getqreal(inFile); // Risikotoleranz
+	rC=getqreal(inFile);
 
-	eF=getReal(inFile); // Anfangsausstattung
-	eC=getReal(inFile);
+	eF=getqreal(inFile); // Anfangsausstattung
+	eC=getqreal(inFile);
 
-	xAll=getReal(inFile);
+	xAll=getqreal(inFile);
 
-	p0=getReal(inFile);
+	p0=getqreal(inFile);
 	pF0=p0;
 	pC0=p0;	
 
@@ -227,11 +227,11 @@ void linFimaErwRueck::saveParamsetWithNames(ofstream& outputFile)
 // Funktionsname:	sendStateSpace
 // Beschreibung:		return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void linFimaErwRueck::sendStateSpace(int &quantity,const real*** stateSpace)
+void linFimaErwRueck::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [1]; // 1 asset in Model linFimaErwRueck
+    *stateSpace= new const qreal* [1]; // 1 asset in Model linFimaErwRueck
     if( !(*stateSpace) )
 	fatalError("linFimaErwRueck::sendStateSpace","Speicherfehler");
     quantity=1; // 1 asset in Model linFimaErwRueck
@@ -246,7 +246,7 @@ void linFimaErwRueck::iteration(const long& t)
 {
 // Die Prognosen der Chartisten und Fundamentalisten ist extern vorgeschaltet !
 
-real beta=1.03;real L=2;
+qreal beta=1.03;qreal L=2;
 //if(t>1)
 // { pC=(beta/L)*(p+pOld);
 //	  pCperf=(beta/L)*(pPerf+pPerfOld); 
@@ -262,7 +262,7 @@ printf("pCperf=%6.6f \n",pCperf);
 
 // lokale Variablen
 //	int i,j,jj;
-	real pOld2,pPerfOld2;
+	qreal pOld2,pPerfOld2;
 
 // Bestimmung von r,b,a^{-1}VFxAll
 	// r ist konstant
@@ -306,7 +306,7 @@ printf("pCperf=%6.6f \n",pCperf);
 	p=(r*pC+(1-r)*pF+de-b)/R; 
 	pPerf=(r*pCperf+(1-r)*pFperf+de-b)/R; // nur zum Vergleich !!!
 
-//	if(p<0) cout <<"periode="<<t<<" p="<<p<<" !"<<endl;
+//	if(p<0) Log::log() <<"periode="<<t<<" p="<<p<<" !"<<endl;
 
 /*
 printf("Modell: p=%6.6f ",p);
@@ -355,14 +355,14 @@ printf("pCperf=%6.6f \n",pCperf);
 	pDiff=(pPerf-p)/p;
 
 
-//cout << t << " pCperf=" << pCperf << " pC=" << pC ;//<< endl;
-//cout << " p=" << p << " pPerf=" << pPerf << endl;
-//cout << " errvar=" << errvar  << endl;
-//cout << "d=" << d << " Ed=" << Ed << " de=" << de << endl; 
+//Log::log() << t << " pCperf=" << pCperf << " pC=" << pC ;//<< endl;
+//Log::log() << " p=" << p << " pPerf=" << pPerf << endl;
+//Log::log() << " errvar=" << errvar  << endl;
+//Log::log() << "d=" << d << " Ed=" << Ed << " de=" << de << endl; 
 
-//cout << " p=" << p << " pF=" << pF << endl;
-//cout << " xF=" << xF << " xC=" << xC << endl;
-//cout << "\nPeriode=" << t << endl;
+//Log::log() << " p=" << p << " pF=" << pF << endl;
+//Log::log() << " xF=" << xF << " xC=" << xC << endl;
+//Log::log() << "\nPeriode=" << t << endl;
 //printf(" pF=%10.10f Ed=%10.10f\n",pF, Ed);
 //printf("p=%6.6f ",p);
 //printf("pPerf=%6.6f \n\n",pPerf);

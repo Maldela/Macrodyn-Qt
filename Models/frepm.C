@@ -136,7 +136,7 @@ void frepm::loadParamset(ifstream& inFile)
 
 void frepm::initialize()
 {
-	real sum_p=0;
+	qreal sum_p=0;
 
 	V = new matrixDef(N,11);
 	if( !V )
@@ -206,57 +206,57 @@ void frepm::check()
 	flag=1;						// flag==1  =>  everything is ok
 	for (int i=0;i<=N-1;i++) {
 		if ((V->m[i][0]<0) || (V->m[i][0]>1)) {
-			cout << "probability out of range!";
+			Log::log() << "probability out of range!";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][1]<0) || (V->m[i][1]>=1)) {
-			cout << "m1 out of range";
+			Log::log() << "m1 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][2]<0) || (V->m[i][2]>=1)) {
-			cout << "m2 out of range";
+			Log::log() << "m2 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][3]<0) || (V->m[i][3]>=1))  {
-			cout << "c1 out of range";
+			Log::log() << "c1 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][4]<0) || (V->m[i][4]>=1))  {
-			cout << "c2 out of range";
+			Log::log() << "c2 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][5]<0) || (V->m[i][5]>=1))  {
-			cout << "i1 out of range";
+			Log::log() << "i1 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][6]<0) || (V->m[i][6]>=1))  {
-			cout << "i2 out of range";
+			Log::log() << "i2 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][7]<0) {
-			cout << "m01 out of range";
+			Log::log() << "m01 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][8]<0) {
-			cout << "m02 out of range";
+			Log::log() << "m02 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][9]<0) {
-			cout << "i01 out of range";
+			Log::log() << "i01 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][10]<0) {
-			cout << "i02 out of range";
+			Log::log() << "i02 out of range";
 			flag=0;
 			break;
 		}
@@ -276,7 +276,7 @@ void frepm::check()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* frepm::setLabels(char* label)
+qreal* frepm::setLabels(char* label)
 {
     if( !strcmp(label,"x01") ) return(&x01);
     if( !strcmp(label,"x02") ) return(&x02);
@@ -413,7 +413,7 @@ real* frepm::setLabels(char* label)
 void frepm::iteration(const long& )
 { 
 if (flag) {					// all values are in range	
-	real sum=V->m[0][0];	// sum is used to find out which intervall was hit
+	qreal sum=V->m[0][0];	// sum is used to find out which intervall was hit
 
 	z = zvar->dice();				// get random number in [0,1]
 	for(int i=0;i<=N-1;i++) {
@@ -533,17 +533,17 @@ void frepm::saveParamset(ofstream& outFile)
 
 void frepm::printParamset()
 {
-    cout << N  << endl;
-    cout << x01 << endl;
-    cout << x02 << endl;
+    Log::log() << N  << endl;
+    Log::log() << x01 << endl;
+    Log::log() << x02 << endl;
 
 	for(int i=0; i<=N-1;i++) {
 		for(int j=0;j<=10;j++) {
-			cout << V->m[i][j] << "\t";
+			Log::log() << V->m[i][j] << "\t";
 		}	
 	}
 
-    cout << length << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -560,11 +560,11 @@ void frepm::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void frepm::sendStateSpace(int &quantity,const real*** stateSpace)
+void frepm::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("frepm::sendStateSpace",
 		   "Can't create state space vector");
@@ -585,13 +585,13 @@ void frepm::sendStateSpace(int &quantity,const real*** stateSpace)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* frepm::sendModelVar(void)
+qreal* frepm::sendModelVar(void)
 { error("macrodyn::frepm::sendModelVar is not implemented");
   return NULL;
 } 
-void frepm::sendParameters(int& ,real** )
+void frepm::sendParameters(int& ,qreal** )
 { error("macrodyn::frepm::sendParameters is not implemented");
 }
-void frepm::receiveParameters(const real* )
+void frepm::receiveParameters(const qreal* )
 { error("macrodyn::frepm::receiveParameters is not implemented");
 } 

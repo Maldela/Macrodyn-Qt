@@ -222,7 +222,7 @@ void finanzmarkt_Jan::loadParamset(ifstream& inFile)
 		for(int j=1;j<2;j++)		//setzen
 			(*Rho[i])(j,j) = (*Rho[i])(0,0);	
 	}
-	for(i=0;i<2;i++)
+    for(int i=0;i<2;i++)
 		inFile >> (*q0)(i,0);		
     inFile >> a1 >> b1 >> c1;	//Parameter fuer die Dreieicksverteilung,
     inFile >> a2 >> b2 >> c2;	//des noise xi(in der Initialisierung wird
@@ -262,7 +262,7 @@ void finanzmarkt_Jan::initialize()
 	sr_F = 0;
 
 	
-	real koeff;
+    qreal koeff;
 	R = 1+r;
 	eta_C = 1-eta_F;
 	e_N = e_N;
@@ -336,24 +336,24 @@ void finanzmarkt_Jan::initialize()
 
 void finanzmarkt_Jan::iteration(const long& t)
 { 	
-
-  Matrix M(1,5,1,5);
-    for (int ii = 1; ii <= 5; ii++) 
-        for (int jj = 1; jj <= 5; jj++) M[ii][jj] = 3.14;
-  Matrix N(1,5,1,5);
-    for (ii = 1; ii <= 5; ii++) 
-        for (int jj = 1; jj <= 5; jj++) N[ii][jj] = 3.14;
-
-
-
-cout << M*N;
-
-	real a_F,a_C;					//gruppenspezifische Risikotoleranz
-	real temp1,temp2;
+//Hä?
+//  Matrix M(1,5,1,5);
+//    for (int ii = 1; ii <= 5; ii++)
+//        for (int jj = 1; jj <= 5; jj++) M[ii][jj] = 3.14;
+//  Matrix N(1,5,1,5);
+//    for (ii = 1; ii <= 5; ii++)
+//        for (int jj = 1; jj <= 5; jj++) N[ii][jj] = 3.14;
 
 
 
-//cout.precision(16);
+//Log::log() << M*N;
+
+    qreal a_F,a_C;					//gruppenspezifische Risikotoleranz
+    qreal temp1,temp2;
+
+
+
+//Log::log().precision(16);
 //Abspeichern von Werten aus der Vorperiode 
 //(für die Berechnung der Portefeuillerenditen)
 	(*p_old) = (*p);
@@ -488,15 +488,15 @@ cout << M*N;
 	rend_N=(wealth_N/e_N)+(R-1);
 
 //mean and standard deviation of return der Fundamentalisten
-	mu_F = (1/real(t+1)) * (rend_F + (t*mu_F));
-	temp1 = ((rend_F - mu_F)*(rend_F - mu_F))/real(t+1);
-	temp2 = (t/real(t+1)) * sigma_F*sigma_F;
+    mu_F = (1/qreal(t+1)) * (rend_F + (t*mu_F));
+    temp1 = ((rend_F - mu_F)*(rend_F - mu_F))/qreal(t+1);
+    temp2 = (t/qreal(t+1)) * sigma_F*sigma_F;
 	sigma_F = sqrt(temp1 + temp2);
 
 //mean and standard deviation of return der Noise-Trader
-	mu_N = (1/real(t+1)) * (rend_N + t*mu_N);
-	temp1 = ((rend_N - mu_N)*(rend_N - mu_N))/real(t+1);
-	temp2 = (t/real(t+1)) * sigma_N*sigma_N;
+    mu_N = (1/qreal(t+1)) * (rend_N + t*mu_N);
+    temp1 = ((rend_N - mu_N)*(rend_N - mu_N))/qreal(t+1);
+    temp2 = (t/qreal(t+1)) * sigma_N*sigma_N;
 	sigma_N = sqrt(temp1 + temp2);
 
 //sharpe ratio Noise-traders und Fundamentalisten
@@ -504,7 +504,7 @@ cout << M*N;
 	sr_F = (mu_F - r)/sigma_F;
 
 //shifting for the next period
-	for (i=1;i<L;i++)
+    for (int i=1;i<L;i++)
 		(*q_MA[L-i]) = (*q_MA[L-1-i]);
 	(*q_MA[0]) = (*q);
 }
@@ -522,7 +522,7 @@ cout << M*N;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-real* finanzmarkt_Jan::setLabels(char* label)
+qreal* finanzmarkt_Jan::setLabels(char* label)
 {
 	if( !strcmp(label,"eta_F") ) return(&eta_F);
 	if( !strcmp(label,"eta_C") ) return(&eta_C);
@@ -575,7 +575,7 @@ void finanzmarkt_Jan::saveParamset(ofstream& outFile)
 	outFile << x_all1 << x_all2;
 	for(int i=0;i<L;i++)
 		outFile << (*Rho[i])(0,0);	
-	for(i=0;i<2;i++)
+    for(int i=0;i<2;i++)
 		outFile << (*q0)(i,0);
 
 	outFile << a1 << b1 << c1;
@@ -603,20 +603,20 @@ void finanzmarkt_Jan::saveParamset(ofstream& outFile)
 void finanzmarkt_Jan::printParamset()
 { 	
 
- 	cout << eta_F << endl;
-    cout <<  alpha_F << alpha_C << endl;
-	cout << r << endl;
-	cout << x_all1 << x_all2 << endl;
+    Log::log() << eta_F << endl;
+    Log::log() <<  alpha_F << alpha_C << endl;
+    Log::log() << r << endl;
+    Log::log() << x_all1 << x_all2 << endl;
 	for(int i=0;i<L;i++)
-		cout << (*Rho[i])(0,0) << endl;	
-	for(i=0;i<2;i++)
-		cout << (*q0)(i,0) << endl;
-	cout << a1 << b1 << c1 << endl;
-	cout << a2 << b2 << c2 << endl;
-   	cout << zetamin1 << zetamax1 << gamma1 << endl;
-   	cout << zetamin2 << zetamax2 << gamma2 << endl;
+        Log::log() << (*Rho[i])(0,0) << endl;
+    for(int i=0;i<2;i++)
+        Log::log() << (*q0)(i,0) << endl;
+    Log::log() << a1 << b1 << c1 << endl;
+    Log::log() << a2 << b2 << c2 << endl;
+    Log::log() << zetamin1 << zetamax1 << gamma1 << endl;
+    Log::log() << zetamin2 << zetamax2 << gamma2 << endl;
 
-	cout << length << endl;
+    Log::log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -633,11 +633,11 @@ void finanzmarkt_Jan::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_Jan::sendStateSpace(int &quantity,const real*** stateSpace)
+void finanzmarkt_Jan::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( stateSpace )
 	delete stateSpace;
-    *stateSpace= new const real* [dimension];
+    *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
 	fatalError("finanzmarkt_Jan::sendStateSpace",
 		   "Can't create state space vector");
@@ -657,13 +657,13 @@ void finanzmarkt_Jan::sendStateSpace(int &quantity,const real*** stateSpace)
 // By:				mhoffman			
 //
 ///////////////////////////////////////////////////////////////////////////////
-real* finanzmarkt_Jan::sendModelVar(void)
+qreal* finanzmarkt_Jan::sendModelVar(void)
 { error("macrodyn::finanzmarkt_Jan::sendModelVar is not implemented");
   return NULL;
 }
-void finanzmarkt_Jan::sendParameters(int& ,real** )
+void finanzmarkt_Jan::sendParameters(int& ,qreal** )
 { error("macrodyn::finanzmarkt_Jan::sendParameters is not implemented");
 }
-void finanzmarkt_Jan::receiveParameters(const real* )
+void finanzmarkt_Jan::receiveParameters(const qreal* )
 { error("macrodyn::finanzmarkt_Jan::receiveParameters is not implemented");
 } 
