@@ -42,13 +42,13 @@ protected:
 
 	qreal get_new_d();		// get new random dividend
 
-	qreal (*_learnAgols) (qreal*,qreal*,int&,long&);
-	qreal (EnRAssH::*learn) (qreal*,qreal*,int&,long&);
-	void learn_init ();
-	qreal  learnAgols (qreal*,qreal*,int&,long&);
-	qreal  seroError (qreal*,qreal*,int&,long&);
-	qreal  constTheta (qreal*,qreal*,int&,long&);
-	qreal  rational (qreal*,qreal*,int&,long&);
+    qreal (*_learnAgols) (qreal*,qreal*,const long&,const long&);
+    qreal (EnRAssH::*learn) (qreal*,qreal*,const long&,const long&);
+    void   learn_init ();
+    qreal  learnAgols (qreal*,qreal*,const long&,const long&);
+    qreal  seroError (qreal*,qreal*,const long&,const long&);
+    qreal  constTheta (qreal*,qreal*,const long&,const long&);
+    qreal  rational (qreal*,qreal*,const long&,const long&);
 
 public:
 

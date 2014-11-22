@@ -108,25 +108,26 @@ qreal EnRAssH::get_new_d()
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-static qreal last_k(qreal *y, qreal *,int &k,long&) {
+static qreal last_k(qreal *y, qreal *, const long &k, const long&) {
 	return ( y[k-1] );
 }
-static qreal diff_k(qreal *y, qreal *,int &k,long&) {
+static qreal diff_k(qreal *y, qreal *,const long &k, const long&) {
 	return ( y[0]+(y[0]-y[k-1]) );
 }
-static qreal ma_k(qreal *y, qreal *,int &k,long&) {
+static qreal ma_k(qreal *y, qreal *,const long &k, const long&) {
 	qreal	value=0;
 	for (int count=0;count<k;count++) value+=y[count];
 	return ( value/k );
 }
-static qreal ols_k(qreal *y, qreal *,long &k,long) {
+static qreal ols_k(qreal *y, qreal *,const long &k, const long&) {
 	qreal	a,b;
 	qreal	x_=0;
 	qreal	x2_=0;
 	qreal	xy_=0;
 	qreal	y_=0;
 	qreal	term;
-	for (int count=0;count<k;count++) {
+    long count;
+    for (count=0;count<k;count++) {
 		y_+=y[count];
 		x_+=count;
 		x2_+=(count*count);
@@ -144,43 +145,42 @@ static qreal ols_k(qreal *y, qreal *,long &k,long) {
 	a=y_-b*x_;
 //Log::log() << " a=" << a << " b=" << b << " count=" << count << endl;
 
-    //Hä? return ( a+b*count );
-    return a+b;
+    return ( a+b*count );
 }
-static qreal ols(qreal *y, qreal *,int &,long &t) {
+static qreal ols(qreal *y, qreal *,const long&, const long& t) {
 
 //Log::log() << "t=" << t << " " << ols_k(y,NULL,t,0);
 	if(t<2) return(y[0]);
 	 else return ( ols_k(y,NULL,t,0) );
 }
 
-qreal  EnRAssH::learnAgols(qreal *y,qreal *w,int &i,long &t) {
+qreal  EnRAssH::learnAgols(qreal *y,qreal *w,const long &i,const long &t) {
 	return ( _learnAgols(y,w,i,t) );
 }
-qreal  EnRAssH::seroError(qreal *, qreal *,int &,long&) {
+qreal  EnRAssH::seroError(qreal *, qreal *,const long&, const long&) {
 	return (thetaE);
 }
-qreal  EnRAssH::constTheta(qreal *, qreal *,int &,long&) {
+qreal  EnRAssH::constTheta(qreal *, qreal *,const long&,const long&) {
 	return (theta0);
 }
-qreal  EnRAssH::rational(qreal *, qreal *,int &,long&) {
+qreal  EnRAssH::rational(qreal *, qreal *,const long&,const long&) {
 	return ((R*thetaOld-dmid)/(1-((alpha*x_/N)*(R*thetaOld-dmid))));
 }
 //	theta = pOld + 0.5 * (pOld-thetaOld) ;			// lernen
 
 void EnRAssH::learn_init () {
-//Hä?
-//	if (strcmp(learntype,"seroError")==0) learn=seroError;
-//	else if (strcmp(learntype,"constTheta")==0) learn=constTheta;
-//	else if (strcmp(learntype,"rational")==0) learn=rational;
 
-//	else if (strcmp(learntype,"last_k")==0) {learn=learnAgols;_learnAgols=last_k;}
-//	else if (strcmp(learntype,"diff_k")==0) {learn=learnAgols;_learnAgols=diff_k;}
-//	else if (strcmp(learntype,"ma_k")==0) {learn=learnAgols;_learnAgols=ma_k;}
-//	else if (strcmp(learntype,"ols_k")==0) {learn=learnAgols;_learnAgols=ols_k;}
-//	else if (strcmp(learntype,"ols")==0) {learn=learnAgols;_learnAgols=ols;}
+    if (strcmp(learntype,"seroError")==0) learn=&EnRAssH::seroError;
+    else if (strcmp(learntype,"constTheta")==0) learn=&EnRAssH::constTheta;
+    else if (strcmp(learntype,"rational")==0) learn=&EnRAssH::rational;
 
-//	else error("macrodyn::EnRAssH::learn_init: no learn type %s", learntype);
+    else if (strcmp(learntype,"last_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=last_k;}
+    else if (strcmp(learntype,"diff_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=diff_k;}
+    else if (strcmp(learntype,"ma_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=ma_k;}
+    else if (strcmp(learntype,"ols_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=ols_k;}
+    else if (strcmp(learntype,"ols")==0) {learn=&EnRAssH::learnAgols;_learnAgols=ols;}
+
+    else error("macrodyn::EnRAssH::learn_init: no learn type %s", learntype);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -330,8 +330,7 @@ void EnRAssH::iteration(const long& t)
 	qreal	term2 = term*term;
 	thetaE = sqrt( (N*dmid)/Ralphax + term2 ) - term;
 
-//Hä?
-//	theta = learn(pPtr,thetaPtr,mem,t);
+    theta = (this->*learn)(pPtr,thetaPtr,mem,t);
 	
 //Log::log()  << "\n time=" << t << " thetaE="<< thetaE << " theta="<< theta;
 	if (theta < 0) theta=0;	// billiger als geschenkt geht nicht

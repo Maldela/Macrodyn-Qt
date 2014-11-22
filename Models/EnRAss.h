@@ -37,19 +37,19 @@ protected:
 	qreal	MEP;			// 
 	qreal	eps,epsmid,avEps,relEps,avRelEps;// error function
 	char	learntype[32];		// Name of update function
-	int	mem;			// Memory length
+    long	mem;			// Memory length
 
 	rand_var * zvar;		// ptr random function   
 
 	qreal get_new_d();		// get new random dividend
 
-	qreal (*_learnAgols) (qreal*,qreal*,int&,long&);
-    qreal (EnRAss::*learn) (qreal*,qreal*,int&,long&);
-	void learn_init ();
-	qreal  learnAgols (qreal*,qreal*,int&,long&);
-	qreal  seroError (qreal*,qreal*,int&,long&);
-	qreal  constTheta (qreal*,qreal*,int&,long&);
-	qreal  rational (qreal*,qreal*,int&,long&);
+    qreal (*_learnAgols) (qreal*,qreal*,const long&,const long&);
+    qreal (EnRAss::*learn) (qreal*,qreal*,const long&,const long&);
+    void   learn_init ();
+    qreal  learnAgols (qreal*,qreal*,const long&,const long&);
+    qreal  seroError (qreal*,qreal*,const long&,const long&);
+    qreal  constTheta (qreal*,qreal*,const long&,const long&);
+    qreal  rational (qreal*,qreal*,const long&,const long&);
 
 public:
 

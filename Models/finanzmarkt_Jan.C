@@ -336,7 +336,7 @@ void finanzmarkt_Jan::initialize()
 
 void finanzmarkt_Jan::iteration(const long& t)
 { 	
-//Hä?
+
 //  Matrix M(1,5,1,5);
 //    for (int ii = 1; ii <= 5; ii++)
 //        for (int jj = 1; jj <= 5; jj++) M[ii][jj] = 3.14;
