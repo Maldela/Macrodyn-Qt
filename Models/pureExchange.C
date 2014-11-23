@@ -26,7 +26,7 @@ static qreal sf_1 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal rho)
 
     qreal theta_aut = delta*w1/w2;
 
-	if (0 <= theta_e < theta_aut)
+    if (0 <= theta_e && theta_e < theta_aut)
 		return 1/delta*(w1 - theta_e*w2);
 	else return 0;
 }

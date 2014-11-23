@@ -672,7 +672,7 @@ void finanzmarkt_JanE::iteration(const long& t)
     *temp1_2_2 = (*V_C) * (*temp4_2_2);
 //	delete temp2_2_2;
     *temp2_2_2 = temp1_2_2->inverse();
-    /*delete*/ A_C;
+//  delete A_C;
     *A_C = temp2_2_2->multiplyScalar(a_C);
 
 	//New: Noisetraders werden wie Investorgruppe behandelt

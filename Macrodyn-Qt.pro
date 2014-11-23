@@ -2,6 +2,11 @@ TEMPLATE = app
 
 QT += qml quick widgets
 
+QMAKE_CXXFLAGS += -Wno-unused-parameter \
+                  -Wno-unused-but-set-variable \
+                  -Wno-unused-variable \
+                  -Wno-unused-function
+
 SOURCES += main.cpp \
     Models/adaptExp.C \
     Models/affine1.C \

@@ -16,8 +16,8 @@
 // Funktionsname:	finanzmarkt_gruppenswitch
 // Beschreibung:	constructor
 ///////////////////////////////////////////////////////////////////////////////
-finanzmarkt_gruppenswitch::finanzmarkt_gruppenswitch() : baseModel(2) {
-
+finanzmarkt_gruppenswitch::finanzmarkt_gruppenswitch() : baseModel(2), epsilon(1e-25)
+{
 	A = new matrixDef(2,2);
 	if( !A )
 		fatalError("matrixDef::matrixDef","Can't allocate memory");

@@ -25,9 +25,8 @@ class finanzmarkt_gruppenswitch : public baseModel {
 protected:
 	 
 	 
-    const qreal  epsilon=1e-25;              //Gruppenswitchkonstante
+    const qreal epsilon;              //Gruppenswitchkonstante
 	 			
-	
     qreal R;
     qreal alphaf, alphan, ef, en;
     qreal mu, mu0;			//Gruppenanteilsvariable

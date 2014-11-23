@@ -92,8 +92,8 @@ qreal milano3::Zins_3(const qreal& r1, const qreal& r2)
 
 
   qreal left(0.001);
-     int i; 
-  for (int i=1; i<= (int) pow(10,(double)iter_prec); ++i)
+  int i;
+  for (i=1; i<= (int) pow(10,(double)iter_prec); ++i)
     {
       if ( zins_3_function(i*pol/pow(10.0,(double) iter_prec) )>0 ) break;
     }
