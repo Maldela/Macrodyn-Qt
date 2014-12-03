@@ -28,8 +28,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, printer* const outDev)
-          :geometricJob(bMod,axes,graph,outDev),
+         MacrodynGraphicsItem* const graph)
+          :geometricJob(bMod,axes,graph),
            h(axes.min[1],axes.max[1],axes.res[1])
 {
 //    if( fileName )
@@ -84,14 +84,14 @@ void d_bif2D::simulation()
     double  h_max;
     int  color=0;
 
-//  cout << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
-//  cout << "yparam" << "\t"<< ymin << "\t"<< ymax << endl; 
+//  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
+//  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << endl;
 
 //initialize output information
   int jobtag_dummy = 31;
   int resolution_y = h.get_x_res();
 
-  cout << "resolution: [" << x_res << "," << resolution_y <<"]\n";
+  log() << "resolution: [" << x_res << "," << resolution_y <<"]\n";
   outFile.write((char*)&jobtag_dummy, 4);
   outFile.write((char*)&x_res, 4);
   outFile.write((char*)&resolution_y, 4);
@@ -122,8 +122,8 @@ void d_bif2D::simulation()
     }
     
     h_max = double (h.get_max_hits());
-	cout << "h_max = " << h_max << endl;
-	cout << "color step every " << h_max/94 << " hits in cell" << endl;
+    log() << "h_max = " << h_max << endl;
+    log() << "color step every " << h_max/94 << " hits in cell" << endl;
     if( h_max == 0 ) {
       h_max = 1;
     }
@@ -140,7 +140,7 @@ void d_bif2D::simulation()
 	hitshilf=h(k);
 	hitpoint = hitshilf/h_max;
 	if (hitshilf==h_max)
-	cout << "maximal hitcounts at: " << dy << endl;
+    log() << "maximal hitcounts at: " << dy << endl;
 	if(hitpoint>0){ 
 		color=int(ceil(hitpoint*dummy2));
 //	    outFile << *xParam << "\t" << *yParam << "\t" << hitpoint << endl; 		
@@ -153,14 +153,11 @@ void d_bif2D::simulation()
       if( screenGraphics ) {
         screenGraphics->setPoint(dummy_x,dy,color); 
       }
-      if( printDev ) {
-        printDev->setBits(dummy_x,dy,color);
-      }
 
     //outFile << *xParam << "\t" << dy << "\t" << hitpoint << endl; 
 //    outFile << hitpoint << "\t";
 
-//      cout << *xParam << "\t" << dy << "\t" << h(k) << endl;
+//      log() << *xParam << "\t" << dy << "\t" << h(k) << endl;
     }
     h.reset();
 //	    outFile << endl;
@@ -183,8 +180,8 @@ void d_bif2D::simulation()
 ///////////////////////////////////////////////////////////////////////////////
 
 d_bif2D_f2::d_bif2D_f2(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, printer* const outDev)
-          :d_bif2D(bMod,axes,graph,outDev)
+         MacrodynGraphicsItem* const graph)
+          :d_bif2D(bMod,axes,graph)
 {
   length *= 2;
 }
@@ -212,8 +209,8 @@ void d_bif2D_f2::simulation()
     int  h_max;
     int  color;
 
-  cout << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
-  cout << "yparam" << "\t"<< ymin << "\t"<< ymax << endl; 
+  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
+  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << endl;
 
   for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
     *xParam = dummy_x;
@@ -243,11 +240,8 @@ void d_bif2D_f2::simulation()
       if( screenGraphics ) {
         screenGraphics->setPoint(dummy_x,dy,color);
       }
-      if( printDev ) {
-        printDev->setBits(dummy_x,dy,color);
-      }
 
-      cout << dummy_x << "\t" << dy << "\t" << h(k) << endl;
+      log() << dummy_x << "\t" << dy << "\t" << h(k) << endl;
     }
     h.reset();
   }
@@ -267,8 +261,8 @@ void d_bif2D_f2::simulation()
 ///////////////////////////////////////////////////////////////////////////////
 
 d_bif2D_f4::d_bif2D_f4(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, printer* const outDev)
-          :d_bif2D(bMod,axes,graph,outDev)
+         MacrodynGraphicsItem* const graph)
+          :d_bif2D(bMod,axes,graph)
 {
   length *=4;
 }
@@ -296,8 +290,8 @@ void d_bif2D_f4::simulation()
     int  h_max;
     int  color;
 
-  cout << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
-  cout << "yparam" << "\t"<< ymin << "\t"<< ymax << endl; 
+  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
+  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << endl;
 
   for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
     *xParam = dummy_x;
@@ -329,11 +323,8 @@ void d_bif2D_f4::simulation()
       if( screenGraphics ) {
         screenGraphics->setPoint(dummy_x,dy,color);
       }
-      if( printDev ) {
-        printDev->setBits(dummy_x,dy,color);
-      }
 
-      cout << dummy_x << "\t" << dy << "\t" << h(k) << endl;
+      log() << dummy_x << "\t" << dy << "\t" << h(k) << endl;
     }
     h.reset();
   }

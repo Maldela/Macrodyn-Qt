@@ -16,10 +16,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-job::job(baseModel * const bMod, QObject *graph, printer * const outDev)
-    : model(bMod), printDev(outDev)
+job::job(baseModel * const bMod, MacrodynGraphicsItem *graph)
+    : model(bMod),screenGraphics(graph)
 {
-    screenGraphics = qobject_cast<MacrodynGraphicsItem *>(graph);
     length=model->getLength();
     limit=0;
 }
@@ -36,10 +35,9 @@ job::~job()
 /******************************************************************************/
 
 job::job(baseModel * const bMod, const long& len, const long& lim,
-      QObject *graph, printer * const outDev)
-    : model(bMod), length(len),limit(lim),printDev(outDev)
+      MacrodynGraphicsItem *graph)
+    : length(len),limit(lim), model(bMod), screenGraphics(graph)
 {
-    screenGraphics = qobject_cast<MacrodynGraphicsItem *>(graph);
 }
 
 void job::setStepX(const qreal&)

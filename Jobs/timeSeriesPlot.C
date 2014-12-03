@@ -30,11 +30,11 @@ int timeSeriesPlot::pointsize = 1;
 //
 ///////////////////////////////////////////////////////////////////////////////
 timeSeriesPlot::timeSeriesPlot(baseModel* const bMod,char* const label,
-                   MacrodynGraphicsItem* const graph, printer* const outDev,
+                   MacrodynGraphicsItem* const graph,
 			       char* const fileName,int const mp_num,char** const mp_ptr) 
-          :timeSeriesJob(bMod,label,graph,outDev)
+          :timeSeriesJob(bMod,label,graph)
 {
-	cout << "constructing time series plot..."<<std::flush;
+    log() << "constructing time series plot..."<<"\n";
 	qreal xmin, xmax;
     if( fileName )
 	outFile.open(fileName,ios::out);
@@ -49,27 +49,28 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod,char* const label,
       multiplotAdr=new qreal*[multiplot_num];
       if( !(multiplotAdr) ) {
 	cerr << "macrodyn::timeSeriesPlot::timeSeriesPlot  \
-		Can't create array for *multiplot[]"<< endl << std::flush;
+        Can't create array for *multiplot[]"<< endl << "\n";
 	exit(-1);
 	}
 
       multiplotOld=new qreal[multiplot_num];
       if( !(multiplotAdr) ) {
 	cerr << "macrodyn::timeSeriesPlot::timeSeriesPlot  \
-		Can't create array for multiplot[]"<< endl << std::flush;
+        Can't create array for multiplot[]"<< endl << "\n";
 	exit(-1);
 	}
-
+      QList<QString> list;
       for(int j=0;j<multiplot_num;j++) {
         multiplotAdr[j]=model->setLabels(mp_ptr[j]);
+        list << QString(mp_ptr[j]);
       }
 
       if( screenGraphics ) {
-         screenGraphics->draw_mp_names(multiplot_num,mp_ptr);
+         screenGraphics->draw_mp_names(list);
       }
 
     }
-    cout << "finished\n" << std::flush;
+    log() << "finished\n" << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -102,7 +103,7 @@ timeSeriesPlot::~timeSeriesPlot() {
 
 void timeSeriesPlot::simulation()
 {
-	cout << "starting time series simulation...";
+    log() << "starting time series simulation...";
     long t;
     qreal oldX, oldY;
     int j;
@@ -128,16 +129,7 @@ void timeSeriesPlot::simulation()
                }
 	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],40);
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
-	      }
-	      if( printDev ) {
-                if (multiplotAdr) {
-                  for(j=0;j<multiplot_num;j++){
-	             printDev->drawLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],41+j);
-		     printDev->setBigPoint((double)t,*multiplotAdr[j],41+j,pointsize);
-		  }
-                }
-	        printDev->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],40);
-		printDev->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
+
 	      }
 	    outFile << t << "\t" << timeSeriesqreal[t] << endl; 
         }
@@ -148,7 +140,7 @@ void timeSeriesPlot::simulation()
                multiplotOld[j]=*multiplotAdr[j];	    
 	}
     }
-    cout << "finished...\n";
+    log() << "finished...\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -165,9 +157,9 @@ void timeSeriesPlot::simulation()
 
 m_timeSeriesPlot::m_timeSeriesPlot(qreal * ivalues, baseModel* const bMod,
 				   char* const label,
-                       MacrodynGraphicsItem* const graph, printer* const outDev,
+                       MacrodynGraphicsItem* const graph,
 			           char* ) 
-                                  :timeSeriesPlot(bMod,label,graph,outDev)
+                                  :timeSeriesPlot(bMod,label,graph)
 {
   n_i_vals = (int) ivalues[0];	// the first entry denotes the number of values
   ivalues++;
@@ -223,11 +215,7 @@ void m_timeSeriesPlot::simulation()
               if( screenGraphics ) {
 	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
-	      }
-	      if( printDev ) {
-	        printDev->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
-		printDev->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
-	      }
+          }
 //	    }
 	    outFile << t << "\t" << timeSeriesqreal[t] << endl; 
 	    oldX=t;
@@ -252,9 +240,9 @@ void m_timeSeriesPlot::simulation()
 m_timeSeriesPlot_v::m_timeSeriesPlot_v(char* const labelm,
 				   qreal * ivalues, baseModel* const bMod,
 				   char* const label,
-                       MacrodynGraphicsItem* const graph, printer* const outDev,
+                       MacrodynGraphicsItem* const graph,
 			           char* ) 
-                                  :timeSeriesPlot(bMod,label,graph,outDev)
+                                  :timeSeriesPlot(bMod,label,graph)
 {
   n_i_vals = (int) ivalues[0];	// the first entry denotes the number of values
   ivalues++;
@@ -313,11 +301,7 @@ void m_timeSeriesPlot_v::simulation()
               if( screenGraphics ) {
 	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
-	      }
-	      if( printDev ) {
-	        printDev->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
-		printDev->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
-	      }
+          }
 	    outFile << t << "\t" << timeSeriesqreal[t] << endl; 
 	    oldX=t;
 	    oldY=timeSeriesqreal[t];

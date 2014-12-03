@@ -18,8 +18,8 @@
 /******************************************************************************/
 
 geometricJob::geometricJob(baseModel* const bMod,const xyRange& axes,
-                MacrodynGraphicsItem* const graph, printer* const outDev)
-          :job(bMod,graph,outDev), xmin(axes.min[0]), xmax(axes.max[0]),
+                MacrodynGraphicsItem* const graph)
+          :job(bMod,graph), xmin(axes.min[0]), xmax(axes.max[0]),
 	   ymin(axes.min[1]),ymax(axes.max[1])
 {
 //    unsigned entries = (unsigned) (length < 103409 ? (length/2+1) : 103409);
@@ -28,21 +28,15 @@ geometricJob::geometricJob(baseModel* const bMod,const xyRange& axes,
     unsigned resX;
     unsigned resY;
 
-    if( outDev ) {
-	resX=5400;
-	resY=3600;
-    }
-    else {
 	resX=axes.res[0];
 	resY=axes.res[1];
-    }
     
-    strcpy(xLabel,axes.label[0]);
+    strcpy(xLabel,axes.label[0].toLatin1().data());
     xParam=model->setLabels(xLabel);
     if( !xParam )
 	fatalError("geometricJob::geometricJob  Can not find x label ",xLabel);
 
-    strcpy(yLabel,axes.label[1]);
+    strcpy(yLabel,axes.label[1].toLatin1().data());
     yParam=model->setLabels(yLabel);
     if( !yParam )
 	fatalError("geometricJob::geometricJob  Can not find y label ",yLabel);

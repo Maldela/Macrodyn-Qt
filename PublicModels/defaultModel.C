@@ -416,11 +416,11 @@ qreal* defaultModel::sendModelVar()
 void defaultModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
     if( *stateSpace )
-	delete *stateSpace;
+    delete *stateSpace;
     *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
-	fatalError("defaultModel::sendStateSpace",
-		   "Can't create state space vector");
+    fatalError("defaultModel::sendStateSpace",
+           "Can't create state space vector");
     quantity=dimension;
     (*stateSpace)[0]=&mtqreal;
     (*stateSpace)[1]=&wtqreal;

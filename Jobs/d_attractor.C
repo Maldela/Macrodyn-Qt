@@ -26,8 +26,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 d_attractor::d_attractor(baseModel* const bMod,const xyRange& axes,
-                  MacrodynGraphicsItem* const graph, printer* const outDev)
-            :geometricJob(bMod,axes,graph,outDev),
+                  MacrodynGraphicsItem* const graph)
+            :geometricJob(bMod,axes,graph),
              h(axes.min[0],axes.max[0],axes.res[0],
                axes.min[1],axes.max[1],axes.res[1])
 {
@@ -67,7 +67,7 @@ void d_attractor::simulation()
   int jobtag_dummy = 61;
   int resolution_x = h.get_x_res();
   int resolution_y = h.get_y_res();
-  cout << "resolution: [" << resolution_x << "," << resolution_y <<"]\n";
+  log() << "resolution: [" << resolution_x << "," << resolution_y <<"]\n";
   outFile.write((char*)&jobtag_dummy, 4);
   outFile.write((char*)&resolution_x, 4);
   outFile.write((char*)&resolution_y, 4);
@@ -92,8 +92,8 @@ void d_attractor::simulation()
   }
 
   h_max = double (h.get_max_hits());
-  cout << "h_max = " << h_max << endl;
-  cout << "color step every " << h_max/94 << " hits in cell" << endl;
+  log() << "h_max = " << h_max << endl;
+  log() << "color step every " << h_max/94 << " hits in cell" << endl;
   if( h_max == 0 ) {
     h_max = 1;
   }
@@ -111,7 +111,7 @@ void d_attractor::simulation()
 	hitshilf=h(k,l);
 	hitpoint = hitshilf / h_max;
 	if (hitshilf==h_max)
-	cout << "maximal hitcounts at: "<< dx << " , " << dy << endl;
+    log() << "maximal hitcounts at: "<< dx << " , " << dy << endl;
 
 	if(hitpoint>0){
 /*		for(int i=0;i<=dummy2;i++){
@@ -123,7 +123,7 @@ void d_attractor::simulation()
 //	    outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 
 	} else color=0;
 	
-	if ( color>94 ) cout << "warning: color > 94\n";
+    if ( color>94 ) log() << "warning: color > 94\n";
 	 //   outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 	
 	outFile << char( color );
 /*Ende neu*/
@@ -132,9 +132,6 @@ void d_attractor::simulation()
 
      if( screenGraphics ) {
         screenGraphics->setPoint(dx,dy,color);
-      }
-      if( printDev ) {
-        printDev->setBits(dx,dy,color);
       }
     }
     //outFile << endl;

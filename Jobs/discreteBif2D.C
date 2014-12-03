@@ -17,8 +17,8 @@
 /******************************************************************************/
 
 discreteBif2D::discreteBif2D(baseModel* const bMod, const xyRange& axes, 
-                 MacrodynGraphicsItem* const graph, printer* const outDev)
-    :geometricJob(bMod,axes,graph,outDev)
+                 MacrodynGraphicsItem* const graph)
+    :geometricJob(bMod,axes,graph)
 {
     length=model->getLength();
     limit=(long)(0.66*length);			// 66% are thrown away
@@ -56,9 +56,7 @@ void discreteBif2D::simulation()
 		    if( nextX > xmax )
 			nextX=xmax;
 		    screenGraphics->drawLine((qreal)*xInt,*yParam,
-									 nextX,*yParam,6);
-			if( printDev )
-			  printDev->setBits(*xParam,*yParam);
+                                     nextX,*yParam,6);
 	    
 	
 		}

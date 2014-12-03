@@ -24,8 +24,7 @@
 
 class cellBif2D : public bif2D {
   public:
-    cellBif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    cellBif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

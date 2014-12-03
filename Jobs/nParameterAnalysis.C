@@ -22,29 +22,20 @@ nParameterAnalysis::nParameterAnalysis(baseModel* const bMod,
 				       const xyRange& stateSpaceLim, 
 				       const xyRange& xDef, 
 				       const xyRange& yDef, 
-                       MacrodynGraphicsItem* const graph,
-				       printer* const outDev)
-    :parameterSpace(bMod,axes,stateSpaceLim,graph,outDev),
+                       MacrodynGraphicsItem* const graph)
+    :parameterSpace(bMod,axes,stateSpaceLim,graph),
      effectiveX(xDef),effectiveY(yDef)
 {
-    xVars=new qreal* [effectiveX.dimension];
-    if( !xVars )
-	fatalError("nParameterAnalysis::nParameterAnalysis",
-		   "Can't create vector of x-variables");
     for(short i=0;i<effectiveX.dimension;i++) {
-	xVars[i]=model->setLabels(effectiveX.label[i]);
+    xVars[i]=*model->setLabels(effectiveX.label[i].toLatin1().data());
                                           // get pointer to the model var.
 	if( !xVars[i] )
 	    fatalError("nParameterAnalysis::nParameterAnalysis",
 		       "illegal x parameter specified");
     }
-    
-    yVars=new qreal* [effectiveY.dimension];
-    if( !yVars )
-	fatalError("nParameterAnalysis::nParameterAnalysis",
-		   "Can't create vector of x-variables");
+
     for(int i=0;i<effectiveY.dimension;i++) {
-	yVars[i]=model->setLabels(effectiveY.label[i]);
+    yVars[i]=*model->setLabels(effectiveY.label[i].toLatin1().data());
                                           // get pointer to the model var.
 	if( !yVars[i] )
 	    fatalError("nParameterAnalysis::nParameterAnalysis",
@@ -63,10 +54,6 @@ nParameterAnalysis::nParameterAnalysis(baseModel* const bMod,
 
 nParameterAnalysis::~nParameterAnalysis()
 {
-    if( xVars )
-	delete xVars;
-    if( yVars )
-	delete yVars;
 }
 
 /******************************************************************************/
@@ -82,7 +69,7 @@ void nParameterAnalysis::setXParams(const qreal& newX)
 {
     static qreal divisor=xmax-xmin;
     for(short i=0;i<effectiveX.dimension;i++)
-	*xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
+    xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
 	    (effectiveX.max[i]-effectiveX.min[i]);
 }
 /******************************************************************************/
@@ -99,7 +86,7 @@ void nParameterAnalysis::setYParams(const qreal& newY)
     static qreal divisor=ymax-ymin;
 
     for(short i=0;i<effectiveY.dimension;i++)
-	*yVars[i]=effectiveY.min[i]+(newY-ymin)/divisor*
+    yVars[i]=effectiveY.min[i]+(newY-ymin)/divisor*
 	    (effectiveY.max[i]-effectiveY.min[i]);
 }
 
@@ -132,33 +119,32 @@ void nParameterAnalysis::simulation()
 	    setYParams(y);
 	    model->initialize();
 	    for(t=0;t<length;t++) {
-		model->iteration(t+1);
-		if( t > limit ) {
-		    if( hash->storePoint(stateVars) ) {
-			    hash->resetHashTable();
-			    order=-1;    // out of domain, leave it blue
-			    break;
-		    }
-		    if( !(t % tDiv) || (t==(length-1)) ) 
-			if ( (order=hash->orderOfCycle()) ) {
-			    hash->resetHashTable();
-			    break;	// a cycle has been detected
-					// so the analysis of this parameterset
-					// can be terminated and the hash table
-					// should be initialized for the next 
-					// parameterset
-			}
-		        else
-			    hash->resetHashTable();
-					// a new analysis has to be done
-					// clean the hash table for the new
-					// simulation results
-		}
+            model->iteration(t+1);
+            if( t > limit ) {
+                if( hash->storePoint(stateVars) ) {
+                    hash->resetHashTable();
+                    order=-1;    // out of domain, leave it blue
+                    break;
+                }
+                if( !(t % tDiv) || (t==(length-1)) ) {
+                    if ( (order=hash->orderOfCycle()) ) {
+                        hash->resetHashTable();
+                        break;	// a cycle has been detected
+                            // so the analysis of this parameterset
+                            // can be terminated and the hash table
+                            // should be initialized for the next
+                            // parameterset
+                    }
+                    else
+                    hash->resetHashTable();
+                        // a new analysis has to be done
+                        // clean the hash table for the new
+                        // simulation results
+                }
+            }
 	    }
 	    if( screenGraphics ) 
-		screenGraphics->setPoint(x,y,order+1);
-	    if( printDev )
-		printDev->setBits(x,y,order+1);
+        screenGraphics->setPoint(x,y,order+1);
 	}
     }
 }

@@ -10,7 +10,6 @@
 #include "job.h"
 #include "../Models/baseModel.h"
 #include "../Graphics/macrodyngraphicsitem.h"
-#include "../Printer/printer.h"
 #include "../MDMap.h"
 
 /******************************************************************************/
@@ -37,7 +36,7 @@ class mapping : public job
 	char* mother;
 	
   public:
-    mapping(baseModel * const, MacrodynGraphicsItem* const=NULL, printer * const=NULL,
+    mapping(baseModel * const, MacrodynGraphicsItem* const=NULL,
     	double min=0, double max=0, int res=0, int dim=0, int tlim=0, char*
 	filename=NULL, char* mothermap=NULL);
     virtual ~mapping();

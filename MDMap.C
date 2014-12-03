@@ -38,7 +38,7 @@ md_Map::md_Map(double min,double max,int res,int dim,int tlim
 	
 	daugther = new char*[resolution];
 	if ( !daugther ) {
-		cout << "md_Map::md_Map can't allocate memory\n" << std::flush;
+		log() << "md_Map::md_Map can't allocate memory\n" << "\n";
 		exit (-1);
 	}
 	for (int i=0;i<resolution;i++)
@@ -46,7 +46,7 @@ md_Map::md_Map(double min,double max,int res,int dim,int tlim
 		
 	value_field = new double[d];
 	if ( !value_field ) {
-		cout << "md_Map::md_Map can't allocate memory\n" << std::flush;
+		log() << "md_Map::md_Map can't allocate memory\n" << "\n";
 		exit (-1);
 	} else { for (int j=0;j<d;j++)
 			value_field[j]=0;
@@ -70,7 +70,7 @@ md_Map::md_Map(char* filename)
 	std::fstream inFile;
 	inFile.open(filename, ios::in|ios::binary);
 	if ( inFile.bad() ) {
-		cout << "md_Map::md_Map input file bad...\n" << std::flush;
+		log() << "md_Map::md_Map input file bad...\n" << "\n";
 		exit (-1);
 	}
 	
@@ -89,7 +89,7 @@ md_Map::md_Map(char* filename)
 	
 	value_field = new double[long(resolution)*long(model_dim)*time_limit];
 	if ( !value_field ) 
-		cout << "mdMap::mdMap can't allocate memory\n" << std::flush;
+		log() << "mdMap::mdMap can't allocate memory\n" << "\n";
 /*	for (i=0;i<resolution;i++){
 		values[i] = new const double* [model_dim];
 		for (int j=0;j<model_dim;j++){
@@ -136,19 +136,19 @@ md_Map::~md_Map()
 
 void md_Map::give_attributes()
 {
-	cout << "l_min: " << l_min << endl;
-	cout << "l_max: " << l_max << endl;
-	cout << "resolution: " << resolution << endl;
-	cout << "model_dim: " << model_dim << endl;
-	cout << "time_limit: " << time_limit << endl;
-	cout << "name: " << name << endl;
+	log() << "l_min: " << l_min << endl;
+	log() << "l_max: " << l_max << endl;
+	log() << "resolution: " << resolution << endl;
+	log() << "model_dim: " << model_dim << endl;
+	log() << "time_limit: " << time_limit << endl;
+	log() << "name: " << name << endl;
 	for (int i=0; i<resolution ; i++)
 		if ( daugther[i] ) 
-			cout << "daugther["<<i<<"]: "<<daugther[i]<<endl;
+			log() << "daugther["<<i<<"]: "<<daugther[i]<<endl;
 	if ( mother )
-		cout << "mother: " << mother << endl;
-	cout << "values: \n";
-	for (i=0; i<resolution*model_dim*time_limit;i++)
-		cout << value_field[i] <<  " ";
-	cout << endl;
+		log() << "mother: " << mother << endl;
+	log() << "values: \n";
+    for (int i=0; i<resolution*model_dim*time_limit;i++)
+		log() << value_field[i] <<  " ";
+	log() << endl;
 }

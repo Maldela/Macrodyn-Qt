@@ -34,8 +34,7 @@ class color_plot : public geometricJob {
 	int psize;
 
   public:
-    color_plot(int, baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	      printer* const=NULL);
+    color_plot(int, baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

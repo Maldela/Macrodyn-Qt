@@ -8,6 +8,7 @@
 /******************************************************************************/
 
 #include "hashTab.h"
+#include "error.h"
 #include <iostream>
 #include <stdlib.h>
 #include <cmath>
@@ -96,10 +97,10 @@ hashTable::~hashTable()
 /*                                                                            */
 /******************************************************************************/
 
-real hashTable::whichCell(const real** actualState) const
+qreal hashTable::whichCell(const qreal** actualState) const
 {
-    real cell=0.0;
-    static real logBase=log(double(base));
+    qreal cell=0.0;
+    static qreal logBase=log(double(base));
     
     for(int i=0;i<domain.dimension;i++) {
 	discreteState[i]=(unsigned) ( (domain.res[i]-1)*
@@ -127,11 +128,11 @@ real hashTable::whichCell(const real** actualState) const
 /*                                                                            */
 /******************************************************************************/
 
-void hashTable::discrete2Cont(const real& cell,real** state) 
+void hashTable::discrete2Cont(const qreal& cell,qreal** state)
 {
-    static real baseLog=log(double(base));
-    real divResult;
-    real *a,*b;
+    static qreal baseLog=log(double(base));
+    qreal divResult;
+    qreal *a,*b;
     for(int i=0;i<domain.dimension;i++) {
 	a=&(domain.min[i]);
 	b=&(domain.max[i]);
@@ -153,7 +154,7 @@ void hashTable::discrete2Cont(const real& cell,real** state)
 /*                                                                            */
 /******************************************************************************/
 
-unsigned hashTable::hashFunction(const real &cell)
+unsigned hashTable::hashFunction(const qreal &cell)
 {
     return ( (unsigned) (cell-noEntries*floor(cell/noEntries)) );
 }
@@ -169,17 +170,17 @@ unsigned hashTable::hashFunction(const real &cell)
 /*                                                                            */
 /******************************************************************************/
 
-int hashTable::storePoint(const real** state)
+int hashTable::storePoint(const qreal** state)
 {
-    real cell;		        // id of the cell that represents the
+    qreal cell;		        // id of the cell that represents the
 					// point to be stored
     unsigned bucket;			
-    real *value;			// pointer to a bucket in the hash table
+    qreal *value;			// pointer to a bucket in the hash table
     unsigned finished=0;		// 0 until the hashing is finished
 
     if( !domain.inRange(state) ) {      // check wether the point is in the 
       					// domain to be considered or not
-//	cout << "Domain error\t" << state[0] << "\t" << state[1] << endl;
+//	log() << "Domain error\t" << state[0] << "\t" << state[1] << endl;
 	return 1;
     }
     cell=whichCell(state);    		// transform the coordinates into a
@@ -287,7 +288,7 @@ unsigned hashTable::numberOfCollisions()
 unsigned hashTable::orderOfCycle()
 {
     unsigned ok=1;
-    real hitsPerBuck=noHits/(real)noBuckets;
+    qreal hitsPerBuck=noHits/(qreal)noBuckets;
     unsigned hits;
 
     for(unsigned i=0;(i<noEntries) && ok ;i++) {
@@ -334,9 +335,9 @@ void hashTable::resetHashTable()
 /*                                                                            */
 /******************************************************************************/
 
-real hashTable::noCells()
+qreal hashTable::noCells()
 {
-    real cellsAtAll=1.0;
+    qreal cellsAtAll=1.0;
     for(int i=0;i<domain.dimension;i++)
 	cellsAtAll *= domain.res[i];
     return cellsAtAll;

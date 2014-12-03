@@ -22,8 +22,7 @@
 
 class cellAttractor : public geometricJob {
   public:
-    cellAttractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-		  printer* const=NULL);
+    cellAttractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

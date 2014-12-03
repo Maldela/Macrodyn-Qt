@@ -18,8 +18,8 @@
 /******************************************************************************/
 
 acf_plot::acf_plot(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph,printer* const outDev, long lag_1, long lag_2)
-          :job(bMod,graph,outDev), l_min(lag_1), l_max(lag_2)
+         MacrodynGraphicsItem* const graph, long lag_1, long lag_2)
+          :job(bMod,graph), l_min(lag_1), l_max(lag_2)
 {
 	xmax = axes.max[0];
 	xmin = axes.min[0];
@@ -32,7 +32,7 @@ acf_plot::acf_plot(baseModel* const bMod, const xyRange& axes,
 	if ( !ts_data ) fatalError("acf_plot::acf_plot","can't create data array!");
 	mean_x = 0;
 	acv_0 = 0;
-	yParam = model->setLabels( axes.label[1] );
+    yParam = model->setLabels( axes.label[1].toLatin1().data() );
 	if ( !yParam ) fatalError("acf_plot::acf_plot","can't find ylabel!");
 }
 
@@ -53,11 +53,6 @@ void acf_plot::drawBox(qreal lo_x, qreal lo_y, qreal ru_x, qreal ru_y, int color
             screenGraphics->drawLine(dummy, ru_y, dummy, lo_y, color);
         }
     }
-	if ( printDev ){
-		for (qreal dummy = lo_x; dummy<= ru_x; dummy+=draw_step){
-			printDev->drawLine(dummy, ru_y, dummy, lo_y, color);
-		}
-	}
 }
 
 
@@ -84,11 +79,6 @@ void acf_plot::simulation()
         screenGraphics->drawLine(l_min,low_bound,l_max,low_bound,6);
         screenGraphics->drawLine(l_min,high_bound,l_max,high_bound,6);
     }
-	if( printDev ){
-		printDev->drawLine(l_min,0,l_max,0,24);
-		printDev->drawLine(l_min,low_bound,l_max,low_bound,6);
-		printDev->drawLine(l_min,high_bound,l_max,high_bound,6);
-	}
 		
 	for(t=0;t<limit;t++) {
 	    model->iteration(t+1);
@@ -109,7 +99,7 @@ void acf_plot::simulation()
 	// computing autocorrelations for all lags ymin to ymax
 	qreal acv;
 	qreal acf;
-	cout << "vector of correlations:\n";
+    log() << "vector of correlations:\n";
 	for( i=l_min;i<=l_max;i++ ){
 		acv = 0;
 		for( j=0; j<how_many-i; j++ ){
@@ -117,7 +107,7 @@ void acf_plot::simulation()
 		}
 		acf = acv / acv_0;
 		drawBox(i-0.4,acf,i+0.4,0,9);
-		cout << "lag " << i << ":\t" << acf << endl;
+        log() << "lag " << i << ":\t" << acf << endl;
 	}
 	delete []ts_data;			
 }

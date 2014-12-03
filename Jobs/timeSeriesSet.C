@@ -24,16 +24,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 timeSeriesSet::timeSeriesSet(baseModel* const bMod, const xyRange& axes, 
 				char* const fileName, bool surf, long res) 
-          :geometricJob(bMod,axes,NULL,NULL), xmin(axes.min[0])
+          :geometricJob(bMod,axes,NULL), xmin(axes.min[0])
 	  , xmax(axes.max[0]), ymin(axes.min[1]), ymax(axes.max[1]),
 	  zmin(res), zmax(axes.max[2]), surface(surf)
 {
-	cout << "constructing time series set..."<<std::flush;
+    log() << "constructing time series set..."<<"\n";
 
-	xParam = model->setLabels(axes.label[0]);
+    xParam = model->setLabels(axes.label[0].toLatin1().data());
 	if( !xParam )
 		fatalError("timeSeriesSet::timeSeriesSet  Can not find x label",axes.label[0]);
-	yParam = model->setLabels(axes.label[1]);
+    yParam = model->setLabels(axes.label[1].toLatin1().data());
 	if( !yParam )
 		fatalError("timeSeriesSet::timeSeriesSet  Can not find y label",axes.label[1]);
 
@@ -44,8 +44,8 @@ timeSeriesSet::timeSeriesSet(baseModel* const bMod, const xyRange& axes,
 
 	stepX=(xmax-xmin) / ymax;
 	limit=long(ymin);		// definiert den ersten Beobachtungszeitpunkt
-	cout << zmin << " " ;
-	cout << "finished\n" << std::flush;
+    log() << zmin << " " ;
+    log() << "finished\n" << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -78,7 +78,7 @@ void timeSeriesSet::setStepX(const qreal& toSet)
 
 void timeSeriesSet::simulation()
 {
-	cout << "time series set simulation...\n";
+    log() << "time series set simulation...\n";
 	double fortschritt = 0;
 	double schritt = double(100/((xmax-xmin)/stepX));
 	qreal oldy, oldx;
@@ -88,7 +88,7 @@ void timeSeriesSet::simulation()
 	if ( surface==true ){
 		for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
 			fortschritt+=schritt;
-			cout << "\r" << fortschritt << "Prozent..." << std::flush;
+            log() << "\r" << fortschritt << "Prozent..." << "\n";
 			model->initialize();
 			for(t=1;t<=length;t++) {
 				model->iteration(t);
@@ -101,7 +101,7 @@ void timeSeriesSet::simulation()
 	} else {
 		for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
 			fortschritt+=schritt;
-			cout << "\r" << fortschritt << "Prozent..." << std::flush;
+            log() << "\r" << fortschritt << "Prozent..." << "\n";
 			model->iteration(1);
 			model->initialize();
 			for(t=1;t<=length;t++) {
@@ -117,5 +117,5 @@ void timeSeriesSet::simulation()
 		}	
 	}
 	outFile.close();
-	cout << "done\n";
+    log() << "done\n";
 }

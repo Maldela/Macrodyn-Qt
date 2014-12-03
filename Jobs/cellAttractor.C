@@ -17,8 +17,8 @@
 /******************************************************************************/
 
 cellAttractor::cellAttractor(baseModel* const bMod,const xyRange& axes,
-             MacrodynGraphicsItem* const graph, printer* const outDev)
-             :geometricJob(bMod,axes,graph,outDev)
+             MacrodynGraphicsItem* const graph)
+             :geometricJob(bMod,axes,graph)
 {
     limit= length / 10;
 }
@@ -55,9 +55,7 @@ void cellAttractor::simulation()
 	    hash->storePoint(state);
 	    if( screenGraphics ) 
 		screenGraphics->setPoint(*xParam,*yParam,
-					 (short)((t/colChange)+1));
-	    if( printDev )
-		printDev->setBits(*xParam,*yParam);
+                     (short)((t/colChange)+1));
 	}
     }
     cout << "Number of hits: " << hash->numberOfHits() << endl;

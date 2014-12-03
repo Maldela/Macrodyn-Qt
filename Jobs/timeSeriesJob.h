@@ -25,8 +25,7 @@ class timeSeriesJob : public job {
     qreal *modelVar;                  // variable that has to be stored
     void saveSeries(const long&);      // saves the simualtion results
   public:
-    timeSeriesJob(baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
-		  printer* const=NULL);
+    timeSeriesJob(baseModel* const, char* const, MacrodynGraphicsItem* const=NULL);
     virtual ~timeSeriesJob();
     virtual void simulation()=0;
 };

@@ -45,8 +45,7 @@ class simpleCellMapping : public geometricJob {
 					// the cells belonging to that cycles
 					// are assigned a new group number
   public:
-    simpleCellMapping(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-		      printer* const=NULL);
+    simpleCellMapping(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~simpleCellMapping();
     void simulation();
 };

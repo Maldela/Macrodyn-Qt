@@ -25,8 +25,7 @@ class bif2D : public geometricJob {
     qreal stepX;                      // stepsize on the x-axis
     
   public:
-    bif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    bif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void setStepX(const qreal&);
     void simulation();
 };

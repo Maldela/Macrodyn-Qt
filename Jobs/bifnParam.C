@@ -23,11 +23,10 @@ bifnParam::bifnParam(baseModel* const bMod,
 					const xyRange& axes, 
 //			        const xyRange& stateSpaceLim,  
 			        const xyRange& xDef,  
-                    MacrodynGraphicsItem* const graph,
-			        printer* const outDev)
+                    MacrodynGraphicsItem* const graph)
 
-//    :parameterSpace(bMod,axes,stateSpaceLim,outDev),
-    :bif2D(bMod,axes,graph,outDev),
+//    :parameterSpace(bMod,axes,stateSpaceLim),
+    :bif2D(bMod,axes,graph),
 
     effectiveX(xDef)
 {
@@ -40,7 +39,7 @@ bifnParam::bifnParam(baseModel* const bMod,
 	fatalError("bifnParam::bifnParam",
 		   "Can't create vector of x-variables");
     for(short i=0;i<effectiveX.dimension;i++) {
-	xVars[i]=model->setLabels(effectiveX.label[i]);
+    xVars[i]=model->setLabels(effectiveX.label[i].toLatin1().data());
                                           // get pointer to the model var.
 	if( !xVars[i] )
 	    fatalError("bifnParam::bifnParam",
@@ -111,8 +110,6 @@ void bifnParam::simulation()
 
 	    if( screenGraphics ) 
 		screenGraphics->setPoint(x,*yParam,9);
-	    if( printDev )
-		printDev->setBits(x,*yParam,9);
 	 }
       }
    }

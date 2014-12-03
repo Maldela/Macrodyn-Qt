@@ -18,8 +18,8 @@
 /******************************************************************************/
 
 geometry3D::geometry3D(baseModel* const bMod,const xyRange& axes,
-                MacrodynGraphicsItem* const graph, printer* const outDev)
-          :job(bMod,graph,outDev), xmin(axes.min[0]), xmax(axes.max[0]),
+                MacrodynGraphicsItem* const graph)
+          :job(bMod,graph), xmin(axes.min[0]), xmax(axes.max[0]),
 	  ymin(axes.min[1]), ymax(axes.max[1]), zmin(axes.min[2]),
 	  zmax(axes.max[2])
 {
@@ -27,26 +27,20 @@ geometry3D::geometry3D(baseModel* const bMod,const xyRange& axes,
     unsigned resX;
     unsigned resY;
 
-    if( outDev ) {
-	resX=5400;
-	resY=3600;
-    }
-    else {
 	resX=axes.res[0];
 	resY=axes.res[1];
-    }
     
-    strcpy(xLabel,axes.label[0]);
+    strcpy(xLabel,axes.label[0].toLatin1().data());
     xParam=model->setLabels(xLabel);
     if( !xParam )
 	fatalError("geometry3D::geometry3D  Can not find x label ",xLabel);
 
-    strcpy(yLabel,axes.label[1]);
+    strcpy(yLabel,axes.label[1].toLatin1().data());
     yParam=model->setLabels(yLabel);
     if( !yParam )
 	fatalError("geometry3D::geometry3D  Can not find y label ",yLabel);
 
-	strcpy(zLabel,axes.label[2]);
+    strcpy(zLabel,axes.label[2].toLatin1().data());
 	zParam=model->setLabels(zLabel);
 	if ( !zParam )
 		fatalError("geometry3D::geometry3D  Can not find z label",

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Module name:		distribution.h
+// Module name:		distributionJob.h
 // Contents:		Class definition of the class distribution
 //
 // Author:		    Michael Meyer
@@ -9,8 +9,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef DISTRIBUTION_INCLUDED
-#define DISTRIBUTION_INCLUDED
+#ifndef DISTRIBUTIONJOB_INCLUDED
+#define DISTRIBUTIONJOB_INCLUDED
 
 #include	"geometricJob.h"
 
@@ -25,7 +25,7 @@
 // Last modified:	Mon Sep 18 14:33:04 METDST 2000 (Michael Meyer)
 //
 ///////////////////////////////////////////////////////////////////////////////
-class distribution: public geometricJob {
+class distributionJob: public geometricJob {
   protected:
     char xLabel[20];
     qreal *xParam;
@@ -39,7 +39,7 @@ class distribution: public geometricJob {
     qreal prob;
 
   public:
-    distribution(int, baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL, printer* const=NULL);
+    distributionJob(int, baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 #endif

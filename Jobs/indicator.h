@@ -46,8 +46,7 @@ class indicator_2d : public geometricJob {
     d_var	* color_code;		// each part is encoded with a different
     					// color
   public:
-    indicator_2d(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    indicator_2d(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

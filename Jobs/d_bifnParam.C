@@ -22,9 +22,8 @@
 d_bifnParam::d_bifnParam(baseModel* const bMod,
 				const xyRange& axes, 
 			        const xyRange& xDef,  
-                    MacrodynGraphicsItem* const graph,
-			        printer* const outDev)
-    :bifnParam(bMod,axes,xDef,graph,outDev),
+                    MacrodynGraphicsItem* const graph)
+    :bifnParam(bMod,axes,xDef,graph),
     h(axes.min[1],axes.max[1],axes.res[1])
 {
     outFile.open("data3D_bifnParam.dat", ios::out);
@@ -70,7 +69,7 @@ void d_bifnParam::simulation()
     int jobtag_dummy = 35;
 
     int resolution_y = h.get_x_res();
-    cout << "resolution: [" << resolution_x << "," << resolution_y <<"]\n";
+    log() << "resolution: [" << resolution_x << "," << resolution_y <<"]\n";
     outFile.write((char*)&jobtag_dummy, 4);
     outFile.write((char*)&resolution_x, 4);
     outFile.write((char*)&resolution_y, 4);
@@ -101,8 +100,8 @@ void d_bifnParam::simulation()
 	}
 	
 	h_max = double (h.get_max_hits());
-	cout << "h_max = " << h_max << endl;
-	cout << "color step every " << h_max/94 << " hits in cell\n";
+    log() << "h_max = " << h_max << endl;
+    log() << "color step every " << h_max/94 << " hits in cell\n";
 	if ( h_max == 0 ) h_max=1;
 	
 	double dummy2=94;
@@ -113,15 +112,14 @@ void d_bifnParam::simulation()
 		hitshilf = h(k);
 		hitpoint = hitshilf/h_max;
 		if ( hitshilf==h_max )
-			cout << "maximal hitcounts at: (" << x << " , " << dy <<")\n";
+            log() << "maximal hitcounts at: (" << x << " , " << dy <<")\n";
 		if ( hitpoint>0 ){
 			color = int(ceil(hitpoint*dummy2));
 		} else color = 0;
 		
 	if( screenGraphics ) 
 		screenGraphics->setPoint(x,dy,color);
-	if( printDev )
-		printDev->setBits(x,dy,color);
+
 	outFile << char( color );
 	}
 	h.reset();

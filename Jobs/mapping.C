@@ -18,10 +18,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-mapping::mapping(baseModel* const bMod, MacrodynGraphicsItem* const graph, printer* const
-	outDev, double min, double max, int res, int dim, int tlim, char*
+mapping::mapping(baseModel* const bMod, MacrodynGraphicsItem* const graph, double min, double max, int res, int dim, int tlim, char*
 	filename, char* mothermap)
-    :job(bMod,graph,outDev)
+    :job(bMod,graph)
 {
 	m = new md_Map(min,max,res,dim,tlim,filename,mothermap);
 	if ( !m )
@@ -43,7 +42,7 @@ mapping::~mapping()
 
 void mapping::simulation()
 {
-	cout << "mapping initialized...\n";
+    log() << "mapping initialized...\n";
 	int dummy;
 	const qreal** states;
 	
@@ -51,14 +50,14 @@ void mapping::simulation()
 	
 	for (int i=0; i<resolution; i++) {
 		model->initialize();
-		cout << "\nmodel length:" << model->getLength() << endl << flush;
+        log() << "\nmodel length:" << model->getLength() << endl << "\n";
 		for (int j=0; j<time_limit; j++) {
 			model->iteration(j+1);
 			model->sendStateSpace(dummy, &states);
 			for (int k=0; k<model_dim; k++) {
-			//	cout << i*time_limit*model_dim+j*model_dim+k << " " << std::flush;
-			//	cout << (states)[0] << " " << (states)[1] << endl << std::flush;
-			//	cout << ((*states)[0]) << " " << ((*states)[1]) << endl << std::flush;
+            //	log() << i*time_limit*model_dim+j*model_dim+k << " " << "\n";
+            //	log() << (states)[0] << " " << (states)[1] << endl << "\n";
+            //	log() << ((*states)[0]) << " " << ((*states)[1]) << endl << "\n";
 				m->value_field[i*time_limit*model_dim+j*model_dim+k]=((*states)[k-1]);
 			}
 		}

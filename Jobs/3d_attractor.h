@@ -40,8 +40,7 @@ class attractor_3d : public geometry3D {
     qreal 	stepY;	// stepsize on the y-axis
     qreal	stepZ;	// stepsize on the z-axis
   public:
-    attractor_3d(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-          printer* const=NULL);
+    attractor_3d(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

@@ -39,8 +39,7 @@ class d_attractor : public geometricJob {
     qreal 	stepX;	// stepsize on the x-axis
     qreal 	stepY;	// stepsize on the y-axis
   public:
-    d_attractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	      printer* const=NULL);
+    d_attractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

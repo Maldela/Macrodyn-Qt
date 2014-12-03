@@ -29,8 +29,7 @@ class parameterSpace : public bif2D {
     qreal stepY;                      // stepsize for the second parameter
     const qreal **stateVars;          // pointer to the state variables
   public:
-    parameterSpace(baseModel* const, const xyRange&, const xyRange&, MacrodynGraphicsItem* const=NULL,
-		   printer* const=NULL);
+    parameterSpace(baseModel* const, const xyRange&, const xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~parameterSpace();
     void simulation();
 };    

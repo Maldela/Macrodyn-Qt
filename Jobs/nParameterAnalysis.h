@@ -28,15 +28,14 @@ class nParameterAnalysis : public parameterSpace {
   protected:
     xyRange effectiveX;		// effective parameters on the x-axis
     xyRange effectiveY;		// effective parameters on the y-axis
-    qreal** xVars;		// model parameters on the x-axis
-    qreal** yVars;		// model parameters on the y-axis
+    QList<qreal> xVars;		// model parameters on the x-axis
+    QList<qreal> yVars;		// model parameters on the y-axis
     void setXParams(const qreal&); // update parameters on the x-axis
     void setYParams(const qreal&); // update parameters on the y-axis
   public:
     nParameterAnalysis(baseModel* const, const xyRange&, const xyRange&,
 		       const xyRange&,const xyRange&,
-               MacrodynGraphicsItem* const=NULL,
-		       printer* const=NULL);
+               MacrodynGraphicsItem* const=NULL);
     virtual ~nParameterAnalysis();
     void simulation();
 };    

@@ -413,7 +413,7 @@ void armax::initialize()
 	if (H==1)
 		(*x_tm1)(0,(L+1)*M + (K-1)*N1 + R*N2 + N3*G) = 1;	
 
-//benötigt für B^-1 * A[i] usw    unten in Iteration
+//benÃ¶tigt fÃ¼r B^-1 * A[i] usw    unten in Iteration
 
 
 
@@ -677,7 +677,7 @@ void armax::iteration(const long& t)
 		*Temp2 = v_t->multiplyATB(*Temp1);
 		sum_var2 += (*Temp2)(0,0);
 //		var2 = 1/qreal(t-49) * sum_var2;
-		var2=(0.2 * 0.2 * 0.2)/12.0;	//for iid: var=(b-a)³/12
+		var2=(0.2 * 0.2 * 0.2)/12.0;	//for iid: var=(b-a) /12
 		delete(Temp1);delete(Temp2);
 		dif_var = var1 - var2;	//should converge to zero
 	}

@@ -12,7 +12,6 @@ void bif3D_1par::progress( long int state, long int range )
     screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
 	(xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
 	(ymax-ymin)*0.5+ymin, 9 );
-	screenGraphics->flushGraph();
 }
 
 
@@ -21,7 +20,6 @@ void bif3D_2par::progress( long int state, long int range )
     screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
 	(xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
 	(ymax-ymin)*0.5+ymin, 9 );
-	screenGraphics->flushGraph();
 }
 
 /******************************************************************************/
@@ -34,9 +32,9 @@ void bif3D_2par::progress( long int state, long int range )
 /******************************************************************************/
 
 bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, printer* const outDev, const long bif3D_dx,
+         MacrodynGraphicsItem* const graph, const long bif3D_dx,
 	     const long bif3D_dy, const long bif3D_dz)
-          :geometry3D(bMod,axes,graph,outDev),h(axes.min[1],axes.max[1],
+          :geometry3D(bMod,axes,graph),h(axes.min[1],axes.max[1],
 	  axes.res[1])
 {
     length=model->getLength();
@@ -45,7 +43,7 @@ bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes,
     resolution_y = axes.res[1];
     resolution_z = axes.res[2];
 //    resolution_x = resolution_y = resolution_z =axes.res[2];
-    cout << "resx: " << resolution_x << " resy: " << resolution_y
+    log() << "resx: " << resolution_x << " resy: " << resolution_y
     << " resz: " << resolution_z << endl;
     dx = bif3D_dx;
     dy = bif3D_dy;
@@ -65,9 +63,9 @@ bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes,
 }
 
 bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, printer* const outDev, const long bif3D_dx,
+         MacrodynGraphicsItem* const graph, const long bif3D_dx,
 	     const long bif3D_dy, const long bif3D_dz)
-          :geometry3D(bMod,axes,graph,outDev),h(axes.min[1],axes.max[1],
+          :geometry3D(bMod,axes,graph),h(axes.min[1],axes.max[1],
 	  axes.res[1],axes.min[2],axes.max[2],axes.res[2])
 {
     length=model->getLength();
@@ -76,7 +74,7 @@ bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes,
     resolution_y = axes.res[1];
     resolution_z = axes.res[2];
 //    resolution_x = resolution_y = resolution_z =axes.res[2];
-    cout << "resx: " << resolution_x << " resy: " << resolution_y
+    log() << "resx: " << resolution_x << " resy: " << resolution_y
     << " resz: " << resolution_z << endl;
     dx = bif3D_dx;
     dy = bif3D_dy;
@@ -153,7 +151,7 @@ void bif3D_2par::simulation()
     char data[resolution_x][resolution_y][resolution_z];
     
     //information
-    //cout << "h.x_res: " << h.get_x_res() << endl;
+    //log() << "h.x_res: " << h.get_x_res() << endl;
 
     // initialize the output file writing header for vrend data
     ofstream outFile;
@@ -186,12 +184,12 @@ void bif3D_2par::simulation()
     length_of_label = strlen(zLabel);
     outFile.write((char*)&length_of_label, 4);
     outFile.write((char*)&zLabel, length_of_label);
-//    cout << zLabel << " for z with " << length_of_label << " characters\n";
+//    log() << zLabel << " for z with " << length_of_label << " characters\n";
     
     h.reset();
     for (dummy_z=zmin, count_z=0; count_z<resolution_z; dummy_z+=stepZ, count_z++) {
     for (dummy_x=xmin, count_x=0; count_x<resolution_x; dummy_x+=stepX, count_x++) {
-//    	cout << "x: " << dummy_x << "\tz: " << dummy_z << endl;
+//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << endl;
     	*xParam=dummy_x;
 	*zParam=dummy_z;
 	model->initialize();
@@ -208,7 +206,7 @@ void bif3D_2par::simulation()
 	}
     
     h_max = double (h.get_max_hits());
-//    cout << "x: " << dummy_x << "\th_max: " << h_max << endl;
+//    log() << "x: " << dummy_x << "\th_max: " << h_max << endl;
     if ( h.get_max_hits()==0 ) h_max=1;
     for( dummy_y=ymin, dummy_a = 0; dummy_a<h.get_x_res(); dummy_y+=stepY,
     dummy_a++){
@@ -228,7 +226,7 @@ void bif3D_2par::simulation()
     	for ( dummy_a=0; dummy_a<resolution_y; dummy_a++)
 		for ( count_x=0;count_x<resolution_x;count_x++){
 			outFile << data[count_x][dummy_a][count_z];
-//			cout << int ( data[count_x][dummy_a][count_z] ) << " ";
+//			log() << int ( data[count_x][dummy_a][count_z] ) << " ";
 		}
     outFile.flush();
     outFile.close();
@@ -285,7 +283,7 @@ void bif3D_1par::simulation()
 
     h.reset();
     for (dummy_x=xmin, count_x=0; count_x<resolution_x; dummy_x+=stepX, count_x++) {
-//    	cout << "x: " << dummy_x << "\tz: " << dummy_z << endl;
+//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << endl;
     	*xParam=dummy_x;
 	model->initialize();
 	for(t=0;t<limit;t++) 
@@ -301,7 +299,7 @@ void bif3D_1par::simulation()
 	}
     
     h_max = double (h.get_max_hits());
-//    cout << "x: " << dummy_x << "\th_max: " << h_max << endl;
+//    log() << "x: " << dummy_x << "\th_max: " << h_max << endl;
     if ( h_max==0 ) h_max=1;
     for( dummy_z=zmin, dummy_b = 0; dummy_b<h.get_y_res(); dummy_z+=stepZ,
     dummy_b++){

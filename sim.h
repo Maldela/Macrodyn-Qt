@@ -2,9 +2,9 @@
 #define SIM_H
 
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
 #include <QtCore>
+#include "logger.h"
 
 // enum BOOLS { FALSE, TRUE, NOTSET, EQUALSET, USERBREAK, STREAMERROR };
 //enum ADJUST { OLDADJUST, WALRASIAN, EXPECTEDOLD, NEWADJUST };

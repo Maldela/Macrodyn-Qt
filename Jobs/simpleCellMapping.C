@@ -18,8 +18,8 @@
 /******************************************************************************/
 
 simpleCellMapping::simpleCellMapping(baseModel* const bMod,const xyRange& axes,
-                     MacrodynGraphicsItem* const graph, printer* const outDev)
-          :geometricJob(bMod,axes,graph,outDev)
+                     MacrodynGraphicsItem* const graph)
+          :geometricJob(bMod,axes,graph)
 {
     int modelDim;
     
@@ -230,11 +230,11 @@ void simpleCellMapping::simulation()
     unsigned finished;
     qreal x,y;
     
-    cout << K << " cells at all" << endl;
+    log() << K << " cells at all" << endl;
 
     model->initialize();
    
-    while( cellProc=virginCell() ) {
+    while( (cellProc=virginCell()) ) {
 	cellProcBackup=cellProc;
 	Gr[cellProc]=-1;
 	step=0;
@@ -256,19 +256,17 @@ void simpleCellMapping::simulation()
     }
     unsigned *groups=new unsigned[lastGroup+1];
 
-    cout << "group[0]=" << Gr[0] << endl;
+    log() << "group[0]=" << Gr[0] << endl;
     for(unsigned i=0;i<=K;i++)
        	if( Gr[i] != 0 ) {
 	    discrete2Cont(i,x,y);
-	    screenGraphics->setPoint(x,y,Gr[i]+1);
-	    if( printDev && i )
-		printDev->setBits(x,y,(Gr[i]%6)+1);
+        screenGraphics->setPoint(x,y,Gr[i]+1);
 	    if( !groups[Gr[i]] ){
 		groups[Gr[i]]=1;
-		cout << "Group " << Gr[i] << " with period " << P[i] << endl;
+        log() << "Group " << Gr[i] << " with period " << P[i] << endl;
 	    }
 	}
-    cout << lastGroup << " groups at all" << endl;
+    log() << lastGroup << " groups at all" << endl;
     delete groups;
 }
 

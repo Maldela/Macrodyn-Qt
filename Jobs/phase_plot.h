@@ -36,8 +36,7 @@ class phase_plot : public geometricJob {
     int pointsize;
 
   public:
-    phase_plot(long, baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	      printer* const=NULL, int psize=1);
+    phase_plot(long, baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL, int psize=1);
     void simulation();
 };
 

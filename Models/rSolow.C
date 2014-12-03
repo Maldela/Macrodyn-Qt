@@ -329,7 +329,7 @@ void rSolow::pf_init ( void )
 // Member function:	rSolow
 // Purpose:		constructor
 //
-// Author:		Michael Meyer & Stefan Lüke
+// Author:		Michael Meyer & Stefan L ke
 // Last modified:	Mon Mar 10 14:09:17 MET 1999
 // By:			Michael Meyer 
 //
@@ -377,7 +377,7 @@ delta_p_paramset->zvar = NULL;
 // Member function:	rSolow
 // Purpose:		destructor
 //
-// Author:		Michael Meyer & Stefan Lüke
+// Author:		Michael Meyer & Stefan L ke
 // Last modified:	Mon Mar 10 14:09:17 MET 1999
 // By:			Michael Meyer 
 //
@@ -537,7 +537,7 @@ void rSolow::iteration(const long& )
 // Member function:	initialize 
 // Purpose:		initialize the model, define the systems initial state
 //
-// Author:		Michael Meyer & Stefan Lüke
+// Author:		Michael Meyer & Stefan L ke
 // Last modified:	Mon Mar 10 15:43:17 MET 1999
 // By:			Michael Meyer
 //
@@ -1028,47 +1028,47 @@ void rSolow::print_st_Paramset(st_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      Log::log() << temp_paramset->type << "\n";
+      log() << temp_paramset->type << "\n";
       
       switch  (temp_paramset->type) {
       case -1:
-    Log::log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->z_0 << "\n";
       break;
       case 0 :	
-        Log::log() << temp_paramset->z_0 << "\n";
+        log() << temp_paramset->z_0 << "\n";
       break;
 	
       case 1 :		
-    Log::log() << temp_paramset->theta_type << "\n";
-    Log::log() << temp_paramset->my << "\n";
-        Log::log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->theta_type << "\n";
+    log() << temp_paramset->my << "\n";
+        log() << temp_paramset->z_0 << "\n";
 	
         i=0;
         while(i<trans_x_Max) {
-          Log::log() << temp_paramset->trans_x[i] << "\n";
+          log() << temp_paramset->trans_x[i] << "\n";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       Log::log() << "\n";
+       log() << "\n";
        for (int j=0;j<i;j++) {
-     Log::log() << temp_paramset->trans_a[j] << "\n";
+     log() << temp_paramset->trans_a[j] << "\n";
 	}
-    Log::log() << "\n";
+    log() << "\n";
        for (int j=0;j<i;j++) {
-     Log::log() << temp_paramset->trans_b[j] << "\n";
+     log() << temp_paramset->trans_b[j] << "\n";
 	}
-        Log::log() << "\n";
+        log() << "\n";
         break;
    
       case 2:
-        Log::log() << temp_paramset->zvar_expr << "\n";
+        log() << temp_paramset->zvar_expr << "\n";
 	  if( temp_paramset->mc_flag == 1) {
-         Log::log() << temp_paramset->mc_matrix << "\n";
+         log() << temp_paramset->mc_matrix << "\n";
           }
        break;
 	
-    Log::log() << "\n";
+    log() << "\n";
     }
 
  }
@@ -1089,8 +1089,8 @@ void rSolow::print_st_Paramset(st_paramset *temp_paramset){
 void rSolow::printParamset()
 
 {     
-    Log::log() << k_0 << "\n" ;
-    Log::log() << pf_type << "\n";
+    log() << k_0 << "\n" ;
+    log() << pf_type << "\n";
 
     print_st_Paramset(a_paramset);
  
@@ -1106,9 +1106,9 @@ void rSolow::printParamset()
     
     print_st_Paramset(delta_p_paramset);
  
-    Log::log() << length << "\n";
+    log() << length << "\n";
     
-    Log::log() << "\n";
+    log() << "\n";
     baseModel::printParamset();
 } 
 //*******************************************************************************   
@@ -1142,7 +1142,7 @@ void rSolow::printParamset()
 // Member function:	rSolow
 // Purpose:		constructor
 //
-// Author:		Michael Meyer & Stefan Lüke
+// Author:		Michael Meyer & Stefan L ke
 // Last modified:	Mon Mar 10 14:09:17 MET 1999
 // By:			Michael Meyer 
 //
@@ -1423,11 +1423,11 @@ outFile << "Length = " << length << "\n";
 void RBC_delta_1::printParamset()
 {
    
-    Log::log() << k_RBC_0 << "\n" ;
+    log() << k_RBC_0 << "\n" ;
     
-    Log::log() << z_RBC_0 << "\n" ;
+    log() << z_RBC_0 << "\n" ;
 		
-    Log::log() << c_RBC_0 << "\n" ;
+    log() << c_RBC_0 << "\n" ;
 
     rSolow::print_st_Paramset(beta_paramset);
     
@@ -1439,9 +1439,9 @@ void RBC_delta_1::printParamset()
     
     rSolow::print_st_Paramset(alpha_paramset);
     
-    Log::log() << length << "\n";
+    log() << length << "\n";
     
-    Log::log() << "\n";
+    log() << "\n";
         
     baseModel::printParamset();
 }

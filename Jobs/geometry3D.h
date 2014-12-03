@@ -43,8 +43,7 @@ class geometry3D : public job {
                                        // returns wether the simulation results
                                        // are inside the considered section
   public:
-    geometry3D(baseModel* const,const xyRange&, MacrodynGraphicsItem* const=NULL,
-         printer* const=NULL);
+    geometry3D(baseModel* const,const xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~geometry3D();
     virtual void simulation()=0;
 };

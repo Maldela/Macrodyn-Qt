@@ -26,8 +26,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 attractor_3d::attractor_3d(baseModel* const bMod,const xyRange& axes,
-                 MacrodynGraphicsItem* const graph, printer* const outDev)
-            :geometry3D(bMod,axes,graph,outDev),
+                 MacrodynGraphicsItem* const graph)
+            :geometry3D(bMod,axes,graph),
              h(axes.min[0],axes.max[0],axes.res[0],
                axes.min[1],axes.max[1],axes.res[1],
 	       axes.min[2],axes.max[2],axes.res[2])
@@ -71,7 +71,7 @@ void attractor_3d::simulation()
   int resolution_x = h.get_x_res();
   int resolution_y = h.get_y_res();
   int resolution_z = h.get_z_res();
-  cout << "resolution: [" << resolution_x << "," << resolution_y << "," << resolution_z <<"]\n";
+  log() << "resolution: [" << resolution_x << "," << resolution_y << "," << resolution_z <<"]\n";
   outFile.write((char*)&jobtag_dummy, 4);
   outFile.write((char*)&resolution_x, 4);
   outFile.write((char*)&resolution_y, 4);
@@ -88,9 +88,9 @@ void attractor_3d::simulation()
   outFile.write((char*)&zmin, 8);
   outFile.write((char*)&zmax, 8);
   
-  cout << "xmin: " << xmin << "\txmax: " << xmax << endl;
-  cout << "ymin: " << ymin << "\tymax: " << ymax << endl;
-  cout << "zmin: " << zmin << "\tzmax: " << zmax << endl;
+  log() << "xmin: " << xmin << "\txmax: " << xmax << endl;
+  log() << "ymin: " << ymin << "\tymax: " << ymax << endl;
+  log() << "zmin: " << zmin << "\tzmax: " << zmax << endl;
   
   int length_of_label = strlen(xLabel);
   outFile.write((char*)&length_of_label, 4);
@@ -110,8 +110,8 @@ void attractor_3d::simulation()
   }
 
   h_max = double (h.get_max_hits());
-  cout << "h_max = " << h_max << endl;
-  cout << "color step every " << h_max/94 << " hits in cell" << endl;
+  log() << "h_max = " << h_max << endl;
+  log() << "color step every " << h_max/94 << " hits in cell" << endl;
   if( h_max == 0 ) {
     h_max = 1;
   }
@@ -130,7 +130,7 @@ void attractor_3d::simulation()
 	hitshilf=h(k,l,m);
 	hitpoint = hitshilf / h_max;
 	if (hitshilf==h_max)
-	cout << "maximal hitcounts at: "<< dx << " , " << dy << " , " << dz << endl;
+    log() << "maximal hitcounts at: "<< dx << " , " << dy << " , " << dz << endl;
 
 	if(hitpoint>0){
 /*		for(int i=0;i<=dummy2;i++){
@@ -142,7 +142,7 @@ void attractor_3d::simulation()
 //	    outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 
 	} else color=0;
 	
-	if ( color>94 ) cout << "warning: color > 94\n";
+    if ( color>94 ) log() << "warning: color > 94\n";
 	 //   outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 	
 	outFile << char( color );
 /*Ende neu*/
@@ -152,9 +152,7 @@ void attractor_3d::simulation()
 //     if( screenGraphics ) {
 //        screenGraphics->setPoint(dx,dy,color);
 //      }
-      if( printDev ) {
-        printDev->setBits(dx,dy,color);
-      }
+
     }
     //outFile << endl;
   }

@@ -30,8 +30,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 density_1d::density_1d(baseModel* const bMod, xyRange & axes, 
-                   MacrodynGraphicsItem* const graph, printer* const outDev)
-                      :geometricJob(bMod,axes,graph,outDev),
+                   MacrodynGraphicsItem* const graph)
+                      :geometricJob(bMod,axes,graph),
                        h(axes.min[0],axes.max[0],axes.res[0])
 {
     stepX=(xmax-xmin) / (1.0*axes.res[0]);
@@ -72,12 +72,9 @@ void density_1d::simulation()
     }
   }
 
-  strcpy(n_axes->label[1],"den");	// relabel the y-axis
+  n_axes->label[1] = "den";	// relabel the y-axis
   if( screenGraphics ) {
     screenGraphics->reset(*n_axes);
-  }
-  if( printDev ){
-    printDev->setLimits(*n_axes);
   }
   
   for( *xParam=xmin, k=0 ;*xParam<=xmax; *xParam+=stepX, k++) {
@@ -90,27 +87,21 @@ void density_1d::simulation()
       if( screenGraphics ) {
         screenGraphics->setPoint(*xParam,dy,color);
       }
-      if( printDev ) {
-        printDev->setBits(*xParam,dy,color);
-      }
     }
     if( screenGraphics ) {		// draw the end point
       screenGraphics->setPoint(*xParam,d,color);
     }
-    if( printDev ) {
-      printDev->setBits(*xParam,d,color);
-    }
   }
-  cout << endl;				// this is for external usage
-  cout << "class width = " << stepX << endl;
-  cout << "possible number of hits = " << length - limit << endl;
+  log() << endl;				// this is for external usage
+  log() << "class width = " << stepX << endl;
+  log() << "possible number of hits = " << length - limit << endl;
   for( k=0 ; k< h.get_x_res() ; k++) {
   // d=((double) h(k))/h.get_no_hits();
     d=((double) h(k))/double(length - limit);
     d=d/stepX;
-    cout << "\t" << d;
+    log() << "\t" << d;
   }
-  cout << endl;
+  log() << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -127,12 +118,12 @@ void density_1d::simulation()
 ///////////////////////////////////////////////////////////////////////////////
 
 density_1d_1p::density_1d_1p(baseModel* const bMod, xyRange & axes, 
-                         MacrodynGraphicsItem* const graph, printer* const outDev)
-                      :density_1d(bMod,axes,graph,outDev)
+                         MacrodynGraphicsItem* const graph)
+                      :density_1d(bMod,axes,graph)
 {
     zmin=axes.min[2];			// save the bounderies for the second
     zmax=axes.max[2];			// bifurcation parameter
-    strcpy(zLabel,axes.label[2]);
+    strcpy(zLabel,axes.label[2].toLatin1().data());
     zParam=model->setLabels(zLabel);	// get the pointer to the second
 					// bifurcation parameter
     if( !zParam )
@@ -164,7 +155,7 @@ void density_1d_1p::simulation()
     qreal d;
     qreal dy;
 
-  strcpy(n_axes->label[1],"den");		// relabel the y-axis
+  n_axes->label[1] = "den";		// relabel the y-axis
   if( screenGraphics ) {
     screenGraphics->reset(*n_axes);
   }
@@ -190,7 +181,6 @@ void density_1d_1p::simulation()
       }
       if( screenGraphics ) {			// draw the end point
         screenGraphics->setPoint(*xParam,d,color);
-        screenGraphics->flushGraph();
       }
     }
   sleep(2);  					// there is still a problem with X
@@ -211,12 +201,12 @@ void density_1d_1p::simulation()
 ///////////////////////////////////////////////////////////////////////////////
 
 density_1d_var::density_1d_var(baseModel* const bMod, xyRange & axes, 
-                   MacrodynGraphicsItem* const graph, printer* const outDev)
-                      :density_1d_1p(bMod,axes,graph,outDev)
+                   MacrodynGraphicsItem* const graph)
+                      :density_1d_1p(bMod,axes,graph)
 {
 	var_res = axes.res[2]+1;
-	cout << "no. of runs: " << var_res << "\tT: " << length << endl << flush;
-	cout << "z: " << zLabel << "\tzmin: " << zmin << "\tzmax: " << zmax << endl << flush;
+    log() << "no. of runs: " << var_res << "\tT: " << length << endl << "\n";
+    log() << "z: " << zLabel << "\tzmin: " << zmin << "\tzmax: " << zmax << endl << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -239,7 +229,7 @@ void density_1d_var::simulation()
 	long t;
 	long how_many;
 	float percent = 0.0;
-	strcpy(n_axes->label[1],"den");	// relabel the y-axis	
+    n_axes->label[1] = "den";	// relabel the y-axis
 
 	// looping in for varying zParam
 	for ( *zParam=zmin, how_many=1; *zParam<=zmax; *zParam+=stepZ, how_many++ ){
@@ -253,17 +243,16 @@ void density_1d_var::simulation()
 			if ( how_many%(long(var_res/100))==0 ){
 				plot_current_data(how_many);
 				percent+=1;
-				cout << "percent: " << percent << endl << flush;
+                log() << "percent: " << percent << endl << "\n";
 			}
 			}
 	}
 	// make final picture and file
 	if ( screenGraphics ) plot_current_data(how_many);
-	if ( printDev ) save_current_picture(how_many);
 
-	cout << endl;				// this is for external usage
-	cout << "class width = " << stepX << endl;
-	cout << "possible number of hits = " << var_res << endl;
+    log() << endl;				// this is for external usage
+    log() << "class width = " << stepX << endl;
+    log() << "possible number of hits = " << var_res << endl;
 	int k;
 	double d;
 	double d_cum = 0;
@@ -272,10 +261,10 @@ void density_1d_var::simulation()
 		d=((double) h(k))/double(var_res);
 		d_cum+=d;
 		d=d/stepX;		
-		cout << "F(" << double(k)*stepX+xmin << ")= " << d_cum << "\t"
+        log() << "F(" << double(k)*stepX+xmin << ")= " << d_cum << "\t"
 		<< "f()= " << d << endl;
 	}
-	cout << endl;	
+    log() << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -320,7 +309,6 @@ void density_1d_var::plot_current_data(long how_many)
 //		d= d/stepX;
 		screenGraphics->drawLine(dummyx,0,dummyx,d,color);
   	}
-	screenGraphics->flushGraph();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -353,8 +341,6 @@ void density_1d_var::save_current_picture(long how_many)
 	y_plot = y_plot*1.01;
 	
 	n_axes->max[1] = y_plot;
-	
-	printDev->setLimits(*n_axes);
 
 	for( dummyx=xmin, k=0 ; dummyx<=xmax; dummyx+=stepX, k++) {
 		// d=((double) h(k))/h.get_no_hits();
@@ -363,7 +349,6 @@ void density_1d_var::save_current_picture(long how_many)
 		d= ((double) h(k))/double(how_many);
 // plotting pseudo density
 		// d= d/stepX;
-		printDev->drawLine(dummyx,0,dummyx,d,color);
   	}
 }
 

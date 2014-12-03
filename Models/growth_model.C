@@ -444,9 +444,9 @@ void growth_model::iteration(const long& )
   ln_K = log(K);
   ln_L = log(L);
   d_K_kL = K - k_fix*L;
-//Log::log() << a << " " << b << " " << c << " " << alpha << " : ";
-//Log::log() << syr << " " << swr << " " << srr << " : ";
-//Log::log() << sav_y << " " << sav_w << " " << sav_r << " " << k_n << endl;
+//log() << a << " " << b << " " << c << " " << alpha << " : ";
+//log() << syr << " " << swr << " " << srr << " : ";
+//log() << sav_y << " " << sav_w << " " << sav_r << " " << k_n << endl;
 }
     
 ///////////////////////////////////////////////////////////////////////////////
@@ -624,19 +624,19 @@ void growth_model::saveParamset(ofstream& outFile)
 
 void growth_model::printParamset()
 {
-    Log::log() << k_0 << endl;
-    Log::log() << pf_type << endl;
-    Log::log() << A << endl;
-    Log::log() << B << endl;
-    Log::log() << C << endl;
-    Log::log() << D << endl;
-    Log::log() << syr << endl;
-    Log::log() << swr << endl;
-    Log::log() << srr << endl;
-    Log::log() << n << endl;
-    Log::log() << delta_p << endl;
+    log() << k_0 << endl;
+    log() << pf_type << endl;
+    log() << A << endl;
+    log() << B << endl;
+    log() << C << endl;
+    log() << D << endl;
+    log() << syr << endl;
+    log() << swr << endl;
+    log() << srr << endl;
+    log() << n << endl;
+    log() << delta_p << endl;
     
-    Log::log() << length << endl;
+    log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1064,25 +1064,25 @@ void depreciate::saveParamset(ofstream& outFile)
 void depreciate::printParamset()
 {
     int i,j;
-    Log::log() << theta_type << endl;
-    Log::log() << my << endl;
-    Log::log() << _z_0 << endl;
-    Log::log() << _z_var_name << endl;
+    log() << theta_type << endl;
+    log() << my << endl;
+    log() << _z_0 << endl;
+    log() << _z_var_name << endl;
     i=0;
     while(i<trans_x_max) {
-     Log::log() << trans_x[i] << "\t";
+     log() << trans_x[i] << "\t";
 	 if(trans_x[i]==1) break;
 	 i++;
 	}
-    Log::log() << "\n";
+    log() << "\n";
     for (int j=0;j<i;j++) {
-     Log::log() << trans_a[i] << "\t";
+     log() << trans_a[i] << "\t";
 	}
-    Log::log() << "\n";
+    log() << "\n";
     for (int j=0;j<i;j++) {
-     Log::log() << trans_b[i] << "\t";
+     log() << trans_b[i] << "\t";
 	}
-    Log::log() << "\n";
+    log() << "\n";
     growth_model::printParamset();
 }
 
@@ -1203,7 +1203,7 @@ void pasinetti::saveParamset(ofstream& outFile)
 
 void pasinetti::printParamset()
 {
-    Log::log() << k_1 << endl;
+    log() << k_1 << endl;
     growth_model::printParamset();
 }
 
@@ -1369,7 +1369,7 @@ void pasinetti::iteration(const long& t)
 
 ////CD:
 ////						Steady-State, Steady-State fuer kc,kw
-////						Elastizität im Steady-State							
+////						Elastizit t im Steady-State							
 if(pf_type==2){
 
     qreal dummy=(n+delta_p)/(srr*a);
@@ -1414,14 +1414,14 @@ if(pf_type==0){
 	
 	E_f_pr_n=steady_ces*(*pf_second_prime)(steady_ces,a,b,c,alpha)/(*pf_prime)(steady_ces,a,b,c,alpha);
 	bif_point=-2*(n+1)/(n+delta_p);	
-//Log::log() << "point =" << bif_point << endl;
+//log() << "point =" << bif_point << endl;
 	
 	s_hat=srr*(E_f_pr_n + bif_point)/(  E_f_pr_n/E_f-2*((1+n)/(2+n+delta_p) )  )  ;
    
 	Konsum_A=(1-swr)*(srr*y_steady-steady_ces*(n+delta_p))/(srr-swr);
 	Konsum_C=(1-srr)*(n+delta_p)/(srr-swr)*steady_ces*(1-swr/(E_f*srr));
 
-//Log::log() << "CES Fixpunkt =" << steady_ces << endl;
+//log() << "CES Fixpunkt =" << steady_ces << endl;
 }
 
 ////Leontief Technologie:
@@ -1443,10 +1443,10 @@ if(pf_type==5){
 	Konsum_C=(1-srr)*(n+delta_p)/(srr-swr)*steady_leon*(1-swr/(E_f*srr));
 
 //		if(t==length){
-//			Log::log() << "Leontief Steady-State =" << steady_leon << endl;
-//			Log::log() << "Leontief Steady-State_kc =" << steady_kc_leon << endl;
-//			Log::log() << "Leontief Steady-State_kw =" << steady_kw_leon << endl;
-//			Log::log() << "Leontief Elastiziaet von f' =" << E_steady_leon_prime << endl;
+//			log() << "Leontief Steady-State =" << steady_leon << endl;
+//			log() << "Leontief Steady-State_kc =" << steady_kc_leon << endl;
+//			log() << "Leontief Steady-State_kw =" << steady_kw_leon << endl;
+//			log() << "Leontief Elastiziaet von f' =" << E_steady_leon_prime << endl;
 //		}
 }
 }  	

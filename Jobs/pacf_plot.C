@@ -18,8 +18,8 @@
 /******************************************************************************/
 
 pacf_plot::pacf_plot(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, printer* const outDev, long lag_1, long lag_2)
-          :job(bMod,graph,outDev), l_min(lag_1), l_max(lag_2)
+         MacrodynGraphicsItem* const graph, long lag_1, long lag_2)
+          :job(bMod,graph), l_min(lag_1), l_max(lag_2)
 {
 	xmax = axes.max[0];
 	xmin = axes.min[0];
@@ -32,7 +32,7 @@ pacf_plot::pacf_plot(baseModel* const bMod, const xyRange& axes,
 	if ( !ts_data ) fatalError("pacf_plot::pacf_plot","can't create data array!");
 	mean_x = 0;
 	acv_0 = 0;
-	yParam = model->setLabels( axes.label[1] );
+    yParam = model->setLabels( axes.label[1].toLatin1().data() );
 	if ( !yParam ) fatalError("pacf_plot::pacf_plot","can't find ylabel!");
 	v_correlations = new matrix_neu( l_max+2, 1 );
 	if ( !v_correlations ) fatalError("pacf_plot::pacf_plot","can't allocate correlation vector!");
@@ -55,12 +55,7 @@ void pacf_plot::drawBox(qreal lo_x, qreal lo_y, qreal ru_x, qreal ru_y, int colo
 		for (qreal dummy = lo_x; dummy<= ru_x; dummy+=draw_step){
 			screenGraphics->drawLine(dummy, ru_y, dummy, lo_y, color);
 		}
-	}
-	if ( printDev ){
-		for (qreal dummy = lo_x; dummy<= ru_x; dummy+=draw_step){
-			printDev->drawLine(dummy, ru_y, dummy, lo_y, color);
-		}
-	}
+    }
 }
 
 
@@ -85,12 +80,7 @@ void pacf_plot::simulation()
 		screenGraphics->drawLine(l_min,0,l_max,0,24);
 		screenGraphics->drawLine(l_min,low_bound,l_max,low_bound,6);
 		screenGraphics->drawLine(l_min,high_bound,l_max,high_bound,6);
-	}
-	if( printDev ){
-		printDev->drawLine(l_min,0,l_max,0,24);
-		printDev->drawLine(l_min,low_bound,l_max,low_bound,6);
-		printDev->drawLine(l_min,high_bound,l_max,high_bound,6);
-	}
+    }
 		
 	for(t=0;t<limit;t++) {
 	    model->iteration(t+1);
@@ -123,7 +113,7 @@ void pacf_plot::simulation()
 		if( printDev )
 			printDev->drawLine(i,0,i,acf,9);*/
 	}
-//	cout << "vector of correlations: " << (*v_correlations) << endl;	
+//	log() << "vector of correlations: " << (*v_correlations) << endl;
 	// drawing zero pacf value
 
 	// looping in for partial correlations
@@ -148,7 +138,7 @@ void pacf_plot::simulation()
 			}
 		}
 	
-//		cout << (*m_correlations);
+//		log() << (*m_correlations);
 		
 		// solving for Yule-Walker
 		(*m_inv_correlations) = m_correlations->inverse();
@@ -156,11 +146,11 @@ void pacf_plot::simulation()
 			(*v_short_correlations)(i-1,0) = (*v_correlations)(i,0);
 		(*v_YW_estimators) = (*m_inv_correlations) * (*v_short_correlations);
 	
-//		cout << (*m_inv_correlations);
-//		cout << (*v_short_correlations);
-		cout << (*v_YW_estimators);
+//		log() << (*m_inv_correlations);
+//		log() << (*v_short_correlations);
+        log() << (*v_YW_estimators);
 		
-		cout << l << ": " << (*v_YW_estimators)(l-1,0) << endl;
+        log() << l << ": " << (*v_YW_estimators)(l-1,0) << endl;
 		// drawing value
 		if ( screenGraphics )
 			screenGraphics->drawLine(l,0,l,(*v_YW_estimators)(l-1,0),9);
@@ -195,15 +185,15 @@ void pacf_plot::simulation()
 			}
 		}
 		
-//		cout << "kappa1:" << endl << (*m_kappa1);
-//		cout << "kappa2:" << endl << (*m_kappa2);
+//		log() << "kappa1:" << endl << (*m_kappa1);
+//		log() << "kappa2:" << endl << (*m_kappa2);
 		
 		det1 = m_kappa1->determinant();
 		det2 = m_kappa2->determinant();
 		
 		coef = pow( double(-1), double(l)) * det2 / det1;
 		
-//		cout << "value: " << coef << endl;
+//		log() << "value: " << coef << endl;
 		
 		if ( screenGraphics )
 			screenGraphics->drawLine(l+1,0,l+1,coef,9);
@@ -223,9 +213,9 @@ void pacf_plot::simulation()
 
 	drawBox(-0.4,1,0.4,0,9);
 	drawBox(0.6,(*v_YW_estimators)(1,0),1.4,0,9);
-	cout << "vector of partial correlations:\n";
-	cout << "lag " << 0 << ":\t" << (*v_YW_estimators)(0,0) << endl;
-	cout << "lag " << 1 << ":\t" << (*v_YW_estimators)(1,0) << endl;
+    log() << "vector of partial correlations:\n";
+    log() << "lag " << 0 << ":\t" << (*v_YW_estimators)(0,0) << endl;
+    log() << "lag " << 1 << ":\t" << (*v_YW_estimators)(1,0) << endl;
 	
 	matrix_neu* dummy_YW;
 	for ( l=2; l<=l_max; l++){
@@ -244,7 +234,7 @@ void pacf_plot::simulation()
 		Q_p = Q_p*(1-(((*v_YW_estimators)(l,0))*((*v_YW_estimators)(l,0))));
 		drawBox(l-0.4, (*v_YW_estimators)(l,0), l+0.4, 0, 9);
 
-		cout << "lag " << l << ":\t" << (*v_YW_estimators)(l,0) << endl;
+        log() << "lag " << l << ":\t" << (*v_YW_estimators)(l,0) << endl;
 		delete dummy_YW;
 	}
 	

@@ -52,8 +52,7 @@ class max_lyapunov_exp_1d : public geometricJob {
     void  evaluate( long t );
     
   public:
-    max_lyapunov_exp_1d(baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL,
-		       printer* const=NULL);
+    max_lyapunov_exp_1d(baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~max_lyapunov_exp_1d();
     void simulation();
 };
@@ -83,8 +82,7 @@ class max_lyapunov_exp_2d : public max_lyapunov_exp_1d {
     					// color
     
   public:
-    max_lyapunov_exp_2d(baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL,
-		       printer* const=NULL);
+    max_lyapunov_exp_2d(baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation(void);
 };
 
@@ -105,8 +103,7 @@ class max_lyapunov_exp_2d : public max_lyapunov_exp_1d {
 
 class max_lyapunov_exp_t : public max_lyapunov_exp_1d {
   public:
-    max_lyapunov_exp_t(baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL,
-		       printer* const=NULL);
+    max_lyapunov_exp_t(baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation(void);
 };
 

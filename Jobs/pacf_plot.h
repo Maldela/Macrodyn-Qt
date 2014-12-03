@@ -41,7 +41,7 @@ class pacf_plot : public job {
     
   public:
     pacf_plot(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL, long lag_1 = 0, long lag_2 = 20);
+      long lag_1 = 0, long lag_2 = 20);
     void simulation();
 };
 

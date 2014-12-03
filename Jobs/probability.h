@@ -39,7 +39,7 @@ class probability: public geometricJob {
 	qreal prob;
 
   public:
-    probability(int, baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL, printer* const=NULL);
+    probability(int, baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 #endif

@@ -28,8 +28,7 @@ class bif2Param : public bif2D {
     qreal stepZ;
     qreal *zParam;
   public:
-    bif2Param(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	      printer* const=NULL);
+    bif2Param(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

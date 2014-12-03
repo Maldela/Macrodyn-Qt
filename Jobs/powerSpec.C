@@ -18,8 +18,8 @@
 /******************************************************************************/
 
 powerSpec::powerSpec(baseModel* const bMod,const window& wind,char* const label,
-             MacrodynGraphicsItem* const graph, printer* const outDev)
-          :timeSeriesJob(bMod,label,graph,outDev),
+             MacrodynGraphicsItem* const graph)
+          :timeSeriesJob(bMod,label,graph),
 	   Pi(3.141592635897932),win(wind)
 {
     timeSeriesImag=new qreal[length];
@@ -335,27 +335,25 @@ void powerSpec::simulation()
 	ymax = dummy > ymax ? dummy : ymax;
 	ymin = dummy < ymin ? dummy : ymin;
     }
-    if( screenGraphics || printDev ) {
-	qreal min[2];
+    if( screenGraphics ) {
+    QList<qreal> min;
 	min[0]=0.0;
 	min[1]=ymin;
 
-	qreal max[2];
+    QList<qreal> max;
 	max[0]=0.5;
 	max[1]=ymax;
 	
-	short res[2];
+    QList<qint64> res;
 	res[0]=res[1]=0;
-	char *string[2];
+    QList<QString> string;
 	string[0]="1/t";
 	string[1]="N";
 	xyRange range(2,string,min,max,res);
 	if( screenGraphics ) 
 	    screenGraphics->reset(range);
 	
-	if( printDev ){
-	    printDev->setLimits(range);
-	}
+
     }
     oldX=timeSeriesImag[0];
     oldY=log10(timeSeriesqreal[0]);
@@ -365,9 +363,7 @@ void powerSpec::simulation()
 //	    screenGraphics->setPoint(timeSeriesImag[t],dummy,9);
 	    screenGraphics->drawLine(oldX,oldY,timeSeriesImag[t],dummy,9);
 	oldX=timeSeriesImag[t];
-	oldY=dummy;
-	if( printDev )
-	    printDev->setBits(timeSeriesImag[t],dummy);
+    oldY=dummy;
     }
 }
 

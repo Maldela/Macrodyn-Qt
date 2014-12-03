@@ -18,9 +18,8 @@
 
 stateSpaceAnalysis::stateSpaceAnalysis(baseModel* const bMod,
 				       const xyRange& axes,
-                       MacrodynGraphicsItem* const graph,
-				       printer* const outDev)
-          :attractor(bMod,axes,graph,outDev)
+                       MacrodynGraphicsItem* const graph)
+          :attractor(bMod,axes,graph)
 {
     int modelDim;
     
@@ -41,7 +40,7 @@ stateSpaceAnalysis::stateSpaceAnalysis(baseModel* const bMod,
 stateSpaceAnalysis::~stateSpaceAnalysis()
 {
     if( stateVars )
-	delete stateVars;
+    delete stateVars;
 }
 
 /******************************************************************************/
@@ -85,8 +84,6 @@ void stateSpaceAnalysis::simulation()
 	if( screenGraphics ) 
 	    screenGraphics->setPoint(*xParam,*yParam,color+1);   
 
-	if( printDev )
-	    printDev->setBits(*xParam,*yParam,color+1);// build the print file
 	hash->resetHashTable();
     }
 }

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Module name:		distribution.C
+// Module name:		distributionJob.C
 // Contents:		Class definition of the class distribution
 //
 // Author:		    Michael Meyer
@@ -9,7 +9,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include	"distribution.h"
+#include	"distributionJob.h"
 #include	"../error.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,13 +22,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-distribution::distribution(int p_size, baseModel* const cMod, xyRange& axes,
-                 MacrodynGraphicsItem* const graph, printer* const pDev)
-
-            :geometricJob(cMod,axes,graph,pDev)
-
+distributionJob::distributionJob(int p_size, baseModel* const cMod, xyRange& axes,
+                 MacrodynGraphicsItem* const graph) : geometricJob(cMod,axes,graph)
 {
-    strcpy(xLabel,axes.label[0]);
+    strcpy(xLabel,axes.label[0].toLatin1().data());
     xParam=model->setLabels(xLabel);
     if( !xParam )
 	fatalError("distribution::distribution  Can not find z label ",xLabel);
@@ -52,7 +49,7 @@ distribution::distribution(int p_size, baseModel* const cMod, xyRange& axes,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void distribution::simulation()
+void distributionJob::simulation()
 {
 	long t;
 	int cmax=100000;
@@ -63,7 +60,7 @@ void distribution::simulation()
     qreal intervall=(xmax-xmin)/cmax;
 //    double intervall=pow(cmax,-1);
 
-cout << "int=" << intervall << endl;
+log() << "int=" << intervall << endl;
 
 	model->initialize();
 
@@ -80,14 +77,10 @@ cout << "int=" << intervall << endl;
                    }
               }
         }
-strcpy(n_axes->label[1],"F()");	// relabel the y-axis
+n_axes->label[1] = "F()";	// relabel the y-axis
 if( screenGraphics )
 {
  screenGraphics->reset(*n_axes);
-}
-if( printDev )
-{
- printDev->setLimits(*n_axes);
 }
 
 for(i=0;i<=100000;i++){	
@@ -103,8 +96,6 @@ old_y = relativeSum;
         if( screenGraphics )
             screenGraphics->setBigPoint(xStep,relativeSum,col,psize);
 
-	    if( printDev )
-			printDev->setBits(xStep,relativeSum,col);
 
 /*	    if( screenGraphics ) 
 		screenGraphics->drawLine(old_x,old_y,xstep,relativeSum,col);

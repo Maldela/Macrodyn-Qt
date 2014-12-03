@@ -46,7 +46,7 @@ class contourline : public geometricJob {
     	
   public:
     contourline(baseModel* const, const xyRange&, const xyRange&, const xyRange&,
-        MacrodynGraphicsItem* const=NULL, printer* const=NULL);
+        MacrodynGraphicsItem* const=NULL);
 	
 	~contourline();
 	

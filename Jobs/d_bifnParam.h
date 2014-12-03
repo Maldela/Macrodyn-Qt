@@ -33,7 +33,7 @@ protected:
 public:
 	d_bifnParam(baseModel* const, 
 		const xyRange&,const xyRange&,
-        MacrodynGraphicsItem* const=NULL,printer* const=NULL);
+        MacrodynGraphicsItem* const=NULL);
 	virtual ~d_bifnParam();
 	void simulation();
 };    

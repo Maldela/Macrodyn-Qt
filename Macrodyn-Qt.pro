@@ -133,9 +133,7 @@ SOURCES += main.cpp \
     Jobs/d_bifnParam.C \
     Jobs/d_var.C \
     Jobs/density.C \
-    Jobs/density_old.C \
     Jobs/discreteBif2D.C \
-    Jobs/distribution.C \
     Jobs/floathisto2d.C \
     Jobs/geometricJob.C \
     Jobs/geometry3D.C \
@@ -159,11 +157,10 @@ SOURCES += main.cpp \
     Jobs/timeSeriesSet.C \
     Graphics/macrodyngraphicsitem.cpp \
     axes.C \
-    Printer/printBaup.C \
-    Printer/printer.C \
     hashTab.C \
     MDMap.C \
-    logger.cpp
+    logger.cpp \
+    Jobs/distributionJob.C
 
 RESOURCES += qml.qrc
 
@@ -313,7 +310,6 @@ HEADERS += \
     Jobs/d_var.h \
     Jobs/density.h \
     Jobs/discreteBif2D.h \
-    Jobs/distribution.h \
     Jobs/floathisto2d.h \
     Jobs/geometricJob.h \
     Jobs/geometry3D.h \
@@ -337,9 +333,7 @@ HEADERS += \
     Jobs/timeSeriesSet.h \
     Graphics/macrodyngraphicsitem.h \
     axes.h \
-    Printer/axes.h \
-    Printer/printer.h \
-    Printer/sim.h \
     hashTab.h \
     MDMap.h \
-    logger.h
+    logger.h \
+    Jobs/distributionJob.h

@@ -23,12 +23,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 color_plot::color_plot(int p_size, baseModel* const cMod,const xyRange& axes,
-          MacrodynGraphicsItem* const graph, printer* const pDev)
-          :geometricJob(cMod,axes,graph,pDev)
+          MacrodynGraphicsItem* const graph)
+          :geometricJob(cMod,axes,graph)
 {
     limit= length / 10;			// 10% are thrown away
 //    limit=0;
-    strcpy(zLabel,axes.label[2]);
+    strcpy(zLabel,axes.label[2].toLatin1().data());
     zParam=model->setLabels(zLabel);
     if( !zParam )
 	fatalError("color_plot::color_plot  Can not find z label ",zLabel);
@@ -80,15 +80,12 @@ if(*zParam<zmax)
           } 
 	}
 		if( screenGraphics ) 
-			screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
-		if( printDev )
-			printDev->setBits(*xParam,*yParam,col);
+            screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
      }	
    
-   cout << "min=" << min << "\t max=" << max << endl;
+   log() << "min=" << min << "\t max=" << max << endl;
 
- if( screenGraphics ) 
-	screenGraphics->draw_color_count();
+ //TODO if( screenGraphics ) screenGraphics->draw_color_count();
 }
 if((zmax > 0) && (zmin < 0)){
     qreal smin=zmin/cmax; // 17 colors under Zero 
@@ -120,13 +117,10 @@ if((zmax > 0) && (zmin < 0)){
 			}
 		}
 		if( screenGraphics ) 
-			screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
-		if( printDev )
-			printDev->setBits(*xParam,*yParam,col);
+            screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
 	}
- cout << "min=" << min << "\t max=" << max << endl;
- if( screenGraphics ) 
-	screenGraphics->draw_color_count();
+ log() << "min=" << min << "\t max=" << max << endl;
+//TODO if( screenGraphics ) screenGraphics->draw_color_count();
 }
 if(zmax>0 && zmin >= 0)
 {	
@@ -147,15 +141,12 @@ if(*zParam>zmin){
            }
           }
 }		if( screenGraphics ) 
-			screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
-		if( printDev )
-			printDev->setBits(*xParam,*yParam,col); 
+            screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
      }	
    
-   cout << "min=" << min << "\t max=" << max << endl;
+   log() << "min=" << min << "\t max=" << max << endl;
 
- if( screenGraphics ) 
-	screenGraphics->draw_color_count();
+//TODO if( screenGraphics ) screenGraphics->draw_color_count();
 	
 }
 }

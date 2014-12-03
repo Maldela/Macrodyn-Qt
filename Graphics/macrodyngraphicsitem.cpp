@@ -1,5 +1,4 @@
 #include "macrodyngraphicsitem.h"
-#include "../Printer/printer.h"
 
 MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
@@ -10,7 +9,7 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     upmargin = UPMARGIN;
 }
 
-MacrodynGraphicsItem::paint(QPainter *painter)
+void MacrodynGraphicsItem::paint(QPainter *painter)
 {
     painter->drawImage(0, 0, *image);
 }
@@ -498,7 +497,7 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
             x3=axis->min[0];
         }
     }
-    //cout << "coordinates: ("<<x2<<","<<y2<<") ("<<x3<<","<<y3<<")"<<endl;
+    //log() << "coordinates: ("<<x2<<","<<y2<<") ("<<x3<<","<<y3<<")"<<endl;
     getCoordinates(x2,y2,pixX0,pixY0);
     getCoordinates(x3,y3,pixX1,pixY1);
 

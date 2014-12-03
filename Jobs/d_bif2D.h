@@ -40,8 +40,7 @@ class d_bif2D : public geometricJob {
     int		x_res;
     
   public:
-    d_bif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    d_bif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void setStepX(const qreal&);
     void simulation();
 };
@@ -62,8 +61,7 @@ class d_bif2D : public geometricJob {
 
 class d_bif2D_f2 : public d_bif2D {
   public:
-    d_bif2D_f2(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    d_bif2D_f2(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 
@@ -83,8 +81,7 @@ class d_bif2D_f2 : public d_bif2D {
 
 class d_bif2D_f4 : public d_bif2D {
   public:
-    d_bif2D_f4(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    d_bif2D_f4(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

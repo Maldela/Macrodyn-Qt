@@ -60,7 +60,8 @@ class hashTable {
     qreal whichCell(const qreal**) const; // computes the cell number of
         			// the state space that has been hit
     unsigned hashFunction(const qreal&); // the hash function
-    ofstream logFile;
+    QTextStream logFile;
+
   public:
     hashTable(const unsigned&,const xyRange&);    // constructor
     virtual ~hashTable();	   // destructor

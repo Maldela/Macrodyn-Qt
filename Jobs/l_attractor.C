@@ -26,8 +26,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 l_attractor::l_attractor(baseModel* const bMod,const xyRange& axes,
-                  MacrodynGraphicsItem* const graph, printer* const outDev, int psize)
-                        : attractor(bMod,axes,graph,outDev)
+                  MacrodynGraphicsItem* const graph, int psize)
+                        : attractor(bMod,axes,graph)
 {
 	pointsize = psize;
 }                                      
@@ -65,13 +65,6 @@ void l_attractor::simulation()
 		(short)((t/colChange)+1),pointsize);
 	    }
 	                                                 // and draw them
-	    if( printDev ){
-		printDev->drawLine(old_x,old_y,*xParam,*yParam,
-			  	  (short)((t/colChange)+1));
-		if ( pointsize > 1 )
-		printDev->setBigPoint(old_x,old_y,(short)((t/colChange)+1),
-		pointsize);
-	    }
 	}
     }
 }

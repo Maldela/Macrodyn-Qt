@@ -30,15 +30,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 indicator_2d::indicator_2d(baseModel* const bMod, xyRange & axes, 
-                   MacrodynGraphicsItem* const graph, printer* const outDev)
-                      :geometricJob(bMod,axes,graph,outDev),
+                   MacrodynGraphicsItem* const graph)
+                      :geometricJob(bMod,axes,graph),
                        n_colors(30)
 {
     stepX=(xmax-xmin) / (1.0*axes.res[0]);
     stepY=(ymax-ymin) / (1.0*axes.res[1]);
     zmin=axes.min[2];	// save the bounderies for the range
     zmax=axes.max[2];	// of encoding of the indicator function
-    strcpy(zLabel,axes.label[2]);
+    strcpy(zLabel,axes.label[2].toLatin1().data());
     zParam=model->setLabels(zLabel);	// get the pointer to the indicator value
     if( !zParam )
 	error("indicator::indicator: Undefined label %s",zLabel);
@@ -79,9 +79,6 @@ void indicator_2d::simulation()
         color=get_encoding();
         if( screenGraphics ) {
           screenGraphics->setPoint(rx,ry,color);
-        }
-        if( printDev ) {
-          printDev->setBits(rx,ry,color);
         }
       }
     }

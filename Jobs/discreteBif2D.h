@@ -25,8 +25,7 @@ class discreteBif2D : public geometricJob {
     short stepX;                      // stepsize on the x-axis
     
   public:
-    discreteBif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-		  printer* const=NULL);
+    discreteBif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

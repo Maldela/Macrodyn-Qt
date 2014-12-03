@@ -25,9 +25,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 timeSeriesPlot_Loop::timeSeriesPlot_Loop(int l_size, baseModel* const bMod,char* const label,
-                   MacrodynGraphicsItem* const graph, printer* const outDev,
+                   MacrodynGraphicsItem* const graph,
 			       char* const fileName,int const mp_num,char** const mp_ptr)
-          :timeSeriesJob(bMod,label,graph,outDev)
+          :timeSeriesJob(bMod,label,graph)
 {
    loop_size = l_size;
 /*    if( fileName )
@@ -101,13 +101,13 @@ void timeSeriesPlot_Loop::simulation()
     	for(t=1;t<=length;t++) {
 			model->iteration(t);
 	    }
-//	    cout << "\nmodelVar (i=" << i << ") = " << *modelVar;
+//	    log() << "\nmodelVar (i=" << i << ") = " << *modelVar;
 		temp = *modelVar;
 		temp = ((temp>0) ? temp : (-temp));			
 		sum += temp;				
 	}
 	mean_error = sum / qreal(loop_size);	
-	cout << "\nmean_error = " << mean_error << endl;
+	log() << "\nmean_error = " << mean_error << endl;
 }
 
 

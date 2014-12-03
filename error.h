@@ -11,6 +11,7 @@
 #include <QString>
 
 void fatalError(const QString&, const QString&);
+void fatalError(const char *, const char *);
 void error(const QString&, const QString &arg2 = "");
 
 #endif

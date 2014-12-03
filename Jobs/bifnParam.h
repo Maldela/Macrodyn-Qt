@@ -33,7 +33,7 @@ class bifnParam : public bif2D {
 //    bifnParam(baseModel* const, const xyRange&,
      bifnParam(baseModel* const, 
 		       const xyRange&,const xyRange&,
-               MacrodynGraphicsItem* const=NULL,printer* const=NULL);
+               MacrodynGraphicsItem* const=NULL);
     virtual ~bifnParam();
     void simulation();
 };    

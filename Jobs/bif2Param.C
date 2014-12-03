@@ -18,12 +18,12 @@
 /******************************************************************************/
 
 bif2Param::bif2Param(baseModel* const bMod, const xyRange& axes,
-              MacrodynGraphicsItem* const graph, printer* const outDev)
-          :bif2D(bMod,axes,graph,outDev)
+              MacrodynGraphicsItem* const graph)
+          :bif2D(bMod,axes,graph)
 {
     zmin=axes.min[2];			// save the bounderies for the second
     zmax=axes.max[2];			// bifurcation parameter
-    strcpy(zLabel,axes.label[2]);
+    strcpy(zLabel,axes.label[2].toLatin1().data());
     zParam=model->setLabels(zLabel);	// get the pointer to the second
 					// bifurcation parameter
     if( !zParam )
@@ -60,8 +60,7 @@ void bif2Param::simulation()
 		if( t > limit && inRange(dummy_x,*yParam) ) {
             if( screenGraphics )
             screenGraphics->setPoint(dummy_x,*yParam,9);
-            if( printDev )
-			printDev->setBits(dummy_x,*yParam);
+
 		}
 	    }
 	}

@@ -40,7 +40,7 @@ class geometricJob : public job
                                        // returns wether the simulation results
                                        // are inside the considered section
   public:
-    geometricJob(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL, printer* const=NULL);
+    geometricJob(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~geometricJob();
     virtual void simulation()=0;
 };

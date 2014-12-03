@@ -27,8 +27,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 phase_plot::phase_plot(long lag, baseModel* const bMod,const xyRange& axes,
-              MacrodynGraphicsItem* const graph, printer* const outDev, int psize)
-          :geometricJob(bMod,axes,graph,outDev)
+              MacrodynGraphicsItem* const graph, int psize)
+          :geometricJob(bMod,axes,graph)
 {
     limit= length / 10;			// 10% are thrown away
 //	limit = 0;
@@ -74,10 +74,7 @@ void phase_plot::simulation()
 	    if( screenGraphics ) 
 		screenGraphics->setBigPoint(fifo[fpos],*xParam,
 					 (short)((t/colChange)+1), pointsize);   
-	                                                 // and draw them
-	    if( printDev )
-		printDev->setBigPoint(fifo[fpos],*xParam,
-		               (short)((t/colChange)+1), pointsize);// build the print file
+                                                     // and draw them
 	}
 	fifo[fpos] = *xParam;	// update the value in the queue
 
@@ -95,10 +92,7 @@ void phase_plot::simulation()
 	    if( screenGraphics ) 
 		screenGraphics->setPoint(fifo[fpos],*xParam,
 					 (short)((t/colChange)+1));   
-	                                                 // and draw them
-	    if( printDev )
-		printDev->setBits(fifo[fpos],*xParam,
-		               (short)((t/colChange)+1));// build the print file
+                                                     // and draw them
 	}
 	fifo[fpos] = *xParam;	// update the value in the queue
 

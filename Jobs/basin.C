@@ -18,8 +18,8 @@
 /******************************************************************************/
 
 basin::basin(baseModel* const bMod,const xyRange& axes, char* const cycleFile,
-         MacrodynGraphicsItem* const graph,printer* const outDev)
-          :geometricJob(bMod,axes,graph,outDev)
+         MacrodynGraphicsItem* const graph)
+          :geometricJob(bMod,axes,graph)
 {
     initCycle(cycleFile,&cycle,period1); // read cycle out of a file
     stepX=(xmax-xmin) / (1.02*axes.res[0]);
@@ -165,8 +165,6 @@ void basin::simulation()
 			if( att1 ) {
                 if( screenGraphics )
                 screenGraphics->setPoint(*xParam,*yParam,9);
-                if( printDev )
-				printDev->setBits(*xParam,*yParam);
 			    break;
 			}
 		    }

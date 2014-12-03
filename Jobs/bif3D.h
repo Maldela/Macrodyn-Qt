@@ -35,7 +35,7 @@ class bif3D_2par : public geometry3D {
     
   public:
     bif3D_2par(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-      printer* const=NULL, const long=1, const long=1, const long=1);
+      const long=1, const long=1, const long=1);
     void setStepX(const qreal&);
     void setStepZ(const qreal&);
     void simulation();
@@ -55,7 +55,7 @@ class bif3D_1par : public geometry3D {
     
   public:
     bif3D_1par(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-      printer* const=NULL, const long=1, const long=1, const long=1);
+       const long=1, const long=1, const long=1);
     void setStepX(const qreal&);
     void setStepZ(const qreal&);
     void simulation();

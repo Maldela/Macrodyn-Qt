@@ -35,8 +35,7 @@ class l_attractor : public attractor {
   	int pointsize;
   
   
-    l_attractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-	      printer* const=NULL, int psize=1);
+    l_attractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL, int psize=1);
      void simulation();
 };
 

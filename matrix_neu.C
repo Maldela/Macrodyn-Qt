@@ -311,7 +311,7 @@ matrix_neu& matrix_neu::operator=(const matrix_neu& C)
 // Class name:		matrix_neu.C
 // Friend Function:	operator<<
 // Purpose:		overload the operator << to use it with matrices				
-//				Log::log()<<A is possible now
+//				log()<<A is possible now
 //
 // Author:		Andreas Starke
 // Last modified:	
@@ -737,8 +737,8 @@ if(row==2){
     qreal det;
 	det = (m[0][0] * m[1][1]) - (m[1][0] * m[0][1]);
 	if(fabs(det)<0.0000000001) {
-        Log::log() << "fabs(determinant)=" << fabs(det) << " < 0.0000000001";
-        Log::log() << "  will be set to null !!!" << endl;
+        log() << "fabs(determinant)=" << fabs(det) << " < 0.0000000001";
+        log() << "  will be set to null !!!" << endl;
 		fatalError("matrix_neu::inverse","determinant=0 break");
 	}
 	matrix_neu::mat__temp1->m[0][0] = (1/det) * m[1][1];
@@ -761,8 +761,8 @@ else{
 
 	detm=determinant();
 	if(fabs(detm)<0.0000000001) {
-        Log::log() << "fabs(determinant)=" << fabs(detm) << " < 0.0000000001";
-        Log::log() << "  will be set to null !!!" << endl;
+        log() << "fabs(determinant)=" << fabs(detm) << " < 0.0000000001";
+        log() << "  will be set to null !!!" << endl;
 		detm=0;
 	}
 	if(detm==0)
@@ -796,7 +796,7 @@ else{
 					if(i==ss)
 						i++;
 				}
-				matrix_neu::mat__temp3->m[ss][zz]=sign*(A->determinant()/detm); //[zz,ss]´=[ss,zz]
+				matrix_neu::mat__temp3->m[ss][zz]=sign*(A->determinant()/detm); //[zz,ss] =[ss,zz]
 				sign*=(-1);
 			}
 		}

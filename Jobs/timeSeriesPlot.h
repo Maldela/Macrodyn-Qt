@@ -40,7 +40,7 @@ public:
     
 public:
     timeSeriesPlot(baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
-		printer* const=NULL, char* const=NULL, int const=0, char** const=NULL);
+        char* const=NULL, int const=0, char** const=NULL);
     ~timeSeriesPlot();
     void simulation();
 };
@@ -67,7 +67,7 @@ protected:
 public:
     m_timeSeriesPlot(qreal * ivalues,
                      baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
-		     printer* const=NULL, char* const=NULL);
+             char* const=NULL);
     ~m_timeSeriesPlot( void );
     void simulation();
 };
@@ -96,7 +96,7 @@ protected:
 public:
     m_timeSeriesPlot_v( char* const,qreal * ivalues,
                      baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
-		     printer* const=NULL, char* const=NULL);
+             char* const=NULL);
     ~m_timeSeriesPlot_v( void );
     void simulation();
 };

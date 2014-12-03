@@ -1,5 +1,7 @@
 #include "logger.h"
 
+QList<Logger *> Logger::m_logger = QList<Logger *>();
+
 LoggerHelper& LoggerHelper::operator <<(const QString& str)
 {
     for (int i=0; i<Logger::m_logger.size(); i++)

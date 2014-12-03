@@ -23,13 +23,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 probability::probability(int p_size, baseModel* const cMod, xyRange& axes,
-                  MacrodynGraphicsItem* const graph,
-		          printer* const pDev)
+                  MacrodynGraphicsItem* const graph)
 
-            :geometricJob(cMod,axes,graph,pDev)
+            :geometricJob(cMod,axes,graph)
 
 {
-    strcpy(xLabel,axes.label[0]);
+    strcpy(xLabel,axes.label[0].toLatin1().data());
     xParam=model->setLabels(xLabel);
     if( !xParam )
 	fatalError("probability::probability  Can not find z label ",xLabel);
@@ -78,14 +77,10 @@ void probability::simulation()
                    }
               }
         }
-strcpy(n_axes->label[1],"1-F()");	// relabel the y-axis
+n_axes->label[1] = "1-F()";	// relabel the y-axis
 if( screenGraphics ) 
 {
  screenGraphics->reset(*n_axes);
-}
-if( printDev )
-{
- printDev->setLimits(*n_axes);
 }
 
 for(i=0;i<=100000;i++){	
@@ -101,8 +96,6 @@ old_y = relativeSum;
 	    if( screenGraphics ) 
 			screenGraphics->setBigPoint(xStep,prob,col,psize);
 
-	    if( printDev )
-			printDev->setBits(xStep,prob,col);
 
 /*	    if( screenGraphics ) 
 		screenGraphics->drawLine(old_x,old_y,xStep,relativeSum,col);

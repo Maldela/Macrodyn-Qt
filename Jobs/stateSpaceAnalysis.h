@@ -26,8 +26,7 @@ class stateSpaceAnalysis: public attractor {
     const qreal **stateVars;
 
   public:
-    stateSpaceAnalysis(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-		       printer* const=NULL);
+    stateSpaceAnalysis(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~stateSpaceAnalysis();
     void simulation();
 };

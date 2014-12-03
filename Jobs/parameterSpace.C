@@ -19,19 +19,18 @@
 
 parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes, 
                    const xyRange& stateSpaceLim,
-                   MacrodynGraphicsItem* const graph,
-			       printer* const outDev)
-               :bif2D(bMod,axes,graph,outDev), stateSpace(stateSpaceLim)
+                   MacrodynGraphicsItem* const graph)
+               :bif2D(bMod,axes,graph), stateSpace(stateSpaceLim)
 {
     hash->resetDomain(stateSpace);        // save bounderies of the state
 					  // space section
     stepY=(ymax-ymin)/(axes.res[1]-1);
     stateVars=new const qreal* [stateSpace.dimension];
     if( !stateVars )
-	fatalError("parameterSpace::parameterSpace",
-		   "Can't create vector of state variables");
+    fatalError("parameterSpace::parameterSpace",
+           "Can't create vector of state variables");
     for(int i=0;i<stateSpace.dimension;i++) {
-	stateVars[i]=model->setLabels(stateSpace.label[i]);
+    stateVars[i]=model->setLabels(stateSpace.label[i].toLatin1().data());
                                           // get pointer to the model var.
 	if( !stateVars[i] )
 	    fatalError("parameterSpace::parameterSpace",
@@ -52,7 +51,7 @@ parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes,
 parameterSpace::~parameterSpace()
 {
     if( stateVars )
-	delete stateVars;
+    delete stateVars;
 }
 
 /******************************************************************************/
@@ -81,34 +80,33 @@ void parameterSpace::simulation()
 	for(*yParam=ymin;*yParam<=ymax;*yParam+=stepY) {
 	    model->initialize();
 	    for(t=0;t<length;t++) {
-		model->iteration(t+1);
-		if( t > limit ) {
-		    if( hash->storePoint(stateVars) ) {
-			    hash->resetHashTable();
-			    order=-1;    // out of domain, leave it blue
-//			    cout << *(stateVars[0]) << endl;
-			    break;
-		    }
-		    if( !(t % tDiv) || (t==(length-1)) ) 
-			if ( (order=hash->orderOfCycle()) ) {
-			    hash->resetHashTable();
-			    break;	// a cycle has been detected
-					// so the analysis of this parameterset
-					// can be terminated and the hash table
-					// should be initialized for the next 
-					// parameterset
-			}
-		        else
-			    hash->resetHashTable();
-					// a new analysis has to be done
-					// clean the hash table for the new
-					// simulation results
-		}
+            model->iteration(t+1);
+            if( t > limit ) {
+                if( hash->storePoint(stateVars) ) {
+                    hash->resetHashTable();
+                    order=-1;    // out of domain, leave it blue
+    //			    log() << *(stateVars[0]) << endl;
+                    break;
+                }
+                if( !(t % tDiv) || (t==(length-1)) ) {
+                    if ( (order=hash->orderOfCycle()) ) {
+                        hash->resetHashTable();
+                        break;	// a cycle has been detected
+                            // so the analysis of this parameterset
+                            // can be terminated and the hash table
+                            // should be initialized for the next
+                            // parameterset
+                    }
+                    else
+                    hash->resetHashTable();
+                        // a new analysis has to be done
+                        // clean the hash table for the new
+                        // simulation results
+                }
+            }
 	    }
 	    if( screenGraphics ) 
-		screenGraphics->setPoint(*xParam,*yParam,order+1);
-	    if( printDev )
-		printDev->setBits(*xParam,*yParam,order+1);
+        screenGraphics->setPoint(*xParam,*yParam,order+1);
 	}
     }
 }

@@ -17,8 +17,8 @@
 /******************************************************************************/
 
 cellBif2D::cellBif2D(baseModel* const bMod, const xyRange& axes, 
-          MacrodynGraphicsItem* const graph, printer* const outDev)
-          :bif2D(bMod,axes,graph,outDev)
+          MacrodynGraphicsItem* const graph)
+          :bif2D(bMod,axes,graph)
 {
 }
 
@@ -52,9 +52,7 @@ void cellBif2D::simulation()
 				       // section under consideration are
 				       // analysed
 		if( screenGraphics )
-		    screenGraphics->setPoint(*xParam,*yParam,9);
-		if( printDev )
-		    printDev->setBits(*xParam,*yParam);
+            screenGraphics->setPoint(*xParam,*yParam,9);
 	    }
 	}
     }

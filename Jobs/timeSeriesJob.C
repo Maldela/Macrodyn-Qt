@@ -17,8 +17,8 @@
 /******************************************************************************/
 
 timeSeriesJob::timeSeriesJob(baseModel* const bMod,char* const label,
-                 MacrodynGraphicsItem* const graph, printer* const outDev)
-          :job(bMod,graph,outDev)
+                 MacrodynGraphicsItem* const graph)
+          :job(bMod,graph)
 {
     timeSeriesqreal=new qreal[length+1];
     if( !timeSeriesqreal )

@@ -36,8 +36,7 @@ class powerSpec : public timeSeriesJob {
     const qreal Pi;
     const window win;
   public:
-    powerSpec(baseModel* const,const window&, char* const, MacrodynGraphicsItem* const=NULL,
-	      printer* const=NULL);
+    powerSpec(baseModel* const,const window&, char* const, MacrodynGraphicsItem* const=NULL);
     virtual ~powerSpec();
     void simulation();
 };

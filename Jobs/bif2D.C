@@ -17,8 +17,8 @@
 /******************************************************************************/
 
 bif2D::bif2D(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, printer* const outDev)
-          :geometricJob(bMod,axes,graph,outDev)
+         MacrodynGraphicsItem* const graph)
+          :geometricJob(bMod,axes,graph)
 {
     length=model->getLength();
     limit=(long)(0.2*length);			// 20% are thrown away
@@ -64,8 +64,7 @@ void bif2D::simulation()
 			// analysed
         if( screenGraphics )
             screenGraphics->setPoint(dummy_x,*yParam,9);
-        if( printDev )
-		    printDev->setBits(dummy_x,*yParam,9);
+
 	    }
 	}
     }

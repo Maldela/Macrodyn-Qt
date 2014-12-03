@@ -36,8 +36,7 @@ class basin : public geometricJob {
                                        // to the cycle or not
 
   public:
-    basin(baseModel* const,const xyRange&, char* const, MacrodynGraphicsItem* const=NULL,
-      printer* const=NULL);
+    basin(baseModel* const,const xyRange&, char* const, MacrodynGraphicsItem* const=NULL);
     virtual ~basin();
     void setStepX(const qreal&);
     void simulation();

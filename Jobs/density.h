@@ -43,8 +43,7 @@ class density_1d : public geometricJob {
 				// for the relative count        
     
   public:
-    density_1d(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    density_1d(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 
@@ -73,8 +72,7 @@ class density_1d_1p : public density_1d {
     qreal *zParam;
     
   public:
-    density_1d_1p(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    density_1d_1p(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 
@@ -98,8 +96,7 @@ class density_1d_var : public density_1d_1p {
     long int var_res;
     
   public:
-    density_1d_var(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL,
-	  printer* const=NULL);
+    density_1d_var(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL);
     void simulation();
     void plot_current_data(long how_many);
     void save_current_picture(long how_many);

@@ -9,7 +9,6 @@
 #define JOB_H
 #include "../Models/baseModel.h"
 #include "../Graphics/macrodyngraphicsitem.h"
-#include "../Printer/printer.h"
 
 /******************************************************************************/
 /*                                                                            */
@@ -28,12 +27,11 @@ class job {
     long limit;                        // for limit <t<= length the simulations
                                        // output is examined
     baseModel* const model;            // model to analysed
-    MacrodynGraphicsItem* const screenGraphics;    // the output of the simulation can be
+    MacrodynGraphicsItem* screenGraphics;    // the output of the simulation can be
                                        // drawn on the screen ..
-    printer* const printDev;           // .. or printed into a PCL- or PS-File
   public:
-    job(baseModel * const, QObject * = NULL, printer * const = NULL);
-    job(baseModel * const, const long&, const long&, QObject * = NULL, printer * const = NULL);
+    job(baseModel * const, MacrodynGraphicsItem * = NULL);
+    job(baseModel * const, const long&, const long&, MacrodynGraphicsItem * = NULL);
     virtual ~job()=0;
     virtual void setStepX(const qreal&);
     virtual void simulation()=0;

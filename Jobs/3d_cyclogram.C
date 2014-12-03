@@ -20,10 +20,9 @@
 cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes, 
 			       const xyRange& stateSpaceLim, 
                    MacrodynGraphicsItem* const graph,
-                   printer* const outDev,
 			       const long bif3D_dx, const long bif3D_dy,
 			       const long bif3D_dz)
-               :bif3D_2par(bMod,axes,graph,outDev, bif3D_dx, bif3D_dy, bif3D_dz), stateSpace(stateSpaceLim)
+               :bif3D_2par(bMod,axes,graph, bif3D_dx, bif3D_dy, bif3D_dz), stateSpace(stateSpaceLim)
 {
     hash->resetDomain(stateSpace);        // save bounderies of the state
 					  // space section
@@ -41,14 +40,14 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
     
     stateVars=new const qreal* [stateSpace.dimension];
     if( !stateVars )
-	fatalError("cyclogram_3d::cyclogram_3d",
-		   "Can't create vector of state variables");
+    fatalError("cyclogram_3d::cyclogram_3d",
+           "Can't create vector of state variables");
     for(int i=0;i<stateSpace.dimension;i++) {
-	stateVars[i]=model->setLabels(stateSpace.label[i]);
+    stateVars[i]=model->setLabels(stateSpace.label[i].toLatin1().data());
                                           // get pointer to the model var.
-	if( !stateVars[i] )
-	    fatalError("cyclogram_3d::cyclogram_3d",
-		       "illegal state variable specified");
+    if( !stateVars[i] )
+        fatalError("cyclogram_3d::cyclogram_3d",
+               "illegal state variable specified");
     }
     limit = length / 10;		  // 10% are thrown away
 }
@@ -65,7 +64,7 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
 cyclogram_3d::~cyclogram_3d()
 {
     if( stateVars )
-	delete stateVars;
+    delete stateVars;
 }
 
 /******************************************************************************/
@@ -134,30 +133,31 @@ void cyclogram_3d::simulation()
 		    *zParam=dummy_z;
 		    model->initialize();
 		    for(t=0;t<length;t++) {
-			model->iteration(t+1);
-			if( t > limit ) {
-			    if( hash->storePoint(stateVars) ) {
-				    hash->resetHashTable();
-				    order=-1;    // out of domain, leave it blue
-	//			    cout << *(stateVars[0]) << endl;
-				    break;
-			    }
-			    if( !(t % tDiv) || (t==(length-1)) ) 
-				if ( (order=hash->orderOfCycle()) ) {
-				    hash->resetHashTable();
-				    break;	// a cycle has been detected
-						// so the analysis of this parameterset
-						// can be terminated and the hash table
-						// should be initialized for the next 
-						// parameterset
-				}
-		        	else
-				    hash->resetHashTable();
-						// a new analysis has to be done
-						// clean the hash table for the new
-						// simulation results
-			}
-	    	    }
+                model->iteration(t+1);
+                if( t > limit ) {
+                    if( hash->storePoint(stateVars) ) {
+                        hash->resetHashTable();
+                        order=-1;    // out of domain, leave it blue
+        //			    cout << *(stateVars[0]) << endl;
+                        break;
+                    }
+                    if( !(t % tDiv) || (t==(length-1)) ) {
+                        if ( (order=hash->orderOfCycle()) ) {
+                            hash->resetHashTable();
+                            break;	// a cycle has been detected
+                                // so the analysis of this parameterset
+                                // can be terminated and the hash table
+                                // should be initialized for the next
+                                // parameterset
+                        }
+                        else
+                        hash->resetHashTable();
+                            // a new analysis has to be done
+                            // clean the hash table for the new
+                            // simulation results
+                    }
+                }
+            }
 		    data[count_x][count_y][count_z] = char( order+1 );
 		}
 	}

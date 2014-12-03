@@ -31,9 +31,8 @@
 
 max_lyapunov_exp_1d::max_lyapunov_exp_1d(baseModel* const bMod,
 				       xyRange& axes,
-                       MacrodynGraphicsItem* const graph,
-				       printer* const outDev)
-          :geometricJob(bMod,axes,graph,outDev), eps(0.0001)
+                       MacrodynGraphicsItem* const graph)
+          :geometricJob(bMod,axes,graph), eps(0.0001)
 {
     stepX=(xmax-xmin) / (1.00*axes.res[0]); // 1.02 -> 1.00
     n_axes = & axes;
@@ -107,23 +106,17 @@ void max_lyapunov_exp_1d::simulation()
   l_max=ceil(l_max);
 //  n_axes->min[1]=l_min;
 //  n_axes->max[1]=l_max;
-  strcpy(n_axes->label[1],"lyap");
+  n_axes->label[1] = "lyap";
 
   if( screenGraphics ) {
     screenGraphics->reset(*n_axes);
   }
-  if( printDev ){
-    printDev->setLimits(*n_axes);
-  }
+
 
   for( *xParam=xmin, l=0; *xParam<=xmax ;*xParam += stepX, l++) {
     if( screenGraphics ) {
       screenGraphics->setPoint(*xParam,l_vals[l],color);
       screenGraphics->setPoint(*xParam,zero,z_color);
-    }
-    if( printDev ) {
-      printDev->setBits(*xParam,l_vals[l],color);
-      printDev->setBits(*xParam,zero,z_color);
     }
   }
   delete [] l_vals;
@@ -157,9 +150,8 @@ void max_lyapunov_exp_1d::evaluate( long t ) {
 
 max_lyapunov_exp_2d::max_lyapunov_exp_2d(baseModel* const bMod,
 				       xyRange& axes,
-                       MacrodynGraphicsItem* const graph,
-				       printer* const outDev)
-		:max_lyapunov_exp_1d(bMod,axes,graph,outDev),
+                       MacrodynGraphicsItem* const graph)
+        :max_lyapunov_exp_1d(bMod,axes,graph),
 		n_colors(30)
 {
     stepY=(ymax-ymin) / (1.00*axes.res[1]); // 1.02 -> 1.00
@@ -188,11 +180,11 @@ void max_lyapunov_exp_2d::simulation()
     const qreal l_exp_eps=0.000001;
     qreal  l_exp_old;
     qreal  l_exp_diff = 0;
-  cout << "\nData-file for conversion to xpm-file" << endl;
-  cout << "Format: y x z" << endl;
-  cout << "xparam" << "\t"<< xmin << "\t"<< xmax << "\t" << (xmax-xmin)/stepX << endl;
-  cout << "yparam" << "\t"<< ymin << "\t"<< ymax << "\t" << (ymax-ymin)/stepY << endl; 
-  cout << "\nSTART DATA NOW:" << endl;
+  log() << "\nData-file for conversion to xpm-file" << endl;
+  log() << "Format: y x z" << endl;
+  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\t" << (xmax-xmin)/stepX << endl;
+  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\t" << (ymax-ymin)/stepY << endl;
+  log() << "\nSTART DATA NOW:" << endl;
  
  for( *yParam=ymax; *yParam>=(ymin-stepY/2) ;*yParam -= stepY) { 
     if (*yParam < ymin)
@@ -219,13 +211,10 @@ void max_lyapunov_exp_2d::simulation()
       if( screenGraphics ) {
         screenGraphics->setPoint(*xParam,*yParam,color);
       }
-      if( printDev ) {
-        printDev->setBits(*xParam,*yParam,color);
-      }
-      cout << *yParam << "\t" << *xParam << "\t" << l_exp <<  endl;
+      log() << *yParam << "\t" << *xParam << "\t" << l_exp <<  endl;
     }  
   }
-   cout << "STOP DATA NOW\n" << endl;
+   log() << "STOP DATA NOW\n" << endl;
 }
 
 int max_lyapunov_exp_2d::get_encoding( void ) {
@@ -254,9 +243,8 @@ int max_lyapunov_exp_2d::get_encoding( void ) {
 
 max_lyapunov_exp_t::max_lyapunov_exp_t(baseModel* const bMod,
 				       xyRange& axes,
-                       MacrodynGraphicsItem* const graph,
-				       printer* const outDev)
-          :max_lyapunov_exp_1d(bMod,axes,graph,outDev)
+                       MacrodynGraphicsItem* const graph)
+          :max_lyapunov_exp_1d(bMod,axes,graph)
 {
 }                                      
 
@@ -302,17 +290,14 @@ void max_lyapunov_exp_t::simulation()
   l_min=floor(l_min);
   l_max=ceil(l_max);
   
-  strcpy(n_axes->label[0],"t");
+  n_axes->label[0] = "t";
   
 //  n_axes->min[1]=l_min;
 //  n_axes->max[1]=l_max;
-  strcpy(n_axes->label[1],"lyap");
+  n_axes->label[1] = "lyap";
 
   if( screenGraphics ) {
     screenGraphics->reset(*n_axes);
-  }
-  if( printDev ){
-    printDev->setLimits(*n_axes);
   }
 
   for( t=0;t<length;t++ ) {
@@ -320,10 +305,6 @@ void max_lyapunov_exp_t::simulation()
     if( screenGraphics ) {
       screenGraphics->setPoint(t_qreal,l_vals[t],color);
       screenGraphics->setPoint(t_qreal,zero,z_color);
-    }
-    if( printDev ) {
-      printDev->setBits(t_qreal,l_vals[t],color);
-      printDev->setBits(t_qreal,zero,z_color);
     }
   }
   delete [] l_vals;

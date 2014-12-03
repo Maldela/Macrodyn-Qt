@@ -102,14 +102,14 @@ xyRange::xyRange(const xyRange& src)
 /* Last modified:   22.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
-bool xyRange::inRange(const QList<qreal>& toCheck) const
+bool xyRange::inRange(const qreal **toCheck) const
 {
     bool result = true;
     int i = 0;
 
-    while (result && i < dimension && i < toCheck.size())
+    while (result && i < dimension)
     {
-        result = (toCheck[i] >= min[i]) && (toCheck[i] <= max[i]);
+        result = (*toCheck[i] >= min[i]) && (*toCheck[i] <= max[i]);
         i++;
     }
     return result;

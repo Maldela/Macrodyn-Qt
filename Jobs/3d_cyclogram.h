@@ -40,7 +40,7 @@ class cyclogram_3d : public bif3D_2par {
     
   public:
     cyclogram_3d(baseModel* const, const xyRange&, const xyRange&,
-           MacrodynGraphicsItem* const=NULL,printer* const=NULL, const long=1,
+           MacrodynGraphicsItem* const=NULL, const long=1,
 		   const long=1, const long=1);
     virtual ~cyclogram_3d();
     void simulation();

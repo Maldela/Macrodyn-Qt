@@ -17,8 +17,8 @@
 /******************************************************************************/
 
 attractor::attractor(baseModel* const bMod,const xyRange& axes,
-             MacrodynGraphicsItem* const graph, printer* const outDev)
-          :geometricJob(bMod,axes,graph,outDev)
+             MacrodynGraphicsItem* const graph)
+          :geometricJob(bMod,axes,graph)
 {
     limit= length / 10;			// 10% are thrown away
 }                                      
@@ -45,25 +45,23 @@ void attractor::simulation()
     model->initialize();
 
     for(long t=0;t<length;t++) {
-	model->iteration(t+1);
-	if( t >= limit && inRange(*xParam,*yParam) ) {
-//	    hash->storePoint(state);     // save the results
-        if( screenGraphics )
-        screenGraphics->setPoint(*xParam,*yParam,
-                     (short)((t/colChange)+1));
-	                                                 // and draw them
-	    if( printDev )
-		printDev->setBits(*xParam,*yParam,
-		               (short)((t/colChange)+1));// build the print file
-	}
+        model->iteration(t+1);
+        if( t >= limit && inRange(*xParam,*yParam) ) {
+    //	    hash->storePoint(state);     // save the results
+            if( screenGraphics )
+            screenGraphics->setPoint(*xParam,*yParam,
+                         (short)((t/colChange)+1));
+                                                         // and draw them
+
+        }
     }
 				       // look if the orbit shows a periodic
                                        // behaviour
 /***************
-    cout << "Number of hits: " << hash->numberOfHits() << endl;
-    cout << "Number of buckets: " << hash->numberOfBuckets() << endl;
-    cout << "Number of collisions: " << hash->numberOfCollisions() << endl;
-    cout << "Order of cycle: " << hash->orderOfCycle() << endl;
+    log() << "Number of hits: " << hash->numberOfHits() << endl;
+    log() << "Number of buckets: " << hash->numberOfBuckets() << endl;
+    log() << "Number of collisions: " << hash->numberOfCollisions() << endl;
+    log() << "Order of cycle: " << hash->orderOfCycle() << endl;
     *******************************/
 }
 

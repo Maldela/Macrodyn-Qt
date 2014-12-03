@@ -21,8 +21,7 @@
 
 class attractor : public geometricJob {
   public:
-    attractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-          printer* const=NULL);
+    attractor(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     void simulation();
 };
 

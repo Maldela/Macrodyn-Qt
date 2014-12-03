@@ -19,8 +19,8 @@
 
 basinTwoCycles::basinTwoCycles(baseModel* const bMod,const xyRange& axes,
 			       char* const name1, char* const name2,
-                   MacrodynGraphicsItem* const graph,printer* const outDev)
-          :basin(bMod,axes,name1,graph,outDev)
+                   MacrodynGraphicsItem* const graph)
+          :basin(bMod,axes,name1,graph)
 {
     initCycle(name2,&cycle2,period2);         // read the second cycle out of a
 					      // file
@@ -105,18 +105,14 @@ void basinTwoCycles::simulation()
 			record=0;
 			att1=isAttracting(lastOrbit,cycle,period1);
 			att2=isAttracting(lastOrbit,cycle2,period2);
-            if( (att1 || att2) && (screenGraphics || printDev) ) {
+            if( (att1 || att2) && (screenGraphics) ) {
                 if( att1 ) {
                 if( screenGraphics )
                     screenGraphics->setPoint(*xParam,*yParam,1);
-                if( printDev )
-                    printDev->setBits(*xParam,*yParam,1);
                 }
                 else{
                 if( screenGraphics )
                     screenGraphics->setPoint(*xParam,*yParam,6);
-                if( printDev )
-                    printDev->setBits(*xParam,*yParam,3);
                 }
                 break;
             }
