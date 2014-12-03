@@ -10,6 +10,10 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     upmargin = UPMARGIN;
 }
 
+MacrodynGraphicsItem::paint(QPainter *painter)
+{
+    painter->drawImage(0, 0, *image);
+}
 
 
 /******************************************************************************/

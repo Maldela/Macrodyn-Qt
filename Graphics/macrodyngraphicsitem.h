@@ -75,6 +75,8 @@ public slots:
 
 protected:
 
+    void paint(QPainter *painter);
+
     QImage *image;
     int job;
     xyRange *axis;

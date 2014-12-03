@@ -96,7 +96,6 @@ SOURCES += main.cpp \
     PublicModels/perturbedDelayedLogisticMap.C \
     matrix_neu.C \
     matrix.C \
-    log.cpp \
     distri/cauchy_distri.C \
     distri/chi_square_distri.C \
     distri/discrete_distri.C \
@@ -163,7 +162,8 @@ SOURCES += main.cpp \
     Printer/printBaup.C \
     Printer/printer.C \
     hashTab.C \
-    MDMap.C
+    MDMap.C \
+    logger.cpp
 
 RESOURCES += qml.qrc
 
@@ -274,7 +274,6 @@ HEADERS += \
     error.h \
     matrix_neu.h \
     matrix.h \
-    log.h \
     distri/cauchy_distri.h \
     distri/chi_square_distri.h \
     distri/discrete_distri.h \
@@ -342,4 +341,5 @@ HEADERS += \
     Printer/printer.h \
     Printer/sim.h \
     hashTab.h \
-    MDMap.h
+    MDMap.h \
+    logger.h
