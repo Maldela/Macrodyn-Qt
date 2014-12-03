@@ -506,12 +506,12 @@ void defaultModel::saveParamsetWithNames(ofstream& outputFile)
 
 void defaultModel::printParamset()
 {
-    Log::log() << A << "\t" << B << "\n";
-    Log::log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    Log::log() << tau << "\t" << length << "\n";
-    Log::log() << delta << "\t" << beta << "\n";
-    Log::log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    Log::log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << endl;
+    log() << A << "\t" << B << "\n";
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
+    log() << tau << "\t" << length << "\n";
+    log() << delta << "\t" << beta << "\n";
+    log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
+    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << endl;
 }
 
 /******************************************************************************/

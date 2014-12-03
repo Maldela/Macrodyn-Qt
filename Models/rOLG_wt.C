@@ -255,7 +255,7 @@ qreal x2;
 ran_rec = rand_dis->rectangular();
 
 
-//Log::log() << "a"<<ran_rec<<"b"<<endl;
+//log() << "a"<<ran_rec<<"b"<<endl;
 ran_norm = rand_dis->st_normal();
 ran_chi = rand_dis->chi_square(dof);
 ran_cauchy = rand_dis->st_cauchy();
@@ -783,47 +783,47 @@ void rOLG_wt::print_st_olg_Paramset(st_olg_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      Log::log() << temp_paramset->type << "\n";
+      log() << temp_paramset->type << "\n";
       
       switch  (temp_paramset->type) {
       case -1:
-    Log::log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->z_0 << "\n";
       break;
       case 0 :	
-        Log::log() << temp_paramset->z_0 << "\n";
+        log() << temp_paramset->z_0 << "\n";
       break;
 	
       case 1 :		
-    Log::log() << temp_paramset->theta_type << "\n";
-    Log::log() << temp_paramset->my << "\n";
-        Log::log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->theta_type << "\n";
+    log() << temp_paramset->my << "\n";
+        log() << temp_paramset->z_0 << "\n";
 	
         i=0;
         while(i<trans_x_MAX) {
-          Log::log() << temp_paramset->trans_x[i] << "\n";
+          log() << temp_paramset->trans_x[i] << "\n";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       Log::log() << "\n";
+       log() << "\n";
        for (int j=0;j<i;j++) {
-     Log::log() << temp_paramset->trans_a[j] << "\n";
+     log() << temp_paramset->trans_a[j] << "\n";
 	}
-    Log::log() << "\n";
+    log() << "\n";
        for (int j=0;j<i;j++) {
-     Log::log() << temp_paramset->trans_b[j] << "\n";
+     log() << temp_paramset->trans_b[j] << "\n";
 	}
-        Log::log() << "\n";
+        log() << "\n";
         break;
    
       case 2:
-        Log::log() << temp_paramset->zvar_expr << "\n";
+        log() << temp_paramset->zvar_expr << "\n";
 	  if( temp_paramset->mc_flag == 1) {
-         Log::log() << temp_paramset->mc_matrix << "\n";
+         log() << temp_paramset->mc_matrix << "\n";
           }
        break;
 	
-    Log::log() << "\n";
+    log() << "\n";
     }
 
  }
@@ -843,14 +843,14 @@ void rOLG_wt::print_st_olg_Paramset(st_olg_paramset *temp_paramset){
 
 void rOLG_wt::printParamset()
 {     
-    Log::log() << K_olg_0 << "\n" ;
-    Log::log() << Ez_0 << "\n";
+    log() << K_olg_0 << "\n" ;
+    log() << Ez_0 << "\n";
     print_st_olg_Paramset(z_st_paramset);			
-    Log::log() << A_olg << "\n";
-    Log::log() << delta_olg << "\n" ;
-    Log::log() << n_olg << "\n";
-    Log::log() << alpha_olg << "\n";
-    Log::log() << length << "\n";
-    Log::log() << "\n";
+    log() << A_olg << "\n";
+    log() << delta_olg << "\n" ;
+    log() << n_olg << "\n";
+    log() << alpha_olg << "\n";
+    log() << length << "\n";
+    log() << "\n";
     baseModel::printParamset();
 } 

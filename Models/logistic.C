@@ -203,9 +203,9 @@ void logistic::saveParamset(ofstream& outFile)
 
 void logistic::printParamset()
 {
-    Log::log() << x0 << endl;
-    Log::log() << alpha << endl;
-    Log::log() << length << endl;
+    log() << x0 << endl;
+    log() << alpha << endl;
+    log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -444,10 +444,10 @@ void rlogistic::saveParamset(ofstream& outFile)
 
 void rlogistic::printParamset()
 {
-    Log::log() << zvar_name << endl;
-    Log::log() << zvar_expr << endl;
-    Log::log() << a << endl;
-    Log::log() << b << endl;
+    log() << zvar_name << endl;
+    log() << zvar_expr << endl;
+    log() << a << endl;
+    log() << b << endl;
     logistic::printParamset();
 }
 

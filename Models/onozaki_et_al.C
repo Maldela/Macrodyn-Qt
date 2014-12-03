@@ -180,11 +180,11 @@ void onozaki_et_al::saveParamset(ofstream& outFile)
 
 void onozaki_et_al::printParamset()
 {
-    Log::log() << z_0 << endl;
-    Log::log() << alpha << endl;
-    Log::log() << beta << endl;
+    log() << z_0 << endl;
+    log() << alpha << endl;
+    log() << beta << endl;
     
-    Log::log() << length << endl;
+    log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

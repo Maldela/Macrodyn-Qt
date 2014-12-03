@@ -251,7 +251,7 @@ qreal* pureExchange::sendModelVar()
 
 void pureExchange::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-    Log::log() << "sendStateSpace" << endl;
+    log() << "sendStateSpace" << endl;
     if( *stateSpace )
 	delete *stateSpace;
     *stateSpace= new const qreal* [dimension];
@@ -311,13 +311,13 @@ void pureExchange::saveParamset(ofstream& outputFile)
 
 void pureExchange::printParamset()
 {
-    Log::log() << sf_type << endl;
-    Log::log() << theta_e_m1 << "\t" << theta_e_null << endl;
-    Log::log() << gamma << "\t" << p0 << endl;
-    Log::log() << w1 << "\t" << w2 << endl;
-    Log::log() << g0 << "\t" << delta << endl;
-    Log::log() << rho << "\t" << job_type << endl;
-    Log::log() << length << endl;
+    log() << sf_type << endl;
+    log() << theta_e_m1 << "\t" << theta_e_null << endl;
+    log() << gamma << "\t" << p0 << endl;
+    log() << w1 << "\t" << w2 << endl;
+    log() << g0 << "\t" << delta << endl;
+    log() << rho << "\t" << job_type << endl;
+    log() << length << endl;
 }
 
 /******************************************************************************/

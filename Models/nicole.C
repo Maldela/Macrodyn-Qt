@@ -104,9 +104,9 @@ void nicole::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void nicole::printParamset()
 {
-    Log::log() << pi << "\t" << dl << "\t" << dh << "\t" << d0 << "\t" << e  << "\t" << alpha ;
-    Log::log() << "\t" << xhat << "\t";
-    Log::log() << theta << "\t" << R << "\n" << length << "\n";
+    log() << pi << "\t" << dl << "\t" << dh << "\t" << d0 << "\t" << e  << "\t" << alpha ;
+    log() << "\t" << xhat << "\t";
+    log() << theta << "\t" << R << "\n" << length << "\n";
 }
 /******************************************************************************/
 /*                                                                            */

@@ -375,7 +375,7 @@ void linFima_wage::initialize()
 void linFima_wage::Wagebill()
 {
 	Wagebill_t=nF*wagerate_t;
-Log::log() << "Wagebill=" << Wagebill_t << endl;
+log() << "Wagebill=" << Wagebill_t << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -385,9 +385,9 @@ Log::log() << "Wagebill=" << Wagebill_t << endl;
 void linFima_wage::Savings()
 {
 	Savings_t=Wagebill_t-(pF-Ed)*xAll;
-Log::log() << "pF=" << pF << endl;
-Log::log() << "Ed=" << Ed << endl;
-Log::log() << "Savings=" << Savings_t << endl;
+log() << "pF=" << pF << endl;
+log() << "Ed=" << Ed << endl;
+log() << "Savings=" << Savings_t << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -398,10 +398,10 @@ void linFima_wage::wagerate()
 {
     qreal wagerate_max = MAX(0,Savings_t);
 	
-Log::log() << "max=" << wagerate_max << endl;
+log() << "max=" << wagerate_max << endl;
 
 	wagerate_t= (*pf)(wagerate_max,a,b,c,d)-wagerate_max*(*pf_prime)(wagerate_max,a,b,c,d);
-Log::log() << "wagerate_dyn=" << wagerate_t << endl;
+log() << "wagerate_dyn=" << wagerate_t << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -414,7 +414,7 @@ void linFima_wage::EndogenR()
 {
 qreal dummy=MAX(0,Savings_t);
 R=(1-delta)+(*pf_prime)(dummy,a,b,c,d);
-Log::log() << "R=" << R << endl;
+log() << "R=" << R << endl;
 }
 
 
@@ -426,7 +426,7 @@ void linFima_wage::iteration(const long& t)
 {
 // Die Prognosen der Chartisten und Fundamentalisten ist extern vorgeschaltet !
 
-// Dividendenprozess (zufällig)
+// Dividendenprozess (zufï¿½llig)
 	div=gamma * div + zvar->dice();
 	Ed= gamma * div + ((zetamax-zetamin)/2) ;
 
@@ -445,7 +445,7 @@ void linFima_wage::iteration(const long& t)
 		if(perfectPredictor) 
 			Fi=1/(nF*tauF)*xAll;
  			pF=R*(pF-Ed)+Fi;
-Log::log() << "pF=" << pF << endl;
+log() << "pF=" << pF << endl;
 //Mark			pF=((R*pF-r*pC-Ed)/(1-r))+(1/rF)*VF*xAll;
 		
 		 // falls Fundis extern vorgeschaltet sind, dann wird

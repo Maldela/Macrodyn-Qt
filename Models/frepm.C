@@ -206,57 +206,57 @@ void frepm::check()
 	flag=1;						// flag==1  =>  everything is ok
 	for (int i=0;i<=N-1;i++) {
 		if ((V->m[i][0]<0) || (V->m[i][0]>1)) {
-			Log::log() << "probability out of range!";
+			log() << "probability out of range!";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][1]<0) || (V->m[i][1]>=1)) {
-			Log::log() << "m1 out of range";
+			log() << "m1 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][2]<0) || (V->m[i][2]>=1)) {
-			Log::log() << "m2 out of range";
+			log() << "m2 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][3]<0) || (V->m[i][3]>=1))  {
-			Log::log() << "c1 out of range";
+			log() << "c1 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][4]<0) || (V->m[i][4]>=1))  {
-			Log::log() << "c2 out of range";
+			log() << "c2 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][5]<0) || (V->m[i][5]>=1))  {
-			Log::log() << "i1 out of range";
+			log() << "i1 out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][6]<0) || (V->m[i][6]>=1))  {
-			Log::log() << "i2 out of range";
+			log() << "i2 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][7]<0) {
-			Log::log() << "m01 out of range";
+			log() << "m01 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][8]<0) {
-			Log::log() << "m02 out of range";
+			log() << "m02 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][9]<0) {
-			Log::log() << "i01 out of range";
+			log() << "i01 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][10]<0) {
-			Log::log() << "i02 out of range";
+			log() << "i02 out of range";
 			flag=0;
 			break;
 		}
@@ -533,17 +533,17 @@ void frepm::saveParamset(ofstream& outFile)
 
 void frepm::printParamset()
 {
-    Log::log() << N  << endl;
-    Log::log() << x01 << endl;
-    Log::log() << x02 << endl;
+    log() << N  << endl;
+    log() << x01 << endl;
+    log() << x02 << endl;
 
 	for(int i=0; i<=N-1;i++) {
 		for(int j=0;j<=10;j++) {
-			Log::log() << V->m[i][j] << "\t";
+			log() << V->m[i][j] << "\t";
 		}	
 	}
 
-    Log::log() << length << endl;
+    log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

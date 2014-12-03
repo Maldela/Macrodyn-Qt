@@ -228,13 +228,13 @@ void Duopol::saveParamset(ofstream& outFile)
 
 void Duopol::printParamset()
 {
-    Log::log() << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20 << endl;
-    Log::log() << M0 << "\t" << w0 << "\t" << Pi0 << endl;
-    Log::log() << g << "\t" << tau << "\t" << B1 << "\t" << B2 << endl;
-    Log::log() << eta1 << "\t" << eta2 << "\t" << alpha1 << "\t" << alpha2 << endl;    
-    Log::log() << lambda1 << "\t" << lambda2 << "\t" << Lmax << "\t" << mu << endl;
-    Log::log() << dep << "\t" << rho << "\t" << delta << endl;
-    Log::log() << cert << "\t" << length << endl;
+    log() << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20 << endl;
+    log() << M0 << "\t" << w0 << "\t" << Pi0 << endl;
+    log() << g << "\t" << tau << "\t" << B1 << "\t" << B2 << endl;
+    log() << eta1 << "\t" << eta2 << "\t" << alpha1 << "\t" << alpha2 << endl;    
+    log() << lambda1 << "\t" << lambda2 << "\t" << Lmax << "\t" << mu << endl;
+    log() << dep << "\t" << rho << "\t" << delta << endl;
+    log() << cert << "\t" << length << endl;
 
 }
 

@@ -261,5 +261,5 @@ void milano_bcw::iteration(const long&) {  // perform one iteration
 	K_emp=virtual_Kemployment();
 	l_dem=labour_demand();
 	diseq_regime(K_emp,l_dem);
-//Log::log() << "teta1=" << teta1 << "\tunemp=" << unemp << endl;
+//log() << "teta1=" << teta1 << "\tunemp=" << unemp << endl;
 }

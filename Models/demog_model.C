@@ -221,7 +221,7 @@ void demog_model::iteration(const long& time)
 		}
 	break;
 	default:
-        Log::log() << "error in iteration!";
+        log() << "error in iteration!";
 		exit(-1);
 	};
 	theta_K = K_t;
@@ -464,7 +464,7 @@ void demog_model::loadParamset(ifstream& inFile)
 		inFile >> tax_rate_0 >> tax_rate_1 >> tax_rate_2;
 	break;
 	default: 
-        Log::log() << "demog_model::loadParamset unknown model type";
+        log() << "demog_model::loadParamset unknown model type";
 		exit(-1);
 	};
 
@@ -524,8 +524,8 @@ void demog_model::saveParamsetWithNames(ofstream& outFile)
 
 void demog_model::printParamset()
 {
-    Log::log() << "no. generations = " << k_t << endl;
-    Log::log() << "length = " << length << endl;
+    log() << "no. generations = " << k_t << endl;
+    log() << "length = " << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

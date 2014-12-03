@@ -96,7 +96,6 @@ SOURCES += main.cpp \
     PublicModels/perturbedDelayedLogisticMap.C \
     matrix_neu.C \
     matrix.C \
-    log.cpp \
     distri/cauchy_distri.C \
     distri/chi_square_distri.C \
     distri/discrete_distri.C \
@@ -114,7 +113,57 @@ SOURCES += main.cpp \
     error.C \
     eval_expr.C \
     get_expr.C \
-    strnchr.C
+    strnchr.C \
+    Jobs/3d_attractor.C \
+    Jobs/3d_cyclogram.C \
+    Jobs/acf_plot.C \
+    Jobs/attractor.C \
+    Jobs/basin.C \
+    Jobs/basinTwoCycles.C \
+    Jobs/bif2D.C \
+    Jobs/bif2Param.C \
+    Jobs/bif3D.C \
+    Jobs/bifnParam.C \
+    Jobs/cellAttractor.C \
+    Jobs/cellBif2D.C \
+    Jobs/color_plot.C \
+    Jobs/contourline.C \
+    Jobs/d_attractor.C \
+    Jobs/d_bif2D.C \
+    Jobs/d_bifnParam.C \
+    Jobs/d_var.C \
+    Jobs/density.C \
+    Jobs/density_old.C \
+    Jobs/discreteBif2D.C \
+    Jobs/distribution.C \
+    Jobs/floathisto2d.C \
+    Jobs/geometricJob.C \
+    Jobs/geometry3D.C \
+    Jobs/histo.C \
+    Jobs/indicator.C \
+    Jobs/job.C \
+    Jobs/l_attractor.C \
+    Jobs/mapping.C \
+    Jobs/max_lyapunov_exp.C \
+    Jobs/nParameterAnalysis.C \
+    Jobs/pacf_plot.C \
+    Jobs/parameterSpace.C \
+    Jobs/phase_plot.C \
+    Jobs/powerSpec.C \
+    Jobs/probability.C \
+    Jobs/simpleCellMapping.C \
+    Jobs/stateSpaceAnalysis.C \
+    Jobs/timeSeriesJob.C \
+    Jobs/timeSeriesPlot.C \
+    Jobs/timeSeriesPlot_Loop.C \
+    Jobs/timeSeriesSet.C \
+    Graphics/macrodyngraphicsitem.cpp \
+    axes.C \
+    Printer/printBaup.C \
+    Printer/printer.C \
+    hashTab.C \
+    MDMap.C \
+    logger.cpp
 
 RESOURCES += qml.qrc
 
@@ -225,7 +274,6 @@ HEADERS += \
     error.h \
     matrix_neu.h \
     matrix.h \
-    log.h \
     distri/cauchy_distri.h \
     distri/chi_square_distri.h \
     distri/discrete_distri.h \
@@ -244,4 +292,54 @@ HEADERS += \
     eval_expr.h \
     get_expr.h \
     strnchr.h \
-    Random/ranlib.h
+    Random/ranlib.h \
+    Jobs/3d_attractor.h \
+    Jobs/3d_cyclogram.h \
+    Jobs/acf_plot.h \
+    Jobs/attractor.h \
+    Jobs/basin.h \
+    Jobs/basinTwoCycles.h \
+    Jobs/bif2D.h \
+    Jobs/bif2Param.h \
+    Jobs/bif3D.h \
+    Jobs/bifnParam.h \
+    Jobs/cellAttractor.h \
+    Jobs/cellBif2D.h \
+    Jobs/color_plot.h \
+    Jobs/contourline.h \
+    Jobs/d_attractor.h \
+    Jobs/d_bif2D.h \
+    Jobs/d_bifnParam.h \
+    Jobs/d_var.h \
+    Jobs/density.h \
+    Jobs/discreteBif2D.h \
+    Jobs/distribution.h \
+    Jobs/floathisto2d.h \
+    Jobs/geometricJob.h \
+    Jobs/geometry3D.h \
+    Jobs/histo.h \
+    Jobs/indicator.h \
+    Jobs/job.h \
+    Jobs/l_attractor.h \
+    Jobs/mapping.h \
+    Jobs/max_lyapunov_exp.h \
+    Jobs/nParameterAnalysis.h \
+    Jobs/pacf_plot.h \
+    Jobs/parameterSpace.h \
+    Jobs/phase_plot.h \
+    Jobs/powerSpec.h \
+    Jobs/probability.h \
+    Jobs/simpleCellMapping.h \
+    Jobs/stateSpaceAnalysis.h \
+    Jobs/timeSeriesJob.h \
+    Jobs/timeSeriesPlot.h \
+    Jobs/timeSeriesPlot_Loop.h \
+    Jobs/timeSeriesSet.h \
+    Graphics/macrodyngraphicsitem.h \
+    axes.h \
+    Printer/axes.h \
+    Printer/printer.h \
+    Printer/sim.h \
+    hashTab.h \
+    MDMap.h \
+    logger.h

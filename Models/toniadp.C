@@ -58,14 +58,14 @@ void toniadp::initialize()
     for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-        //Log::log() << "k=" << k  << " wsum=" << wsum << "\n";
+        //log() << "k=" << k  << " wsum=" << wsum << "\n";
 	   }
     //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-        //Log::log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
+        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
 	   }
 }
 /******************************************************************************/
@@ -92,7 +92,7 @@ void toniadp::loadParamset(ifstream& inputFile)
     for(int k=0;k<=L;k++)
         {
     	inputFile >> pp0[k] ;
-        //Log::log() << "L=" << L << "k=" << k  << "po=" << pp0[k];
+        //log() << "L=" << L << "k=" << k  << "po=" << pp0[k];
     	}
 
     if( pp )
@@ -152,10 +152,10 @@ void toniadp::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void toniadp::printParamset()
 {
-    Log::log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
-    Log::log() << length << "\n";
+    log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
+    log() << length << "\n";
     for(int k=0;k<=L;k++)
-        Log::log() << pp0[k] << "\t";
+        log() << pp0[k] << "\t";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -265,7 +265,7 @@ qreal* toniadp::sendModelVar()
 /******************************************************************************/
 void toniadp::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-    //Log::log() << "toniadp sendStateSpace";
+    //log() << "toniadp sendStateSpace";
     if( *stateSpace )
 	delete *stateSpace;
     *stateSpace= new const qreal* [dimension];
@@ -315,7 +315,7 @@ void toniadp::dynamics(qreal &a)
 	for (int i=1;i<=L;i++) 
 		pp[L+1-i]=pp[L-i];
 	pp[0]=fFunction(a);				
-    //Log::log() << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
+    //log() << "\n" << "add=" << a << "\t pp[0]=" << pp[0];
 	v=pp[0]-a;
 }
 /******************************************************************************/
@@ -345,6 +345,6 @@ void toniadp::iteration(const long& t)
 
 	dynamics(add);
 
-    //Log::log() << "\nPeriod " << ii << "\t";
-    //for(int k=0;k<=L;k++) Log::log() << pp[k] << "\t";
+    //log() << "\nPeriod " << ii << "\t";
+    //for(int k=0;k<=L;k++) log() << pp[k] << "\t";
 }
