@@ -426,7 +426,7 @@ void linFima_wage::iteration(const long& t)
 {
 // Die Prognosen der Chartisten und Fundamentalisten ist extern vorgeschaltet !
 
-// Dividendenprozess (zufällig)
+// Dividendenprozess (zufï¿½llig)
 	div=gamma * div + zvar->dice();
 	Ed= gamma * div + ((zetamax-zetamin)/2) ;
 

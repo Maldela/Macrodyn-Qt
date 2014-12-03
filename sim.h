@@ -1,10 +1,10 @@
 #ifndef SIM_H
 #define SIM_H
 
-#include<stdio.h>
-#include<string.h>
-#include<math.h>
-
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <QtCore>
 
 // enum BOOLS { FALSE, TRUE, NOTSET, EQUALSET, USERBREAK, STREAMERROR };
 //enum ADJUST { OLDADJUST, WALRASIAN, EXPECTEDOLD, NEWADJUST };

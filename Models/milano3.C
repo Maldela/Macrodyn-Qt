@@ -54,7 +54,7 @@ qreal milano3::Zins_1()
 qreal milano3::Zins_2()
 {
      qreal r2;
- 	r2=(b*(h*((1-tax)*pgt+zt)+G+mqreal))/((1-h)*((1-tax)*pgt+zt)+(a-a*h)*(G+mqreal));
+    r2=(b*(h*((1-tax)*pgt+zt)+G+mqreal))/((1-h)*((1-tax)*pgt+zt)+(a-a*h)*(G+mqreal));
     
      return r2;
 }    
@@ -174,16 +174,16 @@ const qreal& r3)
     if ( rr1<=rr2 )
       {
 	if (rr1<=rr3) 
-	  rqreal=rr1;
+      rqreal=rr1;
 	else
-	  rqreal=rr3;
+      rqreal=rr3;
       }
     else
       {
 	if (rr2<=rr3)
-	  rqreal=rr2;
+      rqreal=rr2;
 	else
-	  rqreal=rr3;
+      rqreal=rr3;
       }
 }
    
@@ -279,13 +279,13 @@ void milano3::system_G6(const qreal& r3)
     else{
 	
 	beta=1;
-	if (output<(G+mqreal)){
-	    delta=(output-G)/mqreal;
+    if (output<(G+mqreal)){
+        delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
+        gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
 	}
     }
     mtr=mqreal;
@@ -350,13 +350,13 @@ void milano3::system_8(const qreal& r1)
     }
     else{
 	beta=1;
-	if (output<(G+mqreal)){
-	    delta=(output-G)/mqreal;
+    if (output<(G+mqreal)){
+        delta=(output-G)/mqreal;
 	    gammad=0;
 	}
 	else{
 	    delta=1;
-	    gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
+        gammad=(output-mqreal-G)/(h*(alfa*empl+(1-tax)*pgt+zt));
 	}
     }
 
@@ -498,7 +498,7 @@ qreal* milano3::setLabels(char* name)
     if( !strcmp(name,"alfa") )
 	return( &alfa );
    if( !strcmp(name,"mqreal") )
-	return( &mqreal );
+    return( &mqreal );
     if( !strcmp(name,"pgt") )
 	return( &pgt );
     if( !strcmp(name,"rqreal") )
@@ -530,13 +530,13 @@ qreal* milano3::setLabels(char* name)
     if( !strcmp(name,"alfa0") )
 	return( &alfa0 );
     if( !strcmp(name,"mqreal0") )
-	return( &mqreal0 );
+    return( &mqreal0 );
     if( !strcmp(name,"pg0") )
 	return( &pg0 );
     if( !strcmp(name,"z0") )
         return( &z0 );
     if( !strcmp(name,"n1") )
-	return( (qreal*) &n1 );
+    return( (qreal*) &n1 );
     return( NULL );
 }
 
@@ -554,16 +554,16 @@ void milano3::initialize()
     if ( r1<=r2 )
       {
 	if (r1<=r3) 
-	  rqreal=r1;
+      rqreal=r1;
 	else
-	  rqreal=r3;
+      rqreal=r3;
       }
     else
       {
 	if (r2<=r3)
-	  rqreal=r2;
+      rqreal=r2;
 	else
-	  rqreal=r3;
+      rqreal=r3;
       }
 }
 
@@ -584,7 +584,7 @@ void milano3::sendStateSpace(int &quantity,const qreal*** stateSpace)
     quantity=dimension;
 
 
-	(*stateSpace)[0]=&mqreal;
+    (*stateSpace)[0]=&mqreal;
         (*stateSpace)[1]=&alfa;
         (*stateSpace)[2]=&pgt;
         (*stateSpace)[3]=&rqreal;
