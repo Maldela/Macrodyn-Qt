@@ -249,14 +249,14 @@ void milano::loadParamset(ifstream& inFile)
 
 void milano::printParamset()
 {
-    Log::log() << "a     :  " << a <<"\talpha0 : " << alfa0 << endl;
-    Log::log() << "b     :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
-    Log::log() << "n1    :  " << n1 << endl;
-    Log::log() << "mu1   :  " << mu1 << "\tmu2 : " << mu2 << endl;
-    Log::log() << "nu1   :  " << nu1 << "\tG   : " << G << endl;
-    Log::log() << "nu2   :  " << nu2 << "\ttax : " << tax << endl;
-    Log::log() << "h     :  " << h << "\tsimd: " << simd << endl;
-    Log::log() << "pg0   :  " << pg0 << "\tLs  : " << Ls << endl;
+    log() << "a     :  " << a <<"\talpha0 : " << alfa0 << endl;
+    log() << "b     :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
+    log() << "n1    :  " << n1 << endl;
+    log() << "mu1   :  " << mu1 << "\tmu2 : " << mu2 << endl;
+    log() << "nu1   :  " << nu1 << "\tG   : " << G << endl;
+    log() << "nu2   :  " << nu2 << "\ttax : " << tax << endl;
+    log() << "h     :  " << h << "\tsimd: " << simd << endl;
+    log() << "pg0   :  " << pg0 << "\tLs  : " << Ls << endl;
 }
 
 /******************************************************************************/

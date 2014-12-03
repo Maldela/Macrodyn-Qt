@@ -512,7 +512,7 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
         pixY0 < (int)upmargin ||
         pixY0 >= ((height()) - (int)lowmargin) )
     {
-        Log::log() << "Warning: Not available pixel: " << pixX0 << " " << pixY0 << "\n";
+        log() << "Warning: Not available pixel: " << pixX0 << " " << pixY0 << "\n";
         return;
     }
     if( pixX1 <= (int)lmargin ||
@@ -520,7 +520,7 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
         pixY1 < (int)upmargin ||
         pixY1 >= ((height()) - (int)lowmargin) )
     {
-        Log::log() << "Warning: Not available pixel: " << pixX1 << " " << pixY1 << "\n";
+        log() << "Warning: Not available pixel: " << pixX1 << " " << pixY1 << "\n";
         return;
     }
     QPainter painter(image);
@@ -548,15 +548,15 @@ void MacrodynGraphicsItem::getCoordinates(qreal v,qreal w,int& x,int& y)
 void MacrodynGraphicsItem::dumpGraphics(const QString& fileName) const
 {
     QFile file(fileName);
-    if (file.exists()) Log::log() << "Overwriting file " << fileName;
+    if (file.exists()) log() << "Overwriting file " << fileName;
     if (!file.open(QIODevice::WriteOnly))
     {
-        Log::log() << "Can't open file " << fileName;
+        log() << "Can't open file " << fileName;
         return;
     }
     QDataStream stream(&file);
     stream << *image;
-    Log::log() << "Graph stored in " << fileName;
+    log() << "Graph stored in " << fileName;
 }
 
 /******************************************************************************/

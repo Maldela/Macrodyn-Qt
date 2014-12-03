@@ -8,6 +8,9 @@
 
 class LoggerHelper
 {
+
+public:
+
     LoggerHelper& operator <<(const QString&);
     LoggerHelper& operator <<(qreal n);
 };
@@ -57,4 +60,5 @@ public slots:
 };
 
 inline LoggerHelper log() { return LoggerHelper(); }
+
 #endif // Logger_H

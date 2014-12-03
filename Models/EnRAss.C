@@ -138,17 +138,17 @@ static qreal ols_k(qreal *y, qreal *,const long &k, const long&) {
 	x2_/=k;
 	xy_/=k;
 	term=(x2_-(x_*x_));
-//Log::log() << "\ny_=" << y_ << " x_=" << x_ << " x2_=" << x2_;
-//Log::log() << " xy_=" << xy_ << " term=" << term;
+//log() << "\ny_=" << y_ << " x_=" << x_ << " x2_=" << x2_;
+//log() << " xy_=" << xy_ << " term=" << term;
 	if (term!=0) b=(xy_-x_*y_)/term;
 		else b=0;
 	a=y_-b*x_;
-//Log::log() << " a=" << a << " b=" << b << " count=" << count << endl;
+//log() << " a=" << a << " b=" << b << " count=" << count << endl;
     return ( a+b*count );
 }
 static qreal ols(qreal *y, qreal *,const long &i,const long &t) {
 
-//Log::log() << "t=" << t << " " << ols_k(y,NULL,t,0);
+//log() << "t=" << t << " " << ols_k(y,NULL,t,0);
 	if(t<2) return(y[0]);
     //Guess
      //else return ( ols_k(y,NULL,t,0) );
@@ -311,13 +311,13 @@ void EnRAss::iteration(const long& t)
 
 	if (alpha<alphamin) {
 		alpha=alphamin;
-        Log::log() << "alpha=alphamin=" << alphamin << endl;
+        log() << "alpha=alphamin=" << alphamin << endl;
 	}
 
     qreal dmaxAbs =(  (N/x_) * ( (R*e) - (1/alpha) )  );
 	if ( dmax > dmaxAbs )  {
-      Log::log() << "\n time=" << t << " dmax=" << dmax << " > ";
-      Log::log() << dmaxAbs << "=N/x_ * (R*e - 1/alpha) \n";
+      log() << "\n time=" << t << " dmax=" << dmax << " > ";
+      log() << dmaxAbs << "=N/x_ * (R*e - 1/alpha) \n";
 	  exit (-1);
 	  }
 
@@ -331,16 +331,16 @@ void EnRAss::iteration(const long& t)
 
     theta = (this->*learn)(pPtr,thetaPtr,mem,t);
 	
-//Log::log()  << "\n time=" << t << " thetaE="<< thetaE << " theta="<< theta;
+//log()  << "\n time=" << t << " thetaE="<< thetaE << " theta="<< theta;
 	if (theta < 0) theta=0;	// billiger als geschenkt geht nicht
 
 	p = (N*theta)/(R*(alphax*theta+N)) + (d/R);
     qreal	min = N*e/x_ ;
 	if (p > min) {
 		p = min;
-        Log::log() << " min=" << p;
+        log() << " min=" << p;
 		}
-//		else Log::log() << " p=" << p;
+//		else log() << " p=" << p;
 
 //	MEP = ( (alphax* thetaOld + N) * ( d + (R-1) * dOld ) ) / ( N*thetaOld + (alphax*thetaOld+N) * dOld ) +1 - R ;
 

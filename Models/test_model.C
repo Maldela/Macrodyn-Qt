@@ -83,7 +83,7 @@ void test_model::iteration(const long& time)
     //qreal R=1.0;
 	
 	s1 = l_1*w-1.0/(1.0+delta+delta*delta)*(l_1*w+l_2*w/R);
-    Log::log() << "w: " << w <<"\tR: " << R << "\ts1: " << s1 << "\ts2: " << s2 << endl;
+    log() << "w: " << w <<"\tR: " << R << "\ts1: " << s1 << "\ts2: " << s2 << endl;
 	s2 = delta/(1.0+delta)*(l_2*w+R*s1);
 	d2 = 1.0/(l_2*(1.0+sqrt(l_2/l_1)))*(sqrt(l_2/l_1)*s1+s2)-d;
 
@@ -293,7 +293,7 @@ void test_model::saveParamsetWithNames(ofstream& outFile)
 void test_model::printParamset()
 {
 
-    Log::log() << d << "\t" << length << endl;
+    log() << d << "\t" << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

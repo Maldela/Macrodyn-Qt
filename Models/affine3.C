@@ -62,21 +62,21 @@ void affine3::iteration(const long&)
 	qreal oldX = x;
 	
 	if(urv_p < p){
-		//Log::log() << "map1 is chosen" << endl;
+		//log() << "map1 is chosen" << endl;
 		count1++;
 		x = (a+urv_e)*oldX;
 	} else {
-		//Log::log() << "map2 is chosen" << endl;
+		//log() << "map2 is chosen" << endl;
 		count2++;
 		x = (a-1+urv_e)*oldX + 1;
 	}
 
-	/*Log::log() << "oldX = " << oldX << endl;
-	Log::log() << "urv_p = " << urv_p << endl;
-	Log::log() << "urv_e = " << urv_e << endl;
-	Log::log() << "x = " << x << endl;
-	Log::log() << "count1 = " << count1 << endl;
-	Log::log() << "count2 = " << count2 << endl;*/
+	/*log() << "oldX = " << oldX << endl;
+	log() << "urv_p = " << urv_p << endl;
+	log() << "urv_e = " << urv_e << endl;
+	log() << "x = " << x << endl;
+	log() << "count1 = " << count1 << endl;
+	log() << "count2 = " << count2 << endl;*/
 }
     
     
@@ -203,9 +203,9 @@ void affine3::sendStateSpace(int &quantity,const qreal*** stateSpace)
 void affine3::loadParamset(ifstream& inFile)
 {
  	inFile >> zvar_expr1;
-	//Log::log() << zvar_expr1 << endl;
+	//log() << zvar_expr1 << endl;
 	//inFile >> zvar_expr2;
-	//Log::log() << zvar_expr2 << endl;
+	//log() << zvar_expr2 << endl;
 	inFile >> eta;
 	inFile >> a;
 	if( (a<0) || (a>1)) fatalError("affine3::loadParamset","Parameter a out of range");
@@ -214,11 +214,11 @@ void affine3::loadParamset(ifstream& inFile)
 	inFile >> p;
 	inFile >> length;
 
-	/*Log::log() << "eta = " << eta << endl;
-	Log::log() << "a = " << a << endl;
-	Log::log() << "x0 = " << x0 << endl;
-	Log::log() << "p = " << p << endl;
-	Log::log() << "length = " << length << endl;*/
+	/*log() << "eta = " << eta << endl;
+	log() << "a = " << a << endl;
+	log() << "x0 = " << x0 << endl;
+	log() << "p = " << p << endl;
+	log() << "length = " << length << endl;*/
  	
     	initialize();
 }
@@ -260,11 +260,11 @@ void affine3::saveParamset(ofstream& outFile)
 
 void affine3::printParamset()
 {
-	Log::log() << eta << endl;
-	Log::log() << a << endl;
-	Log::log() << x0 << endl;
-	Log::log() << p << endl;
-	Log::log() << length << endl;
+	log() << eta << endl;
+	log() << a << endl;
+	log() << x0 << endl;
+	log() << p << endl;
+	log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

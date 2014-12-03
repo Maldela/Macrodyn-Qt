@@ -38,12 +38,12 @@
 void PrintPubModelDate(void) {
       #ifdef __DATE__
         #ifdef __TIME__
-          Log::log() << "public macrodyn  built on " << __DATE__ << " (" << __TIME__ << ")\n";
+          log() << "public macrodyn  built on " << __DATE__ << " (" << __TIME__ << ")\n";
         #else
-          Log::log() << "public macrodyn  built on " << __DATE__ << "\n";
+          log() << "public macrodyn  built on " << __DATE__ << "\n";
         #endif
       #else
-        Log::log() << "Sorry, no build date stored of public macrodyn.\n";
+        log() << "Sorry, no build date stored of public macrodyn.\n";
       #endif
 };
 

@@ -18,7 +18,7 @@
 #include <fstream>
 //#include <iostream.h>
 #include <iostream>
-#include "log.h"
+#include "logger.h"
 
 using namespace std;
 

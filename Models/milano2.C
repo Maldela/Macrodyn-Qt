@@ -207,8 +207,8 @@ void milano2::system_1(const qreal& s1_emp)
     mqreal=(mqreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
     rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
-    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -266,8 +266,8 @@ void milano2::system_2(const qreal& l_dem)
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
     rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
-    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -356,8 +356,8 @@ void milano2::system_4(const qreal& s4_emp)
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
     rqreal=(exp(-omikron2*log(mud))*rqreal)/teta;
-    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -413,8 +413,8 @@ void milano2::system_6(const qreal& l_dem)
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(-nu2*log(lambdad))*alfa)/teta;
     rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
-    if (pgt<0) Log::log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) Log::log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
 
 }
 
@@ -442,7 +442,7 @@ void milano2::iteration(const long& t)
     l_dem=labour_demand();
     diseq_regime(s1_emp,s4_emp,l_dem);
 */
-Log::log() << "model not active - contact A. Foerster" << endl;
+log() << "model not active - contact A. Foerster" << endl;
 
 }
 
@@ -473,18 +473,18 @@ void milano2::loadParamset(ifstream& inFile)
 
 void milano2::printParamset()
 {
-    Log::log() << "a      :  " << a <<"\talpha0 : " << alfa0 << endl;
-    Log::log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
-    Log::log() << "rqreal0 :  " << rqreal0 <<"\tz0 : " << z0 << endl;
-    Log::log() << "epsilon : " << epsilon << endl;
-    Log::log() << "f      :  " << f << endl;
-    Log::log() << "n1     :  " << n1 << endl;
-    Log::log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << endl;
-    Log::log() << "omikron1 : " << omikron1 << "\tomikron2 : " << omikron2 << endl;
-    Log::log() << "nu1    :  " << nu1 << "\tG   : " << G << endl;
-    Log::log() << "nu2    :  " << nu2 << "\ttax : " << tax << endl;
-    Log::log() << "h      :  " << h << "\tsimd: " << simd << endl;
-    Log::log() << "pg0    :  " << pg0 << "\tLs  : " << Ls << endl;
+    log() << "a      :  " << a <<"\talpha0 : " << alfa0 << endl;
+    log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
+    log() << "rqreal0 :  " << rqreal0 <<"\tz0 : " << z0 << endl;
+    log() << "epsilon : " << epsilon << endl;
+    log() << "f      :  " << f << endl;
+    log() << "n1     :  " << n1 << endl;
+    log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << endl;
+    log() << "omikron1 : " << omikron1 << "\tomikron2 : " << omikron2 << endl;
+    log() << "nu1    :  " << nu1 << "\tG   : " << G << endl;
+    log() << "nu2    :  " << nu2 << "\ttax : " << tax << endl;
+    log() << "h      :  " << h << "\tsimd: " << simd << endl;
+    log() << "pg0    :  " << pg0 << "\tLs  : " << Ls << endl;
 }
 
 /******************************************************************************/

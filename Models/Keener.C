@@ -244,8 +244,8 @@ void Keener::saveParamsetWithNames(ofstream& outFile)
 
 void Keener::printParamset()
 {
-	Log::log() << x_0 << "\t" << a << "\t" << b << "\t" << Modulo << "\t";
-	Log::log() << lambda << "\t" << myseed << "\t" << length << endl;
+	log() << x_0 << "\t" << a << "\t" << b << "\t" << Modulo << "\t";
+	log() << lambda << "\t" << myseed << "\t" << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

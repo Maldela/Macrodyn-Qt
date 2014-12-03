@@ -58,7 +58,7 @@ manipulate::manipulate() : baseModel(0) { // dimension is set zero! do not use
 // Last modified:	2000/6/20
 ///////////////////////////////////////////////////////////////////////////////
 manipulate::~manipulate() {
-Log::log() << "manipulate destructor" << endl;
+log() << "manipulate destructor" << endl;
 
 	if( model ) delete model;
 	if( manipulateTag ) delete [] manipulateTag;
@@ -208,7 +208,7 @@ void manipulate::loadParamset(ifstream& inFile) {
 
 	for (int hm=0;hm<howMany;hm++) {
 		inFile >> manipulateTag[hm];
-Log::log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
+log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 		switch( manipulateTag[hm] ) {
 
 		  case stoch_uni:
@@ -262,7 +262,7 @@ Log::log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 					*pos2++ = *pos;
 				*pos2 = '\0';
 				states[i]=atof(sdummy); // trage States in vektor ein
-				//Log::log() << sdummy << " " << states[i] << endl;
+				//log() << sdummy << " " << states[i] << endl;
 			}
 			for (j = 0; j < statesNum; j++) { // Uli liest Uebergangsmatrix zeilenweise ein!
 				inFile >> dummy;	
@@ -273,7 +273,7 @@ Log::log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 						*pos2++ = *pos;
 					*pos2 = '\0';
 					umatrix[j][i]=atof(sdummy); // trage Uebergangsmatrix ein
-					//Log::log() << sdummy << " " << umatrix[j][i] << endl;
+					//log() << sdummy << " " << umatrix[j][i] << endl;
 				}
 				strcat(m_matrix,dummy); // anhaengen der Zeilen !
 				strcat(m_matrix," ");		
@@ -648,7 +648,7 @@ void manipulate::initialize() {
 				for ( i = 0; i < ma_k_a_ptr[j].k ; i++ )
 					ma_k_a_ptr[j].vn_k[i] = *ma_k_a_ptr[j].vname;
 			}
-			//Log::log() << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a << endl;
+			//log() << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a << endl;
 			break;									
 		   case rls0:
 			beta_tm1 = 0 ;
@@ -735,7 +735,7 @@ void manipulate::F_stoch_markov() {
 	*expname=exp;
 	*variancename=exp2-(exp*exp);
 	*randname=markov->dice();
-//Log::log() << "F_stoch_markov() " << *randname << endl;
+//log() << "F_stoch_markov() " << *randname << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -846,8 +846,8 @@ void manipulate::F_ma_k_a() {
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_rls0() {
     qreal theta_tm1,theta2;
-//Log::log() << " *p_tm1=" << *p_tm1 << " p_tm2=" << p_tm2;
-//Log::log() << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 << endl;
+//log() << " *p_tm1=" << *p_tm1 << " p_tm2=" << p_tm2;
+//log() << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 << endl;
 
     theta_tm1= *p_tm1 / p_tm2; // calculate inflation factor
     beta_tm1 += g_tm1 * ( theta_tm1 - beta_tm1 ) ;  // recursiv estimate
@@ -871,7 +871,7 @@ void manipulate::F_rls1() {
     *theta_e_tp1 = *theta_e_t + g_tm1 * ( *theta_tm1 - *theta_e_t ) ;
     qreal dummy = g_tm1 * *theta_tm1 * *theta_tm1 ;
     g_tm1 = dummy / (dummy + 1.0) ;
-//Log::log() <<"99rls1: g_tm1="<<g_tm1<<" *theta_tm1="<<*theta_tm1<<" *theta_e_t="<<*theta_e_t<<" *theta_e_tp1="<<*theta_e_tp1<<endl;
+//log() <<"99rls1: g_tm1="<<g_tm1<<" *theta_tm1="<<*theta_tm1<<" *theta_e_t="<<*theta_e_t<<" *theta_e_tp1="<<*theta_e_tp1<<endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -883,12 +883,12 @@ void manipulate::F_rls1() {
 // Last modified:	3.Jan.2000 Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_rls1d() {
-//Log::log() <<"121rls1d: oldp="<<oldp<<" pe="<<theta*oldp;
-//Log::log() <<" fe="<<( *p - theta*oldp ) <<endl;
+//log() <<"121rls1d: oldp="<<oldp<<" pe="<<theta*oldp;
+//log() <<" fe="<<( *p - theta*oldp ) <<endl;
 
     theta += ((oldp*P)/(1+oldp*oldp*P)) * ( *p - theta*oldp ) ;
 
-//Log::log() <<"121rls1d: p="<<*p<<" lPp="<<((oldp*P)/(1+oldp*oldp*P))<<" theta="<<theta<<endl;
+//log() <<"121rls1d: p="<<*p<<" lPp="<<((oldp*P)/(1+oldp*oldp*P))<<" theta="<<theta<<endl;
 
     P /= ( 1+oldp*oldp*P );
 
@@ -896,7 +896,7 @@ void manipulate::F_rls1d() {
 	*q=theta*theta * *p; //forecast2
      else
 	*q=theta * *p; //forecast
-//Log::log() <<"121rls1d: P="<<P<<" theta="<<theta<<" oldp="<<oldp<<" p="<<*p<<" pe="<<*q<<endl;
+//log() <<"121rls1d: P="<<P<<" theta="<<theta<<" oldp="<<oldp<<" p="<<*p<<" pe="<<*q<<endl;
     oldp=*p;
 }
 
@@ -1064,7 +1064,7 @@ void manipulate::FXRoot() {
 		fx1 = FX1();
 		fx2 = FX2();
 		if (eps1 > fabs(fx1)) {
-			Log::log() << "FXROOT::First derivative at current root estitmate extremely small" << endl;
+			log() << "FXROOT::First derivative at current root estitmate extremely small" << endl;
 			x = x_save ;
 			break;
 		}
@@ -1073,7 +1073,7 @@ void manipulate::FXRoot() {
 		if (eps2 >= fabs(x - x_old)) break;  		
 	}
     if (i==101) {
-		Log::log() << "FXROOT::No convergence under current conditions (100, 10^(-10))" << endl;
+		log() << "FXROOT::No convergence under current conditions (100, 10^(-10))" << endl;
 		x = x_save;
 	}
 }
@@ -1248,7 +1248,7 @@ void manipulate::iteration(const long& t) {
 			    sharpeRatio = (mean + 0.01)/standardDeviation;
 			}
 			if(t==length)
-				Log::log() <<"mean="<<mean<<" variance="<<variance
+				log() <<"mean="<<mean<<" variance="<<variance
 					 <<"standardDeviation="<<standardDeviation
 					 <<"Variationskoeffizient="<<variationskoeff<<endl
 					 <<"sharpeRatio="<<sharpeRatio<<endl;

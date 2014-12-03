@@ -109,14 +109,14 @@ void laborMarketFirstTax::saveParamsetWithNames(ofstream& outputFile)
 /******************************************************************************/
 void laborMarketFirstTax::printParamset()
 {
-    Log::log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
-    Log::log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
-    Log::log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
-    Log::log() << g << "\t" << tax << "\n"; 
-    Log::log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
-    Log::log() << length << "\n";
-    Log::log() << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
-    Log::log() << d0 << "\t" << theta0 << endl;
+    log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
+    log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
+    log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
+    log() << g << "\t" << tax << "\n"; 
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
+    log() << length << "\n";
+    log() << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
+    log() << d0 << "\t" << theta0 << endl;
 }
 
 /******************************************************************************/

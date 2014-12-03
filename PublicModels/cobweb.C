@@ -239,9 +239,9 @@ void cobweb::saveParamsetWithNames(ofstream& outFile)
 
 void cobweb::printParamset()
 {
-/*	Log::log() << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
-    Log::log() << G << "\t" << T << "\t" << alpha  << "\t" << y0;
-    Log::log() << "\t" << length << endl;*/
+/*	log() << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
+    log() << G << "\t" << T << "\t" << alpha  << "\t" << y0;
+    log() << "\t" << length << endl;*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////

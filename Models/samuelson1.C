@@ -197,27 +197,27 @@ void samuelson1::check()
 	flag=1;						// flag==1  =>  everything is ok
 	for (int i=0;i<=N-1;i++) {
 		if ((V->m[i][0]<0) || (V->m[i][0]>1)) {
-            Log::log() << "probability out of range!";
+            log() << "probability out of range!";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][1]<0) || (V->m[i][1]>=1)) {
-            Log::log() << "m out of range";
+            log() << "m out of range";
 			flag=0;
 			break;
 		}
 		if ((V->m[i][2]<0) || (V->m[i][2]>4)) {
-            Log::log() << "v out of range";
+            log() << "v out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][3]<0) {
-            Log::log() << "m0 out of range";
+            log() << "m0 out of range";
 			flag=0;
 			break;
 		}
 		if (V->m[i][4]<0) {
-            Log::log() << "v0 out of range";
+            log() << "v0 out of range";
 			flag=0;
 			break;
 		}
@@ -436,17 +436,17 @@ void samuelson1::saveParamset(ofstream& outFile)
 
 void samuelson1::printParamset()
 {
-    Log::log() << N  << endl;
-    Log::log() << x01 << endl;
-    Log::log() << x02 << endl;
+    log() << N  << endl;
+    log() << x01 << endl;
+    log() << x02 << endl;
 
 	for(int i=0; i<=N-1;i++) {
 		for(int j=0;j<=4;j++) {
-            Log::log() << V->m[i][j] << "\t";
+            log() << V->m[i][j] << "\t";
 		}	
 	}
 
-    Log::log() << length << endl;
+    log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

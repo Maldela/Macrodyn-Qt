@@ -55,14 +55,14 @@ if(zvar) delete zvar;
 
 void affine1::iteration(const long&)
 {
-	//Log::log() << "This is function 'iteration()' in affine1.C" << endl;
+	//log() << "This is function 'iteration()' in affine1.C" << endl;
     
  	a = zvar->dice();	// Set a new random value for the Parameter
     qreal oldX=x;
 	x = a*(oldX + r);
-	/*Log::log() << "oldX = " << oldX << endl;
-	Log::log() << "a  = " << a << endl;
-	Log::log() << "x = " << x << endl;*/
+	/*log() << "oldX = " << oldX << endl;
+	log() << "a  = " << a << endl;
+	log() << "x = " << x << endl;*/
 }
     
     
@@ -104,9 +104,9 @@ void affine1::initialize()
 
 qreal* affine1::sendModelVar()
 {
-	//Log::log() << "This is function 'sendModelVar()' in affine1.C" << endl;
+	//log() << "This is function 'sendModelVar()' in affine1.C" << endl;
     return &x;
-	//Log::log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ qreal* affine1::sendModelVar()
 
 qreal* affine1::setLabels(char* label)
 {
-	//Log::log() << "This is function 'setLabels()' in affine1.C ." << endl;
+	//log() << "This is function 'setLabels()' in affine1.C ." << endl;
 	if( !strcmp(label,"a") )
 	return( &a);
     if( !strcmp(label,"x") )
@@ -134,7 +134,7 @@ qreal* affine1::setLabels(char* label)
 	if( !strcmp(label,"r") )
 	return( &r );
     return NULL;
-	//Log::log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -153,7 +153,7 @@ qreal* affine1::setLabels(char* label)
 
 void affine1::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-	//Log::log() << "This is function 'sendStateSpace()' in affine1.C ." << endl; 
+	//log() << "This is function 'sendStateSpace()' in affine1.C ." << endl; 
     if( stateSpace )
 	delete stateSpace;
     *stateSpace= new const qreal* [dimension];
@@ -162,7 +162,7 @@ void affine1::sendStateSpace(int &quantity,const qreal*** stateSpace)
 		   "Can't create state space vector");
     quantity=dimension;
     (*stateSpace)[0]=&x;
- 	Log::log() << "Now returning...." << endl; 
+ 	log() << "Now returning...." << endl; 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -180,16 +180,16 @@ void affine1::sendStateSpace(int &quantity,const qreal*** stateSpace)
 
 void affine1::loadParamset(ifstream& inFile)
 {
-//Log::log() << "This is function 'loadParamset()' in 'affine1.C' ." << endl; 
+//log() << "This is function 'loadParamset()' in 'affine1.C' ." << endl; 
  
  	inFile >> zvar_expr;  
 	inFile >> x0;
 	inFile >> r;
 	inFile >> length;
 
-	/*Log::log() << "a = " << a << endl;
-	Log::log() << "a1= " << a1 << endl;
-	Log::log() << "a2= " << a2 << endl;*/
+	/*log() << "a = " << a << endl;
+	log() << "a1= " << a1 << endl;
+	log() << "a2= " << a2 << endl;*/
  	
     	initialize();
 }
@@ -209,11 +209,11 @@ void affine1::loadParamset(ifstream& inFile)
 
 void affine1::saveParamset(ofstream& outFile)
 {
-	//Log::log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << endl; 
+	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << endl; 
    	outFile << x0  << "\t";
 	outFile << r  << "\t";
 	outFile << length;
-	//Log::log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -231,11 +231,11 @@ void affine1::saveParamset(ofstream& outFile)
 
 void affine1::printParamset()
 {
-    //Log::log() << "This is function 'printParamset()' in 'AFFINE.C' ." << endl; 
-    Log::log() << x0 << endl;
-	Log::log() << r << endl;
-	Log::log() << length << endl;
-	//Log::log() << "Now returning...." << endl; 
+    //log() << "This is function 'printParamset()' in 'AFFINE.C' ." << endl; 
+    log() << x0 << endl;
+	log() << r << endl;
+	log() << length << endl;
+	//log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,7 @@ void affine1::printParamset()
 
 void affine1::sendParameters(int& amount,qreal** parameters)
 {
- 	//Log::log() << "This is function 'sendParameters()' in 'affine1.C' ." << endl; 
+ 	//log() << "This is function 'sendParameters()' in 'affine1.C' ." << endl; 
     
     if( *parameters )
 	delete *parameters;
@@ -265,7 +265,7 @@ void affine1::sendParameters(int& amount,qreal** parameters)
     (*parameters[0])=x0;
     (*parameters[1])=r;
 	(*parameters[2])=length;
-	//Log::log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << endl; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -283,10 +283,10 @@ void affine1::sendParameters(int& amount,qreal** parameters)
 
 void affine1::receiveParameters(const qreal* parameters)
 {	
-	//Log::log() << "This is function 'receiveParameters()' in 'affine1.C' ." << endl; 
+	//log() << "This is function 'receiveParameters()' in 'affine1.C' ." << endl; 
 	x0=parameters[0];
 	r =parameters[1];
 	length=(long)(parameters[5]);
-	//Log::log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << endl; 
 }
 

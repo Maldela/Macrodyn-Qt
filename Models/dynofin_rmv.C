@@ -829,47 +829,47 @@ void dynofin_rmv::print_st_fin_paramset(st_fin_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      Log::log() << temp_paramset->type << "\n";
+      log() << temp_paramset->type << "\n";
       
       switch  (temp_paramset->type) {
       case -1:
- 	Log::log() << temp_paramset->z_0 << "\n";  
+ 	log() << temp_paramset->z_0 << "\n";  
       break;
       case 0 :	
-    	Log::log() << temp_paramset->z_0 << "\n";	 
+    	log() << temp_paramset->z_0 << "\n";	 
       break;
 	
       case 1 :		
-	Log::log() << temp_paramset->theta_type << "\n";
-	Log::log() << temp_paramset->my << "\n";
-    	Log::log() << temp_paramset->z_0 << "\n"; 
+	log() << temp_paramset->theta_type << "\n";
+	log() << temp_paramset->my << "\n";
+    	log() << temp_paramset->z_0 << "\n"; 
 	
         i=0;
         while(i<Trans_x_Max) {
-	      Log::log() << temp_paramset->trans_x[i] << "\n";
+	      log() << temp_paramset->trans_x[i] << "\n";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       Log::log() << "\n";
+       log() << "\n";
        for (int j=0;j<i;j++) {
-	 Log::log() << temp_paramset->trans_a[j] << "\n";
+	 log() << temp_paramset->trans_a[j] << "\n";
 	}
-	Log::log() << "\n";
+	log() << "\n";
        for (int j=0;j<i;j++) {
-	 Log::log() << temp_paramset->trans_b[j] << "\n";
+	 log() << temp_paramset->trans_b[j] << "\n";
 	}
-        Log::log() << "\n";
+        log() << "\n";
         break;
    
       case 2:
-        Log::log() << temp_paramset->zvar_expr << "\n";
+        log() << temp_paramset->zvar_expr << "\n";
 	  if( temp_paramset->mc_flag == 1) {
-	     Log::log() << temp_paramset->mc_matrix << "\n";
+	     log() << temp_paramset->mc_matrix << "\n";
           }
        break;
 	
-    Log::log() << "\n";  
+    log() << "\n";  
     }
 
  }
@@ -890,24 +890,24 @@ void dynofin_rmv::print_st_fin_paramset(st_fin_paramset *temp_paramset){
 void dynofin_rmv::printParamset()
 
 {     
-    Log::log() << w1_0 << "\n" ;				
-    Log::log() << w2_0 << "\n";			
-    Log::log() << gam_0 << "\n" ;				
-    Log::log() << var_0 << "\n";
-    Log::log() << expe_0 << "\n" ;				
-    Log::log() << p_0 << "\n";    
-    Log::log() << thetaA1_0 << "\n" ;				
-    Log::log() << thetaA2_0 << "\n";	
-    Log::log() << thetaB1_0 << "\n" ;				
-    Log::log() << thetaB2_0 << "\n";
+    log() << w1_0 << "\n" ;				
+    log() << w2_0 << "\n";			
+    log() << gam_0 << "\n" ;				
+    log() << var_0 << "\n";
+    log() << expe_0 << "\n" ;				
+    log() << p_0 << "\n";    
+    log() << thetaA1_0 << "\n" ;				
+    log() << thetaA2_0 << "\n";	
+    log() << thetaB1_0 << "\n" ;				
+    log() << thetaB2_0 << "\n";
     
     print_st_fin_paramset(r_fin_paramset);
  
     print_st_fin_paramset(d_fin_paramset);
  
-    Log::log() << length << "\n";
+    log() << length << "\n";
     
-    Log::log() << "\n";  
+    log() << "\n";  
          
     baseModel::printParamset();
 }   

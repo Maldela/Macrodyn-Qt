@@ -204,10 +204,10 @@ void jan_model::saveParamset(ofstream& outFile)
 
 void jan_model::printParamset()
 {
-    Log::log() << x0 << endl;
-    Log::log() << alpha << endl;
-    Log::log() << delta << endl;
-    Log::log() << length << endl;
+    log() << x0 << endl;
+    log() << alpha << endl;
+    log() << delta << endl;
+    log() << length << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

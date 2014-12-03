@@ -642,7 +642,7 @@ void dorn::saveParamsetWithNames(ofstream& outputFile)
 
 void dorn::printParamset()
 {
-    Log::log() << tau << "\t" << p0 << "\t" << w0 << "\t" << s0 << "\t"
+    log() << tau << "\t" << p0 << "\t" << w0 << "\t" << s0 << "\t"
          << B0 << "\t" << x0 << "\t" 
          << A << "\t" << B << "\t" << Lmax << "\t" << tax << "\t"
          << delta << "\t" << rho << "\t" << d << "\t" << deltaB << "\t"  

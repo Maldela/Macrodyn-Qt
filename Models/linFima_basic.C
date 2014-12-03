@@ -171,15 +171,15 @@ void linFima_basic::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 void linFima_basic::printParamset()
 {
-	Log::log() << "\nlinFima_basic:"<<"\t";
-	Log::log() << MODELL <<endl;
-	Log::log() << x0     << "\t" << y0     <<endl; 
-	Log::log() << alpha  << "\t" << beta   <<endl;
-	Log::log() << d0     << "\t" << psi    <<endl;
-	Log::log() << xi_min << "\t" << xi_max <<endl;
-	Log::log() << gamma  <<endl;
-	Log::log() << L      <<endl;
-	Log::log() << length <<endl;
+	log() << "\nlinFima_basic:"<<"\t";
+	log() << MODELL <<endl;
+	log() << x0     << "\t" << y0     <<endl; 
+	log() << alpha  << "\t" << beta   <<endl;
+	log() << d0     << "\t" << psi    <<endl;
+	log() << xi_min << "\t" << xi_max <<endl;
+	log() << gamma  <<endl;
+	log() << L      <<endl;
+	log() << length <<endl;
 
 };
 
