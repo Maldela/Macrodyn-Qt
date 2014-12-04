@@ -84,7 +84,7 @@ qreal milano3::Zins_3(const qreal& r1, const qreal& r2)
     
   //  clog << setprecision(16);
 
- qreal pol(( b/a/(1-h)) );
+  qreal pol(( b/a/(1-h)) );
 
  
   qreal oldzero;
@@ -111,7 +111,7 @@ qreal milano3::Zins_3(const qreal& r1, const qreal& r2)
 
   qreal m;
   do
-    {
+  {
       iter++;
       oldzero=zero;
       qreal value_left( zins_3_function(left) );
@@ -125,16 +125,16 @@ qreal milano3::Zins_3(const qreal& r1, const qreal& r2)
       qreal value_zero( zins_3_function(zero) );
 
       if ( value_left*value_zero < 0 )
-	{
-	  right=zero;
-	}
+      {
+        right=zero;
+      }
       else
-	{
-	  assert( value_right*value_zero < 0 );
-	  left=zero;
-	}
-    }
-    while (   ( left<r1 && left<r2 ) && iter < max_iter  && qAbs(zero-oldzero) > 1E-8);
+      {
+        assert( value_right*value_zero < 0 );
+        left=zero;
+      }
+  }
+    while ( ( left<r1 && left<r2 ) && iter < max_iter && qAbs(zero-oldzero) > 1E-8);
 
   return zero;
 }

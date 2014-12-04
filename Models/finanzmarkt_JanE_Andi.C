@@ -265,7 +265,6 @@ finanzmarkt_JanE::~finanzmarkt_JanE()
 	if(V_C) 			delete V_C;
 	if(V_N) 			delete V_N;
 	
-	if(Rho) 			delete Rho;
 	for(int i=0;i<L;i++){
 		if(Rho[i]) delete Rho[i];
 		if(q_MA[i]) delete q_MA[i];
@@ -320,7 +319,7 @@ void finanzmarkt_JanE::loadParamset(ifstream& inFile)
 	inFile >> switch_F >> switch_C >> switch_N;		//Schalter Investoren
 
 	for(int i=0;i<L;i++)
-	{												//Diagonalmatrix für Moving Average
+	{												//Diagonalmatrix f r Moving Average
 	inFile >> (*Rho[i])(0,0);						//eingelesenen Wert auf die gesamte Diagonale
 	for(int j=1;j<2;j++)							//setzen
 	(*Rho[i])(j,j) = (*Rho[i])(0,0);	
@@ -449,7 +448,7 @@ Ed2 = gamma1*d2;
 
 
 
-//Erechnen des Wertes der Peaks, (c1,c2), der Verteilungsfunktion für Noise
+//Erechnen des Wertes der Peaks, (c1,c2), der Verteilungsfunktion f r Noise
 	z1=b1-a1;				
 	if (z1==0){				
 		F_c1=0;				
@@ -520,7 +519,7 @@ Ed2 = gamma1*d2;
     *V_N_inv = V_N->inverse();
 
 
-	//Startwerte für Vorhersagen und cumdividend-Preise, Achtung: Vorhersagen jetzt auf ex-dividend Preise!
+	//Startwerte f r Vorhersagen und cumdividend-Preise, Achtung: Vorhersagen jetzt auf ex-dividend Preise!
 	(*q) = (*q0);
 //	delete p;
     *p = (*q0)-(*d);
@@ -530,7 +529,7 @@ Ed2 = gamma1*d2;
     *q_N = (*q_F) - (*E_xi);
 	
 
-	//Initialisierung für Moving Average
+	//Initialisierung f r Moving Average
 	for(i=0;i<L;i++)
 		(*q_MA[i]) = (*p);	
 
@@ -607,7 +606,7 @@ void finanzmarkt_JanE::iteration(const long& t)
 
 	//cout.precision(16);
 	//Abspeichern von Werten aus der Vorperiode 
-	//(für die Berechnung der Portefeuillerenditen)
+	//(f r die Berechnung der Portefeuillerenditen)
 	
 	(*p_old) = (*p);
 	(*x_Fold) = (*x_F);
@@ -615,7 +614,7 @@ void finanzmarkt_JanE::iteration(const long& t)
 	(*x_Nold) = (*x_N);
 
 	//Zufallsdividende fuer die laufende Periode 
-	//ACHTUNG: Position der Berechnung ist abhängig von Datierung 
+	//ACHTUNG: Position der Berechnung ist abh ngig von Datierung 
 	//der bedingten Erwartungswerte
 	
 	//Modifikation!!!!
@@ -692,7 +691,7 @@ void finanzmarkt_JanE::iteration(const long& t)
     *A2_F =  (*A_F) + (*A_N);
 
 
-	// Generierung der Dreiecksverteilung für den Noise-Prozess
+	// Generierung der Dreiecksverteilung f r den Noise-Prozess
 	if(F_c1==0){
 		xi1=0;		
 		}

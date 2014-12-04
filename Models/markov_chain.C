@@ -68,7 +68,7 @@ markov_chain::markov_chain
   token = strdup(matrix);
   pos = matrix;
   
-  for( n=0; n < n_states && (pos = get_expr(pos,token," ")) ; n ++ ) {
+  for( n=0; n < n_states && (pos = get_expr(pos,token,' ')) ; n ++ ) {
     set_row(n, token);
   }
   

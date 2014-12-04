@@ -24,7 +24,7 @@
 /*                                                                            */
 /* Modified:      16.06.1998 (Anton Stiefenhofer)                             */
 /*                Henon Map according to Devaney (1996)                       */
-/*                                                                            *
+/*                                                                            */
 /******************************************************************************/
 
 void henon::iteration(const long&)

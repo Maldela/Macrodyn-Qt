@@ -213,7 +213,7 @@ void  randomBits::random_bits(unsigned needed_bits, unsigned *words,
            {  words++;
               offset -= bits_per_word;
               if (offset)
-                 *words |=  next >> bits_per_word-offset; 
+                 *words |=  next >> (bits_per_word-offset);
            }
            defined_bits += next_bits;
            state->availible_bits -= next_bits;

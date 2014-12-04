@@ -292,12 +292,13 @@ unsigned hashTable::orderOfCycle()
     unsigned hits;
 
     for(unsigned i=0;(i<noEntries) && ok ;i++) {
-	hits=hashTab[i].hits;
-	if( hits )
-	    if( hits > 1)
-		ok= (unsigned)(fabs(hitsPerBuck-hits) < 2);
-	    else
-		ok = 0;
+        hits=hashTab[i].hits;
+        if( hits ) {
+            if( hits > 1)
+            ok= (unsigned)(fabs(hitsPerBuck-hits) < 2);
+            else
+            ok = 0;
+        }
     }
     if( ok )
 	return noBuckets;

@@ -46,8 +46,8 @@ protected:
     qreal z1,z2;
     qreal F_c1, F_c2;
 	
-    qreal zetamin1, zetamax1, gamma1;	//Parameter für AR1-Prozess der Dividende 1
-    qreal zetamin2, zetamax2, gamma2;	//Parameter für AR1-Prozess der Dividende 2
+    qreal zetamin1, zetamax1, gamma1;	//Parameter fÃ¼r AR1-Prozess der Dividende 1
+    qreal zetamin2, zetamax2, gamma2;	//Parameter fÃ¼r AR1-Prozess der Dividende 2
 	matrix_neu* d;					// Dividende
     qreal d1,d2;						//Kompenenten des Dividenden-Vektors
     qreal var_d1,var_d2;				//Varianzen der Dividenden-Prozesse
@@ -55,13 +55,13 @@ protected:
     qreal eta_F, eta_C;				//Gruppenanteile
     qreal alpha_F, alpha_C;			//Risikoparameter
 
-	matrix_neu* Rho[L];				// Array von Diagonalmatrizen für MA
+    matrix_neu* Rho[L];				// Array von Diagonalmatrizen fÃ¼r MA
 	matrix_neu* q_MA[L];			// Array der gelagten cumdividend-Preise
     qreal r, R;						// fixed rate of interest, R=1+r
 	matrix_neu* p;					// price
 	matrix_neu* p_old;				// price of the previous period
 	matrix_neu* q;					// cumdividend price
-	matrix_neu* q0;					// Startwerte für q, q_C und q_F
+    matrix_neu* q0;					// Startwerte fÃ¼r q, q_C und q_F
 	matrix_neu* q_C;				// cumdividend forecast (Chartists)
 	matrix_neu* q_F;				// cumdividend forecast (Fundamentalists)
 	matrix_neu* xi;					// noise
@@ -69,7 +69,7 @@ protected:
 	matrix_neu* E_xi;				// Erwartungswert noise
 	matrix_neu* x_all;				// alle papiere
     qreal x_all1, x_all2;			// Komponenten von alle papiere
-	matrix_neu* x_N;				// Portefeuille der imaginären Noise-Traders
+    matrix_neu* x_N;				// Portefeuille der imaginÃ¤ren Noise-Traders
     qreal x_N1, x_N2;				// Komponenten des Noise-Trader-Portef.
 	matrix_neu* x_Nold;				// Portefeuille der Noise-Traders aus der Vorperiode
 	matrix_neu* x_F;				// Portefeuille der Fundamentalisten
@@ -80,9 +80,9 @@ protected:
 	matrix_neu* A_F;				// riskadjusted covariance-matrix(Fundamentalist)
 	matrix_neu* V_C;				// Kovarianz-Matrix (Chartists)
 	matrix_neu* V_F;				// Kovarianz-Matrix (Fundamentalist)
-    qreal e_N, e_F;					// Anfangsausstattung der Händlergruppen
-    qreal wealth_N, wealth_F;		// Endvermögen der Händlergruppen
-    qreal rend_N, rend_F;			// Rendite der Händlergruppen
+    qreal e_N, e_F;					// Anfangsausstattung der HÃ¤ndlergruppen
+    qreal wealth_N, wealth_F;		// EndvermÃ¶gen der HÃ¤ndlergruppen
+    qreal rend_N, rend_F;			// Rendite der HÃ¤ndlergruppen
     qreal mu_F;						// mean of returns der Fundamentalisten
     qreal sigma_F;					// standard deviation of returns der Fundamentalisten
     qreal mu_N;						// mean of returns der Noise-Trader

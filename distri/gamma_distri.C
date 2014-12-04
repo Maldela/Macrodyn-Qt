@@ -41,7 +41,7 @@ if (arg <= 0.0)
 double  y, z, f, x;
 unsigned   i, k;
 z=1.0;
-for (int k=0,x=arg-1.0;x<arg_limit;x+=1.0,k++)
+for (k=0,x=arg-1.0;x<arg_limit;x+=1.0,k++)
     z *= (x+=1.0);
 y = x * log(x) - x + 0.5*log( 2.0*M_PI*x ) - log(z);
 for (f=1.0, i=2, z=x; i<n_limit ;i+=2,z*=x*x,f+=2.0)

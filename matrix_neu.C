@@ -159,7 +159,7 @@ matrix_neu operator*(const matrix_neu& A, const matrix_neu& B)
         	    	for(int k=0;k<B.row;k++)
                 	matrix_neu::mat__temp1->m[i][j]+= A.m[i][k] * B.m[k][j];
 	        }
-	return *matrix_neu::mat__temp1;		
+        return *matrix_neu::mat__temp1;
 	}
 	
 	if ((matrix_neu::mat__temp2!=&A)&&(matrix_neu::mat__temp2!=&B)) {
@@ -172,7 +172,7 @@ matrix_neu operator*(const matrix_neu& A, const matrix_neu& B)
         	    	for(int k=0;k<B.row;k++)
                 	matrix_neu::mat__temp2->m[i][j]+= A.m[i][k] * B.m[k][j];
 	        }		
-	return *matrix_neu::mat__temp2;		
+        return *matrix_neu::mat__temp2;
 	}
 	
 	if ((matrix_neu::mat__temp3!=&A)&&(matrix_neu::mat__temp3!=&B)) {
@@ -185,8 +185,9 @@ matrix_neu operator*(const matrix_neu& A, const matrix_neu& B)
         	    	for(int k=0;k<B.row;k++)
                 	matrix_neu::mat__temp3->m[i][j]+= A.m[i][k] * B.m[k][j];
 	        }
-	return *matrix_neu::mat__temp3;		
+        return *matrix_neu::mat__temp3;
 	}
+    return matrix_neu();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -211,7 +212,7 @@ matrix_neu operator+(const matrix_neu& A, const matrix_neu& B)
 	    	for(int i=0;i<A.row;i++)
 			for(int j=0;j<B.col;j++)
 		        	matrix_neu::mat__temp1->m[i][j] = A.m[i][j] + B.m[i][j];
-	return *matrix_neu::mat__temp1;
+        return *matrix_neu::mat__temp1;
 	}
 	
 	if ((matrix_neu::mat__temp2!=&A)&&(matrix_neu::mat__temp2!=&B)) {
@@ -221,7 +222,7 @@ matrix_neu operator+(const matrix_neu& A, const matrix_neu& B)
 	    	for(int i=0;i<A.row;i++)
 			for(int j=0;j<B.col;j++)
 		        	matrix_neu::mat__temp2->m[i][j] = A.m[i][j] + B.m[i][j];
-	return *matrix_neu::mat__temp2;		
+        return *matrix_neu::mat__temp2;
 	}
 	
 	if ((matrix_neu::mat__temp3!=&A)&&(matrix_neu::mat__temp3!=&B)) {
@@ -231,8 +232,9 @@ matrix_neu operator+(const matrix_neu& A, const matrix_neu& B)
 	    	for(int i=0;i<A.row;i++)
 			for(int j=0;j<B.col;j++)
 		        	matrix_neu::mat__temp3->m[i][j] = A.m[i][j] + B.m[i][j];
-	return *matrix_neu::mat__temp3;		
+        return *matrix_neu::mat__temp3;
 	}
+    return matrix_neu();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -257,7 +259,7 @@ matrix_neu operator-(const matrix_neu& A, const matrix_neu& B)
 	    	for(int i=0;i<A.row;i++)
 			for(int j=0;j<B.col;j++)
 		        	matrix_neu::mat__temp1->m[i][j] = A.m[i][j] - B.m[i][j];
-	return *matrix_neu::mat__temp1;		
+        return *matrix_neu::mat__temp1;
 	}
 	
 	if ((matrix_neu::mat__temp2!=&A)&&(matrix_neu::mat__temp2!=&B)) {
@@ -267,7 +269,7 @@ matrix_neu operator-(const matrix_neu& A, const matrix_neu& B)
 	    	for(int i=0;i<A.row;i++)
 			for(int j=0;j<B.col;j++)
 		        	matrix_neu::mat__temp2->m[i][j] = A.m[i][j] - B.m[i][j];
-	return *matrix_neu::mat__temp2;		
+        return *matrix_neu::mat__temp2;
 	}
 	
 	if ((matrix_neu::mat__temp3!=&A)&&(matrix_neu::mat__temp3!=&B)) {
@@ -277,8 +279,9 @@ matrix_neu operator-(const matrix_neu& A, const matrix_neu& B)
 	    	for(int i=0;i<A.row;i++)
 			for(int j=0;j<B.col;j++)
 		        	matrix_neu::mat__temp3->m[i][j] = A.m[i][j] - B.m[i][j];
-	return *matrix_neu::mat__temp3;		
+        return *matrix_neu::mat__temp3;
 	}
+    return matrix_neu();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
