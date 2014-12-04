@@ -1,4 +1,8 @@
 #include "logger.h"
+#include <QDebug>
+
+
+int LoggerHelper::ref = 0;
 
 QList<Logger *> Logger::m_logger = QList<Logger *>();
 
@@ -24,6 +28,7 @@ Logger::Logger(QObject *parent) : QObject(parent)
 {
     m_logger << this;
     m_precision = 6;
+    m_line = "New Log\n";
 }
 
 Logger::~Logger()
@@ -33,14 +38,32 @@ Logger::~Logger()
 
 void Logger::print(const QString &str)
 {
-    if (str == "\n")
+    if (str.endsWith("\n"))
     {
-        emit lineChanged();
-        m_oldLine = m_line;
-        m_line = "";
+        if (m_line.isEmpty())
+        {
+            if (str != "\n")
+            {
+                qDebug() << 1;
+                m_oldLine = str;
+                m_oldLine.chop(2);
+                emit lineChanged();
+            }
+            else qDebug() << "string = endl and line is empty";
+        }
+        else
+        {
+            qDebug() << 2;
+            m_line += str;
+            m_line.chop(2);
+            m_oldLine = m_line;
+            m_line.clear();
+            emit lineChanged();
+        }
     }
     else
     {
+        qDebug() << 3;
         m_line += str;
         m_line += " ";
     }
@@ -48,7 +71,7 @@ void Logger::print(const QString &str)
 
 void Logger::print(qreal r, int precision)
 {
-    if (precision == 0) precision = m_precision;
+    if (precision <= 0) precision = m_precision;
     m_line += QString::number(r, 'g', precision) += " ";
 }
 
@@ -57,6 +80,9 @@ void Logger::setPrecision(int p)
     if (p != m_precision)
     {
         m_precision = p;
+        print("Precision changed to");
+        print(m_precision);
+        print("\n");
         emit precisionChanged();
     }
 }

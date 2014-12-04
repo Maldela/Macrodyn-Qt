@@ -33,7 +33,7 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
     resolution_y = axes.res[1];
     resolution_z = axes.res[2];
     cout << "resx: " << resolution_x << " resy: " << resolution_y << " resz: "
-    << resolution_z << endl; 
+    << resolution_z << "\n";
     dx = bif3D_dx;
     dy = bif3D_dy;
     dz = bif3D_dz;
@@ -138,7 +138,7 @@ void cyclogram_3d::simulation()
                     if( hash->storePoint(stateVars) ) {
                         hash->resetHashTable();
                         order=-1;    // out of domain, leave it blue
-        //			    cout << *(stateVars[0]) << endl;
+        //			    cout << *(stateVars[0]) << "\n";
                         break;
                     }
                     if( !(t % tDiv) || (t==(length-1)) ) {

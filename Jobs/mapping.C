@@ -50,14 +50,14 @@ void mapping::simulation()
 	
 	for (int i=0; i<resolution; i++) {
 		model->initialize();
-        log() << "\nmodel length:" << model->getLength() << endl << "\n";
+        log() << "\nmodel length:" << model->getLength() << "\n" << "\n";
 		for (int j=0; j<time_limit; j++) {
 			model->iteration(j+1);
 			model->sendStateSpace(dummy, &states);
 			for (int k=0; k<model_dim; k++) {
             //	log() << i*time_limit*model_dim+j*model_dim+k << " " << "\n";
-            //	log() << (states)[0] << " " << (states)[1] << endl << "\n";
-            //	log() << ((*states)[0]) << " " << ((*states)[1]) << endl << "\n";
+            //	log() << (states)[0] << " " << (states)[1] << "\n" << "\n";
+            //	log() << ((*states)[0]) << " " << ((*states)[1]) << "\n" << "\n";
 				m->value_field[i*time_limit*model_dim+j*model_dim+k]=((*states)[k-1]);
 			}
 		}

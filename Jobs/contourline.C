@@ -214,11 +214,11 @@ void contourline::simulation()
 		if (col<1) col=1;
 		if( screenGraphics ) 
             screenGraphics->setPoint(dummy_x,dummy_y,col);
-		outFile << dummy_x << "\t" << dummy_y << "\t" << dummy_value << endl;
+        outFile << dummy_x << "\t" << dummy_y << "\t" << dummy_value << "\n";
      }
-     outFile << endl;
+     outFile << "\n";
    }
-    log() << "\nmin=" << min << "\t max=" << max << endl;
+    log() << "\nmin=" << min << "\t max=" << max << "\n";
 	outFile.close();
 }
 

@@ -440,21 +440,21 @@ void armax_eindim::iteration(const long& t)
 			error_es_e = ((-1/b[0]) * e) - es_e;		
 // output on screen in the last period
 	if (t==length){		
-        log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << endl;
+        log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << "\n";
         for (int l=1;l<L+1;l++)
-            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << endl;
+            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << "\n";
         for (int k=0;k<K-1;k++)
-            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << endl;
+            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << "\n";
         for (int r=0;r<R;r++)
-            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << endl;
+            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << "\n";
 		if (G==1)
-            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << endl;
+            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << "\n";
 		if (H==1)
-            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e << endl;
-//		log() << "last dif_var=" << dif_var << endl;
-//		log() << "var1 = " << var1 << endl;
-//		log() << "var2 = " << var2 << endl;
-//		log() << "sum_var1 = " << sum_var1 << endl;
+            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e << "\n";
+//		log() << "last dif_var=" << dif_var << "\n";
+//		log() << "var1 = " << var1 << "\n";
+//		log() << "var2 = " << var2 << "\n";
+//		log() << "sum_var1 = " << sum_var1 << "\n";
 	}
 	
 	
@@ -589,36 +589,36 @@ void armax_eindim::saveParamset(ofstream& outFile)
 void armax_eindim::printParamset()
 { 	
  	for (int l=0;l<L;l++)
-        log() << y_old_ini[l] << endl;
+        log() << y_old_ini[l] << "\n";
  	for (int k=0;k<K;k++)
-        log() << u_old_ini[k] << endl;
+        log() << u_old_ini[k] << "\n";
 	for (int r=0;r<R;r++)
-        log() << v_old_ini[r] << endl;
+        log() << v_old_ini[r] << "\n";
     for (int l=0;l<L;l++)
-        log() << a[l] << endl;
+        log() << a[l] << "\n";
     for (int k=0;k<K;k++)
-        log() << b[k] << endl;
+        log() << b[k] << "\n";
     for (int r=0;r<R;r++)
-        log() << c[r] << endl;
+        log() << c[r] << "\n";
 	if (G==1)
-        log() << d << endl;
+        log() << d << "\n";
 	if (H==1)
-        log() << e << endl;
+        log() << e << "\n";
     for (int l=0;l<L;l++)
-        log() << a_e[l] << endl;
+        log() << a_e[l] << "\n";
     for (int k=0;k<K;k++)
-        log() << b_e[k] << endl;
+        log() << b_e[k] << "\n";
     for (int r=0;r<R;r++)
-        log() << c_e[r] << endl;
+        log() << c_e[r] << "\n";
 	if (G==1)
-        log() << d_e << endl;
+        log() << d_e << "\n";
 	if (H==1)
-        log() << e_e << endl;
+        log() << e_e << "\n";
  	
-    log() << eps << endl;
-    log() << sigma_eps << endl;
+    log() << eps << "\n";
+    log() << sigma_eps << "\n";
 		
-    log() << length << endl;
+    log() << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

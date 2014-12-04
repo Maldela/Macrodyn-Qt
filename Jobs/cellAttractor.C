@@ -58,9 +58,9 @@ void cellAttractor::simulation()
                      (short)((t/colChange)+1));
 	}
     }
-    cout << "Number of hits: " << hash->numberOfHits() << endl;
-    cout << "Number of buckets: " << hash->numberOfBuckets() << endl;
-    cout << "Number of collisions: " << hash->numberOfCollisions() << endl;
-    cout << "Order of cycle: " << hash->orderOfCycle() << endl;
+    cout << "Number of hits: " << hash->numberOfHits() << "\n";
+    cout << "Number of buckets: " << hash->numberOfBuckets() << "\n";
+    cout << "Number of collisions: " << hash->numberOfCollisions() << "\n";
+    cout << "Order of cycle: " << hash->orderOfCycle() << "\n";
 }
 

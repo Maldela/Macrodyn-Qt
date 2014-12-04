@@ -116,7 +116,7 @@ void laborMarketFirstTax::printParamset()
     log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
     log() << length << "\n";
     log() << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
-    log() << d0 << "\t" << theta0 << endl;
+    log() << d0 << "\t" << theta0 << "\n";
 }
 
 /******************************************************************************/

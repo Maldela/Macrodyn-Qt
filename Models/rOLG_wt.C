@@ -255,7 +255,7 @@ qreal x2;
 ran_rec = rand_dis->rectangular();
 
 
-//log() << "a"<<ran_rec<<"b"<<endl;
+//log() << "a"<<ran_rec<<"b"<<"\n";
 ran_norm = rand_dis->st_normal();
 ran_chi = rand_dis->chi_square(dof);
 ran_cauchy = rand_dis->st_cauchy();

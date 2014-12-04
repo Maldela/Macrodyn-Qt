@@ -93,10 +93,10 @@ void timeSeriesSet::simulation()
 			for(t=1;t<=length;t++) {
 				model->iteration(t);
 				if( (t >= limit) && ( t % zmin == 0 ) )  {
-					outFile << *xParam << "\t" << t << "\t" << *yParam << endl; 
+                    outFile << *xParam << "\t" << t << "\t" << *yParam << "\n";
 			        }
 			}
-			outFile << endl;
+            outFile << "\n";
 		}
 	} else {
 		for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
@@ -109,9 +109,9 @@ void timeSeriesSet::simulation()
 				oldy=*yParam;	
 				model->iteration(t);
 				if( t >= limit )  {
-					outFile << oldx << "\t" << t-1 << "\t" << oldy << endl;
-					outFile << *xParam << "\t" << t << "\t" << *yParam << endl; 
-					outFile << endl << endl;
+                    outFile << oldx << "\t" << t-1 << "\t" << oldy << "\n";
+                    outFile << *xParam << "\t" << t << "\t" << *yParam << "\n";
+                    outFile << "\n" << "\n";
 			        }
 			}
 		}	

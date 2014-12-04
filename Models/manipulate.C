@@ -58,7 +58,7 @@ manipulate::manipulate() : baseModel(0) { // dimension is set zero! do not use
 // Last modified:	2000/6/20
 ///////////////////////////////////////////////////////////////////////////////
 manipulate::~manipulate() {
-log() << "manipulate destructor" << endl;
+log() << "manipulate destructor" << "\n";
 
 	if( model ) delete model;
 	if( manipulateTag ) delete [] manipulateTag;
@@ -208,7 +208,7 @@ void manipulate::loadParamset(ifstream& inFile) {
 
 	for (int hm=0;hm<howMany;hm++) {
 		inFile >> manipulateTag[hm];
-log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
+log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 		switch( manipulateTag[hm] ) {
 
 		  case stoch_uni:
@@ -262,7 +262,7 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 					*pos2++ = *pos;
 				*pos2 = '\0';
 				states[i]=atof(sdummy); // trage States in vektor ein
-				//log() << sdummy << " " << states[i] << endl;
+				//log() << sdummy << " " << states[i] << "\n";
 			}
 			for (j = 0; j < statesNum; j++) { // Uli liest Uebergangsmatrix zeilenweise ein!
 				inFile >> dummy;	
@@ -273,7 +273,7 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 						*pos2++ = *pos;
 					*pos2 = '\0';
 					umatrix[j][i]=atof(sdummy); // trage Uebergangsmatrix ein
-					//log() << sdummy << " " << umatrix[j][i] << endl;
+					//log() << sdummy << " " << umatrix[j][i] << "\n";
 				}
 				strcat(m_matrix,dummy); // anhaengen der Zeilen !
 				strcat(m_matrix," ");		
@@ -553,7 +553,7 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << endl;
 
 		  default:
 			cerr << "manipulate::loadParamset  Do not know manipulate Tag ";
-			cerr << manipulateTag[hm] << endl;
+			cerr << manipulateTag[hm] << "\n";
 			exit(-1);
 		}
 	}
@@ -648,7 +648,7 @@ void manipulate::initialize() {
 				for ( i = 0; i < ma_k_a_ptr[j].k ; i++ )
 					ma_k_a_ptr[j].vn_k[i] = *ma_k_a_ptr[j].vname;
 			}
-			//log() << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a << endl;
+			//log() << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a << "\n";
 			break;									
 		   case rls0:
 			beta_tm1 = 0 ;
@@ -735,7 +735,7 @@ void manipulate::F_stoch_markov() {
 	*expname=exp;
 	*variancename=exp2-(exp*exp);
 	*randname=markov->dice();
-//log() << "F_stoch_markov() " << *randname << endl;
+//log() << "F_stoch_markov() " << *randname << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -847,7 +847,7 @@ void manipulate::F_ma_k_a() {
 void manipulate::F_rls0() {
     qreal theta_tm1,theta2;
 //log() << " *p_tm1=" << *p_tm1 << " p_tm2=" << p_tm2;
-//log() << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 << endl;
+//log() << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 << "\n";
 
     theta_tm1= *p_tm1 / p_tm2; // calculate inflation factor
     beta_tm1 += g_tm1 * ( theta_tm1 - beta_tm1 ) ;  // recursiv estimate
@@ -871,7 +871,7 @@ void manipulate::F_rls1() {
     *theta_e_tp1 = *theta_e_t + g_tm1 * ( *theta_tm1 - *theta_e_t ) ;
     qreal dummy = g_tm1 * *theta_tm1 * *theta_tm1 ;
     g_tm1 = dummy / (dummy + 1.0) ;
-//log() <<"99rls1: g_tm1="<<g_tm1<<" *theta_tm1="<<*theta_tm1<<" *theta_e_t="<<*theta_e_t<<" *theta_e_tp1="<<*theta_e_tp1<<endl;
+//log() <<"99rls1: g_tm1="<<g_tm1<<" *theta_tm1="<<*theta_tm1<<" *theta_e_t="<<*theta_e_t<<" *theta_e_tp1="<<*theta_e_tp1<<"\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -884,11 +884,11 @@ void manipulate::F_rls1() {
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_rls1d() {
 //log() <<"121rls1d: oldp="<<oldp<<" pe="<<theta*oldp;
-//log() <<" fe="<<( *p - theta*oldp ) <<endl;
+//log() <<" fe="<<( *p - theta*oldp ) <<"\n";
 
     theta += ((oldp*P)/(1+oldp*oldp*P)) * ( *p - theta*oldp ) ;
 
-//log() <<"121rls1d: p="<<*p<<" lPp="<<((oldp*P)/(1+oldp*oldp*P))<<" theta="<<theta<<endl;
+//log() <<"121rls1d: p="<<*p<<" lPp="<<((oldp*P)/(1+oldp*oldp*P))<<" theta="<<theta<<"\n";
 
     P /= ( 1+oldp*oldp*P );
 
@@ -896,7 +896,7 @@ void manipulate::F_rls1d() {
 	*q=theta*theta * *p; //forecast2
      else
 	*q=theta * *p; //forecast
-//log() <<"121rls1d: P="<<P<<" theta="<<theta<<" oldp="<<oldp<<" p="<<*p<<" pe="<<*q<<endl;
+//log() <<"121rls1d: P="<<P<<" theta="<<theta<<" oldp="<<oldp<<" p="<<*p<<" pe="<<*q<<"\n";
     oldp=*p;
 }
 
@@ -932,7 +932,7 @@ void manipulate::F_els() {
 	if(forecasttype==1) ELS->forecast();
 	 else if(forecasttype==2) ELS->forecast2();
 	 else {
-		cerr << "manipulate::F_els do not know forecasttype "<<forecasttype<<endl;
+		cerr << "manipulate::F_els do not know forecasttype "<<forecasttype<<"\n";
 		exit(-1);
 	 }
 }
@@ -954,7 +954,7 @@ void manipulate::F_sg() {
 //		}
 	}
 	else {
-		cerr << "manipulate::F_sg do not know forecasttype "<<forecasttype<<endl;
+		cerr << "manipulate::F_sg do not know forecasttype "<<forecasttype<<"\n";
 		exit(-1);
 	}
 }
@@ -1064,7 +1064,7 @@ void manipulate::FXRoot() {
 		fx1 = FX1();
 		fx2 = FX2();
 		if (eps1 > fabs(fx1)) {
-			log() << "FXROOT::First derivative at current root estitmate extremely small" << endl;
+			log() << "FXROOT::First derivative at current root estitmate extremely small" << "\n";
 			x = x_save ;
 			break;
 		}
@@ -1073,7 +1073,7 @@ void manipulate::FXRoot() {
 		if (eps2 >= fabs(x - x_old)) break;  		
 	}
     if (i==101) {
-		log() << "FXROOT::No convergence under current conditions (100, 10^(-10))" << endl;
+		log() << "FXROOT::No convergence under current conditions (100, 10^(-10))" << "\n";
 		x = x_save;
 	}
 }
@@ -1250,8 +1250,8 @@ void manipulate::iteration(const long& t) {
 			if(t==length)
 				log() <<"mean="<<mean<<" variance="<<variance
 					 <<"standardDeviation="<<standardDeviation
-					 <<"Variationskoeffizient="<<variationskoeff<<endl
-					 <<"sharpeRatio="<<sharpeRatio<<endl;
+					 <<"Variationskoeffizient="<<variationskoeff<<"\n"
+					 <<"sharpeRatio="<<sharpeRatio<<"\n";
 		break;		
 		   case quantiles: 
 			Sequper(t); 
@@ -1267,7 +1267,7 @@ void manipulate::iteration(const long& t) {
 				stat_output << "kurtosis&" << ku << "\\\\ \\hline\n"; 
 				stat_output << "quantile (" << u << ")&" << xi << "\\\\ \\hline\n"; 
 				stat_output << "\\end{tabular}";
-				stat_output << endl;
+				stat_output << "\n";
 				stat_output << "\\begin{tabular}{|l|l|}\\hline\n";
 				for (j = 1; j<=4; j++)
 					stat_output <<  j << ". moment&" << mr[j-1] <<"\\\\ \\hline\n";

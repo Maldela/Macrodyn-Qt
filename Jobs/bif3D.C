@@ -44,7 +44,7 @@ bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes,
     resolution_z = axes.res[2];
 //    resolution_x = resolution_y = resolution_z =axes.res[2];
     log() << "resx: " << resolution_x << " resy: " << resolution_y
-    << " resz: " << resolution_z << endl;
+    << " resz: " << resolution_z << "\n";
     dx = bif3D_dx;
     dy = bif3D_dy;
     dz = bif3D_dz;
@@ -75,7 +75,7 @@ bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes,
     resolution_z = axes.res[2];
 //    resolution_x = resolution_y = resolution_z =axes.res[2];
     log() << "resx: " << resolution_x << " resy: " << resolution_y
-    << " resz: " << resolution_z << endl;
+    << " resz: " << resolution_z << "\n";
     dx = bif3D_dx;
     dy = bif3D_dy;
     dz = bif3D_dz;
@@ -151,7 +151,7 @@ void bif3D_2par::simulation()
     char data[resolution_x][resolution_y][resolution_z];
     
     //information
-    //log() << "h.x_res: " << h.get_x_res() << endl;
+    //log() << "h.x_res: " << h.get_x_res() << "\n";
 
     // initialize the output file writing header for vrend data
     ofstream outFile;
@@ -189,7 +189,7 @@ void bif3D_2par::simulation()
     h.reset();
     for (dummy_z=zmin, count_z=0; count_z<resolution_z; dummy_z+=stepZ, count_z++) {
     for (dummy_x=xmin, count_x=0; count_x<resolution_x; dummy_x+=stepX, count_x++) {
-//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << endl;
+//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << "\n";
     	*xParam=dummy_x;
 	*zParam=dummy_z;
 	model->initialize();
@@ -206,7 +206,7 @@ void bif3D_2par::simulation()
 	}
     
     h_max = double (h.get_max_hits());
-//    log() << "x: " << dummy_x << "\th_max: " << h_max << endl;
+//    log() << "x: " << dummy_x << "\th_max: " << h_max << "\n";
     if ( h.get_max_hits()==0 ) h_max=1;
     for( dummy_y=ymin, dummy_a = 0; dummy_a<h.get_x_res(); dummy_y+=stepY,
     dummy_a++){
@@ -283,7 +283,7 @@ void bif3D_1par::simulation()
 
     h.reset();
     for (dummy_x=xmin, count_x=0; count_x<resolution_x; dummy_x+=stepX, count_x++) {
-//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << endl;
+//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << "\n";
     	*xParam=dummy_x;
 	model->initialize();
 	for(t=0;t<limit;t++) 
@@ -299,7 +299,7 @@ void bif3D_1par::simulation()
 	}
     
     h_max = double (h.get_max_hits());
-//    log() << "x: " << dummy_x << "\th_max: " << h_max << endl;
+//    log() << "x: " << dummy_x << "\th_max: " << h_max << "\n";
     if ( h_max==0 ) h_max=1;
     for( dummy_z=zmin, dummy_b = 0; dummy_b<h.get_y_res(); dummy_z+=stepZ,
     dummy_b++){

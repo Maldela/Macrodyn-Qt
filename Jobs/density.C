@@ -92,16 +92,16 @@ void density_1d::simulation()
       screenGraphics->setPoint(*xParam,d,color);
     }
   }
-  log() << endl;				// this is for external usage
-  log() << "class width = " << stepX << endl;
-  log() << "possible number of hits = " << length - limit << endl;
+  log() << "\n";				// this is for external usage
+  log() << "class width = " << stepX << "\n";
+  log() << "possible number of hits = " << length - limit << "\n";
   for( k=0 ; k< h.get_x_res() ; k++) {
   // d=((double) h(k))/h.get_no_hits();
     d=((double) h(k))/double(length - limit);
     d=d/stepX;
     log() << "\t" << d;
   }
-  log() << endl;
+  log() << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -205,8 +205,8 @@ density_1d_var::density_1d_var(baseModel* const bMod, xyRange & axes,
                       :density_1d_1p(bMod,axes,graph)
 {
 	var_res = axes.res[2]+1;
-    log() << "no. of runs: " << var_res << "\tT: " << length << endl << "\n";
-    log() << "z: " << zLabel << "\tzmin: " << zmin << "\tzmax: " << zmax << endl << "\n";
+    log() << "no. of runs: " << var_res << "\tT: " << length << "\n" << "\n";
+    log() << "z: " << zLabel << "\tzmin: " << zmin << "\tzmax: " << zmax << "\n" << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -243,16 +243,16 @@ void density_1d_var::simulation()
 			if ( how_many%(long(var_res/100))==0 ){
 				plot_current_data(how_many);
 				percent+=1;
-                log() << "percent: " << percent << endl << "\n";
+                log() << "percent: " << percent << "\n" << "\n";
 			}
 			}
 	}
 	// make final picture and file
 	if ( screenGraphics ) plot_current_data(how_many);
 
-    log() << endl;				// this is for external usage
-    log() << "class width = " << stepX << endl;
-    log() << "possible number of hits = " << var_res << endl;
+    log() << "\n";				// this is for external usage
+    log() << "class width = " << stepX << "\n";
+    log() << "possible number of hits = " << var_res << "\n";
 	int k;
 	double d;
 	double d_cum = 0;
@@ -262,9 +262,9 @@ void density_1d_var::simulation()
 		d_cum+=d;
 		d=d/stepX;		
         log() << "F(" << double(k)*stepX+xmin << ")= " << d_cum << "\t"
-		<< "f()= " << d << endl;
+        << "f()= " << d << "\n";
 	}
-    log() << endl;
+    log() << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

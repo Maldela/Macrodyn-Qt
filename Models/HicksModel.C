@@ -243,7 +243,7 @@ void HicksModel::saveParamsetWithNames(ofstream& outFile)
 	outFile << "\nm = " << m;
 	outFile << "\nlambda = " << lambda;
 	outFile << "\nseed = " << myseed;
-	outFile << "\nlength = " << length << endl;
+	outFile << "\nlength = " << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -261,7 +261,7 @@ void HicksModel::saveParamsetWithNames(ofstream& outFile)
 void HicksModel::printParamset()
 {
     log() << y1_0 << "\t" << y2_0 << "\t" << If << "\t" << Iaut << "\t";
-    log() << Yc << "\t" << v << "\t" << m  << "\t" << lambda << "\t" << myseed << "\t" << length << endl;
+    log() << Yc << "\t" << v << "\t" << m  << "\t" << lambda << "\t" << myseed << "\t" << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

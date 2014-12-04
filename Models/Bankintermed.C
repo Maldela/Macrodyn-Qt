@@ -112,9 +112,9 @@ void Bankintermed::initialize()
 	S=(1-nu)*e*s;
 
 	df_min=-(S+nu*e);
-log() << "df_min=" << df_min << endl;
+log() << "df_min=" << df_min << "\n";
 	df_max=nu*I_ini-S;
-log() << "df_max=" << df_max << endl;
+log() << "df_max=" << df_max << "\n";
 
 	df_crit_min=-alpha/(1+e/I_min-alpha)*df_min;
 	df_crit_max=-alpha/(1+e/I-alpha)*df_min;
@@ -508,24 +508,24 @@ void Bankintermed::saveParamset(ofstream& outFile){
 
 void Bankintermed::printParamset(){
 
-    log() <<	e_0 << endl;
-    log() <<	e_alpha << endl;
-    log() <<	e_beta << endl;
-    log() <<	I << endl;
-    log() << s << endl;
-    log() <<	nu << endl;
-    log() <<	alpha << endl;
-    log() <<	beta << endl;
-    log() <<	gamma << endl;
-    log() <<	delta << endl;
-    log() <<	q_min << endl;
-    log() <<	q_max << endl;
-    log() <<	a << endl;
-    log() <<	b << endl;
-    log() <<	c << endl;
-    log() <<	df_0 << endl;
+    log() <<	e_0 << "\n";
+    log() <<	e_alpha << "\n";
+    log() <<	e_beta << "\n";
+    log() <<	I << "\n";
+    log() << s << "\n";
+    log() <<	nu << "\n";
+    log() <<	alpha << "\n";
+    log() <<	beta << "\n";
+    log() <<	gamma << "\n";
+    log() <<	delta << "\n";
+    log() <<	q_min << "\n";
+    log() <<	q_max << "\n";
+    log() <<	a << "\n";
+    log() <<	b << "\n";
+    log() <<	c << "\n";
+    log() <<	df_0 << "\n";
 
-    log() << length << endl;
+    log() << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

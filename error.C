@@ -3,15 +3,15 @@
 
 void fatalError(const QString &where, const QString &what)
 {
-    log() << QString("Fatal error:") << where << " " << what << endl;
+    log() << QString("Fatal error:") << where << " " << what << "\n";
 }
 
 void fatalError(const char *where, const char *what)
 {
-    log() << QString("Fatal error:") << QString(where) << " " << QString(what) << endl;
+    log() << QString("Fatal error:") << QString(where) << " " << QString(what) << "\n";
 }
 
 void error(const QString &arg1, const QString &arg2)
 {
-    log() << QString("Error:") << arg1 << " " << arg2 << endl;
+    log() << QString("Error:") << arg1 << " " << arg2 << "\n";
 }

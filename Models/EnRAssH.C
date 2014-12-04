@@ -143,7 +143,7 @@ static qreal ols_k(qreal *y, qreal *,const long &k, const long&) {
 	if (term!=0) b=(xy_-x_*y_)/term;
 		else b=0;
 	a=y_-b*x_;
-//log() << " a=" << a << " b=" << b << " count=" << count << endl;
+//log() << " a=" << a << " b=" << b << " count=" << count << "\n";
 
     return ( a+b*count );
 }
@@ -264,11 +264,11 @@ void EnRAssH::loadParamset(ifstream& inFile)
 void EnRAssH::saveParamsetWithNames(ofstream& outputFile)
 {
     outputFile << "\nModel EnRAssH\n";
-    outputFile << "N = " << N << "\tx_ = " << x_ << "\te = " << e << endl;
-    outputFile << "R = " << R << "\tdmax = " << dmax << endl;
-    outputFile << "alpha = " << alpha << endl;
-    outputFile << "theta0 = " << theta0 << "\tp0 = " << p0  << endl;
-    outputFile << "learn type = " << learntype << "\tmemory = " << mem << endl;
+    outputFile << "N = " << N << "\tx_ = " << x_ << "\te = " << e << "\n";
+    outputFile << "R = " << R << "\tdmax = " << dmax << "\n";
+    outputFile << "alpha = " << alpha << "\n";
+    outputFile << "theta0 = " << theta0 << "\tp0 = " << p0  << "\n";
+    outputFile << "learn type = " << learntype << "\tmemory = " << mem << "\n";
     outputFile << "length = "<< length << "\n";
 }
 
@@ -312,7 +312,7 @@ void EnRAssH::iteration(const long& t)
 
 	if (alpha<alphamin) {
 		alpha=alphamin;
-		log() << "alpha=alphamin=" << alphamin << endl;
+		log() << "alpha=alphamin=" << alphamin << "\n";
 	}
 
 	qreal dmaxAbs =(  (N/x_) * ( (R*e) - (1/alpha) )  );

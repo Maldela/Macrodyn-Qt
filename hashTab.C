@@ -180,7 +180,7 @@ int hashTable::storePoint(const qreal** state)
 
     if( !domain.inRange(state) ) {      // check wether the point is in the 
       					// domain to be considered or not
-//	log() << "Domain error\t" << state[0] << "\t" << state[1] << endl;
+//	log() << "Domain error\t" << state[0] << "\t" << state[1] << "\n";
 	return 1;
     }
     cell=whichCell(state);    		// transform the coordinates into a

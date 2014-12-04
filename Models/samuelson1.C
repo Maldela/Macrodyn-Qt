@@ -436,9 +436,9 @@ void samuelson1::saveParamset(ofstream& outFile)
 
 void samuelson1::printParamset()
 {
-    log() << N  << endl;
-    log() << x01 << endl;
-    log() << x02 << endl;
+    log() << N  << "\n";
+    log() << x01 << "\n";
+    log() << x02 << "\n";
 
 	for(int i=0; i<=N-1;i++) {
 		for(int j=0;j<=4;j++) {
@@ -446,7 +446,7 @@ void samuelson1::printParamset()
 		}	
 	}
 
-    log() << length << endl;
+    log() << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -194,7 +194,7 @@ void adaptExp::printParamset()
     log() << tau << "\t" << length << "\n";
     log() << delta << "\t" << beta << "\t" << eta << "\n";
     log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << endl;
+    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
 }
 
 /******************************************************************************/

@@ -164,9 +164,9 @@ void OlgRat::saveParamset(ofstream& outFile)
 
 void OlgRat::printParamset()
 {
-    log() << m0 << "\t" << g << "\t" << tau << endl;
-    log() << s << "\t" << lambda << endl;
-    log() << length << endl;
+    log() << m0 << "\t" << g << "\t" << tau << "\n";
+    log() << s << "\t" << lambda << "\n";
+    log() << length << "\n";
 }
 
 

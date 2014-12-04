@@ -249,14 +249,14 @@ void milano::loadParamset(ifstream& inFile)
 
 void milano::printParamset()
 {
-    log() << "a     :  " << a <<"\talpha0 : " << alfa0 << endl;
-    log() << "b     :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
-    log() << "n1    :  " << n1 << endl;
-    log() << "mu1   :  " << mu1 << "\tmu2 : " << mu2 << endl;
-    log() << "nu1   :  " << nu1 << "\tG   : " << G << endl;
-    log() << "nu2   :  " << nu2 << "\ttax : " << tax << endl;
-    log() << "h     :  " << h << "\tsimd: " << simd << endl;
-    log() << "pg0   :  " << pg0 << "\tLs  : " << Ls << endl;
+    log() << "a     :  " << a <<"\talpha0 : " << alfa0 << "\n";
+    log() << "b     :  " << b <<"\tmqreal0 : " << mqreal0 << "\n";
+    log() << "n1    :  " << n1 << "\n";
+    log() << "mu1   :  " << mu1 << "\tmu2 : " << mu2 << "\n";
+    log() << "nu1   :  " << nu1 << "\tG   : " << G << "\n";
+    log() << "nu2   :  " << nu2 << "\ttax : " << tax << "\n";
+    log() << "h     :  " << h << "\tsimd: " << simd << "\n";
+    log() << "pg0   :  " << pg0 << "\tLs  : " << Ls << "\n";
 }
 
 /******************************************************************************/
@@ -268,11 +268,11 @@ void milano::printParamset()
 /*****************************************************************************/
 void milano::saveParamset(ofstream& outFile)
 {
-    outFile << a << " " << b << endl;
-    outFile << mu1 << " " << mu2 << " " << nu1 << " " << nu2 << endl;
-    outFile << n1 << " " << simd << endl;
-    outFile << h << " " << pg0 << " " << alfa0 << " " << mqreal0 << endl;
-    outFile << Ls << " " << G << " " << tax << endl;
+    outFile << a << " " << b << "\n";
+    outFile << mu1 << " " << mu2 << " " << nu1 << " " << nu2 << "\n";
+    outFile << n1 << " " << simd << "\n";
+    outFile << h << " " << pg0 << " " << alfa0 << " " << mqreal0 << "\n";
+    outFile << Ls << " " << G << " " << tax << "\n";
 }
 
 /******************************************************************************/

@@ -533,9 +533,9 @@ void frepm::saveParamset(ofstream& outFile)
 
 void frepm::printParamset()
 {
-    log() << N  << endl;
-    log() << x01 << endl;
-    log() << x02 << endl;
+    log() << N  << "\n";
+    log() << x01 << "\n";
+    log() << x02 << "\n";
 
 	for(int i=0; i<=N-1;i++) {
 		for(int j=0;j<=10;j++) {
@@ -543,7 +543,7 @@ void frepm::printParamset()
 		}	
 	}
 
-    log() << length << endl;
+    log() << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

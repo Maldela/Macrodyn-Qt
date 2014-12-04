@@ -4,15 +4,22 @@
 #include <QObject>
 #include <QString>
 
-#define endl "\n"
 
 class LoggerHelper
 {
 
 public:
 
+    LoggerHelper() { ref++; }
+    ~LoggerHelper() { if (!ref--) *this << "\n"; }
+
     LoggerHelper& operator <<(const QString&);
     LoggerHelper& operator <<(qreal n);
+
+
+protected:
+
+    static int ref;
 };
 
 class Logger : public QObject
@@ -26,7 +33,7 @@ class Logger : public QObject
 
 public:
 
-    explicit Logger(QObject * = 0);
+    Logger(QObject * = 0);
     ~Logger();
 
     void print(const QString&);
@@ -35,6 +42,12 @@ public:
     inline QString line() const { return m_oldLine; }
     inline int precision() const { return m_precision; }
     void setPrecision(int);
+
+
+signals:
+
+    void lineChanged();
+    void precisionChanged();
 
 
 protected:
@@ -47,16 +60,6 @@ protected:
 private:
 
     static QList<Logger *> m_logger;
-
-
-signals:
-
-    void lineChanged();
-    void precisionChanged();
-
-
-public slots:
-
 };
 
 inline LoggerHelper log() { return LoggerHelper(); }

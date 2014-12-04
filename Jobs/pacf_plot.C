@@ -113,7 +113,7 @@ void pacf_plot::simulation()
 		if( printDev )
 			printDev->drawLine(i,0,i,acf,9);*/
 	}
-//	log() << "vector of correlations: " << (*v_correlations) << endl;
+//	log() << "vector of correlations: " << (*v_correlations) << "\n";
 	// drawing zero pacf value
 
 	// looping in for partial correlations
@@ -150,7 +150,7 @@ void pacf_plot::simulation()
 //		log() << (*v_short_correlations);
         log() << (*v_YW_estimators);
 		
-        log() << l << ": " << (*v_YW_estimators)(l-1,0) << endl;
+        log() << l << ": " << (*v_YW_estimators)(l-1,0) << "\n";
 		// drawing value
 		if ( screenGraphics )
 			screenGraphics->drawLine(l,0,l,(*v_YW_estimators)(l-1,0),9);
@@ -185,15 +185,15 @@ void pacf_plot::simulation()
 			}
 		}
 		
-//		log() << "kappa1:" << endl << (*m_kappa1);
-//		log() << "kappa2:" << endl << (*m_kappa2);
+//		log() << "kappa1:" << "\n" << (*m_kappa1);
+//		log() << "kappa2:" << "\n" << (*m_kappa2);
 		
 		det1 = m_kappa1->determinant();
 		det2 = m_kappa2->determinant();
 		
 		coef = pow( double(-1), double(l)) * det2 / det1;
 		
-//		log() << "value: " << coef << endl;
+//		log() << "value: " << coef << "\n";
 		
 		if ( screenGraphics )
 			screenGraphics->drawLine(l+1,0,l+1,coef,9);
@@ -214,8 +214,8 @@ void pacf_plot::simulation()
 	drawBox(-0.4,1,0.4,0,9);
 	drawBox(0.6,(*v_YW_estimators)(1,0),1.4,0,9);
     log() << "vector of partial correlations:\n";
-    log() << "lag " << 0 << ":\t" << (*v_YW_estimators)(0,0) << endl;
-    log() << "lag " << 1 << ":\t" << (*v_YW_estimators)(1,0) << endl;
+    log() << "lag " << 0 << ":\t" << (*v_YW_estimators)(0,0) << "\n";
+    log() << "lag " << 1 << ":\t" << (*v_YW_estimators)(1,0) << "\n";
 	
 	matrix_neu* dummy_YW;
 	for ( l=2; l<=l_max; l++){
@@ -234,7 +234,7 @@ void pacf_plot::simulation()
 		Q_p = Q_p*(1-(((*v_YW_estimators)(l,0))*((*v_YW_estimators)(l,0))));
 		drawBox(l-0.4, (*v_YW_estimators)(l,0), l+0.4, 0, 9);
 
-        log() << "lag " << l << ":\t" << (*v_YW_estimators)(l,0) << endl;
+        log() << "lag " << l << ":\t" << (*v_YW_estimators)(l,0) << "\n";
 		delete dummy_YW;
 	}
 	

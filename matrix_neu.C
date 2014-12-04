@@ -321,11 +321,11 @@ matrix_neu& matrix_neu::operator=(const matrix_neu& C)
 
 QDataStream& operator<<(QDataStream& ostr, const matrix_neu& C)
 {
-    ostr<<endl;
+    ostr<<"\n";
     for(int i=0;i<C.row;i++){
         for(int j=0;j<C.col;j++)
             ostr << "["<<i<<","<<j<<"]:"<<C.m[i][j]<<"\t";
-		ostr<<endl;
+        ostr<<"\n";
     }
     return ostr;
 }
@@ -738,7 +738,7 @@ if(row==2){
 	det = (m[0][0] * m[1][1]) - (m[1][0] * m[0][1]);
 	if(fabs(det)<0.0000000001) {
         log() << "fabs(determinant)=" << fabs(det) << " < 0.0000000001";
-        log() << "  will be set to null !!!" << endl;
+        log() << "  will be set to null !!!" << "\n";
 		fatalError("matrix_neu::inverse","determinant=0 break");
 	}
 	matrix_neu::mat__temp1->m[0][0] = (1/det) * m[1][1];
@@ -762,7 +762,7 @@ else{
 	detm=determinant();
 	if(fabs(detm)<0.0000000001) {
         log() << "fabs(determinant)=" << fabs(detm) << " < 0.0000000001";
-        log() << "  will be set to null !!!" << endl;
+        log() << "  will be set to null !!!" << "\n";
 		detm=0;
 	}
 	if(detm==0)

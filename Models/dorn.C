@@ -558,7 +558,7 @@ void dorn::sendStateSpace(int &quantity,const qreal*** stateSpace)
 
 void dorn::loadParamset(ifstream& inputFile)
 {
-  /* cerr << "loadps:" << endl; */
+  /* cerr << "loadps:" << "\n"; */
     inputFile >> tau >> p0 >> w0 >> s0 >>  B0 >> x0
               >> A >> B >> Lmax >> tax >> delta >> rho >> d
               >> deltaB >> g >> fi

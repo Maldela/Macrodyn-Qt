@@ -375,7 +375,7 @@ void linFima_wage::initialize()
 void linFima_wage::Wagebill()
 {
 	Wagebill_t=nF*wagerate_t;
-log() << "Wagebill=" << Wagebill_t << endl;
+log() << "Wagebill=" << Wagebill_t << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -385,9 +385,9 @@ log() << "Wagebill=" << Wagebill_t << endl;
 void linFima_wage::Savings()
 {
 	Savings_t=Wagebill_t-(pF-Ed)*xAll;
-log() << "pF=" << pF << endl;
-log() << "Ed=" << Ed << endl;
-log() << "Savings=" << Savings_t << endl;
+log() << "pF=" << pF << "\n";
+log() << "Ed=" << Ed << "\n";
+log() << "Savings=" << Savings_t << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -398,10 +398,10 @@ void linFima_wage::wagerate()
 {
     qreal wagerate_max = MAX(0,Savings_t);
 	
-log() << "max=" << wagerate_max << endl;
+log() << "max=" << wagerate_max << "\n";
 
 	wagerate_t= (*pf)(wagerate_max,a,b,c,d)-wagerate_max*(*pf_prime)(wagerate_max,a,b,c,d);
-log() << "wagerate_dyn=" << wagerate_t << endl;
+log() << "wagerate_dyn=" << wagerate_t << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -414,7 +414,7 @@ void linFima_wage::EndogenR()
 {
 qreal dummy=MAX(0,Savings_t);
 R=(1-delta)+(*pf_prime)(dummy,a,b,c,d);
-log() << "R=" << R << endl;
+log() << "R=" << R << "\n";
 }
 
 
@@ -445,7 +445,7 @@ void linFima_wage::iteration(const long& t)
 		if(perfectPredictor) 
 			Fi=1/(nF*tauF)*xAll;
  			pF=R*(pF-Ed)+Fi;
-log() << "pF=" << pF << endl;
+log() << "pF=" << pF << "\n";
 //Mark			pF=((R*pF-r*pC-Ed)/(1-r))+(1/rF)*VF*xAll;
 		
 		 // falls Fundis extern vorgeschaltet sind, dann wird
@@ -586,12 +586,12 @@ void linFima_wage::saveParamsetWithNames(ofstream& outputFile)
 {
     outputFile << "\nModel linFima_wage\n";
     if(perfectPredictor)
-	outputFile << "perfectPredictor" << endl;
-    outputFile << "R = " << R << endl;
+	outputFile << "perfectPredictor" << "\n";
+    outputFile << "R = " << R << "\n";
     outputFile << "xAll= " << xAll << " ";
     outputFile << "p0= " << p0 << " ";
-    outputFile << endl;
-    outputFile << "length = "<< length << endl;
+    outputFile << "\n";
+    outputFile << "length = "<< length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -318,9 +318,9 @@ void excOlg::loadParamset(ifstream& inputFile)
 
 void excOlg::saveParamset(ofstream& outputFile)
 {
-    outputFile << delta << "\t" << rho << endl;
-    outputFile << tau << "\t" << length << endl;
-    outputFile << theta0 << endl;
+    outputFile << delta << "\t" << rho << "\n";
+    outputFile << tau << "\t" << length << "\n";
+    outputFile << theta0 << "\n";
 }
 
 /******************************************************************************/
@@ -334,9 +334,9 @@ void excOlg::saveParamset(ofstream& outputFile)
 
 void excOlg::printParamset()
 {
-    log() << delta << "\t" << rho << endl;
+    log() << delta << "\t" << rho << "\n";
     log() << tau << "\t" << length << "\n";
-    log() << theta0 << endl;
+    log() << theta0 << "\n";
 }
 
 /******************************************************************************/
@@ -530,10 +530,10 @@ void excOlgAdapt::loadParamset(ifstream& inputFile)
 
 void excOlgAdapt::saveParamset(ofstream& outputFile)
 {
-    outputFile << delta << "\t" << rho << endl;
-    outputFile << tau << "\t" << length << endl;
-    outputFile << etaYoung << "\t" << etaOld << endl;
-    outputFile << theta0 << endl;
+    outputFile << delta << "\t" << rho << "\n";
+    outputFile << tau << "\t" << length << "\n";
+    outputFile << etaYoung << "\t" << etaOld << "\n";
+    outputFile << theta0 << "\n";
 }
 
 /******************************************************************************/
@@ -547,10 +547,10 @@ void excOlgAdapt::saveParamset(ofstream& outputFile)
 
 void excOlgAdapt::printParamset()
 {
-    log() << delta << "\t" << rho << endl;
+    log() << delta << "\t" << rho << "\n";
     log() << tau << "\t" << length << "\n";
     log() << etaYoung << "\t" << etaOld << "\n";
-    log() << theta0 << endl;
+    log() << theta0 << "\n";
 }
 
 /******************************************************************************/
@@ -778,10 +778,10 @@ void excOlgGeoExp::loadParamset(ifstream& inputFile)
 
 void excOlgGeoExp::saveParamset(ofstream& outputFile)
 {
-    outputFile << delta << "\t" << rho << endl;
-    outputFile << tau << "\t" << length << endl;
-    outputFile << etaYoung << "\t" << etaOld << endl;
-    outputFile << theta0 << endl;
+    outputFile << delta << "\t" << rho << "\n";
+    outputFile << tau << "\t" << length << "\n";
+    outputFile << etaYoung << "\t" << etaOld << "\n";
+    outputFile << theta0 << "\n";
 }
 
 /******************************************************************************/
@@ -795,10 +795,10 @@ void excOlgGeoExp::saveParamset(ofstream& outputFile)
 
 void excOlgGeoExp::printParamset()
 {
-    log() << delta << "\t" << rho << endl;
+    log() << delta << "\t" << rho << "\n";
     log() << tau << "\t" << length << "\n";
     log() << etaYoung << "\t" << etaOld << "\n";
-    log() << theta0 << endl;
+    log() << theta0 << "\n";
 }
 
 /******************************************************************************/

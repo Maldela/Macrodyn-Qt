@@ -180,11 +180,11 @@ void max_lyapunov_exp_2d::simulation()
     const qreal l_exp_eps=0.000001;
     qreal  l_exp_old;
     qreal  l_exp_diff = 0;
-  log() << "\nData-file for conversion to xpm-file" << endl;
-  log() << "Format: y x z" << endl;
-  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\t" << (xmax-xmin)/stepX << endl;
-  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\t" << (ymax-ymin)/stepY << endl;
-  log() << "\nSTART DATA NOW:" << endl;
+  log() << "\nData-file for conversion to xpm-file" << "\n";
+  log() << "Format: y x z" << "\n";
+  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\t" << (xmax-xmin)/stepX << "\n";
+  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\t" << (ymax-ymin)/stepY << "\n";
+  log() << "\nSTART DATA NOW:" << "\n";
  
  for( *yParam=ymax; *yParam>=(ymin-stepY/2) ;*yParam -= stepY) { 
     if (*yParam < ymin)
@@ -211,10 +211,10 @@ void max_lyapunov_exp_2d::simulation()
       if( screenGraphics ) {
         screenGraphics->setPoint(*xParam,*yParam,color);
       }
-      log() << *yParam << "\t" << *xParam << "\t" << l_exp <<  endl;
+      log() << *yParam << "\t" << *xParam << "\t" << l_exp <<  "\n";
     }  
   }
-   log() << "STOP DATA NOW\n" << endl;
+   log() << "STOP DATA NOW\n" << "\n";
 }
 
 int max_lyapunov_exp_2d::get_encoding( void ) {

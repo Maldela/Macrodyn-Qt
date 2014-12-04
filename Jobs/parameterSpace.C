@@ -85,7 +85,7 @@ void parameterSpace::simulation()
                 if( hash->storePoint(stateVars) ) {
                     hash->resetHashTable();
                     order=-1;    // out of domain, leave it blue
-    //			    log() << *(stateVars[0]) << endl;
+    //			    log() << *(stateVars[0]) << "\n";
                     break;
                 }
                 if( !(t % tDiv) || (t==(length-1)) ) {

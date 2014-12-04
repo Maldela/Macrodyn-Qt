@@ -55,29 +55,29 @@ if(zvar) delete zvar;
 
 void affine2::iteration(const long&)
 {
-	//log() << "This is function 'iteration()' in affine2.C" << endl;
+	//log() << "This is function 'iteration()' in affine2.C" << "\n";
     
  	urv = zvar->dice();	// Set a new random value for the Parameter
     qreal oldX=x;
 	
 	if(urv < p) 
 	{
-	//log() << "map1 is chosen" << endl;
+	//log() << "map1 is chosen" << "\n";
 	count1 = count1 + 1;
 	x = a1*oldX;
 	}
 	else
 	{
-	//log() << "map2 is chosen" << endl;
+	//log() << "map2 is chosen" << "\n";
 	x = a2*oldX + 1;
 	count2 = count2 + 1;
 	}
 
-	/*log() << "oldX = " << oldX << endl;
-	log() << "urv  = " << urv << endl;
-	log() << "x = " << x << endl;
-	log() << "count1 = " << count1 << endl;
-	log() << "count2 = " << count2 << endl;*/
+	/*log() << "oldX = " << oldX << "\n";
+	log() << "urv  = " << urv << "\n";
+	log() << "x = " << x << "\n";
+	log() << "count1 = " << count1 << "\n";
+	log() << "count2 = " << count2 << "\n";*/
 
 }
     
@@ -97,30 +97,30 @@ void affine2::iteration(const long&)
 
 void affine2::initialize()
 {
-	//log() << "This is function 'initialize()' in AFFINE2.C ."<< endl; 
-   	//log() << incase1 << endl;;
+	//log() << "This is function 'initialize()' in AFFINE2.C ."<< "\n"; 
+   	//log() << incase1 << "\n";;
 	x=x0;
 	count1=0;
 	count2=0;
     zvar = new rand_var(this,"ranf",zvar_expr);
 	if(!zvar)	
 	fatalError("randvar::initialize stoch_ar", "can't create rand_var");
-	//log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << "\n"; 
 	if(incase1==1) 
 	{
-	//log() << "case1 is valid:" << endl;
+	//log() << "case1 is valid:" << "\n";
 	a1 = a;
 	a2 = a-1;
-	/*log() << "a = " << a << endl;
-	log() << "a1= a = " << a1 << endl;
-	log() << "a2= a-1 = " << a2 << endl;*/
+	/*log() << "a = " << a << "\n";
+	log() << "a1= a = " << a1 << "\n";
+	log() << "a2= a-1 = " << a2 << "\n";*/
 	}
 else
 	{
-	/*log() << "case2 or case 3 is valid:" << endl;
-	log() << "a = " << a << endl;
-	log() << "a1= a = " << a1 << endl;
-	log() << "a2= a-1 = " << a2 << endl;*/
+	/*log() << "case2 or case 3 is valid:" << "\n";
+	log() << "a = " << a << "\n";
+	log() << "a1= a = " << a1 << "\n";
+	log() << "a2= a-1 = " << a2 << "\n";*/
 	}
 
 
@@ -142,9 +142,9 @@ else
 
 qreal* affine2::sendModelVar()
 {
-	//log() << "This is function 'sendModelVar()' in AFFINE2.C" << endl;
+	//log() << "This is function 'sendModelVar()' in AFFINE2.C" << "\n";
     return &x;
-	//log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << "\n"; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ qreal* affine2::sendModelVar()
 
 qreal* affine2::setLabels(char* label)
 {
-	//log() << "This is function 'setLabels()' in AFFINE2.C ." << endl;
+	//log() << "This is function 'setLabels()' in AFFINE2.C ." << "\n";
 	if( !strcmp(label,"a") )
 	return( &a);
     if( !strcmp(label,"a1") )
@@ -182,7 +182,7 @@ qreal* affine2::setLabels(char* label)
 	if( !strcmp(label,"yBundle") )
 	return( &yBundle );
     return NULL;
-	//log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << "\n"; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ qreal* affine2::setLabels(char* label)
 
 void affine2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-	//log() << "This is function 'sendStateSpace()' in AFFINE2.C ." << endl; 
+	//log() << "This is function 'sendStateSpace()' in AFFINE2.C ." << "\n"; 
     if( stateSpace )
 	delete stateSpace;
     *stateSpace= new const qreal* [dimension];
@@ -210,7 +210,7 @@ void affine2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 		   "Can't create state space vector");
     quantity=dimension;
     (*stateSpace)[0]=&x;
- 	log() << "Now returning...." << endl; 
+ 	log() << "Now returning...." << "\n"; 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -228,17 +228,17 @@ void affine2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 
 void affine2::loadParamset(ifstream& inFile)
 {
-//log() << "This is function 'loadParamset()' in 'AFFINE2.C' ." << endl; 
+//log() << "This is function 'loadParamset()' in 'AFFINE2.C' ." << "\n"; 
  
  	inFile >> zvar_expr;  
-	//log() << zvar_expr << endl;
+	//log() << zvar_expr << "\n";
 	inFile >> incase1;
-	//log() << incase1 << endl;
+	//log() << incase1 << "\n";
 	inFile >> a;
-	//log() << a << endl;
+	//log() << a << "\n";
 	if(a<0 || a > 1) fatalError("affine2::loadParamset","Parameter a out of range");
 	inFile >> a1;
-	//log() << a1 << endl;
+	//log() << a1 << "\n";
 	if((a1<=0) || (a1>=1)) fatalError("affine2::loadParamset","Parameter a1 out of range");
 	inFile >> a2;
     if(a2<=-1 || a2 >= 0) fatalError("affine2::loadParamset","Parameter a2 out of range");
@@ -247,9 +247,9 @@ void affine2::loadParamset(ifstream& inFile)
 	inFile >> p;
 	inFile >> length;
 
-	/*log() << "a = " << a << endl;
-	log() << "a1= " << a1 << endl;
-	log() << "a2= " << a2 << endl;*/
+	/*log() << "a = " << a << "\n";
+	log() << "a1= " << a1 << "\n";
+	log() << "a2= " << a2 << "\n";*/
  	
     	initialize();
 }
@@ -269,14 +269,14 @@ void affine2::loadParamset(ifstream& inFile)
 
 void affine2::saveParamset(ofstream& outFile)
 {
-	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << endl; 
+	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << "\n"; 
    	outFile << a  << "\t";
 	outFile << a1  << "\t";
 	outFile << a2  << "\t";
 	outFile << x0  << "\t";
 	outFile << p  << "\t";
     outFile << length;
-	//log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << "\n"; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -294,14 +294,14 @@ void affine2::saveParamset(ofstream& outFile)
 
 void affine2::printParamset()
 {
-    //log() << "This is function 'printParamset()' in 'AFFINE.C' ." << endl; 
-    log() << a << endl;
-	log() << a1 << endl;
-	log() << a2 << endl;
-	log() << x0 << endl;
-    log() << p << endl;
-    log() << length << endl;
-	//log() << "Now returning...." << endl; 
+    //log() << "This is function 'printParamset()' in 'AFFINE.C' ." << "\n"; 
+    log() << a << "\n";
+	log() << a1 << "\n";
+	log() << a2 << "\n";
+	log() << x0 << "\n";
+    log() << p << "\n";
+    log() << length << "\n";
+	//log() << "Now returning...." << "\n"; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -319,7 +319,7 @@ void affine2::printParamset()
 
 void affine2::sendParameters(int& amount,qreal** parameters)
 {
- 	//log() << "This is function 'sendParameters()' in 'AFFINE2.C' ." << endl; 
+ 	//log() << "This is function 'sendParameters()' in 'AFFINE2.C' ." << "\n"; 
     
     if( *parameters )
 	delete *parameters;
@@ -334,7 +334,7 @@ void affine2::sendParameters(int& amount,qreal** parameters)
 	(*parameters[3])=x0;
 	(*parameters[4])=p;
     (*parameters[5])=length;
-	//log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << "\n"; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -352,13 +352,13 @@ void affine2::sendParameters(int& amount,qreal** parameters)
 
 void affine2::receiveParameters(const qreal* parameters)
 {	
-	//log() << "This is function 'receiveParameters()' in 'AFFINE2.C' ." << endl; 
+	//log() << "This is function 'receiveParameters()' in 'AFFINE2.C' ." << "\n"; 
 	a=parameters[0];
 	a1=parameters[1];
 	a2=parameters[2];
 	x0=parameters[3];
 	p=parameters[4];
     length=(long)(parameters[5]);
-	//log() << "Now returning...." << endl; 
+	//log() << "Now returning...." << "\n"; 
 }
 

@@ -195,9 +195,9 @@ void martin::saveParamset(ofstream& outFile)
 
 void martin::printParamset()
 {
-    log() << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << endl;
-    log() << theta << "\t" << rho << endl;
-    log() << length << endl;
+    log() << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\n";
+    log() << theta << "\t" << rho << "\n";
+    log() << length << "\n";
 }
 
 
@@ -377,9 +377,9 @@ void martin2::saveParamset(ofstream& outFile)
 
 void martin2::printParamset()
 {
-    log() << beta0 << "\t" << k0 << "\t" << g0 << endl;
-    log() << theta << "\t" << rho << "\t" << lambda << endl;
-    log() << length << endl;
+    log() << beta0 << "\t" << k0 << "\t" << g0 << "\n";
+    log() << theta << "\t" << rho << "\t" << lambda << "\n";
+    log() << length << "\n";
 }
 
 
@@ -549,10 +549,10 @@ void martin4::saveParamset(ofstream& outFile)
 
 void martin4::printParamset()
 {
-    log() << beta0 << "\t" << k0 << "\t" << g0 << endl;
-    log() << theta << "\t" << rho << "\t" << lambda << endl;
-    log() << a << "\t" << b << "\t" << c << endl;
-    log() << length << endl;
+    log() << beta0 << "\t" << k0 << "\t" << g0 << "\n";
+    log() << theta << "\t" << rho << "\t" << lambda << "\n";
+    log() << a << "\t" << b << "\t" << c << "\n";
+    log() << length << "\n";
 }
 
 

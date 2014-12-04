@@ -289,10 +289,10 @@ void capOlg::loadParamset(ifstream& inputFile)
 
 void capOlg::saveParamset(ofstream& outputFile)
 {
-    outputFile << A << "\t" << B << "\t" << d << endl;
-    outputFile << n << "\t" << delta << "\t" << rho << endl;
-    outputFile << tau << "\t" << length << endl;
-    outputFile << k0 << "\t" << r0 << endl;
+    outputFile << A << "\t" << B << "\t" << d << "\n";
+    outputFile << n << "\t" << delta << "\t" << rho << "\n";
+    outputFile << tau << "\t" << length << "\n";
+    outputFile << k0 << "\t" << r0 << "\n";
 }
 
 /******************************************************************************/
@@ -307,9 +307,9 @@ void capOlg::saveParamset(ofstream& outputFile)
 void capOlg::printParamset()
 {
     log() << A << "\t" << B <<  "\t" << d << "\n";
-    log() << n << "\t" << delta << "\t" << rho << endl;
+    log() << n << "\t" << delta << "\t" << rho << "\n";
     log() << tau << "\t" << length << "\n";
-    log() << k0 << "\t" << r0 << endl;
+    log() << k0 << "\t" << r0 << "\n";
 }
 
 /******************************************************************************/
@@ -505,10 +505,10 @@ void capOlgAdapt::loadParamset(ifstream& inputFile)
 
 void capOlgAdapt::saveParamset(ofstream& outputFile)
 {
-    outputFile << A << "\t" << B << "\t" << d << endl;
-    outputFile << n << "\t" << delta << "\t" << rho << endl;
-    outputFile << tau << "\t" << eta << "\t" << length << endl;
-    outputFile << k0 << "\t" << r0 << endl;
+    outputFile << A << "\t" << B << "\t" << d << "\n";
+    outputFile << n << "\t" << delta << "\t" << rho << "\n";
+    outputFile << tau << "\t" << eta << "\t" << length << "\n";
+    outputFile << k0 << "\t" << r0 << "\n";
 }
 
 /******************************************************************************/
@@ -523,9 +523,9 @@ void capOlgAdapt::saveParamset(ofstream& outputFile)
 void capOlgAdapt::printParamset()
 {
     log() << A << "\t" << B <<  "\t" << d << "\n";
-    log() << n << "\t" << delta << "\t" << rho << endl;
+    log() << n << "\t" << delta << "\t" << rho << "\n";
     log() << tau << "\t" << eta << "\t" << length << "\n";
-    log() << k0 << "\t" << r0 << endl;
+    log() << k0 << "\t" << r0 << "\n";
 }
 
 /******************************************************************************/
@@ -747,10 +747,10 @@ void capOlgGeoExp::loadParamset(ifstream& inputFile)
 
 void capOlgGeoExp::saveParamset(ofstream& outputFile)
 {
-    outputFile << A << "\t" << B << "\t" << d << endl;
-    outputFile << n << "\t" << delta << "\t" << rho << endl;
-    outputFile << tau << "\t" << eta << "\t" << length << endl;
-    outputFile << k0 << "\t" << r0 << endl;
+    outputFile << A << "\t" << B << "\t" << d << "\n";
+    outputFile << n << "\t" << delta << "\t" << rho << "\n";
+    outputFile << tau << "\t" << eta << "\t" << length << "\n";
+    outputFile << k0 << "\t" << r0 << "\n";
 }
 
 /******************************************************************************/
@@ -765,9 +765,9 @@ void capOlgGeoExp::saveParamset(ofstream& outputFile)
 void capOlgGeoExp::printParamset()
 {
     log() << A << "\t" << B <<  "\t" << d << "\n";
-    log() << n << "\t" << delta << "\t" << rho << endl;
+    log() << n << "\t" << delta << "\t" << rho << "\n";
     log() << tau << "\t" << eta << "\t" << length << "\n";
-    log() << k0 << "\t" << r0 << endl;
+    log() << k0 << "\t" << r0 << "\n";
 }
 
 /******************************************************************************/

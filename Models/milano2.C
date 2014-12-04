@@ -73,7 +73,7 @@ qreal milano2::regfal(int max_iter, qreal start_left, qreal start_right, qreal c
     }
   while ( iter < max_iter && qAbs(zero-oldzero) > 1E-4);
 
-  // clog << "regfal: needed " << iter << " iterations." << endl;
+  // clog << "regfal: needed " << iter << " iterations." << "\n";
 
   return zero;
 }
@@ -207,8 +207,8 @@ void milano2::system_1(const qreal& s1_emp)
     mqreal=(mqreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
     rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
-    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << "\n";
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << "\n";
 
 }
 
@@ -266,8 +266,8 @@ void milano2::system_2(const qreal& l_dem)
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
     rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
-    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << "\n";
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << "\n";
 
 }
 
@@ -310,7 +310,7 @@ void milano2::system_4(const qreal& s4_emp)
 		      */
 
 	mud=regfal(100,0,1,c);
-	// clog << "Hi! did a regfal" << endl;
+	// clog << "Hi! did a regfal" << "\n";
       }
     else
       {
@@ -324,7 +324,7 @@ void milano2::system_4(const qreal& s4_emp)
 	  }
 	else
 	  {
-	    // clog << "milano2::system_4: unzulaessiger Parameterwert fuer c" << endl;
+	    // clog << "milano2::system_4: unzulaessiger Parameterwert fuer c" << "\n";
         error("milano2::system_4: unzulaessiger Parameterwert fuer c: %lf", QString::number(c));
 	    // exit(1);
 	  }
@@ -356,8 +356,8 @@ void milano2::system_4(const qreal& s4_emp)
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
     rqreal=(exp(-omikron2*log(mud))*rqreal)/teta;
-    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << "\n";
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << "\n";
 
 }
 
@@ -413,8 +413,8 @@ void milano2::system_6(const qreal& l_dem)
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(-nu2*log(lambdad))*alfa)/teta;
     rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
-    if (pgt<0) log() << "  Gewinn ist negativ." << endl;
-    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << endl;
+    if (pgt<0) log() << "  Gewinn ist negativ." << "\n";
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << "\n";
 
 }
 
@@ -442,7 +442,7 @@ void milano2::iteration(const long& t)
     l_dem=labour_demand();
     diseq_regime(s1_emp,s4_emp,l_dem);
 */
-log() << "model not active - contact A. Foerster" << endl;
+log() << "model not active - contact A. Foerster" << "\n";
 
 }
 
@@ -473,18 +473,18 @@ void milano2::loadParamset(ifstream& inFile)
 
 void milano2::printParamset()
 {
-    log() << "a      :  " << a <<"\talpha0 : " << alfa0 << endl;
-    log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0 << endl;
-    log() << "rqreal0 :  " << rqreal0 <<"\tz0 : " << z0 << endl;
-    log() << "epsilon : " << epsilon << endl;
-    log() << "f      :  " << f << endl;
-    log() << "n1     :  " << n1 << endl;
-    log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << endl;
-    log() << "omikron1 : " << omikron1 << "\tomikron2 : " << omikron2 << endl;
-    log() << "nu1    :  " << nu1 << "\tG   : " << G << endl;
-    log() << "nu2    :  " << nu2 << "\ttax : " << tax << endl;
-    log() << "h      :  " << h << "\tsimd: " << simd << endl;
-    log() << "pg0    :  " << pg0 << "\tLs  : " << Ls << endl;
+    log() << "a      :  " << a <<"\talpha0 : " << alfa0 << "\n";
+    log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0 << "\n";
+    log() << "rqreal0 :  " << rqreal0 <<"\tz0 : " << z0 << "\n";
+    log() << "epsilon : " << epsilon << "\n";
+    log() << "f      :  " << f << "\n";
+    log() << "n1     :  " << n1 << "\n";
+    log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << "\n";
+    log() << "omikron1 : " << omikron1 << "\tomikron2 : " << omikron2 << "\n";
+    log() << "nu1    :  " << nu1 << "\tG   : " << G << "\n";
+    log() << "nu2    :  " << nu2 << "\ttax : " << tax << "\n";
+    log() << "h      :  " << h << "\tsimd: " << simd << "\n";
+    log() << "pg0    :  " << pg0 << "\tLs  : " << Ls << "\n";
 }
 
 /******************************************************************************/
@@ -496,13 +496,13 @@ void milano2::printParamset()
 /*****************************************************************************/
 void milano2::saveParamset(ofstream& outFile)
 {
-    outFile << a << " " << b << endl;
-    outFile << psi1 << " " << psi2 << endl; 
-    outFile << nu1 << " " << nu2 << " " << omikron1 << " " << omikron2 << endl;
-    outFile << n1 << " " << simd << endl;
-    outFile << h << " " << epsilon << " " << f << endl;
-    outFile << rqreal0 << " " << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0 << endl;
-    outFile << Ls << " " << G << " " << tax << endl;
+    outFile << a << " " << b << "\n";
+    outFile << psi1 << " " << psi2 << "\n"; 
+    outFile << nu1 << " " << nu2 << " " << omikron1 << " " << omikron2 << "\n";
+    outFile << n1 << " " << simd << "\n";
+    outFile << h << " " << epsilon << " " << f << "\n";
+    outFile << rqreal0 << " " << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0 << "\n";
+    outFile << Ls << " " << G << " " << tax << "\n";
 }
 
 /******************************************************************************/

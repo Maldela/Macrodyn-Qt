@@ -42,14 +42,14 @@ timeSeriesPlot_Loop::timeSeriesPlot_Loop(int l_size, baseModel* const bMod,char*
       multiplotAdr=new qreal*[multiplot_num];
       if( !(multiplotAdr) ) {
 		cerr << "macrodyn::timeSeriesPlot_Loop::timeSeriesPlot_Loop  \
-		Can't create array for *multiplot[]"<< endl;
+		Can't create array for *multiplot[]"<< "\n";
 		exit(-1);
 	  }
 
       multiplotOld=new qreal[multiplot_num];
       if( !(multiplotAdr) ) {
 		cerr << "macrodyn::timeSeriesPlot_Loop::timeSeriesPlot_Loop  \
-		Can't create array for multiplot[]"<< endl;
+		Can't create array for multiplot[]"<< "\n";
 		exit(-1);
 	  }
 
@@ -107,7 +107,7 @@ void timeSeriesPlot_Loop::simulation()
 		sum += temp;				
 	}
 	mean_error = sum / qreal(loop_size);	
-	log() << "\nmean_error = " << mean_error << endl;
+	log() << "\nmean_error = " << mean_error << "\n";
 }
 
 
@@ -136,7 +136,7 @@ void timeSeriesPlot_Loop::simulation()
                 	}
 	        		printDev->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],6);
 	      		}
-	    		outFile << t << "\t" << timeSeriesqreal[t] << endl;
+	    		outFile << t << "\t" << timeSeriesqreal[t] << "\n";
         }
         oldX=t;
         oldY=timeSeriesqreal[t];	

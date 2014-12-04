@@ -92,8 +92,8 @@ void d_attractor::simulation()
   }
 
   h_max = double (h.get_max_hits());
-  log() << "h_max = " << h_max << endl;
-  log() << "color step every " << h_max/94 << " hits in cell" << endl;
+  log() << "h_max = " << h_max << "\n";
+  log() << "color step every " << h_max/94 << " hits in cell" << "\n";
   if( h_max == 0 ) {
     h_max = 1;
   }
@@ -111,7 +111,7 @@ void d_attractor::simulation()
 	hitshilf=h(k,l);
 	hitpoint = hitshilf / h_max;
 	if (hitshilf==h_max)
-    log() << "maximal hitcounts at: "<< dx << " , " << dy << endl;
+    log() << "maximal hitcounts at: "<< dx << " , " << dy << "\n";
 
 	if(hitpoint>0){
 /*		for(int i=0;i<=dummy2;i++){
@@ -120,11 +120,11 @@ void d_attractor::simulation()
 			}
 		}*/
 		color=int (ceil (hitpoint*dummy2));
-//	    outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 
+//	    outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
 	} else color=0;
 	
     if ( color>94 ) log() << "warning: color > 94\n";
-	 //   outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 	
+     //   outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
 	outFile << char( color );
 /*Ende neu*/
 
@@ -134,7 +134,7 @@ void d_attractor::simulation()
         screenGraphics->setPoint(dx,dy,color);
       }
     }
-    //outFile << endl;
+    //outFile << "\n";
   }
   outFile.flush();
   outFile.close();  

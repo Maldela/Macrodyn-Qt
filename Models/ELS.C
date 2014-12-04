@@ -207,7 +207,7 @@ void ELS::saveParamsetWithNames(ofstream& outFile)
 	outFile << "\nqreal_money = " << qreal_money;
 	outFile << "\nG = " << G << "\tT = " << T;
 	outFile << "\nalpha = " << alpha << "\ty0 = " << y0;
-	outFile << "length = " << length << endl;
+	outFile << "length = " << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -226,7 +226,7 @@ void ELS::printParamset()
 {
 	log() << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	log() << G << "\t" << T << "\t" << alpha  << "\t" << y0;
-	log() << "\t" << length << endl;
+	log() << "\t" << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

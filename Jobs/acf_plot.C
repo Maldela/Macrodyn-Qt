@@ -107,7 +107,7 @@ void acf_plot::simulation()
 		}
 		acf = acv / acv_0;
 		drawBox(i-0.4,acf,i+0.4,0,9);
-        log() << "lag " << i << ":\t" << acf << endl;
+        log() << "lag " << i << ":\t" << acf << "\n";
 	}
 	delete []ts_data;			
 }

@@ -49,14 +49,14 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod,char* const label,
       multiplotAdr=new qreal*[multiplot_num];
       if( !(multiplotAdr) ) {
 	cerr << "macrodyn::timeSeriesPlot::timeSeriesPlot  \
-        Can't create array for *multiplot[]"<< endl << "\n";
+        Can't create array for *multiplot[]"<< "\n" << "\n";
 	exit(-1);
 	}
 
       multiplotOld=new qreal[multiplot_num];
       if( !(multiplotAdr) ) {
 	cerr << "macrodyn::timeSeriesPlot::timeSeriesPlot  \
-        Can't create array for multiplot[]"<< endl << "\n";
+        Can't create array for multiplot[]"<< "\n" << "\n";
 	exit(-1);
 	}
       QList<QString> list;
@@ -131,7 +131,7 @@ void timeSeriesPlot::simulation()
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
 
 	      }
-	    outFile << t << "\t" << timeSeriesqreal[t] << endl; 
+        outFile << t << "\t" << timeSeriesqreal[t] << "\n";
         }
         oldX=t;
         oldY=timeSeriesqreal[t];	
@@ -207,7 +207,7 @@ void m_timeSeriesPlot::simulation()
     *modelVar = i_vals[k];		// pick the next initial value
     oldX=0;
     oldY=*modelVar;
-    outFile << oldX << "\t" << oldY << endl; 
+    outFile << oldX << "\t" << oldY << "\n";
     for(t=1;t<length+1;t++) {
 	model->iteration(t);          // compute the orbit
 	if( t >= limit )  {
@@ -217,7 +217,7 @@ void m_timeSeriesPlot::simulation()
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
           }
 //	    }
-	    outFile << t << "\t" << timeSeriesqreal[t] << endl; 
+        outFile << t << "\t" << timeSeriesqreal[t] << "\n";
 	    oldX=t;
 	    oldY=timeSeriesqreal[t];
 	}
@@ -293,7 +293,7 @@ void m_timeSeriesPlot_v::simulation()
     model->initialize();                // initialize the model
     oldX=0;
     oldY=*modelVar;
-    outFile << oldX << "\t" << oldY << endl; 
+    outFile << oldX << "\t" << oldY << "\n";
     for(t=1;t<length+1;t++) {
 	model->iteration(t);          // compute the orbit
 	if( t >= limit )  {
@@ -302,7 +302,7 @@ void m_timeSeriesPlot_v::simulation()
 	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
           }
-	    outFile << t << "\t" << timeSeriesqreal[t] << endl; 
+        outFile << t << "\t" << timeSeriesqreal[t] << "\n";
 	    oldX=t;
 	    oldY=timeSeriesqreal[t];
 	}

@@ -195,12 +195,12 @@ void Monopol::saveParamset(ofstream& outFile)
 
 void Monopol::printParamset()
 {
-    log() << beta0 << "\t" << M0 << "\t" << w0 << endl;
-    log() << z0 << "\t" << g << "\t" << tau << endl;
-    log() << B << "\t" << eta << "\t" << alpha << endl;
-    log() << Lmax << "\t" << lambda << "\t" << mu << endl;        
-    log() << delta << "\t" << cert << endl;
-    log() << length << endl;
+    log() << beta0 << "\t" << M0 << "\t" << w0 << "\n";
+    log() << z0 << "\t" << g << "\t" << tau << "\n";
+    log() << B << "\t" << eta << "\t" << alpha << "\n";
+    log() << Lmax << "\t" << lambda << "\t" << mu << "\n";        
+    log() << delta << "\t" << cert << "\n";
+    log() << length << "\n";
 }
 
 

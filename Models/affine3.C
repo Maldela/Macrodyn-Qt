@@ -62,21 +62,21 @@ void affine3::iteration(const long&)
 	qreal oldX = x;
 	
 	if(urv_p < p){
-		//log() << "map1 is chosen" << endl;
+		//log() << "map1 is chosen" << "\n";
 		count1++;
 		x = (a+urv_e)*oldX;
 	} else {
-		//log() << "map2 is chosen" << endl;
+		//log() << "map2 is chosen" << "\n";
 		count2++;
 		x = (a-1+urv_e)*oldX + 1;
 	}
 
-	/*log() << "oldX = " << oldX << endl;
-	log() << "urv_p = " << urv_p << endl;
-	log() << "urv_e = " << urv_e << endl;
-	log() << "x = " << x << endl;
-	log() << "count1 = " << count1 << endl;
-	log() << "count2 = " << count2 << endl;*/
+	/*log() << "oldX = " << oldX << "\n";
+	log() << "urv_p = " << urv_p << "\n";
+	log() << "urv_e = " << urv_e << "\n";
+	log() << "x = " << x << "\n";
+	log() << "count1 = " << count1 << "\n";
+	log() << "count2 = " << count2 << "\n";*/
 }
     
     
@@ -203,9 +203,9 @@ void affine3::sendStateSpace(int &quantity,const qreal*** stateSpace)
 void affine3::loadParamset(ifstream& inFile)
 {
  	inFile >> zvar_expr1;
-	//log() << zvar_expr1 << endl;
+	//log() << zvar_expr1 << "\n";
 	//inFile >> zvar_expr2;
-	//log() << zvar_expr2 << endl;
+	//log() << zvar_expr2 << "\n";
 	inFile >> eta;
 	inFile >> a;
 	if( (a<0) || (a>1)) fatalError("affine3::loadParamset","Parameter a out of range");
@@ -214,11 +214,11 @@ void affine3::loadParamset(ifstream& inFile)
 	inFile >> p;
 	inFile >> length;
 
-	/*log() << "eta = " << eta << endl;
-	log() << "a = " << a << endl;
-	log() << "x0 = " << x0 << endl;
-	log() << "p = " << p << endl;
-	log() << "length = " << length << endl;*/
+	/*log() << "eta = " << eta << "\n";
+	log() << "a = " << a << "\n";
+	log() << "x0 = " << x0 << "\n";
+	log() << "p = " << p << "\n";
+	log() << "length = " << length << "\n";*/
  	
     	initialize();
 }
@@ -260,11 +260,11 @@ void affine3::saveParamset(ofstream& outFile)
 
 void affine3::printParamset()
 {
-	log() << eta << endl;
-	log() << a << endl;
-	log() << x0 << endl;
-	log() << p << endl;
-	log() << length << endl;
+	log() << eta << "\n";
+	log() << a << "\n";
+	log() << x0 << "\n";
+	log() << p << "\n";
+	log() << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

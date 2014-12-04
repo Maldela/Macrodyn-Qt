@@ -100,7 +100,7 @@ void d_bifnParam::simulation()
 	}
 	
 	h_max = double (h.get_max_hits());
-    log() << "h_max = " << h_max << endl;
+    log() << "h_max = " << h_max << "\n";
     log() << "color step every " << h_max/94 << " hits in cell\n";
 	if ( h_max == 0 ) h_max=1;
 	

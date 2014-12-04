@@ -2,7 +2,7 @@
 //																		 //
 // Name: finanzmarkt_2Dim_1.C
 //       lineares Finanzmarktmodell mit Erwartungsr"uckkoppelung	
-//		 sowie zwei heterogenen Haendlergruppen
+//		 sowie zwei heterogenen Ha"\n"ergruppen
 //	 K=2
 //
 // Code: Andreas Tonn 

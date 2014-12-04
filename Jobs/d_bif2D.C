@@ -84,8 +84,8 @@ void d_bif2D::simulation()
     double  h_max;
     int  color=0;
 
-//  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
-//  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << endl;
+//  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\n";
+//  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\n";
 
 //initialize output information
   int jobtag_dummy = 31;
@@ -122,8 +122,8 @@ void d_bif2D::simulation()
     }
     
     h_max = double (h.get_max_hits());
-    log() << "h_max = " << h_max << endl;
-    log() << "color step every " << h_max/94 << " hits in cell" << endl;
+    log() << "h_max = " << h_max << "\n";
+    log() << "color step every " << h_max/94 << " hits in cell" << "\n";
     if( h_max == 0 ) {
       h_max = 1;
     }
@@ -140,10 +140,10 @@ void d_bif2D::simulation()
 	hitshilf=h(k);
 	hitpoint = hitshilf/h_max;
 	if (hitshilf==h_max)
-    log() << "maximal hitcounts at: " << dy << endl;
+    log() << "maximal hitcounts at: " << dy << "\n";
 	if(hitpoint>0){ 
 		color=int(ceil(hitpoint*dummy2));
-//	    outFile << *xParam << "\t" << *yParam << "\t" << hitpoint << endl; 		
+//	    outFile << *xParam << "\t" << *yParam << "\t" << hitpoint << "\n";
 	}
 	else color=0;
 /*Ende neu*/
@@ -154,13 +154,13 @@ void d_bif2D::simulation()
         screenGraphics->setPoint(dummy_x,dy,color); 
       }
 
-    //outFile << *xParam << "\t" << dy << "\t" << hitpoint << endl; 
+    //outFile << *xParam << "\t" << dy << "\t" << hitpoint << "\n";
 //    outFile << hitpoint << "\t";
 
-//      log() << *xParam << "\t" << dy << "\t" << h(k) << endl;
+//      log() << *xParam << "\t" << dy << "\t" << h(k) << "\n";
     }
     h.reset();
-//	    outFile << endl;
+//	    outFile << "\n";
   }
   outFile.flush();
   outFile.close();
@@ -209,8 +209,8 @@ void d_bif2D_f2::simulation()
     int  h_max;
     int  color;
 
-  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
-  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << endl;
+  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\n";
+  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\n";
 
   for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
     *xParam = dummy_x;
@@ -241,7 +241,7 @@ void d_bif2D_f2::simulation()
         screenGraphics->setPoint(dummy_x,dy,color);
       }
 
-      log() << dummy_x << "\t" << dy << "\t" << h(k) << endl;
+      log() << dummy_x << "\t" << dy << "\t" << h(k) << "\n";
     }
     h.reset();
   }
@@ -290,8 +290,8 @@ void d_bif2D_f4::simulation()
     int  h_max;
     int  color;
 
-  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << endl;
-  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << endl;
+  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\n";
+  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\n";
 
   for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
     *xParam = dummy_x;
@@ -324,7 +324,7 @@ void d_bif2D_f4::simulation()
         screenGraphics->setPoint(dummy_x,dy,color);
       }
 
-      log() << dummy_x << "\t" << dy << "\t" << h(k) << endl;
+      log() << dummy_x << "\t" << dy << "\t" << h(k) << "\n";
     }
     h.reset();
   }

@@ -506,8 +506,8 @@ void demog_model::saveParamset(ofstream& outFile)
 
 void demog_model::saveParamsetWithNames(ofstream& outFile)
 {
-	outFile << "no. generations = " << k_t << endl;
-	outFile << "length = " << length << endl;
+	outFile << "no. generations = " << k_t << "\n";
+	outFile << "length = " << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -524,8 +524,8 @@ void demog_model::saveParamsetWithNames(ofstream& outFile)
 
 void demog_model::printParamset()
 {
-    log() << "no. generations = " << k_t << endl;
-    log() << "length = " << length << endl;
+    log() << "no. generations = " << k_t << "\n";
+    log() << "length = " << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

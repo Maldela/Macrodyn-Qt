@@ -66,7 +66,7 @@ int MacrodynGraphicsItem::drawAxis()
 //            cerr << "INFORMATION:increase left margin from " << lmargin;
 //            lmargin=textWidth+12;       // that means enlarge left margin if
 //                            // necessary
-//            cerr << "to " << lmargin << endl;
+//            cerr << "to " << lmargin << "\n";
 //        }
 //    }
 
@@ -379,7 +379,7 @@ void MacrodynGraphicsItem::setPoint(const qreal& v, const qreal& w, const QColor
         pixw < (int)upmargin || pixw >= ((height()) - (int)lowmargin) )
     {
     }
-//	cerr << "Warning: Not available pixel: " << pixv << " " << pixw << endl;
+//	cerr << "Warning: Not available pixel: " << pixv << " " << pixw << "\n";
     else
     {
         QPainter painter(image);
@@ -409,7 +409,7 @@ void MacrodynGraphicsItem::setBigPoint(const qreal& v, const qreal& w, const QCo
         pixw < (int)upmargin || pixw >= ((height()) - (int)lowmargin) )
     {
     }
-//	cerr << "Warning: Not available pixel: " << pixv << " " << pixw << endl;
+//	cerr << "Warning: Not available pixel: " << pixv << " " << pixw << "\n";
     else
     {
         QRect rect(pixv-size/2, pixw-size/2, size, size);
@@ -497,7 +497,7 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
             x3=axis->min[0];
         }
     }
-    //log() << "coordinates: ("<<x2<<","<<y2<<") ("<<x3<<","<<y3<<")"<<endl;
+    //log() << "coordinates: ("<<x2<<","<<y2<<") ("<<x3<<","<<y3<<")"<<"\n";
     getCoordinates(x2,y2,pixX0,pixY0);
     getCoordinates(x3,y3,pixX1,pixY1);
 

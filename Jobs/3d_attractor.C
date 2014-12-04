@@ -88,9 +88,9 @@ void attractor_3d::simulation()
   outFile.write((char*)&zmin, 8);
   outFile.write((char*)&zmax, 8);
   
-  log() << "xmin: " << xmin << "\txmax: " << xmax << endl;
-  log() << "ymin: " << ymin << "\tymax: " << ymax << endl;
-  log() << "zmin: " << zmin << "\tzmax: " << zmax << endl;
+  log() << "xmin: " << xmin << "\txmax: " << xmax << "\n";
+  log() << "ymin: " << ymin << "\tymax: " << ymax << "\n";
+  log() << "zmin: " << zmin << "\tzmax: " << zmax << "\n";
   
   int length_of_label = strlen(xLabel);
   outFile.write((char*)&length_of_label, 4);
@@ -110,8 +110,8 @@ void attractor_3d::simulation()
   }
 
   h_max = double (h.get_max_hits());
-  log() << "h_max = " << h_max << endl;
-  log() << "color step every " << h_max/94 << " hits in cell" << endl;
+  log() << "h_max = " << h_max << "\n";
+  log() << "color step every " << h_max/94 << " hits in cell" << "\n";
   if( h_max == 0 ) {
     h_max = 1;
   }
@@ -130,7 +130,7 @@ void attractor_3d::simulation()
 	hitshilf=h(k,l,m);
 	hitpoint = hitshilf / h_max;
 	if (hitshilf==h_max)
-    log() << "maximal hitcounts at: "<< dx << " , " << dy << " , " << dz << endl;
+    log() << "maximal hitcounts at: "<< dx << " , " << dy << " , " << dz << "\n";
 
 	if(hitpoint>0){
 /*		for(int i=0;i<=dummy2;i++){
@@ -139,11 +139,11 @@ void attractor_3d::simulation()
 			}
 		}*/
 		color=int (ceil (hitpoint*dummy2));
-//	    outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 
+//	    outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
 	} else color=0;
 	
     if ( color>94 ) log() << "warning: color > 94\n";
-	 //   outFile << dx << "\t" << dy << "\t" << hitpoint << endl; 	
+     //   outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
 	outFile << char( color );
 /*Ende neu*/
 
@@ -154,7 +154,7 @@ void attractor_3d::simulation()
 //      }
 
     }
-    //outFile << endl;
+    //outFile << "\n";
   }
   }
   outFile.flush();

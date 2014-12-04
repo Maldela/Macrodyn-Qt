@@ -136,19 +136,19 @@ md_Map::~md_Map()
 
 void md_Map::give_attributes()
 {
-	log() << "l_min: " << l_min << endl;
-	log() << "l_max: " << l_max << endl;
-	log() << "resolution: " << resolution << endl;
-	log() << "model_dim: " << model_dim << endl;
-	log() << "time_limit: " << time_limit << endl;
-	log() << "name: " << name << endl;
+    log() << "l_min: " << l_min << "\n";
+    log() << "l_max: " << l_max << "\n";
+    log() << "resolution: " << resolution << "\n";
+    log() << "model_dim: " << model_dim << "\n";
+    log() << "time_limit: " << time_limit << "\n";
+    log() << "name: " << name << "\n";
 	for (int i=0; i<resolution ; i++)
 		if ( daugther[i] ) 
-			log() << "daugther["<<i<<"]: "<<daugther[i]<<endl;
+            log() << "daugther["<<i<<"]: "<<daugther[i]<<"\n";
 	if ( mother )
-		log() << "mother: " << mother << endl;
+        log() << "mother: " << mother << "\n";
 	log() << "values: \n";
     for (int i=0; i<resolution*model_dim*time_limit;i++)
 		log() << value_field[i] <<  " ";
-	log() << endl;
+    log() << "\n";
 }

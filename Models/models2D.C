@@ -157,9 +157,9 @@ void models2D::saveParamset(ofstream& outFile)
 
 void models2D::printParamset()
 {
-    log() << x0 << "\t" << y0 << endl;
-    log() << alpha << "\t" << beta << endl;
-    log() << length << endl;
+    log() << x0 << "\t" << y0 << "\n";
+    log() << alpha << "\t" << beta << "\n";
+    log() << length << "\n";
 }
 
 /******************************************************************************/

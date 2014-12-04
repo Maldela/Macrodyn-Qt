@@ -83,7 +83,7 @@ if(*zParam<zmax)
             screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
      }	
    
-   log() << "min=" << min << "\t max=" << max << endl;
+   log() << "min=" << min << "\t max=" << max << "\n";
 
  //TODO if( screenGraphics ) screenGraphics->draw_color_count();
 }
@@ -119,7 +119,7 @@ if((zmax > 0) && (zmin < 0)){
 		if( screenGraphics ) 
             screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
 	}
- log() << "min=" << min << "\t max=" << max << endl;
+ log() << "min=" << min << "\t max=" << max << "\n";
 //TODO if( screenGraphics ) screenGraphics->draw_color_count();
 }
 if(zmax>0 && zmin >= 0)
@@ -144,7 +144,7 @@ if(*zParam>zmin){
             screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
      }	
    
-   log() << "min=" << min << "\t max=" << max << endl;
+   log() << "min=" << min << "\t max=" << max << "\n";
 
 //TODO if( screenGraphics ) screenGraphics->draw_color_count();
 	

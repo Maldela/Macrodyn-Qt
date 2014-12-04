@@ -126,9 +126,9 @@ void linFimaErwRueck::initialize()
 	b=xAll/((rC/VC)+(rF/VF));
 //	b=((1-r)*VF*xAll)/rF;     // Problem bei rF=0 !!!
 
-log() <<"Ed=" << Ed <<"Vd=" << Vd <<"d=" << d <<endl;
-log() <<"r=" << r << endl;
-log() <<"b=" << b << endl;
+log() <<"Ed=" << Ed <<"Vd=" << Vd <<"d=" << d <<"\n";
+log() <<"r=" << r << "\n";
+log() <<"b=" << b << "\n";
 qreal beta=1.03;qreal L=2;
 printf("THETA=%10.10f %10.10f %10.10f %10.10f %10.10f \n",
 	(beta/(L*R))*rC/(rC+rF), (beta/(L*R))*rC/(rC+rF), ((1-r)/R), 1/R, -b/R );
@@ -215,12 +215,12 @@ void linFimaErwRueck::saveParamsetWithNames(ofstream& outputFile)
 {
     outputFile << "\nModel linFimaErwRueck\n";
     if(perfectPredictor)
-	outputFile << "perfectPredictor" << endl;
-    outputFile << "R = " << R << endl;
+	outputFile << "perfectPredictor" << "\n";
+    outputFile << "R = " << R << "\n";
     outputFile << "xAll= " << xAll << " ";
     outputFile << "p0= " << p0 << " ";
-    outputFile << endl;
-    outputFile << "length = "<< length << endl;
+    outputFile << "\n";
+    outputFile << "length = "<< length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -306,7 +306,7 @@ printf("pCperf=%6.6f \n",pCperf);
 	p=(r*pC+(1-r)*pF+de-b)/R; 
 	pPerf=(r*pCperf+(1-r)*pFperf+de-b)/R; // nur zum Vergleich !!!
 
-//	if(p<0) log() <<"periode="<<t<<" p="<<p<<" !"<<endl;
+//	if(p<0) log() <<"periode="<<t<<" p="<<p<<" !"<<"\n";
 
 /*
 printf("Modell: p=%6.6f ",p);
@@ -355,14 +355,14 @@ printf("pCperf=%6.6f \n",pCperf);
 	pDiff=(pPerf-p)/p;
 
 
-//log() << t << " pCperf=" << pCperf << " pC=" << pC ;//<< endl;
-//log() << " p=" << p << " pPerf=" << pPerf << endl;
-//log() << " errvar=" << errvar  << endl;
-//log() << "d=" << d << " Ed=" << Ed << " de=" << de << endl; 
+//log() << t << " pCperf=" << pCperf << " pC=" << pC ;//<< "\n";
+//log() << " p=" << p << " pPerf=" << pPerf << "\n";
+//log() << " errvar=" << errvar  << "\n";
+//log() << "d=" << d << " Ed=" << Ed << " de=" << de << "\n"; 
 
-//log() << " p=" << p << " pF=" << pF << endl;
-//log() << " xF=" << xF << " xC=" << xC << endl;
-//log() << "\nPeriode=" << t << endl;
+//log() << " p=" << p << " pF=" << pF << "\n";
+//log() << " xF=" << xF << " xC=" << xC << "\n";
+//log() << "\nPeriode=" << t << "\n";
 //printf(" pF=%10.10f Ed=%10.10f\n",pF, Ed);
 //printf("p=%6.6f ",p);
 //printf("pPerf=%6.6f \n\n",pPerf);

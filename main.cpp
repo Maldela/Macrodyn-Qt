@@ -10,6 +10,5 @@ int main(int argc, char *argv[])
     qmlRegisterType<Logger>("MacrodynQML", 1, 0, "Logger");
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
     return app.exec();
 }

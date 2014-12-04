@@ -746,21 +746,21 @@ log() << "\ndif_var="<<dif_var;
 		if (H==1)
 			error_es_e = ((-1/b[0]) * e) - es_e;		
 // output on screen in the last period
-        log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << endl;
+        log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << "\n";
 		for (l=1;l<L+1;l++)
-            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << endl;
+            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << "\n";
 		for (k=0;k<K-1;k++)
-            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << endl;
+            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << "\n";
 		for (r=0;r<R;r++)
-            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << endl;
+            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << "\n";
 		if (G==1)
-            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << endl;
+            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << "\n";
 		if (H==1)
-            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e << endl;
-        log() << "last dif_var=" << dif_var << endl;
-        log() << "var1 = " << var1 << endl;
-        log() << "var2 = " << var2 << endl;
-        log() << "sum_var1 = " << sum_var1 << endl;
+            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e << "\n";
+        log() << "last dif_var=" << dif_var << "\n";
+        log() << "var1 = " << var1 << "\n";
+        log() << "var2 = " << var2 << "\n";
+        log() << "sum_var1 = " << sum_var1 << "\n";
 	}
 */
 
@@ -833,7 +833,7 @@ log() << "\ndif_var="<<dif_var;
      	normB1 +=  (*difA)(1,0) * (*difA)(1,0);
         normB1 +=  (*difA)(1,1) * (*difA)(1,1);
         normB1 = sqrt(normB1);
-        log() << "\nnormB_inv_1="<<normB1<<endl;
+        log() << "\nnormB_inv_1="<<normB1<<"\n";
 	
 		delete(Temp1);	
 	
@@ -981,56 +981,56 @@ void armax::printParamset()
 { 	
  	for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
-            log() << (*y_old_ini[l])(m,0) << endl;
+            log() << (*y_old_ini[l])(m,0) << "\n";
  	for (int k=0;k<K;k++)
  		for (int n1=0;n1<N1;n1++)	
-            log() << (*u_old_ini[k])(n1,0) << endl;
+            log() << (*u_old_ini[k])(n1,0) << "\n";
   	for (int r=0;r<R;r++)
  		for (int n2=0;n2<N2;n2++)
-            log() << (*v_old_ini[r])(n2,0) << endl;
+            log() << (*v_old_ini[r])(n2,0) << "\n";
     for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
  			for (int mm=0;mm<M;mm++)
-                log() << (*A[l])(m,mm) << endl;
+                log() << (*A[l])(m,mm) << "\n";
     for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
-                log() << (*B[k])(m,n1) << endl;
+                log() << (*B[k])(m,n1) << "\n";
     for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
-                log() << (*C[r])(m,n2) << endl;
+                log() << (*C[r])(m,n2) << "\n";
 	if (G==1)
 		for (int m=0;m<M;m++)	
 			for (int n3=0;n3<N3;n3++)	
-                log() << (*D)(m,n3) << endl;
+                log() << (*D)(m,n3) << "\n";
 	if (H==1)
 		for (int m=0;m<M;m++)
-            log() << (*E)(m,0) << endl;
+            log() << (*E)(m,0) << "\n";
     for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
 			for (int mm=0;mm<M;mm++)
-                log() << (*A_e[l])(m,mm) << endl;
+                log() << (*A_e[l])(m,mm) << "\n";
     for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
-                log() << (*B_e[k])(m,n1) << endl;
+                log() << (*B_e[k])(m,n1) << "\n";
     for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
-                log() << (*C_e[r])(m,n2) << endl;
+                log() << (*C_e[r])(m,n2) << "\n";
 	if (G==1)
 		for (int m=0;m<M;m++)	
 			for (int n3=0;n3<N3;n3++)	
-                log() << (*D_e)(m,n3) << endl;
+                log() << (*D_e)(m,n3) << "\n";
 	if (H==1)
 		for (int m=0;m<M;m++)
-            log() << (*E_e)(m,0) << endl;
+            log() << (*E_e)(m,0) << "\n";
     log() << eps;
     log() << sigma_eps;
 
 			
-    log() << length << endl;
+    log() << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

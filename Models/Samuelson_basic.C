@@ -62,7 +62,7 @@ void Samuelson_basic::iteration(const long&)
 	if (v_0noise < v_0prob){
 	v_0=v_0min;}
 	else {v_0=v_0max;}  
-    //log() << v_0noise << endl;
+    //log() << v_0noise << "\n";
 	y2 = y1;
 	y1 = y;
 	y = m_0+v_0+(m+v)*y1-v*y2+noise;
@@ -242,7 +242,7 @@ void Samuelson_basic::saveParamsetWithNames(ofstream& outFile)
 	outFile << "\nv = " << v;
 	outFile << "\nlambda = " << lambda;
 	outFile << "\nseed = " << myseed;
-	outFile << "\nlength = " << length << endl;
+	outFile << "\nlength = " << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -260,7 +260,7 @@ void Samuelson_basic::saveParamsetWithNames(ofstream& outFile)
 void Samuelson_basic::printParamset()
 {
     log() << y1_0 << "\t" << y2_0 << "\t" << m_0 << "\t" << v_0 << "\t";
-    log() << m << "\t" << v << "\t" <<  lambda << "\t" << myseed << "\t" << length << endl;
+    log() << m << "\t" << v << "\t" <<  lambda << "\t" << myseed << "\t" << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

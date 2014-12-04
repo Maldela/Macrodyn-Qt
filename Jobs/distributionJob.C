@@ -60,7 +60,7 @@ void distributionJob::simulation()
     qreal intervall=(xmax-xmin)/cmax;
 //    double intervall=pow(cmax,-1);
 
-log() << "int=" << intervall << endl;
+log() << "int=" << intervall << "\n";
 
 	model->initialize();
 
