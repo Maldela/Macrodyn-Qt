@@ -23,7 +23,7 @@ protected:
     void leoDynamics();			// leos dynamics
 public:
     leo();				// constructor
-    void iteration(const long&);	// perform one iteration
+    void iteration(const qint64&);	// perform one iteration
     qreal* setLabels(char*);
     void loadParamset(ifstream&);	// load parameterset from a file
     void saveParamset(ofstream&);	// write parameterset into a file

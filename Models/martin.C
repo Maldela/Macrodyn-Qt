@@ -247,7 +247,7 @@ void martin::receiveParameters(const qreal* parameters)
     p0=parameters[3];
     theta=parameters[4];
     rho=parameters[5];
-    length=(long)(parameters[6]);
+    length=(qint64)(parameters[6]);
 }
 
 qreal martin::savings(const qreal& x)
@@ -256,7 +256,7 @@ qreal martin::savings(const qreal& x)
     return( 1/exp( cos(10/(1+exp(r*log(x))))));
 }
 
-void martin::iteration(const long&)
+void martin::iteration(const qint64&)
 {
     qreal oldP=p;
     qreal term;
@@ -431,7 +431,7 @@ void martin2::receiveParameters(const qreal* parameters)
     theta=parameters[4];
     rho=parameters[5];
     lambda=parameters[6];
-    length=(long)(parameters[7]);
+    length=(qint64)(parameters[7]);
 }
 
 
@@ -610,7 +610,7 @@ void martin4::receiveParameters(const qreal* parameters)
     a=parameters[7];
     b=parameters[8];
     c=parameters[9];
-    length=(long)(parameters[10]);
+    length=(qint64)(parameters[10]);
 }
 
 

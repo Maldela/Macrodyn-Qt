@@ -27,8 +27,8 @@
 class prob_Distri {
 public:
     prob_Distri() {}
-    unsigned state_size() const;            // # needed internal variables
-    prob_Distri(const unsigned );        // constructor
+    uint state_size() const;            // # needed internal variables
+    prob_Distri(const uint );        // constructor
     virtual ~prob_Distri();                 // destructor
     prob_Distri(const prob_Distri&);        // copy-constructor
     virtual prob_Distri& operator=(const prob_Distri&);   // assign-operator
@@ -38,7 +38,7 @@ public:
     virtual qreal inverse(const qreal) const; // inverse cumulative function
 //  virtual qreal random();                  // random distributed variable
 //  virtual qreal random(...);               // random distributed variable
-    virtual void seed(const unsigned * , const unsigned ); // set seed value for distribution
+    virtual void seed(const uint * , const uint ); // set seed value for distribution
     void save_state(random_state&);         // save generator state
     virtual void swap_state(random_state&); // swap generator state for distri
 protected:

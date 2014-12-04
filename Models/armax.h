@@ -64,7 +64,7 @@ protected:
     matrix_neu* E;             //true parameter for e loaded from sim-file
     qreal u;
     qreal y;
-    qreal norm_u;               //euklidische Norm² von u
+    qreal norm_u;               //euklidische Norm von u
     qreal norm_y;               //        "            y
     qreal sum_u;                //1/n * SUM (norm_u)
     qreal sum_y;
@@ -139,7 +139,7 @@ public:
     void receiveParameters(const qreal*);
     qreal* setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
-    void iteration(const long&);	// perform one iteration 	
+    void iteration(const qint64&);	// perform one iteration
     void sendStateSpace(int &,const qreal***);
 
 };

@@ -42,13 +42,13 @@ protected:
 
 	qreal get_new_d();		// get new random dividend
 
-    qreal (*_learnAgols) (qreal*,qreal*,const long&,const long&);
-    qreal (EnRAssH::*learn) (qreal*,qreal*,const long&,const long&);
+    qreal (*_learnAgols) (qreal*,qreal*,const qint64&,const qint64&);
+    qreal (EnRAssH::*learn) (qreal*,qreal*,const qint64&,const qint64&);
     void   learn_init ();
-    qreal  learnAgols (qreal*,qreal*,const long&,const long&);
-    qreal  seroError (qreal*,qreal*,const long&,const long&);
-    qreal  constTheta (qreal*,qreal*,const long&,const long&);
-    qreal  rational (qreal*,qreal*,const long&,const long&);
+    qreal  learnAgols (qreal*,qreal*,const qint64&,const qint64&);
+    qreal  seroError (qreal*,qreal*,const qint64&,const qint64&);
+    qreal  constTheta (qreal*,qreal*,const qint64&,const qint64&);
+    qreal  rational (qreal*,qreal*,const qint64&,const qint64&);
 
 public:
 
@@ -60,7 +60,7 @@ public:
 	void saveParamsetWithNames(ofstream&); 
 //	void printParamset();
 	void sendStateSpace(int &,const qreal***);
-	void iteration(const long&);
+	void iteration(const qint64&);
 
 };
 

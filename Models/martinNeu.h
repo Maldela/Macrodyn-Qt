@@ -36,7 +36,7 @@ public:
     void initialize();
     void loadParamset(ifstream&);	
     void sendStateSpace(int &,const qreal***);
-    void iteration(const long&);
+    void iteration(const qint64&);
 };
 
 #endif

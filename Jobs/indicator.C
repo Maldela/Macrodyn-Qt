@@ -43,7 +43,7 @@ indicator_2d::indicator_2d(baseModel* const bMod, xyRange & axes,
     if( !zParam )
 	error("indicator::indicator: Undefined label %s",zLabel);
 
-    limit=(long)(0.0*length);		// 0% are thrown away
+    limit=(qint64)(0.0*length);		// 0% are thrown away
     
     color_code = new d_var (zmin, zmin, zmax, n_colors);
 }
@@ -63,9 +63,9 @@ indicator_2d::indicator_2d(baseModel* const bMod, xyRange & axes,
 
 void indicator_2d::simulation()
 {
-    long t;
-    long T;
-    short color;
+    qint64 t;
+    qint64 T;
+    int color;
     qreal rx, ry;
   
   for( T=length;T<=length;T++ ) {

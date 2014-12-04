@@ -25,9 +25,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-qreal constantLag::expectedInflationRate(const long t)
+qreal constantLag::expectedInflationRate(const qint64 t)
 {
-    long T=MIN(t,tau);
+    qint64 T=MIN(t,tau);
     if( !tau )
 	return 1;
     return( theta[T-1] );
@@ -42,7 +42,7 @@ qreal constantLag::expectedInflationRate(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-void constantLag::iteration(const long& t)
+void constantLag::iteration(const qint64& t)
 {
     qreal ptratex;
     char state[5];

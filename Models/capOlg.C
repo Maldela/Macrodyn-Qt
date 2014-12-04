@@ -105,9 +105,9 @@ void capOlg::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-qreal capOlg::expReturnRate(const long t)
+qreal capOlg::expReturnRate(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     
     T=MIN(t,tau);
@@ -158,7 +158,7 @@ void capOlg::rShift()
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::iteration(const long& t)
+void capOlg::iteration(const qint64& t)
 {
     qreal rE;
     qreal term;
@@ -361,7 +361,7 @@ void capOlg::receiveParameters(const qreal* parameters)
     delta=parameters[4];
     rho=parameters[5];
     tau=(int)(parameters[6]);
-    length=(long)(parameters[7]);
+    length=(qint64)(parameters[7]);
     k0=parameters[8];
     r0=parameters[9];
 }
@@ -389,7 +389,7 @@ capOlgAdapt::capOlgAdapt()
 /*                                                                            */
 /******************************************************************************/
 
-qreal capOlgAdapt::expectedReturnRate(const long)
+qreal capOlgAdapt::expectedReturnRate(const qint64)
 {
     qreal expReturnRate;
 
@@ -408,7 +408,7 @@ qreal capOlgAdapt::expectedReturnRate(const long)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::iteration(const long& t)
+void capOlgAdapt::iteration(const qint64& t)
 {
     qreal rE;
     qreal term;
@@ -579,7 +579,7 @@ void capOlgAdapt::receiveParameters(const qreal* parameters)
     rho=parameters[5];
     tau=(int)(parameters[6]);
     eta=parameters[7];
-    length=(long)(parameters[8]);
+    length=(qint64)(parameters[8]);
     k0=parameters[9];
     r0=parameters[10];
 }
@@ -624,9 +624,9 @@ void capOlgGeoExp::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-qreal capOlgGeoExp::expectedReturnRate(const long t)
+qreal capOlgGeoExp::expectedReturnRate(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     qreal etaSum=0.0;
     qreal exponent=0.0;
@@ -650,7 +650,7 @@ qreal capOlgGeoExp::expectedReturnRate(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::iteration(const long& t)
+void capOlgGeoExp::iteration(const qint64& t)
 {
     qreal rE;
     qreal term;
@@ -821,7 +821,7 @@ void capOlgGeoExp::receiveParameters(const qreal* parameters)
     rho=parameters[5];
     tau=(int)(parameters[6]);
     eta=parameters[7];
-    length=(long)(parameters[8]);
+    length=(qint64)(parameters[8]);
     k0=parameters[9];
     r0=parameters[10];
 }

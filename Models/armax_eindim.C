@@ -266,7 +266,7 @@ void armax_eindim::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax_eindim::iteration(const long& t)
+void armax_eindim::iteration(const qint64& t)
 { 	
     qreal sum1, sum2, sum3;
     qreal temp_max = ((L>K) ? L : K);	//max of L,K

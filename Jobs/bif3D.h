@@ -26,16 +26,16 @@ class bif3D_2par : public geometry3D {
     qreal stepX;                      // stepsize on the x-axis
     qreal stepY;				// stepsize on the y-axis
     qreal stepZ;				// stepsize on the z-axis
-    long int resolution_x;
-    long int resolution_y;
-    long int resolution_z;
-    long int dx,dy,dz;
+    qint64 resolution_x;
+    qint64 resolution_y;
+    qint64 resolution_z;
+    qint64 dx,dy,dz;
     histo_1d	h;
-    void progress(long int, long int);
+    void progress(qint64, qint64);
     
   public:
     bif3D_2par(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-      const long=1, const long=1, const long=1);
+      const qint64=1, const qint64=1, const qint64=1);
     void setStepX(const qreal&);
     void setStepZ(const qreal&);
     void simulation();
@@ -46,16 +46,16 @@ class bif3D_1par : public geometry3D {
     qreal stepX;                      // stepsize on the x-axis
     qreal stepY;				// stepsize on the y-axis
     qreal stepZ;				// stepsize on the z-axis
-    long int resolution_x;
-    long int resolution_y;
-    long int resolution_z;
-    long int dx,dy,dz;
+    qint64 resolution_x;
+    qint64 resolution_y;
+    qint64 resolution_z;
+    qint64 dx,dy,dz;
     histo_2d	h;
-    void progress(long int, long int);
+    void progress(qint64, qint64);
     
   public:
     bif3D_1par(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-       const long=1, const long=1, const long=1);
+       const qint64=1, const qint64=1, const qint64=1);
     void setStepX(const qreal&);
     void setStepZ(const qreal&);
     void simulation();

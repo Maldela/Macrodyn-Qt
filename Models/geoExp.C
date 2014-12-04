@@ -55,9 +55,9 @@ void geoExp::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-qreal geoExp::expectedInflationRate(const long t)
+qreal geoExp::expectedInflationRate(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     qreal etaSum=0.0;
     qreal exponent=0.0;
@@ -81,7 +81,7 @@ qreal geoExp::expectedInflationRate(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-void geoExp::iteration(const long& t)
+void geoExp::iteration(const qint64& t)
 {
     qreal ptratex;
     char state[5];
@@ -277,7 +277,7 @@ void geoExp::receiveParameters(const qreal* parameters)
     lambda=parameters[4];
     my=parameters[5];
     tau=(int)(parameters[6]);
-    length=(long)(parameters[7]);
+    length=(qint64)(parameters[7]);
     delta=parameters[8];
     beta=parameters[9];
     eta=parameters[10];

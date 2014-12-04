@@ -191,7 +191,7 @@ void laborMarketFirstTax::receiveParameters(const qreal* parameters)
     kappa=parameters[15];
     lambda=parameters[16];
     mu=parameters[17];
-    length=(long)(parameters[18]);
+    length=(qint64)(parameters[18]);
     w0=parameters[19];
     mS0=parameters[20];
     mW0=parameters[21];
@@ -308,7 +308,7 @@ void laborMarketFirstTax::setTax()
 /* Last modified:   06.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::iteration(const long& t)
+void laborMarketFirstTax::iteration(const qint64& t)
 {
   qreal ztnot;		// labor demand
   qreal sigmaL;		// labor market imbalance
@@ -376,7 +376,7 @@ rlaborMarketFirstTax::rlaborMarketFirstTax() : laborMarketFirstTax()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlaborMarketFirstTax::iteration(const long& t)
+void rlaborMarketFirstTax::iteration(const qint64& t)
 {
   * zvar_ptr = zvar->dice();	// Set a new random value for the Parameter
   laborMarketFirstTax::iteration(t);	// iterate as usual

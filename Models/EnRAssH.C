@@ -108,25 +108,25 @@ qreal EnRAssH::get_new_d()
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-static qreal last_k(qreal *y, qreal *, const long &k, const long&) {
+static qreal last_k(qreal *y, qreal *, const qint64 &k, const qint64&) {
 	return ( y[k-1] );
 }
-static qreal diff_k(qreal *y, qreal *,const long &k, const long&) {
+static qreal diff_k(qreal *y, qreal *,const qint64 &k, const qint64&) {
 	return ( y[0]+(y[0]-y[k-1]) );
 }
-static qreal ma_k(qreal *y, qreal *,const long &k, const long&) {
+static qreal ma_k(qreal *y, qreal *,const qint64 &k, const qint64&) {
 	qreal	value=0;
 	for (int count=0;count<k;count++) value+=y[count];
 	return ( value/k );
 }
-static qreal ols_k(qreal *y, qreal *,const long &k, const long&) {
+static qreal ols_k(qreal *y, qreal *,const qint64 &k, const qint64&) {
 	qreal	a,b;
 	qreal	x_=0;
 	qreal	x2_=0;
 	qreal	xy_=0;
 	qreal	y_=0;
 	qreal	term;
-    long count;
+    qint64 count;
     for (count=0;count<k;count++) {
 		y_+=y[count];
 		x_+=count;
@@ -147,23 +147,23 @@ static qreal ols_k(qreal *y, qreal *,const long &k, const long&) {
 
     return ( a+b*count );
 }
-static qreal ols(qreal *y, qreal *,const long&, const long& t) {
+static qreal ols(qreal *y, qreal *,const qint64&, const qint64& t) {
 
 //log() << "t=" << t << " " << ols_k(y,NULL,t,0);
 	if(t<2) return(y[0]);
 	 else return ( ols_k(y,NULL,t,0) );
 }
 
-qreal  EnRAssH::learnAgols(qreal *y,qreal *w,const long &i,const long &t) {
+qreal  EnRAssH::learnAgols(qreal *y,qreal *w,const qint64 &i,const qint64 &t) {
 	return ( _learnAgols(y,w,i,t) );
 }
-qreal  EnRAssH::seroError(qreal *, qreal *,const long&, const long&) {
+qreal  EnRAssH::seroError(qreal *, qreal *,const qint64&, const qint64&) {
 	return (thetaE);
 }
-qreal  EnRAssH::constTheta(qreal *, qreal *,const long&,const long&) {
+qreal  EnRAssH::constTheta(qreal *, qreal *,const qint64&,const qint64&) {
 	return (theta0);
 }
-qreal  EnRAssH::rational(qreal *, qreal *,const long&,const long&) {
+qreal  EnRAssH::rational(qreal *, qreal *,const qint64&,const qint64&) {
 	return ((R*thetaOld-dmid)/(1-((alpha*x_/N)*(R*thetaOld-dmid))));
 }
 //	theta = pOld + 0.5 * (pOld-thetaOld) ;			// lernen
@@ -302,7 +302,7 @@ void EnRAssH::sendStateSpace(int &quantity,const qreal*** stateSpace)
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void EnRAssH::iteration(const long& t)
+void EnRAssH::iteration(const qint64& t)
 { 
 	int count;
 

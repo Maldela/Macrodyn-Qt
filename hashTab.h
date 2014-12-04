@@ -27,7 +27,7 @@
 
 struct hashEntry {
     qreal bucket;		// cell that has been hit
-    unsigned hits;		// # hits into the bucket
+    uint hits;		// # hits into the bucket
 
     hashEntry();		// default constructor
 };
@@ -48,31 +48,31 @@ class hashTable {
   protected:
     xyRange domain;		// section of the state space under 
 				// consideration	
-    unsigned noEntries;         // # entries in the hash table 
+    uint noEntries;         // # entries in the hash table
     hashEntry* hashTab;         // hash table
-    unsigned *discreteState;       // vector for the dicrete representation of
+    uint *discreteState;       // vector for the dicrete representation of
 				// a systems state
-    unsigned base;		// base used for the discrete representation of
+    uint base;		// base used for the discrete representation of
 				// a systems state
-    unsigned noHits;            // # hits at all               
-    unsigned noBuckets;         // # hit buckets               
-    unsigned collisions;        // # collisions                
+    uint noHits;            // # hits at all
+    uint noBuckets;         // # hit buckets
+    uint collisions;        // # collisions
     qreal whichCell(const qreal**) const; // computes the cell number of
         			// the state space that has been hit
-    unsigned hashFunction(const qreal&); // the hash function
+    uint hashFunction(const qreal&); // the hash function
     QTextStream logFile;
 
   public:
-    hashTable(const unsigned&,const xyRange&);    // constructor
+    hashTable(const uint&,const xyRange&);    // constructor
     virtual ~hashTable();	   // destructor
     int storePoint(const qreal**);
     void discrete2Cont(const qreal&,qreal**); //computes the middle
                                    // point of a given cell
-    unsigned numberOfHits();	   // returns noHits
-    unsigned numberOfBuckets();	   // returns noBuckets
-    unsigned orderOfCycle();	   // returns the order of the cycle or zero if
+    uint numberOfHits();	   // returns noHits
+    uint numberOfBuckets();	   // returns noBuckets
+    uint orderOfCycle();	   // returns the order of the cycle or zero if
 				   // no periodic behaviour could be found
-    unsigned numberOfCollisions(); // returns collisions
+    uint numberOfCollisions(); // returns collisions
     void resetHashTable();         // resets the hash table
     void resetDomain(const xyRange&); // resets the state space under 
 				   // consideration

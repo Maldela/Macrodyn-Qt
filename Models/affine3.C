@@ -55,7 +55,7 @@ affine3::~affine3()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::iteration(const long&)
+void affine3::iteration(const qint64&)
 {   
 	urv_p = zvar1->dice();	// pick iteration function according to p
 	urv_e = zvar2->dice();	// get distortion value in t
@@ -315,5 +315,5 @@ void affine3::receiveParameters(const qreal* parameters)
 	a=parameters[1];
 	x0=parameters[2];
 	p=parameters[3];
-	length=(long)(parameters[4]);
+	length=(qint64)(parameters[4]);
 }

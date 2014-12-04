@@ -45,10 +45,10 @@ class laborMarketFirst : public baseModel {
     qreal actualEmployment(qreal&);
     qreal detSigmaL(qreal&);              // percentage surplus of the labormarket
     qreal detWtRate(qreal&);	        // wage adjustment 
-    virtual qreal expectedInflationRateW(const long);
+    virtual qreal expectedInflationRateW(const qint64);
     qreal consumptionPropensityW(qreal&); 
     qreal demandYoungW(qreal&);           // desired consum of the young workers
-    virtual qreal expectedInflationRateS(const long);                
+    virtual qreal expectedInflationRateS(const qint64);                
     qreal consumptionPropensityS(qreal&);
     qreal demandYoungS(qreal&); 
     qreal aggregateDemand(qreal&,qreal&);
@@ -80,6 +80,6 @@ public:
     void sendStateSpace(int &,const qreal***); // return pointers to all model
 					 // variables and the dimension
 					 // of the model
-    virtual void iteration(const long&); // perform one iteration 
+    virtual void iteration(const qint64&); // perform one iteration 
 };
 #endif

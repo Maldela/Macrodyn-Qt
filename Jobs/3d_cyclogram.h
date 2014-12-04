@@ -29,10 +29,10 @@ class cyclogram_3d : public bif3D_2par {
     qreal stepY;                      // stepsize for the second parameter
     qreal stepX;
     qreal stepZ;
-    long int resolution_x;
-    long int resolution_y;
-    long int resolution_z;
-    long int dx,dy,dz;
+    qint64 resolution_x;
+    qint64 resolution_y;
+    qint64 resolution_z;
+    qint64 dx,dy,dz;
     
     const qreal **stateVars;          // pointer to the state variables
     
@@ -40,8 +40,8 @@ class cyclogram_3d : public bif3D_2par {
     
   public:
     cyclogram_3d(baseModel* const, const xyRange&, const xyRange&,
-           MacrodynGraphicsItem* const=NULL, const long=1,
-		   const long=1, const long=1);
+           MacrodynGraphicsItem* const=NULL, const qint64=1,
+           const qint64=1, const qint64=1);
     virtual ~cyclogram_3d();
     void simulation();
 };    

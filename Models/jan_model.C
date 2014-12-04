@@ -46,7 +46,7 @@ jan_model::jan_model() : baseModel(1) //  1 fuer 1-dimensionalen Phasenraum;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::iteration(const long&)
+void jan_model::iteration(const qint64&)
 {
     qreal oldX=x;
 
@@ -256,7 +256,7 @@ void jan_model::receiveParameters(const qreal* parameters)
     x0=parameters[0];
     alpha=parameters[1];
     delta=parameters[2];
-    length=(long)(parameters[3]);
+    length=(qint64)(parameters[3]);
 }
 
 // eof

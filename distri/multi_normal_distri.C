@@ -57,8 +57,8 @@ void multi_normal_Distri::compute_lowerleft_inverse_and_sqrt_of_determinate()
 //  else if (dim == 3)
 //  {
 //      qreal  p[6];
-//      for (unsigned h=0, i=0; i<3 ; i++)
-//      for (unsigned j=i; j<3 ; j++, h++)
+//      for (uint h=0, i=0; i<3 ; i++)
+//      for (uint j=i; j<3 ; j++, h++)
 //          p[h] = inver[j+3*i];
 //
 //      qreal  v = p[0]*p[3]*p[5] + 2*p[1]*p[2]+p[4] -
@@ -84,11 +84,11 @@ void multi_normal_Distri::compute_lowerleft_inverse_and_sqrt_of_determinate()
 //  store L as lower-left triangle matrix in inverse , except the diagonal
 
     qreal  *diag = new qreal[dim];
-    for (unsigned i=0; i < dim ; i++)
-    for (unsigned j=i; j < dim ; j++)
+    for (uint i=0; i < dim ; i++)
+    for (uint j=i; j < dim ; j++)
     {
         qreal v = inver[j+dim*i];
-        for (unsigned h=0; h < i ; h++)
+        for (uint h=0; h < i ; h++)
            v -= inver[h+dim*j]*inver[h+dim*i];
         if (j != i)
             lower_left[i+dim*j] = inver[i+dim*j] = v * diag[i];
@@ -100,26 +100,26 @@ void multi_normal_Distri::compute_lowerleft_inverse_and_sqrt_of_determinate()
 
 //  Compute Sqrt of Determinate of Covariance-Matrix
     sqrt_det = 1.0;
-    for (unsigned h=0; h < dim*dim ; h+=dim+1)
+    for (uint h=0; h < dim*dim ; h+=dim+1)
        sqrt_det *= lower_left[h];
 
 //  Compute D as inverse of Lower-left L triangle matrix
 //  and store it as upper-right triangle matrix in inverse
-    for (unsigned i=0; i < dim ; i++)
-    for (unsigned h=0; h <= i ; h++)
+    for (uint i=0; i < dim ; i++)
+    for (uint h=0; h <= i ; h++)
     {   qreal  v = (i==h ? 1.0 : 0.0);
-        for (unsigned j=0; j < h ; j++)
+        for (uint j=0; j < h ; j++)
             v -= inver[j+dim*i]*inver[h+dim*j];
-        for (unsigned j=h; j < i ; j++)
+        for (uint j=h; j < i ; j++)
             v -= inver[j+dim*i]*inver[j+dim*h];
         inver[i+dim*h] = v * diag[i];
     }
 
 //  Compute L^-1*L^-1^T and store it as lower-left triangle matrix in inverse
-    for (unsigned i=0; i < dim ; i++)
-    for (unsigned j=i; j < dim ; j++)
+    for (uint i=0; i < dim ; i++)
+    for (uint j=i; j < dim ; j++)
     {   qreal  v = 0.0;
-        for (unsigned h=j; h < dim ; h++)
+        for (uint h=j; h < dim ; h++)
             v += inver[h+dim*i]*inver[h+dim*j];
         inver[i+dim*j] = v;
     }
@@ -143,22 +143,22 @@ void multi_normal_Distri::compute_lowerleft_inverse_and_sqrt_of_determinate()
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-multi_normal_Distri::multi_normal_Distri(const unsigned d, const qreal *med ,
+multi_normal_Distri::multi_normal_Distri(const uint d, const qreal *med ,
 const qreal *covar ) :
 prob_Distri(0), dim(d), median(new qreal[d]), lower_left(new qreal[d*d]), inver(new qreal[d*d]) 
 {
     if (!dim)
         fatalError("multi_normal_Distri::multi_normal_Distri","dimension must be positive");
-    for (unsigned i=0;i<dim;i++)
+    for (uint i=0;i<dim;i++)
         median[i] = (med?med[i]:0.0);
     if (!covar)
-        for (unsigned i=0;i<dim;i++)
-        for (unsigned j=0;j<dim;j++)
+        for (uint i=0;i<dim;i++)
+        for (uint j=0;j<dim;j++)
             inver[i*dim+j] = (i==j ? 1.0 : 0.0);
     else
     {   //  store Triangle-Covariance matrix into upper-right of inverse
-        for (unsigned h=0, i=0; i<dim ; i++)
-        for (unsigned j=i; j<dim ; j++, h++)
+        for (uint h=0, i=0; i<dim ; i++)
+        for (uint j=i; j<dim ; j++, h++)
             inver[j+dim*i] = covar[h];
         compute_lowerleft_inverse_and_sqrt_of_determinate();
     }
@@ -239,13 +239,13 @@ multi_normal_Distri& multi_normal_Distri::operator=(const multi_normal_Distri &g
         state = given.state;
         dim = given.dim;
         median = new qreal[dim];
-        for (unsigned i=0;i<dim;i++)
+        for (uint i=0;i<dim;i++)
             median[i]= given.median[i];
         inver = new qreal[dim*dim];
-        for (unsigned h=dim*dim;h--;)
+        for (uint h=dim*dim;h--;)
             inver[h]= given.inver[h];
         lower_left = new qreal[dim*dim];
-        for (unsigned h=dim*dim;h--;)
+        for (uint h=dim*dim;h--;)
             lower_left[h]= given.lower_left[h];
         sqrt_det = given.sqrt_det;
     }
@@ -272,8 +272,8 @@ multi_normal_Distri& multi_normal_Distri::operator=(const multi_normal_Distri &g
 qreal multi_normal_Distri::density(const qreal x[]) const
 {
     qreal  sum = 0.0;
-    for (unsigned h=0, j=0; j<dim ; j++, h+=dim)
-    for (unsigned i=0; i<=j ; i++)
+    for (uint h=0, j=0; j<dim ; j++, h+=dim)
+    for (uint i=0; i<=j ; i++)
         sum -= (i==j?0.5:1.0) * (x[i]-median[i])* inver[i+h] *(x[j]-median[j]);
     return   0.39894228040143267794/sqrt_det*exp(sum);  // 1/sqrt(2.0*M_PI)
 }
@@ -348,7 +348,7 @@ qreal* multi_normal_Distri::random()
     delete[]  x;
     x = new qreal[dim];
     qreal  *arg = new qreal[dim];
-    for (unsigned i=0;i<dim;i++)
+    for (uint i=0;i<dim;i++)
     {
         qreal val;
         //  following loop will be called 1.369 times on the average
@@ -361,7 +361,7 @@ qreal* multi_normal_Distri::random()
         } while ( arg[i]*arg[i] > 5-C2*val  &&  (arg[i]*arg[i] >= C3/val+1.4
                                             || arg[i]*arg[i] > -4.0*log(val)) );
         x[i] = median[i];
-        for (unsigned j=0;j<=i;j++)
+        for (uint j=0;j<=i;j++)
             x[i] += lower_left[j+i*dim]*arg[j];
     }
     delete[]  arg;

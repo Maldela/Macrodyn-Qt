@@ -430,7 +430,7 @@ void milano2::system_6(const qreal& l_dem)
 
 
 
-void milano2::iteration(const long& t)
+void milano2::iteration(const qint64& t)
 {
 /*
     qreal s1_emp;

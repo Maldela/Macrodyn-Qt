@@ -127,7 +127,7 @@ int geometric_Distri::random(const qreal pro)
     {
         static randomBits  generator;
         random_state & safe = generator.attach_state(state);
-        unsigned dummy=  generator.search_next_1_bit(true);
+        uint dummy=  generator.search_next_1_bit(true);
         generator.attach_state(safe);
 
         return  int( dummy+1 );

@@ -55,7 +55,7 @@ Keener::~Keener()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::iteration(const long&)
+void Keener::iteration(const qint64&)
 {
 	bias = distri.rectangular()*2.0*lambda;
 	x = fmod(a*x+b+bias , Modulo);
@@ -296,6 +296,6 @@ void Keener::receiveParameters(const qreal* parameters)
     b=parameters[2];
     Modulo=parameters[3];
     lambda=parameters[4];
-    length=long(parameters[5]);
+    length=qint64(parameters[5]);
 }
 

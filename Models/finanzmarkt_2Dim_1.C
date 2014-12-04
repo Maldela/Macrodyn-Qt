@@ -527,7 +527,7 @@ void finanzmarkt_2Dim_1::sendStateSpace(int &quantity,const qreal*** stateSpace)
 // Funktionsname:	iteration
 // Beschreibung:	Durchlauf einer Periode
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim_1::iteration(const long& t)
+void finanzmarkt_2Dim_1::iteration(const qint64& t)
 {
 //Neu--Berechnung der Matrizen A,B,C bei neuem Fundamentalisten--Marktanteil (mu)
 //durch Gruppenswitch:

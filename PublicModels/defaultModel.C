@@ -111,9 +111,9 @@ void defaultModel::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-qreal defaultModel::expectedInflationRate(const long t)
+qreal defaultModel::expectedInflationRate(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     
     T=MIN(t,tau);
@@ -279,7 +279,7 @@ void defaultModel::dynamics()
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::iteration(const long& t)
+void defaultModel::iteration(const qint64& t)
 {
     qreal ptratex;
     char state[5];
@@ -570,7 +570,7 @@ void defaultModel::receiveParameters(const qreal* parameters)
     lambda=parameters[4];
     my=parameters[5];
     tau=(int)(parameters[6]);
-    length=(long)(parameters[7]);
+    length=(qint64)(parameters[7]);
     delta=parameters[8];
     beta=parameters[9];
     w0=parameters[10];
@@ -613,7 +613,7 @@ rdefaultModel::rdefaultModel() : defaultModel()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rdefaultModel::iteration(const long& t)
+void rdefaultModel::iteration(const qint64& t)
 {
   * zvar_ptr = zvar->dice();	// Set a new random value for the Parameter
   defaultModel::iteration(t);	// iterate as usual

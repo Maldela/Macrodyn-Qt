@@ -155,7 +155,7 @@ qreal* manipulate::setLabels(char* label) {
 	return model->setLabels(label);
 }
 
-long  manipulate::getLength() const {return model->getLength();}
+qint64  manipulate::getLength() const {return model->getLength();}
 qreal* manipulate::sendModelVar() {return model->sendModelVar();}
 void  manipulate::sendStateSpace(int &i,const qreal*** r) {model->sendStateSpace(i,r);}
 void  manipulate::receiveParameters(const qreal* r) {model->receiveParameters(r);} 
@@ -781,7 +781,7 @@ void manipulate::F_errcor() {
 // Author:		Marc Mueller Jul 13 1999
 // Last modified:	Tue Jul 13 15:01:38 CEST 1999
 ///////////////////////////////////////////////////////////////////////////////
-void manipulate::F_ma(const long& t) {
+void manipulate::F_ma(const qint64& t) {
 	if(t>0)	for(int j=0;j<ma_num;j++) {
 			ma_ptr[j].vn = (ma_ptr[j].vn*t + *ma_ptr[j].vname)/(t+1);
 			*ma_ptr[j].mname = ma_ptr[j].vn;
@@ -972,7 +972,7 @@ void manipulate::F_sg() {
 // Author:			Mathias Hoffmann & Michael Meyer							//
 // Last modified:	Thu Sep 21 11:51:02 METDST 2000								//
 ///////////////////////////////////////////////////////////////////////////////	//
-void manipulate::Sequper(const long& t) {
+void manipulate::Sequper(const qint64& t) {
 	const qreal lnC = -706.893623549172;
 	const int tbi = 5;
 
@@ -1209,7 +1209,7 @@ void manipulate::ZX() {
 // Author:			Marc Mueller  Jul 12 1999								//
 // Last modified:	Thu Sep 21 11:50:25 METDST 2000 (M. Hoffmann & M. Meyer)//
 //////////////////////////////////////////////////////////////////////////////
-void manipulate::iteration(const long& t) {
+void manipulate::iteration(const qint64& t) {
 	int i,j;
 	for (int i=0;i<howMany;i++) {
 		switch( manipulateTag[i] ) {

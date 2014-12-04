@@ -132,10 +132,10 @@ int discrete_Distri::random(const int wid, const int sta)
 {
     if (wid <= 0)
         fatalError("cauchy_Distri::random","width must be positive");
-    unsigned  bits=0;
-    for (unsigned  i=1; i < unsigned(wid)  &&  i; i <<= 1)
+    uint  bits=0;
+    for (uint  i=1; i < uint(wid)  &&  i; i <<= 1)
         bits ++;
-    unsigned  arg;
+    uint  arg;
     static randomBits  generator;
     random_state & safe = generator.attach_state(state);
     //  for given  width  we have  2^bits/width < 2  tries on average
@@ -143,7 +143,7 @@ int discrete_Distri::random(const int wid, const int sta)
     do {
        arg= 0;
        generator.random_bits(bits,&arg); 
-    } while (arg >= unsigned(wid)); 
+    } while (arg >= uint(wid)); 
     generator.attach_state(safe);
     return  sta + int(arg);
 }

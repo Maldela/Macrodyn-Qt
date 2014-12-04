@@ -40,8 +40,8 @@ protected:
 	real xf1, xf2, xn1, xn2;		//einzelne Portfolioanzahl
 	real pxF, pxN, pxf, pxn;		//Variablen zur Schuldenberechnung
 	real Haben_F, Haben_N, Haben_f, Haben_n;
-	real zetamin1, zetamax1, gamma1;	//Parameter fuer Dividendenprozeﬂ 1
-	real zetamin2, zetamax2, gamma2;	//Parameter fuer Dividendenprozeﬂ 2	
+    real zetamin1, zetamax1, gamma1;	//Parameter fuer Dividendenprozess 1
+    real zetamin2, zetamax2, gamma2;	//Parameter fuer Dividendenprozess 2
 	real d1, d2;				//Dividendenzufallsvariablen
 	real Ed1, Ed2, var1, var2, cov12;	//Momente der Dividendenprozesse
 	real delta_d1, delta_d2;		//d_{t+1}-\E_t(d_{t+1}) fuer alternative Renditenberechung
@@ -56,7 +56,7 @@ protected:
 	real rendf_neu, rendn_neu;		//alternativ berechnete Renditen
 	real ErendF_p, ErendF_ges; 		//Erwartete Renditen
 	real ErendN_p, ErendN_ges; 		//Erwartete Renditen
-	real RPF, RPN, sdRF, sdRN; 		//Risikopr‰mien und deren Standardaweichungen
+    real RPF, RPN, sdRF, sdRN; 		//Risikopr√§mien und deren Standardaweichungen
 	real Eff_F, Eff_N, delta_Eff;		//Steigungen der Effizienzlinien
 	real z1, z2, z3, z4, z5, z7, z8, muN;  	//Zischenrechnungsvariablen
 	real xBundle;

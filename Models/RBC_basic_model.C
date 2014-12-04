@@ -53,7 +53,7 @@ if(zvar) delete zvar;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::iteration(const long&)
+void RBC_basic_model::iteration(const qint64&)
 {
 qreal Z_old;
 
@@ -455,7 +455,7 @@ void RBC_basic_model::receiveParameters(const qreal* parameters)
 	mu 	  = parameters[3];
 	k_0	  = parameters[4];
 	Z_0	  = parameters[5];
-	length= (long) parameters[6];
+	length= (qint64) parameters[6];
 	//log() << "Now returning...." << "\n"; 
 }
 

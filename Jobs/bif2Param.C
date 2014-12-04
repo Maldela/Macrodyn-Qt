@@ -44,7 +44,7 @@ bif2Param::bif2Param(baseModel* const bMod, const xyRange& axes,
 
 void bif2Param::simulation()
 {
-    long t;
+    qint64 t;
     qreal dummy_x;
     qreal dummy_z;
 

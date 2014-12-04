@@ -19,7 +19,7 @@
 /* Last modified:   Wed Jun  2 16:03:59 CEST 1999  (Marc Mueller)             */
 /*                                                                            */
 /******************************************************************************/
-xyRange::xyRange(short dim, const QList<QString>& names, const QList<qreal>& mins,
+xyRange::xyRange(int dim, const QList<QString>& names, const QList<qreal>& mins,
          const QList<qreal>& maxs, const QList<qint64>& count, const QList<QColor>& zerol)
 {
     dimension = dim;
@@ -44,7 +44,7 @@ xyRange::xyRange(short dim, const QList<QString>& names, const QList<qreal>& min
 /* Last modified:   Wed Jun  2 16:03:59 CEST 1999  (Marc Mueller)             */
 /*                                                                            */
 /******************************************************************************/
-xyRange::xyRange(short dim, const QList<QString>& names, const QList<qreal>& mins,
+xyRange::xyRange(int dim, const QList<QString>& names, const QList<qreal>& mins,
          const QList<qreal>& maxs, const QList<qint64>& count)
 {
     dimension = dim;

@@ -43,5 +43,5 @@ public:
 //    void loadParamset(ifstream&);	// load parameterset from a file
 //    void saveParamset(ofstream&);
 //    void printParamset();
-    void iteration(const long&);	// perform one iteration 
+    void iteration(const qint64&);	// perform one iteration 
 };

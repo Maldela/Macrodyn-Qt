@@ -32,14 +32,14 @@
 
 class logiDelay : public models2D {
 public:
-    void iteration(const long&);
+    void iteration(const qint64&);
 };
 
 class logLogDelay : public models2D {
 protected:
     qreal delayFunc(const qreal&, const qreal&);
 public:
-    void iteration(const long&);
+    void iteration(const qint64&);
 };
 
 #endif

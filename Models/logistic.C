@@ -47,7 +47,7 @@ logistic::logistic() : baseModel(1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::iteration(const long&)
+void logistic::iteration(const qint64&)
 {
     qreal oldX=x;
 
@@ -252,7 +252,7 @@ void logistic::receiveParameters(const qreal* parameters)
 {
     x0=parameters[0];
     alpha=parameters[1];
-    length=(long)(parameters[2]);
+    length=(qint64)(parameters[2]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -292,7 +292,7 @@ rlogistic::rlogistic() : logistic()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlogistic::iteration(const long& t)
+void rlogistic::iteration(const qint64& t)
 {
   if( mc_flag ) {		// do we use a markov chain ?
     * zvar_ptr = mc->dice();	// Set a new random value for the Parameter

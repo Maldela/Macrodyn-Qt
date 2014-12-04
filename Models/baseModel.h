@@ -24,12 +24,12 @@ using namespace std;
 
 class baseModel {
 protected:
-    long length;                            // length of simulation
-    unsigned dimension;	                    // dimension of the system
+    qint64 length;                            // length of simulation
+    uint dimension;	                    // dimension of the system
     qreal xBundle;		            // dummy variables used as default
     qreal yBundle;                           //   settings in an analysis
 public:
-    baseModel(const unsigned&);	            // constructor
+    baseModel(const uint&);	            // constructor
     virtual ~baseModel()=0;
     virtual qreal* setLabels(char*)=0;       // return pointer to a specified
 				            //   parameter or variable
@@ -38,7 +38,7 @@ public:
     virtual void sendStateSpace(int&,const qreal***)=0;// return the system's
 				            //   dimension and pointers to all
 				            //   state variables
-    virtual void iteration(const long&)=0;  // perform one iteration
+    virtual void iteration(const qint64&)=0;  // perform one iteration
 
  //following functions need not to be implemented in any model
 
@@ -52,7 +52,7 @@ public:
     virtual void sendParameters(int&,qreal**);// write all parameters
                                             //   into an array and return
 				            //   the numbers of parameters
-    virtual long getLength() const;
+    virtual qint64 getLength() const;
 };
 
 #endif

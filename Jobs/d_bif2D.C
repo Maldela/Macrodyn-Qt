@@ -38,7 +38,7 @@ d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes,
 	outFile.open("data3D_bifurcation.dat",ios::out);
 
     length=model->getLength();
-    limit=(long)(0.2*length);			// 20% are thrown away
+    limit=(qint64)(0.2*length);			// 20% are thrown away
     stepX=(xmax-xmin) / (axes.res[0]-1);
     stepY=(ymax-ymin) / (axes.res[1]-1);
     x_res = axes.res[0];
@@ -77,7 +77,7 @@ void d_bif2D::setStepX(const qreal& toSet)
 
 void d_bif2D::simulation()
 {
-    long t;
+    qint64 t;
     int  k;
     qreal dy;
     qreal dummy_x;
@@ -202,7 +202,7 @@ d_bif2D_f2::d_bif2D_f2(baseModel* const bMod, const xyRange& axes,
 
 void d_bif2D_f2::simulation()
 {
-    long t;
+    qint64 t;
     int  k;
     qreal dy;
     qreal dummy_x;
@@ -283,7 +283,7 @@ d_bif2D_f4::d_bif2D_f4(baseModel* const bMod, const xyRange& axes,
 
 void d_bif2D_f4::simulation()
 {
-    long t;
+    qint64 t;
     int  k;
     qreal dy;
     qreal dummy_x;

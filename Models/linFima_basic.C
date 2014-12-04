@@ -225,7 +225,7 @@ void linFima_basic::receiveParameters(const qreal* parameters)
 	xi_max	= parameters[7];
 	gamma	= parameters[8];
 	L	= parameters[9];
-	length	= (long) (parameters[10]);
+	length	= (qint64) (parameters[10]);
 	
 };
 
@@ -233,7 +233,7 @@ void linFima_basic::receiveParameters(const qreal* parameters)
 // Funktionsname:	iteration
 // Beschreibung:	Durchlauf einer Periode
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::iteration(const long& t)
+void linFima_basic::iteration(const qint64& t)
 {	
 	// noise
 	d2 = d1;
@@ -281,7 +281,7 @@ void linFima_basic::iteration(const long& t)
 // Beschreibung: Berechnet den rekursiven Mittelwert von Beobachtungen
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal linFima_basic::rekursiverMittelwertx(const long t)
+qreal linFima_basic::rekursiverMittelwertx(const qint64 t)
 {
 	// lokale Typen und Initialisierung
 	double ttx    =0;	
@@ -296,7 +296,7 @@ qreal linFima_basic::rekursiverMittelwertx(const long t)
 	return(mxx);
 }
 
-qreal linFima_basic::rekursiverMittelwerty(const long t)
+qreal linFima_basic::rekursiverMittelwerty(const qint64 t)
 {
 	// lokale Typen und Initialisierung
 	double tty    =0;	

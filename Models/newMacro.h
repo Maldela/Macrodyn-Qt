@@ -21,7 +21,7 @@ protected:
     void wageAndPrice(qreal&,qreal&,qreal&,char*);            
     void dynamics();                        
 public:
-    void iteration(const long&);
+    void iteration(const qint64&);
 };
 
 #endif

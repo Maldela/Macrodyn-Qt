@@ -2,8 +2,8 @@
 #include "milano3.h"
 #include "../error.h"
 
-static const unsigned int max_iter=10000;
-static const unsigned int iter_prec=1;
+static const uint max_iter=10000;
+static const uint iter_prec=1;
 
 //$Header: milano3.C,v 1.7 99/07/01 11:53:03 mmueller Exp $
 
@@ -107,7 +107,7 @@ qreal milano3::Zins_3(const qreal& r1, const qreal& r2)
     }
   right=pol*( (pow(10,(double)iter_prec)-(i-1))/pow(10.0,(double)iter_prec) );
   right*=1.1;
-  int iter=0;
+  uint iter=0;
 
   qreal m;
   do
@@ -396,7 +396,7 @@ void milano3::system_8(const qreal& r1)
 /*                                                                            */
 /******************************************************************************/
 
-void milano3::iteration(const long& t)
+void milano3::iteration(const qint64& t)
 {
 /*
     qreal r1;

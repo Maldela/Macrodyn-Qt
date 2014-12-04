@@ -41,7 +41,7 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod,char* const label,
     else
 	outFile.open("timeSeries.asc",ios::out);
     graph->get_axis(0, &xmin, &xmax);
-    limit = long( xmin );
+    limit = qint64( xmin );
 
     if (mp_ptr) {
       multiplot_num=mp_num;
@@ -104,7 +104,7 @@ timeSeriesPlot::~timeSeriesPlot() {
 void timeSeriesPlot::simulation()
 {
     log() << "starting time series simulation...";
-    long t;
+    qint64 t;
     qreal oldX, oldY;
     int j;
     model->initialize();
@@ -197,7 +197,7 @@ m_timeSeriesPlot::~m_timeSeriesPlot(void)
 
 void m_timeSeriesPlot::simulation()
 {
-    long t;
+    qint64 t;
     qreal oldX, oldY;
     int  k;
         
@@ -284,7 +284,7 @@ m_timeSeriesPlot_v::~m_timeSeriesPlot_v(void)
 
 void m_timeSeriesPlot_v::simulation()
 {
-    long t;
+    qint64 t;
     qreal oldX, oldY;
     int  k;
         

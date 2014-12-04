@@ -160,7 +160,8 @@ SOURCES += main.cpp \
     hashTab.C \
     MDMap.C \
     logger.cpp \
-    Jobs/distributionJob.C
+    Jobs/distributionJob.C \
+    block.C
 
 RESOURCES += qml.qrc
 
@@ -336,4 +337,5 @@ HEADERS += \
     hashTab.h \
     MDMap.h \
     logger.h \
-    Jobs/distributionJob.h
+    Jobs/distributionJob.h \
+    block.h

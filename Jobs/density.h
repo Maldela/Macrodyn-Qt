@@ -93,13 +93,13 @@ class density_1d_1p : public density_1d {
 
 class density_1d_var : public density_1d_1p {
   protected:    
-    long int var_res;
+    qint64 var_res;
     
   public:
     density_1d_var(baseModel* const, xyRange &, MacrodynGraphicsItem* const=NULL);
     void simulation();
-    void plot_current_data(long how_many);
-    void save_current_picture(long how_many);
+    void plot_current_data(qint64 how_many);
+    void save_current_picture(qint64 how_many);
 };
 
 #endif // _DENSITY_INCLUDED

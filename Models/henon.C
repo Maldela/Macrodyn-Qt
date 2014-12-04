@@ -27,7 +27,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-void henon::iteration(const long&)
+void henon::iteration(const qint64&)
 {
     qreal oldY=y;
 
@@ -48,7 +48,7 @@ void henon::iteration(const long&)
 /*                                                                            */
 /******************************************************************************/
 
-void quadHenon::iteration(const long&)
+void quadHenon::iteration(const qint64&)
 {
     qreal oldX=x;
 

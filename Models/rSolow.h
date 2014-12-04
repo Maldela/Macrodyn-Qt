@@ -105,7 +105,7 @@ public:
     void noise_iteration(st_paramset*);
     void read_sim(ifstream&,st_paramset*);
     void delete_st_paramset_stochptr(st_paramset*);
-    void iteration(const long&);
+    void iteration(const qint64&);
     void initialize();
     qreal* setLabels(char*);
     void sendStateSpace(int &,const qreal***);
@@ -154,7 +154,7 @@ public:
   	void saveParamset(ofstream&);  
 	void saveParamsetWithNames(ofstream&); // add parametset to printerfile (so far only for xpm)	
    	void printParamset();	   	
-   	void iteration(const long&);
+   	void iteration(const qint64&);
    	void initialize();
     	virtual ~RBC_delta_1(void);            //destructor
     qreal* setLabels(char*);

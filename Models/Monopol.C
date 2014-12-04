@@ -267,7 +267,7 @@ void Monopol::receiveParameters(const qreal* parameters)
     mu=parameters[11];
     delta=parameters[12];
     cert=parameters[13];
-    length=(long)(parameters[14]);
+    length=(qint64)(parameters[14]);
 }
 
 /******************************************************************************/
@@ -413,7 +413,7 @@ qreal Monopol::rewa(const qreal x)
 /******************************************************************************/
 
 
-void Monopol::iteration(const long&)
+void Monopol::iteration(const qint64&)
 {
     qreal Ltdem;          //  notional labor demand
     qreal Lt;		 //  actual employment level

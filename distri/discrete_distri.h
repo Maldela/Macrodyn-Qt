@@ -31,7 +31,7 @@ class discrete_Distri : public prob_Distri {
         int random();                      // random prob. distributed variable
         int random(const int, const int); // random prob. distributed variable
     private:
-        unsigned  width;
+        uint  width;
         int  start;
 };
 

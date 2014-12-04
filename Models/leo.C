@@ -208,7 +208,7 @@ void leo::receiveParameters(const qreal* parameters)
     lambda=parameters[4];
     my=parameters[5];
     tau=(int)(parameters[6]);
-    length=(long)(parameters[7]);
+    length=(qint64)(parameters[7]);
     delta=parameters[8];
     beta=parameters[9];
     eta=parameters[10];
@@ -252,7 +252,7 @@ void leo::leoDynamics()
 /*                                                                            */
 /******************************************************************************/
 
-void leo::iteration(const long& t)
+void leo::iteration(const qint64& t)
 {
     qreal ptratex;
     char state[5];

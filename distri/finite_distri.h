@@ -20,7 +20,7 @@
 
 class finite_Distri : public prob_Distri {
     public:
-        finite_Distri(const unsigned n, const qreal *prob, const int first=0);
+        finite_Distri(const uint n, const qreal *prob, const int first=0);
                                            // constructor
         finite_Distri(const finite_Distri &);
                                            // copy-constructor
@@ -32,10 +32,10 @@ class finite_Distri : public prob_Distri {
         qreal cumulat(const int) const;     // cumulative probability function
         qreal inverse(const qreal) const;    // inverse cumulative prob. function
         int random();                      // random prob. distributed variable
-        int random(const unsigned, const qreal*, const int);
+        int random(const uint, const qreal*, const int);
                                            // random prob. distributed variable
     private:
-        unsigned  no;
+        uint  no;
         qreal  *prob, *cumu;
         int  start;
 };

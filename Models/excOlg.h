@@ -27,8 +27,8 @@ class excOlg : public baseModel {
     qreal savYoung;
     qreal *thetaVec;
     
-    virtual qreal expInflRateYoung(const long);                
-    virtual qreal expInflRateOld(const long);                
+    virtual qreal expInflRateYoung(const qint64);                
+    virtual qreal expInflRateOld(const qint64);                
     qreal savingsFuncYoung(qreal&);                         
     qreal savingsFuncOld(qreal&);                         
     void thetaShift();
@@ -40,7 +40,7 @@ public:
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
-    virtual void iteration(const long&);    // perform one iteration 
+    virtual void iteration(const qint64&);    // perform one iteration 
     qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
@@ -62,15 +62,15 @@ public:
 
 class excOlgAdapt : public excOlg {
 protected:
-    qreal expInflRateYoung(const long);
-    qreal expInflRateOld(const long);
+    qreal expInflRateYoung(const qint64);
+    qreal expInflRateOld(const qint64);
     qreal oldExpectationsYoung;              // used to save the expected 
     qreal oldExpectationsOld;                // return rate for the last period
     qreal etaYoung;                          // weight parameter young
     qreal etaOld;                            // weight parameter old
 public:
     excOlgAdapt();                          // default constructor
-    void iteration(const long&);            // perform one iteration 
+    void iteration(const qint64&);            // perform one iteration 
     qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
@@ -96,8 +96,8 @@ public:
 
 class excOlgGeoExp : public excOlg {
 protected:
-    qreal expInflRateYoung(const long);
-    qreal expInflRateOld(const long);
+    qreal expInflRateYoung(const qint64);
+    qreal expInflRateOld(const qint64);
     qreal etaYoung;                          // parameter of the geometric lag
     qreal etaOld;    		            // distribution
     qreal etaTildaYoung;
@@ -105,7 +105,7 @@ protected:
     void initialize();
 public:
     excOlgGeoExp();                         // default constructor
-    void iteration(const long&);            // perform one iteration 
+    void iteration(const qint64&);            // perform one iteration 
     qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file

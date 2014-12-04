@@ -20,14 +20,14 @@
 
 class chi_square_Distri : public prob_Distri {
     public:
-        chi_square_Distri(const unsigned free);
+        chi_square_Distri(const uint free);
                                            // constructor
         qreal density(const qreal) const;    // probability density function
 //      qreal cumulat(const qreal) const;    // cumulative probability function
 //      qreal inverse(const qreal) const;    // inverse cumulative prob. function
         qreal random();                     // random prob. distributed variable
-        qreal random(const unsigned);       // random prob. distributed variable
+        qreal random(const uint);       // random prob. distributed variable
     private:
-        unsigned  n;
+        uint  n;
 };
 #endif

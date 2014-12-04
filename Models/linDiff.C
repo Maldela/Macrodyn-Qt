@@ -21,7 +21,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-void linDiff::iteration(const long&)
+void linDiff::iteration(const qint64&)
 {
     qreal oldX=x;
 

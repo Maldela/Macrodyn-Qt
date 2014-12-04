@@ -7,7 +7,7 @@
 
 #include	"bif3D.h"
 
-void bif3D_1par::progress( long int state, long int range )
+void bif3D_1par::progress( qint64 state, qint64 range )
 {
     screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
 	(xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
@@ -15,7 +15,7 @@ void bif3D_1par::progress( long int state, long int range )
 }
 
 
-void bif3D_2par::progress( long int state, long int range )
+void bif3D_2par::progress( qint64 state, qint64 range )
 {
     screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
 	(xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
@@ -32,13 +32,13 @@ void bif3D_2par::progress( long int state, long int range )
 /******************************************************************************/
 
 bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, const long bif3D_dx,
-	     const long bif3D_dy, const long bif3D_dz)
+         MacrodynGraphicsItem* const graph, const qint64 bif3D_dx,
+         const qint64 bif3D_dy, const qint64 bif3D_dz)
           :geometry3D(bMod,axes,graph),h(axes.min[1],axes.max[1],
 	  axes.res[1])
 {
     length=model->getLength();
-    limit=(long)(0.2*length);			// 20% are thrown away
+    limit=(qint64)(0.2*length);			// 20% are thrown away
     resolution_x = axes.res[0];
     resolution_y = axes.res[1];
     resolution_z = axes.res[2];
@@ -63,13 +63,13 @@ bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes,
 }
 
 bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, const long bif3D_dx,
-	     const long bif3D_dy, const long bif3D_dz)
+         MacrodynGraphicsItem* const graph, const qint64 bif3D_dx,
+         const qint64 bif3D_dy, const qint64 bif3D_dz)
           :geometry3D(bMod,axes,graph),h(axes.min[1],axes.max[1],
 	  axes.res[1],axes.min[2],axes.max[2],axes.res[2])
 {
     length=model->getLength();
-    limit=(long)(0.2*length);			// 20% are thrown away
+    limit=(qint64)(0.2*length);			// 20% are thrown away
     resolution_x = axes.res[0];
     resolution_y = axes.res[1];
     resolution_z = axes.res[2];
@@ -137,17 +137,17 @@ void bif3D_1par::setStepZ(const qreal& toSet)
 
 void bif3D_2par::simulation()
 {
-    long t;
+    qint64 t;
     qreal dummy_x;
     qreal dummy_y;
     qreal dummy_z;
     // for the histogram
     double h_max;
-    long color=0;
+    qint64 color=0;
     double hitshilf;
     double hitpoint;
-    long dummy_a;
-    long count_x, count_z;
+    qint64 dummy_a;
+    qint64 count_x, count_z;
     char data[resolution_x][resolution_y][resolution_z];
     
     //information
@@ -234,19 +234,19 @@ void bif3D_2par::simulation()
 
 void bif3D_1par::simulation()
 {
-    long t;
+    qint64 t;
     qreal dummy_x;
     qreal dummy_y;
     qreal dummy_z;
     // for the histogram
     double h_max;
-    long color;
+    qint64 color;
     char data[resolution_x][resolution_y][resolution_z];
     double hitshilf;
     double hitpoint;
-    long dummy_a;
-    long dummy_b;
-    long count_x;
+    qint64 dummy_a;
+    qint64 dummy_b;
+    qint64 count_x;
     
     // initialize the output file writing header for vrend data
     ofstream outFile;

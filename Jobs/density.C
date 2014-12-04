@@ -38,7 +38,7 @@ density_1d::density_1d(baseModel* const bMod, xyRange & axes,
     stepY=(ymax-ymin) / (1.0*axes.res[1]);
     n_axes = & axes;
     length=model->getLength();
-    limit=(long)(0.2*length);			// 20% are thrown away
+    limit=(qint64)(0.2*length);			// 20% are thrown away
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ density_1d::density_1d(baseModel* const bMod, xyRange & axes,
 
 void density_1d::simulation()
 {
-    long t;
+    qint64 t;
     int  k;
     int  color = 9;	// color used for the density plot
     qreal d;
@@ -149,7 +149,7 @@ density_1d_1p::density_1d_1p(baseModel* const bMod, xyRange & axes,
 
 void density_1d_1p::simulation()
 {
-    long t;
+    qint64 t;
     int  k;
     int  color = 9;				// color used for the density plot
     qreal d;
@@ -226,8 +226,8 @@ density_1d_var::density_1d_var(baseModel* const bMod, xyRange & axes,
 
 void density_1d_var::simulation()
 {
-	long t;
-	long how_many;
+    qint64 t;
+    qint64 how_many;
 	float percent = 0.0;
     n_axes->label[1] = "den";	// relabel the y-axis
 
@@ -240,7 +240,7 @@ void density_1d_var::simulation()
 		h.inc(*xParam);		// store the hit in the histogram
 		if ( screenGraphics )
 			if ( how_many>= 100 ){
-			if ( how_many%(long(var_res/100))==0 ){
+            if ( how_many%(qint64(var_res/100))==0 ){
 				plot_current_data(how_many);
 				percent+=1;
                 log() << "percent: " << percent << "\n" << "\n";
@@ -282,7 +282,7 @@ void density_1d_var::simulation()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void density_1d_var::plot_current_data(long how_many)
+void density_1d_var::plot_current_data(qint64 how_many)
 {
 	int  k;
 	qreal dummyx;
@@ -326,7 +326,7 @@ void density_1d_var::plot_current_data(long how_many)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void density_1d_var::save_current_picture(long how_many)
+void density_1d_var::save_current_picture(qint64 how_many)
 {
 	int  k;
 	qreal dummyx;

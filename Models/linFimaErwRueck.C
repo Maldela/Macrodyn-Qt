@@ -242,7 +242,7 @@ void linFimaErwRueck::sendStateSpace(int &quantity,const qreal*** stateSpace)
 // Funktionsname:	iteration
 // Beschreibung:	Durchlauf einer Periode
 ///////////////////////////////////////////////////////////////////////////////
-void linFimaErwRueck::iteration(const long& t)
+void linFimaErwRueck::iteration(const qint64& t)
 {
 // Die Prognosen der Chartisten und Fundamentalisten ist extern vorgeschaltet !
 

@@ -320,7 +320,7 @@ void Duopol::receiveParameters(const qreal* parameters)
     rho=parameters[20];
     delta=parameters[21];
     cert=parameters[22];
-    length=(long)(parameters[23]);
+    length=(qint64)(parameters[23]);
 }
 
 /******************************************************************************/
@@ -593,7 +593,7 @@ qreal Duopol::cprop(const qreal theta)
 
 /*  Vorsicht: Alte Version: Definition von zeta stimmt nicht mehr !  */
 
-void Duopol::iteration(const long&)
+void Duopol::iteration(const qint64&)
 {
    qreal Ltdem1;          //  notional labor demand firm 1
    qreal Ltdem2;          //  notional labor demand firm 2
@@ -736,7 +736,7 @@ void Duopol::iteration(const long&)
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol2::iteration(const long&)
+void Duopol2::iteration(const qint64&)
 {
    qreal Ltdem1;          //  notional labor demand firm 1
    qreal Ltdem2;          //  notional labor demand firm 2

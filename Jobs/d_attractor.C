@@ -54,7 +54,7 @@ d_attractor::d_attractor(baseModel* const bMod,const xyRange& axes,
 
 void d_attractor::simulation()
 {
-    long t;
+    qint64 t;
     double h_max;
     int  k, l;
     int  color;

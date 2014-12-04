@@ -25,7 +25,7 @@ stateSpaceAnalysis::stateSpaceAnalysis(baseModel* const bMod,
     
     model->sendStateSpace(modelDim,&stateVars);
     maxCell=hash->noCells();
-    limit =(long)(length *0.66); // first two thirds are thrown away
+    limit =(qint64)(length *0.66); // first two thirds are thrown away
 }                                      
 
 /******************************************************************************/
@@ -55,10 +55,10 @@ stateSpaceAnalysis::~stateSpaceAnalysis()
 
 void stateSpaceAnalysis::simulation()
 {
-    unsigned outside;
+    uint outside;
     qreal cell;
-    long t;
-    short color;
+    qint64 t;
+    int color;
     qreal *param[2];
   
     param[0]=xParam;

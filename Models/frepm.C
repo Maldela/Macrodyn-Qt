@@ -178,7 +178,7 @@ void frepm::initialize()
 	x1_tp1 = x01; 
 	x2_tp1 = x02;
 
-	for (int i=0;i<=N-2;i++) {				// p[N]=1-sum(p[1],...,p[N-1]
+    for (uint i=0;i<=N-2;i++) {				// p[N]=1-sum(p[1],...,p[N-1]
 		sum_p += V->m[i][0];  
 	}
 	V->m[N-1][0] = 1-sum_p;
@@ -204,7 +204,7 @@ void frepm::initialize()
 void frepm::check()
 {
 	flag=1;						// flag==1  =>  everything is ok
-	for (int i=0;i<=N-1;i++) {
+    for (uint i=0;i<=N-1;i++) {
 		if ((V->m[i][0]<0) || (V->m[i][0]>1)) {
 			log() << "probability out of range!";
 			flag=0;
@@ -410,13 +410,13 @@ qreal* frepm::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void frepm::iteration(const long& )
+void frepm::iteration(const qint64& )
 { 
 if (flag) {					// all values are in range	
 	qreal sum=V->m[0][0];	// sum is used to find out which intervall was hit
 
 	z = zvar->dice();				// get random number in [0,1]
-	for(int i=0;i<=N-1;i++) {
+    for (uint i=0;i<=N-1;i++) {
 		if (z<=sum) {			// if z<=sum,row i is the currently drawn one
 			A->m[0][0] = V->m[i][3] + V->m[i][5] - V->m[i][1]; 	// so take A[i] and b[i]
 			A->m[0][1] = V->m[i][2];
@@ -508,7 +508,7 @@ void frepm::saveParamset(ofstream& outFile)
     outFile << x01 << "\t";
     outFile << x02 << "\t";
 
-	for(int i=0; i<=N-1;i++) {
+    for (uint i=0; i<=N-1;i++) {
 		for(int j=0;j<=10;j++) {
 			outFile << V->m[i][j] << "\t";
 		}	
@@ -537,7 +537,7 @@ void frepm::printParamset()
     log() << x01 << "\n";
     log() << x02 << "\n";
 
-	for(int i=0; i<=N-1;i++) {
+    for (uint i=0; i<=N-1;i++) {
 		for(int j=0;j<=10;j++) {
 			log() << V->m[i][j] << "\t";
 		}	

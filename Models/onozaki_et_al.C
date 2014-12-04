@@ -45,7 +45,7 @@ onozaki_et_al::onozaki_et_al() : baseModel(1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::iteration(const long& )
+void onozaki_et_al::iteration(const qint64& )
 { 
   qreal z_n;				// value of z for the next period
 	z_n = (1-alpha)*z + alpha/exp(log(z)*beta); 

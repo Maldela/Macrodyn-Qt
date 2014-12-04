@@ -340,7 +340,7 @@ void tonicapm::dynamics(qreal &a)
 /* Last modified:   04.02.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapm::iteration(const long& t)
+void tonicapm::iteration(const qint64& t)
 {
     qreal add=0;
     qreal ev=0;

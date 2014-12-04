@@ -41,7 +41,7 @@ class distribution {
 		distribution();
 		~distribution();
 		void newseed();
-		void setseed(unsigned int val);
+        void setseed(uint val);
 		qreal rectangular();
 		qreal triangular(const qreal, const qreal, const qreal);
 		qreal st_normal();

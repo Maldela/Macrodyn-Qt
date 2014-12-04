@@ -32,7 +32,7 @@ simpleCellMapping::simpleCellMapping(baseModel* const bMod,const xyRange& axes,
     if( !Gr || !P || !St )
 	fatalError("simpleCellMapping::simpleCellMapping",
 		   "Can't create vectors");
-    for(unsigned i=0;i<=K;i++)
+    for(uint i=0;i<=K;i++)
 	Gr[i]=P[i]=St[i]=0;
     lastGroup=0;
     model->sendStateSpace(modelDim,&modelVars);
@@ -69,11 +69,11 @@ simpleCellMapping::~simpleCellMapping()
 /*                                                                            */
 /******************************************************************************/
 
-void simpleCellMapping::discrete2Cont(const unsigned& startCell,qreal& x,
+void simpleCellMapping::discrete2Cont(const uint& startCell,qreal& x,
 					  qreal& y)
 {
-    unsigned cellMod=startCell % h[0];
-    unsigned cellDiv=startCell / h[0];
+    uint cellMod=startCell % h[0];
+    uint cellDiv=startCell / h[0];
 
     if( !cellMod ) {
 	cellMod=h[0];
@@ -93,10 +93,10 @@ void simpleCellMapping::discrete2Cont(const unsigned& startCell,qreal& x,
 /*                                                                            */
 /******************************************************************************/
 
-unsigned simpleCellMapping::iteration(const unsigned& startCell)
+uint simpleCellMapping::iteration(const uint& startCell)
 {
-    unsigned cellX;
-    unsigned cellY;
+    uint cellX;
+    uint cellY;
     
     if( !startCell )
 	return 0;		// iteration(0)=0
@@ -108,8 +108,8 @@ unsigned simpleCellMapping::iteration(const unsigned& startCell)
     if( !inRange(*modelVars[0],*modelVars[1]) )
 	return 0;
 
-    cellX=(unsigned)((*modelVars[0]-xmin)/(xmax-xmin)*h[0]) + 1;
-    cellY=(unsigned)((*modelVars[1]-ymin)/(ymax-ymin)*h[1]);
+    cellX=(uint)((*modelVars[0]-xmin)/(xmax-xmin)*h[0]) + 1;
+    cellY=(uint)((*modelVars[1]-ymin)/(ymax-ymin)*h[1]);
 
     return ( h[0]*cellY + cellX );
 }
@@ -123,10 +123,10 @@ unsigned simpleCellMapping::iteration(const unsigned& startCell)
 /*                                                                            */
 /******************************************************************************/
 
-unsigned simpleCellMapping::virginCell()
+uint simpleCellMapping::virginCell()
 {
-    static unsigned lastCell=1;
-    unsigned j=lastCell;
+    static uint lastCell=1;
+    uint j=lastCell;
     
     while( (j<=K) && Gr[j] )
 	j++;
@@ -148,13 +148,13 @@ unsigned simpleCellMapping::virginCell()
 /*                                                                            */
 /******************************************************************************/
 
-void simpleCellMapping::oldGroup(unsigned& startCell,unsigned& endCell,
-				 unsigned& steps) 
+void simpleCellMapping::oldGroup(uint& startCell,uint& endCell,
+                 uint& steps)
 {
-    unsigned group=Gr[endCell];
-    unsigned period=P[endCell];
-    unsigned stepNumber=St[endCell];
-    unsigned actualStep=0;
+    uint group=Gr[endCell];
+    uint period=P[endCell];
+    uint stepNumber=St[endCell];
+    uint actualStep=0;
 
     while(startCell != endCell) {
 	Gr[startCell]=group;
@@ -169,20 +169,20 @@ void simpleCellMapping::oldGroup(unsigned& startCell,unsigned& endCell,
 /*                                                                            */
 /* Class name:      simpleCellMapping                                         */
 /* Member function: newGroup                                                  */
-/* Purpose:         A new cycle is found; all cells belonging to that cycle   */
+/* Purpose:         A new cycle is found; all cells beqint64ing to that cycle   */
 /*                  are assigned a new group number                           */
 /* Last modified:   30.11.1994 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
 
-void simpleCellMapping::newGroup(unsigned& startCell,unsigned& endCell,
-				 unsigned& steps)
+void simpleCellMapping::newGroup(uint& startCell,uint& endCell,
+                 uint& steps)
 {
-    unsigned group;
-    unsigned period;
-    unsigned actualStep=0;
-    unsigned firstHit;
-    unsigned runCell=startCell;
+    uint group;
+    uint period;
+    uint actualStep=0;
+    uint firstHit;
+    uint runCell=startCell;
     
     while(runCell != endCell) { // find the beginning of the new cycle
 	actualStep++;
@@ -223,11 +223,11 @@ void simpleCellMapping::newGroup(unsigned& startCell,unsigned& endCell,
 
 void simpleCellMapping::simulation()
 {
-    unsigned cellProc;
-    unsigned cellProcBackup;
-    unsigned imageCell;
-    unsigned step=0;
-    unsigned finished;
+    uint cellProc;
+    uint cellProcBackup;
+    uint imageCell;
+    uint step=0;
+    uint finished;
     qreal x,y;
     
     log() << K << " cells at all" << "\n";
@@ -254,10 +254,10 @@ void simpleCellMapping::simulation()
 		newGroup(cellProcBackup,imageCell,step);
 	}
     }
-    unsigned *groups=new unsigned[lastGroup+1];
+    uint *groups=new uint[lastGroup+1];
 
     log() << "group[0]=" << Gr[0] << "\n";
-    for(unsigned i=0;i<=K;i++)
+    for(uint i=0;i<=K;i++)
        	if( Gr[i] != 0 ) {
 	    discrete2Cont(i,x,y);
         screenGraphics->setPoint(x,y,Gr[i]+1);

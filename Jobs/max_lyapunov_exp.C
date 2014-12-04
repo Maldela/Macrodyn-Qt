@@ -77,7 +77,7 @@ max_lyapunov_exp_1d::~max_lyapunov_exp_1d()
 
 void max_lyapunov_exp_1d::simulation()
 {
-    long t;
+    qint64 t;
     int color = 6;	// color used for the exponents
     qreal zero=0;	// variable used to draw the zero line
     int z_color = 30;	// color used for the zero line
@@ -132,7 +132,7 @@ void max_lyapunov_exp_1d::evaluate( void ) {
   l_exp = (1.0 / (length)) * sum;
 }
 
-void max_lyapunov_exp_1d::evaluate( long t ) {
+void max_lyapunov_exp_1d::evaluate( qint64 t ) {
   l_exp = (1.0 / (t)) * sum;
 }
 
@@ -175,8 +175,8 @@ max_lyapunov_exp_2d::max_lyapunov_exp_2d(baseModel* const bMod,
 
 void max_lyapunov_exp_2d::simulation()
 {
-    long  t;
-    short color;
+    qint64  t;
+    int color;
     const qreal l_exp_eps=0.000001;
     qreal  l_exp_old;
     qreal  l_exp_diff = 0;
@@ -262,13 +262,13 @@ max_lyapunov_exp_t::max_lyapunov_exp_t(baseModel* const bMod,
 ///////////////////////////////////////////////////////////////////////////////
 void max_lyapunov_exp_t::simulation()
 {
-    long t;
+    qint64 t;
     int color = 6;	// color used for the exponents
     qreal zero=0;	// variable used to draw the zero line
     int z_color = 30;	// color used for the zero line
     qreal l_min=0;
     qreal l_max=0;
-    long l_len = length;
+    qint64 l_len = length;
     qreal * l_vals = new double[l_len];
     int    l = 0;
     qreal   t_qreal;

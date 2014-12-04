@@ -55,7 +55,7 @@ HicksModel::~HicksModel()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::iteration(const long&)
+void HicksModel::iteration(const qint64&)
 {
 	noise = distri.rectangular()*2.0*lambda;
 	Ct = m*y2;
@@ -318,6 +318,6 @@ void HicksModel::receiveParameters(const qreal* parameters)
     v=parameters[5];
     m=parameters[6];
     lambda=parameters[7];
-    length=long(parameters[8]);
+    length=qint64(parameters[8]);
 }
 

@@ -26,7 +26,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-phase_plot::phase_plot(long lag, baseModel* const bMod,const xyRange& axes,
+phase_plot::phase_plot(qint64 lag, baseModel* const bMod,const xyRange& axes,
               MacrodynGraphicsItem* const graph, int psize)
           :geometricJob(bMod,axes,graph)
 {
@@ -50,11 +50,11 @@ phase_plot::phase_plot(long lag, baseModel* const bMod,const xyRange& axes,
 
 void phase_plot::simulation()
 {
-    long colChange=length/6;           // for better viewing there are 6 colors
+    qint64 colChange=length/6;           // for better viewing there are 6 colors
 				       // used to draw the attractor
 
     qreal * fifo;		// queue to store last lag_size values of *xParam
-    long   fpos;		// the current position in the queue
+    qint64   fpos;		// the current position in the queue
         
     model->initialize();
 
@@ -66,14 +66,14 @@ void phase_plot::simulation()
 
     fpos=0;
     if ( pointsize>1 ){
-    for(long t=lag_size;t<length;t++) {
+    for(qint64 t=lag_size;t<length;t++) {
 	model->iteration(t+1);
 	
 	if( t >= limit && inRange(fifo[fpos],*xParam) ) {
 //	if(inRange(fifo[fpos],*xParam) ) {
 	    if( screenGraphics ) 
 		screenGraphics->setBigPoint(fifo[fpos],*xParam,
-					 (short)((t/colChange)+1), pointsize);   
+                     (int)((t/colChange)+1), pointsize);
                                                      // and draw them
 	}
 	fifo[fpos] = *xParam;	// update the value in the queue
@@ -84,14 +84,14 @@ void phase_plot::simulation()
 	}
     }
     } else {
-    for(long t=lag_size;t<length;t++) {
+    for(qint64 t=lag_size;t<length;t++) {
 	model->iteration(t+1);
 	
 	if( t >= limit && inRange(fifo[fpos],*xParam) ) {
 //	if(inRange(fifo[fpos],*xParam) ) {
 	    if( screenGraphics ) 
 		screenGraphics->setPoint(fifo[fpos],*xParam,
-					 (short)((t/colChange)+1));   
+                     (int)((t/colChange)+1));
                                                      // and draw them
 	}
 	fifo[fpos] = *xParam;	// update the value in the queue

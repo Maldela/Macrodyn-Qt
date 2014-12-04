@@ -31,9 +31,9 @@
 class test_model : public baseModel {
 
 protected:
-    qreal Ed;			// Variable für den Erwartungswert
-    qreal Vd;			// Variable für die Varianz
-    qreal d;				// Variable für die Zufallsvariable
+    qreal Ed;			// Variable fÃ¼r den Erwartungswert
+    qreal Vd;			// Variable fÃ¼r die Varianz
+    qreal d;				// Variable fÃ¼r die Zufallsvariable
     qreal d2;
 	distribution distri;
 	normal_Distri distri2;
@@ -49,7 +49,7 @@ public:
     void saveParamset(ofstream&);
     void saveParamsetWithNames(ofstream&);
     void printParamset();
-    void iteration(const long&);
+    void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
     qreal* setLabels(char*);

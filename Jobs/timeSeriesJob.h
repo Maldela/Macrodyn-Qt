@@ -23,7 +23,7 @@ class timeSeriesJob : public job {
   protected:
     qreal *timeSeriesqreal;            // time series to be analysed
     qreal *modelVar;                  // variable that has to be stored
-    void saveSeries(const long&);      // saves the simualtion results
+    void saveSeries(const qint64&);      // saves the simualtion results
   public:
     timeSeriesJob(baseModel* const, char* const, MacrodynGraphicsItem* const=NULL);
     virtual ~timeSeriesJob();

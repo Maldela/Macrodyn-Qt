@@ -54,8 +54,8 @@ protected:
     qreal z1,z2;
     qreal F_c1, F_c2;
 	
-    qreal zetamin1, zetamax1, gamma1;	//Parameter für AR1-Prozess der Dividende 1
-    qreal zetamin2, zetamax2, gamma2;	//Parameter für AR1-Prozess der Dividende 2
+    qreal zetamin1, zetamax1, gamma1;	//Parameter fÃ¼r AR1-Prozess der Dividende 1
+    qreal zetamin2, zetamax2, gamma2;	//Parameter fÃ¼r AR1-Prozess der Dividende 2
     qreal Ezeta1, Ezeta2;				//Unbedingter Erwartungswert d. Innovationen
 										//im Dividendenprozess
  
@@ -80,7 +80,7 @@ protected:
     qreal beta_1, beta_2, beta_3;		// intensity of choice d. HH
     qreal e_1, e_2, e_3;					// Anfangsausstattung der Haushalte
 	
-	matrix_neu* Rho[L];					// Array von Diagonalmatrizen für MA
+    matrix_neu* Rho[L];					// Array von Diagonalmatrizen fÃ¼r MA
 	matrix_neu* q_MA[L];				// Array der gelagten cumdividend-Preise
 	
     qreal r, R;							// fixed rate of interest, R=1+r
@@ -89,7 +89,7 @@ protected:
     qreal p1, p2;						// Prices of assets
 	matrix_neu* p_old;					// price of the previous period
 	matrix_neu* q;						// cumdividend price
-	matrix_neu* q0;						// Startwerte für q, q_C und q_F
+    matrix_neu* q0;						// Startwerte fÃ¼r q, q_C und q_F
 	matrix_neu* q_C;					// cumdividend forecast (Chartists)
 	matrix_neu* q_F;					// cumdividend forecast (Fundamentalists)
 	matrix_neu* q_Fold;					// cumdividend forecast der Vorperiode (Fundamentalists)
@@ -142,8 +142,8 @@ protected:
 	matrix_neu* V_F;					// Kovarianz-Matrix (Fundamentalist)
 	matrix_neu* V_N;					// Kovarianz-Matrix (Noisetraders)
 	
-    qreal wealth_N, wealth_F, wealth_C;	// Endvermögen der Händlergruppen
-    qreal rend_N, rend_F, rend_C;		// Rendite der Händlergruppen
+    qreal wealth_N, wealth_F, wealth_C;	// EndvermÃ¶gen der HÃ¤ndlergruppen
+    qreal rend_N, rend_F, rend_C;		// Rendite der HÃ¤ndlergruppen
 	
     qreal mu_F;							// mean of returns der Fundamentalisten
     qreal sigma_F;						// standard deviation of returns der Fundamentalisten
@@ -189,7 +189,7 @@ public:
     void receiveParameters(const qreal*);
     qreal* setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
-    void iteration(const long&);	// perform one iteration 	
+    void iteration(const qint64&);	// perform one iteration
     void sendStateSpace(int &,const qreal***);
 
 };

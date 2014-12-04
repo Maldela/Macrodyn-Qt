@@ -32,13 +32,13 @@ bifnParam::bifnParam(baseModel* const bMod,
 {
 
     length=model->getLength();
-    limit=(long)(0.99*length);	
+    limit=(qint64)(0.99*length);
 
     xVars=new qreal* [effectiveX.dimension];
     if( !xVars )
 	fatalError("bifnParam::bifnParam",
 		   "Can't create vector of x-variables");
-    for(short i=0;i<effectiveX.dimension;i++) {
+    for(int i=0;i<effectiveX.dimension;i++) {
     xVars[i]=model->setLabels(effectiveX.label[i].toLatin1().data());
                                           // get pointer to the model var.
 	if( !xVars[i] )
@@ -76,7 +76,7 @@ bifnParam::~bifnParam()
 void bifnParam::setXParams(const qreal& newX)
 {
     static qreal divisor=xmax-xmin;
-    for(short i=0;i<effectiveX.dimension;i++)
+    for(int i=0;i<effectiveX.dimension;i++)
 	*xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
 	    (effectiveX.max[i]-effectiveX.min[i]);
 }
@@ -93,7 +93,7 @@ void bifnParam::setXParams(const qreal& newX)
 
 void bifnParam::simulation()
 {
-    long t;				// time
+    qint64 t;				// time
 
     qreal x=0;
 

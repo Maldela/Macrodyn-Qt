@@ -119,7 +119,7 @@ public:
 	void loadParamset(ifstream&);	
 	void saveParamsetWithNames(ofstream&); 
 	void sendStateSpace(int &,const qreal***);
-	void iteration(const long&);
+	void iteration(const qint64&);
 	void wagerate();
 	void Wagebill();
 	void Savings();

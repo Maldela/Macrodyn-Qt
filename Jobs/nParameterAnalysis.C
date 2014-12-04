@@ -26,7 +26,7 @@ nParameterAnalysis::nParameterAnalysis(baseModel* const bMod,
     :parameterSpace(bMod,axes,stateSpaceLim,graph),
      effectiveX(xDef),effectiveY(yDef)
 {
-    for(short i=0;i<effectiveX.dimension;i++) {
+    for(int i=0;i<effectiveX.dimension;i++) {
     xVars[i]=*model->setLabels(effectiveX.label[i].toLatin1().data());
                                           // get pointer to the model var.
 	if( !xVars[i] )
@@ -68,7 +68,7 @@ nParameterAnalysis::~nParameterAnalysis()
 void nParameterAnalysis::setXParams(const qreal& newX)
 {
     static qreal divisor=xmax-xmin;
-    for(short i=0;i<effectiveX.dimension;i++)
+    for(int i=0;i<effectiveX.dimension;i++)
     xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
 	    (effectiveX.max[i]-effectiveX.min[i]);
 }
@@ -85,7 +85,7 @@ void nParameterAnalysis::setYParams(const qreal& newY)
 {
     static qreal divisor=ymax-ymin;
 
-    for(short i=0;i<effectiveY.dimension;i++)
+    for(int i=0;i<effectiveY.dimension;i++)
     yVars[i]=effectiveY.min[i]+(newY-ymin)/divisor*
 	    (effectiveY.max[i]-effectiveY.min[i]);
 }
@@ -105,9 +105,9 @@ void nParameterAnalysis::setYParams(const qreal& newY)
 
 void nParameterAnalysis::simulation()
 {
-    long t;				// time
+    qint64 t;				// time
     int order=0;			// order of cycle
-    unsigned tDiv=(unsigned)(length/10);  // analysis of the simulation results
+    uint tDiv=(uint)(length/10);  // analysis of the simulation results
 					// is done every tDiv periods until
 					// length is reached or a cycle has
 					// been detected

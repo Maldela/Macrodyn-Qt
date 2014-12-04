@@ -88,7 +88,7 @@ public:
     void loadParamset(ifstream&);	
     void saveParamset(ofstream&);
     void printParamset();
-    void iteration(const long&);
+    void iteration(const qint64&);
     void initialize();
     qreal* setLabels(char*);
     void sendStateSpace(int &,const qreal***);
@@ -122,7 +122,7 @@ private:
 public:
     rgrowth_model();			// constructor
     void loadParamset(ifstream&);	// load parameterset from a file
-    void iteration(const long&);	// perform one iteration 
+    void iteration(const qint64&);	// perform one iteration 
     void initialize(void);		// initialize the model
 };
 
@@ -168,7 +168,7 @@ public:
     void loadParamset(ifstream&);	// load parameterset from a file
     void saveParamset(ofstream&);
     void printParamset();
-    void iteration(const long&);	// perform one iteration 
+    void iteration(const qint64&);	// perform one iteration 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -239,7 +239,7 @@ public:
     void printParamset();
     qreal * setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
-    void iteration(const long&);	// perform one iteration 
+    void iteration(const qint64&);	// perform one iteration 
 };
 
 

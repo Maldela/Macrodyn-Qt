@@ -25,11 +25,11 @@ class powerSpec : public timeSeriesJob {
     void FFTSwap(qreal&,qreal&);
     void FFTSolve(const int&);
     void powerSpecCalc(const qreal&);
-    qreal parzen(const long&);
-    qreal hanning(const long&);
-    qreal welch(const long&);
-    qreal hamming(const long&);
-    qreal exactBlackman(const long&);
+    qreal parzen(const qint64&);
+    qreal hanning(const qint64&);
+    qreal welch(const qint64&);
+    qreal hamming(const qint64&);
+    qreal exactBlackman(const qint64&);
     void windowData(qreal*);
 
     qreal* timeSeriesImag;

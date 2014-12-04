@@ -22,7 +22,7 @@
 
 class discreteBif2D : public geometricJob {
   protected:
-    short stepX;                      // stepsize on the x-axis
+    int stepX;                      // stepsize on the x-axis
     
   public:
     discreteBif2D(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);

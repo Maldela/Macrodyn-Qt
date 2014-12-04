@@ -211,7 +211,7 @@ switch  (temp_paramset->type) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::iteration(const long& )
+void rOLG_wt::iteration(const qint64& )
 { 
   qreal K_olg_n;	   // value of k for the next period
   qreal K_olg_count;

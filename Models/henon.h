@@ -28,7 +28,7 @@
 
 class henon : public models2D {
 public:
-    void iteration(const long&);
+    void iteration(const qint64&);
 };
 
 /******************************************************************************/
@@ -43,6 +43,6 @@ public:
 
 class quadHenon : public models2D {
 public:
-    void iteration(const long&);
+    void iteration(const qint64&);
 };
 #endif

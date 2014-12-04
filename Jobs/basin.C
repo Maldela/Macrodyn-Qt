@@ -64,7 +64,7 @@ void basin::initCycle(char *const name,qreal*** cycle,int& period)
 /*                                                                            */
 /******************************************************************************/
 
-unsigned basin::isAttracting(qreal** lastOrbit,qreal** cycle,const int& period)
+uint basin::isAttracting(qreal** lastOrbit,qreal** cycle,const int& period)
 {
     qreal eps=0.001;                   // accuracy of "tends to"
     qreal firstComp=lastOrbit[0][0];   // get the first component of the 
@@ -96,7 +96,7 @@ unsigned basin::isAttracting(qreal** lastOrbit,qreal** cycle,const int& period)
 	attempt++;
 	i++;
     }  
-    return (unsigned) ok;
+    return (uint) ok;
 }
 
 /******************************************************************************/
@@ -124,15 +124,15 @@ void basin::setStepX(const qreal& toSet)
 
 void basin::simulation()
 {
-    unsigned att1=0;			// orbit tends to cycle or not
+    uint att1=0;			// orbit tends to cycle or not
     qreal **lastOrbit;		        // matrix to store the actual orbit
     int i=0;			        // 0 <= i < dimension
-    long t;				// time   
+    qint64 t;				// time
     int record=0;			// index of the orbit vectors that
 					// shows where the actual simulation
 					// results are stored
 					// 0 <= record <= period1
-    long tDiv=length/6;			// analysis of the simulation results
+    qint64 tDiv=length/6;			// analysis of the simulation results
 					// is done every tDiv periods until
 					// length is reached or the orbit
 					// tends to the cycle

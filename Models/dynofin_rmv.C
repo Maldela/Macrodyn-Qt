@@ -311,7 +311,7 @@ switch  (temp_paramset->type) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::iteration(const long& )
+void dynofin_rmv::iteration(const qint64& )
 { 
   qreal w1_n;
   qreal w2_n;

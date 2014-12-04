@@ -74,7 +74,7 @@ public:
     	void noise_iteration(st_fin_paramset*);
     	void read_sim(ifstream&,st_fin_paramset*);
     	void delete_st_fin_paramset_stochptr(st_fin_paramset*);
-    	void iteration(const long&);
+    	void iteration(const qint64&);
     	void initialize();
     	qreal* setLabels(char*);
     	void sendStateSpace(int &,const qreal***);

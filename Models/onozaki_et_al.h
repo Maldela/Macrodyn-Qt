@@ -44,7 +44,7 @@ public:
     void saveParamset(ofstream&);
     void saveParamsetWithNames(ofstream&);
     void printParamset();
-    void iteration(const long&);
+    void iteration(const qint64&);
     void initialize();
     qreal* setLabels(char*);
     void sendStateSpace(int &,const qreal***);

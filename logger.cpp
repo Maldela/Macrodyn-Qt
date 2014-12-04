@@ -1,5 +1,4 @@
 #include "logger.h"
-#include <QDebug>
 
 
 int LoggerHelper::ref = 0;
@@ -44,16 +43,13 @@ void Logger::print(const QString &str)
         {
             if (str != "\n")
             {
-                qDebug() << 1;
                 m_oldLine = str;
                 m_oldLine.chop(2);
                 emit lineChanged();
             }
-            else qDebug() << "string = endl and line is empty";
         }
         else
         {
-            qDebug() << 2;
             m_line += str;
             m_line.chop(2);
             m_oldLine = m_line;
@@ -63,7 +59,6 @@ void Logger::print(const QString &str)
     }
     else
     {
-        qDebug() << 3;
         m_line += str;
         m_line += " ";
     }

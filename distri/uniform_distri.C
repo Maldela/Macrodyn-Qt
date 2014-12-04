@@ -131,15 +131,15 @@ qreal uniform_Distri::random(const qreal cen, const qreal wid)
 {
     if (wid <= 0.0)
         fatalError("uniform_Distri::random","width must be positive");
-    const unsigned   mantissa_words = (mantissa_bits + bits_per_word - 1)
+    const uint   mantissa_words = (mantissa_bits + bits_per_word - 1)
                                      / bits_per_word;
-    static unsigned  *words = new unsigned [mantissa_words];
+    static uint  *words = new uint [mantissa_words];
 
-    for (unsigned  i=0;i < mantissa_words ;i++)
+    for (uint  i=0;i < mantissa_words ;i++)
         words[i] = 0;
     static randomBits  generator;
     random_state & safe = generator.attach_state(state);
-    unsigned  skiped_bits = generator.search_next_1_bit(false);
+    uint  skiped_bits = generator.search_next_1_bit(false);
     generator.random_bits(mantissa_bits,words,0);
     generator.attach_state(safe);
     if (!(words[0]&1))
@@ -147,8 +147,8 @@ qreal uniform_Distri::random(const qreal cen, const qreal wid)
     if (!(words[0]&~(~0U>>1)))  //  (int)words[0] >= 0)  // highest bit not set
         words[0] &= ~1U, words[0] |= ~(~0U>>1);  // exchange highest with lowest
     double arg = 0.0;
-    for (unsigned  defined_bits=0, i=0; i < mantissa_words ;i++)
-    {   unsigned  next_bits = defined_bits + bits_per_word > mantissa_bits ?
+    for (uint  defined_bits=0, i=0; i < mantissa_words ;i++)
+    {   uint  next_bits = defined_bits + bits_per_word > mantissa_bits ?
                               mantissa_bits - defined_bits : bits_per_word ;
         arg= ldexp(arg,next_bits);
         arg += double(words[i]);

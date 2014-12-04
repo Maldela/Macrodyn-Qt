@@ -366,7 +366,7 @@ if(0<=df && df <=df_crit_min){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Bankintermed::iteration(const long& t){
+void Bankintermed::iteration(const qint64& t){
 
     qreal buffer;
 

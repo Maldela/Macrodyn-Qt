@@ -203,6 +203,6 @@ void models2D::receiveParameters(const qreal* parameters)
     y0=parameters[1];
     alpha=parameters[2];
     beta=parameters[3];
-    length=(long)(parameters[4]);
+    length=(qint64)(parameters[4]);
 }
 

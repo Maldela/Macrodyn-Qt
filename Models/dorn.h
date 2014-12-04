@@ -70,8 +70,8 @@ public:
     dorn();			       // default constructor
     virtual ~dorn();                   // destructor
     void pInit(qreal*);		       
-    qreal pexpBerechnung(const long);
-    void dynamics(qreal *,const long);
+    qreal pexpBerechnung(const qint64);
+    void dynamics(qreal *,const qint64);
     void labordemand ();
     void profit();
     void income();
@@ -94,7 +94,7 @@ public:
     void saveParamsetWithNames(ofstream&);    // add parametset to printerfile (so far only for xpm)
     void receiveParameters(const qreal*);      // receive parameter values
     void printParamset();		      // print parameterset on the screen    
-    virtual void iteration(const long&);      // perform one iteration 
+    virtual void iteration(const qint64&);      // perform one iteration 
     qreal* setLabels(char*);		      // return a pointer to a variable
 					      // or a parameter specified by its
 					      // name

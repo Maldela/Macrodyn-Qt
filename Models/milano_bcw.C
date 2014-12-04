@@ -254,7 +254,7 @@ void milano_bcw::sendStateSpace(int &quantity,const qreal*** stateSpace) {
 }
 
 /******************************************************************************/
-void milano_bcw::iteration(const long&) {  // perform one iteration 
+void milano_bcw::iteration(const qint64&) {  // perform one iteration 
 	double K_emp;
 	double l_dem;
 

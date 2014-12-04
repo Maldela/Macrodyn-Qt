@@ -41,7 +41,7 @@ ELS::ELS() : baseModel(1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::iteration(const long&)
+void ELS::iteration(const qint64&)
 {
     qreal oldY=y;
 
@@ -281,6 +281,6 @@ void ELS::receiveParameters(const qreal* parameters)
     T=parameters[4];
     alpha=parameters[5];
     y0=parameters[6];
-    length=long(parameters[7]);
+    length=qint64(parameters[7]);
 }
 

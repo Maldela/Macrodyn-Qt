@@ -44,7 +44,7 @@ class defaultModel : public baseModel {
     qreal output;                          // actual output
     
     qreal prodFunction(const qreal&);
-    virtual qreal expectedInflationRate(const long);
+    virtual qreal expectedInflationRate(const qint64);
     void notProd(qreal&,qreal&);
     void notCom(qreal&,qreal&,qreal&);
     void empAndOut(qreal&,qreal&);
@@ -60,7 +60,7 @@ public:
     void saveParamsetWithNames(ofstream&);  // add parametset to printerfile (so far only for xpm)
     void printParamset();		    // print parameterset on the screen
     
-    virtual void iteration(const long&);    // perform one iteration 
+    virtual void iteration(const qint64&);    // perform one iteration
     qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
@@ -102,7 +102,7 @@ private:
 public:
     rdefaultModel();			// constructor
     void loadParamset(ifstream&);	// load parameterset from a file
-    void iteration(const long&);	// perform one iteration 
+    void iteration(const qint64&);	// perform one iteration
     void initialize(void);		// initialize the model
 };
 

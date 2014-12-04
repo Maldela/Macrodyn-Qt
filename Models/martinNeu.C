@@ -146,9 +146,9 @@ qreal martinNeu::savings(const qreal& x) { // (martin4)
 /******************************************************************************/
 /* Class name:      martinNeu                                                 */
 /* Member function: iteration                                                 */
-/* Purpose:         calculate one period of jan´s dynamics                    */
+/* Purpose:         calculate one period of jan's dynamics                    */
 /******************************************************************************/
-void martinNeu::iteration(const long& t) {
+void martinNeu::iteration(const qint64& t) {
 
 //    theta_e_tp1 = theta_e_t + g_tm1 * ( theta_tm1 - theta_e_t ) ;
 //    qreal dummy = g_tm1 * theta_tm1 * theta_tm1 ;
@@ -161,7 +161,7 @@ theta_e_tp1 = p_e_tp1 / p_t;
     
     theta_t = (gamma*savings(theta_e_t))/savings(theta_e_tp1) ;
 
-p_t = theta_t * p_tm1 ;
+    p_t = theta_t * p_tm1 ;
 
     Err = theta_t - theta_e_t ;
 
@@ -174,5 +174,5 @@ p_t = theta_t * p_tm1 ;
     theta_e_t = theta_e_tp1 ;
     theta_tm1 = theta_t ;
     p_tm1 = p_t ;
-cout<<"t="<<t<<"  theta_e_tp1="<<theta_e_tp1<<"  theta_tm1="<<theta_tm1<<"  p_t="<< p_t <<endl;
+    log() <<"t="<<t<<"  theta_e_tp1="<<theta_e_tp1<<"  theta_tm1="<<theta_tm1<<"  p_t="<< p_t << "\n";
 }

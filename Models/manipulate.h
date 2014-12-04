@@ -74,7 +74,7 @@ protected:
 		int errcor_num;
 
 	// case ma total average  100 1 q p
-		void F_ma(const long int &);
+		void F_ma(const qint64 &);
 		struct struct_ma {qreal* mname;qreal* vname;qreal vn;};
 		struct_ma* ma_ptr;
 		int ma_num;
@@ -165,7 +165,7 @@ protected:
 		char quanvarname[40];
 		double x, zx, sk, ku, xi, mr[4], mc[4], *quanvar, sd;
 		qreal u;
-		void Sequper(const long&);
+		void Sequper(const qint64&);
 		void Bisec();
 		void FXRoot();
 		double FX();
@@ -179,7 +179,7 @@ public:
 		virtual ~manipulate();
 
 		qreal* setLabels(char*);
-		long getLength() const;
+		qint64 getLength() const;
 		qreal* sendModelVar();
 		void sendStateSpace(int &,const qreal***);
 		void receiveParameters(const qreal*);
@@ -190,7 +190,7 @@ public:
 		void saveParamsetWithNames(ofstream&);
 		void loadParamset(ifstream&);
 		void initialize();
-		void iteration(const long&);
+		void iteration(const qint64&);
 };
 
 #endif

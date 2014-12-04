@@ -53,7 +53,7 @@ if(zvar) delete zvar;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine1::iteration(const long&)
+void affine1::iteration(const qint64&)
 {
 	//log() << "This is function 'iteration()' in affine1.C" << "\n";
     
@@ -286,7 +286,7 @@ void affine1::receiveParameters(const qreal* parameters)
 	//log() << "This is function 'receiveParameters()' in 'affine1.C' ." << "\n"; 
 	x0=parameters[0];
 	r =parameters[1];
-	length=(long)(parameters[5]);
+	length=(qint64)(parameters[5]);
 	//log() << "Now returning...." << "\n"; 
 }
 

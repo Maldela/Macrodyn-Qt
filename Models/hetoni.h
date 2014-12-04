@@ -19,13 +19,13 @@ class hetoni : public baseModel {
   //Parameters
     qreal a,b,alpha,w,L0,L1,shr;
 
-    int  L,Ls;				// L = Lag_long, Ls = Lag_short
+    int  L,Ls;				// L = Lag_qint64, Ls = Lag_int
 
   //Condition variable
     qreal *pp0;				// pointer on init price vector
     qreal *pp;				// pointer on price vector
     qreal *vv;				// pointer on rates of weights vector
-    qreal *vvs;				// pointer on rates of short weights vector
+    qreal *vvs;				// pointer on rates of int weights vector
     qreal v;
     qreal s;		
   //Model functions
@@ -52,6 +52,6 @@ public:
     void sendStateSpace(int &,const qreal***);// return pointers to all model
 					 // variables and the dimension
 					 // of the model
-    virtual void iteration(const long&); // perform one iteration 
+    virtual void iteration(const qint64&); // perform one iteration 
 };
 #endif

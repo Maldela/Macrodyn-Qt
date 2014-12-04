@@ -29,7 +29,7 @@ class capOlg : public baseModel {
     qreal indivSave;                       // individual savings
     
     qreal prodFunction(const qreal&);
-    virtual qreal expReturnRate(const long);                
+    virtual qreal expReturnRate(const qint64);                
     qreal savingsFunc(qreal&);                         
     void rShift();
 public:
@@ -40,7 +40,7 @@ public:
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
-    virtual void iteration(const long&);    // perform one iteration 
+    virtual void iteration(const qint64&);    // perform one iteration 
     qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
@@ -59,14 +59,14 @@ public:
 
 class capOlgAdapt : public capOlg {
 protected:
-    qreal expectedReturnRate(const long);
+    qreal expectedReturnRate(const qint64);
     qreal oldExpectations;                   // used to save the expected 
 				            // return rate for the last period
     qreal eta;                               // weight parameter
 public:
     capOlgAdapt();                          // default constructor
     qreal* setLabels(char*);
-    void iteration(const long&);    // perform one iteration 
+    void iteration(const qint64&);    // perform one iteration 
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
@@ -91,14 +91,14 @@ public:
 
 class capOlgGeoExp : public capOlg {
 protected:
-    qreal expectedReturnRate(const long);
+    qreal expectedReturnRate(const qint64);
     qreal eta;                               // parameter of the geometric lag
 				            // distribution
     qreal etaTilda;
     void initialize();
 public:
     capOlgGeoExp();                         // default constructor
-    void iteration(const long&);    // perform one iteration 
+    void iteration(const qint64&);    // perform one iteration 
     qreal* setLabels(char*);
     void loadParamset(ifstream&);	    // load parameterset from a file
     void saveParamset(ofstream&);	    // write parameterset into a file

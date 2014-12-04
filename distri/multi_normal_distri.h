@@ -20,7 +20,7 @@
 
 class multi_normal_Distri : public prob_Distri {
     public:
-        multi_normal_Distri(const unsigned d, const qreal *med =0, const qreal *covar =0);  // constructor
+        multi_normal_Distri(const uint d, const qreal *med =0, const qreal *covar =0);  // constructor
         multi_normal_Distri(const multi_normal_Distri&); // copy-constructor
         ~multi_normal_Distri(); // destructor
         multi_normal_Distri& operator=(const multi_normal_Distri&);
@@ -29,10 +29,10 @@ class multi_normal_Distri : public prob_Distri {
         qreal cumulat(const qreal*) const; // cumulative probability function
         qreal inverse(const qreal*) const; // inverse cumulative prob. function
         qreal* random();                  // random prob. distributed variable
-//      qreal* random(const unsigned, const qreal *, const qreal *);            
+//      qreal* random(const uint, const qreal *, const qreal *);            
                                          // random prob. distributed variable
     private:
-        unsigned  dim;
+        uint  dim;
         qreal  *median, *lower_left, *inver, sqrt_det;
         void compute_lowerleft_inverse_and_sqrt_of_determinate();
 };

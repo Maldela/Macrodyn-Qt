@@ -54,7 +54,7 @@ public:
     virtual void saveParamset(ofstream&);
     virtual void printParamset();
     void initialize();
-    virtual void iteration(const long&);
+    virtual void iteration(const qint64&);
     qreal* sendModelVar();
     virtual qreal* setLabels(char*);
     void sendStateSpace(int &,const qreal***);

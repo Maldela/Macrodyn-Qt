@@ -69,9 +69,9 @@ parameterSpace::~parameterSpace()
 
 void parameterSpace::simulation()
 {
-    long t;				// time
+    qint64 t;				// time
     int order=0;			// order of cycle
-    unsigned long int tDiv=(unsigned)(length/10);// analysis of the simulation results
+    quint64 tDiv=(uint)(length/10);// analysis of the simulation results
 					// is done every tDiv periods until
 					// length is reached or a cycle has
 					// been detected

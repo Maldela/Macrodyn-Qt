@@ -34,7 +34,7 @@ job::~job()
 /*                                                                            */
 /******************************************************************************/
 
-job::job(baseModel * const bMod, const long& len, const long& lim,
+job::job(baseModel * const bMod, const qint64& len, const qint64& lim,
       MacrodynGraphicsItem *graph)
     : length(len),limit(lim), model(bMod), screenGraphics(graph)
 {

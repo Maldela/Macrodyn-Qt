@@ -3,7 +3,7 @@
 #include "gamma_distri.h"
 #include <math.h>
 #include "error.h"
-const unsigned  l_max = 40;  // maximal l_max/2 iterations in each loop
+const uint  l_max = 40;  // maximal l_max/2 iterations in each loop
 
 
 const double  gam=0.57721566490153286060651209;// Euler-Mac-Laurin'sche constant
@@ -35,11 +35,11 @@ const double  bern[] = { 1.0, -1.0/2.0, 1.0/6.0, 0.0, -1.0/30.0, 0.0, 1.0/42.0,
 double  log_gamma(const double arg)
 {
 const double arg_limit = 15.0;
-const unsigned n_limit = 11;
+const uint n_limit = 11;
 if (arg <= 0.0)
     fatalError("log_gamma:","DOMAIN-error");
 double  y, z, f, x;
-unsigned   i, k;
+uint   i, k;
 z=1.0;
 for (k=0,x=arg-1.0;x<arg_limit;x+=1.0,k++)
     z *= (x+=1.0);

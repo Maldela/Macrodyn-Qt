@@ -35,7 +35,7 @@ cellAttractor::cellAttractor(baseModel* const bMod,const xyRange& axes,
 
 void cellAttractor::simulation()
 {
-    long colChange=length/6;
+    qint64 colChange=length/6;
     qreal hx=(xmax-xmin+0.001)/940000000.0;
     qreal hy=(ymax-ymin+0.001)/860000000.0;
     const qreal *state[2];
@@ -47,7 +47,7 @@ void cellAttractor::simulation()
     *xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
     *yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
 
-    for(long t=0;t<length;t++) {
+    for(qint64 t=0;t<length;t++) {
 	model->iteration(t+1);
 	*xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
 	*yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
@@ -55,12 +55,12 @@ void cellAttractor::simulation()
 	    hash->storePoint(state);
 	    if( screenGraphics ) 
 		screenGraphics->setPoint(*xParam,*yParam,
-                     (short)((t/colChange)+1));
+                     (int)((t/colChange)+1));
 	}
     }
-    cout << "Number of hits: " << hash->numberOfHits() << "\n";
-    cout << "Number of buckets: " << hash->numberOfBuckets() << "\n";
-    cout << "Number of collisions: " << hash->numberOfCollisions() << "\n";
-    cout << "Order of cycle: " << hash->orderOfCycle() << "\n";
+    log() << "Number of hits: " << hash->numberOfHits() << "\n";
+    log() << "Number of buckets: " << hash->numberOfBuckets() << "\n";
+    log() << "Number of collisions: " << hash->numberOfCollisions() << "\n";
+    log() << "Order of cycle: " << hash->orderOfCycle() << "\n";
 }
 

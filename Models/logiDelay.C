@@ -22,7 +22,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-void logiDelay::iteration(const long&)
+void logiDelay::iteration(const qint64&)
 {
     qreal oldX=x;
        
@@ -35,7 +35,7 @@ qreal logLogDelay::delayFunc(const qreal& argOne, const qreal& argTwo)
     return( (1-beta)*argTwo + beta*argOne );
 }
 
-void logLogDelay::iteration(const long&)
+void logLogDelay::iteration(const qint64&)
 {
 
     qreal w=delayFunc(x,y);

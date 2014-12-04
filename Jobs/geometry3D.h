@@ -39,7 +39,7 @@ class geometry3D : public job {
     qreal *zParam;
     hashTable *hash;                   // hash table to store simulation
                                        // results
-    unsigned inRange(const qreal&,const qreal&,const qreal&);
+    uint inRange(const qreal&,const qreal&,const qreal&);
                                        // returns wether the simulation results
                                        // are inside the considered section
   public:

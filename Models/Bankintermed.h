@@ -41,10 +41,10 @@ protected:
     qreal S_vol;						// Gesamtsparvolumen
     qreal nu;						// Anteil Unternehmer 		// 0 < nu < 1
     qreal alpha,beta,gamma,delta;	// Regulierungsparameter	// 0 < alpha,beta,gamma,delta < 1
-    qreal q;							// Störung					// 0 < q_min < q_max
+    qreal q;							// StÃ¶rung					// 0 < q_min < q_max
 	rand_var *zvar;
-    qreal q_max;						// maximale Störung
-    qreal q_min;						// minimale Störung
+    qreal q_max;						// maximale StÃ¶rung
+    qreal q_min;						// minimale StÃ¶rung
     qreal a,b,c,d;					// Produktionsparameter		// 0 < a,b,c,d
     qreal df_0;						// Startwert Defizit
     qreal df;						// Defizit
@@ -61,7 +61,7 @@ protected:
     qreal I_B;						// Firmenbankrott
     qreal P;							// Aggr. Output der Firmen
     qreal G;							// Dynamik
-    qreal RF;						// Rückzahlungsfähigkeit
+    qreal RF;						// RÃ¼ckzahlungsfÃ¤higkeit
     qreal K;							// Kreditvolumen
     qreal B;							// Bankrotte
 
@@ -93,7 +93,7 @@ public:
     void receiveParameters(const qreal*);
     qreal* setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
-    void iteration(const long&);	// perform one iteration 	
+    void iteration(const qint64&);	// perform one iteration
     void sendStateSpace(int &,const qreal***);
 
 };

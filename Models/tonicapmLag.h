@@ -50,6 +50,6 @@ public:
     void sendStateSpace(int &,const qreal***);// return pointers to all model
 					 // variables and the dimension
 					 // of the model
-    virtual void iteration(const long&); // perform one iteration 
+    virtual void iteration(const qint64&); // perform one iteration 
 };
 #endif

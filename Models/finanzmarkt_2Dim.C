@@ -2,7 +2,7 @@
 //																		 //
 // Name: finanzmarkt_2Dim.C
 //       lineares Finanzmarktmodell mit Erwartungsr"uckkoppelung	
-//		 sowie zwei heterogenen Händlergruppen
+//		 sowie zwei heterogenen HÃ¤ndlergruppen
 //	 K=2
 //
 // Code: Andreas Tonn 
@@ -330,8 +330,8 @@ void finanzmarkt_2Dim::initialize()
 
 //for(int j=0;j<=1;j++)	
 //{		
-//	cout << "A" << j << 0 << "=" << A->m[j][0] << endl;	
-//	cout << "A" << j << 1 << "=" << A->m[j][1] << endl;		
+//	log() << "A" << j << 0 << "=" << A->m[j][0] << "\n";
+//	log() << "A" << j << 1 << "=" << A->m[j][1] << "\n";
 //}
 
 //B=Id-A

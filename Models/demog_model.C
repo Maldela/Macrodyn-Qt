@@ -58,7 +58,7 @@ demog_model::~demog_model()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::iteration(const long& time)
+void demog_model::iteration(const qint64& time)
 {
 	switch ( type ){
 	case 1 :
@@ -568,6 +568,6 @@ void demog_model::sendParameters(int& amount,qreal** parameters)
 void demog_model::receiveParameters(const qreal* parameters)
 {
     k_t=parameters[0];
-    length=long(parameters[1]);
+    length=qint64(parameters[1]);
 }
 

@@ -32,7 +32,7 @@ protected:
 	char xLabel[20];
 	qreal xmin,xmax;
 	qreal ymin,ymax;
-	long int zmin;
+	qint64 zmin;
 	qreal zmax;
 	qreal* xParam;
 	qreal* yParam;
@@ -40,7 +40,7 @@ protected:
 	
 public:
 	timeSeriesSet(baseModel* const, const xyRange& axes, 
-			 char* const filename, bool surf, long res);
+			 char* const filename, bool surf, qint64 res);
 	void setStepX(const qreal&);
 	void simulation();
 };

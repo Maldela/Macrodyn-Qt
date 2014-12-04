@@ -56,12 +56,12 @@ attractor_3d::attractor_3d(baseModel* const bMod,const xyRange& axes,
 
 void attractor_3d::simulation()
 {
-    long t;
+    qint64 t;
     double h_max;
     int  k, l, m;
     int  color;
     qreal dx, dy, dz;
-    long dummy=1;
+    qint64 dummy=1;
     
     model->initialize();
     h.reset();

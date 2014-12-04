@@ -239,7 +239,7 @@ void nicole::dynamics()
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::iteration(const long& t)
+void nicole::iteration(const qint64& t)
 {
 	getD();
 	dynamics();

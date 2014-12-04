@@ -478,7 +478,7 @@ switch  (temp_paramset->type) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::iteration(const long& )
+void rSolow::iteration(const qint64& )
 { 
   qreal k_n;		// value of k for the next period
 
@@ -1206,7 +1206,7 @@ if(alpha_paramset) delete alpha_paramset;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_delta_1::iteration(const long&)
+void RBC_delta_1::iteration(const qint64&)
 { 
   qreal k_RBC_n;
   qreal z_RBC_n;

@@ -21,33 +21,33 @@
 #include "rand_var.h"
 #include <time.h>
 //default seed:
-static const long sd1 = 2036452194;
-static const long sd2 = 1194132260; 
+static const qint64 sd1 = 2036452194;
+static const qint64 sd2 = 1194132260;
 
 //alternative seed1 (omega_1)
 
-//static const long sd1 = 2016478191;
-//static const long sd2 = 2112932563; 
+//static const qint64 sd1 = 2016478191;
+//static const qint64 sd2 = 2112932563;
 
 //alternative seed2 (omega_2)
-//static const long sd1 = 1816478191;
-//static const long sd2 = 1542932563; 
+//static const qint64 sd1 = 1816478191;
+//static const qint64 sd2 = 1542932563;
 
 //alternative seed3 (omega_3)
-//static const long sd1 = 1616478091;
-//static const long sd2 = 1342962563; 
+//static const qint64 sd1 = 1616478091;
+//static const qint64 sd2 = 1342962563;
 
 //alternative seed4 (omega_4)
-//static const long sd1 = 1716478091;
-//static const long sd2 = 1842962563; 
+//static const qint64 sd1 = 1716478091;
+//static const qint64 sd2 = 1842962563;
 
 //alternative seed5 (omega_5)
-//static const long sd1 = 1006478091;
-//static const long sd2 = 1358942563; 
+//static const qint64 sd1 = 1006478091;
+//static const qint64 sd2 = 1358942563;
 
 //degenerated seed for Jan's model
-//static const long sd1 = 40007730;
-//static const long sd2 = 11111111;
+//static const qint64 sd1 = 40007730;
+//static const qint64 sd2 = 11111111;
 
 //alternative seed? (consecutive different seeds, process time dependened)
 

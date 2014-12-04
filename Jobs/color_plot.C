@@ -53,7 +53,7 @@ color_plot::color_plot(int p_size, baseModel* const cMod,const xyRange& axes,
 
 void color_plot::simulation()
 {
-	long t;
+    qint64 t;
 	int col,i;
 	int cmax=17;
 	qreal min=zmax;

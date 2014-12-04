@@ -553,7 +553,7 @@ void finanzmarkt_wage::Dividende()
 // Funktionsname:	iteration
 // Beschreibung:	Durchlauf einer Periode
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_wage::iteration(const long& t)
+void finanzmarkt_wage::iteration(const qint64& t)
 {
 
 Wagebill();

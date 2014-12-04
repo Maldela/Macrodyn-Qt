@@ -111,7 +111,7 @@ michael::michael() : baseModel(1)
 // Member function:	michael
 // Purpose:		destructor
 //
-// Author:		Michael Meyer & Stefan Lüke
+// Author:		Michael Meyer & Stefan LÃ¼ke
 // Last modified:	Mon Mar 10 14:09:17 MET 1999
 // By:			Michael Meyer 
 //
@@ -133,7 +133,7 @@ michael::~michael(void) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void michael::iteration(const long& )
+void michael::iteration(const qint64& )
 { 
   qreal k_n;             // value of k for the next period
   qreal z_n;		// value of z for the next period
@@ -301,17 +301,17 @@ void michael::saveParamset(ofstream& outFile)
 
 void michael::printParamset()
 {
-    cout << k_0 << endl;
-    cout << z_0 << endl;
-    cout << r << endl;
-    cout << tau << endl;
-    cout << rho << endl;
-    cout << gamma << endl;
-    cout << B << endl;
+    log() << k_0 << "\n";
+    log() << z_0 << "\n";
+    log() << r << "\n";
+    log() << tau << "\n";
+    log() << rho << "\n";
+    log() << gamma << "\n";
+    log() << B << "\n";
     
-    cout << n << endl;
+    log() << n << "\n";
 
-    cout << length << endl;       
+    log() << length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

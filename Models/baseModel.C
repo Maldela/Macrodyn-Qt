@@ -11,7 +11,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-baseModel::baseModel(const unsigned &dim) : dimension(dim)
+baseModel::baseModel(const uint &dim) : dimension(dim)
 {
 }
 baseModel::~baseModel()
@@ -26,7 +26,7 @@ baseModel::~baseModel()
 /*                                                                            */
 /******************************************************************************/
 
-long baseModel::getLength() const
+qint64 baseModel::getLength() const
 {
     return length;
 }

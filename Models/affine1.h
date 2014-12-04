@@ -43,7 +43,7 @@ public:
 	void loadParamset(ifstream&);	
     void saveParamset(ofstream&);
     void printParamset();
-    void iteration(const long&);
+    void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
     qreal* setLabels(char*);

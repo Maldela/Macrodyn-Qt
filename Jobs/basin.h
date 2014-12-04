@@ -31,7 +31,7 @@ class basin : public geometricJob {
     qreal stepY;                      // .. y-direction
     void initCycle(char* const,qreal***,int&);
 				       // read cycle out of a file
-    unsigned isAttracting(qreal**,qreal**,const int&);
+    uint isAttracting(qreal**,qreal**,const int&);
                                        // determine wether a given orbit tends
                                        // to the cycle or not
 

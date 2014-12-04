@@ -85,9 +85,9 @@ void powerSpec::FFTSwap(qreal& x, qreal& y)
 
 void powerSpec::FFTSolve(const int& flag)
 {
-    long j,i,k,a,b;
+    qint64 j,i,k,a,b;
     int maxpower,cntr;
-    long arg,pnt0,pnt1;
+    qint64 arg,pnt0,pnt1;
     qreal harm, prodqreal, prodimag, sign, hi;
     qreal *cosary;
     qreal *sinary;
@@ -178,7 +178,7 @@ void powerSpec::FFTSolve(const int& flag)
 
 void powerSpec::powerSpecCalc(const qreal& delta)
 {
-    long i;
+    qint64 i;
     qreal normal, timespan;
     
     normal = 1.0 / (length * length);
@@ -209,7 +209,7 @@ void powerSpec::powerSpecCalc(const qreal& delta)
 /*                                                                            */
 /******************************************************************************/
 
-qreal powerSpec::parzen(const long& t)
+qreal powerSpec::parzen(const qint64& t)
 {
     return( 1.0 - fabs((t - .5 * (length-1.0))/(0.5 * (length + 1.0))) );
 }
@@ -223,7 +223,7 @@ qreal powerSpec::parzen(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal powerSpec::hanning(const long& t)
+qreal powerSpec::hanning(const qint64& t)
 {
     return( .5 * (1 - cos(2.0 * Pi * t / (length-1))) );
 }
@@ -237,7 +237,7 @@ qreal powerSpec::hanning(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal powerSpec::welch(const long& t)
+qreal powerSpec::welch(const qint64& t)
 {
     qreal dummy=((t - .5 * (length - 1)) / (.5 * (length + 1)));
     return( 1 -  dummy*dummy );
@@ -252,7 +252,7 @@ qreal powerSpec::welch(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal powerSpec::hamming(const long& t)
+qreal powerSpec::hamming(const qint64& t)
 {
     return( .54 - .46 * cos(2.0 * Pi * t / (length-1)) );
 }
@@ -266,7 +266,7 @@ qreal powerSpec::hamming(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal powerSpec::exactBlackman(const long& t)
+qreal powerSpec::exactBlackman(const qint64& t)
 {
     return( 0.42-0.5*cos(2.0*Pi*t/(length-1))+0.08*cos(4.0*Pi*t/(length-1)) );
 }
@@ -284,7 +284,7 @@ qreal powerSpec::exactBlackman(const long& t)
 void powerSpec::windowData (qreal *x)
 {
     qreal  multiplier;
-    long i;
+    qint64 i;
 
     for(i=0;i<=length-1;i++) {
 	switch(win) {
@@ -316,7 +316,7 @@ void powerSpec::windowData (qreal *x)
 
 void powerSpec::simulation()
 {
-    long t;
+    qint64 t;
     qreal ymax=-10000.0;
     qreal dummy;
     qreal ymin=10000.0;

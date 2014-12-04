@@ -90,7 +90,7 @@ timeSeriesPlot_Loop::~timeSeriesPlot_Loop() {
 
 void timeSeriesPlot_Loop::simulation()
 {
-    long t;
+    qint64 t;
 	double temp;
     double mean_error, sum;
 

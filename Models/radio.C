@@ -35,7 +35,7 @@ qreal radio::logisticMap(qreal& in)
 /*                                                                            */
 /******************************************************************************/
 
-void radio::iteration(const long&)
+void radio::iteration(const qint64&)
 {
     qreal oldX=x;
     qreal oldY=y;

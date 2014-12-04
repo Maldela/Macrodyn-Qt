@@ -17,7 +17,7 @@
 // Purpose:		constructor
 //
 // Author:		Marc Mueller
-// Last modified:	98/11/3ß
+// Last modified:	98/11/3
 ///////////////////////////////////////////////////////////////////////////////
 MerA::MerA() : baseModel(1)
 {
@@ -52,7 +52,7 @@ MerA::MerA() : baseModel(1)
 ///////////////////////////////////////////////////////////////////////////////
 MerA::~MerA()
 {
-cout << "Model MerA destructor" << endl;
+log() << "Model MerA destructor" << "\n";
 
 	if( zvar ) delete zvar;
 	if( markov ) delete markov;
@@ -208,9 +208,9 @@ mef=0;
 
 		if(perfectPredictor) {//bed. perfekter praediktor
 			if(q0[i]<=((dmax[i]-dmin[i])/R)) {
-				cout <<"Asset "<<i<<" : q0["<<i<<"]="<<q0[i];
-				cout <<" <= (dmax-dmin)/R=";
-				cout <<((dmax[i]-dmin[i])/R)<<endl;
+                log() <<"Asset "<<i<<" : q0["<<i<<"]="<<q0[i];
+                log() <<" <= (dmax-dmin)/R=";
+                log() <<((dmax[i]-dmin[i])/R)<<"\n";
 				exit(-1);	
 			}
 			qmin[i]=(tau1x[i]-dmin[i])/(1-R);
@@ -220,8 +220,8 @@ mef=0;
 			if(dmax[i]>DMAX)
 				DMAX=dmax[i];
 			if(tau1x[i]<=DMAX) {
-				cout << "Asset "<<i<<" : tau^-1x="<<tau1x[i];
-				cout <<" <= DMAX="<<DMAX<<endl;
+                log() << "Asset "<<i<<" : tau^-1x="<<tau1x[i];
+                log() <<" <= DMAX="<<DMAX<<"\n";
 				exit(-1);
 			}
 		}
@@ -378,18 +378,18 @@ void MerA::saveParamsetWithNames(ofstream& outputFile)
 {
     outputFile << "\nModel MerA\n";
     if(perfectPredictor)
-	outputFile << "perfectPredictor" << endl;
-    outputFile << "R = " << R << endl;
-    outputFile << "K = " << K << endl;
+    outputFile << "perfectPredictor" << "\n";
+    outputFile << "R = " << R << "\n";
+    outputFile << "K = " << K << "\n";
     for(int i=0;i<K;i++) {
      	outputFile << "xAll[" << i << "] = " << xAll[i] << " ";
      	outputFile << "dmin[" << i << "] = " << dmin[i] << " ";
      	outputFile << "dmax[" << i << "] = " << dmin[i] << " ";
      	outputFile << "p0[" << i << "] = " << p0[i] << " ";
      	outputFile << "q0[" << i << "] = " << q0[i] << " ";
-	outputFile << endl;
+    outputFile << "\n";
 	}
-    outputFile << "length = "<< length << endl;
+    outputFile << "length = "<< length << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -420,7 +420,7 @@ void MerA::sendStateSpace(int &quantity,const qreal*** stateSpace)
 // Author:		Marc Mueller
 // Last modified:	98/11/30
 ///////////////////////////////////////////////////////////////////////////////
-void MerA::iteration(const long& t)
+void MerA::iteration(const qint64& t)
 { 
 pOld=p[0];
 qreal dOld=d[0];
@@ -437,7 +437,7 @@ qreal dOld=d[0];
 		d[i]=get_new_d(i);
 		p[i]=(d[i]+q[i]-tau1x[i])/R;
 		if(p[i]<0)
-			cout <<"period="<<t<<" p["<<i<<"]="<<p[i]<<"!"<<endl;
+            log() <<"period="<<t<<" p["<<i<<"]="<<p[i]<<"!"<<"\n";
 		ferr[i]=p[i]-qOld[i];
 	}
 
@@ -470,14 +470,14 @@ variance_d *= (t-1)/t; variance_d += (d[0]-expectation_d)*(d[0]-expectation_d)/t
 standardDeviation_d = sqrt(variance_d);
 mean_d *= t-1; mean_d+=d[0]; mean_d/=t;
 
-cout << t << " d=" << d[0];
-cout << " q=" << q[0] << " qOld=" << qOld[0] << " p=" << p[0] << endl;
-cout << " d=" << d[0] << " Mean_d="  << mean_d << " SD_d="  << standardDeviation_d << endl;
-//cout << " p=" << p[0] << " Mean_p="  << mean_p << " SD_p="  << standardDeviation_p << endl;
-//cout << " ferr=" << ferr[0] << " Mean_ferr="  << mean_ferr << " SD_ferr="  << standardDeviation_ferr << endl;
-//cout << " deltaq=" << deltaq << " Mean_deltaq="  << mean_deltaq << " SD_deltaq="  << standardDeviation_deltaq << endl;
-//cout << " deltap=" << deltap << " Mean_deltap="  << mean_deltap << " SD_deltap="  << standardDeviation_deltap << endl;
+log() << t << " d=" << d[0];
+log() << " q=" << q[0] << " qOld=" << qOld[0] << " p=" << p[0] << "\n";
+log() << " d=" << d[0] << " Mean_d="  << mean_d << " SD_d="  << standardDeviation_d << "\n";
+//log() << " p=" << p[0] << " Mean_p="  << mean_p << " SD_p="  << standardDeviation_p << "\n";
+//log() << " ferr=" << ferr[0] << " Mean_ferr="  << mean_ferr << " SD_ferr="  << standardDeviation_ferr << "\n";
+//log() << " deltaq=" << deltaq << " Mean_deltaq="  << mean_deltaq << " SD_deltaq="  << standardDeviation_deltaq << "\n";
+//log() << " deltap=" << deltap << " Mean_deltap="  << mean_deltap << " SD_deltap="  << standardDeviation_deltap << "\n";
 
-//cout << " q=" << q[0] << " qOld=" << qOld[0] << " mef" << mef << endl ;
+//log() << " q=" << q[0] << " qOld=" << qOld[0] << " mef" << mef << "\n" ;
 
 }

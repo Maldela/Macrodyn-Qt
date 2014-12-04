@@ -23,9 +23,9 @@ geometry3D::geometry3D(baseModel* const bMod,const xyRange& axes,
 	  ymin(axes.min[1]), ymax(axes.max[1]), zmin(axes.min[2]),
 	  zmax(axes.max[2])
 {
-    unsigned entries = (unsigned) (length < 103409 ? (length/2+1) : 103409);
-    unsigned resX;
-    unsigned resY;
+    uint entries = (uint) (length < 103409 ? (length/2+1) : 103409);
+    uint resX;
+    uint resY;
 
 	resX=axes.res[0];
 	resY=axes.res[1];
@@ -78,7 +78,7 @@ geometry3D::~geometry3D()
 /*                                                                            */
 /******************************************************************************/
 
-unsigned geometry3D::inRange(const qreal&x,const qreal& y, const qreal& z)
+uint geometry3D::inRange(const qreal&x,const qreal& y, const qreal& z)
 {
     return( ((x >= xmin)&&(x <= xmax)&&(y >= ymin)&&(y <= ymax)&&(z >= zmin)
     &&(z<=zmax)) ? 1:0 );

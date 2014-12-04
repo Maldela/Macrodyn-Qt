@@ -106,7 +106,7 @@ void newMacro::dynamics()
 /*                                                                            */
 /******************************************************************************/
 
-void newMacro::iteration(const long& t)
+void newMacro::iteration(const qint64& t)
 {
     qreal ptratex;
     qreal ztnot;

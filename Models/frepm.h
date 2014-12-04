@@ -58,7 +58,7 @@ protected:
 	qreal p10, m0110, m0210, i0110, i0210, i110, i210, m110, m210, c110, c210;
 	qreal x01, x02;				// initial values
 		
-	unsigned short N;   // number of lines in sim-file
+	uint N;   // number of lines in sim-file
 	int flag;			// 0 if value out of range
 	void check();		// checks if values are out of range
 
@@ -74,7 +74,7 @@ public:
     void receiveParameters(const qreal*);
     qreal* setLabels(char*);		// get a variable by a name
     void initialize(void);		// initialize the model
-    void iteration(const long&);	// perform one iteration 	
+    void iteration(const qint64&);	// perform one iteration 	
     void sendStateSpace(int &,const qreal***);
 
 };

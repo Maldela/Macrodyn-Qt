@@ -23,15 +23,15 @@
 
 class job {
   protected:
-    long length;                       // length of simulation
-    long limit;                        // for limit <t<= length the simulations
+    qint64 length;                       // length of simulation
+    qint64 limit;                        // for limit <t<= length the simulations
                                        // output is examined
     baseModel* const model;            // model to analysed
     MacrodynGraphicsItem* screenGraphics;    // the output of the simulation can be
                                        // drawn on the screen ..
   public:
     job(baseModel * const, MacrodynGraphicsItem * = NULL);
-    job(baseModel * const, const long&, const long&, MacrodynGraphicsItem * = NULL);
+    job(baseModel * const, const qint64&, const qint64&, MacrodynGraphicsItem * = NULL);
     virtual ~job()=0;
     virtual void setStepX(const qreal&);
     virtual void simulation()=0;

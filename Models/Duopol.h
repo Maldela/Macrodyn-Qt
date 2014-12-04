@@ -75,7 +75,7 @@ public:
     virtual void saveParamset(ofstream&);
     virtual void printParamset();
     virtual void initialize();
-    virtual void iteration(const long&);
+    virtual void iteration(const qint64&);
     virtual qreal* sendModelVar();
     virtual qreal* setLabels(char*);
     virtual void sendStateSpace(int &,const qreal***);
@@ -90,7 +90,7 @@ class Duopol2 : public Duopol {
 
 public:
 
-    virtual void iteration(const long&);
+    virtual void iteration(const qint64&);
 
 };
 

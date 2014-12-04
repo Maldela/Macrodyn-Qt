@@ -29,7 +29,7 @@ contourline::contourline(baseModel* const cMod,const xyRange& axes,
 	               h(axes.min[0],axes.max[0],axes.res[0],
 	               axes.min[1],axes.max[1],axes.res[1])
 {
-	short i;
+    int i;
 //    limit= length / 10;			// 10% are thrown away
     limit=0;
     strcpy(zLabel,axes.label[2].toLatin1().data());
@@ -100,7 +100,7 @@ contourline::~contourline()
 void contourline::setXParams(const qreal& newX)
 {
 	static qreal divisor=xmax-xmin;
-	for(short i=0;i<effectiveX.dimension;i++)
+    for(int i=0;i<effectiveX.dimension;i++)
 		*xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
 			(effectiveX.max[i]-effectiveX.min[i]);
 }
@@ -118,7 +118,7 @@ void contourline::setXParams(const qreal& newX)
 void contourline::setYParams(const qreal& newY)
 {
 	static qreal divisor=ymax-ymin;
-	for(short i=0;i<effectiveY.dimension;i++)
+    for(int i=0;i<effectiveY.dimension;i++)
 		*yVars[i]=effectiveY.min[i]+(newY-ymin)/divisor*
 			(effectiveY.max[i]-effectiveY.min[i]);
 }
@@ -138,7 +138,7 @@ void contourline::simulation()
 {
   qreal dummy_x;
   qreal dummy_y;
-  long t;
+  qint64 t;
   int col;
   int cmax=34;
 

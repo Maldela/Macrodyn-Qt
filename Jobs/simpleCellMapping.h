@@ -22,27 +22,27 @@
 
 class simpleCellMapping : public geometricJob {
   protected:
-    unsigned h[2];          	        // finenesses
+    uint h[2];          	        // finenesses
     int *Gr;			        // group vector
     int *P;                             // vector of the periodicities
     int *St;			        // vector of the step numbers
-    unsigned K;			        // number of cells
-    unsigned lastGroup;			// id of the last detected group
+    uint K;			        // number of cells
+    uint lastGroup;			// id of the last detected group
     const qreal **modelVars;
 
-    void discrete2Cont(const unsigned&,qreal&,qreal&); // transformation of
+    void discrete2Cont(const uint&,qreal&,qreal&); // transformation of
 					// a discrete cell to the corresponding
 					// center point in the state space
-    unsigned iteration(const unsigned&); // iteration of the cell mapping
-    unsigned virginCell();              // returns the id of a virgin cell
+    uint iteration(const uint&); // iteration of the cell mapping
+    uint virginCell();              // returns the id of a virgin cell
 	              			// Gr(j)=0
-    void oldGroup(unsigned&,unsigned&,unsigned&); // a cell (or a path) is found
+    void oldGroup(uint&,uint&,uint&); // a cell (or a path) is found
 					// that lies in the basin of attraction
                                         // of an already known cycle; all cells
 					// of that path are assigned the group
 					// numberof that cycle
-    void newGroup(unsigned&,unsigned&,unsigned&); // a new cycle is found; all
-					// the cells belonging to that cycles
+    void newGroup(uint&,uint&,uint&); // a new cycle is found; all
+                    // the cells beqint64ing to that cycles
 					// are assigned a new group number
   public:
     simpleCellMapping(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);

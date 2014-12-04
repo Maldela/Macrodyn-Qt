@@ -24,14 +24,14 @@
 class pacf_plot : public job {
   protected:
     qreal* ts_data;
-    long int how_many,l_min,l_max;
+    qint64 how_many,l_min,l_max;
     qreal xmax,xmin;
     qreal ymax,ymin;
     qreal* yParam;
     qreal mean_x;
     qreal acv_0;
     matrix_neu* v_correlations;
-// matrix_neu* v_short_correlations;
+// matrix_neu* v_int_correlations;
 // matrix_neu* m_correlations;    
 // matrix_neu* m_inv_correlations;
 // matrix_neu* m_kappa1;
@@ -41,7 +41,7 @@ class pacf_plot : public job {
     
   public:
     pacf_plot(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL,
-      long lag_1 = 0, long lag_2 = 20);
+      qint64 lag_1 = 0, qint64 lag_2 = 20);
     void simulation();
 };
 

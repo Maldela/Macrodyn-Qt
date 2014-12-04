@@ -20,7 +20,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-void perturbedDelayedLogisticMap::iteration(const long&)
+void perturbedDelayedLogisticMap::iteration(const qint64&)
 {
     qreal oldX=x;
 

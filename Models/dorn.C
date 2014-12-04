@@ -97,7 +97,7 @@ void dorn::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::iteration(const long& t)
+void dorn::iteration(const qint64& t)
 {
   pe = pexpBerechnung (t);
   ExpectedInterestRate (); 
@@ -122,7 +122,7 @@ void dorn::iteration(const long& t)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::dynamics(qreal *p,const long t)
+void dorn::dynamics(qreal *p,const qint64 t)
 {  
   assert(t>0);
   if (t>tau)
@@ -150,9 +150,9 @@ void dorn::dynamics(qreal *p,const long t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal dorn::pexpBerechnung(const long t)
+qreal dorn::pexpBerechnung(const qint64 t)
 {
-    long T, counter;
+    qint64 T, counter;
     qreal sum=0.0;
     
     assert(t>0);

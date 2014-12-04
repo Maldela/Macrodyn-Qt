@@ -45,7 +45,7 @@ hashEntry::hashEntry()
 /*                                                                            */
 /******************************************************************************/
 
-hashTable::hashTable(const unsigned& entries,const xyRange& range)
+hashTable::hashTable(const uint& entries,const xyRange& range)
           :domain(range)
 {
     base=0;
@@ -62,7 +62,7 @@ hashTable::hashTable(const unsigned& entries,const xyRange& range)
     hashTab=new hashEntry[noEntries];
     if( !hashTab )
 	fatalError("hashTable::hashTable","Can't allocate hash table");
-    if( !(discreteState=new unsigned[domain.dimension]) )
+    if( !(discreteState=new uint[domain.dimension]) )
 	fatalError("hashTable::hashTable",
 		   "Can't create discrete representation vector");
 
@@ -103,7 +103,7 @@ qreal hashTable::whichCell(const qreal** actualState) const
     static qreal logBase=log(double(base));
     
     for(int i=0;i<domain.dimension;i++) {
-	discreteState[i]=(unsigned) ( (domain.res[i]-1)*
+    discreteState[i]=(uint) ( (domain.res[i]-1)*
 				    (*actualState[i]-domain.min[i])/
 				   (domain.max[i]-domain.min[i]) );
 
@@ -137,7 +137,7 @@ void hashTable::discrete2Cont(const qreal& cell,qreal** state)
 	a=&(domain.min[i]);
 	b=&(domain.max[i]);
 	divResult=floor(cell/exp(i*baseLog));
-	discreteState[i]=(unsigned)(divResult-base*floor(divResult/base));
+    discreteState[i]=(uint)(divResult-base*floor(divResult/base));
 	*state[i]=*a+(discreteState[i]-1) * (*b - *a)/domain.res[i] +
 	          0.5*(*b - *a);
     }
@@ -154,9 +154,9 @@ void hashTable::discrete2Cont(const qreal& cell,qreal** state)
 /*                                                                            */
 /******************************************************************************/
 
-unsigned hashTable::hashFunction(const qreal &cell)
+uint hashTable::hashFunction(const qreal &cell)
 {
-    return ( (unsigned) (cell-noEntries*floor(cell/noEntries)) );
+    return ( (uint) (cell-noEntries*floor(cell/noEntries)) );
 }
 
 /******************************************************************************/
@@ -174,9 +174,9 @@ int hashTable::storePoint(const qreal** state)
 {
     qreal cell;		        // id of the cell that represents the
 					// point to be stored
-    unsigned bucket;			
+    uint bucket;
     qreal *value;			// pointer to a bucket in the hash table
-    unsigned finished=0;		// 0 until the hashing is finished
+    uint finished=0;		// 0 until the hashing is finished
 
     if( !domain.inRange(state) ) {      // check wether the point is in the 
       					// domain to be considered or not
@@ -201,7 +201,7 @@ int hashTable::storePoint(const qreal** state)
 	    if( (*value) != cell ) {    // collision
 		if( noBuckets == noEntries )
 		    fatalError("hashTable::storePoint","Hash table overflow");
-		bucket=(unsigned)(drand48()*noEntries);	// compute the new
+        bucket=(uint)(drand48()*noEntries);	// compute the new
 							// bucket
 		collisions++;
 	    }
@@ -240,7 +240,7 @@ void hashTable::resetDomain(const xyRange& newDomain)
 /*                                                                            */
 /******************************************************************************/
 
-unsigned hashTable::numberOfHits()
+uint hashTable::numberOfHits()
 {
     return noHits;
 }
@@ -255,7 +255,7 @@ unsigned hashTable::numberOfHits()
 /*                                                                            */
 /******************************************************************************/
 
-unsigned hashTable::numberOfBuckets()
+uint hashTable::numberOfBuckets()
 {
     return noBuckets;
 }
@@ -269,7 +269,7 @@ unsigned hashTable::numberOfBuckets()
 /*                                                                            */
 /******************************************************************************/
 
-unsigned hashTable::numberOfCollisions()
+uint hashTable::numberOfCollisions()
 {
     return collisions;
 }
@@ -285,17 +285,17 @@ unsigned hashTable::numberOfCollisions()
 /*                                                                            */
 /******************************************************************************/
 
-unsigned hashTable::orderOfCycle()
+uint hashTable::orderOfCycle()
 {
-    unsigned ok=1;
+    uint ok=1;
     qreal hitsPerBuck=noHits/(qreal)noBuckets;
-    unsigned hits;
+    uint hits;
 
-    for(unsigned i=0;(i<noEntries) && ok ;i++) {
+    for(uint i=0;(i<noEntries) && ok ;i++) {
         hits=hashTab[i].hits;
         if( hits ) {
             if( hits > 1)
-            ok= (unsigned)(fabs(hitsPerBuck-hits) < 2);
+            ok= (uint)(fabs(hitsPerBuck-hits) < 2);
             else
             ok = 0;
         }
@@ -317,7 +317,7 @@ unsigned hashTable::orderOfCycle()
 
 void hashTable::resetHashTable()
 {
-    for(unsigned i=0;i<noEntries ;i++) {
+    for(uint i=0;i<noEntries ;i++) {
 	hashTab[i].bucket=0;
 	hashTab[i].hits=0;
     }

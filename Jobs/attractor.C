@@ -36,7 +36,7 @@ attractor::attractor(baseModel* const bMod,const xyRange& axes,
 
 void attractor::simulation()
 {
-    long colChange=length/6;           // for better viewing there are 6 colors
+    qint64 colChange=length/6;           // for better viewing there are 6 colors
 				       // used to draw the attractor
     const qreal *state[2];
 
@@ -44,13 +44,13 @@ void attractor::simulation()
     state[1]=yParam;
     model->initialize();
 
-    for(long t=0;t<length;t++) {
+    for(qint64 t=0;t<length;t++) {
         model->iteration(t+1);
         if( t >= limit && inRange(*xParam,*yParam) ) {
     //	    hash->storePoint(state);     // save the results
             if( screenGraphics )
             screenGraphics->setPoint(*xParam,*yParam,
-                         (short)((t/colChange)+1));
+                         (int)((t/colChange)+1));
                                                          // and draw them
 
         }

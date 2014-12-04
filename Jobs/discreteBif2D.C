@@ -21,8 +21,8 @@ discreteBif2D::discreteBif2D(baseModel* const bMod, const xyRange& axes,
     :geometricJob(bMod,axes,graph)
 {
     length=model->getLength();
-    limit=(long)(0.66*length);			// 66% are thrown away
-    stepX=(short)((xmax-xmin) / (axes.res[0]-1));
+    limit=(qint64)(0.66*length);			// 66% are thrown away
+    stepX=(int)((xmax-xmin) / (axes.res[0]-1));
 }
 
 /******************************************************************************/
@@ -37,7 +37,7 @@ discreteBif2D::discreteBif2D(baseModel* const bMod, const xyRange& axes,
 
 void discreteBif2D::simulation()
 {
-    long t;
+    qint64 t;
 
     int *xInt=(int*)xParam;
     qreal nextX;

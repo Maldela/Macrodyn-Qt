@@ -218,7 +218,7 @@ void laborMarketFirst::receiveParameters(const qreal* parameters)
     kappa=parameters[16];
     lambda=parameters[17];
     mu=parameters[18];
-    length=(long)(parameters[19]);
+    length=(qint64)(parameters[19]);
     w0=parameters[20];
     mS0=parameters[21];
     mW0=parameters[22];
@@ -412,9 +412,9 @@ qreal laborMarketFirst::detWtRate(qreal& sigmaL)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal laborMarketFirst::expectedInflationRateW(const long t)
+qreal laborMarketFirst::expectedInflationRateW(const qint64 t)
 {
-	long I,index;
+	qint64 I,index;
 	qreal help=0.0;
 
 	I=MIN(t,tauW);
@@ -458,9 +458,9 @@ qreal laborMarketFirst::demandYoungW(qreal& cpsW)
 /* Last modified:   30.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal laborMarketFirst::expectedInflationRateS(const long t)
+qreal laborMarketFirst::expectedInflationRateS(const qint64 t)
 {
-	long I,index;
+	qint64 I,index;
 	qreal help=0.0;
 
 	I=MIN(t,tauS);
@@ -626,7 +626,7 @@ void laborMarketFirst::dynamics(qreal& yteff,qreal& xtS,qreal& xtW)
 /* Last modified:   08.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::iteration(const long& t)
+void laborMarketFirst::iteration(const qint64& t)
 {
   qreal ztnot;		// labor demand
   qreal sigmaL;		// labor market imbalance

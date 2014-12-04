@@ -34,7 +34,7 @@ cellBif2D::cellBif2D(baseModel* const bMod, const xyRange& axes,
 
 void cellBif2D::simulation()
 {
-    long t;
+    qint64 t;
     qreal hx=(xmax-xmin+0.0001)/10000.0;
     qreal hy=(ymax-ymin+0.0001)/10000.0;
 

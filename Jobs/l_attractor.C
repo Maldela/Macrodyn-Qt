@@ -45,24 +45,24 @@ l_attractor::l_attractor(baseModel* const bMod,const xyRange& axes,
 
 void l_attractor::simulation()
 {
-    long colChange=length/6;           // for better viewing there are 6 colors
+    qint64 colChange=length/6;           // for better viewing there are 6 colors
 				       // used to draw the attractor
     qreal old_x = 0;
     qreal old_y = 0;
 
     model->initialize();
 
-    for(long t=0;t<length;t++) {
+    for(qint64 t=0;t<length;t++) {
         old_x = *xParam;
 	old_y = *yParam;
 	model->iteration(t+1);
 	if( t >= limit /*&& inRange(*xParam,*yParam)*/ ) {
 	    if( screenGraphics ){
 		screenGraphics->drawLine(old_x,old_y,*xParam,*yParam,
-					(short)((t/colChange)+1));
+                    (int)((t/colChange)+1));
 		if ( pointsize > 1 )
 		screenGraphics->setBigPoint(old_x,old_y,
-		(short)((t/colChange)+1),pointsize);
+        (int)((t/colChange)+1),pointsize);
 	    }
 	                                                 // and draw them
 	}

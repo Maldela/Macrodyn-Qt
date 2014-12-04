@@ -32,11 +32,11 @@
 
 class phase_plot : public geometricJob {
   protected:
-    long lag_size;	// the size of the lag (k)
+    qint64 lag_size;	// the size of the lag (k)
     int pointsize;
 
   public:
-    phase_plot(long, baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL, int psize=1);
+    phase_plot(qint64, baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL, int psize=1);
     void simulation();
 };
 

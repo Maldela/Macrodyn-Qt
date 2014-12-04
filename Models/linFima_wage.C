@@ -422,7 +422,7 @@ log() << "R=" << R << "\n";
 // Funktionsname:	iteration
 // Beschreibung:	Durchlauf einer Periode
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_wage::iteration(const long& t)
+void linFima_wage::iteration(const qint64& t)
 {
 // Die Prognosen der Chartisten und Fundamentalisten ist extern vorgeschaltet !
 

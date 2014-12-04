@@ -84,9 +84,9 @@ void excOlg::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-qreal excOlg::expInflRateYoung(const long t)
+qreal excOlg::expInflRateYoung(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     
     T=MIN(t,tau);
@@ -104,9 +104,9 @@ qreal excOlg::expInflRateYoung(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal excOlg::expInflRateOld(const long t)
+qreal excOlg::expInflRateOld(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     
     T=MIN(t,tau);
@@ -172,7 +172,7 @@ void excOlg::thetaShift()
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::iteration(const long& t)
+void excOlg::iteration(const qint64& t)
 {
     qreal ptratex;
 
@@ -379,7 +379,7 @@ void excOlg::receiveParameters(const qreal* parameters)
     delta=parameters[0];
     rho=parameters[1];
     tau=(int)(parameters[2]);
-    length=(long)(parameters[3]);
+    length=(qint64)(parameters[3]);
     theta0=parameters[4];
 }
 
@@ -407,7 +407,7 @@ excOlgAdapt::excOlgAdapt()
 /*                                                                            */
 /******************************************************************************/
 
-qreal excOlgAdapt::expInflRateYoung(const long)
+qreal excOlgAdapt::expInflRateYoung(const qint64)
 {
     qreal expInflRate;
 
@@ -426,7 +426,7 @@ qreal excOlgAdapt::expInflRateYoung(const long)
 /*                                                                            */
 /******************************************************************************/
 
-qreal excOlgAdapt::expInflRateOld(const long)
+qreal excOlgAdapt::expInflRateOld(const qint64)
 {
     qreal expInflRate;
 
@@ -445,7 +445,7 @@ qreal excOlgAdapt::expInflRateOld(const long)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::iteration(const long& t)
+void excOlgAdapt::iteration(const qint64& t)
 {
     qreal ptratex;
 
@@ -595,7 +595,7 @@ void excOlgAdapt::receiveParameters(const qreal* parameters)
     delta=parameters[0];
     rho=parameters[1];
     tau=(int)(parameters[2]);
-    length=(long)(parameters[3]);
+    length=(qint64)(parameters[3]);
     etaYoung=parameters[4];
     etaOld=parameters[5];
     theta0=parameters[6];
@@ -641,9 +641,9 @@ void excOlgGeoExp::initialize()
 /*                                                                            */
 /******************************************************************************/
 
-qreal excOlgGeoExp::expInflRateYoung(const long t)
+qreal excOlgGeoExp::expInflRateYoung(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     qreal etaSum=0.0;
     qreal exponent=0.0;
@@ -667,9 +667,9 @@ qreal excOlgGeoExp::expInflRateYoung(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal excOlgGeoExp::expInflRateOld(const long t)
+qreal excOlgGeoExp::expInflRateOld(const qint64 t)
 {
-    long T,counter;
+    qint64 T,counter;
     qreal help=0.0;
     qreal etaSum=0.0;
     qreal exponent=0.0;
@@ -693,7 +693,7 @@ qreal excOlgGeoExp::expInflRateOld(const long t)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::iteration(const long& t)
+void excOlgGeoExp::iteration(const qint64& t)
 {
     qreal ptratex;
 
@@ -843,7 +843,7 @@ void excOlgGeoExp::receiveParameters(const qreal* parameters)
     delta=parameters[0];
     rho=parameters[1];
     tau=(int)(parameters[2]);
-    length=(long)(parameters[3]);
+    length=(qint64)(parameters[3]);
     etaYoung=parameters[4];
     etaOld=parameters[5];
     theta0=parameters[6];

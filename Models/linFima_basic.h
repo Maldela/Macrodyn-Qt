@@ -3,7 +3,7 @@
 // Klassendefinition
 //
 // Name: linFima_basic.h
-//       lineares Finanzmarktmodell mit Erwartungsrückkoppelung 
+//       lineares Finanzmarktmodell mit ErwartungsrÃ¼ckkoppelung
 //       (Basis Version)
 //
 // Code: Markus Kopyciok
@@ -39,7 +39,7 @@ protected:
 	// noise
         qreal xi0;		// Initialisierung
 		rand_var *zvar;		// Zufallsvariable
-        qreal xi_min, xi_max;    // Grenzen der Störgröße
+        qreal xi_min, xi_max;    // Grenzen der StÃ¶rgrÃ¶ÃŸe
 				
 
 	// Dividendenprozess d = psi * d + xi
@@ -51,13 +51,13 @@ protected:
 
 	// Parameter	
         qreal alpha;		// Zinsrate (R)
-        qreal beta;		// Heterogenitäten der Ökonomie(invphi)
+        qreal beta;		// HeterogenitÃ¤ten der Ã–konomie(invphi)
 	
         qreal gamma;		// Fehlerkorrekturfaktor der Naiven Erwartungen
         qreal L;			// Lag der Durchschnittlichen Erwartungen
 	
 	// Iterationen
-	   // geschützte Variable aus baseModel
+       // geschÃ¼tzte Variable aus baseModel
 
 	// Modellauswahl
 		int MODELL;      	// 1= Rationale Erwartungen (RE) 
@@ -73,8 +73,8 @@ protected:
         qreal my;		// Rekursiver Mittelwert cum Dividenden Preis
 		
 	//Funktionen
-        qreal rekursiverMittelwertx(const long);
-        qreal rekursiverMittelwerty(const long);
+        qreal rekursiverMittelwertx(const qint64);
+        qreal rekursiverMittelwerty(const qint64);
 
 
 public:
@@ -89,7 +89,7 @@ public:
     void sendStateSpace(int &,const qreal***);
     void sendParameters(int&, qreal**);
     void receiveParameters(const qreal*);
-	void iteration(const long&t);
+    void iteration(const qint64&t);
 
 };
 

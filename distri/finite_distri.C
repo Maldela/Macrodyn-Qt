@@ -18,11 +18,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-finite_Distri::finite_Distri(const unsigned n, const qreal *pro, const int first) :
+finite_Distri::finite_Distri(const uint n, const qreal *pro, const int first) :
 prob_Distri(0), no(n), prob(new  qreal[no]),  cumu(new  qreal[no]), start(first)
 {
     if (!no)  return;
-    for (unsigned  i=0; i < no ; i++)
+    for (uint  i=0; i < no ; i++)
     {
         if ((prob[i] = (pro ? pro[i] : 1.0/no)) < 0.0)
            fatalError("finite_Distri::finite_Distri","probability is negative");
@@ -32,7 +32,7 @@ prob_Distri(0), no(n), prob(new  qreal[no]),  cumu(new  qreal[no]), start(first)
     if (!cumu[no-1])
         fatalError("finite_Distri::finite_Distri","all probabilities are zero");
     if (cumu[no-1] != 1.0)
-        for (unsigned  i=0; i < no ; i++)
+        for (uint  i=0; i < no ; i++)
             prob[i] /= cumu[no-1],
             cumu[i] /= cumu[no-1];
 }
@@ -108,7 +108,7 @@ finite_Distri& finite_Distri::operator=(const finite_Distri & given)
    {   state = given.state;
        no = given.no;
        start = given.start;
-       for (unsigned i=0; i < no ; i++)
+       for (uint i=0; i < no ; i++)
            prob[i] = given.prob[i],
            cumu[i] = given.cumu[i];
    }
@@ -130,7 +130,7 @@ finite_Distri& finite_Distri::operator=(const finite_Distri & given)
 inline qreal  finite_Distri::density(const int arg) const
 {
     if (arg < start)  return  0.0;
-    if (arg >= start+no)  return  0.0;
+    if (arg >= (int)start+no)  return  0.0;
     return  prob[arg-start];
 }
 
@@ -146,10 +146,10 @@ inline qreal  finite_Distri::density(const int arg) const
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-inline qreal  finite_Distri::cumulat(const int arg) const
+inline qreal finite_Distri::cumulat(const int arg) const
 {
     if (arg < start)  return  0.0;
-    if (arg >= start+no)  return  1.0;
+    if (arg >= (int)start+no)  return  1.0;
     return  cumu[arg-start];
 }
 
@@ -165,7 +165,7 @@ inline qreal  finite_Distri::cumulat(const int arg) const
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-inline qreal  finite_Distri::inverse(const qreal arg) const
+inline qreal finite_Distri::inverse(const qreal arg) const
 {
    if (arg < 0.0 || arg > 1.0)
        fatalError("finite_Distri::inverse","parameter out of range");

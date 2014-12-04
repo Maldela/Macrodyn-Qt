@@ -39,7 +39,7 @@ protected:
 	distribution distri;
 	qreal lambda;
 	qreal noise;
-	long myseed;
+	qint64 myseed;
 	
 	qreal y2;			// state variable
 	qreal y1;			// old state
@@ -54,7 +54,7 @@ public:
     void saveParamset(ofstream&);
     void saveParamsetWithNames(ofstream&);    
     void printParamset();
-    void iteration(const long&);
+    void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
     qreal* setLabels(char*);

@@ -214,7 +214,7 @@ void OlgRat::receiveParameters(const qreal* parameters)
     tau=parameters[2];
     s=parameters[3];
     lambda=parameters[4];
-    length=(long)(parameters[5]);
+    length=(qint64)(parameters[5]);
 }
 
 /******************************************************************************/
@@ -227,7 +227,7 @@ void OlgRat::receiveParameters(const qreal* parameters)
 /******************************************************************************/
 
 
-void OlgRat::iteration(const long&)
+void OlgRat::iteration(const qint64&)
 {
     qreal mg=m+g;
     qreal min;
@@ -242,7 +242,7 @@ void OlgRat::iteration(const long&)
     m = (1-tau) * min * exp( (-lambda) * (mg-s) / max );
 }
 
-void OlgRat2::iteration(const long&)
+void OlgRat2::iteration(const qint64&)
 {
     qreal mg=m+g;
     qreal min;

@@ -55,7 +55,7 @@ Samuelson_basic::~Samuelson_basic()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::iteration(const long&)
+void Samuelson_basic::iteration(const qint64&)
 {
 	noise = distri.rectangular()*2.0*lambda;
 	v_0noise = distri.rectangular();
@@ -315,7 +315,7 @@ void Samuelson_basic::receiveParameters(const qreal* parameters)
     m=parameters[4];
     v=parameters[5];
     lambda=parameters[6];
-    length=long(parameters[7]);
+    length=qint64(parameters[7]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -330,7 +330,7 @@ void Samuelson_basic::receiveParameters(const qreal* parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_ar1::iteration(const long&)
+void Samuelson_ar1::iteration(const qint64&)
 {
 	noise = distri.rectangular()*2.0*lambda*(1-a);
 	xi = a*xi+noise;

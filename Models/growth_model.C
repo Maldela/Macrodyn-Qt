@@ -420,7 +420,7 @@ growth_model::growth_model() : baseModel(1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void growth_model::iteration(const long& )
+void growth_model::iteration(const qint64& )
 { 
   qreal k_n;		// value of k for the next period
 //  y = (*pf)(k,a,b,c,alpha);
@@ -705,7 +705,7 @@ rgrowth_model::rgrowth_model() : growth_model()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rgrowth_model::iteration(const long& t)
+void rgrowth_model::iteration(const qint64& t)
 {
   * zvar_ptr = zvar->dice();	// Set a new random value for the Parameter
   growth_model::iteration(t);	// iterate as usual
@@ -1098,7 +1098,7 @@ void depreciate::printParamset()
 // By:                  Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-void depreciate::iteration(const long& t)
+void depreciate::iteration(const qint64& t)
 {
   _z = (* theta ) (_z, my);			   // iterate _z
   * _z_var_ptr = trans(_z,trans_x,trans_a,trans_b);// transform _z to _z_var_ptr
@@ -1311,7 +1311,7 @@ void pasinetti::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void pasinetti::iteration(const long& t)
+void pasinetti::iteration(const qint64& t)
 { 
 
 	growth_model::iteration(t);

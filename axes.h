@@ -33,7 +33,7 @@ friend QDataStream& operator<<(QDataStream&, const xyRange&);
 
 public:
 
-    short dimension;		// dimension of the state space or parameter
+    int dimension;		// dimension of the state space or parameter
 				// space under consideration
     QList<QString> label;		// array for the labels
     QList<qreal> min;			// array for the minimum values (for each
@@ -42,8 +42,8 @@ public:
     QList<qint64> res;			// resolution used in each dimension
     QList<QColor> zeroline;		// -1 non; > color of zeroline
 
-    xyRange(short, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&, const QList<QColor>&);	// constructor
-    xyRange(short, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&);	// old constructor
+    xyRange(int, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&, const QList<QColor>&);	// constructor
+    xyRange(int, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&);	// old constructor
     xyRange(QDataStream&);         // create instance from a file
     xyRange(const xyRange&);	// copy constructor
     ~xyRange() {}			// destructor

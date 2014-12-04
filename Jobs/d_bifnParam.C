@@ -58,7 +58,7 @@ d_bifnParam::~d_bifnParam()
 
 void d_bifnParam::simulation()
 {
-    long t;				// time
+    qint64 t;				// time
     int k;
     qreal dy;
     qreal x=0;

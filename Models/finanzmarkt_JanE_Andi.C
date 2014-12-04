@@ -34,7 +34,7 @@ finanzmarkt_JanE::finanzmarkt_JanE() : baseModel(2)
 	zvar2	= NULL;
 	zvar3	= NULL;
 	zvar4	= NULL;
-	cout << "Reached constructor in finanzmarkt_JanE" << endl;
+    log() << "Reached constructor in finanzmarkt_JanE" << "\n";
 
 	d = new matrix_neu(2,1);
 	if( !(d) )
@@ -219,7 +219,7 @@ finanzmarkt_JanE::finanzmarkt_JanE() : baseModel(2)
 
 finanzmarkt_JanE::~finanzmarkt_JanE()
 {
-	cout << "Reached destructor in finanzmarkt_JanE" << endl;
+    log() << "Reached destructor in finanzmarkt_JanE" << "\n";
 	if(zvar1) 		delete zvar1;
 	if(zvar2) 		delete zvar2;
 	if(zvar3) 		delete zvar3;
@@ -319,7 +319,7 @@ void finanzmarkt_JanE::loadParamset(ifstream& inFile)
 	inFile >> switch_F >> switch_C >> switch_N;		//Schalter Investoren
 
 	for(int i=0;i<L;i++)
-	{												//Diagonalmatrix f r Moving Average
+    {												//Diagonalmatrix für Moving Average
 	inFile >> (*Rho[i])(0,0);						//eingelesenen Wert auf die gesamte Diagonale
 	for(int j=1;j<2;j++)							//setzen
 	(*Rho[i])(j,j) = (*Rho[i])(0,0);	
@@ -448,7 +448,7 @@ Ed2 = gamma1*d2;
 
 
 
-//Erechnen des Wertes der Peaks, (c1,c2), der Verteilungsfunktion f r Noise
+//Erechnen des Wertes der Peaks, (c1,c2), der Verteilungsfunktion für Noise
 	z1=b1-a1;				
 	if (z1==0){				
 		F_c1=0;				
@@ -519,7 +519,7 @@ Ed2 = gamma1*d2;
     *V_N_inv = V_N->inverse();
 
 
-	//Startwerte f r Vorhersagen und cumdividend-Preise, Achtung: Vorhersagen jetzt auf ex-dividend Preise!
+    //Startwerte für Vorhersagen und cumdividend-Preise, Achtung: Vorhersagen jetzt auf ex-dividend Preise!
 	(*q) = (*q0);
 //	delete p;
     *p = (*q0)-(*d);
@@ -529,48 +529,48 @@ Ed2 = gamma1*d2;
     *q_N = (*q_F) - (*E_xi);
 	
 
-	//Initialisierung f r Moving Average
+    //Initialisierung für Moving Average
 	for(i=0;i<L;i++)
 		(*q_MA[i]) = (*p);	
 
 /*	
-cout << "Parameterset"	<< endl;
-cout <<	"eta1_F = " << eta1_F << endl;
-cout <<	"eta2_F = " << eta2_F << endl;
-cout << "eta3_F = " << eta3_F << endl;
+log() << "Parameterset"	<< "\n";
+log() <<	"eta1_F = " << eta1_F << "\n";
+log() <<	"eta2_F = " << eta2_F << "\n";
+log() << "eta3_F = " << eta3_F << "\n";
 
-cout <<	"eta1_C = " << eta1_C << endl;
-cout <<	"eta2_C = " << eta2_C << endl;
-cout << "eta3_C = " << eta3_C << endl;
+log() <<	"eta1_C = " << eta1_C << "\n";
+log() <<	"eta2_C = " << eta2_C << "\n";
+log() << "eta3_C = " << eta3_C << "\n";
 
-cout <<	"eta1_N = " << eta1_N << endl;
-cout <<	"eta2_N = " << eta2_N << endl;
-cout << "eta3_N = " << eta3_N << endl;
+log() <<	"eta1_N = " << eta1_N << "\n";
+log() <<	"eta2_N = " << eta2_N << "\n";
+log() << "eta3_N = " << eta3_N << "\n";
 
-cout <<	"alpha_1 = " << alpha_1 << endl;
-cout <<	"alpha_2 = " << alpha_2 << endl;
-cout << "alpha_3 = " << alpha_3 << endl;
+log() <<	"alpha_1 = " << alpha_1 << "\n";
+log() <<	"alpha_2 = " << alpha_2 << "\n";
+log() << "alpha_3 = " << alpha_3 << "\n";
 
-cout <<	"beta_1 = " << beta_1 << endl;
-cout <<	"beta_2 = " << beta_2 << endl;
-cout << "beta_3 = " << beta_3 << endl;
+log() <<	"beta_1 = " << beta_1 << "\n";
+log() <<	"beta_2 = " << beta_2 << "\n";
+log() << "beta_3 = " << beta_3 << "\n";
 
-cout <<	"e_1 = " << e_1 << endl;
-cout <<	"e_2 = " << e_2 << endl;
-cout <<	"e_3 = " << e_3 << endl;
+log() <<	"e_1 = " << e_1 << "\n";
+log() <<	"e_2 = " << e_2 << "\n";
+log() <<	"e_3 = " << e_3 << "\n";
 
-cout <<	"sr_F = " << sr_F << endl;
-cout <<	"sr_C = " << sr_C << endl;
-cout <<	"sr_N = " << sr_N << endl;
+log() <<	"sr_F = " << sr_F << "\n";
+log() <<	"sr_C = " << sr_C << "\n";
+log() <<	"sr_N = " << sr_N << "\n";
 
-cout <<	"a1 = " << a1 << endl;
-cout <<	"b1 = " << b1 << endl;
-cout <<	"c1 = " << c1 << endl;
-cout <<	"a2 = " << a2 << endl;
-cout <<	"b2 = " << b2 << endl;
-cout <<	"c2 = " << c2 << endl;
+log() <<	"a1 = " << a1 << "\n";
+log() <<	"b1 = " << b1 << "\n";
+log() <<	"c1 = " << c1 << "\n";
+log() <<	"a2 = " << a2 << "\n";
+log() <<	"b2 = " << b2 << "\n";
+log() <<	"c2 = " << c2 << "\n";
 
-cout <<	"r = " << r << endl;
+log() <<	"r = " << r << "\n";
 */
 
 //Achtung: Jetzt in initialize(), vorher in loadParamset()
@@ -598,15 +598,15 @@ if(zvar4) delete zvar4;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_JanE::iteration(const long& t)
+void finanzmarkt_JanE::iteration(const qint64& t)
 { 	
     qreal a_F,a_C, a_N;					//gruppenspezifische Risikotoleranz
     qreal temp1,temp2;
 	int i;
 
-	//cout.precision(16);
+    //log().precision(16);
 	//Abspeichern von Werten aus der Vorperiode 
-	//(f r die Berechnung der Portefeuillerenditen)
+    //(für die Berechnung der Portefeuillerenditen)
 	
 	(*p_old) = (*p);
 	(*x_Fold) = (*x_F);
@@ -614,7 +614,7 @@ void finanzmarkt_JanE::iteration(const long& t)
 	(*x_Nold) = (*x_N);
 
 	//Zufallsdividende fuer die laufende Periode 
-	//ACHTUNG: Position der Berechnung ist abh ngig von Datierung 
+    //ACHTUNG: Position der Berechnung ist abhängig von Datierung
 	//der bedingten Erwartungswerte
 	
 	//Modifikation!!!!
@@ -691,7 +691,7 @@ void finanzmarkt_JanE::iteration(const long& t)
     *A2_F =  (*A_F) + (*A_N);
 
 
-	// Generierung der Dreiecksverteilung f r den Noise-Prozess
+    // Generierung der Dreiecksverteilung für den Noise-Prozess
 	if(F_c1==0){
 		xi1=0;		
 		}
@@ -922,24 +922,24 @@ void finanzmarkt_JanE::iteration(const long& t)
 	//Ausgabe zur Kontrolle:
 
 /*	
-	cout << "sr_F =" << sr_F << endl;
-	cout << "sr_C =" << sr_C << endl;
-	cout << "sr_N =" << sr_N << endl;
-	cout << "mu_F =" << mu_F << endl;
-	cout << "mu_C =" << mu_C << endl;
-	cout << "mu_N =" << mu_N << endl;
-	cout << "sigma_F =" << sigma_F << endl;
-	cout << "sigma_C =" << sigma_C << endl;
-	cout << "sigma_N =" << sigma_N << endl;
-	cout << "eta1_F =" << eta1_F << endl;
-	cout << "eta2_F =" << eta2_F << endl;
-	cout << "eta3_F =" << eta3_F << endl;
-	cout << "eta1_C =" << eta1_C << endl;
-	cout << "eta2_C =" << eta2_C << endl;
-	cout << "eta3_C =" << eta3_C << endl;
-	cout << "eta1_N =" << eta1_N << endl;
-	cout << "eta2_N =" << eta2_N << endl;
-	cout << "eta3_N =" << eta3_N << endl;
+    log() << "sr_F =" << sr_F << "\n";
+    log() << "sr_C =" << sr_C << "\n";
+    log() << "sr_N =" << sr_N << "\n";
+    log() << "mu_F =" << mu_F << "\n";
+    log() << "mu_C =" << mu_C << "\n";
+    log() << "mu_N =" << mu_N << "\n";
+    log() << "sigma_F =" << sigma_F << "\n";
+    log() << "sigma_C =" << sigma_C << "\n";
+    log() << "sigma_N =" << sigma_N << "\n";
+    log() << "eta1_F =" << eta1_F << "\n";
+    log() << "eta2_F =" << eta2_F << "\n";
+    log() << "eta3_F =" << eta3_F << "\n";
+    log() << "eta1_C =" << eta1_C << "\n";
+    log() << "eta2_C =" << eta2_C << "\n";
+    log() << "eta3_C =" << eta3_C << "\n";
+    log() << "eta1_N =" << eta1_N << "\n";
+    log() << "eta2_N =" << eta2_N << "\n";
+    log() << "eta3_N =" << eta3_N << "\n";
 */
 
 }
@@ -1142,30 +1142,30 @@ void finanzmarkt_JanE::saveParamset(ofstream& outFile)
 void finanzmarkt_JanE::printParamset()
 { 	
 	
-	cout << eta1_F << eta2_F << eta3_F << endl;
-	cout << eta1_C << eta2_C << eta3_C << endl;
-	cout <<  alpha_1 << alpha_2 << alpha_3 << endl;
-	cout <<  beta_1 << beta_2 << beta_3 << endl;
-	cout << e_1 << e_2 << e_3 << endl;
-	cout << r << endl;
-	cout << x_all1 << x_all2 << endl;
-	cout << zeta1_F << zeta2_F;
-	cout << zeta1_C << zeta2_C;
-	cout << zeta1_N << zeta2_N;
-	cout << switch_F << switch_C << switch_N;
+    log() << eta1_F << eta2_F << eta3_F << "\n";
+    log() << eta1_C << eta2_C << eta3_C << "\n";
+    log() <<  alpha_1 << alpha_2 << alpha_3 << "\n";
+    log() <<  beta_1 << beta_2 << beta_3 << "\n";
+    log() << e_1 << e_2 << e_3 << "\n";
+    log() << r << "\n";
+    log() << x_all1 << x_all2 << "\n";
+    log() << zeta1_F << zeta2_F;
+    log() << zeta1_C << zeta2_C;
+    log() << zeta1_N << zeta2_N;
+    log() << switch_F << switch_C << switch_N;
 	
 	for(int i=0;i<L;i++)
-		cout << (*Rho[i])(0,0) << endl;	
+        log() << (*Rho[i])(0,0) << "\n";
     for(int i=0;i<2;i++)
-		cout << (*q0)(i,0) << endl;
+        log() << (*q0)(i,0) << "\n";
 	
-	cout << a1 << b1 << c1 << endl;
-	cout << a2 << b2 << c2 << endl;
-   	cout << delta << endl;
-   	cout << b_1 << b_2 << endl;
-	cout << zetamin1 << zetamax1 << gamma1 << endl;
-   	cout << zetamin2 << zetamax2 << gamma2 << endl;
-	cout << length << endl;
+    log() << a1 << b1 << c1 << "\n";
+    log() << a2 << b2 << c2 << "\n";
+    log() << delta << "\n";
+    log() << b_1 << b_2 << "\n";
+    log() << zetamin1 << zetamax1 << gamma1 << "\n";
+    log() << zetamin2 << zetamax2 << gamma2 << "\n";
+    log() << length << "\n";
 
 }
 
@@ -1216,7 +1216,7 @@ qreal* finanzmarkt_JanE::sendModelVar(void)
 
 void finanzmarkt_JanE::sendParameters(int& amount ,qreal** parameters)
 { 
-   cout << "Warning: function sendParameters() is in use" << endl;
+   log() << "Warning: function sendParameters() is in use" << "\n";
    if( *parameters )
 	delete *parameters;
     amount=47;
@@ -1274,7 +1274,7 @@ void finanzmarkt_JanE::sendParameters(int& amount ,qreal** parameters)
 
 void finanzmarkt_JanE::receiveParameters(const qreal* parameters)
 {
-  cout << "Warning: function receiveParameters() is in use" << endl;
+  log() << "Warning: function receiveParameters() is in use" << "\n";
    eta1_F_0 = parameters[0];
    eta2_F_0 = parameters[1];
    eta3_F_0 = parameters[2];
@@ -1321,6 +1321,6 @@ void finanzmarkt_JanE::receiveParameters(const qreal* parameters)
 	zetamin2 = parameters[43];
 	zetamax2 = parameters[44];
 	gamma2 	 = parameters[45];
- 	length=(long)(parameters[46]);
+    length=(qint64)(parameters[46]);
 } 
 

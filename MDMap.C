@@ -87,14 +87,14 @@ md_Map::md_Map(char* filename)
 		inFile >> daugther[i];
 	}
 	
-	value_field = new double[long(resolution)*long(model_dim)*time_limit];
+    value_field = new double[qint64(resolution)*qint64(model_dim)*time_limit];
 	if ( !value_field ) 
 		log() << "mdMap::mdMap can't allocate memory\n" << "\n";
 /*	for (i=0;i<resolution;i++){
 		values[i] = new const double* [model_dim];
 		for (int j=0;j<model_dim;j++){
 			values[i][j] = new double[time_limit];
-			for (long k=0;k<time_limit;k++){
+            for (qint64 k=0;k<time_limit;k++){
 //				inFile >> values[i][j][k];
 			}
 		}

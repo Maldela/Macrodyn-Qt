@@ -433,7 +433,7 @@ void armax::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax::iteration(const long& t)
+void armax::iteration(const qint64& t)
 { 	
 
 //	qreal temp_max = ((L>K) ? L : K);	//max of L,K

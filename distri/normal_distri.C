@@ -172,14 +172,14 @@ qreal normal_Distri::inverse(const qreal arg) const
         y= -sqrt(-log( arg*arg*(-4.0*M_PI*log(arg))));
     else
     {
-        const unsigned  N=10;
+        const uint  N=10;
         const qreal taylor[N]={1,1,7,127,4369,243649, 20036983.,
                               2280356863.,343141433761.,65967241200001.};
         qreal  t = taylor[N-1];
         y= C1*(arg-0.5);
         z= y*y;
         //  Taylorapproximation --- better would be Chebychev
-        for (unsigned  i=N-1;i>0;i--)
+        for (uint  i=N-1;i>0;i--)
             t =  taylor[i-1]+t*z/(2*i)/(2*i+1);
         y *= t;
         //   y *= (1.0+z/6.0*(1.0+z/20.0*(7.0+z/42.0*(127+z/72.0*4369.0))));

@@ -54,7 +54,7 @@ timeSeriesJob::~timeSeriesJob()
 /*                                                                            */
 /******************************************************************************/
 
-void timeSeriesJob::saveSeries(const long& t)
+void timeSeriesJob::saveSeries(const qint64& t)
 {
     if( (t>=0) && (t<=length) )
 	timeSeriesqreal[t]=*modelVar;

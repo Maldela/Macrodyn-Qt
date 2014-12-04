@@ -21,7 +21,7 @@ bif2D::bif2D(baseModel* const bMod, const xyRange& axes,
           :geometricJob(bMod,axes,graph)
 {
     length=model->getLength();
-    limit=(long)(0.2*length);			// 20% are thrown away
+    limit=(qint64)(0.2*length);			// 20% are thrown away
     stepX=(xmax-xmin) / (axes.res[0]-1);
 }
 /******************************************************************************/
@@ -49,7 +49,7 @@ void bif2D::setStepX(const qreal& toSet)
 
 void bif2D::simulation()
 {
-    long t;
+    qint64 t;
     qreal dummy_x;
 
 //    for(*xParam=xmin;*xParam<=xmax; *xParam+=stepX) {

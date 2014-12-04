@@ -42,7 +42,7 @@ cobweb::cobweb() : baseModel(1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::iteration(const long& t)
+void cobweb::iteration(const qint64& t)
 {
 	p_e = (1.0-w)*p_e_old + w*1.0/b*(a-atan(lambda*p_e_old));
 	q = atan(lambda*p_e);
@@ -284,7 +284,7 @@ void cobweb::sendParameters(int& amount,qreal** parameters)
 void cobweb::receiveParameters(const qreal* parameters)
 {
     p=parameters[0];
-    length=long(parameters[1]);
+    length=qint64(parameters[1]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -316,7 +316,7 @@ rdemand_cobweb::rdemand_cobweb()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rdemand_cobweb::iteration( const long& t )
+void rdemand_cobweb::iteration( const qint64& t )
 {
 	*zvar_ptr = zvar->dice();
 	p_e = (1.0-w)*p_e_old + w*1.0/b*(a-atan(lambda*p_e_old));
@@ -420,7 +420,7 @@ void cobweb_RLS::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb_RLS::iteration(const long& t)
+void cobweb_RLS::iteration(const qint64& t)
 {
 	p_e_old = p_e;
 	p_e = theta_t * p;

@@ -38,7 +38,7 @@ class defbudba : public baseModel {
     qreal y;                          // actual output
     
     qreal prodFunction(const qreal&);
-    virtual qreal expectedInflationRate(const long);                
+    virtual qreal expectedInflationRate(const qint64);                
     void notProd(qreal&,qreal&);                        
     void notCom(qreal&,qreal&,qreal&);                         
     void empAndOut(qreal&,qreal&);
@@ -53,7 +53,7 @@ public:
     void saveParamset(ofstream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
-    virtual void iteration(const long&);    // perform one iteration 
+    virtual void iteration(const qint64&);    // perform one iteration 
     qreal* setLabels(char*);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name

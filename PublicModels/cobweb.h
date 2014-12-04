@@ -47,7 +47,7 @@ public:
     void saveParamset(ofstream&);
     void saveParamsetWithNames(ofstream&);
     void printParamset();
-    void iteration(const long&);
+    void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
     qreal* setLabels(char*);
@@ -84,7 +84,7 @@ private:
 public:
 	void loadParamset( ifstream& inFile );
 	void initialize();
-	void iteration( const long& );
+	void iteration( const qint64& );
     qreal* setLabels(char*);
 };
 
@@ -111,7 +111,7 @@ private:
 public:
 	rdemand_cobweb();			//constructor
 	void loadParamset( ifstream& );		//load parameterset
-	void iteration( const long& );		//iterate ones
+	void iteration( const qint64& );		//iterate ones
 	void initialize(void);			//initialize
 };
 

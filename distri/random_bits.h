@@ -18,25 +18,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-typedef struct { unsigned  availible_bits;
-                 unsigned  size;
-                 unsigned  *word; } random_state;
+typedef struct { uint  availible_bits;
+                 uint  size;
+                 uint  *word; } random_state;
 
 class randomBits {
 public: 
-    static unsigned  generator_state_size() ;   // # needed internal variables
+    static uint  generator_state_size() ;   // # needed internal variables
     randomBits();                               // constructor
     ~randomBits();                              // destructor
-    void random_bits(unsigned, unsigned *, unsigned offset = 0);
+    void random_bits(uint, uint *, uint offset = 0);
                                                 // return random bit sequence
-    unsigned  search_next_1_bit(const bool);    // search next 1 bit
+    uint  search_next_1_bit(const bool);    // search next 1 bit
     random_state & attach_state(random_state&); // attach new generator state
     static random_state & default_state(random_state* =0 );// return default state
 private:
     random_state * state;                       // pointer to random-state
     void discrete_random_state_generator();     // discrete random generator
-    static unsigned twist (unsigned);           // local twister of next bits
-    static unsigned  generated_bits();          // # generated random bits
+    static uint twist (uint);           // local twister of next bits
+    static uint  generated_bits();          // # generated random bits
 };
 
 #endif

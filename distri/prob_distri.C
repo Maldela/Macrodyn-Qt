@@ -13,7 +13,7 @@ const char * NOT_IMPLEMENTED = " is not implemented\n";
 //
 //  Member function:  state_size
 //
-//  Purpose:          return the number of unsigned used for state space
+//  Purpose:          return the number of uint used for state space
 //
 //
 //  Created:          2001-12-08 (Achim Flammenkamp)
@@ -23,7 +23,7 @@ const char * NOT_IMPLEMENTED = " is not implemented\n";
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-inline unsigned prob_Distri::state_size()  const
+inline uint prob_Distri::state_size()  const
 {
    return  state.size;
 }
@@ -44,10 +44,10 @@ inline unsigned prob_Distri::state_size()  const
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-prob_Distri::prob_Distri(const unsigned size)
+prob_Distri::prob_Distri(const uint size)
 {
    state.size = size + randomBits::generator_state_size();
-   state.word = new unsigned [state.size];
+   state.word = new uint [state.size];
    randomBits::default_state(&state);
 }
 
@@ -96,8 +96,8 @@ prob_Distri& prob_Distri::operator=(const prob_Distri & given)
    if (this != &given)
    {   state.size = given.state_size();
        delete[] state.word;
-       if ((state.word = given.state.word) ? new unsigned [state.size] : 0)
-           for (unsigned i=0; i < state.size ; i++)
+       if ((state.word = given.state.word) ? new uint [state.size] : 0)
+           for (uint i=0; i < state.size ; i++)
                state.word[i] = given.state.word[i];
        state.availible_bits = given.state.availible_bits;
    }
@@ -195,12 +195,12 @@ inline qreal  prob_Distri::inverse(const qreal) const
 #include <time.h>
 #include <sys/times.h>
 
-void  prob_Distri::seed(const unsigned *array = 0, const unsigned no = 1)
+void  prob_Distri::seed(const uint *array = 0, const uint no = 1)
 {
-    unsigned  count = min(no,randomBits::generator_state_size());
+    uint  count = min(no,randomBits::generator_state_size());
     if (array)
     {
-        for (unsigned  i=0; i < count; i++)
+        for (uint  i=0; i < count; i++)
             state.word[i]= array[i];
         state.availible_bits = count * bits_per_word;
     }
@@ -210,14 +210,14 @@ void  prob_Distri::seed(const unsigned *array = 0, const unsigned no = 1)
 // number of seconds since 1970-01-01
         if (count > 0)
         {
-            state.word[0] = unsigned( time(NULL) );
+            state.word[0] = uint( time(NULL) );
             state.availible_bits = bits_per_word;
         }
         if (count > 1)
         {   struct tms  dummy;
 // number of TICKS since boot
-            state.word[1] = unsigned( times(&dummy) );
-            for (unsigned  i= state.word[1]; i; i>>=1)
+            state.word[1] = uint( times(&dummy) );
+            for (uint  i= state.word[1]; i; i>>=1)
                 state.availible_bits += 1;
         }
     }
@@ -243,7 +243,7 @@ void  prob_Distri::save_state(random_state &new_state)
 {
    if (new_state.size < state.size)
        return;
-   for (unsigned  i=0; i < state.size; i++)
+   for (uint  i=0; i < state.size; i++)
        new_state.word[i] = state.word[i];
    new_state.availible_bits = state.availible_bits;
    new_state.size = state.size;
@@ -268,10 +268,10 @@ void  prob_Distri::save_state(random_state &new_state)
 
 void  prob_Distri::swap_state(random_state  &new_state)
 {
-   unsigned  dummy;
+   uint  dummy;
    if (new_state.size != state.size)
        return;
-   for (unsigned  i=0; i < state.size; i++)
+   for (uint  i=0; i < state.size; i++)
    {
        dummy =state.word[i];
        state.word[i]= new_state.word[i];

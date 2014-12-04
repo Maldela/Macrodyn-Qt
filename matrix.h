@@ -33,11 +33,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 struct matrixDef {		
     friend ostream& operator<<(ostream&, const matrixDef&);
-	matrixDef(const unsigned short&,const unsigned short&);	// constructor
+    matrixDef(const uint&, const uint&);	// constructor
 	~matrixDef();	// destructor
 		
-	unsigned short row; // size of matrix
-	unsigned short column; // size of matrix
+    uint row; // size of matrix
+    uint column; // size of matrix
     qreal** m;
 };   
 
@@ -56,20 +56,20 @@ class matrixFn {
 	matrixFn(void);	// constructor
 //	~matrixFn();	// destructor
 
-	void coutMatrix(const matrixDef*); // print matrix on standard out
+    void coutMatrix(const matrixDef*); // print matrix on standard out
 
     qreal determinant(const matrixDef*);
 
 	void inverse(const matrixDef*,matrixDef*); // in,out
-	  // dimension and memory of out matrix won´t be done
+      // dimension and memory of out matrix won't be done
 	  // in function inverse(in,out)
 	matrixDef* inverse(const matrixDef*); // out=(in)^-1
 	  // generates new container => use a empty pointer for output!
 
 	void transpose(const matrixDef*,matrixDef*); // in,out
-	  // dimension and memory of out matrix won´t be done
+      // dimension and memory of out matrix won't be done
 	  // in function transpose(in,out)
-	matrixDef* transpose(const matrixDef*); // out=(in)´
+    matrixDef* transpose(const matrixDef*);
 	  // generates new container => use a empty pointer for output!
 
 	void subtract(const matrixDef* A, const matrixDef* B, matrixDef* C);
@@ -96,12 +96,12 @@ class matrixFn {
 	  // out=A*B  !use a empty pointer with output!
 
 	void multiplyATB(const matrixDef* A, const matrixDef* B, matrixDef* C);
-	  // dimension and memory of C will not be done in function multiplyA´B
+      // dimension and memory of C will not be done in function multiplyATB
 	matrixDef* multiplyATB(const matrixDef* A, const matrixDef* B);
 	  // out=A'*B  !use a empty pointer with output!
 
 	void multiplyABT(const matrixDef* A, const matrixDef* B, matrixDef* C);
-	  // dimension and memory of C will not be done in function multiplyAB´
+      // dimension and memory of C will not be done in function multiplyABT
 	matrixDef* multiplyABT(const matrixDef* A, const matrixDef* B);
 	  // out=A*B'  !use a empty pointer with output!
 

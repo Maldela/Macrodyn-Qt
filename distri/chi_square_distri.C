@@ -3,7 +3,7 @@
 #include "chi_square_distri.h"
 #include <math.h>
 #include "error.h"
-const unsigned  n_max = 32;  // maximal n_max/2 iterations in each loop
+const uint  n_max = 32;  // maximal n_max/2 iterations in each loop
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ const unsigned  n_max = 32;  // maximal n_max/2 iterations in each loop
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-chi_square_Distri::chi_square_Distri(const unsigned free) :
+chi_square_Distri::chi_square_Distri(const uint free) :
 prob_Distri(0), n(free)
 {
     if (!n)
@@ -86,7 +86,7 @@ qreal chi_square_Distri::random()
     return  random(n);
 }
 
-qreal chi_square_Distri::random(const unsigned free)
+qreal chi_square_Distri::random(const uint free)
 {
     if (!free)
         fatalError("chi_square_Distri::random","number of free must be positive");

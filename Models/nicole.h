@@ -36,7 +36,7 @@ public:
     void printParamset();		 // print parameterset on the screen
     void saveParamsetWithNames(ofstream&);// add parametset to printerfile
     qreal* setLabels(char*);		 // return a pointer to a variable
-    virtual void iteration(const long&); // perform one iteration 
+    virtual void iteration(const qint64&); // perform one iteration 
     qreal* sendModelVar();		 // obsolete and unused
     void sendStateSpace(int &,const qreal***);// obsolete
     void sendParameters(int&,qreal**); 	 // unused

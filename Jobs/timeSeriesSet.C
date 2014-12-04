@@ -23,7 +23,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 timeSeriesSet::timeSeriesSet(baseModel* const bMod, const xyRange& axes, 
-				char* const fileName, bool surf, long res) 
+                char* const fileName, bool surf, qint64 res)
           :geometricJob(bMod,axes,NULL), xmin(axes.min[0])
 	  , xmax(axes.max[0]), ymin(axes.min[1]), ymax(axes.max[1]),
 	  zmin(res), zmax(axes.max[2]), surface(surf)
@@ -43,7 +43,7 @@ timeSeriesSet::timeSeriesSet(baseModel* const bMod, const xyRange& axes,
 		outFile.open("data3D_timeseries.dat",ios::out);
 
 	stepX=(xmax-xmin) / ymax;
-	limit=long(ymin);		// definiert den ersten Beobachtungszeitpunkt
+    limit=qint64(ymin);		// definiert den ersten Beobachtungszeitpunkt
     log() << zmin << " " ;
     log() << "finished\n" << "\n";
 }
@@ -82,7 +82,7 @@ void timeSeriesSet::simulation()
 	double fortschritt = 0;
 	double schritt = double(100/((xmax-xmin)/stepX));
 	qreal oldy, oldx;
-	long t;
+    qint64 t;
 	model->initialize();
 	
 	if ( surface==true ){

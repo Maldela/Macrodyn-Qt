@@ -108,7 +108,7 @@ public:
     void noise_iteration(st_olg_paramset*);
     void read_sim(ifstream&,st_olg_paramset*);
     void delete_st_olg_paramset_stochptr(st_olg_paramset*);
-    void iteration(const long&);
+    void iteration(const qint64&);
     void expection(qreal,qreal);
     void initialize();
     qreal* setLabels(char*);

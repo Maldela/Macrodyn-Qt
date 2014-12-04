@@ -38,8 +38,8 @@ int MacrodynGraphicsItem::drawAxis()
     int i;
     int axisMark;
     QString markLabel;
-    QString shortxLabel = axis->label.at(0).left(MAXLABELLENGTH + 2);
-    QString shortyLabel = axis->label.at(1).left(MAXLABELLENGTH + 2);;
+    QString intxLabel = axis->label.at(0).left(MAXLABELLENGTH + 2);
+    QString intyLabel = axis->label.at(1).left(MAXLABELLENGTH + 2);;
     QString char_chain;
     QPolygon pointsX;
     pointsX << QPoint(0, 0);         /* coords for arrow on x-axis */
@@ -93,8 +93,8 @@ int MacrodynGraphicsItem::drawAxis()
     painter.setBrush(QBrush(AXISLABELCOLOR));
 
     /* Put Label on axis */
-    painter.drawText(width()-rmargin+2, height()-lowmargin-5, shortxLabel);
-    painter.drawText(5, upmargin-7, shortyLabel);
+    painter.drawText(width()-rmargin+2, height()-lowmargin-5, intxLabel);
+    painter.drawText(5, upmargin-7, intyLabel);
 
     painter.setBrush(QBrush(XICSMARKSCOLOR));
 
@@ -320,7 +320,7 @@ void MacrodynGraphicsItem::drawString(const qreal& x,const qreal& y, const QStri
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void MacrodynGraphicsItem::set_axis(short which, qreal to_min, qreal to_max)
+void MacrodynGraphicsItem::set_axis(int which, qreal to_min, qreal to_max)
 {
     axis->min[which] = to_min;
     axis->max[which] = to_max;
@@ -336,7 +336,7 @@ void MacrodynGraphicsItem::set_axis(short which, qreal to_min, qreal to_max)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void MacrodynGraphicsItem::get_axis(short which, qreal *to_min, qreal *to_max)
+void MacrodynGraphicsItem::get_axis(int which, qreal *to_min, qreal *to_max)
 {
     *to_min = axis->min[which];
     *to_max = axis->max[which];

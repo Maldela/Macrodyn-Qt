@@ -160,7 +160,7 @@ void pureExchange::expInflRateYoung()
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::iteration(const long& t)
+void pureExchange::iteration(const qint64& t)
 {
 
 theta_t = gamma *  (*savingsFunc)(theE_Old, w1, w2, delta, rho)
@@ -375,7 +375,7 @@ void pureExchange::receiveParameters(const qreal* parameters)
     delta=(parameters[8]);
 	rho=(parameters[9]);
 	job_type=(parameters[10]);
-	length=(long)(parameters[11]);
+	length=(qint64)(parameters[11]);
 }
 
 // eof

@@ -18,16 +18,16 @@
 /******************************************************************************/
 
 pacf_plot::pacf_plot(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, long lag_1, long lag_2)
+         MacrodynGraphicsItem* const graph, qint64 lag_1, qint64 lag_2)
           :job(bMod,graph), l_min(lag_1), l_max(lag_2)
 {
 	xmax = axes.max[0];
 	xmin = axes.min[0];
 	ymin = axes.min[1];
 	ymax = axes.max[1];
-	length=long(xmax);			// last iteration to be analysed
-	limit=long(xmin);				// first iteration to be analysed
-	how_many = long(xmax-xmin);
+    length=qint64(xmax);			// last iteration to be analysed
+    limit=qint64(xmin);				// first iteration to be analysed
+    how_many = qint64(xmax-xmin);
 	ts_data = new qreal[how_many];
 	if ( !ts_data ) fatalError("pacf_plot::pacf_plot","can't create data array!");
 	mean_x = 0;
@@ -70,7 +70,7 @@ void pacf_plot::drawBox(qreal lo_x, qreal lo_y, qreal ru_x, qreal ru_y, int colo
 
 void pacf_plot::simulation()
 {
-	long t,i,j,l;
+    qint64 t,i,j,l;
 	qreal low_bound, high_bound;
 	// computing boundaries
 	low_bound = -(2*sqrt(double(1)/double(how_many)));
@@ -121,8 +121,8 @@ void pacf_plot::simulation()
 	
 	// alter Ansatz funktioniert zwar ist aber sehr langsam...
 /*	for ( l=1;l<=l_max;l++){
-		v_short_correlations = new matrix_neu( l, 1 );
-		if ( !v_short_correlations ) fatalError("pacf_plot::pacf_plot","can't allocate short correlation vector!");	
+        v_int_correlations = new matrix_neu( l, 1 );
+        if ( !v_int_correlations ) fatalError("pacf_plot::pacf_plot","can't allocate int correlation vector!");
 		m_correlations = new matrix_neu( l, l );
 		if ( !m_correlations ) fatalError("pacf_plot::pacf_plot","can't allocate correlation matrix!");	
 		m_inv_correlations = new matrix_neu( l,l );
@@ -143,11 +143,11 @@ void pacf_plot::simulation()
 		// solving for Yule-Walker
 		(*m_inv_correlations) = m_correlations->inverse();
 		for ( i=1;i<=l;i++)
-			(*v_short_correlations)(i-1,0) = (*v_correlations)(i,0);
-		(*v_YW_estimators) = (*m_inv_correlations) * (*v_short_correlations);
+            (*v_int_correlations)(i-1,0) = (*v_correlations)(i,0);
+        (*v_YW_estimators) = (*m_inv_correlations) * (*v_int_correlations);
 	
 //		log() << (*m_inv_correlations);
-//		log() << (*v_short_correlations);
+//		log() << (*v_int_correlations);
         log() << (*v_YW_estimators);
 		
         log() << l << ": " << (*v_YW_estimators)(l-1,0) << "\n";
@@ -155,7 +155,7 @@ void pacf_plot::simulation()
 		if ( screenGraphics )
 			screenGraphics->drawLine(l,0,l,(*v_YW_estimators)(l-1,0),9);
 		
-		delete v_short_correlations;
+        delete v_int_correlations;
 		delete m_correlations;
 		delete m_inv_correlations;
 		delete v_YW_estimators;

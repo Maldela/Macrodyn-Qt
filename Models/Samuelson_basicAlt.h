@@ -36,7 +36,7 @@ protected:
 	qreal	y2_0;
 	qreal	lambda;
 	qreal	noise;
-	long	myseed;
+	qint64	myseed;
 	
 	qreal y;			// state variable
 	qreal y1;
@@ -50,7 +50,7 @@ public:
     void saveParamset(ofstream&);
     void saveParamsetWithNames(ofstream&);    
     void printParamset();
-    virtual void iteration(const long&);
+    virtual void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
     qreal* setLabels(char*);
@@ -70,7 +70,7 @@ protected:
 	qreal xi;
 
 public:
-	void iteration(const long& );
+	void iteration(const qint64& );
 	void loadParamset(ifstream& );
 	void initialize();
 	qreal* setLabels(char* label);

@@ -18,16 +18,16 @@
 /******************************************************************************/
 
 acf_plot::acf_plot(baseModel* const bMod, const xyRange& axes, 
-         MacrodynGraphicsItem* const graph, long lag_1, long lag_2)
+         MacrodynGraphicsItem* const graph, qint64 lag_1, qint64 lag_2)
           :job(bMod,graph), l_min(lag_1), l_max(lag_2)
 {
 	xmax = axes.max[0];
 	xmin = axes.min[0];
 	ymin = axes.min[1];
 	ymax = axes.max[1];
-	length=long(xmax);			// last iteration to be analysed
-	limit=long(xmin);				// first iteration to be analysed
-	how_many = long(xmax-xmin);
+    length=qint64(xmax);			// last iteration to be analysed
+    limit=qint64(xmin);				// first iteration to be analysed
+    how_many = qint64(xmax-xmin);
 	ts_data = new qreal[how_many];
 	if ( !ts_data ) fatalError("acf_plot::acf_plot","can't create data array!");
 	mean_x = 0;
@@ -67,7 +67,7 @@ void acf_plot::drawBox(qreal lo_x, qreal lo_y, qreal ru_x, qreal ru_y, int color
 
 void acf_plot::simulation()
 {
-	long t,i,j;
+    qint64 t,i,j;
 	qreal low_bound, high_bound;
 	model->initialize();
 	// drawing zeroline and confidential bands for

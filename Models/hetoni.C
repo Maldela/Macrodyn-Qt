@@ -124,12 +124,12 @@ void hetoni::loadParamset(ifstream& inputFile)
 	delete [] vv;
         vv = new qreal[L+1];
     if( !vv )
-	fatalError("hetoni::loadParamset","Can't create short weight vector");
+	fatalError("hetoni::loadParamset","Can't create int weight vector");
     if( vvs )
 	delete [] vvs;
         vvs = new qreal[L+1];
     if( !vvs )
-	fatalError("hetoni::loadParamset","Can't create short weight vector");
+	fatalError("hetoni::loadParamset","Can't create int weight vector");
     	
     initialize();
 }
@@ -361,7 +361,7 @@ void hetoni::dynamics(qreal &a, qreal &b)
 /* Last modified:   20.04.1997 (Marc Mueller, Toni Stiefenhofer)              */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::iteration(const long& t)
+void hetoni::iteration(const qint64& t)
 {
     qreal addlo=0;
     qreal addso=0;

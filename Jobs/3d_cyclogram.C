@@ -20,8 +20,8 @@
 cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes, 
 			       const xyRange& stateSpaceLim, 
                    MacrodynGraphicsItem* const graph,
-			       const long bif3D_dx, const long bif3D_dy,
-			       const long bif3D_dz)
+                   const qint64 bif3D_dx, const qint64 bif3D_dy,
+                   const qint64 bif3D_dz)
                :bif3D_2par(bMod,axes,graph, bif3D_dx, bif3D_dy, bif3D_dz), stateSpace(stateSpaceLim)
 {
     hash->resetDomain(stateSpace);        // save bounderies of the state
@@ -32,7 +32,7 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
     resolution_x = axes.res[0];
     resolution_y = axes.res[1];
     resolution_z = axes.res[2];
-    cout << "resx: " << resolution_x << " resy: " << resolution_y << " resz: "
+    log() << "resx: " << resolution_x << " resy: " << resolution_y << " resz: "
     << resolution_z << "\n";
     dx = bif3D_dx;
     dy = bif3D_dy;
@@ -82,16 +82,16 @@ cyclogram_3d::~cyclogram_3d()
 
 void cyclogram_3d::simulation()
 {
-    long t;				// time
+    qint64 t;				// time
     int order=0;			// order of cycle
-    unsigned long int tDiv=(unsigned)(length/10);// analysis of the simulation results
+    quint64 tDiv=(uint)(length/10);// analysis of the simulation results
 					// is done every tDiv periods until
 					// length is reached or a cycle has
 					// been detected
     qreal dummy_x;
     qreal dummy_y;
     qreal dummy_z;
-    long count_x,count_y,count_z;
+    qint64 count_x,count_y,count_z;
     char data[resolution_x][resolution_y][resolution_z];
     ofstream outFile;
     char* filename = "cycle_data_3par.dat";
@@ -138,7 +138,7 @@ void cyclogram_3d::simulation()
                     if( hash->storePoint(stateVars) ) {
                         hash->resetHashTable();
                         order=-1;    // out of domain, leave it blue
-        //			    cout << *(stateVars[0]) << "\n";
+        //			    log() << *(stateVars[0]) << "\n";
                         break;
                     }
                     if( !(t % tDiv) || (t==(length-1)) ) {

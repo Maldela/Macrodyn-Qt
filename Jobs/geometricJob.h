@@ -36,7 +36,7 @@ class geometricJob : public job
     qreal *yParam;                    // .. the y-axis
     hashTable *hash;                   // hash table to store simulation
                                        // results
-    unsigned inRange(const qreal&,const qreal&);
+    uint inRange(const qreal&,const qreal&);
                                        // returns wether the simulation results
                                        // are inside the considered section
   public:

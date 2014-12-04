@@ -56,7 +56,7 @@ test_model::~test_model()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::iteration(const long& time)
+void test_model::iteration(const qint64& time)
 {
 // 	d = distri.st_normal();
 //	d2 = distri.st_normal();
@@ -336,6 +336,6 @@ void test_model::sendParameters(int& amount,qreal** parameters)
 void test_model::receiveParameters(const qreal* parameters)
 {
     d=parameters[0];
-    length=long(parameters[1]);
+    length=qint64(parameters[1]);
 }
 

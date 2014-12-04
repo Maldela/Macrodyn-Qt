@@ -32,7 +32,7 @@ public:
 
     qreal* setLabels(char*);		 // return a pointer to a variable or
     laborMarketFirstTax();		// constructor
-    void iteration(const long&);	// perform one iteration
+    void iteration(const qint64&);	// perform one iteration
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ private:
 public:
     rlaborMarketFirstTax();		// constructor
     void loadParamset(ifstream&);	// load parameterset from a file
-    void iteration(const long&);	// perform one iteration 
+    void iteration(const qint64&);	// perform one iteration 
     void initialize(void);		// initialize the model
 };
 

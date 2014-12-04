@@ -27,6 +27,6 @@
 
 class linDiff : public models2D {
 public:
-    void iteration(const long&);
+    void iteration(const qint64&);
 };
 #endif

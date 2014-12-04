@@ -49,7 +49,7 @@ class max_lyapunov_exp_1d : public geometricJob {
 				// for the lyapunov exponent        
     void  update_sum(void);
     void  evaluate(void);
-    void  evaluate( long t );
+    void  evaluate( qint64 t );
     
   public:
     max_lyapunov_exp_1d(baseModel* const, xyRange&, MacrodynGraphicsItem* const=NULL);

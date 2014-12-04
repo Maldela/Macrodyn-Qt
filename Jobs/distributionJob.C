@@ -51,7 +51,7 @@ distributionJob::distributionJob(int p_size, baseModel* const cMod, xyRange& axe
 
 void distributionJob::simulation()
 {
-	long t;
+    qint64 t;
 	int cmax=100000;
 
     qreal old_x = 0;
