@@ -130,7 +130,7 @@ finite_Distri& finite_Distri::operator=(const finite_Distri & given)
 inline qreal  finite_Distri::density(const int arg) const
 {
     if (arg < start)  return  0.0;
-    if (arg >= (int)start+no)  return  0.0;
+    if (arg >= (int)(start+no))  return  0.0;
     return  prob[arg-start];
 }
 
@@ -149,7 +149,7 @@ inline qreal  finite_Distri::density(const int arg) const
 inline qreal finite_Distri::cumulat(const int arg) const
 {
     if (arg < start)  return  0.0;
-    if (arg >= (int)start+no)  return  1.0;
+    if (arg >= (int)(start+no))  return  1.0;
     return  cumu[arg-start];
 }
 

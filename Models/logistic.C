@@ -107,15 +107,15 @@ qreal* logistic::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* logistic::setLabels(char* label)
+qreal* logistic::setLabels(const QString& label)
 {
-    if( !strcmp(label,"alpha") )
+    if (label == "alpha")
 	return( &alpha);
-    if( !strcmp(label,"x") )
+    if (label == "x")
 	return( &x);
-    if( !strcmp(label,"x0") )
+    if (label == "x0")
 	return( &x0 );
-    if( !strcmp(label,"x_prime") )
+    if (label == "x_prime")
 	return( &x_prime );
     return NULL;
 }
@@ -159,7 +159,7 @@ void logistic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::loadParamset(ifstream& inFile)
+void logistic::loadParamset(QDataStream& inFile)
 {
     inFile >> x0 ;
     inFile >> alpha;
@@ -181,7 +181,7 @@ void logistic::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::saveParamset(ofstream& outFile)
+void logistic::saveParamset(QDataStream& outFile)
 {
     outFile << x0 << "\t";
     outFile << alpha  << "\t";
@@ -316,7 +316,7 @@ void rlogistic::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlogistic::loadParamset(ifstream& inputFile)
+void rlogistic::loadParamset(QDataStream& inputFile)
 {
     int n_states;
     
@@ -325,13 +325,13 @@ void rlogistic::loadParamset(ifstream& inputFile)
   
   if( zvar_expr[0] == '{' ) {		// we have a definition of a markov chain
     mc_flag = 1;
-    strcpy(mc_states, zvar_expr);
-    n_states = strnchr(mc_states, ';');
+    mc_states = zvar_expr;
+    n_states = mc_states.count(';');
     mc_matrix[0] = '\0';
     for (int n = 0; n < n_states; n++) {
       inputFile >> zvar_expr;		// compose the matrix from
-      strcat(mc_matrix, zvar_expr);	// the input file with blank at the
-      strcat(mc_matrix, " ");		// end of each row
+      mc_matrix += zvar_expr;	// the input file with blank at the
+      mc_matrix += " ";		// end of each row
     }
   } else {
     mc_flag = 0;
@@ -396,13 +396,13 @@ void rlogistic::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* rlogistic::setLabels(char* label)
+qreal* rlogistic::setLabels(const QString& label)
 {
-    if( !strcmp(label,"a") )
+    if (label == "a")
 	return( &a);
-    if( !strcmp(label,"b") )
+    if (label == "b")
 	return( &b);
-    if( !strcmp(label,"beta") )
+    if (label == "beta")
 	return( &beta);
     return logistic::setLabels(label);
 }
@@ -420,7 +420,7 @@ qreal* rlogistic::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlogistic::saveParamset(ofstream& outFile)
+void rlogistic::saveParamset(QDataStream& outFile)
 {
     outFile << zvar_name << "\t";
     outFile << zvar_expr << "\t";

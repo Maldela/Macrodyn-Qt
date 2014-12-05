@@ -34,7 +34,7 @@
 
 class d_attractor : public geometricJob {
   protected:
-    ofstream outFile;
+    QFile outFile;
     histo_2d	h;
     qreal 	stepX;	// stepsize on the x-axis
     qreal 	stepY;	// stepsize on the y-axis

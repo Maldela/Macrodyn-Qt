@@ -440,83 +440,83 @@ void dorn::pwBerechnung()
 /*                                                                            */
 /******************************************************************************/
 
-qreal* dorn::setLabels(char *name)
+qreal* dorn::setLabels(const QString& name)
 {
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
 	return( (qreal*)(&tau) );
-    if( !strcmp(name,"pt") )
+    if (name == "pt")
 	return( (qreal*)(&pt) );
-    if( !strcmp(name,"wt") )
+    if (name == "wt")
 	return( (qreal*)(&wt) );
-    if( !strcmp(name,"st") )
+    if (name == "st")
 	return( (qreal*)(&st) );
-    if( !strcmp(name,"stv") )
+    if (name == "stv")
 	return( (qreal*)(&stv) );
-    if( !strcmp(name,"xt") )
+    if (name == "xt")
 	return( (qreal*)(&xt) );
-    if( !strcmp(name,"it") )
+    if (name == "it")
 	return( (qreal*)(&it) );
-    if( !strcmp(name,"Bt") )
+    if (name == "Bt")
 	return( (qreal*)(&Bt) );
-    if( !strcmp(name,"Lt") )
+    if (name == "Lt")
 	return( (qreal*)(&Lt) );
-    if( !strcmp(name,"yt") )
+    if (name == "yt")
 	return( (qreal*)(&yt) );
-    if( !strcmp(name,"iet") )
+    if (name == "iet")
 	return( (qreal*)(&iet) );
-    if( !strcmp(name,"Lmax") )
+    if (name == "Lmax")
 	return( (qreal*)(&Lmax) );
-    if( !strcmp(name,"tax") )
+    if (name == "tax")
 	return( (qreal*)(&tax) );
-    if( !strcmp(name,"d") )
+    if (name == "d")
 	return( (qreal*)(&d) );
-    if( !strcmp(name,"deltaB") )
+    if (name == "deltaB")
 	return( (qreal*)(&deltaB) );
-    if( !strcmp(name,"pe") )
+    if (name == "pe")
 	return( (qreal*)(&pe) );
-    if( !strcmp(name,"g") )
+    if (name == "g")
 	return( (qreal*)(&g) );
-    if( !strcmp(name,"ytf") )
+    if (name == "ytf")
 	return( (qreal*)(&ytf) );
-    if( !strcmp(name,"ytz") )
+    if (name == "ytz")
 	return( (qreal*)(&ytz) );
-    if( !strcmp(name,"Im") )
+    if (name == "Im")
 	return( (qreal*)(&Im) ); 
-    if( !strcmp(name,"fi") )
+    if (name == "fi")
 	return( (qreal*)(&fi) );
-    if( !strcmp(name,"xet") )
+    if (name == "xet")
 	return( (qreal*)(&xet) );
-    if( !strcmp(name,"B") )
+    if (name == "B")
 	return( (qreal*)(&B) );
-    if( !strcmp(name,"zt") )
+    if (name == "zt")
 	return( (qreal*)(&zt) );
-    if( !strcmp(name,"A") )
+    if (name == "A")
 	return( (qreal*)(&A) );
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
 	return( (qreal*)(&delta) );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
 	return( (qreal*)(&rho) );
-    if( !strcmp(name,"xtdy") )
+    if (name == "xtdy")
 	return( (qreal*)(&xtdy) );
-    if( !strcmp(name,"gamma") )
+    if (name == "gamma")
 	return( (qreal*)(&gamma) );
-    if( !strcmp(name,"kappa") )
+    if (name == "kappa")
 	return( (qreal*)(&kappa) );
-    if( !strcmp(name,"lambda") )
+    if (name == "lambda")
 	return( (qreal*)(&lambda) );
-    if( !strcmp(name,"mu") )
+    if (name == "mu")
 	return( (qreal*)(&mu) );
-    if( !strcmp(name,"V") )
+    if (name == "V")
 	return( (qreal*)(&V) );
-    if( !strcmp(name,"W") )
+    if (name == "W")
 	return( (qreal*)(&W) );
-    if( !strcmp(name,"xetv") )
+    if (name == "xetv")
 	return( (qreal*)(&xetv) );
-    if( !strcmp(name,"B0") )
+    if (name == "B0")
 	return( (qreal*)(&B0) );
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return( (qreal*)(&xBundle) );
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return( (qreal*)(&yBundle) );
     return( NULL );
 }
@@ -556,7 +556,7 @@ void dorn::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::loadParamset(ifstream& inputFile)
+void dorn::loadParamset(QDataStream& inputFile)
 {
   /* cerr << "loadps:" << "\n"; */
     inputFile >> tau >> p0 >> w0 >> s0 >>  B0 >> x0
@@ -584,7 +584,7 @@ void dorn::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::saveParamset(ofstream& outputFile)
+void dorn::saveParamset(QDataStream& outputFile)
 {
     outputFile << tau << "\t" << p0 << "\t" << w0 << "\t" << s0 << "\t"
                << B0 << "\t" << x0 << "\t"
@@ -603,7 +603,7 @@ void dorn::saveParamset(ofstream& outputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::saveParamsetWithNames(ofstream& outputFile)
+void dorn::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "dornModel:\n\t";
     outputFile << "Tau = " << tau 

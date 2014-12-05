@@ -87,7 +87,7 @@ samuelson1::~samuelson1()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void samuelson1::loadParamset(ifstream& inFile)
+void samuelson1::loadParamset(QDataStream& inFile)
 {
     inFile >> N;
     inFile >> x01;
@@ -237,63 +237,63 @@ void samuelson1::check()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* samuelson1::setLabels(char* label)
+qreal* samuelson1::setLabels(const QString& label)
 {
-    if( !strcmp(label,"x01") ) return(&x01);
-    if( !strcmp(label,"x02") ) return(&x02);
-    if( !strcmp(label,"x1_tp1") ) return(&x1_tp1);
-    if( !strcmp(label,"x2_tp1") ) return(&x2_tp1);
-    if( !strcmp(label,"p1") ) return(&p1);
-    if( !strcmp(label,"m01") ) return(&m01);
-    if( !strcmp(label,"v01") ) return(&v01);
-    if( !strcmp(label,"m1") ) return(&m1);
-    if( !strcmp(label,"v1") ) return(&v1);
-    if( !strcmp(label,"p2") ) return(&p2);
-    if( !strcmp(label,"m02") ) return(&m02);
-    if( !strcmp(label,"v02") ) return(&v02);
-    if( !strcmp(label,"m2") ) return(&m2);
-    if( !strcmp(label,"v2") ) return(&v2);
-    if( !strcmp(label,"p3") ) return(&p3);
-    if( !strcmp(label,"m03") ) return(&m03);
-    if( !strcmp(label,"v03") ) return(&v03);
-    if( !strcmp(label,"m3") ) return(&m3);
-    if( !strcmp(label,"v3") ) return(&v3);
-    if( !strcmp(label,"p4") ) return(&p4);
-    if( !strcmp(label,"m04") ) return(&m04);
-    if( !strcmp(label,"v04") ) return(&v04);
-    if( !strcmp(label,"m4") ) return(&m4);
-    if( !strcmp(label,"v4") ) return(&v4);
-    if( !strcmp(label,"p5") ) return(&p5);
-    if( !strcmp(label,"m05") ) return(&m05);
-    if( !strcmp(label,"v05") ) return(&v05);
-    if( !strcmp(label,"m5") ) return(&m5);
-    if( !strcmp(label,"v5") ) return(&v5);
-    if( !strcmp(label,"p6") ) return(&p6);
-    if( !strcmp(label,"m06") ) return(&m06);
-    if( !strcmp(label,"v06") ) return(&v06);
-    if( !strcmp(label,"m6") ) return(&m6);
-    if( !strcmp(label,"v6") ) return(&v6);
-    if( !strcmp(label,"p7") ) return(&p7);
-    if( !strcmp(label,"m07") ) return(&m07);
-    if( !strcmp(label,"v07") ) return(&v07);
-    if( !strcmp(label,"m7") ) return(&m7);
-    if( !strcmp(label,"v7") ) return(&v7);
-    if( !strcmp(label,"p8") ) return(&p8);
-    if( !strcmp(label,"m08") ) return(&m08);
-    if( !strcmp(label,"v08") ) return(&v08);
-    if( !strcmp(label,"m8") ) return(&m8);
-    if( !strcmp(label,"v8") ) return(&v8);
-    if( !strcmp(label,"p9") ) return(&p9);
-    if( !strcmp(label,"m09") ) return(&m09);
-    if( !strcmp(label,"v09") ) return(&v09);
-    if( !strcmp(label,"m9") ) return(&m9);
-    if( !strcmp(label,"v9") ) return(&v9);
-    if( !strcmp(label,"p10") ) return(&p10);
-    if( !strcmp(label,"m010") ) return(&m010);
-    if( !strcmp(label,"v010") ) return(&v010);
-    if( !strcmp(label,"m10") ) return(&m10);
-    if( !strcmp(label,"v10") ) return(&v10);
-    if( !strcmp(label,"xBundle") ) return(&xBundle);
+    if (label == "x01") return(&x01);
+    if (label == "x02") return(&x02);
+    if (label == "x1_tp1") return(&x1_tp1);
+    if (label == "x2_tp1") return(&x2_tp1);
+    if (label == "p1") return(&p1);
+    if (label == "m01") return(&m01);
+    if (label == "v01") return(&v01);
+    if (label == "m1") return(&m1);
+    if (label == "v1") return(&v1);
+    if (label == "p2") return(&p2);
+    if (label == "m02") return(&m02);
+    if (label == "v02") return(&v02);
+    if (label == "m2") return(&m2);
+    if (label == "v2") return(&v2);
+    if (label == "p3") return(&p3);
+    if (label == "m03") return(&m03);
+    if (label == "v03") return(&v03);
+    if (label == "m3") return(&m3);
+    if (label == "v3") return(&v3);
+    if (label == "p4") return(&p4);
+    if (label == "m04") return(&m04);
+    if (label == "v04") return(&v04);
+    if (label == "m4") return(&m4);
+    if (label == "v4") return(&v4);
+    if (label == "p5") return(&p5);
+    if (label == "m05") return(&m05);
+    if (label == "v05") return(&v05);
+    if (label == "m5") return(&m5);
+    if (label == "v5") return(&v5);
+    if (label == "p6") return(&p6);
+    if (label == "m06") return(&m06);
+    if (label == "v06") return(&v06);
+    if (label == "m6") return(&m6);
+    if (label == "v6") return(&v6);
+    if (label == "p7") return(&p7);
+    if (label == "m07") return(&m07);
+    if (label == "v07") return(&v07);
+    if (label == "m7") return(&m7);
+    if (label == "v7") return(&v7);
+    if (label == "p8") return(&p8);
+    if (label == "m08") return(&m08);
+    if (label == "v08") return(&v08);
+    if (label == "m8") return(&m8);
+    if (label == "v8") return(&v8);
+    if (label == "p9") return(&p9);
+    if (label == "m09") return(&m09);
+    if (label == "v09") return(&v09);
+    if (label == "m9") return(&m9);
+    if (label == "v9") return(&v9);
+    if (label == "p10") return(&p10);
+    if (label == "m010") return(&m010);
+    if (label == "v010") return(&v010);
+    if (label == "m10") return(&m10);
+    if (label == "v10") return(&v10);
+    if (label == "xBundle") return(&xBundle);
 
     return NULL;
 }
@@ -405,7 +405,7 @@ for(;1;) {					// correct the value of pN
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void samuelson1::saveParamset(ofstream& outFile)
+void samuelson1::saveParamset(QDataStream& outFile)
 {
     outFile << N << "\t";
     outFile << x01 << "\t";

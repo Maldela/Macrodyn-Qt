@@ -96,27 +96,27 @@ qreal* ELS::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* ELS::setLabels(char* label)
+qreal* ELS::setLabels(const QString& label)
 {
-	if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 		return( &xBundle );
-	if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 		return( &yBundle );
-	if( !strcmp(label,"alpha") )
+    if (label == "alpha")
 		return( &alpha);
-	if( !strcmp(label,"y") )
+    if (label == "y")
 		return( &y);
-	if( !strcmp(label,"y0") )
+    if (label == "y0")
 		return( &y0 );
-	if( !strcmp(label,"c0") )
+    if (label == "c0")
 		return( &c0 );
-	if( !strcmp(label,"c1") )
+    if (label == "c1")
 		return( &c1 );
-	if( !strcmp(label,"qreal_money") )
+    if (label == "qreal_money")
 		return( &qreal_money );
-	if( !strcmp(label,"G") )
+    if (label == "G")
 		return( &G );
-	if( !strcmp(label,"T") )
+    if (label == "T")
 		return( &T );
 
 	return NULL;
@@ -159,7 +159,7 @@ void ELS::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::loadParamset(ifstream& inFile)
+void ELS::loadParamset(QDataStream& inFile)
 {
 	inFile >> c0 >> c1 >> qreal_money >> G >> T;
 	inFile >> alpha >> y0;
@@ -180,7 +180,7 @@ void ELS::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::saveParamset(ofstream& outFile)
+void ELS::saveParamset(QDataStream& outFile)
 {
 	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
@@ -200,7 +200,7 @@ void ELS::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void ELS::saveParamsetWithNames(ofstream& outFile)
+void ELS::saveParamsetWithNames(QDataStream& outFile)
 {
 	outFile << "c0 = " << c0;
 	outFile << "\nc1 = " << c1;

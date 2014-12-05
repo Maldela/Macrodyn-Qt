@@ -32,9 +32,9 @@ protected:
 public:
     martinNeu();
 //    virtual ~martinNeu();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void initialize();
-    void loadParamset(ifstream&);	
+    void loadParamset(QDataStream&);	
     void sendStateSpace(int &,const qreal***);
     void iteration(const qint64&);
 };

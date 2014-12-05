@@ -183,35 +183,35 @@ void capOlg::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* capOlg::setLabels(char *name)
+qreal* capOlg::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"n") )
+    if (name == "n")
         return( &n );
-    if( !strcmp(name,"d") )
+    if (name == "d")
         return( &d );
-    if( !strcmp(name,"A") )
+    if (name == "A")
         return( &A );
-    if( !strcmp(name,"B") )
+    if (name == "B")
         return( &B );
-    if( !strcmp(name,"wt") )
+    if (name == "wt")
         return( &wt );
-    if( !strcmp(name,"rt") )
+    if (name == "rt")
         return( &rt);
-    if( !strcmp(name,"kt") )
+    if (name == "kt")
         return( &kt );
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"k0") )
+    if (name == "k0")
 	return( &k0 );
-    if( !strcmp(name,"r0") )
+    if (name == "r0")
 	return( &r0 );
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
 	return( (qreal*)(&tau) );
     return( NULL );
 }
@@ -262,7 +262,7 @@ void capOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::loadParamset(ifstream& inputFile)
+void capOlg::loadParamset(QDataStream& inputFile)
 {
     inputFile >> A >> B >> d;
     inputFile >> n >> delta >> rho;
@@ -287,7 +287,7 @@ void capOlg::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::saveParamset(ofstream& outputFile)
+void capOlg::saveParamset(QDataStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t" << d << "\n";
     outputFile << n << "\t" << delta << "\t" << rho << "\n";
@@ -433,37 +433,37 @@ void capOlgAdapt::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* capOlgAdapt::setLabels(char *name)
+qreal* capOlgAdapt::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"n") )
+    if (name == "n")
         return( &n );
-    if( !strcmp(name,"d") )
+    if (name == "d")
         return( &d );
-    if( !strcmp(name,"A") )
+    if (name == "A")
         return( &A );
-    if( !strcmp(name,"B") )
+    if (name == "B")
         return( &B );
-    if( !strcmp(name,"wt") )
+    if (name == "wt")
         return( &wt );
-    if( !strcmp(name,"rt") )
+    if (name == "rt")
         return( &rt);
-    if( !strcmp(name,"kt") )
+    if (name == "kt")
         return( &kt );
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"k0") )
+    if (name == "k0")
 	return( &k0 );
-    if( !strcmp(name,"r0") )
+    if (name == "r0")
 	return( &r0 );
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
 	return( (qreal*)(&tau) );
-    if( !strcmp(name,"eta") ) 
+    if (name == "eta")
 	return( &eta );
 
     return( NULL );
@@ -478,7 +478,7 @@ qreal* capOlgAdapt::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::loadParamset(ifstream& inputFile)
+void capOlgAdapt::loadParamset(QDataStream& inputFile)
 {
     inputFile >> A >> B >> d;
     inputFile >> n >> delta >> rho;
@@ -503,7 +503,7 @@ void capOlgAdapt::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::saveParamset(ofstream& outputFile)
+void capOlgAdapt::saveParamset(QDataStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t" << d << "\n";
     outputFile << n << "\t" << delta << "\t" << rho << "\n";
@@ -675,37 +675,37 @@ void capOlgGeoExp::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* capOlgGeoExp::setLabels(char *name)
+qreal* capOlgGeoExp::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"n") )
+    if (name == "n")
         return( &n );
-    if( !strcmp(name,"d") )
+    if (name == "d")
         return( &d );
-    if( !strcmp(name,"A") )
+    if (name == "A")
         return( &A );
-    if( !strcmp(name,"B") )
+    if (name == "B")
         return( &B );
-    if( !strcmp(name,"wt") )
+    if (name == "wt")
         return( &wt );
-    if( !strcmp(name,"rt") )
+    if (name == "rt")
         return( &rt);
-    if( !strcmp(name,"kt") )
+    if (name == "kt")
         return( &kt );
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"k0") )
+    if (name == "k0")
 	return( &k0 );
-    if( !strcmp(name,"r0") )
+    if (name == "r0")
 	return( &r0 );
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
 	return( (qreal*)(&tau) );
-    if( !strcmp(name,"eta") ) 
+    if (name == "eta")
 	return( &eta );
 
     return( NULL );
@@ -720,7 +720,7 @@ qreal* capOlgGeoExp::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::loadParamset(ifstream& inputFile)
+void capOlgGeoExp::loadParamset(QDataStream& inputFile)
 {
     inputFile >> A >> B >> d;
     inputFile >> n >> delta >> rho;
@@ -745,7 +745,7 @@ void capOlgGeoExp::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::saveParamset(ofstream& outputFile)
+void capOlgGeoExp::saveParamset(QDataStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t" << d << "\n";
     outputFile << n << "\t" << delta << "\t" << rho << "\n";

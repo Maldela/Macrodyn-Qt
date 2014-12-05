@@ -30,7 +30,7 @@ parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes,
     fatalError("parameterSpace::parameterSpace",
            "Can't create vector of state variables");
     for(int i=0;i<stateSpace.dimension;i++) {
-    stateVars[i]=model->setLabels(stateSpace.label[i].toLatin1().data());
+    stateVars[i]=model->setLabels(stateSpace.label[i]);
                                           // get pointer to the model var.
 	if( !stateVars[i] )
 	    fatalError("parameterSpace::parameterSpace",

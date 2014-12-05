@@ -35,8 +35,8 @@ struct st_paramset
     qreal trans_a[trans_x_Max];
     qreal trans_b[trans_x_Max];
         int mc_flag;
-	char* zvar_expr;
-	char mc_matrix[256];
+    QString zvar_expr;
+    QString mc_matrix;
 	markov_chain * mc;
 	rand_var * zvar;
 	
@@ -87,7 +87,7 @@ st_paramset *delta_p_paramset;
    
     qreal delta_p;	// depreciation of kapital
     int n_states;
-    char in_string[256];
+    QString in_string;
    
     qreal a_0, b_0, c_0, d_0, n_0, s_0, delta_p_0;	// original parameters
     qreal cons_sum;
@@ -95,19 +95,19 @@ st_paramset *delta_p_paramset;
 
 public:
     rSolow();			// constructor
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
-    void save_st_Paramset(ofstream&,st_paramset*);
-    void saveParamsetWithNames(ofstream&); // add parametset to printerfile (so far only for xpm)
-    void save_st_ParamsetWithNames(ofstream&,st_paramset*);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
+    void save_st_Paramset(QDataStream&,st_paramset*);
+    void saveParamsetWithNames(QDataStream&); // add parametset to printerfile (so far only for xpm)
+    void save_st_ParamsetWithNames(QDataStream&,st_paramset*);
     void printParamset();
     void print_st_Paramset(st_paramset*);
     void noise_iteration(st_paramset*);
-    void read_sim(ifstream&,st_paramset*);
+    void read_sim(QDataStream&,st_paramset*);
     void delete_st_paramset_stochptr(st_paramset*);
     void iteration(const qint64&);
     void initialize();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
 
     qreal* sendModelVar();		// for compatibity reasons only
@@ -150,14 +150,14 @@ protected:
 	
 public:
 	RBC_delta_1();			//constructor
-   	void loadParamset(ifstream&);	
-  	void saveParamset(ofstream&);  
-	void saveParamsetWithNames(ofstream&); // add parametset to printerfile (so far only for xpm)	
+   	void loadParamset(QDataStream&);	
+  	void saveParamset(QDataStream&);  
+	void saveParamsetWithNames(QDataStream&); // add parametset to printerfile (so far only for xpm)	
    	void printParamset();	   	
    	void iteration(const qint64&);
    	void initialize();
     	virtual ~RBC_delta_1(void);            //destructor
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
 };
 #endif //  _RSOLOW_INCLUDED
 

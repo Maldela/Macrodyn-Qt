@@ -27,7 +27,7 @@ nParameterAnalysis::nParameterAnalysis(baseModel* const bMod,
      effectiveX(xDef),effectiveY(yDef)
 {
     for(int i=0;i<effectiveX.dimension;i++) {
-    xVars[i]=*model->setLabels(effectiveX.label[i].toLatin1().data());
+    xVars[i]=*model->setLabels(effectiveX.label[i]);
                                           // get pointer to the model var.
 	if( !xVars[i] )
 	    fatalError("nParameterAnalysis::nParameterAnalysis",
@@ -35,7 +35,7 @@ nParameterAnalysis::nParameterAnalysis(baseModel* const bMod,
     }
 
     for(int i=0;i<effectiveY.dimension;i++) {
-    yVars[i]=*model->setLabels(effectiveY.label[i].toLatin1().data());
+    yVars[i]=*model->setLabels(effectiveY.label[i]);
                                           // get pointer to the model var.
 	if( !yVars[i] )
 	    fatalError("nParameterAnalysis::nParameterAnalysis",

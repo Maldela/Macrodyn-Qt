@@ -75,43 +75,43 @@ qreal* Monopol::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-qreal* Monopol::setLabels(char* label)
+qreal* Monopol::setLabels(const QString& label)
 {
-    if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
-    if( !strcmp(label,"g") )
+    if (label == "g")
 	return( &g);
-    if( !strcmp(label,"tau") )
+    if (label == "tau")
 	return( &tau);
-    if( !strcmp(label,"B") )
+    if (label == "B")
 	return( &B);
-    if( !strcmp(label,"eta") )
+    if (label == "eta")
 	return( &eta);
-    if( !strcmp(label,"alpha") )
+    if (label == "alpha")
 	return( &alpha);
-    if( !strcmp(label,"Lmax") )
+    if (label == "Lmax")
 	return( &Lmax);
-    if( !strcmp(label,"lambda") )
+    if (label == "lambda")
 	return( &lambda);
-    if( !strcmp(label,"mu") )
+    if (label == "mu")
 	return( &mu);			
-    if( !strcmp(label,"delta") )
+    if (label == "delta")
 	return( &delta);
-    if( !strcmp(label,"zeta") )
+    if (label == "zeta")
 	return( &zeta);
-    if( !strcmp(label,"m") )
+    if (label == "m")
 	return( &m);	
-    if( !strcmp(label,"z") )
+    if (label == "z")
 	return( &z);	
-    if( !strcmp(label,"beta0") )
+    if (label == "beta0")
 	return( &beta0);
-    if( !strcmp(label,"M0") )
+    if (label == "M0")
 	return( &M0);
-    if( !strcmp(label,"w0") ) 
+    if (label == "w0") 
 	return( &w0 );
-    if( !strcmp(label,"z0") ) 
+    if (label == "z0") 
 	return( &z0 );
 
     return NULL;
@@ -152,7 +152,7 @@ void Monopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::loadParamset(ifstream& inFile)
+void Monopol::loadParamset(QDataStream& inFile)
 {
     inFile >> beta0 >> M0 >> w0 >> z0;
     inFile >> g >> tau >> B; 
@@ -173,7 +173,7 @@ void Monopol::loadParamset(ifstream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::saveParamset(ofstream& outFile)
+void Monopol::saveParamset(QDataStream& outFile)
 {
     outFile << beta0 << "\t" << M0 << "\t" << w0 << "\t";
     outFile << z0 << "\t" << g << "\t" << tau << "\t";

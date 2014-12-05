@@ -34,7 +34,8 @@ d_attractor::d_attractor(baseModel* const bMod,const xyRange& axes,
 //    if( fileName )
 //	outFile.open(fileName,ios::out);
  //   else
-	outFile.open("data3D_attraktor.dat",ios::out);
+    outFile.setFileName("data3D_attraktor.dat");
+    outFile.open(QFile::WriteOnly);
 
     limit= length / 10;			// 10% are thrown away
     stepX=(xmax-xmin) / (axes.res[0]-1);
@@ -77,10 +78,10 @@ void d_attractor::simulation()
   outFile.write((char*)&ymin, 8);
   outFile.write((char*)&ymax, 8);
   
-  int length_of_label = strlen(xLabel);
+  int length_of_label = xLabel.size();
   outFile.write((char*)&length_of_label, 4);
   outFile.write((char*)&xLabel, length_of_label);
-  length_of_label = strlen(yLabel);
+  length_of_label = yLabel.size();
   outFile.write((char*)&length_of_label, 4);
   outFile.write((char*)&yLabel, length_of_label);
   
@@ -125,7 +126,7 @@ void d_attractor::simulation()
 	
     if ( color>94 ) log() << "warning: color > 94\n";
      //   outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
-	outFile << char( color );
+    QDataStream(&outFile) << color;
 /*Ende neu*/
 
 

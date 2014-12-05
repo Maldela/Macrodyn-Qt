@@ -40,18 +40,20 @@
 
 markov_chain::markov_chain
     ( baseModel  * model, 	// to resolve names
-      const char * gen, 	// the basic random generator
-      const char * states, 	// definition of the states and their qrealisations
-      const char * matrix )	// the transition matrix 
+      const QString& gen, 	// the basic random generator
+      const QString& states, 	// definition of the states and their qrealisations
+      const QString& matrix )	// the transition matrix
 {
-    const char * pos    = states;
-    char       * token  = strdup(states);
+    QByteArray qba = states.toLatin1();
+    const char * pos    = qba.data();
+    QByteArray qba2 = states.toLatin1();
+    char       * token  = qba2.data();
     int          n;
 
   b_model = model;
-  r_gen = strdup(gen);
+  r_gen = gen;
 
-  n_states = strnchr(states, ';');	// get the numbet of states
+  n_states = states.count(';');	// get the numbet of states
   qrealization = new double [n_states];
   trans = new rand_var * [n_states];
   state = 0;
@@ -63,17 +65,14 @@ markov_chain::markov_chain
     trans[n] = NULL;
   }
 
-  free(token);
-
-  token = strdup(matrix);
-  pos = matrix;
+  qba = matrix.toLatin1();
+  token = qba.data();
+  qba2 = matrix.toLatin1();
+  pos = qba2.data();
   
   for( n=0; n < n_states && (pos = get_expr(pos,token,' ')) ; n ++ ) {
     set_row(n, token);
-  }
-  
-  free(token);
-  
+  }  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,7 +95,6 @@ markov_chain::~markov_chain ( void )
   }
   delete [] qrealization;
   delete [] trans;
-  free(r_gen);
 }
 
 
@@ -119,7 +117,7 @@ void markov_chain::set_row ( int row, const char * expr)
 {   const char * pos    = expr;
     char * token = strdup(expr);
     
-    char * zvar_expr = new char [1024];
+    QString zvar_expr;
     char * buf = new char [1024];
 
   if( row < 0 || row >=n_states ) {
@@ -129,8 +127,7 @@ void markov_chain::set_row ( int row, const char * expr)
   zvar_expr[0]='\0';
   
   for( int n = 0; n < n_states && (pos = get_expr(pos,token,';')); n++) {
-    sprintf(buf,"%s[%d,%d];",token, n, n);
-    strcat(zvar_expr,buf);
+    zvar_expr.sprintf("%s[%d,%d];",token, n, n);
   }
 
   if( trans[row] != NULL ) {
@@ -140,7 +137,6 @@ void markov_chain::set_row ( int row, const char * expr)
   trans[row] = new rand_var(b_model, r_gen, zvar_expr);
 
   free(token);
-  delete [] zvar_expr;
   delete [] buf;
 }
     

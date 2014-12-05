@@ -236,12 +236,12 @@ void defaultModel::wageAndPrice(qreal &xtnot, qreal &ytnot,
                 qreal &ztnot, char *state)
 
 {
-    if( !strcmp(state,"K ") )
+    if( !strcmp(state,"K "))
 	ptrate= 1 + kappa*((output-ytnot)/ytnot) ;
     else
 	ptrate= 1 + gamm*( (xtnot-output)/xtnot ) ;
     
-    if( !strcmp(state,"I ") )
+    if( !strcmp(state,"I "))
 	wtrate= 1 + my*((ztnot-employment)/ztnot) ;
     else
 	wtrate= 1 + lambda*((employment-Lmax)/Lmax) ;
@@ -308,53 +308,53 @@ void defaultModel::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* defaultModel::setLabels(char *name)
+qreal* defaultModel::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"g") )
+    if (name == "g")
         return( &g );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &employment );
-    if( !strcmp(name,"A") )
+    if (name == "A")
         return( &A );
-    if( !strcmp(name,"ymax") )
+    if (name == "ymax")
         return( &ymax );
-    if( !strcmp(name,"B") )
+    if (name == "B")
         return( &B );
-    if( !strcmp(name,"wtqreal") )
+    if (name == "wtqreal")
         return( &wtqreal );
-    if( !strcmp(name,"wtrate") )
+    if (name == "wtrate")
         return( &wtrate );
-    if( !strcmp(name,"mtqreal") )
+    if (name == "mtqreal")
         return( &mtqreal );
-    if( !strcmp(name,"theta") )
+    if (name == "theta")
         return( theta );
-    if( !strcmp(name,"gamma") )
+    if (name == "gamma")
         return( &gamm );
-    if( !strcmp(name,"kappa") )
+    if (name == "kappa")
         return( &kappa );
-    if( !strcmp(name,"lambda") )
+    if (name == "lambda")
         return( &lambda );
-    if( !strcmp(name,"my") )
+    if (name == "my")
         return( &my );
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"tax") )
+    if (name == "tax")
         return( &tax );
-    if( !strcmp(name,"Lmax") )
+    if (name == "Lmax")
         return( &Lmax );
-    if( !strcmp(name,"m0") )
+    if (name == "m0")
 	return( &m0 );
-    if( !strcmp(name,"w0") )
+    if (name == "w0")
 	return( &w0 );
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
     return( (qreal*)(&tau) );
-    if( !strcmp(name,"output") )
+    if (name == "output")
     return( (qreal*)(&output) );
     return( NULL );
 }
@@ -436,7 +436,7 @@ void defaultModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::loadParamset(ifstream& inputFile)
+void defaultModel::loadParamset(QDataStream& inputFile)
 {
     inputFile >> A >> B;
     inputFile >> gamm >> kappa >> lambda >> my;
@@ -463,7 +463,7 @@ void defaultModel::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::saveParamset(ofstream& outputFile)
+void defaultModel::saveParamset(QDataStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t";
     outputFile << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\t";
@@ -482,7 +482,7 @@ void defaultModel::saveParamset(ofstream& outputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::saveParamsetWithNames(ofstream& outputFile)
+void defaultModel::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "defaultModel:\n\t";
     outputFile << "A = " << A << "\tB = " << B << "\n\tgamma = ";
@@ -632,7 +632,7 @@ void rdefaultModel::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rdefaultModel::loadParamset(ifstream& inputFile)
+void rdefaultModel::loadParamset(QDataStream& inputFile)
 {
   inputFile >> zvar_name;		// read the name of the stochastic parameter
   inputFile >> zvar_expr;		// read the definition

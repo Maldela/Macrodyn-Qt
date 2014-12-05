@@ -50,13 +50,13 @@ public:
     martin();			// constructor
     virtual ~martin();		// destructor;
 
-    virtual void loadParamset(ifstream&);	
-    virtual void saveParamset(ofstream&);
+    virtual void loadParamset(QDataStream&);	
+    virtual void saveParamset(QDataStream&);
     virtual void printParamset();
     void initialize();
     virtual void iteration(const qint64&);
     qreal* sendModelVar();
-    virtual qreal* setLabels(char*);
+    virtual qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     virtual void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
@@ -80,10 +80,10 @@ protected:
     qreal lambda;				// Another parameter
     virtual qreal savings(const qreal&);
 public:
-    virtual void loadParamset(ifstream&);	
-    virtual void saveParamset(ofstream&);
+    virtual void loadParamset(QDataStream&);	
+    virtual void saveParamset(QDataStream&);
     virtual void printParamset();
-    virtual qreal* setLabels(char*);
+    virtual qreal* setLabels(const QString&);
     virtual void sendParameters(int&,qreal**);		// as above
     virtual void receiveParameters(const qreal*);	// as above 
 };
@@ -119,10 +119,10 @@ protected:
     qreal a,b,c;			// parameters for the savings function
     qreal savings(const qreal&);
 public:
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
     void printParamset();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendParameters(int&,qreal**);		// as above
     void receiveParameters(const qreal*);	// as above 
 };

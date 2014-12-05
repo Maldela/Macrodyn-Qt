@@ -1,8 +1,6 @@
 #include "uniform_distri.h"
 #include <math.h>
 #include "error.h"
- #include <iostream>  //  debugging
- #include <iomanip>  //  debugging
 
 
 ///////////////////////////////////////////////////////////////////////////////

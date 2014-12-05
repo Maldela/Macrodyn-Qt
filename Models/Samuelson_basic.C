@@ -123,33 +123,33 @@ qreal* Samuelson_basic::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* Samuelson_basic::setLabels(char* label)
+qreal* Samuelson_basic::setLabels(const QString& label)
 {
-	if( !strcmp(label,"xBundle") )
+	if (label == "xBundle")
 		return( &xBundle );
-	if( !strcmp(label,"yBundle") )
+	if (label == "yBundle")
 		return( &yBundle );
-	if( !strcmp(label,"y1_0") )
+	if (label == "y1_0")
 		return( &y1_0);
-	if( !strcmp(label,"y2_0") )
+	if (label == "y2_0")
 		return( &y2_0);
-	if( !strcmp(label,"m_0") )
+	if (label == "m_0")
 		return( &m_0);
-	if( !strcmp(label,"v_0") )
+	if (label == "v_0")
 		return( &v_0);
-	if( !strcmp(label,"m") )
+	if (label == "m")
 		return( &m);		
-	if( !strcmp(label,"v") )
+	if (label == "v")
 		return( &v );
-	if( !strcmp(label,"lambda") )
+	if (label == "lambda")
 		return( &lambda );
-	if( !strcmp(label,"y") )
+	if (label == "y")
 		return( &y );
-	if( !strcmp(label,"y1") )
+	if (label == "y1")
 		return( &y1 );
-	if( !strcmp(label,"y2") )
+	if (label == "y2")
 		return( &y2 );
-	if( !strcmp(label,"noise") )
+	if (label == "noise")
 		return( &noise );
 		
 	return NULL;
@@ -192,7 +192,7 @@ void Samuelson_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::loadParamset(ifstream& inFile)
+void Samuelson_basic::loadParamset(QDataStream& inFile)
 {
 	inFile >> y1_0 >> y2_0 >> m_0 >> v_0 >> m >> v >> lambda >> myseed;
 	inFile >> length;
@@ -212,7 +212,7 @@ void Samuelson_basic::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::saveParamset(ofstream& outFile)
+void Samuelson_basic::saveParamset(QDataStream& outFile)
 {
 	outFile << y1_0 << "\t" << y2_0 << "\t" << m_0 << "\t";
 	outFile << v_0 << "\t" << m << "\t" << v << "\t" << lambda << "\t" << myseed;
@@ -232,7 +232,7 @@ void Samuelson_basic::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void Samuelson_basic::saveParamsetWithNames(ofstream& outFile)
+void Samuelson_basic::saveParamsetWithNames(QDataStream& outFile)
 {
 	outFile << "y1_0 = " << y1_0;
 	outFile << "\ny2_0 = " << y2_0;
@@ -351,7 +351,7 @@ void Samuelson_ar1::iteration(const qint64&)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_ar1::loadParamset(ifstream& inFile)
+void Samuelson_ar1::loadParamset(QDataStream& inFile)
 {
 	inFile >> a;
 	Samuelson_basic::loadParamset( inFile );
@@ -389,15 +389,15 @@ void Samuelson_ar1::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* Samuelson_ar1::setLabels(char* label)
+qreal* Samuelson_ar1::setLabels(const QString& label)
 {
     qreal *plab = NULL;
 	plab = Samuelson_basic::setLabels( label );
 	if ( plab != NULL ) return plab;
 
-	if( !strcmp(label,"a") )
+	if (label == "a")
 		return( &a);		
-	if( !strcmp(label,"xi") )
+	if (label == "xi")
 		return( &xi );
 		
 	return NULL;

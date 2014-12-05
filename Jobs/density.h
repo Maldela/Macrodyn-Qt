@@ -67,7 +67,7 @@ class density_1d_1p : public density_1d {
   protected:
     qreal zmin;                       // describes the second
     qreal zmax;                       // parameter
-    char zLabel[256];
+    QString zLabel;
     qreal stepZ;
     qreal *zParam;
     

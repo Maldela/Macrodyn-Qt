@@ -60,10 +60,10 @@ public:
 
 	MerA();
 	virtual ~MerA();
-	qreal* setLabels(char*);
+	qreal* setLabels(const QString&);
 	void initialize();
-	void loadParamset(ifstream&);	
-	void saveParamsetWithNames(ofstream&); 
+	void loadParamset(QDataStream&);	
+	void saveParamsetWithNames(QDataStream&); 
 	void sendStateSpace(int &,const qreal***);
 	void iteration(const qint64&);
 

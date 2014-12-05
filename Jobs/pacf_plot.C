@@ -32,7 +32,7 @@ pacf_plot::pacf_plot(baseModel* const bMod, const xyRange& axes,
 	if ( !ts_data ) fatalError("pacf_plot::pacf_plot","can't create data array!");
 	mean_x = 0;
 	acv_0 = 0;
-    yParam = model->setLabels( axes.label[1].toLatin1().data() );
+    yParam = model->setLabels( axes.label[1] );
 	if ( !yParam ) fatalError("pacf_plot::pacf_plot","can't find ylabel!");
 	v_correlations = new matrix_neu( l_max+2, 1 );
 	if ( !v_correlations ) fatalError("pacf_plot::pacf_plot","can't allocate correlation vector!");

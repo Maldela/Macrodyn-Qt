@@ -154,10 +154,8 @@ void bif3D_2par::simulation()
     //log() << "h.x_res: " << h.get_x_res() << "\n";
 
     // initialize the output file writing header for vrend data
-    ofstream outFile;
-    char* filename = "pseudo_data_2par.dat";
-    outFile.open( filename, ios::out );
-    if ( !outFile ) exit(-1);
+    QFile outFile("pseudo_data_2par.dat");
+    if (!outFile.open(QFile::WriteOnly)) exit(-1);
     int jobtag_dummy = 25;
     outFile.write((char*)&jobtag_dummy, 4);
     
@@ -175,15 +173,11 @@ void bif3D_2par::simulation()
     outFile.write((char*)&zmin, 8);
     outFile.write((char*)&zmax, 8);
     
-    int length_of_label = strlen(xLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&xLabel, length_of_label);
-    length_of_label = strlen(yLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&yLabel, length_of_label);
-    length_of_label = strlen(zLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&zLabel, length_of_label);
+    QTextStream stream(&outFile);
+
+    stream << xLabel;
+    stream << yLabel;
+    stream << zLabel;
 //    log() << zLabel << " for z with " << length_of_label << " characters\n";
     
     h.reset();
@@ -225,7 +219,7 @@ void bif3D_2par::simulation()
     for ( count_z=0;count_z<resolution_z;count_z++)    
     	for ( dummy_a=0; dummy_a<resolution_y; dummy_a++)
 		for ( count_x=0;count_x<resolution_x;count_x++){
-			outFile << data[count_x][dummy_a][count_z];
+            QDataStream(&outFile) << data[count_x][dummy_a][count_z];
 //			log() << int ( data[count_x][dummy_a][count_z] ) << " ";
 		}
     outFile.flush();
@@ -249,10 +243,8 @@ void bif3D_1par::simulation()
     qint64 count_x;
     
     // initialize the output file writing header for vrend data
-    ofstream outFile;
-    char* filename = "pseudo_data_1par.dat";
-    outFile.open( filename, ios::out );
-    if ( !outFile ) exit(-1);
+    QFile outFile("pseudo_data_1par.dat");
+    if (!outFile.open(QFile::WriteOnly)) exit(-1);
     
     int jobtag_dummy = 24;
     outFile.write((char*)&jobtag_dummy, 4);    
@@ -271,15 +263,11 @@ void bif3D_1par::simulation()
     outFile.write((char*)&zmin, 8);
     outFile.write((char*)&zmax, 8);
     
-    int length_of_label = strlen(xLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&xLabel, length_of_label);
-    length_of_label = strlen(yLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&yLabel, length_of_label);
-    length_of_label = strlen(zLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&zLabel, length_of_label);
+    QTextStream stream(&outFile);
+
+    stream << xLabel;
+    stream << yLabel;
+    stream << zLabel;
 
     h.reset();
     for (dummy_x=xmin, count_x=0; count_x<resolution_x; dummy_x+=stepX, count_x++) {
@@ -322,7 +310,7 @@ void bif3D_1par::simulation()
     for ( dummy_b = 0; dummy_b<resolution_z; dummy_b++)
     	for ( dummy_a = 0; dummy_a<resolution_y; dummy_a++)
 	    for ( count_x = 0; count_x<resolution_x; count_x++)
-			outFile << data[count_x][dummy_a][dummy_b];
+            QDataStream(&outFile) << data[count_x][dummy_a][dummy_b];
 //			outFile.write((char*)&data[count_x][dummy_a][dummy_b],1);
     outFile.flush();
     outFile.close();

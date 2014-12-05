@@ -38,7 +38,7 @@ indicator_2d::indicator_2d(baseModel* const bMod, xyRange & axes,
     stepY=(ymax-ymin) / (1.0*axes.res[1]);
     zmin=axes.min[2];	// save the bounderies for the range
     zmax=axes.max[2];	// of encoding of the indicator function
-    strcpy(zLabel,axes.label[2].toLatin1().data());
+    zLabel = axes.label[2];
     zParam=model->setLabels(zLabel);	// get the pointer to the indicator value
     if( !zParam )
 	error("indicator::indicator: Undefined label %s",zLabel);

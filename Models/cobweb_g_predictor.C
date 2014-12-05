@@ -76,7 +76,7 @@ void cobweb_g_predictor::initialize()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::loadParamset(ifstream& inputFile)
+void cobweb_g_predictor::loadParamset(QDataStream& inputFile)
 {
 
     inputFile >> a >> b >> alpha >> w >> L0;
@@ -116,7 +116,7 @@ void cobweb_g_predictor::loadParamset(ifstream& inputFile)
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::saveParamset(ofstream& outputFile)
+void cobweb_g_predictor::saveParamset(QDataStream& outputFile)
 {
     outputFile << a << "\t" << b << "\t" << alpha << "\t" << w << "\t";
     outputFile << L0 << "\t"<< length << "\t";
@@ -131,7 +131,7 @@ void cobweb_g_predictor::saveParamset(ofstream& outputFile)
 /* Last modified:   20.02.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::saveParamsetWithNames(ofstream& outputFile)
+void cobweb_g_predictor::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel cobweb_g_predictor\n";
     outputFile << "a = " << a << "\tb = " << b << "\talpha = " << alpha ;
@@ -212,32 +212,32 @@ void cobweb_g_predictor::receiveParameters(const qreal* parameters)
 /* Last modified:   09.03.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal* cobweb_g_predictor::setLabels(char *name)
+qreal* cobweb_g_predictor::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(name,"a") )
+    if (name == "a")
         return( &a );
-    if( !strcmp(name,"b") )
+    if (name == "b")
         return( &b );
-    if( !strcmp(name,"alpha") )
+    if (name == "alpha")
         return( &alpha );
-    if( !strcmp(name,"w") )
+    if (name == "w")
         return( &w );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &L0 );
 
-    if( !strcmp(name,"v") )
+    if (name == "v")
         return( &v );
-    if( !strcmp(name,"s") )
+    if (name == "s")
         return( &s );
 
-    if( !strcmp(name,"p") )
+    if (name == "p")
         return( pp );
-    if( !strcmp(name,"p0") )
+    if (name == "p0")
         return( pp0 );
 
     return( NULL );

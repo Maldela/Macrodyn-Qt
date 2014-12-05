@@ -1,9 +1,6 @@
 #include "prob_distri.h"
 #include "error.h"
 #include <algorithm>   // min
-// #include <iostream>  // debugging
-
-using namespace std;
 
 const char * NOT_IMPLEMENTED = " is not implemented\n";
 
@@ -197,7 +194,7 @@ inline qreal  prob_Distri::inverse(const qreal) const
 
 void  prob_Distri::seed(const uint *array = 0, const uint no = 1)
 {
-    uint  count = min(no,randomBits::generator_state_size());
+    uint  count = qMin(no,randomBits::generator_state_size());
     if (array)
     {
         for (uint  i=0; i < count; i++)

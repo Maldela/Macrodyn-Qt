@@ -39,7 +39,7 @@ bifnParam::bifnParam(baseModel* const bMod,
 	fatalError("bifnParam::bifnParam",
 		   "Can't create vector of x-variables");
     for(int i=0;i<effectiveX.dimension;i++) {
-    xVars[i]=model->setLabels(effectiveX.label[i].toLatin1().data());
+    xVars[i]=model->setLabels(effectiveX.label[i]);
                                           // get pointer to the model var.
 	if( !xVars[i] )
 	    fatalError("bifnParam::bifnParam",

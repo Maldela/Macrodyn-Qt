@@ -160,26 +160,26 @@ qreal* affine2::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* affine2::setLabels(char* label)
+qreal* affine2::setLabels(const QString& label)
 {
 	//log() << "This is function 'setLabels()' in AFFINE2.C ." << "\n";
-	if( !strcmp(label,"a") )
+    if (label == "a")
 	return( &a);
-    if( !strcmp(label,"a1") )
+    if (label == "a1")
 	return( &a1);
-    if( !strcmp(label,"a2") )
+    if (label == "a2")
 	return( &a2);
-    if( !strcmp(label,"x") )
+    if (label == "x")
 	return( &x);
-    if( !strcmp(label,"x0") )
+    if (label == "x0")
 	return( &x0 );
-	if( !strcmp(label,"p") )
+    if (label == "p")
 	return( &p );
-	if( !strcmp(label,"urv") )
+    if (label == "urv")
 	return( &urv );
-	if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return( &xBundle );
-	if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return( &yBundle );
     return NULL;
 	//log() << "Now returning...." << "\n"; 
@@ -226,7 +226,7 @@ void affine2::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine2::loadParamset(ifstream& inFile)
+void affine2::loadParamset(QDataStream& inFile)
 {
 //log() << "This is function 'loadParamset()' in 'AFFINE2.C' ." << "\n"; 
  
@@ -267,7 +267,7 @@ void affine2::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine2::saveParamset(ofstream& outFile)
+void affine2::saveParamset(QDataStream& outFile)
 {
 	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << "\n"; 
    	outFile << a  << "\t";

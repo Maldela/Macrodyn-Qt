@@ -44,13 +44,13 @@ protected:
 
 public:
     logistic();			// constructor
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
@@ -78,16 +78,16 @@ protected:
     qreal a,b;			// parameter
     qreal beta;			// parameter used in case of additive noise
  
-    char zvar_expr[256];        // expression which defines a random variable
+    QString zvar_expr;        // expression which defines a random variable
     rand_var * zvar;            // a random variable 
 
     int  mc_flag;		// flag if either markov chain or zvar
     
-    char mc_states[265];	// states and qrealization for each state
-    char mc_matrix[1024];	// the transision matrix
+    QString mc_states;	// states and qrealization for each state
+    QString mc_matrix;	// the transision matrix
     markov_chain * mc;		// a markov chain
 
-    char zvar_name[256];        // name of the stochastified parameter
+    QString zvar_name;        // name of the stochastified parameter
     qreal * zvar_ptr;		// pointer to the stochastic parameter
 
 public:
@@ -95,10 +95,10 @@ public:
     void iteration(const qint64&);
     void initialize();
 //    qreal* sendModelVar();			// obsolete and unused
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
 //  void sendStateSpace(int &,const qreal***);	// obsolete
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
     void printParamset();
 
 //    void sendParameters(int&,qreal**); 	// unused

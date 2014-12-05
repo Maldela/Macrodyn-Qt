@@ -80,67 +80,67 @@ qreal* Duopol::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-qreal* Duopol::setLabels(char* label)
+qreal* Duopol::setLabels(const QString& label)
 {
-    if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
-    if( !strcmp(label,"g") )
+    if (label == "g")
 	return( &g);
-    if( !strcmp(label,"tau") )
+    if (label == "tau")
 	return( &tau);
-    if( !strcmp(label,"B1") )
+    if (label == "B1")
 	return( &B1);
-    if( !strcmp(label,"B2") )
+    if (label == "B2")
 	return( &B2);
-    if( !strcmp(label,"eta1") )
+    if (label == "eta1")
 	return( &eta1);
-    if( !strcmp(label,"eta2") )
+    if (label == "eta2")
 	return( &eta2);
-    if( !strcmp(label,"alpha1") )
+    if (label == "alpha1")
 	return( &alpha1);
-    if( !strcmp(label,"alpha2") )
+    if (label == "alpha2")
 	return( &alpha2);
-    if( !strcmp(label,"lambda1") )
+    if (label == "lambda1")
 	return( &lambda1);
-    if( !strcmp(label,"lambda2") )
+    if (label == "lambda2")
 	return( &lambda2);
-    if( !strcmp(label,"Lmax") )
+    if (label == "Lmax")
 	return( &Lmax);
-    if( !strcmp(label,"mu") )
+    if (label == "mu")
 	return( &mu);			
-    if( !strcmp(label,"dep") )
+    if (label == "dep")
 	return( &dep);
-    if( !strcmp(label,"rho") )
+    if (label == "rho")
 	return( &rho);
-    if( !strcmp(label,"delta") )
+    if (label == "delta")
 	return( &delta);
-    if( !strcmp(label,"zeta1") )
+    if (label == "zeta1")
 	return( &zeta1);
-    if( !strcmp(label,"zeta2") )
+    if (label == "zeta2")
 	return( &zeta2);
-    if( !strcmp(label,"z1") )
+    if (label == "z1")
 	return( &z1);
-    if( !strcmp(label,"z2") )
+    if (label == "z2")
 	return( &z2);
-    if( !strcmp(label,"m") )
+    if (label == "m")
 	return( &m);	
-    if( !strcmp(label,"pi") )
+    if (label == "pi")
 	return( &pi);	
-    if( !strcmp(label,"beta10") )
+    if (label == "beta10")
 	return( &beta10);
-    if( !strcmp(label,"beta20") )
+    if (label == "beta20")
 	return( &beta20);
-    if( !strcmp(label,"z10") ) 
+    if (label == "z10")
 	return( &z10 );
-    if( !strcmp(label,"z20") ) 
+    if (label == "z20")
 	return( &z20 );
-    if( !strcmp(label,"M0") )
+    if (label == "M0")
 	return( &M0);
-    if( !strcmp(label,"w0") ) 
+    if (label == "w0")
 	return( &w0 );
-    if( !strcmp(label,"Pi0") ) 
+    if (label == "Pi0")
 	return( &Pi0 );
     return NULL;
 }
@@ -183,7 +183,7 @@ void Duopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
- void Duopol::loadParamset(ifstream& inFile)
+ void Duopol::loadParamset(QDataStream& inFile)
 {
     inFile >> beta10 >> beta20 >> z10 >> z20;
     inFile >> M0 >> w0 >> Pi0;
@@ -205,7 +205,7 @@ void Duopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol::saveParamset(ofstream& outFile)
+void Duopol::saveParamset(QDataStream& outFile)
 {
     outFile << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20 << "\t";
     outFile << M0 << "\t" << w0 << "\t" << Pi0 << "\t";

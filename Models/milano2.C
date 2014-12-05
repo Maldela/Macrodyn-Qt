@@ -450,7 +450,7 @@ log() << "model not active - contact A. Foerster" << "\n";
 
 /* loadParamset Last modified: 31.05.1996 (Jorg Nikutta) */
 
-void milano2::loadParamset(ifstream& inFile)
+void milano2::loadParamset(QDataStream& inFile)
 {
     inFile >> a >> b;
     inFile >> psi1 >> psi2 >> nu1 >> nu2 >> omikron1 >> omikron2;
@@ -494,7 +494,7 @@ void milano2::printParamset()
 /*   Last modified:  31.05.1996 (Jorg Nikutta)                             */
 /*                                                                           */
 /*****************************************************************************/
-void milano2::saveParamset(ofstream& outFile)
+void milano2::saveParamset(QDataStream& outFile)
 {
     outFile << a << " " << b << "\n";
     outFile << psi1 << " " << psi2 << "\n"; 
@@ -516,71 +516,71 @@ void milano2::saveParamset(ofstream& outFile)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* milano2::setLabels(char* name)
+qreal* milano2::setLabels(const QString& name)
 {
-    if( !strcmp(name,"G") )
+    if (name == "G")
 	return( &G );
-    if( !strcmp(name,"empl") )
+    if (name == "empl")
 	return( &empl );
-    if( !strcmp(name,"capital") )
+    if (name == "capital")
         return( &capital );
-    if( !strcmp(name,"output") )
+    if (name == "output")
 	return( &output );
-    if( !strcmp(name,"a") )
+    if (name == "a")
 	return( &a );
-    if( !strcmp(name,"b") )
+    if (name == "b")
 	return( &b );
-    if( !strcmp(name,"alfa") )
+    if (name == "alfa")
 	return( &alfa );
-    if( !strcmp(name,"mqreal") )
+    if (name == "mqreal")
     return( &mqreal );
-    if( !strcmp(name,"pgt") )
+    if (name == "pgt")
 	return( &pgt );
-    if( !strcmp(name,"rqreal") )
+    if (name == "rqreal")
         return( &rqreal );
-    if( !strcmp(name,"teta") )
+    if (name == "teta")
          return( &teta );
-   if( !strcmp(name,"zt") )
+   if (name == "zt")
         return( &zt ); 
-    if( !strcmp(name,"mtr") ) 
+    if (name == "mtr") 
 	return( &mtr );
-    if( !strcmp(name,"wtr") )
+    if (name == "wtr")
 	return( &wtr );
-    if( !strcmp(name,"rtr") )
+    if (name == "rtr")
         return( &rtr );
-    if( !strcmp(name,"psi1") )
+    if (name == "psi1")
 	return( &psi1 );
-    if( !strcmp(name,"psi2") )
+    if (name == "psi2")
 	return( &psi2 );
-    if( !strcmp(name,"nu1") )
+    if (name == "nu1")
 	return( &nu1 );
-    if( !strcmp(name,"nu2") )
+    if (name == "nu2")
 	return( &nu2 );
-    if( !strcmp(name,"omikron1") )
+    if (name == "omikron1")
         return( &omikron1 );
-    if( !strcmp(name,"omikron2") )
+    if (name == "omikron2")
         return( &omikron2 );
-    if( !strcmp(name,"h") )
+    if (name == "h")
 	return( &h );
-    if( !strcmp(name,"tax") )
+    if (name == "tax")
 	return( &tax );
-    if( !strcmp(name,"Ls") )
+    if (name == "Ls")
 	return( &Ls );
-    if( !strcmp(name,"alfa0") )
+    if (name == "alfa0")
 	return( &alfa0 );
-    if( !strcmp(name,"mqreal0") )
+    if (name == "mqreal0")
     return( &mqreal0 );
-    if( !strcmp(name,"pg0") )
+    if (name == "pg0")
 	return( &pg0 );
-    if( !strcmp(name,"rqreal0") )
+    if (name == "rqreal0")
         return( &rqreal0 );
-    if( !strcmp(name,"z0") )
+    if (name == "z0")
         return( &z0 );
-    if( !strcmp(name,"epsilon") )
+    if (name == "epsilon")
         return( &epsilon ); 
-    if( !strcmp(name,"f") )
+    if (name == "f")
         return( &f );
-    if( !strcmp(name,"n1") )
+    if (name == "n1")
     return( (qreal*) &n1 );
     return( NULL );
 }

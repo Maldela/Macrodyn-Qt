@@ -36,12 +36,12 @@ public:
     capOlg();			    // default constructor
     virtual ~capOlg();		    // destructor
     
-    void loadParamset(ifstream&);	    // load parameterset from a file
-    void saveParamset(ofstream&);	    // write parameterset into a file
+    void loadParamset(QDataStream&);	    // load parameterset from a file
+    void saveParamset(QDataStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const qint64&);    // perform one iteration 
-    qreal* setLabels(char*);		    // return a pointer to a variable
+    qreal* setLabels(const QString&);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
     void initialize();			    // initialize the model, define
@@ -65,10 +65,10 @@ protected:
     qreal eta;                               // weight parameter
 public:
     capOlgAdapt();                          // default constructor
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void iteration(const qint64&);    // perform one iteration 
-    void loadParamset(ifstream&);	    // load parameterset from a file
-    void saveParamset(ofstream&);	    // write parameterset into a file
+    void loadParamset(QDataStream&);	    // load parameterset from a file
+    void saveParamset(QDataStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
@@ -99,9 +99,9 @@ protected:
 public:
     capOlgGeoExp();                         // default constructor
     void iteration(const qint64&);    // perform one iteration 
-    qreal* setLabels(char*);
-    void loadParamset(ifstream&);	    // load parameterset from a file
-    void saveParamset(ofstream&);	    // write parameterset into a file
+    qreal* setLabels(const QString&);
+    void loadParamset(QDataStream&);	    // load parameterset from a file
+    void saveParamset(QDataStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers

@@ -19,8 +19,8 @@ class md_Map {
 
 public:
 	md_Map(double min,double max,int res,int dim,int tlim
-		,char* filename,char* mothermap);		// constructor new
-	md_Map(char* filename);					// constructor to load
+        ,const QString& filename, const QString& mothermap);		// constructor new
+    md_Map(const QString& filename);					// constructor to load
 	~md_Map();						// destructor
 	
 	void give_attributes();			// attributes to standard output		
@@ -32,9 +32,9 @@ private:
 	int resolution;			// resolution of map
 	int model_dim;			// dimension of model variables space
 	int time_limit;			// upper end of time dimension
-	char* name;			// name(filename) of map
-	char* mother;			// pointer to name of mother-map
-	char** daugther;		// pointer to names of daugthers		
+    QString name;			// name(filename) of map
+    QString mother;			// pointer to name of mother-map
+    QStringList daugther;		// pointer to names of daugthers
 };
 
 #endif

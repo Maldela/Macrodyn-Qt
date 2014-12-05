@@ -55,33 +55,33 @@ EnRAssH::~EnRAssH()
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-qreal* EnRAssH::setLabels(char* label)
+qreal* EnRAssH::setLabels(const QString& label)
 {
-    if( !strcmp(label,"N") ) return( (qreal*)(&N) );
-    if( !strcmp(label,"e") ) return(&e);
-    if( !strcmp(label,"R") ) return(&R);
-    if( !strcmp(label,"x_") ) return( (qreal*)(&x_) );
-    if( !strcmp(label,"c_a") ) return(&c_a);
-    if( !strcmp(label,"alpha") ) return(&alpha);
-    if( !strcmp(label,"alphamin") ) return(&alphamin);
-    if( !strcmp(label,"theta0") ) return(&theta0);
-    if( !strcmp(label,"theta") ) return(&theta);
-    if( !strcmp(label,"thetaE") ) return(&thetaE);
-    if( !strcmp(label,"thetaDiff") ) return(&thetaDiff);
-    if( !strcmp(label,"d") ) return(&d);
-    if( !strcmp(label,"dmid") ) return(&dmid);
-    if( !strcmp(label,"dmax") ) return(&dmax);
-    if( !strcmp(label,"p0") ) return(&p0);
-    if( !strcmp(label,"pmax") ) return(&pmax);
-    if( !strcmp(label,"p") ) return(&p);
-    if( !strcmp(label,"pOld") ) return(&pOld);
-    if( !strcmp(label,"pmid") ) return(&pmid);
-    if( !strcmp(label,"MEP") ) return(&MEP);
-    if( !strcmp(label,"eps") ) return(&eps);
-    if( !strcmp(label,"epsmid") ) return(&epsmid);
-    if( !strcmp(label,"avEps") ) return(&avEps);
-    if( !strcmp(label,"relEps") ) return(&relEps);
-    if( !strcmp(label,"avRelEps") ) return(&avRelEps);
+    if (label == "N") return( (qreal*)(&N) );
+    if (label == "e") return(&e);
+    if (label == "R") return(&R);
+    if (label == "x_") return( (qreal*)(&x_) );
+    if (label == "c_a") return(&c_a);
+    if (label == "alpha") return(&alpha);
+    if (label == "alphamin") return(&alphamin);
+    if (label == "theta0") return(&theta0);
+    if (label == "theta") return(&theta);
+    if (label == "thetaE") return(&thetaE);
+    if (label == "thetaDiff") return(&thetaDiff);
+    if (label == "d") return(&d);
+    if (label == "dmid") return(&dmid);
+    if (label == "dmax") return(&dmax);
+    if (label == "p0") return(&p0);
+    if (label == "pmax") return(&pmax);
+    if (label == "p") return(&p);
+    if (label == "pOld") return(&pOld);
+    if (label == "pmid") return(&pmid);
+    if (label == "MEP") return(&MEP);
+    if (label == "eps") return(&eps);
+    if (label == "epsmid") return(&epsmid);
+    if (label == "avEps") return(&avEps);
+    if (label == "relEps") return(&relEps);
+    if (label == "avRelEps") return(&avRelEps);
     return NULL;
 }
 
@@ -170,15 +170,15 @@ qreal  EnRAssH::rational(qreal *, qreal *,const qint64&,const qint64&) {
 
 void EnRAssH::learn_init () {
 
-    if (strcmp(learntype,"seroError")==0) learn=&EnRAssH::seroError;
-    else if (strcmp(learntype,"constTheta")==0) learn=&EnRAssH::constTheta;
-    else if (strcmp(learntype,"rational")==0) learn=&EnRAssH::rational;
+    if (learntype == "seroError") learn=&EnRAssH::seroError;
+    else if (learntype == "constTheta") learn=&EnRAssH::constTheta;
+    else if (learntype == "rational") learn=&EnRAssH::rational;
 
-    else if (strcmp(learntype,"last_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=last_k;}
-    else if (strcmp(learntype,"diff_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=diff_k;}
-    else if (strcmp(learntype,"ma_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=ma_k;}
-    else if (strcmp(learntype,"ols_k")==0) {learn=&EnRAssH::learnAgols;_learnAgols=ols_k;}
-    else if (strcmp(learntype,"ols")==0) {learn=&EnRAssH::learnAgols;_learnAgols=ols;}
+    else if (learntype == "last_k") {learn=&EnRAssH::learnAgols;_learnAgols=last_k;}
+    else if (learntype == "diff_k") {learn=&EnRAssH::learnAgols;_learnAgols=diff_k;}
+    else if (learntype == "ma_k") {learn=&EnRAssH::learnAgols;_learnAgols=ma_k;}
+    else if (learntype == "ols_k") {learn=&EnRAssH::learnAgols;_learnAgols=ols_k;}
+    else if (learntype == "ols") {learn=&EnRAssH::learnAgols;_learnAgols=ols;}
 
     else error("macrodyn::EnRAssH::learn_init: no learn type %s", learntype);
 }
@@ -233,7 +233,7 @@ void EnRAssH::initialize()
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void EnRAssH::loadParamset(ifstream& inFile)
+void EnRAssH::loadParamset(QDataStream& inFile)
 {
 	int i;
 //	inFile >> ni;
@@ -261,7 +261,7 @@ void EnRAssH::loadParamset(ifstream& inFile)
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void EnRAssH::saveParamsetWithNames(ofstream& outputFile)
+void EnRAssH::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel EnRAssH\n";
     outputFile << "N = " << N << "\tx_ = " << x_ << "\te = " << e << "\n";

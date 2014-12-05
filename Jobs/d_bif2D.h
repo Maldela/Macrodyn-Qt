@@ -33,7 +33,7 @@
 
 class d_bif2D : public geometricJob {
   protected:
-    ofstream outFile;
+    QFile outFile;
     histo_1d	h;
     qreal 	stepX;	// stepsize on the x-axis
     qreal 	stepY;	// stepsize on the y-axis

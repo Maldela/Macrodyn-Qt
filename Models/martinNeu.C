@@ -28,39 +28,39 @@ martinNeu::~martinNeu() {
 /* Purpose:         return a pointer to a variable or a parameter specified   */
 /*                  by its name                                               */
 /******************************************************************************/
-qreal* martinNeu::setLabels(char* label) {
-    if( !strcmp(label,"xBundle") )
+qreal* martinNeu::setLabels(const QString& label) {
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(label,"gamma") )
+    if (label == "gamma")
 	return( &gamma);
-    if( !strcmp(label,"rho") )
+    if (label == "rho")
 	return( &rho);
 
-    if( !strcmp(label,"g") )
+    if (label == "g")
 	return( &g_tm1);
-    if( !strcmp(label,"thetaEold") )
+    if (label == "thetaEold")
 	return( &thetaEold);
-    if( !strcmp(label,"thetaEt") )
+    if (label == "thetaEt")
 	return( &theta_e_t);
-    if( !strcmp(label,"thetaEtp1") )
+    if (label == "thetaEtp1")
 	return( &theta_e_tp1);	
-    if( !strcmp(label,"thetaE") )
+    if (label == "thetaE")
 	return( &theta_e_tp1);	
-    if( !strcmp(label,"thetaOld") )
+    if (label == "thetaOld")
 	return( &thetaOld);
-    if( !strcmp(label,"thetatm1") )
+    if (label == "thetatm1")
 	return( &theta_tm1);
-    if( !strcmp(label,"theta") )
+    if (label == "theta")
 	return( &theta_t);
-    if( !strcmp(label,"Err") )
+    if (label == "Err")
 	return( &Err);
 
-    if( !strcmp(label,"p") )
+    if (label == "p")
 	return( &p_t);
-    if( !strcmp(label,"pe") )
+    if (label == "pe")
 	return( &p_e_tp1);
 
     return NULL;
@@ -92,7 +92,7 @@ p_e_tp1 = 1;
 /* Member function: loadParamset                                              */
 /* Purpose:         load a parameterset from a specified input file           */
 /******************************************************************************/
-void martinNeu::loadParamset(ifstream& inFile) {
+void martinNeu::loadParamset(QDataStream& inFile) {
     inFile >> g_tm1_0 >> theta_e_t_0 >> theta_tm1_0;
     inFile >> gamma >> rho >> lambda;
     inFile >> length;

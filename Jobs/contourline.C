@@ -32,7 +32,7 @@ contourline::contourline(baseModel* const cMod,const xyRange& axes,
     int i;
 //    limit= length / 10;			// 10% are thrown away
     limit=0;
-    strcpy(zLabel,axes.label[2].toLatin1().data());
+    zLabel = axes.label[2];
     zParam=model->setLabels(zLabel);
     if( !zParam )
 	fatalError("contourline::contourline  Can not find z label ",zLabel);
@@ -44,7 +44,7 @@ contourline::contourline(baseModel* const cMod,const xyRange& axes,
 	if ( !xVars )
 		fatalError("contourline::contourline","can't create vector of x-variables");
 	for (i=0;i<effectiveX.dimension;i++) {
-        xVars[i]=model->setLabels(effectiveX.label[i].toLatin1().data()); // get bundle vars
+        xVars[i]=model->setLabels(effectiveX.label[i]); // get bundle vars
 		if ( !xVars[i] )
 			fatalError("contourline::contourline","unknown x parameter specified");
 	}
@@ -53,7 +53,7 @@ contourline::contourline(baseModel* const cMod,const xyRange& axes,
 	if ( !yVars)
 		fatalError("contourline::contourline","can't create vector of y-variables");
 	for (i=0;i<effectiveY.dimension;i++) {
-        yVars[i]=model->setLabels(effectiveY.label[i].toLatin1().data()); // get bundle vars
+        yVars[i]=model->setLabels(effectiveY.label[i]); // get bundle vars
 		if ( !yVars[i] )
 			fatalError("contourline::contourline","unknown y parameter specified");
 	}
@@ -66,7 +66,8 @@ contourline::contourline(baseModel* const cMod,const xyRange& axes,
 		max=axes.max[2];
 	}
 
-	outFile.open("data3D_contour.dat",ios::out);
+    outFile.setFileName("data3D_contour.dat");
+    outFile.open(QFile::WriteOnly);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -196,10 +197,11 @@ void contourline::simulation()
 	screenGraphics->set_axis(2,min,max);
 	screenGraphics->drawAxis();
 
-     qreal scala=(max-min)/double(cmax); // 34 colors for complete range of values
-     qreal dummy_value;
-     
-	for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {       
+    qreal scala=(max-min)/double(cmax); // 34 colors for complete range of values
+    qreal dummy_value;
+    QDataStream stream(&outFile);
+
+    for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
 		for(dummy_y=ymin;dummy_y<=ymax;dummy_y+=stepY) {
 		dummy_value=h(dummy_x,dummy_y);
 /*		if ((min<0)&&(max>0))
@@ -214,10 +216,10 @@ void contourline::simulation()
 		if (col<1) col=1;
 		if( screenGraphics ) 
             screenGraphics->setPoint(dummy_x,dummy_y,col);
-        outFile << dummy_x << "\t" << dummy_y << "\t" << dummy_value << "\n";
-     }
-     outFile << "\n";
-   }
+        stream << dummy_x << "\t" << dummy_y << "\t" << dummy_value << "\n";
+       }
+       stream << "\n";
+    }
     log() << "\nmin=" << min << "\t max=" << max << "\n";
 	outFile.close();
 }

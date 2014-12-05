@@ -197,26 +197,26 @@ if (job_type != 83)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* pureExchange::setLabels(char *name)
+qreal* pureExchange::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 		return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 		return &yBundle;
-    if( !strcmp(name,"theta_t") )
+    if (name == "theta_t")
         return( &theta_t );
-    if( !strcmp(name,"theE_Old") )
+    if (name == "theE_Old")
         return( &theE_Old);
-    if( !strcmp(name,"theE_You") )
+    if (name == "theE_You")
         return( &theE_You );
 
-    if( !strcmp(name,"pt") )
+    if (name == "pt")
 		return( &pt );
-    if( !strcmp(name,"err") )
+    if (name == "err")
 		return( &err );
- 	if( !strcmp(name,"theE_Old2") )
+ 	if (name == "theE_Old2")
 		return( &theE_Old2 );
-  	if( !strcmp(name,"theE_You2") )
+  	if (name == "theE_You2")
 		return( &theE_You2 );
 
     return( NULL );
@@ -273,7 +273,7 @@ void pureExchange::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::loadParamset(ifstream& inputFile)
+void pureExchange::loadParamset(QDataStream& inputFile)
 {
     inputFile 	>> sf_type >> theta_e_m1 >> theta_e_null >> gamma >> p0 
 				>> w1 >> w2 >> g0 >> delta >> rho >> job_type;
@@ -293,7 +293,7 @@ sf_init();
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::saveParamset(ofstream& outputFile)
+void pureExchange::saveParamset(QDataStream& outputFile)
 {
     outputFile 	<< sf_type << theta_e_m1 << theta_e_null << gamma << p0 
 				<< w1 << w2 << g0 << delta << rho << job_type;

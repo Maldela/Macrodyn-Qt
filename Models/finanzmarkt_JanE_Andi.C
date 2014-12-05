@@ -303,7 +303,7 @@ finanzmarkt_JanE::~finanzmarkt_JanE()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_JanE::loadParamset(ifstream& inFile)
+void finanzmarkt_JanE::loadParamset(QDataStream& inFile)
 { 	
 
 	inFile >> eta1_F_0 >> eta2_F_0 >> eta3_F_0;			//Gruppenanteile d. Fundamentalisten (Startwert)			
@@ -1003,80 +1003,80 @@ qreal finanzmarkt_JanE::risk_tolerance(qreal &eta_1, qreal &eta_2, qreal &eta_3)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* finanzmarkt_JanE::setLabels(char* label)
+qreal* finanzmarkt_JanE::setLabels(const QString& label)
 {	
-	if( !strcmp(label,"xBundle") ) return(&xBundle);
-	if( !strcmp(label,"eta1_F") ) return(&eta1_F);
-	if( !strcmp(label,"eta2_F") ) return(&eta2_F);
-	if( !strcmp(label,"eta3_F") ) return(&eta3_F);
-	if( !strcmp(label,"eta1_C") ) return(&eta1_C);
-	if( !strcmp(label,"eta2_C") ) return(&eta2_C);
-	if( !strcmp(label,"eta3_C") ) return(&eta3_C);
-	if( !strcmp(label,"eta1_N") ) return(&eta1_N);
-	if( !strcmp(label,"eta2_N") ) return(&eta2_N);
-	if( !strcmp(label,"eta3_N") ) return(&eta3_N);
+    if (label == "xBundle") return(&xBundle);
+    if (label == "eta1_F") return(&eta1_F);
+    if (label == "eta2_F") return(&eta2_F);
+    if (label == "eta3_F") return(&eta3_F);
+    if (label == "eta1_C") return(&eta1_C);
+    if (label == "eta2_C") return(&eta2_C);
+    if (label == "eta3_C") return(&eta3_C);
+    if (label == "eta1_N") return(&eta1_N);
+    if (label == "eta2_N") return(&eta2_N);
+    if (label == "eta3_N") return(&eta3_N);
 	
 	
-	if( !strcmp(label,"alpha_1") ) return(&alpha_1);
-	if( !strcmp(label,"alpha_2") ) return(&alpha_2);
-	if( !strcmp(label,"alpha_3") ) return(&alpha_3);
+    if (label == "alpha_1") return(&alpha_1);
+    if (label == "alpha_2") return(&alpha_2);
+    if (label == "alpha_3") return(&alpha_3);
 	
-	if( !strcmp(label,"beta_1") ) return(&beta_1);
-	if( !strcmp(label,"beta_2") ) return(&beta_2);
-	if( !strcmp(label,"beta_3") ) return(&beta_3);
+    if (label == "beta_1") return(&beta_1);
+    if (label == "beta_2") return(&beta_2);
+    if (label == "beta_3") return(&beta_3);
 	
-	if( !strcmp(label,"e_1") ) return(&e_1);
-	if( !strcmp(label,"e_2") ) return(&e_2);
-	if( !strcmp(label,"e_3") ) return(&e_3);
+    if (label == "e_1") return(&e_1);
+    if (label == "e_2") return(&e_2);
+    if (label == "e_3") return(&e_3);
 
 
-	if( !strcmp(label,"r") ) return(&r);
-	if( !strcmp(label,"xi1") ) return(&xi1);
-	if( !strcmp(label,"xi2") ) return(&xi2);
-	if( !strcmp(label,"epsilon1") ) return(&epsilon1);
-	if( !strcmp(label,"epsilon2") ) return(&epsilon2);
-	if( !strcmp(label,"delta") ) return(&delta);
-	if( !strcmp(label,"d1") ) return(&d1);
-	if( !strcmp(label,"d2") ) return(&d2);
-	if( !strcmp(label,"Ed1") ) return(&Ed1);
-	if( !strcmp(label,"Ed2") ) return(&Ed2);
-	if( !strcmp(label,"p1") ) return(&(*p)(0,0));
-	if( !strcmp(label,"p2") ) return(&(*p)(1,0));
-	if( !strcmp(label,"q1") ) return(&(*q)(0,0));
-	if( !strcmp(label,"q2") ) return(&(*q)(1,0));
-	if( !strcmp(label,"q_Fold1") ) return(&(*q_Fold)(0,0));
-	if( !strcmp(label,"q_Fold2") ) return(&(*q_Fold)(1,0));
+    if (label == "r") return(&r);
+    if (label == "xi1") return(&xi1);
+    if (label == "xi2") return(&xi2);
+    if (label == "epsilon1") return(&epsilon1);
+    if (label == "epsilon2") return(&epsilon2);
+    if (label == "delta") return(&delta);
+    if (label == "d1") return(&d1);
+    if (label == "d2") return(&d2);
+    if (label == "Ed1") return(&Ed1);
+    if (label == "Ed2") return(&Ed2);
+    if (label == "p1") return(&(*p)(0,0));
+    if (label == "p2") return(&(*p)(1,0));
+    if (label == "q1") return(&(*q)(0,0));
+    if (label == "q2") return(&(*q)(1,0));
+    if (label == "q_Fold1") return(&(*q_Fold)(0,0));
+    if (label == "q_Fold2") return(&(*q_Fold)(1,0));
 	
 	
-	if( !strcmp(label,"x_N1") ) return(&(*x_N)(0,0));
-	if( !strcmp(label,"x_N2") ) return(&(*x_N)(1,0));
-	if( !strcmp(label,"x_F1") ) return(&(*x_F)(0,0));
-	if( !strcmp(label,"x_F2") ) return(&(*x_F)(1,0));
-	if( !strcmp(label,"x_C1") ) return(&(*x_C)(0,0));
-	if( !strcmp(label,"x_C2") ) return(&(*x_C)(1,0));
+    if (label == "x_N1") return(&(*x_N)(0,0));
+    if (label == "x_N2") return(&(*x_N)(1,0));
+    if (label == "x_F1") return(&(*x_F)(0,0));
+    if (label == "x_F2") return(&(*x_F)(1,0));
+    if (label == "x_C1") return(&(*x_C)(0,0));
+    if (label == "x_C2") return(&(*x_C)(1,0));
 
-	if( !strcmp(label,"rend_N") ) return(&rend_N);
-	if( !strcmp(label,"rend_F") ) return(&rend_F);
-	if( !strcmp(label,"rend_C") ) return(&rend_C);
+    if (label == "rend_N") return(&rend_N);
+    if (label == "rend_F") return(&rend_F);
+    if (label == "rend_C") return(&rend_C);
 	
-	if( !strcmp(label,"sr_N") ) return(&sr_N);
-	if( !strcmp(label,"sr_F") ) return(&sr_F);
-	if( !strcmp(label,"sr_C") ) return(&sr_C);
+    if (label == "sr_N") return(&sr_N);
+    if (label == "sr_F") return(&sr_F);
+    if (label == "sr_C") return(&sr_C);
 
-	if( !strcmp(label,"mu_N") ) return(&mu_N);
-	if( !strcmp(label,"mu_F") ) return(&mu_F);
-	if( !strcmp(label,"mu_C") ) return(&mu_C);
+    if (label == "mu_N") return(&mu_N);
+    if (label == "mu_F") return(&mu_F);
+    if (label == "mu_C") return(&mu_C);
 
-	if( !strcmp(label,"sigma_N") ) return(&sigma_N);
-	if( !strcmp(label,"sigma_F") ) return(&sigma_F);
-	if( !strcmp(label,"sigma_C") ) return(&sigma_C);
-	if( !strcmp(label,"a1") ) return(&a1);
-	if( !strcmp(label,"b1") ) return(&b1);
-	if( !strcmp(label,"c1") ) return(&c1);
-	if( !strcmp(label,"a2") ) return(&a2);
-	if( !strcmp(label,"b2") ) return(&b2);
-	if( !strcmp(label,"c2") ) return(&c2);
-	if( !strcmp(label,"b_2") ) return(&b_2);
+    if (label == "sigma_N") return(&sigma_N);
+    if (label == "sigma_F") return(&sigma_F);
+    if (label == "sigma_C") return(&sigma_C);
+    if (label == "a1") return(&a1);
+    if (label == "b1") return(&b1);
+    if (label == "c1") return(&c1);
+    if (label == "a2") return(&a2);
+    if (label == "b2") return(&b2);
+    if (label == "c2") return(&c2);
+    if (label == "b_2") return(&b_2);
 
 	
     return NULL;
@@ -1095,7 +1095,7 @@ qreal* finanzmarkt_JanE::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_JanE::saveParamset(ofstream& outFile)
+void finanzmarkt_JanE::saveParamset(QDataStream& outFile)
 {	
 
 	outFile << eta1_F << eta2_F << eta3_F;

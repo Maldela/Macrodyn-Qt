@@ -42,11 +42,11 @@ class pureExchange : public baseModel {
 public:
     pureExchange();			   		 // default constructor
     virtual ~pureExchange();		    // destructor   
-    void loadParamset(ifstream&);	    // load parameterset from a file
-    void saveParamset(ofstream&);	    // write parameterset into a file
+    void loadParamset(QDataStream&);	    // load parameterset from a file
+    void saveParamset(QDataStream&);	    // write parameterset into a file
     void printParamset();		    	// print parameterset on the screen
     void iteration(const qint64&);    	// perform one iteration    
-	qreal* setLabels(char*);		    	// return a pointer to a variable
+	qreal* setLabels(const QString&);		    	// return a pointer to a variable
 					    				// or a parameter specified by its
 					    				// name
     void initialize();			    	// initialize the model, define

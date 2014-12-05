@@ -17,7 +17,7 @@
 
 class nicole : public baseModel {
   protected:
-    char zvar_expr[256];	// expression which defines a random variable
+    QString zvar_expr;	// expression which defines a random variable
     rand_var * zvar;		// a random variable    
   //Parameters
     qreal pi,dl,dh,d0,e,alpha,xhat,theta,R;
@@ -31,11 +31,11 @@ public:
     nicole();				// constructor
     virtual ~nicole();			// destructor
     void initialize();			 // initialize the model
-    void loadParamset(ifstream&);	 // load parameterset from a file
-    void saveParamset(ofstream&);	 // write parameterset into a file
+    void loadParamset(QDataStream&);	 // load parameterset from a file
+    void saveParamset(QDataStream&);	 // write parameterset into a file
     void printParamset();		 // print parameterset on the screen
-    void saveParamsetWithNames(ofstream&);// add parametset to printerfile
-    qreal* setLabels(char*);		 // return a pointer to a variable
+    void saveParamsetWithNames(QDataStream&);// add parametset to printerfile
+    qreal* setLabels(const QString&);		 // return a pointer to a variable
     virtual void iteration(const qint64&); // perform one iteration 
     qreal* sendModelVar();		 // obsolete and unused
     void sendStateSpace(int &,const qreal***);// obsolete

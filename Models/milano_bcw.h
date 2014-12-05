@@ -40,11 +40,11 @@ public:
     milano_bcw();		                    // default constructor
 //  virtual ~milano_bcw();		            // destructor
 
-    qreal* setLabels(char*);		    // return a pointer to a variable or
+    qreal* setLabels(const QString&);		    // return a pointer to a variable or
 					    // a parameter specified by its name
     void initialize();			    // initialize the model
-    void loadParamset(ifstream&);	    // load parameterset from a file
-    void saveParamsetWithNames(ofstream&);  // add parametset to XPM printerfile
+    void loadParamset(QDataStream&);	    // load parameterset from a file
+    void saveParamsetWithNames(QDataStream&);  // add parametset to XPM printerfile
     void sendStateSpace(int &,const qreal***);// return pointers to all model
 					    // variables and the dimension
 					    // of the model
@@ -53,7 +53,7 @@ public:
 
 
 //void printParamset();
-//void saveParamset(ofstream&);
+//void saveParamset(QDataStream&);
 //qreal* sendModelVar();
 //void sendParameters(int& amount,qreal**);
 //void receiveParameters(const qreal*);

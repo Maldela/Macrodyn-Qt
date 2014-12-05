@@ -34,9 +34,9 @@ struct st_olg_paramset
     qreal trans_x[trans_x_MAX];
     qreal trans_a[trans_x_MAX];
     qreal trans_b[trans_x_MAX];
-        int mc_flag;
-	char* zvar_expr;
-	char mc_matrix[256];
+    int mc_flag;
+    QString zvar_expr;
+    QString mc_matrix;
 	markov_chain * mc;
 	rand_var * zvar;			
 };
@@ -80,7 +80,7 @@ protected:
     qreal c1;
     qreal c2;
     int n_states;
-    char in_string[256];
+    QString in_string;
     qreal z_st_n;
     qreal z_st_0;              // original parameter
     qreal T;
@@ -98,20 +98,20 @@ protected:
 
 public:
     rOLG_wt();			// constructor
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
-    void save_st_olg_Paramset(ofstream&,st_olg_paramset*);
-    void saveParamsetWithNames(ofstream&); // add parametset to printerfile (so far only for xpm)
-    void save_st_olg_ParamsetWithNames(ofstream&,st_olg_paramset*);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
+    void save_st_olg_Paramset(QDataStream&,st_olg_paramset*);
+    void saveParamsetWithNames(QDataStream&); // add parametset to printerfile (so far only for xpm)
+    void save_st_olg_ParamsetWithNames(QDataStream&,st_olg_paramset*);
     void printParamset();
     void print_st_olg_Paramset(st_olg_paramset*);
     void noise_iteration(st_olg_paramset*);
-    void read_sim(ifstream&,st_olg_paramset*);
+    void read_sim(QDataStream&,st_olg_paramset*);
     void delete_st_olg_paramset_stochptr(st_olg_paramset*);
     void iteration(const qint64&);
     void expection(qreal,qreal);
     void initialize();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
 
     qreal* sendModelVar();		// for compatibity reasons only

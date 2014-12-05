@@ -24,9 +24,9 @@
 
 class geometry3D : public job {
   protected:
-    char xLabel[20];                   // variables that determine the
-    char yLabel[20];                   // coordinate system
-    char zLabel[20];
+    QString xLabel;                   // variables that determine the
+    QString yLabel;                   // coordinate system
+    QString zLabel;
     qreal xmin;
     qreal xmax;
     qreal ymin;

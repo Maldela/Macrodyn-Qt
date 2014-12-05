@@ -123,7 +123,7 @@ density_1d_1p::density_1d_1p(baseModel* const bMod, xyRange & axes,
 {
     zmin=axes.min[2];			// save the bounderies for the second
     zmax=axes.max[2];			// bifurcation parameter
-    strcpy(zLabel,axes.label[2].toLatin1().data());
+    zLabel = axes.label[2];
     zParam=model->setLabels(zLabel);	// get the pointer to the second
 					// bifurcation parameter
     if( !zParam )

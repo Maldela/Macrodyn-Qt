@@ -3,9 +3,9 @@
 /* Module name:  ExchangeRateModel.h										*/	
 /* Contents:     Class definition of the class ExchangeRateModel 			*/
 /* Autor:		 Michael Meyer												*/
-/* Date:		 Don Mär 14 11:19:26 CET 2002								*/
+/* Date:		 Don MÃ¤r 14 11:19:26 CET 2002								*/
 /*																			*/
-/* Modified:	 Don Mär 14 11:18:06 CET 2002								*/
+/* Modified:	 Don MÃ¤r 14 11:18:06 CET 2002								*/
 /* By:			 Michael Meyer												*/
 /****************************************************************************/
 
@@ -86,14 +86,14 @@ public:
     virtual ~ExchangeRateModel();			// destructor
 
 	void initialize();						// initialize the model, define the initial state
-    void loadParamset(ifstream&);			// load parameterset from a file
+    void loadParamset(QDataStream&);			// load parameterset from a file
 	void iteration(const long&);      		// perform one iteration 
     real* setLabels(char*);					// return a pointer to a variable or a parameter specified by its name
 
     void sendStateSpace(int &,const real***);// return pointers to all model variables and the dimension of the model
     void sendParameters(int&,real**);		// write all parameters into an array and return the numbers of parameters
-    void saveParamset(ofstream&);			// write parameterset into a file
-    void saveParamsetWithNames(ofstream&);	// add parametset to printerfile (so far only for xpm)
+    void saveParamset(QDataStream&);			// write parameterset into a file
+    void saveParamsetWithNames(QDataStream&);	// add parametset to printerfile (so far only for xpm)
     void receiveParameters(const real*);	// receive parameter values
     void printParamset();					// print parameterset on the screen    
 	real* sendModelVar();

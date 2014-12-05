@@ -194,14 +194,14 @@ protected:
 public:
     finanzmarkt_JanE();				// constructor
     virtual ~finanzmarkt_JanE();		// destructor
-    void loadParamset(ifstream&);	// load parameterset from a file
-    void saveParamset(ofstream&);
-    void saveParamsetWithNames(ofstream&);
+    void loadParamset(QDataStream&);	// load parameterset from a file
+    void saveParamset(QDataStream&);
+    void saveParamsetWithNames(QDataStream&);
     void printParamset();
     void sendParameters(int &,qreal**);
     qreal* sendModelVar(void);
     void receiveParameters(const qreal*);
-    qreal* setLabels(char*);		// get a variable by a name
+    qreal* setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const qint64&);	// perform one iteration
     void sendStateSpace(int &,const qreal***);

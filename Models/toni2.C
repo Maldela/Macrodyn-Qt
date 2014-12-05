@@ -76,7 +76,7 @@ void toni2::initialize()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::loadParamset(ifstream& inputFile)
+void toni2::loadParamset(QDataStream& inputFile)
 {
 
     inputFile >> gamma >> beta >> alpha >> w >> L0;
@@ -116,7 +116,7 @@ void toni2::loadParamset(ifstream& inputFile)
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::saveParamset(ofstream& outputFile)
+void toni2::saveParamset(QDataStream& outputFile)
 {
     outputFile << gamma << "\t" << beta << "\t" << alpha << "\t" << w << "\t";
     outputFile << L0 << "\t"<< length << "\t";
@@ -131,7 +131,7 @@ void toni2::saveParamset(ofstream& outputFile)
 /* Last modified:   20.02.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::saveParamsetWithNames(ofstream& outputFile)
+void toni2::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel Toni2\n";
     outputFile << "gamma = " << gamma << "\tbeta = " << beta << "\talpha = " << alpha ;
@@ -212,32 +212,32 @@ void toni2::receiveParameters(const qreal* parameters)
 /* Last modified:   09.03.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal* toni2::setLabels(char *name)
+qreal* toni2::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(name,"gamma") )
+    if (name == "gamma")
         return( &gamma );
-    if( !strcmp(name,"beta") )
+    if (name == "beta")
         return( &beta );
-    if( !strcmp(name,"alpha") )
+    if (name == "alpha")
         return( &alpha );
-    if( !strcmp(name,"w") )
+    if (name == "w")
         return( &w );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &L0 );
 
-    if( !strcmp(name,"v") )
+    if (name == "v")
         return( &v );
-    if( !strcmp(name,"s") )
+    if (name == "s")
         return( &s );
 
-    if( !strcmp(name,"p") )
+    if (name == "p")
         return( pp );
-    if( !strcmp(name,"p0") )
+    if (name == "p0")
         return( pp0 );
 
     return( NULL );

@@ -37,13 +37,13 @@ public:
     OlgRat();			// constructor
     virtual ~OlgRat();		// destructor;
 
-    virtual void loadParamset(ifstream&);	
-    virtual void saveParamset(ofstream&);
+    virtual void loadParamset(QDataStream&);	
+    virtual void saveParamset(QDataStream&);
     virtual void printParamset();
     void initialize();
     virtual void iteration(const qint64&);
     qreal* sendModelVar();
-    virtual qreal* setLabels(char*);
+    virtual qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     virtual void sendParameters(int&,qreal**);   // write all parameters into an 
                                                 // array and return the numbers

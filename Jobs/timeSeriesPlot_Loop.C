@@ -33,7 +33,7 @@ timeSeriesPlot_Loop::timeSeriesPlot_Loop(int l_size, baseModel* const bMod,char*
 /*    if( fileName )
 	outFile.open(fileName,ios::out);
     else
-	outFile.open("timeSeries.asc",ios::out);
+	outFile.setFileName("timeSeries.asc",ios::out);
     limit=0;
 
     if (mp_ptr) {

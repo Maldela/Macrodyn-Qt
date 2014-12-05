@@ -40,13 +40,13 @@ protected:
     
 public:
     onozaki_et_al();			// constructor
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
-    void saveParamsetWithNames(ofstream&);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
+    void saveParamsetWithNames(QDataStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
 
     qreal* sendModelVar();		// for compatibity reasons only

@@ -21,10 +21,10 @@ bif2Param::bif2Param(baseModel* const bMod, const xyRange& axes,
               MacrodynGraphicsItem* const graph)
           :bif2D(bMod,axes,graph)
 {
-    zmin=axes.min[2];			// save the bounderies for the second
-    zmax=axes.max[2];			// bifurcation parameter
-    strcpy(zLabel,axes.label[2].toLatin1().data());
-    zParam=model->setLabels(zLabel);	// get the pointer to the second
+    zmin = axes.min[2];			// save the bounderies for the second
+    zmax = axes.max[2];			// bifurcation parameter
+    zLabel = axes.label[2];
+    zParam = model->setLabels(zLabel);	// get the pointer to the second
 					// bifurcation parameter
     if( !zParam )
 	fatalError("bif2Param::bif2Param","Undefined label");

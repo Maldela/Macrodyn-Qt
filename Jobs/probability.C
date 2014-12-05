@@ -28,7 +28,7 @@ probability::probability(int p_size, baseModel* const cMod, xyRange& axes,
             :geometricJob(cMod,axes,graph)
 
 {
-    strcpy(xLabel,axes.label[0].toLatin1().data());
+    xLabel = axes.label[0];
     xParam=model->setLabels(xLabel);
     if( !xParam )
 	fatalError("probability::probability  Can not find z label ",xLabel);

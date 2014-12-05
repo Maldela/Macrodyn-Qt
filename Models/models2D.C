@@ -67,23 +67,23 @@ qreal* models2D::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-qreal* models2D::setLabels(char* label)
+qreal* models2D::setLabels(const QString& label)
 {
-    if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
-    if( !strcmp(label,"alpha") )
+    if (label == "alpha")
 	return( &alpha);
-    if( !strcmp(label,"beta") )
+    if (label == "beta")
 	return( &beta);
-    if( !strcmp(label,"x") )
+    if (label == "x")
 	return( &x);
-    if( !strcmp(label,"x0") )
+    if (label == "x0")
 	return( &x0 );
-    if( !strcmp(label,"y") )
+    if (label == "y")
 	return( &y);
-    if( !strcmp(label,"y0") )
+    if (label == "y0")
 	return( &y0 );
 
     return NULL;
@@ -121,7 +121,7 @@ void models2D::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::loadParamset(ifstream& inFile)
+void models2D::loadParamset(QDataStream& inFile)
 {
     inFile >> x0 >> y0;
     inFile >> alpha >> beta;
@@ -139,7 +139,7 @@ void models2D::loadParamset(ifstream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::saveParamset(ofstream& outFile)
+void models2D::saveParamset(QDataStream& outFile)
 {
     outFile << x0 << "\t" << y0 << "\t";
     outFile << alpha  << "\t" << beta << "\t";

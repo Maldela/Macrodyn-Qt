@@ -117,10 +117,10 @@ protected:
 public:
 	finanzmarkt_2Dim_1();
 	virtual ~finanzmarkt_2Dim_1();
-	real* setLabels(char*);
+    real* setLabels(const QString&);
 	void initialize();
-	void loadParamset(ifstream&);	
-/*	void saveParamsetWithNames(ofstream&);*/ 
+    void loadParamset(QDataStream&);
+/*	void saveParamsetWithNames(QDataStream&);*/
 	void sendStateSpace(int &,const real***);
 	void iteration(const long&);
 /*	void saveParamset();	

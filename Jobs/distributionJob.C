@@ -25,7 +25,7 @@
 distributionJob::distributionJob(int p_size, baseModel* const cMod, xyRange& axes,
                  MacrodynGraphicsItem* const graph) : geometricJob(cMod,axes,graph)
 {
-    strcpy(xLabel,axes.label[0].toLatin1().data());
+    xLabel = axes.label[0];
     xParam=model->setLabels(xLabel);
     if( !xParam )
 	fatalError("distribution::distribution  Can not find z label ",xLabel);

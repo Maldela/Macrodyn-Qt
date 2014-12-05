@@ -486,38 +486,38 @@ void growth_model::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* growth_model::setLabels(char* label)
+qreal* growth_model::setLabels(const QString& label)
 {
-    if( !strcmp(label,"K") ) return(&K);
-    if( !strcmp(label,"L") ) return(&L);
-    if( !strcmp(label,"ln_K") ) return(&ln_K);
-    if( !strcmp(label,"d_K_kL") ) return(&d_K_kL);    
-    if( !strcmp(label,"ln_L") ) return(&ln_L);    
-    if( !strcmp(label,"k") ) return(&k);
-    if( !strcmp(label,"k_fix") ) return(&k_fix);    
-    if( !strcmp(label,"k_0") ) return(&k_0);
-    if( !strcmp(label,"y") ) return(&y);
-    if( !strcmp(label,"w") ) return(&w);
-    if( !strcmp(label,"r") ) return(&r);
-    if( !strcmp(label,"pf_type") ) return(&pf_type);
-    if( !strcmp(label,"A") ) return(&A);
-    if( !strcmp(label,"B") ) return(&B);
-    if( !strcmp(label,"C") ) return(&C);
-    if( !strcmp(label,"D") ) return(&D);
-    if( !strcmp(label,"alpha") ) return(&D);
-    if( !strcmp(label,"a") ) return(&a);
-    if( !strcmp(label,"b") ) return(&b);
-    if( !strcmp(label,"c") ) return(&c);
-    if( !strcmp(label,"d") ) return(&alpha);
-    if( !strcmp(label,"syr") ) return(&syr);
-    if( !strcmp(label,"swr") ) return(&swr);
-    if( !strcmp(label,"srr") ) return(&srr);
-    if( !strcmp(label,"sav_y") ) return(&sav_y);
-    if( !strcmp(label,"sav_w") ) return(&sav_w);
-    if( !strcmp(label,"sav_r") ) return(&sav_r);
-    if( !strcmp(label,"n") ) return(&n);
-    if( !strcmp(label,"delta_p") ) return(&delta_p);
-    if( !strcmp(label,"xBundle") ) return(&xBundle);
+    if (label == "K") return(&K);
+    if (label == "L") return(&L);
+    if (label == "ln_K") return(&ln_K);
+    if (label == "d_K_kL") return(&d_K_kL);
+    if (label == "ln_L") return(&ln_L);
+    if (label == "k") return(&k);
+    if (label == "k_fix") return(&k_fix);
+    if (label == "k_0") return(&k_0);
+    if (label == "y") return(&y);
+    if (label == "w") return(&w);
+    if (label == "r") return(&r);
+    if (label == "pf_type") return(&pf_type);
+    if (label == "A") return(&A);
+    if (label == "B") return(&B);
+    if (label == "C") return(&C);
+    if (label == "D") return(&D);
+    if (label == "alpha") return(&D);
+    if (label == "a") return(&a);
+    if (label == "b") return(&b);
+    if (label == "c") return(&c);
+    if (label == "d") return(&alpha);
+    if (label == "syr") return(&syr);
+    if (label == "swr") return(&swr);
+    if (label == "srr") return(&srr);
+    if (label == "sav_y") return(&sav_y);
+    if (label == "sav_w") return(&sav_w);
+    if (label == "sav_r") return(&sav_r);
+    if (label == "n") return(&n);
+    if (label == "delta_p") return(&delta_p);
+    if (label == "xBundle") return(&xBundle);
 
     return NULL;
 }
@@ -561,7 +561,7 @@ void growth_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void growth_model::loadParamset(ifstream& inFile)
+void growth_model::loadParamset(QDataStream& inFile)
 {
     inFile >> k_0 ;
     inFile >> pf_type;
@@ -592,7 +592,7 @@ void growth_model::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void growth_model::saveParamset(ofstream& outFile)
+void growth_model::saveParamset(QDataStream& outFile)
 {
     outFile << k_0 << "\t";
     outFile << pf_type << "\t";
@@ -724,7 +724,7 @@ void rgrowth_model::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rgrowth_model::loadParamset(ifstream& inputFile)
+void rgrowth_model::loadParamset(QDataStream& inputFile)
 {
   inputFile >> zvar_name;		// read the name of the stochastic parameter
   inputFile >> zvar_expr;		// read the definition
@@ -836,14 +836,14 @@ void depreciate::sendStateSpace(int &quantity,const qreal*** stateSpace)
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-qreal* depreciate::setLabels(char* label)
+qreal* depreciate::setLabels(const QString& label)
 {
-    if( !strcmp(label,"_z_0") ) return(&_z_0);
-    if( !strcmp(label,"_z") ) return(&_z);
-//    if( !strcmp(label,"theta_type") ) return(&theta_type);
-    if( !strcmp(label,"my") ) return(&my);
-//    if( !strcmp(label,"trans_a") ) return(&trans_a);
-//    if( !strcmp(label,"trans_b") ) return(&trans_b);
+    if (label == "_z_0") return(&_z_0);
+    if (label == "_z") return(&_z);
+//    if (label == "theta_type") return(&theta_type);
+    if (label == "my") return(&my);
+//    if (label == "trans_a") return(&trans_a);
+//    if (label == "trans_b") return(&trans_b);
 
     return growth_model::setLabels(label);
 }
@@ -977,7 +977,7 @@ void depreciate::initialize()
 // By:                  Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-void depreciate::loadParamset(ifstream& inputFile)
+void depreciate::loadParamset(QDataStream& inputFile)
 {
   inputFile >> theta_type;
   inputFile >> my;
@@ -1024,7 +1024,7 @@ void depreciate::loadParamset(ifstream& inputFile)
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-void depreciate::saveParamset(ofstream& outFile)
+void depreciate::saveParamset(QDataStream& outFile)
 {
     int i,j;
     outFile << theta_type << "\t";
@@ -1163,7 +1163,7 @@ pasinetti::~pasinetti()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void pasinetti::loadParamset(ifstream& inFile)
+void pasinetti::loadParamset(QDataStream& inFile)
 {
     inFile >> k_1 ;
     growth_model::loadParamset(inFile);
@@ -1182,7 +1182,7 @@ void pasinetti::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void pasinetti::saveParamset(ofstream& outFile)
+void pasinetti::saveParamset(QDataStream& outFile)
 {
     outFile << k_1 << "\t";
     growth_model::saveParamset(outFile);
@@ -1220,56 +1220,56 @@ void pasinetti::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* pasinetti::setLabels(char* label)
+qreal* pasinetti::setLabels(const QString& label)
 {
-    if( !strcmp(label,"k_1") ) return(&k_1);
-    if( !strcmp(label,"kw_0") ) return(&k_1);
-    if( !strcmp(label,"k_0") ) return(&k_0);
-    if( !strcmp(label,"kr_0") ) return(&k_0);
-    if( !strcmp(label,"kw") ) return(&kw);
-    if( !strcmp(label,"kr") ) return(&kr);
-    if( !strcmp(label,"k_pas") ) return(&k_pas);
-    if( !strcmp(label,"Q_r") ) return(&Q_r);
-    if( !strcmp(label,"Q_w") ) return(&Q_w);
-    if( !strcmp(label,"Q_r_n") ) return(&Q_r_n);
-    if( !strcmp(label,"Q_w_n") ) return(&Q_w_n);
-    if( !strcmp(label,"Quot_kr") ) return(&Quot_kr);
-    if( !strcmp(label,"Quot_kw") ) return(&Quot_kw);
-    if( !strcmp(label,"y_ini") ) return(&y_ini);
-    if( !strcmp(label,"y_ini_prime") ) return(&y_ini_prime);
-    if( !strcmp(label,"r") ) return(&r);
-    if( !strcmp(label,"E") ) return(&E);
-    if( !strcmp(label,"E_n") ) return(&E_n);
-    if( !strcmp(label,"E_f_pr_n") ) return(&E_f_pr_n);
-    if( !strcmp(label,"E_steady_leon") ) return(&E_steady_leon);
-    if( !strcmp(label,"E_steady_leon_prime") ) return(&E_steady_leon_prime);
-    if( !strcmp(label,"bif_point") ) return(&bif_point);
-    if( !strcmp(label,"xBundle") ) return(&xBundle);
-    if( !strcmp(label,"yBundle") ) return(&yBundle);
-    if( !strcmp(label,"steady_leon") ) return(&steady_leon);
-    if( !strcmp(label,"steady_kc") ) return(&steady_kc);
-    if( !strcmp(label,"steady_kw") ) return(&steady_kw);
-    if( !strcmp(label,"steady_kc_cd") ) return(&steady_kc_cd);
-    if( !strcmp(label,"steady_kw_cd") ) return(&steady_kw_cd);
-    if( !strcmp(label,"Q") ) return(&Q);
-    if( !strcmp(label,"Konsum_C") ) return(&Konsum_C);
-    if( !strcmp(label,"Konsum_K") ) return(&Konsum_K);
-    if( !strcmp(label,"Konsum_A") ) return(&Konsum_A);
-    if( !strcmp(label,"Konsum_C_n") ) return(&Konsum_C_n);
-    if( !strcmp(label,"Konsum_A_n") ) return(&Konsum_A_n);
-    if( !strcmp(label,"lohn") ) return(&lohn);
-    if( !strcmp(label,"kap_an") ) return(&kap_an);
-    if( !strcmp(label,"kap_ka") ) return(&kap_ka);
-    if( !strcmp(label,"lohn_od") ) return(&lohn_od);
-    if( !strcmp(label,"kap_an_od") ) return(&kap_an_od);
-    if( !strcmp(label,"kap_ka_od") ) return(&kap_ka_od);
-    if( !strcmp(label,"eink_an") ) return(&eink_an);
-    if( !strcmp(label,"kap_ges") ) return(&kap_ges);
-    if( !strcmp(label,"y_steady") ) return(&y_steady);
-    if( !strcmp(label,"s_hat") ) return(&s_hat);
-    if( !strcmp(label,"Ef_sc") ) return(&Ef_sc);
-    if( !strcmp(label,"Z") ) return(&Z);
-    if( !strcmp(label,"Z2") ) return(&Z2);
+    if (label == "k_1") return(&k_1);
+    if (label == "kw_0") return(&k_1);
+    if (label == "k_0") return(&k_0);
+    if (label == "kr_0") return(&k_0);
+    if (label == "kw") return(&kw);
+    if (label == "kr") return(&kr);
+    if (label == "k_pas") return(&k_pas);
+    if (label == "Q_r") return(&Q_r);
+    if (label == "Q_w") return(&Q_w);
+    if (label == "Q_r_n") return(&Q_r_n);
+    if (label == "Q_w_n") return(&Q_w_n);
+    if (label == "Quot_kr") return(&Quot_kr);
+    if (label == "Quot_kw") return(&Quot_kw);
+    if (label == "y_ini") return(&y_ini);
+    if (label == "y_ini_prime") return(&y_ini_prime);
+    if (label == "r") return(&r);
+    if (label == "E") return(&E);
+    if (label == "E_n") return(&E_n);
+    if (label == "E_f_pr_n") return(&E_f_pr_n);
+    if (label == "E_steady_leon") return(&E_steady_leon);
+    if (label == "E_steady_leon_prime") return(&E_steady_leon_prime);
+    if (label == "bif_point") return(&bif_point);
+    if (label == "xBundle") return(&xBundle);
+    if (label == "yBundle") return(&yBundle);
+    if (label == "steady_leon") return(&steady_leon);
+    if (label == "steady_kc") return(&steady_kc);
+    if (label == "steady_kw") return(&steady_kw);
+    if (label == "steady_kc_cd") return(&steady_kc_cd);
+    if (label == "steady_kw_cd") return(&steady_kw_cd);
+    if (label == "Q") return(&Q);
+    if (label == "Konsum_C") return(&Konsum_C);
+    if (label == "Konsum_K") return(&Konsum_K);
+    if (label == "Konsum_A") return(&Konsum_A);
+    if (label == "Konsum_C_n") return(&Konsum_C_n);
+    if (label == "Konsum_A_n") return(&Konsum_A_n);
+    if (label == "lohn") return(&lohn);
+    if (label == "kap_an") return(&kap_an);
+    if (label == "kap_ka") return(&kap_ka);
+    if (label == "lohn_od") return(&lohn_od);
+    if (label == "kap_an_od") return(&kap_an_od);
+    if (label == "kap_ka_od") return(&kap_ka_od);
+    if (label == "eink_an") return(&eink_an);
+    if (label == "kap_ges") return(&kap_ges);
+    if (label == "y_steady") return(&y_steady);
+    if (label == "s_hat") return(&s_hat);
+    if (label == "Ef_sc") return(&Ef_sc);
+    if (label == "Z") return(&Z);
+    if (label == "Z2") return(&Z2);
 
     return growth_model::setLabels(label);
 }

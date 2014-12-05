@@ -103,33 +103,33 @@ qreal* cobweb::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* cobweb::setLabels(char* label)
+qreal* cobweb::setLabels(const QString& label)
 {
-	if( !strcmp(label,"xBundle") )
+	if (label == "xBundle")
 		return( &xBundle );
-	if( !strcmp(label,"yBundle") )
+	if (label == "yBundle")
 		return( &yBundle );
-	if( !strcmp(label,"p") )
+	if (label == "p")
 		return( &p );
-	if( !strcmp(label,"p_e") )
+	if (label == "p_e")
 		return( &p_e);
-	if( !strcmp(label,"p_e_old") )
+	if (label == "p_e_old")
 		return( &p_e_old);
-	if( !strcmp(label,"q") )
+	if (label == "q")
 		return( &q );
-	if( !strcmp(label,"e_t") )
+	if (label == "e_t")
 		return( &e_t );
-	if( !strcmp(label,"lambda") )
+	if (label == "lambda")
 		return( &lambda );
-	if( !strcmp(label,"a") )
+	if (label == "a")
 		return( &a );
-	if( !strcmp(label,"b") )
+	if (label == "b")
 		return( &b );
-	if( !strcmp(label,"w") )
+	if (label == "w")
 		return( &w );
-	if( !strcmp(label,"p_e_0") )
+	if (label == "p_e_0")
 		return( &p_e_0 );
-	if( !strcmp(label,"dummy") )
+	if (label == "dummy")
 		return( &dummy );
 	
 	return NULL;
@@ -172,7 +172,7 @@ void cobweb::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::loadParamset(ifstream& inFile)
+void cobweb::loadParamset(QDataStream& inFile)
 {
 	inFile >> lambda;
 	inFile >> a >> b;
@@ -195,7 +195,7 @@ void cobweb::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::saveParamset(ofstream& outFile)
+void cobweb::saveParamset(QDataStream& outFile)
 {
 /*	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
@@ -215,7 +215,7 @@ void cobweb::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void cobweb::saveParamsetWithNames(ofstream& outFile)
+void cobweb::saveParamsetWithNames(QDataStream& outFile)
 {
 /*	outFile << "c0 = " << c0;
 	outFile << "\nc1 = " << c1;
@@ -339,7 +339,7 @@ void rdemand_cobweb::iteration( const qint64& t )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rdemand_cobweb::loadParamset( ifstream& inFile )
+void rdemand_cobweb::loadParamset( QDataStream& inFile )
 {
 	inFile >> zvar_name;
 	inFile >> zvar_expr;
@@ -379,7 +379,7 @@ void rdemand_cobweb::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb_RLS::loadParamset( ifstream& inFile )
+void cobweb_RLS::loadParamset( QDataStream& inFile )
 {
 	inFile >> p_0 >> X_0 >> theta_0;
 	cobweb::loadParamset( inFile );
@@ -447,21 +447,21 @@ void cobweb_RLS::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* cobweb_RLS::setLabels(char* label)
+qreal* cobweb_RLS::setLabels(const QString& label)
 {
-	if( !strcmp(label,"theta_t") )
+	if (label == "theta_t")
 		return( &theta_t );
-	if( !strcmp(label,"theta_0") )
+	if (label == "theta_0")
 		return( &theta_0 );
-	if( !strcmp(label,"X_t") )
+	if (label == "X_t")
 		return( &X_t );
-	if( !strcmp(label,"X_0") )
+	if (label == "X_0")
 		return( &X_0);
-	if( !strcmp(label,"p_0") )
+	if (label == "p_0")
 		return( &p_0 );
-	if( !strcmp(label,"p_t1") )
+	if (label == "p_t1")
 		return( &p_t1 );
-	if( !strcmp(label,"lambda_t") )
+	if (label == "lambda_t")
 		return( &lambda_t );
 	
 	return cobweb::setLabels( label );

@@ -28,7 +28,7 @@
 
 class color_plot : public geometricJob {
   protected:
-    char zLabel[20];
+    QString zLabel;
     qreal *zParam;
     qreal zmin,zmax;
 	int psize;

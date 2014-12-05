@@ -196,23 +196,23 @@ void excOlg::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* excOlg::setLabels(char *name)
+qreal* excOlg::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"thetat") )
+    if (name == "thetat")
         return( &thetat);
-    if( !strcmp(name,"oldThetat") )
+    if (name == "oldThetat")
         return( &oldThetat);
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"theta0") )
+    if (name == "theta0")
 	return( &theta0 );
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
 	return( (qreal*)(&tau) );
     return( NULL );
 }
@@ -292,7 +292,7 @@ void excOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::loadParamset(ifstream& inputFile)
+void excOlg::loadParamset(QDataStream& inputFile)
 {
     inputFile >> delta >> rho;
     inputFile >> tau >> length;
@@ -316,7 +316,7 @@ void excOlg::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::saveParamset(ofstream& outputFile)
+void excOlg::saveParamset(QDataStream& outputFile)
 {
     outputFile << delta << "\t" << rho << "\n";
     outputFile << tau << "\t" << length << "\n";
@@ -469,27 +469,27 @@ void excOlgAdapt::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* excOlgAdapt::setLabels(char *name)
+qreal* excOlgAdapt::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"thetat") )
+    if (name == "thetat")
         return( &thetat);
-    if( !strcmp(name,"oldThetat") )
+    if (name == "oldThetat")
         return( &oldThetat);
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"theta0") )
+    if (name == "theta0")
 	return( &theta0 );
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
 	return( (qreal*)(&tau) );
-    if( !strcmp(name,"etaYoung") )
+    if (name == "etaYoung")
 	return( &etaYoung );
-    if( !strcmp(name,"etaOld") )
+    if (name == "etaOld")
 	return( &etaOld );
     return( NULL );
 }
@@ -503,7 +503,7 @@ qreal* excOlgAdapt::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::loadParamset(ifstream& inputFile)
+void excOlgAdapt::loadParamset(QDataStream& inputFile)
 {
     inputFile >> delta >> rho;
     inputFile >> tau >> length;
@@ -528,7 +528,7 @@ void excOlgAdapt::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::saveParamset(ofstream& outputFile)
+void excOlgAdapt::saveParamset(QDataStream& outputFile)
 {
     outputFile << delta << "\t" << rho << "\n";
     outputFile << tau << "\t" << length << "\n";
@@ -717,27 +717,27 @@ void excOlgGeoExp::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* excOlgGeoExp::setLabels(char *name)
+qreal* excOlgGeoExp::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"thetat") )
+    if (name == "thetat")
         return( &thetat);
-    if( !strcmp(name,"oldThetat") )
+    if (name == "oldThetat")
         return( &oldThetat);
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"theta0") )
+    if (name == "theta0")
 	return( &theta0 );
-    if( !strcmp(name,"tau") )
+    if (name == "tau")
 	return( (qreal*)(&tau) );
-    if( !strcmp(name,"etaYoung") )
+    if (name == "etaYoung")
 	return( &etaYoung );
-    if( !strcmp(name,"etaOld") )
+    if (name == "etaOld")
 	return( &etaOld );
     return( NULL );
 }
@@ -751,7 +751,7 @@ qreal* excOlgGeoExp::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::loadParamset(ifstream& inputFile)
+void excOlgGeoExp::loadParamset(QDataStream& inputFile)
 {
     inputFile >> delta >> rho;
     inputFile >> tau >> length;
@@ -776,7 +776,7 @@ void excOlgGeoExp::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::saveParamset(ofstream& outputFile)
+void excOlgGeoExp::saveParamset(QDataStream& outputFile)
 {
     outputFile << delta << "\t" << rho << "\n";
     outputFile << tau << "\t" << length << "\n";

@@ -50,14 +50,14 @@ protected:
 public:
     HicksModel();			// constructor
     virtual ~HicksModel();		// destructor
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
-    void saveParamsetWithNames(ofstream&);    
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
+    void saveParamsetWithNames(QDataStream&);    
     void printParamset();
     void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 

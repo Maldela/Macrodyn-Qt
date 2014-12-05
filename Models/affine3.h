@@ -42,19 +42,18 @@ protected:
 	int count1, count2;	// counter for map1 and map2
 	rand_var *zvar1;
 	rand_var *zvar2;
-	char zvar_expr1[256];
-//	char zvar_expr2[256];
+    QString zvar_expr1;
 
 public:
 	affine3();				// constructor
 	virtual ~affine3();			//destructor
-	void loadParamset(ifstream&);	
-	void saveParamset(ofstream&);
+	void loadParamset(QDataStream&);	
+	void saveParamset(QDataStream&);
 	void printParamset();
 	void iteration(const qint64&);
 	void initialize();
 	qreal* sendModelVar();
-	qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
 	void sendStateSpace(int &,const qreal***);
 	void sendParameters(int&,qreal**); 	// write all parameters
                          	       		// into an array and return the 

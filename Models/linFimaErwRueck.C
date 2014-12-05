@@ -29,60 +29,60 @@ linFimaErwRueck::~linFimaErwRueck() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-qreal* linFimaErwRueck::setLabels(char* label)
+qreal* linFimaErwRueck::setLabels(const QString& label)
 {
-//	if( !strcmp(label,"intVarName") ) return( (qreal*)(&intVarName) );
-	if( !strcmp(label,"R") ) return(&R);
-	if( !strcmp(label,"x") ) return(&xAll);
+//	if (label == "intVarName") return( (qreal*)(&intVarName) );
+	if (label == "R") return(&R);
+	if (label == "x") return(&xAll);
 
-	if( !strcmp(label,"p") ) return(&p);
-	if( !strcmp(label,"p0") ) return(&p0);
-  	if( !strcmp(label,"pOld") ) return(&pOld);
-  	if( !strcmp(label,"pPerf") ) return(&pPerf);
-  	if( !strcmp(label,"pDiff") ) return(&pDiff);
+	if (label == "p") return(&p);
+	if (label == "p0") return(&p0);
+  	if (label == "pOld") return(&pOld);
+  	if (label == "pPerf") return(&pPerf);
+  	if (label == "pDiff") return(&pDiff);
 
-	if( !strcmp(label,"rF") ) return(&rF);
-	if( !strcmp(label,"eF") ) return(&eF);
-	if( !strcmp(label,"pF0") ) return(&pF0);
-	if( !strcmp(label,"pF") ) return(&pF);
-	if( !strcmp(label,"pFOld") ) return(&pFOld);
-	if( !strcmp(label,"qOld") ) return(&pFOld);
-  	if( !strcmp(label,"pFperf") ) return(&pFperf);
-	if( !strcmp(label,"xF") ) return(&xF);
-	if( !strcmp(label,"xFold") ) return(&xFold);
-	if( !strcmp(label,"xFrel") ) return(&xFrel);
-	if( !strcmp(label,"wF") ) return(&wF);
-	if( !strcmp(label,"RF") ) return(&RF);
-	if( !strcmp(label,"RpF") ) return(&RpF);
+	if (label == "rF") return(&rF);
+	if (label == "eF") return(&eF);
+	if (label == "pF0") return(&pF0);
+	if (label == "pF") return(&pF);
+	if (label == "pFOld") return(&pFOld);
+	if (label == "qOld") return(&pFOld);
+  	if (label == "pFperf") return(&pFperf);
+	if (label == "xF") return(&xF);
+	if (label == "xFold") return(&xFold);
+	if (label == "xFrel") return(&xFrel);
+	if (label == "wF") return(&wF);
+	if (label == "RF") return(&RF);
+	if (label == "RpF") return(&RpF);
 
-	if( !strcmp(label,"rC") ) return(&rC);
-	if( !strcmp(label,"eC") ) return(&eC);
-	if( !strcmp(label,"pC0") ) return(&pC0);
-	if( !strcmp(label,"pC") ) return(&pC);
-  	if( !strcmp(label,"pCperf") ) return(&pCperf);
-	if( !strcmp(label,"xC") ) return(&xC);
-	if( !strcmp(label,"xCold") ) return(&xCold);
-	if( !strcmp(label,"xCrel") ) return(&xCrel);
-	if( !strcmp(label,"wC") ) return(&wC);
-	if( !strcmp(label,"RC") ) return(&RC);
-	if( !strcmp(label,"RpC") ) return(&RpC);
+	if (label == "rC") return(&rC);
+	if (label == "eC") return(&eC);
+	if (label == "pC0") return(&pC0);
+	if (label == "pC") return(&pC);
+  	if (label == "pCperf") return(&pCperf);
+	if (label == "xC") return(&xC);
+	if (label == "xCold") return(&xCold);
+	if (label == "xCrel") return(&xCrel);
+	if (label == "wC") return(&wC);
+	if (label == "RC") return(&RC);
+	if (label == "RpC") return(&RpC);
 
-	if( !strcmp(label,"de") ) return(&de);
-	if( !strcmp(label,"Ed") ) return(&Ed);
-	if( !strcmp(label,"Vd") ) return(&Vd);
-	if( !strcmp(label,"d") ) return(&d);
+	if (label == "de") return(&de);
+	if (label == "Ed") return(&Ed);
+	if (label == "Vd") return(&Vd);
+	if (label == "d") return(&d);
 
-	if( !strcmp(label,"ferr") ) return(&ferrF);
-	if( !strcmp(label,"ferrF") ) return(&ferrF);
-	if( !strcmp(label,"ferrC") ) return(&ferrC);
-	if( !strcmp(label,"deltap") ) return(&deltap);
-	if( !strcmp(label,"deltaq") ) return(&deltapF);
-	if( !strcmp(label,"deltapF") ) return(&deltapF);
-	if( !strcmp(label,"ertrag") ) return(&ertrag);
-	if( !strcmp(label,"return") ) return(&ertrag);
+	if (label == "ferr") return(&ferrF);
+	if (label == "ferrF") return(&ferrF);
+	if (label == "ferrC") return(&ferrC);
+	if (label == "deltap") return(&deltap);
+	if (label == "deltaq") return(&deltapF);
+	if (label == "deltapF") return(&deltapF);
+	if (label == "ertrag") return(&ertrag);
+	if (label == "return") return(&ertrag);
 
-	if( !strcmp(label,"errvar") ) return(&errvar);
-	if( !strcmp(label,"divvar") ) return(&divvar);
+	if (label == "errvar") return(&errvar);
+	if (label == "divvar") return(&divvar);
 
 
   return NULL;
@@ -117,7 +117,7 @@ void linFimaErwRueck::initialize()
 	dOld=d;
 	divvar=0;
 
-	// sp"ater gebrauchte Konstanten
+    // später gebrauchte Konstanten
 	// Annahme: VC,VF zeitinvariant
 	if(rC==0)
 		r=0; // !!!
@@ -140,69 +140,44 @@ printf("THETA=%10.10f %10.10f %10.10f %10.10f %10.10f \n",
 // Funktionsname:	loadParamset
 // Beschreibung:	Einlesen der Parameter aus der .sim Datei 
 ///////////////////////////////////////////////////////////////////////////////
-void linFimaErwRueck::getString(ifstream& inFile,char* dummy) {
-	inFile >> dummy;
-	while( !strcmp(dummy,"/*") ) {
-		while(strcmp(dummy,"*/"))
-			inFile >> dummy;
-		inFile >> dummy;	
-	}
-}
-qreal linFimaErwRueck::getqreal(ifstream& inFile) {
-	char dummy[1024];
-	inFile >> dummy;
-	while( !strcmp(dummy,"/*") ) {
-		while(strcmp(dummy,"*/"))
-			inFile >> dummy;
-	inFile >> dummy;	
-	}
-	return (atof(dummy));
-}
-int linFimaErwRueck::getInt(ifstream& inFile) {
-	char dummy[1024];
-	inFile >> dummy;
-	while( !strcmp(dummy,"/*") ) {
-		while(strcmp(dummy,"*/"))
-			inFile >> dummy;
-	inFile >> dummy;	
-	}
-	return (atoi(dummy));
-}
 
-void linFimaErwRueck::loadParamset(ifstream& inFile) {
-	char dummy[1024];
-
-	getString(inFile,dummy); // lese Versionsnummer
-	if( strcmp(dummy,"V1.4") )
+void linFimaErwRueck::loadParamset(QDataStream& inFile)
+{
+    QString str;
+    inFile >> str;
+    if(str != "V1.4")
+    {
 		fatalError("loadParamset","wrong version");
+        return;
+    }
 	
-	getString(inFile,dummy);
-	if( !strcmp(dummy,"PrognoseFundamentalisten=perfekt") )
+    inFile >> str;
+    if(str == "PrognoseFundamentalisten=perfekt")
 		perfectPredictor=1; // Ja
 	 else	perfectPredictor=0; // Nein
 
-	getString(inFile,dummy);
-	if( !strcmp(dummy,"Dividenden=bekannt") )
+    inFile >> str;
+    if(str == "Dividenden=bekannt")
 		DividendenErwartung=bekannt;
 	 else	DividendenErwartung=unbekannt;
 
-	vc=getqreal(inFile); // Skalierung der erw. Div.Varianz der C
+    inFile >> vc; // Skalierung der erw. Div.Varianz der C
 
-	R=getqreal(inFile);
+    inFile >> R;
 
-	rF=getqreal(inFile); // Risikotoleranz
-	rC=getqreal(inFile);
+    inFile >> rF; // Risikotoleranz
+    inFile >> rC;
 
-	eF=getqreal(inFile); // Anfangsausstattung
-	eC=getqreal(inFile);
+    inFile >> eF; // Anfangsausstattung
+    inFile >> eC;
 
-	xAll=getqreal(inFile);
+    inFile >> xAll;
 
-	p0=getqreal(inFile);
+    inFile >> p0;
 	pF0=p0;
 	pC0=p0;	
 
-	length=getInt(inFile);
+    inFile >> length;
 
 	initialize();
 }
@@ -211,7 +186,7 @@ void linFimaErwRueck::loadParamset(ifstream& inFile) {
 // Funktionsname: saveParamsetWithNames
 // Beschreibung:         add  parameterset to printfile
 ///////////////////////////////////////////////////////////////////////////////
-void linFimaErwRueck::saveParamsetWithNames(ofstream& outputFile)
+void linFimaErwRueck::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel linFimaErwRueck\n";
     if(perfectPredictor)
@@ -235,8 +210,8 @@ void linFimaErwRueck::sendStateSpace(int &quantity,const qreal*** stateSpace)
     if( !(*stateSpace) )
 	fatalError("linFimaErwRueck::sendStateSpace","Speicherfehler");
     quantity=1; // 1 asset in Model linFimaErwRueck
-   (*stateSpace)[0]=&p;
-};
+    (*stateSpace)[0]=&p;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Funktionsname:	iteration

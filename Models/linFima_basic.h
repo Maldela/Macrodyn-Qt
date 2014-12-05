@@ -80,12 +80,12 @@ protected:
 public:
 	linFima_basic();
 	//virtual ~linFima_basic();	
-	void loadParamset(ifstream&);
-	void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);
+    void saveParamset(QDataStream&);
 	void printParamset();
 	void initialize();
     qreal* sendModelVar();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     void sendParameters(int&, qreal**);
     void receiveParameters(const qreal*);

@@ -87,172 +87,172 @@
 // Author:		Markus Lohmann
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getModel(const char* modelTyp)
+baseModel* getModel(const QString& modelTyp)
 {
-    if( !strcmp(modelTyp,"radio") )
+    if (modelTyp == "radio")
 	return new radio;
-    if( !strcmp(modelTyp,"newMacro") )
+    if (modelTyp == "newMacro")
 	return new newMacro;
-    if( !strcmp(modelTyp,"geoExp") )
+    if (modelTyp == "geoExp")
 	return new geoExp;
-    if( !strcmp(modelTyp,"adaptExp") )
+    if (modelTyp == "adaptExp")
 	return new adaptExp;
-    if( !strcmp(modelTyp,"affine1") )
+    if (modelTyp == "affine1")
 	return new affine1;	
-    if( !strcmp(modelTyp,"affine2") )
+    if (modelTyp == "affine2")
 	return new affine2;
-    if( !strcmp(modelTyp,"affine3") )
+    if (modelTyp == "affine3")
 	return new affine3;
-    if( !strcmp(modelTyp,"constantLag") )
+    if (modelTyp == "constantLag")
 	return new constantLag;
-    if( !strcmp(modelTyp,"logistic") )
+    if (modelTyp == "logistic")
 	return new logistic;
-    if( !strcmp(modelTyp,"rlogistic") )
+    if (modelTyp == "rlogistic")
 	return new rlogistic;
-    if( !strcmp(modelTyp,"henon") )
+    if (modelTyp == "henon")
 	return new henon;
-    if( !strcmp(modelTyp,"quadHenon") )
+    if (modelTyp == "quadHenon")
 	return new quadHenon;
-    if( !strcmp(modelTyp,"logiDelay") )
+    if (modelTyp == "logiDelay")
 	return new logiDelay;
-    if( !strcmp(modelTyp,"logLogDelay") )
+    if (modelTyp == "logLogDelay")
 	return new logLogDelay;
-    if( !strcmp(modelTyp,"linDiff") )
+    if (modelTyp == "linDiff")
 	return new linDiff;
-    if( !strcmp(modelTyp,"martin") )
+    if (modelTyp == "martin")
 	return new martin;
-    if( !strcmp(modelTyp,"martin2") )
+    if (modelTyp == "martin2")
 	return new martin2;
-    if( !strcmp(modelTyp,"martin3") )
+    if (modelTyp == "martin3")
 	return new martin3;
-    if( !strcmp(modelTyp,"capOlg") )
+    if (modelTyp == "capOlg")
 	return new capOlg;
-    if( !strcmp(modelTyp,"capOlgAdapt") )
+    if (modelTyp == "capOlgAdapt")
 	return new capOlgAdapt;
-    if( !strcmp(modelTyp,"capOlgGeoExp") )
+    if (modelTyp == "capOlgGeoExp")
 	return new capOlgGeoExp;
-    if( !strcmp(modelTyp,"excOlg") )
+    if (modelTyp == "excOlg")
 	return new excOlg;
-    if( !strcmp(modelTyp,"excOlgAdapt") )
+    if (modelTyp == "excOlgAdapt")
 	return new excOlgAdapt;
-    if( !strcmp(modelTyp,"excOlgGeoExp") )
+    if (modelTyp == "excOlgGeoExp")
 	return new excOlgGeoExp;
-    if( !strcmp(modelTyp,"laborMarketFirst") )
+    if (modelTyp == "laborMarketFirst")
 	return new laborMarketFirst;
-    if( !strcmp(modelTyp,"leo") )
+    if (modelTyp == "leo")
 	return new leo;
-    if( !strcmp(modelTyp,"laborMarketFirstTax") )
+    if (modelTyp == "laborMarketFirstTax")
 	return new laborMarketFirstTax;
-    if( !strcmp(modelTyp,"rlaborMarketFirstTax") )
+    if (modelTyp == "rlaborMarketFirstTax")
     	return new rlaborMarketFirstTax;
-    if( !strcmp(modelTyp,"martin4") )
+    if (modelTyp == "martin4")
 	return new martin4;
-    if( !strcmp(modelTyp,"OlgRat") )
+    if (modelTyp == "OlgRat")
 	return new OlgRat;
-    if( !strcmp(modelTyp,"OlgRat2") )
+    if (modelTyp == "OlgRat2")
 	return new OlgRat2;
-    if( !strcmp(modelTyp,"defbudba") )
+    if (modelTyp == "defbudba")
 	return new defbudba;
-    if( !strcmp(modelTyp,"Monopol") )
+    if (modelTyp == "Monopol")
 	return new Monopol;
-    if( !strcmp(modelTyp,"Duopol") )
+    if (modelTyp == "Duopol")
 	return new Duopol;
-    if( !strcmp(modelTyp,"Duopol2") )
+    if (modelTyp == "Duopol2")
 	return new Duopol2;
-    if( !strcmp(modelTyp,"cobweb_g_predictor") )
+    if (modelTyp == "cobweb_g_predictor")
     return new cobweb_g_predictor;
-    if( !strcmp(modelTyp,"toniRV") )
+    if (modelTyp == "toniRV")
     return new toniRV;
-    if( !strcmp(modelTyp,"tonicapm") )
+    if (modelTyp == "tonicapm")
     return new tonicapm;
-    if( !strcmp(modelTyp,"tonicapmLag") )
+    if (modelTyp == "tonicapmLag")
     return new tonicapmLag;
-    if( !strcmp(modelTyp,"toniLag") )
+    if (modelTyp == "toniLag")
     return new toniLag;
-    if( !strcmp(modelTyp,"toniadp") )
+    if (modelTyp == "toniadp")
     return new toniadp;
-    if( !strcmp(modelTyp,"toniadp2") )
+    if (modelTyp == "toniadp2")
     return new toniadp;
-    if( !strcmp(modelTyp,"toni2") )
+    if (modelTyp == "toni2")
     return new toni2;
-    if( !strcmp(modelTyp,"hetoni") )
+    if (modelTyp == "hetoni")
 	return new hetoni;
-    if( !strcmp(modelTyp,"growth_model") )
+    if (modelTyp == "growth_model")
 	return new growth_model;
-    if( !strcmp(modelTyp,"rgrowth_model") )
+    if (modelTyp == "rgrowth_model")
 	return new rgrowth_model;
-    if( !strcmp(modelTyp,"depreciate") )
+    if (modelTyp == "depreciate")
 	return new depreciate;
-    if( !strcmp(modelTyp,"pasinetti") )
+    if (modelTyp == "pasinetti")
 	return new pasinetti;
-    if( !strcmp(modelTyp,"nicole") )
+    if (modelTyp == "nicole")
 	return new nicole;
-    if( !strcmp(modelTyp,"jan_model") )
+    if (modelTyp == "jan_model")
 	return new jan_model;
-    if( !strcmp(modelTyp,"rSolow") )
+    if (modelTyp == "rSolow")
 	return new rSolow;
-    if( !strcmp(modelTyp,"RBC_delta_1") )
+    if (modelTyp == "RBC_delta_1")
 	return new RBC_delta_1;    
-    if( !strcmp(modelTyp,"dynofin_rmv") )
+    if (modelTyp == "dynofin_rmv")
 	return new dynofin_rmv;
-    if( !strcmp(modelTyp,"armax_eindim") )
+    if (modelTyp == "armax_eindim")
 	return new armax_eindim;
-    if( !strcmp(modelTyp,"armax") )
+    if (modelTyp == "armax")
 	return new armax;
-    if( !strcmp(modelTyp,"rOLG_wt") )
+    if (modelTyp == "rOLG_wt")
 	return new rOLG_wt;
-    if( !strcmp(modelTyp,"dornbusch") )
+    if (modelTyp == "dornbusch")
 	return new dornbusch;
-    if( !strcmp(modelTyp,"dorn") )
+    if (modelTyp == "dorn")
 	return new dorn;
-    if( !strcmp(modelTyp,"samuelson1") )
+    if (modelTyp == "samuelson1")
 	return new samuelson1;
-    if( !strcmp(modelTyp,"frepm") )
+    if (modelTyp == "frepm")
 	return new frepm;
-    if( !strcmp(modelTyp,"manipulate") )
+    if (modelTyp == "manipulate")
 	return new manipulate;
-    if( !strcmp(modelTyp,"linFima_basic") )
+    if (modelTyp == "linFima_basic")
 	return new linFima_basic;
-    if( !strcmp(modelTyp,"linFimaErwRueck") )
+    if (modelTyp == "linFimaErwRueck")
 	return new linFimaErwRueck;
-    if( !strcmp(modelTyp,"linFima_wage") )
+    if (modelTyp == "linFima_wage")
 	return new linFima_wage;
-    if( !strcmp(modelTyp,"pureExchange") )
+    if (modelTyp == "pureExchange")
 	return new pureExchange;
-    if( !strcmp(modelTyp,"martinNeu") )
+    if (modelTyp == "martinNeu")
 	return new martinNeu;
-    if( !strcmp(modelTyp,"onozaki_et_al") )
+    if (modelTyp == "onozaki_et_al")
 	return new onozaki_et_al;
-    if( !strcmp(modelTyp,"MerA") )
+    if (modelTyp == "MerA")
 	return new MerA;
-    if( !strcmp(modelTyp,"Bankintermed") )
+    if (modelTyp == "Bankintermed")
 	return new Bankintermed;
-	if( !strcmp(modelTyp,"finanzmarkt_2Dim_1") )
+    if (modelTyp == "finanzmarkt_2Dim_1")
 	return new finanzmarkt_2Dim_1;
-	if( !strcmp(modelTyp,"finanzmarkt_wage") )
+    if (modelTyp == "finanzmarkt_wage")
 	return new finanzmarkt_wage;
-	if( !strcmp(modelTyp,"finanzmarkt_JanE") )
+    if (modelTyp == "finanzmarkt_JanE")
 	return new finanzmarkt_JanE;
-	if( !strcmp(modelTyp,"ExchangeRateModel") )
+    if (modelTyp == "ExchangeRateModel")
 	return new ExchangeRateModel;
-	if( !strcmp(modelTyp,"ExchangeRateModel2") )
+    if (modelTyp == "ExchangeRateModel2")
 	return new ExchangeRateModel2;	
-	if( !strcmp(modelTyp,"ELS") )
+    if (modelTyp == "ELS")
 	return new ELS;
-	if( !strcmp(modelTyp,"demog_model") )
+    if (modelTyp == "demog_model")
 	return new demog_model;	
-	if( !strcmp(modelTyp,"HicksModel") )
+    if (modelTyp == "HicksModel")
 	return new HicksModel;
-	if( !strcmp(modelTyp,"RBC_basic_model") )
+    if (modelTyp == "RBC_basic_model")
 	return new RBC_basic_model;
-	if( !strcmp(modelTyp,"Keener") )
+    if (modelTyp == "Keener")
 	return new Keener;
-	if( !strcmp(modelTyp,"Samuelson_basic") )
+    if (modelTyp == "Samuelson_basic")
 	return new Samuelson_basic;
-	if( !strcmp(modelTyp,"Samuelson_ar1") )
+    if (modelTyp == "Samuelson_ar1")
 	return new Samuelson_ar1;
 	
-	if( !strcmp(modelTyp,"test_model") )
+    if (modelTyp == "test_model")
 	return new test_model;			
     return NULL;
 }//getModel(1)
@@ -267,172 +267,172 @@ baseModel* getModel(const char* modelTyp)
 // Author:		Markus Lohmann
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getModel(const char* modelTyp,const baseModel* sourceModel)
+baseModel* getModel(const QString& modelTyp, const baseModel* sourceModel)
 {
-    if( !strcmp(modelTyp,"radio") )
+    if (modelTyp == "radio")
 	return new radio(*((radio*)sourceModel));
-    if( !strcmp(modelTyp,"newMacro") )
+    if (modelTyp == "newMacro")
 	return new newMacro(*((newMacro*)sourceModel));
-    if( !strcmp(modelTyp,"logistic") )
+    if (modelTyp == "logistic")
 	return new logistic(*((logistic*)sourceModel));
-    if( !strcmp(modelTyp,"rlogistic") )
+    if (modelTyp == "rlogistic")
 	return new rlogistic(*((rlogistic*)sourceModel));
-    if( !strcmp(modelTyp,"geoExp") )
+    if (modelTyp == "geoExp")
 	return new geoExp(*((geoExp*)sourceModel));
-    if( !strcmp(modelTyp,"adaptExp") )
+    if (modelTyp == "adaptExp")
 	return new adaptExp(*((adaptExp*)sourceModel));
-    if( !strcmp(modelTyp,"affine1") )
+    if (modelTyp == "affine1")
 	return new affine1(*((affine1*)sourceModel));	
-    if( !strcmp(modelTyp,"affine2") )
+    if (modelTyp == "affine2")
 	return new affine2(*((affine2*)sourceModel));
-    if( !strcmp(modelTyp,"affine3") )
+    if (modelTyp == "affine3")
 	return new affine3(*((affine3*)sourceModel));
-    if( !strcmp(modelTyp,"constantLag") )
+    if (modelTyp == "constantLag")
 	return new constantLag(*((constantLag*)sourceModel));
-    if( !strcmp(modelTyp,"henon") )
+    if (modelTyp == "henon")
 	return new henon(*((henon*)sourceModel));
-    if( !strcmp(modelTyp,"quadHenon") )
+    if (modelTyp == "quadHenon")
 	return new quadHenon(*((quadHenon*)sourceModel));
-    if( !strcmp(modelTyp,"logiDelay") )
+    if (modelTyp == "logiDelay")
 	return new logiDelay(*((logiDelay*)sourceModel));
-    if( !strcmp(modelTyp,"logLogDelay") )
+    if (modelTyp == "logLogDelay")
 	return new logLogDelay(*((logLogDelay*)sourceModel));
-    if( !strcmp(modelTyp,"linDiff") )
+    if (modelTyp == "linDiff")
 	return new linDiff(*((linDiff*)sourceModel));
-    if( !strcmp(modelTyp,"martin") )
+    if (modelTyp == "martin")
 	return new martin(*((martin*)sourceModel));
-    if( !strcmp(modelTyp,"martin2") )
+    if (modelTyp == "martin2")
 	return new martin2(*((martin2*)sourceModel));
-    if( !strcmp(modelTyp,"martin3") )
+    if (modelTyp == "martin3")
 	return new martin3(*((martin3*)sourceModel));
-    if( !strcmp(modelTyp,"capOlg") )
+    if (modelTyp == "capOlg")
 	return new capOlg(*((capOlg*)sourceModel));
-    if( !strcmp(modelTyp,"capOlgAdapt") )
+    if (modelTyp == "capOlgAdapt")
 	return new capOlgAdapt(*((capOlgAdapt*)sourceModel));
-    if( !strcmp(modelTyp,"capOlgGeoExp") )
+    if (modelTyp == "capOlgGeoExp")
 	return new capOlgGeoExp(*((capOlgGeoExp*)sourceModel));
-    if( !strcmp(modelTyp,"excOlg") )
+    if (modelTyp == "excOlg")
 	return new excOlg(*((excOlg*)sourceModel));
-    if( !strcmp(modelTyp,"excOlgAdapt") )
+    if (modelTyp == "excOlgAdapt")
 	return new excOlgAdapt(*((excOlgAdapt*)sourceModel));
-    if( !strcmp(modelTyp,"excOlgGeoExp") )
+    if (modelTyp == "excOlgGeoExp")
 	return new excOlgGeoExp(*((excOlgGeoExp*)sourceModel));
-    if( !strcmp(modelTyp,"laborMarketFirst") )
+    if (modelTyp == "laborMarketFirst")
 	return new laborMarketFirst(*((laborMarketFirst*)sourceModel));
-    if( !strcmp(modelTyp,"leo") )
+    if (modelTyp == "leo")
 	return new leo(*((leo*)sourceModel));
-    if( !strcmp(modelTyp,"laborMarketFirstTax") )
+    if (modelTyp == "laborMarketFirstTax")
 	return new laborMarketFirstTax(*((laborMarketFirstTax*)sourceModel));
-    if( !strcmp(modelTyp,"rlaborMarketFirstTax") )
+    if (modelTyp == "rlaborMarketFirstTax")
         return new rlaborMarketFirstTax(*((rlaborMarketFirstTax*)sourceModel));
-    if( !strcmp(modelTyp,"martin4") )
+    if (modelTyp == "martin4")
 	return new martin4(*((martin4*)sourceModel));
-    if( !strcmp(modelTyp,"OlgRat") )
+    if (modelTyp == "OlgRat")
 	return new OlgRat(*((OlgRat*)sourceModel));
-    if( !strcmp(modelTyp,"OlgRat2") )
+    if (modelTyp == "OlgRat2")
 	return new OlgRat2(*((OlgRat2*)sourceModel));
-    if(!strcmp(modelTyp,"defbudba") )
+    if (modelTyp == "defbudba")
 	return new defbudba(*((defbudba*)sourceModel));
-    if(!strcmp(modelTyp,"Monopol") )
+    if (modelTyp == "Monopol")
 	return new Monopol(*((Monopol*)sourceModel));
-    if(!strcmp(modelTyp,"Duopol") )
+    if (modelTyp == "Duopol")
 	return new Duopol(*((Duopol*)sourceModel));
-    if( !strcmp(modelTyp,"Duopol2") )
+    if (modelTyp == "Duopol2")
 	return new Duopol2(*((Duopol2*)sourceModel));
-    if( !strcmp(modelTyp,"cobweb_g_predictor") )
+    if (modelTyp == "cobweb_g_predictor")
         return new cobweb_g_predictor(*((cobweb_g_predictor*)sourceModel));
-    if( !strcmp(modelTyp,"toniRV") )
+    if (modelTyp == "toniRV")
         return new toniRV(*((toniRV*)sourceModel));
-    if( !strcmp(modelTyp,"tonicapm") )
+    if (modelTyp == "tonicapm")
       return new tonicapm(*((tonicapm*)sourceModel));
-    if( !strcmp(modelTyp,"tonicapmLag") )
+    if (modelTyp == "tonicapmLag")
       return new tonicapmLag(*((tonicapmLag*)sourceModel));
-    if( !strcmp(modelTyp,"toniLag") )
+    if (modelTyp == "toniLag")
 	return new toniLag(*((toniLag*)sourceModel));
-    if( !strcmp(modelTyp,"toniadp") )
+    if (modelTyp == "toniadp")
 	return new toniadp(*((toniadp*)sourceModel));
-    if( !strcmp(modelTyp,"toniadp2") )
+    if (modelTyp == "toniadp2")
 	return new toniadp2(*((toniadp2*)sourceModel));
-    if( !strcmp(modelTyp,"toni2") )
+    if (modelTyp == "toni2")
 	return new toni2(*((toni2*)sourceModel));
-    if( !strcmp(modelTyp,"hetoni") )
+    if (modelTyp == "hetoni")
 	return new hetoni(*((hetoni*)sourceModel));
-    if( !strcmp(modelTyp,"nicole") )
+    if (modelTyp == "nicole")
 	return new nicole(*((nicole*)sourceModel));
-    if( !strcmp(modelTyp,"growth_model") )
+    if (modelTyp == "growth_model")
 	return new growth_model(*((growth_model*)sourceModel));
-    if( !strcmp(modelTyp,"depreciate") )
+    if (modelTyp == "depreciate")
 	return new depreciate(*((depreciate*)sourceModel));
-    if( !strcmp(modelTyp,"pasinetti") )
+    if (modelTyp == "pasinetti")
 	return new pasinetti(*((pasinetti*)sourceModel));
-    if( !strcmp(modelTyp,"rgrowth_model") )
+    if (modelTyp == "rgrowth_model")
 	return new rgrowth_model(*((rgrowth_model*)sourceModel));
-    if( !strcmp(modelTyp,"jan_model") )
+    if (modelTyp == "jan_model")
 	return new jan_model(*((jan_model*)sourceModel));
-    if( !strcmp(modelTyp,"rSolow") )
+    if (modelTyp == "rSolow")
 	return new rSolow(*((rSolow*)sourceModel));
-    if( !strcmp(modelTyp,"RBC_delta_1") )
+    if (modelTyp == "RBC_delta_1")
 	return new RBC_delta_1(*((RBC_delta_1*)sourceModel));
-    if( !strcmp(modelTyp,"dynofin_rmv") )
+    if (modelTyp == "dynofin_rmv")
 	return new dynofin_rmv(*((dynofin_rmv*)sourceModel));	
-    if( !strcmp(modelTyp,"armax_eindim") )
+    if (modelTyp == "armax_eindim")
         return new armax_eindim(*((armax_eindim*)sourceModel));
-    if( !strcmp(modelTyp,"armax") )
+    if (modelTyp == "armax")
 	return new armax(*((armax*)sourceModel));
-    if( !strcmp(modelTyp,"rOLG_wt") )
+    if (modelTyp == "rOLG_wt")
 	return new rOLG_wt(*((rOLG_wt*)sourceModel));
-    if( !strcmp(modelTyp,"dornbusch") )
+    if (modelTyp == "dornbusch")
 	return new dornbusch(*((dornbusch*)sourceModel));
-    if( !strcmp(modelTyp,"dorn") )
+    if (modelTyp == "dorn")
 	return new dorn(*((dorn*)sourceModel));
-    if( !strcmp(modelTyp,"samuelson1") )
+    if (modelTyp == "samuelson1")
 	return new samuelson1(*((samuelson1*)sourceModel));
-    if( !strcmp(modelTyp,"frepm") )
+    if (modelTyp == "frepm")
 	return new frepm(*((frepm*)sourceModel));
-    if( !strcmp(modelTyp,"manipulate") )
+    if (modelTyp == "manipulate")
 	return new manipulate(*((manipulate*)sourceModel));
-    if( !strcmp(modelTyp,"linFima_basic") )
+    if (modelTyp == "linFima_basic")
 	return new linFima_basic(*((linFima_basic*)sourceModel));
-    if( !strcmp(modelTyp,"linFimaErwRueck") )
+    if (modelTyp == "linFimaErwRueck")
 	return new linFimaErwRueck(*((linFimaErwRueck*)sourceModel));
-    if( !strcmp(modelTyp,"linFima_wage") )
+    if (modelTyp == "linFima_wage")
 	return new linFima_wage(*((linFima_wage*)sourceModel));
-    if( !strcmp(modelTyp,"pureExchange") )
+    if (modelTyp == "pureExchange")
 	return new pureExchange(*((pureExchange*)sourceModel));
-    if( !strcmp(modelTyp,"martinNeu") )
+    if (modelTyp == "martinNeu")
 	return new martinNeu(*((martinNeu*)sourceModel));
-    if( !strcmp(modelTyp,"onozaki_et_al") )
+    if (modelTyp == "onozaki_et_al")
 	return new onozaki_et_al(*((onozaki_et_al*)sourceModel));
-    if( !strcmp(modelTyp,"MerA") )
+    if (modelTyp == "MerA")
 	return new MerA(*((MerA*)sourceModel));
-    if( !strcmp(modelTyp,"Bankintermed") )
+    if (modelTyp == "Bankintermed")
 	return new Bankintermed(*((Bankintermed*)sourceModel));	
-    if( !strcmp(modelTyp,"finanzmarkt_2Dim_1") )
+    if (modelTyp == "finanzmarkt_2Dim_1")
 	return new finanzmarkt_2Dim_1(*((finanzmarkt_2Dim_1*)sourceModel));	
-    if( !strcmp(modelTyp,"finanzmarkt_wage") )
+    if (modelTyp == "finanzmarkt_wage")
 	return new finanzmarkt_wage(*((finanzmarkt_wage*)sourceModel));	
-    if( !strcmp(modelTyp,"finanzmarkt_JanE") )
+    if (modelTyp == "finanzmarkt_JanE")
 	return new finanzmarkt_JanE(*((finanzmarkt_JanE*)sourceModel));	
-    if( !strcmp(modelTyp,"ExchangeRateModel") )
+    if (modelTyp == "ExchangeRateModel")
 	return new ExchangeRateModel(*((ExchangeRateModel*)sourceModel));
-    if( !strcmp(modelTyp,"ExchangeRateModel2") )
+    if (modelTyp == "ExchangeRateModel2")
 	return new ExchangeRateModel2(*((ExchangeRateModel2*)sourceModel));			
-    if( !strcmp(modelTyp,"ELS") )
+    if (modelTyp == "ELS")
 	return new ELS(*((ELS*)sourceModel));
-    if( !strcmp(modelTyp,"demog_model") )
+    if (modelTyp == "demog_model")
 	return new demog_model(*((demog_model*)sourceModel));
-    if( !strcmp(modelTyp,"HicksModel") )
+    if (modelTyp == "HicksModel")
 	return new HicksModel(*((HicksModel*)sourceModel));
-    if( !strcmp(modelTyp,"RBC_basic_model") )
+    if (modelTyp == "RBC_basic_model")
 	return new RBC_basic_model(*((RBC_basic_model*)sourceModel));
-    if( !strcmp(modelTyp,"Keener") )
+    if (modelTyp == "Keener")
 	return new Keener(*((Keener*)sourceModel));
-    if( !strcmp(modelTyp,"Samuelson_basic") )
+    if (modelTyp == "Samuelson_basic")
 	return new Samuelson_basic(*((Samuelson_basic*)sourceModel));	
-    if( !strcmp(modelTyp,"Samuelson_ar1") )
+    if (modelTyp == "Samuelson_ar1")
 	return new Samuelson_ar1(*((Samuelson_ar1*)sourceModel));
 	
-    if( !strcmp(modelTyp,"test_model") )
+    if (modelTyp == "test_model")
 	return new test_model(*((test_model*)sourceModel));			
 	return NULL;		// not reached
 }//getModel(2)

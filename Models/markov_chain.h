@@ -25,7 +25,7 @@ class markov_chain {
     double     * qrealization;	// the qrealization for each state
     rand_var * * trans;		// transition matrix
     baseModel  * b_model;	// to resolve names
-    char       * r_gen;		//
+    QString      r_gen;		//
     
     void set_row ( int row,		// set the probabilities in this row
                   const char * expr);	// according to the expression
@@ -33,9 +33,9 @@ class markov_chain {
   public:
     markov_chain			// constructor 
              ( baseModel* model, 	// to resolve names
-               const char * gen, 	// the basic random generator
-               const char * states,	// definition of the states and their qrealisations
-               const char * matrix);    // the transition matrix 
+               const QString& gen, 	// the basic random generator
+               const QString& states,	// definition of the states and their qrealisations
+               const QString& matrix);    // the transition matrix
                				
     ~markov_chain ( void );		//  distructor
  

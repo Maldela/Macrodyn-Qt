@@ -87,10 +87,10 @@ protected:
 public:
 	finanzmarkt_2Dim();
 	virtual ~finanzmarkt_2Dim();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
 	void initialize();
-	void loadParamset(ifstream&);	
-/*	void saveParamsetWithNames(ofstream&);*/ 
+    void loadParamset(QDataStream&);
+/*	void saveParamsetWithNames(QDataStream&);*/
     void sendStateSpace(int &,const qreal***);
 	void iteration(const long&);
 /*	void saveParamset();	

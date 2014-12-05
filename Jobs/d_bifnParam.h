@@ -25,7 +25,7 @@
 class d_bifnParam : public bifnParam {
 
 protected:
-	ofstream outFile;
+	QFile outFile;
 	histo_1d h;		// hit storing grid
     qreal stepY;		// scale of the grid
 	int resolution_x;	// store dummy

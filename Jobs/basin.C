@@ -35,23 +35,34 @@ basin::basin(baseModel* const bMod,const xyRange& axes, char* const cycleFile,
 /*                                                                            */
 /******************************************************************************/
 
-void basin::initCycle(char *const name,qreal*** cycle,int& period)
+void basin::initCycle(const QString& name, qreal*** cycle, int& period)
 {
-    ifstream cycleFile(name);
+    QFile cycleFile(name);
 
-    if( cycleFile.bad() )
-	fatalError("basin::initCycle","Can't open cycle-file");
+    if(!cycleFile.open(QFile::ReadOnly))
+    {
+        fatalError("basin::initCycle","Can't open cycle-file");
+        return;
+    }
 
-    cycleFile >> period >> dimension;
+    QDataStream stream(&cycleFile);
+
+    stream >> period >> dimension;
     if( !(*cycle = new qreal*[dimension]) )
-	fatalError("basin::initCycle","Can't create cycle matrix");
+    {
+        fatalError("basin::initCycle","Can't create cycle matrix");
+        return;
+    }
     for(int i=0;i<dimension;i++)
 	if( !( (*cycle)[i] = new qreal[period] ) )
+    {
 	    fatalError("basin::initCycle","Can't create cycle matrix");
+        return;
+    }
     
     for(int j=0;j<period;j++)
     for(int i=0;i<dimension;i++)
-	    cycleFile >> (*cycle)[i][j];
+        stream >> (*cycle)[i][j];
 }
 
 /******************************************************************************/

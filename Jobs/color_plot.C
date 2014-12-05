@@ -28,7 +28,7 @@ color_plot::color_plot(int p_size, baseModel* const cMod,const xyRange& axes,
 {
     limit= length / 10;			// 10% are thrown away
 //    limit=0;
-    strcpy(zLabel,axes.label[2].toLatin1().data());
+    zLabel = axes.label[2];
     zParam=model->setLabels(zLabel);
     if( !zParam )
 	fatalError("color_plot::color_plot  Can not find z label ",zLabel);

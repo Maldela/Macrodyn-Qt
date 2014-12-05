@@ -40,7 +40,7 @@ class rand_var {
     double * range_max;			// the right interval bound
     
   public:
-    rand_var ( baseModel* model,const char* gen,const char* zvar_expr);// constructor
+    rand_var ( baseModel* model,const QString& gen,const QString& zvar_expr);// constructor
     rand_var ( const char* gen,const qreal& probab,const qreal& min,const qreal& max);
     ~rand_var ( void );			// distructor
 

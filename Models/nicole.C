@@ -58,7 +58,7 @@ void nicole::initialize()
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::loadParamset(ifstream& inputFile)
+void nicole::loadParamset(QDataStream& inputFile)
 {
     inputFile >> pi >> dl >> dh >> d0 >> e >> alpha >> xhat >> theta >> R;
     inputFile >> length ;
@@ -73,7 +73,7 @@ void nicole::loadParamset(ifstream& inputFile)
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::saveParamset(ofstream& outputFile)
+void nicole::saveParamset(QDataStream& outputFile)
 {
     outputFile << pi << "\t" << dl << "\t" << dh << "\t" << d0 << "\t" ;
     outputFile << e << "\t" << alpha << "\t" << xhat << "\t";
@@ -87,7 +87,7 @@ void nicole::saveParamset(ofstream& outputFile)
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::saveParamsetWithNames(ofstream& outputFile)
+void nicole::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel nicole\n" << "pi = " << pi << "\tdl = " << dl ;
     outputFile << "\tdh = " << dh << "\td0 = " << d0 << "\te = " << e << "\talpha = " << alpha ;
@@ -137,36 +137,36 @@ void nicole::receiveParameters(const qreal* parameters)
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal* nicole::setLabels(char *name)
+qreal* nicole::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(name,"pi") )
+    if (name == "pi")
         return( &pi );
-    if( !strcmp(name,"dl") )
+    if (name == "dl")
         return( &dl );
-    if( !strcmp(name,"dh") )
+    if (name == "dh")
         return( &dh );
-    if( !strcmp(name,"d0") )
+    if (name == "d0")
         return( &d0 );
 
-    if( !strcmp(name,"e") )
+    if (name == "e")
         return( &e );
-    if( !strcmp(name,"alpha") )
+    if (name == "alpha")
         return( &alpha );
-    if( !strcmp(name,"xhat") )
+    if (name == "xhat")
         return( &xhat );
-    if( !strcmp(name,"theta") )
+    if (name == "theta")
         return( &theta );
-    if( !strcmp(name,"R") )
+    if (name == "R")
         return( &R );
  
-    if( !strcmp(name,"p") )
+    if (name == "p")
         return( &p );
-    if( !strcmp(name,"d") )
+    if (name == "d")
         return( &d );
 
     return( NULL );

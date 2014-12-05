@@ -14,8 +14,6 @@
 #include "manipulate.h"
 #include "getModel.h"
 #include "../PublicModels/getPubModel.h"
-#include <fstream>
-
 #include "../Random/ranlib.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -90,66 +88,67 @@ log() << "manipulate destructor" << "\n";
 // Last modified:	2000/2/12  Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* manipulate::setLabels(char* label) {
-	char* labelp;
-	if( !strcmp(label,"102[0]k") ) return((qreal*)(&ma_k_a_ptr[0].k));
-	if( !strcmp(label,"102[0]a") ) return(&ma_k_a_ptr[0].a);
-	if( !strcmp(label,"MA_Trend") ) return(&ma_k_a_ptr[0].a);
+qreal* manipulate::setLabels(const QString& label) {
+	if (label == "102[0]k") return((qreal*)(&ma_k_a_ptr[0].k));
+	if (label == "102[0]a") return(&ma_k_a_ptr[0].a);
+	if (label == "MA_Trend") return(&ma_k_a_ptr[0].a);
 
-	if( !strncmp(label,"m(",2) ) {
-		labelp=label+2;
-		if( !strncmp(labelp,statvarname,strlen(statvarname)) )
+    QString labelp = label;
+
+    if (label.startsWith("m(") ) {
+        labelp.remove(0, 2);
+        if (labelp.startsWith(statvarname) )
 			return(&mean);
 	}
-	if( !strncmp(label,"v(",2) ) {
-		labelp=label+2;
-		if( !strncmp(labelp,statvarname,strlen(statvarname)) )
+    if (label.startsWith("v(") ) {
+        labelp.remove(0, 2);
+        if (labelp.startsWith(statvarname) )
 			return(&variance);
 	}
-	if( !strncmp(label,"s(",2) ) {
-		labelp=label+2;
-		if( !strncmp(labelp,statvarname,strlen(statvarname)) )
+    if (label.startsWith("s(") ) {
+        labelp.remove(0, 2);
+        if (labelp.startsWith(statvarname) )
 			return(&standardDeviation);
 	}
-	if( !strncmp(label,"vk(",3) ) {
-		labelp=label+3;
-		if( !strncmp(labelp,statvarname,strlen(statvarname)) )
+    if (label.startsWith("vk(") ) {
+        labelp.remove(0, 3);
+        if (labelp.startsWith(statvarname) )
 			return(&variationskoeff);
 	}
-	if( !strncmp(label,"sr(",3) ) {
-		labelp=label+3;
-		if( !strncmp(labelp,statvarname,strlen(statvarname)) )
+    if (label.startsWith("sr(") ) {
+        labelp.remove(0, 3);
+        if (labelp.startsWith(statvarname) )
 			return(&sharpeRatio);
 	}
-	if( !strncmp(label,"mean(",5) ) {
-		labelp=label+5;
-		if( !strncmp(labelp,quanvarname,strlen(quanvarname)) )
+    if (label.startsWith("mean(") ) {
+        labelp.remove(0, 5);
+        if (labelp.startsWith(quanvarname) )
 			return(&mr[0]);
 	}
-	if( !strncmp(label,"var(",4) ) {
-		labelp=label+4;
-		if( !strncmp(labelp,quanvarname,strlen(quanvarname)) )
+    if (label.startsWith("var(") ) {
+        labelp.remove(0, 4);
+        if (labelp.startsWith(quanvarname) )
 			return(&mc[1]);
 	}
-	if( !strncmp(label,"sd(",3) ) {
-		labelp=label+3;
-		if( !strncmp(labelp,quanvarname,strlen(quanvarname)) )
+    if (label.startsWith("sd(") ) {
+        labelp.remove(0, 3);
+        if (labelp.startsWith(quanvarname) )
 			return(&sd);
 	}
 
-	if( !strncmp(label,"sk(",3) ) {
-		labelp=label+3;
-		if( !strncmp(labelp,quanvarname,strlen(quanvarname)) )
+    if (label.startsWith("sk(") ) {
+        labelp.remove(0, 3);
+        if (labelp.startsWith(quanvarname) )
 			return(&sk);
 	}
-	if( !strncmp(label,"ku(",3) ) {
-		labelp=label+3;
-		if( !strncmp(labelp,quanvarname,strlen(quanvarname)) )
+    if (label.startsWith("ku(") ) {
+        labelp.remove(0, 3);
+        if (labelp.startsWith(quanvarname) )
 			return(&ku);
 	}
-	if( !strncmp(label,"quan(",5) ) {
-		labelp=label+5;
-		if( !strncmp(labelp,quanvarname,strlen(quanvarname)) )
+    if (label.startsWith("quan(") ) {
+        labelp.remove(0, 5);
+        if (labelp.startsWith(quanvarname) )
 			return(&xi);
 	}
 	return model->setLabels(label);
@@ -161,7 +160,7 @@ void  manipulate::sendStateSpace(int &i,const qreal*** r) {model->sendStateSpace
 void  manipulate::receiveParameters(const qreal* r) {model->receiveParameters(r);} 
 void  manipulate::sendParameters(int& i,qreal** r) {model->sendParameters(i,r);}
 void  manipulate::printParamset() {model->printParamset();}
-void  manipulate::saveParamset(ofstream& os) {model->saveParamset(os);}
+void  manipulate::saveParamset(QDataStream& os) {model->saveParamset(os);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Class name:		manipulate
@@ -171,7 +170,7 @@ void  manipulate::saveParamset(ofstream& os) {model->saveParamset(os);}
 // Author:		Marc Mueller  Jul 12 1999
 // Last modified:	Mon Jul 12 12:11:54 CEST 1999  Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void manipulate::saveParamsetWithNames(ofstream& outputFile) {
+void manipulate::saveParamsetWithNames(QDataStream& outputFile) {
 	outputFile << "\nManipulate Model\n";
 	model->saveParamsetWithNames(outputFile);
 }
@@ -184,11 +183,10 @@ void manipulate::saveParamsetWithNames(ofstream& outputFile) {
 // Author:		Marc Mueller  Jul 12 1999
 // Last modified:	2000/5/25
 ///////////////////////////////////////////////////////////////////////////////
-void manipulate::loadParamset(ifstream& inFile) {
+void manipulate::loadParamset(QDataStream& inFile) {
 	int i,j;
-	char* name;
-	char dummy[256];
-	char dummy2[1024];
+    QString dummy, dummy2;
+    QString name;
 	forecasttype=1; // normal forecast is default
 
 	inFile >> modelTyp;
@@ -220,6 +218,7 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 			break;
 
 		  case stoch_markov:
+        {
 			// 11 expectationname variancename randomname
 			//    STATES TRANSFORMATIONMATRIX
 			// Bsp.:
@@ -251,34 +250,25 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 				fatalError("manipulate::loadParamset stoch_markov can't find",varname);
 
 			inFile >> m_state;
-			statesNum = strnchr(m_state,';');
-			char sdummy[256];
-			char * pos;
-			char * pos2;
-			pos=m_state;
-			for (i = 0; i < statesNum; i++) { // konvertiere States aus char in qreal
-				pos2=sdummy;
-				while(*++pos!=';')
-					*pos2++ = *pos;
-				*pos2 = '\0';
-				states[i]=atof(sdummy); // trage States in vektor ein
-				//log() << sdummy << " " << states[i] << "\n";
+            QStringList list = m_state.split(';');
+            statesNum = list.size();
+            for (i = 0; i < statesNum; i++)
+            { // konvertiere States aus char in qreal
+                states[i] = list[i].toDouble(); // trage States in vektor ein
 			}
-			for (j = 0; j < statesNum; j++) { // Uli liest Uebergangsmatrix zeilenweise ein!
-				inFile >> dummy;	
-				pos=dummy-1;
-				for (i = 0; i < statesNum; i++) {
-					pos2=sdummy;
-					while(*++pos!=';')
-						*pos2++ = *pos;
-					*pos2 = '\0';
-					umatrix[j][i]=atof(sdummy); // trage Uebergangsmatrix ein
+            for (j = 0; j < statesNum; j++)
+            { // Uli liest Uebergangsmatrix zeilenweise ein!
+                inFile >> dummy;
+                list = dummy.split(';');
+                for (i = 0; i < list.size(); i++)
+                {
+                    umatrix[j][i] = list[i].toDouble(); // trage Uebergangsmatrix ein
 					//log() << sdummy << " " << umatrix[j][i] << "\n";
 				}
-				strcat(m_matrix,dummy); // anhaengen der Zeilen !
-				strcat(m_matrix," ");		
+                m_matrix += dummy += " "; // anhaengen der Zeilen !
 			}
-			break;
+            break;
+        }
 		  case stoch_ar: 
 			// 12 expectationname variancename randomname gammavalue zetaminvalue zetamaxvalue
 			// Bsp.: 12 Ed Vd d 0.75 0.01 0.13
@@ -428,7 +418,7 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 			if( !RLS )
 				fatalError("manipulate::loadParamset ","no rls pointer");
 			inFile >> varname;
-			if( !strcmp(varname,"F2") )
+            if(varname == "F2")
 				forecasttype=2;
 			break;			
 		  case rls1d:
@@ -445,7 +435,7 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 						  varname);
 			inFile >> varname;
 			forecasttype=1; // normal forecast is default
-			if( !strcmp(varname,"F2") )
+            if (varname == "F2")
 				forecasttype=2;
 			break;			
 		  case els:
@@ -453,89 +443,87 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 			if( !ELS )
 				fatalError("manipulate::loadParamset ","no els pointer");
 			inFile >> varname;
-			if( !strcmp(varname,"F2") )
+            if (varname == "F2")
 				forecasttype=2;
 			break;			
 		  case sg:
+        {
 			SG = new sgClass(inFile,model);
 			if( !SG )
 				fatalError("manipulate::loadParamset ","no sg pointer");
 			inFile >> varname;
-			if( !strncmp(varname,"F",1) ) {
-				name=varname+1;
-				forecasttype=atoi(name);
+            if (varname.startsWith("F")) {
+                name = varname;
+                name.remove(0, 1);
+                forecasttype = name.toInt();
 			}
-			if( !strncmp(varname,"U",1) ) { // UnbiasedForecast "U2" -> forecast t+2 
-				name=varname+1;
-				forecasttype=100+atoi(name);
+            if (varname.startsWith("U")) { // UnbiasedForecast "U2" -> forecast t+2
+                name = varname;
+                name.remove(0, 1);
+                forecasttype = 100 + name.toInt();
 				inFile >> sigma;
 				inFile >> epsilon;
 				inFile >> dummy; // varname or start matrix
 				ipointer=NULL;
 				tstart=NULL;
-				if( strncmp(dummy,"(",1) ) { // not equal, then it must be a varname
+                if (!dummy.startsWith("(")) { // not equal, then it must be a varname
 					ipointer = model->setLabels(dummy); // get pointer
 					if( !ipointer )
+                    {
 						fatalError("manipulate::loadParamset can't find ",dummy);
-					inFile >> dummy; // start matrix with '('
+                        return;
+                    }
+                    inFile >> dummy; // start matrix with '('
 				}
 				// now reads start matrix
-				if( strncmp(dummy,"(",1) )
-					fatalError("manipulate::loadParamset '(' expected, not ",dummy);
-				strcpy(dummy2,"\000"); // clear 
-				char* pos;
-				if(strlen(dummy)>1) { // erase `(` from string
-					pos=dummy+1;
-					strcpy(dummy2,pos);
-					pos=dummy2+strlen(dummy2)-1; // last char in dummy
-				}
-				else	pos=dummy2; // is empty
-				if( !strcmp(pos,")") )  // last is ")" 
-					strcpy(pos,"\000"); // clear last
-				else while(inFile>>dummy) {
-					if( strcmp(pos,",") )  // last is not "," 
-						strcat(dummy2,","); // add a ","
-					if( !strncmp(dummy,",",1) ) {// first is "," 
-						pos=dummy+1;
-						strcpy(dummy,pos);
-					}
-					strcat(dummy2,dummy); // add a ","
-					pos=dummy2+strlen(dummy2)-1; // last char in dummy2
-					if( !strcmp(pos,")") ) { // last is ")" 
-						strcpy(pos,"\000"); // clear last
-						break;
-					}
-				}
-				pos=dummy2+strlen(dummy2)-1; // last char in dummy2
-				if( strcmp(pos,",") )  // last is not "," 
-					strcat(dummy2,","); // add a ","
-				if( !strncmp(dummy2,",",1) ) { // first is "," 
-					pos=dummy2+1;
-					strcpy(dummy2,pos);
+                if (!dummy.startsWith("("))
+                {
+                    fatalError("manipulate::loadParamset '(' expected, not ",dummy);
+                    return;
+                }
+                if(dummy.endsWith(")"))  // last is ")"
+                    dummy.chop(1); // clear last
+                else
+                {
+                    dummy2.clear();
+                    while(!inFile.atEnd())
+                    {
+                        inFile >> dummy;
+                        if(!dummy.endsWith(","))  // last is not ","
+                            dummy += ","; // add a ","
+                        if(dummy.startsWith(",")) {// first is ","
+                            dummy.remove(0, 1);
+                        }
+                        dummy2 += dummy; // add a ","
+                        if (dummy2.endsWith(")")) { // last is ")"
+                            dummy2.chop(1); // clear last
+                            break;
+                        }
+                    }
+                }
+                if (!dummy2.endsWith(","))  // last is not ","
+                    dummy2 += ","; // add a ","
+                if (dummy2.startsWith(",")) { // first is ","
+                    dummy2.remove(0, 1);
 				}
 				// convert data string into array
-				pos=dummy2;
-				int cnum=0;
-				for (int i=0;i<(int)strlen(dummy2);i++)
-					if(!strncmp(pos++,",",1)) cnum++;
-				tstart= new qreal[cnum+1];
+                int cnum = dummy2.count(',');
+                tstart = new qreal[cnum+1];
 				if( !tstart )
+                {
 					fatalError("manipulate::loadParamset case sg",
 						"Can't allocate tstart");
-				tstart[0]=cnum;
-				char* posS;
-				pos=dummy2; //start
-				posS=dummy2; //stop
-				for (int i=1;i<=cnum;i++) {
-					while( strncmp(posS,",",1) )
-						posS++;
-					strcpy(posS,"\000"); // put in line end
-					posS++;
-					tstart[i]=atof(pos);
-					pos=posS; // take next
-				}
+                    return;
+                }
+                tstart[0] = cnum;
+                QStringList list = dummy2.split(',');
+                for (int i=1; i<cnum; i++)
+                {
+                    tstart[i] = list[i].toDouble();
+                }
 			}
-			break;			
+            break;
+        }
 		  case statistics: // 200 inputvarname
 			inFile >> statvarname;
 			statvar = model->setLabels(statvarname);
@@ -552,8 +540,8 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 			break;
 
 		  default:
-			cerr << "manipulate::loadParamset  Do not know manipulate Tag ";
-			cerr << manipulateTag[hm] << "\n";
+            log() << "manipulate::loadParamset  Do not know manipulate Tag ";
+            log() << manipulateTag[hm] << "\n";
 			exit(-1);
 		}
 	}
@@ -932,7 +920,7 @@ void manipulate::F_els() {
 	if(forecasttype==1) ELS->forecast();
 	 else if(forecasttype==2) ELS->forecast2();
 	 else {
-		cerr << "manipulate::F_els do not know forecasttype "<<forecasttype<<"\n";
+        log() << "manipulate::F_els do not know forecasttype "<<forecasttype<<"\n";
 		exit(-1);
 	 }
 }
@@ -954,7 +942,7 @@ void manipulate::F_sg() {
 //		}
 	}
 	else {
-		cerr << "manipulate::F_sg do not know forecasttype "<<forecasttype<<"\n";
+        log() << "manipulate::F_sg do not know forecasttype "<<forecasttype<<"\n";
 		exit(-1);
 	}
 }
@@ -1257,7 +1245,7 @@ void manipulate::iteration(const qint64& t) {
 			Sequper(t); 
 			if(t==length)
 			{
-				ofstream stat_output("statistic_output.tex");
+				QDataStream stat_output("statistic_output.tex");
 				stat_output << "\\begin{tabular}{|l||l|}\\hline\n";
 				stat_output << "statistic&estimate\\\\ \\hline\\hline\n"; 
 				stat_output << "mean&" << mr[0] << "\\\\ \\hline\n"; 

@@ -93,7 +93,7 @@ void hetoni::initialize()
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::loadParamset(ifstream& inputFile)
+void hetoni::loadParamset(QDataStream& inputFile)
 {
 
     inputFile >> a >> b >> alpha >> w >> L0 >> L1 >> shr;
@@ -141,7 +141,7 @@ void hetoni::loadParamset(ifstream& inputFile)
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::saveParamset(ofstream& outputFile)
+void hetoni::saveParamset(QDataStream& outputFile)
 {
     outputFile << a << "\t" << b << "\t" << alpha << "\t" << w << "\t";
     outputFile << L0 << "\t"<< L1 << "\t" << shr << "\t" << length << "\t";
@@ -156,7 +156,7 @@ void hetoni::saveParamset(ofstream& outputFile)
 /* Last modified:   20.04.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::saveParamsetWithNames(ofstream& outputFile)
+void hetoni::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel Hetoni\n";
     outputFile << "a = " << a << "\tb = " << b << "\talpha = " << alpha ;
@@ -242,35 +242,35 @@ void hetoni::receiveParameters(const qreal* parameters)
 /* Last modified:   09.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal* hetoni::setLabels(char *name)
+qreal* hetoni::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(name,"a") )
+    if (name == "a")
         return( &a );
-    if( !strcmp(name,"b") )
+    if (name == "b")
         return( &b );
-    if( !strcmp(name,"alpha") )
+    if (name == "alpha")
         return( &alpha );
-    if( !strcmp(name,"w") )
+    if (name == "w")
         return( &w );
-    if( !strcmp(name,"shr") )
+    if (name == "shr")
         return( &shr );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &L0 );
-    if( !strcmp(name,"Ls") )
+    if (name == "Ls")
         return( &L1 );
-    if( !strcmp(name,"v") )
+    if (name == "v")
         return( &v );
-    if( !strcmp(name,"s") )
+    if (name == "s")
         return( &s );
 
-    if( !strcmp(name,"p") )
+    if (name == "p")
         return( pp );
-    if( !strcmp(name,"p0") )
+    if (name == "p0")
         return( pp0 );
 
     return( NULL );

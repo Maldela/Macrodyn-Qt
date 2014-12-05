@@ -63,7 +63,7 @@ if(zvar) delete zvar;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Bankintermed::loadParamset(ifstream& inFile)
+void Bankintermed::loadParamset(QDataStream& inFile)
 {
 	inFile >> e_0;
 	inFile >> e_alpha;
@@ -425,35 +425,35 @@ void Bankintermed::iteration(const qint64& t){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* Bankintermed::setLabels(char* label){
+qreal* Bankintermed::setLabels(const QString& label){
     
-	if( !strcmp(label,"R") ) return(&R);
-	if( !strcmp(label,"R_min") ) return(&R_min);
-    if( !strcmp(label,"R_c") ) return(&R_c);
-    if( !strcmp(label,"R_reg") ) return(&R_reg);
-    if( !strcmp(label,"P") ) return(&P);
-    if( !strcmp(label,"I_B") ) return(&I_B);
-    if( !strcmp(label,"I_G") ) return(&I_G);
-    if( !strcmp(label,"Y") ) return(&Y);
-    if( !strcmp(label,"y") ) return(&y);
-    if( !strcmp(label,"K") ) return(&K);
-    if( !strcmp(label,"RF") ) return(&RF);
-    if( !strcmp(label,"S_vol") ) return(&S_vol);
-    if( !strcmp(label,"df") ) return(&df);
-    if( !strcmp(label,"e") ) return(&e);
-    if( !strcmp(label,"df_min") ) return(&df_min);
-    if( !strcmp(label,"df_max") ) return(&df_max);
-    if( !strcmp(label,"df_crit_min") ) return(&df_crit_min);
-    if( !strcmp(label,"df_crit_max") ) return(&df_crit_max);
-    if( !strcmp(label,"df_reg") ) return(&df_reg);
-    if( !strcmp(label,"df_0") ) return(&df_0);
-    if( !strcmp(label,"G") ) return(&G);
-    if( !strcmp(label,"B") ) return(&B);
-    if( !strcmp(label,"I") ) return(&I);
-    if( !strcmp(label,"q") ) return(&q);
-    if( !strcmp(label,"a") ) return(&a);
-    if( !strcmp(label,"b") ) return(&b);
-    if( !strcmp(label,"xBundle") ) return(&xBundle);
+    if (label == "R") return(&R);
+    if (label == "R_min") return(&R_min);
+    if (label == "R_c") return(&R_c);
+    if (label == "R_reg") return(&R_reg);
+    if (label == "P") return(&P);
+    if (label == "I_B") return(&I_B);
+    if (label == "I_G") return(&I_G);
+    if (label == "Y") return(&Y);
+    if (label == "y") return(&y);
+    if (label == "K") return(&K);
+    if (label == "RF") return(&RF);
+    if (label == "S_vol") return(&S_vol);
+    if (label == "df") return(&df);
+    if (label == "e") return(&e);
+    if (label == "df_min") return(&df_min);
+    if (label == "df_max") return(&df_max);
+    if (label == "df_crit_min") return(&df_crit_min);
+    if (label == "df_crit_max") return(&df_crit_max);
+    if (label == "df_reg") return(&df_reg);
+    if (label == "df_0") return(&df_0);
+    if (label == "G") return(&G);
+    if (label == "B") return(&B);
+    if (label == "I") return(&I);
+    if (label == "q") return(&q);
+    if (label == "a") return(&a);
+    if (label == "b") return(&b);
+    if (label == "xBundle") return(&xBundle);
 
     return NULL;
 }
@@ -471,7 +471,7 @@ qreal* Bankintermed::setLabels(char* label){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Bankintermed::saveParamset(ofstream& outFile){
+void Bankintermed::saveParamset(QDataStream& outFile){
 
 	outFile << e_0;
 	outFile << e_alpha;

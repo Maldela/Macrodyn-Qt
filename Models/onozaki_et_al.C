@@ -84,13 +84,13 @@ void onozaki_et_al::initialize()
 // By:	
 /////////////////////////////////////////////////////////////////////////////
 
-qreal* onozaki_et_al::setLabels(char* label)
+qreal* onozaki_et_al::setLabels(const QString& label)
 {
    
-    if( !strcmp(label,"z") ) return(&z);
-    if( !strcmp(label,"z_0") ) return(&z_0);
-	if( !strcmp(label,"alpha") ) return(&alpha);
-    if( !strcmp(label,"beta") ) return(&beta);
+    if (label == "z") return(&z);
+    if (label == "z_0") return(&z_0);
+	if (label == "alpha") return(&alpha);
+    if (label == "beta") return(&beta);
     return NULL;
 }
 
@@ -133,7 +133,7 @@ void onozaki_et_al::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::loadParamset(ifstream& inFile)
+void onozaki_et_al::loadParamset(QDataStream& inFile)
 {
     inFile >> z_0 ;
     inFile >> alpha;
@@ -156,7 +156,7 @@ void onozaki_et_al::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::saveParamset(ofstream& outFile)
+void onozaki_et_al::saveParamset(QDataStream& outFile)
 {
     outFile << z_0 << "\t";
     outFile << alpha << "\t";
@@ -200,7 +200,7 @@ void onozaki_et_al::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::saveParamsetWithNames(ofstream& outputFile)
+void onozaki_et_al::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "growthModel:\n\t";
 		outputFile << "z_0 =" << z_0 << "\nalpha =" << alpha << "\nbeta=" << beta

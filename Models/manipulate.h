@@ -24,10 +24,10 @@ class manipulate : public baseModel {
 
 protected:
 	baseModel* model;
-	char modelTyp[40];
+    QString modelTyp;
 	int howMany;
 	int* manipulateTag;
-	char varname[40];
+    QString varname;
 	enum manipulateMode {	stoch_uni=10, stoch_markov=11, stoch_ar=12,
 				errcor=50,
 				ma=100, ma_k, ma_k_a,
@@ -39,15 +39,15 @@ protected:
 		void F_stoch_uni();
    	    qreal * zvar_ptr;		// pointer to the stochastic parameter
 		rand_var * zvar;		// ptr random function   
-		char zvar_expr[256];
+		QString zvar_expr;
 		qreal *randname;		    // Modellvariable in die die gezogene Zufallsvariable eingetragen wird
 
 	// case stoch_markov
 		void F_stoch_markov();
 		markov_chain * markov;	// Zeiger auf Markovkette
 		int statesNum;		// Anzahl der Zustaende
-		char m_state[256];	// Zustaende als Zeichenkette fuer
-		char m_matrix[1024];	// Uebergangsmatrix als Zeichenkette
+        QString m_state;	// Zustaende als Zeichenkette fuer
+        QString m_matrix;	// Uebergangsmatrix als Zeichenkette
 		qreal states[32];	// Zustaende als qreal-Feld angeordnent
 		qreal umatrix[32][32];	// Uebergangsmatrix als qreal-Matrix
 		qreal zetamin;
@@ -157,12 +157,12 @@ protected:
 		void F_sg();
 
 	// case statistics 200 inputvarname
-		char  statvarname[40];
+        QString  statvarname;
 		qreal* statvar;
 		qreal  mean,variance,standardDeviation,meansum,variationskoeff,sharpeRatio;
 
 	// case quantiles 210 inputvarname
-		char quanvarname[40];
+        QString quanvarname;
 		double x, zx, sk, ku, xi, mr[4], mc[4], *quanvar, sd;
 		qreal u;
 		void Sequper(const qint64&);
@@ -178,17 +178,17 @@ public:
 		manipulate();
 		virtual ~manipulate();
 
-		qreal* setLabels(char*);
+		qreal* setLabels(const QString&);
 		qint64 getLength() const;
 		qreal* sendModelVar();
 		void sendStateSpace(int &,const qreal***);
 		void receiveParameters(const qreal*);
 		void sendParameters(int&,qreal**);
 		void printParamset();
-		void saveParamset(ofstream&);
+		void saveParamset(QDataStream&);
 
-		void saveParamsetWithNames(ofstream&);
-		void loadParamset(ifstream&);
+		void saveParamsetWithNames(QDataStream&);
+		void loadParamset(QDataStream&);
 		void initialize();
 		void iteration(const qint64&);
 };

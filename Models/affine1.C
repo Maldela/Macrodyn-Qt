@@ -82,7 +82,7 @@ void affine1::iteration(const qint64&)
 void affine1::initialize()
 {
 	x=x0;
-	zvar = new rand_var(this,"ranf",zvar_expr);
+    zvar = new rand_var(this,"ranf",zvar_expr);
 	if(!zvar)	
 	fatalError("randvar::initialize stoch_ar", "can't create rand_var");
 	
@@ -122,16 +122,16 @@ qreal* affine1::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* affine1::setLabels(char* label)
+qreal* affine1::setLabels(const QString& label)
 {
 	//log() << "This is function 'setLabels()' in affine1.C ." << "\n";
-	if( !strcmp(label,"a") )
+    if (label == "a")
 	return( &a);
-    if( !strcmp(label,"x") )
+    if (label == "x")
 	return( &x);
-    if( !strcmp(label,"x0") )
+    if (label == "x0")
 	return( &x0 );
-	if( !strcmp(label,"r") )
+    if (label == "r")
 	return( &r );
     return NULL;
 	//log() << "Now returning...." << "\n"; 
@@ -178,7 +178,7 @@ void affine1::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine1::loadParamset(ifstream& inFile)
+void affine1::loadParamset(QDataStream& inFile)
 {
 //log() << "This is function 'loadParamset()' in 'affine1.C' ." << "\n"; 
  
@@ -207,7 +207,7 @@ void affine1::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine1::saveParamset(ofstream& outFile)
+void affine1::saveParamset(QDataStream& outFile)
 {
 	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << "\n"; 
    	outFile << x0  << "\t";

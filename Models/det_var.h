@@ -38,10 +38,10 @@ private:
 public:
     det_var();			// constructor
     void sendStateSpace(int &,const qreal***);
-    qreal * setLabels(char*);		// get a variable by a name
+    qreal * setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
-//    void loadParamset(ifstream&);	// load parameterset from a file
-//    void saveParamset(ofstream&);
+//    void loadParamset(QDataStream&);	// load parameterset from a file
+//    void saveParamset(QDataStream&);
 //    void printParamset();
     void iteration(const qint64&);	// perform one iteration 
 };

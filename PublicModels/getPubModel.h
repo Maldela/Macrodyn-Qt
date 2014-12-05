@@ -27,7 +27,7 @@ void PrintPubModelDate(void);
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getPubModel(const char* modelTyp);
+baseModel* getPubModel(const QString& modelTyp);
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -40,7 +40,7 @@ baseModel* getPubModel(const char* modelTyp);
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getPubModel(const char* modelTyp, const baseModel* sourceModel);
+baseModel* getPubModel(const QString& modelTyp, const baseModel* sourceModel);
 
 #endif // _GETPUBMODEL_INCLUDED
 

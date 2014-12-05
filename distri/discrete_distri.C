@@ -1,7 +1,6 @@
 #include "discrete_distri.h"
 #include <math.h>
 #include "error.h"
-//  #include <iostream>  // debugging
 
 
 ///////////////////////////////////////////////////////////////////////////////

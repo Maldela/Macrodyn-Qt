@@ -85,12 +85,12 @@ protected:
 
 public:
     growth_model();			// constructor
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
 
     qreal* sendModelVar();		// for compatibity reasons only
@@ -114,14 +114,14 @@ public:
 
 class rgrowth_model : public growth_model {
 private:
-    char zvar_expr[256];        // expression which defines a random variable
+    QString zvar_expr;        // expression which defines a random variable
     rand_var * zvar;            // a random variable    
-    char zvar_name[256];        // name of the stochastified parameter
+    QString zvar_name;        // name of the stochastified parameter
     qreal * zvar_ptr;		// pointer to the stochastic parameter
     
 public:
     rgrowth_model();			// constructor
-    void loadParamset(ifstream&);	// load parameterset from a file
+    void loadParamset(QDataStream&);	// load parameterset from a file
     void iteration(const qint64&);	// perform one iteration 
     void initialize(void);		// initialize the model
 };
@@ -147,7 +147,7 @@ class depreciate : public growth_model {
 private:
     qreal _z;				// variable for the original process
     qreal _z_0;				// initial value for z
-    char _z_var_name[256];		// lexical name of the stochastified parameter
+    QString _z_var_name;		// lexical name of the stochastified parameter
     qreal * _z_var_ptr;			// pointer to the stochastified parameter
 
     qreal trans(qreal z,qreal* x,qreal* a,qreal* b); // transforms z to delta_p
@@ -163,10 +163,10 @@ private:
 public:
     depreciate();			// constructor
     void sendStateSpace(int &,const qreal***);
-    qreal * setLabels(char*);		// get a variable by a name
+    qreal * setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
-    void loadParamset(ifstream&);	// load parameterset from a file
-    void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);	// load parameterset from a file
+    void saveParamset(QDataStream&);
     void printParamset();
     void iteration(const qint64&);	// perform one iteration 
 };
@@ -234,10 +234,10 @@ private:
 public:
     pasinetti();			// constructor
 	virtual ~pasinetti();
-    void loadParamset(ifstream&);	// load parameterset from a file
-    void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);	// load parameterset from a file
+    void saveParamset(QDataStream&);
     void printParamset();
-    qreal * setLabels(char*);		// get a variable by a name
+    qreal * setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const qint64&);	// perform one iteration 
 };

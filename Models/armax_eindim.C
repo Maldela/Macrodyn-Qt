@@ -123,7 +123,7 @@ armax_eindim::~armax_eindim()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax_eindim::loadParamset(ifstream& inFile)
+void armax_eindim::loadParamset(QDataStream& inFile)
 { 	
  	for (int l=0;l<L;l++)
 		inFile >> y_old_ini[l];
@@ -473,53 +473,53 @@ void armax_eindim::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* armax_eindim::setLabels(char* label)
+qreal* armax_eindim::setLabels(const QString& label)
 {
-	if( !strcmp(label,"y_t") ) return(&y_t);
-    if( !strcmp(label,"u_t") ) return(&u_t);
-    if( !strcmp(label,"v_t") ) return(&v_t);
-    if( !strcmp(label,"dif_var") ) return(&dif_var);
-    if( !strcmp(label,"dif") ) return(&dif);
-    if( !strcmp(label,"eta_t") ) return(&eta_t);
-    if( !strcmp(label,"eps_t") ) return(&eps_t);
-    if( !strcmp(label,"ds_e") ) return(&ds_e);
-    if( !strcmp(label,"es_e") ) return(&es_e);
-    if( !strcmp(label,"var1") ) return(&var1);
-    if( !strcmp(label,"sum_var1") ) return(&sum_var1);
-    if( !strcmp(label,"as_e[0]") ) return(&as_e[0]);
-    if( !strcmp(label,"norm_u") ) return(&norm_u);
-    if( !strcmp(label,"norm_y") ) return(&norm_y);
-    if( !strcmp(label,"sum_u") ) return(&sum_u);
-    if( !strcmp(label,"sum_y") ) return(&sum_y);
-    if( !strcmp(label,"sum_uy") ) return(&sum_uy);
+    if (label == "y_t") return(&y_t);
+    if (label == "u_t") return(&u_t);
+    if (label == "v_t") return(&v_t);
+    if (label == "dif_var") return(&dif_var);
+    if (label == "dif") return(&dif);
+    if (label == "eta_t") return(&eta_t);
+    if (label == "eps_t") return(&eps_t);
+    if (label == "ds_e") return(&ds_e);
+    if (label == "es_e") return(&es_e);
+    if (label == "var1") return(&var1);
+    if (label == "sum_var1") return(&sum_var1);
+    if (label == "as_e[0]") return(&as_e[0]);
+    if (label == "norm_u") return(&norm_u);
+    if (label == "norm_y") return(&norm_y);
+    if (label == "sum_u") return(&sum_u);
+    if (label == "sum_y") return(&sum_y);
+    if (label == "sum_uy") return(&sum_uy);
 
-    if( !strcmp(label,"error_as_e[0]") ) return(&error_as_e[0]);
+    if (label == "error_as_e[0]") return(&error_as_e[0]);
 if(L>=1)
-    if( !strcmp(label,"error_as_e[1]") ) return(&error_as_e[1]);
+    if (label == "error_as_e[1]") return(&error_as_e[1]);
 if(L>=2)
-    if( !strcmp(label,"error_as_e[2]") ) return(&error_as_e[2]);
+    if (label == "error_as_e[2]") return(&error_as_e[2]);
 if(L>=3)
-    if( !strcmp(label,"error_as_e[3]") ) return(&error_as_e[3]);
+    if (label == "error_as_e[3]") return(&error_as_e[3]);
 if(L>=4)
-    if( !strcmp(label,"error_as_e[4]") ) return(&error_as_e[4]);
+    if (label == "error_as_e[4]") return(&error_as_e[4]);
 if(K>=2)
-    if( !strcmp(label,"error_bs_e[0]") ) return(&error_bs_e[0]);
+    if (label == "error_bs_e[0]") return(&error_bs_e[0]);
 if(K>=3)
-    if( !strcmp(label,"error_bs_e[1]") ) return(&error_bs_e[1]);
+    if (label == "error_bs_e[1]") return(&error_bs_e[1]);
 if(K>=4)
-    if( !strcmp(label,"error_bs_e[2]") ) return(&error_bs_e[2]);
+    if (label == "error_bs_e[2]") return(&error_bs_e[2]);
 if(R>=1)
-    if( !strcmp(label,"error_cs_e[0]") ) return(&error_cs_e[0]);
+    if (label == "error_cs_e[0]") return(&error_cs_e[0]);
 if(R>=2)
-    if( !strcmp(label,"error_cs_e[1]") ) return(&error_cs_e[1]);
+    if (label == "error_cs_e[1]") return(&error_cs_e[1]);
 if(R>=3)
-    if( !strcmp(label,"error_cs_e[2]") ) return(&error_cs_e[2]);
+    if (label == "error_cs_e[2]") return(&error_cs_e[2]);
 if(R>=4)
-    if( !strcmp(label,"error_cs_e[3]") ) return(&error_cs_e[3]);
+    if (label == "error_cs_e[3]") return(&error_cs_e[3]);
 if(G!=0)
-    if( !strcmp(label,"error_ds_e") ) return(&error_ds_e);
+    if (label == "error_ds_e") return(&error_ds_e);
 if(H!=0)
-    if( !strcmp(label,"error_es_e") ) return(&error_es_e);
+    if (label == "error_es_e") return(&error_es_e);
 
     return NULL;
 }
@@ -537,7 +537,7 @@ if(H!=0)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax_eindim::saveParamset(ofstream& outFile)
+void armax_eindim::saveParamset(QDataStream& outFile)
 {	
 	for (int l=0;l<L;l++)
 		outFile << y_old_ini[l] << "\t";

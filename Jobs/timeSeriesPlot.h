@@ -30,7 +30,7 @@
 
 class timeSeriesPlot : public timeSeriesJob {
 protected:
-    ofstream outFile;
+    QFile outFile;
     int multiplot_num;		// number of additional variables to plot
     qreal ** multiplotAdr;	// addresses of additional variables
     qreal * multiplotOld;	// to store old values
@@ -40,7 +40,7 @@ public:
     
 public:
     timeSeriesPlot(baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
-        char* const=NULL, int const=0, char** const=NULL);
+        const QString& = "", int const=0, char** const=NULL);
     ~timeSeriesPlot();
     void simulation();
 };

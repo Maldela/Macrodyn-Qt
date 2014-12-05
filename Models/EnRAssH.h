@@ -35,7 +35,7 @@ protected:
 	qreal	*pPtr;
 	qreal	MEP;			// 
 	qreal	eps,epsmid,avEps,relEps,avRelEps;// error function
-	char	learntype[32];		// Name of update function
+    QString	learntype;		// Name of update function
 	int	mem;			// Memory length
 
 	rand_var * zvar;		// ptr random function   
@@ -54,10 +54,10 @@ public:
 
 	EnRAssH();
 	~EnRAssH();
-	qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
 	void initialize();
-	void loadParamset(ifstream&);	
-	void saveParamsetWithNames(ofstream&); 
+	void loadParamset(QDataStream&);	
+	void saveParamsetWithNames(QDataStream&); 
 //	void printParamset();
 	void sendStateSpace(int &,const qreal***);
 	void iteration(const qint64&);

@@ -431,23 +431,23 @@ d_fin_paramset->z_0 = d_fin_0;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* dynofin_rmv::setLabels(char* label)
+qreal* dynofin_rmv::setLabels(const QString& label)
 {
-    if( !strcmp(label,"w1") ) return(&w1);
-    if( !strcmp(label,"w2") ) return(&w2);
-    if( !strcmp(label,"thetaA1") ) return(&thetaA1);
-    if( !strcmp(label,"thetaA2") ) return(&thetaA2);
-    if( !strcmp(label,"thetaB1") ) return(&thetaB1);
-    if( !strcmp(label,"thetaB2") ) return(&thetaB2);
-    if( !strcmp(label,"p") ) return(&p);
-    if( !strcmp(label,"gam_1") ) return(&gam_1);
-    if( !strcmp(label,"var_1") ) return(&var_1);
-    if( !strcmp(label,"exp_1") ) return(&exp_1);
-    if( !strcmp(label,"gam_2") ) return(&gam_2);
-    if( !strcmp(label,"var_2") ) return(&var_2);
-    if( !strcmp(label,"exp_2") ) return(&exp_2);
-    if( !strcmp(label,"r_fin") ) return(&r_fin);
-    if( !strcmp(label,"d_fin") ) return(&d_fin);
+    if (label == "w1") return(&w1);
+    if (label == "w2") return(&w2);
+    if (label == "thetaA1") return(&thetaA1);
+    if (label == "thetaA2") return(&thetaA2);
+    if (label == "thetaB1") return(&thetaB1);
+    if (label == "thetaB2") return(&thetaB2);
+    if (label == "p") return(&p);
+    if (label == "gam_1") return(&gam_1);
+    if (label == "var_1") return(&var_1);
+    if (label == "exp_1") return(&exp_1);
+    if (label == "gam_2") return(&gam_2);
+    if (label == "var_2") return(&var_2);
+    if (label == "exp_2") return(&exp_2);
+    if (label == "r_fin") return(&r_fin);
+    if (label == "d_fin") return(&d_fin);
    
     return NULL;
 }
@@ -491,7 +491,7 @@ void dynofin_rmv::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::read_sim(ifstream& inFile, st_fin_paramset *temp_paramset){
+void dynofin_rmv::read_sim(QDataStream& inFile, st_fin_paramset *temp_paramset){
 
   int	i,j;			// Index
 
@@ -546,16 +546,16 @@ void dynofin_rmv::read_sim(ifstream& inFile, st_fin_paramset *temp_paramset){
 	     // we have a definition of a markov chain
             temp_paramset->mc_flag = 1; 
 	        
-           n_states = strnchr(in_string, ';');
+           n_states = in_string.count(';');
            temp_paramset->zvar_expr = in_string;
 
           	for (int n = 0; n < n_states; n++) {
             	 inFile >> in_string;	
 	    	 	// compose the matrix from
 		 //temp_paramset->mc_matrix[0] = '\0';	
-           	 strcat(temp_paramset->mc_matrix, in_string);	
+             temp_paramset->mc_matrix += in_string;
 	    	   // the input file with blank at the
-           	 strcat(temp_paramset->mc_matrix, " ");		
+             temp_paramset->mc_matrix += " ";
             	  // end of each row
 	 	}  
 		
@@ -591,7 +591,7 @@ void dynofin_rmv::read_sim(ifstream& inFile, st_fin_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::loadParamset(ifstream& inFile){          
+void dynofin_rmv::loadParamset(QDataStream& inFile){          
     
     inFile >> w1_0;    
     inFile >> w2_0; 	         	  
@@ -648,7 +648,7 @@ void dynofin_rmv::receiveParameters(const qreal* )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::save_st_fin_paramset(ofstream& outFile, st_fin_paramset *temp_paramset){
+void dynofin_rmv::save_st_fin_paramset(QDataStream& outFile, st_fin_paramset *temp_paramset){
 
    int	i,j;			// Index
   
@@ -710,7 +710,7 @@ void dynofin_rmv::save_st_fin_paramset(ofstream& outFile, st_fin_paramset *temp_
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::saveParamset(ofstream& outFile)
+void dynofin_rmv::saveParamset(QDataStream& outFile)
 
 {     
     outFile << w1_0 << "\n" ;				
@@ -742,7 +742,7 @@ void dynofin_rmv::saveParamset(ofstream& outFile)
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void dynofin_rmv::saveParamsetWithNames(ofstream& outFile)	
+void dynofin_rmv::saveParamsetWithNames(QDataStream& outFile)	
 {
 outFile << "dynofin_rmv:\n";
 outFile << "w1_0 =" << w1_0 << "\tw2_0 =" << w2_0 << "\n";
@@ -765,7 +765,7 @@ outFile << "Length = " << length << "\n";
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void dynofin_rmv::save_st_fin_paramsetWithNames(ofstream& outFile, st_fin_paramset *temp_paramset)	
+void dynofin_rmv::save_st_fin_paramsetWithNames(QDataStream& outFile, st_fin_paramset *temp_paramset)	
 {
    int	i,j;			// Index
   	

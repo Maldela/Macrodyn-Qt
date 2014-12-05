@@ -23,24 +23,25 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 timeSeriesSet::timeSeriesSet(baseModel* const bMod, const xyRange& axes, 
-                char* const fileName, bool surf, qint64 res)
+                const QString& fileName, bool surf, qint64 res)
           :geometricJob(bMod,axes,NULL), xmin(axes.min[0])
 	  , xmax(axes.max[0]), ymin(axes.min[1]), ymax(axes.max[1]),
 	  zmin(res), zmax(axes.max[2]), surface(surf)
 {
     log() << "constructing time series set..."<<"\n";
 
-    xParam = model->setLabels(axes.label[0].toLatin1().data());
+    xParam = model->setLabels(axes.label[0]);
 	if( !xParam )
 		fatalError("timeSeriesSet::timeSeriesSet  Can not find x label",axes.label[0]);
-    yParam = model->setLabels(axes.label[1].toLatin1().data());
+    yParam = model->setLabels(axes.label[1]);
 	if( !yParam )
 		fatalError("timeSeriesSet::timeSeriesSet  Can not find y label",axes.label[1]);
 
-	if( fileName )
-		outFile.open(fileName,ios::out);
-	else
-		outFile.open("data3D_timeseries.dat",ios::out);
+    if(!fileName.isEmpty())
+        outFile.setFileName(fileName);
+    else
+        outFile.setFileName("data3D_timeseries.dat");
+    outFile.open(QFile::WriteOnly);
 
 	stepX=(xmax-xmin) / ymax;
     limit=qint64(ymin);		// definiert den ersten Beobachtungszeitpunkt
@@ -84,7 +85,7 @@ void timeSeriesSet::simulation()
 	qreal oldy, oldx;
     qint64 t;
 	model->initialize();
-	
+    QDataStream stream(&outFile);
 	if ( surface==true ){
 		for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
 			fortschritt+=schritt;
@@ -93,10 +94,10 @@ void timeSeriesSet::simulation()
 			for(t=1;t<=length;t++) {
 				model->iteration(t);
 				if( (t >= limit) && ( t % zmin == 0 ) )  {
-                    outFile << *xParam << "\t" << t << "\t" << *yParam << "\n";
+                    stream << *xParam << "\t" << t << "\t" << *yParam << "\n";
 			        }
 			}
-            outFile << "\n";
+            stream << "\n";
 		}
 	} else {
 		for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
@@ -109,9 +110,9 @@ void timeSeriesSet::simulation()
 				oldy=*yParam;	
 				model->iteration(t);
 				if( t >= limit )  {
-                    outFile << oldx << "\t" << t-1 << "\t" << oldy << "\n";
-                    outFile << *xParam << "\t" << t << "\t" << *yParam << "\n";
-                    outFile << "\n" << "\n";
+                    stream << oldx << "\t" << t-1 << "\t" << oldy << "\n";
+                    stream << *xParam << "\t" << t << "\t" << *yParam << "\n";
+                    stream << "\n" << "\n";
 			        }
 			}
 		}	

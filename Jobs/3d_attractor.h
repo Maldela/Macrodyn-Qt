@@ -34,7 +34,7 @@
 
 class attractor_3d : public geometry3D {
   protected:
-    ofstream outFile;
+    QFile outFile;
     histo_3d	h;
     qreal 	stepX;	// stepsize on the x-axis
     qreal 	stepY;	// stepsize on the y-axis

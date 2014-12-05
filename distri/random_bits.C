@@ -1,7 +1,5 @@
 #include "random_bits.h"
 #include "error.h"
-// #include <iostream>
-// #include <iomanip>
 
 const uint  state_size = 25;
 

@@ -329,7 +329,7 @@ void rSolow::pf_init ( void )
 // Member function:	rSolow
 // Purpose:		constructor
 //
-// Author:		Michael Meyer & Stefan L ke
+// Author:		Michael Meyer & Stefan Lüke
 // Last modified:	Mon Mar 10 14:09:17 MET 1999
 // By:			Michael Meyer 
 //
@@ -377,7 +377,7 @@ delta_p_paramset->zvar = NULL;
 // Member function:	rSolow
 // Purpose:		destructor
 //
-// Author:		Michael Meyer & Stefan L ke
+// Author:		Michael Meyer & Stefan Lüke
 // Last modified:	Mon Mar 10 14:09:17 MET 1999
 // By:			Michael Meyer 
 //
@@ -537,7 +537,7 @@ void rSolow::iteration(const qint64& )
 // Member function:	initialize 
 // Purpose:		initialize the model, define the systems initial state
 //
-// Author:		Michael Meyer & Stefan L ke
+// Author:		Michael Meyer & Stefan Lüke
 // Last modified:	Mon Mar 10 15:43:17 MET 1999
 // By:			Michael Meyer
 //
@@ -602,29 +602,29 @@ delta_p_paramset->z_0 = delta_p_0;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* rSolow::setLabels(char* label)
+qreal* rSolow::setLabels(const QString& label)
 {
-    if( !strcmp(label,"K") ) return(&K);
-    if( !strcmp(label,"L") ) return(&L);
-    if( !strcmp(label,"k") ) return(&k);
-    if( !strcmp(label,"k_0") ) return(&k_0);
-    if( !strcmp(label,"y") ) return(&y);
-    if( !strcmp(label,"pf_type") ) return(&pf_type);
-    if( !strcmp(label,"A") ) return(&A);
-    if( !strcmp(label,"B") ) return(&B);
-    if( !strcmp(label,"C") ) return(&C);
-    if( !strcmp(label,"D") ) return(&D);
-    if( !strcmp(label,"alpha") ) return(&D);
-    if( !strcmp(label,"a") ) return(&a);
-    if( !strcmp(label,"b") ) return(&b);
-    if( !strcmp(label,"c") ) return(&c);
-    if( !strcmp(label,"d") ) return(&alpha);
-    if( !strcmp(label,"s") ) return(&s);
-    if( !strcmp(label,"n") ) return(&n);
-    if( !strcmp(label,"delta_p") ) return(&delta_p);
+    if (label == "K") return(&K);
+    if (label == "L") return(&L);
+    if (label == "k") return(&k);
+    if (label == "k_0") return(&k_0);
+    if (label == "y") return(&y);
+    if (label == "pf_type") return(&pf_type);
+    if (label == "A") return(&A);
+    if (label == "B") return(&B);
+    if (label == "C") return(&C);
+    if (label == "D") return(&D);
+    if (label == "alpha") return(&D);
+    if (label == "a") return(&a);
+    if (label == "b") return(&b);
+    if (label == "c") return(&c);
+    if (label == "d") return(&alpha);
+    if (label == "s") return(&s);
+    if (label == "n") return(&n);
+    if (label == "delta_p") return(&delta_p);
 
-    if( !strcmp(label,"consumption") ) return(&consumption);
-    if( !strcmp(label,"av_cons") ) return(&av_cons);
+    if (label == "consumption") return(&consumption);
+    if (label == "av_cons") return(&av_cons);
 
 
     return NULL;
@@ -671,7 +671,7 @@ void rSolow::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::read_sim(ifstream& inFile, st_paramset *temp_paramset){
+void rSolow::read_sim(QDataStream& inFile, st_paramset *temp_paramset){
 
   int	i,j;			// Index
 
@@ -726,16 +726,16 @@ void rSolow::read_sim(ifstream& inFile, st_paramset *temp_paramset){
 	     // we have a definition of a markov chain
             temp_paramset->mc_flag = 1; 
 	        
-           n_states = strnchr(in_string, ';');
+           n_states = in_string.count(';');
            temp_paramset->zvar_expr = in_string;
 
           	for (int n = 0; n < n_states; n++) {
             	 inFile >> in_string;	
 	    	 	// compose the matrix from
 		 //temp_paramset->mc_matrix[0] = '\0';	
-           	 strcat(temp_paramset->mc_matrix, in_string);	
+             temp_paramset->mc_matrix += in_string;
 	    	   // the input file with blank at the
-           	 strcat(temp_paramset->mc_matrix, " ");		
+             temp_paramset->mc_matrix += " ";
             	  // end of each row
 	 	}  
 		
@@ -771,7 +771,7 @@ void rSolow::read_sim(ifstream& inFile, st_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::loadParamset(ifstream& inFile){          
+void rSolow::loadParamset(QDataStream& inFile){
     
     inFile >> k_0 ;    
     			  // read the starting point
@@ -841,7 +841,7 @@ void rSolow::receiveParameters(const qreal* )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::save_st_Paramset(ofstream& outFile, st_paramset *temp_paramset){
+void rSolow::save_st_Paramset(QDataStream& outFile, st_paramset *temp_paramset){
 
    int	i,j;			// Index
   
@@ -903,7 +903,7 @@ void rSolow::save_st_Paramset(ofstream& outFile, st_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::saveParamset(ofstream& outFile)
+void rSolow::saveParamset(QDataStream& outFile)
 
 {     
     outFile << k_0 << "\n" ;				
@@ -936,7 +936,7 @@ void rSolow::saveParamset(ofstream& outFile)
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rSolow::saveParamsetWithNames(ofstream& outFile)	
+void rSolow::saveParamsetWithNames(QDataStream& outFile)
 {
 outFile << "rSolow:\n";
 outFile << "k_0 =" << k_0 << "\tpf_type =" << pf_type << "\n";
@@ -964,7 +964,7 @@ outFile << "Length = " << length << "\n";
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rSolow::save_st_ParamsetWithNames(ofstream& outFile, st_paramset *temp_paramset)	
+void rSolow::save_st_ParamsetWithNames(QDataStream& outFile, st_paramset *temp_paramset)
 {
    int	i,j;			// Index
   	
@@ -1284,20 +1284,20 @@ void RBC_delta_1::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* RBC_delta_1::setLabels(char* label)
+qreal* RBC_delta_1::setLabels(const QString& label)
 {
-    if( !strcmp(label,"k_RBC") ) return(&k_RBC);
-    if( !strcmp(label,"l_RBC") ) return(&l_RBC);
-    if( !strcmp(label,"z_RBC") ) return(&z_RBC);
-    if( !strcmp(label,"c_RBC") ) return(&c_RBC);
-    if( !strcmp(label,"z_RBC_0") ) return(&z_RBC_0);
-    if( !strcmp(label,"c_RBC_0") ) return(&c_RBC_0);
-    if( !strcmp(label,"k_RBC_0") ) return(&k_RBC_0);
-    if( !strcmp(label,"beta") ) return(&beta);
-    if( !strcmp(label,"theta_RBC") ) return(&theta_RBC);
-    if( !strcmp(label,"rho") ) return(&rho);
-    if( !strcmp(label,"epsilon") ) return(&epsilon);
-    if( !strcmp(label,"alpha_RBC") ) return(&alpha_RBC);
+    if (label == "k_RBC") return(&k_RBC);
+    if (label == "l_RBC") return(&l_RBC);
+    if (label == "z_RBC") return(&z_RBC);
+    if (label == "c_RBC") return(&c_RBC);
+    if (label == "z_RBC_0") return(&z_RBC_0);
+    if (label == "c_RBC_0") return(&c_RBC_0);
+    if (label == "k_RBC_0") return(&k_RBC_0);
+    if (label == "beta") return(&beta);
+    if (label == "theta_RBC") return(&theta_RBC);
+    if (label == "rho") return(&rho);
+    if (label == "epsilon") return(&epsilon);
+    if (label == "alpha_RBC") return(&alpha_RBC);
 
     return NULL;   
 }
@@ -1315,7 +1315,7 @@ qreal* RBC_delta_1::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_delta_1::loadParamset(ifstream& inFile){          
+void RBC_delta_1::loadParamset(QDataStream& inFile){
     
     inFile >> k_RBC_0 ;
     
@@ -1358,7 +1358,7 @@ void RBC_delta_1::loadParamset(ifstream& inFile){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_delta_1::saveParamset(ofstream& outFile)
+void RBC_delta_1::saveParamset(QDataStream& outFile)
 { 
     outFile << k_RBC_0 << "\n" ;	
               
@@ -1390,7 +1390,7 @@ void RBC_delta_1::saveParamset(ofstream& outFile)
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void RBC_delta_1::saveParamsetWithNames(ofstream& outFile)	
+void RBC_delta_1::saveParamsetWithNames(QDataStream& outFile)
 {
 outFile << "RBC_delta_1:\n";
 outFile << "k_RBC_0 =" << k_RBC_0 << "\tz_RBC_0 =" << z_RBC_0 << "\tc_RBC_0 =" << c_RBC_0 <<"\n";

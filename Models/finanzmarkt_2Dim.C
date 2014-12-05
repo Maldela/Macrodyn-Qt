@@ -155,58 +155,58 @@ finanzmarkt_2Dim::~finanzmarkt_2Dim() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-qreal* finanzmarkt_2Dim::setLabels(char* label)
+qreal* finanzmarkt_2Dim::setLabels(const QString& label)
 {
-	if( !strcmp(label,"R") ) return(&R);
+    if (label == "R") return(&R);
 	
-	if( !strcmp(label,"xAll1") ) return(&xAll1);
-	if( !strcmp(label,"xAll2") ) return(&xAll2);
-	if( !strcmp(label,"xF1") ) return(&xF1);
-	if( !strcmp(label,"xF2") ) return(&xF2);
-  	if( !strcmp(label,"xN1") ) return(&xN1);
-	if( !strcmp(label,"xN2") ) return(&xN2);
-	if( !strcmp(label,"xf1") ) return(&xf1);
-	if( !strcmp(label,"xf2") ) return(&xf2);
-  	if( !strcmp(label,"xn1") ) return(&xn1);
-	if( !strcmp(label,"xn2") ) return(&xn2);
-	if( !strcmp(label,"rho1") ) return(&rho1);
-	if( !strcmp(label,"rho2") ) return(&rho2);
+    if (label == "xAll1") return(&xAll1);
+    if (label == "xAll2") return(&xAll2);
+    if (label == "xF1") return(&xF1);
+    if (label == "xF2") return(&xF2);
+    if (label == "xN1") return(&xN1);
+    if (label == "xN2") return(&xN2);
+    if (label == "xf1") return(&xf1);
+    if (label == "xf2") return(&xf2);
+    if (label == "xn1") return(&xn1);
+    if (label == "xn2") return(&xn2);
+    if (label == "rho1") return(&rho1);
+    if (label == "rho2") return(&rho2);
 
-	if( !strcmp(label,"pF01") ) return(&pF01);
-	if( !strcmp(label,"pF02") ) return(&pF02);
-	if( !strcmp(label,"pN01") ) return(&pN01);
-	if( !strcmp(label,"pN02") ) return(&pN02);
-	if( !strcmp(label,"p01") ) return(&p01);
-  	if( !strcmp(label,"p02") ) return(&p02);
-  	if( !strcmp(label,"p1") ) return(&p1);
-	if( !strcmp(label,"p2") ) return(&p2);
-  	if( !strcmp(label,"pF1") ) return(&pF1);
-	if( !strcmp(label,"pF2") ) return(&pF2);
-  	if( !strcmp(label,"pN1") ) return(&pN1);
-	if( !strcmp(label,"pN2") ) return(&pN2);
-	if( !strcmp(label,"Ed1") ) return(&Ed1);
-	if( !strcmp(label,"Ed2") ) return(&Ed2);
-	if( !strcmp(label,"var1") ) return(&var1);
-	if( !strcmp(label,"var2") ) return(&var2);
-	if( !strcmp(label,"d1") ) return(&d1);
-	if( !strcmp(label,"d2") ) return(&d2);
-	if( !strcmp(label,"return_f") ) return(&return_f);
-	if( !strcmp(label,"return_n") ) return(&return_n);
-	if( !strcmp(label,"cf") ) return(&cf);
-	if( !strcmp(label,"cn") ) return(&cn);
-	if( !strcmp(label,"rend_F") ) return(&rend_F);
-	if( !strcmp(label,"rend_N") ) return(&rend_N);
-	if( !strcmp(label,"rend_diff") ) return(&rend_diff);		
-	if( !strcmp(label,"quote_F1") ) return(&quote_F1);
-	if( !strcmp(label,"quote_F2") ) return(&quote_F2);
-	if( !strcmp(label,"quote_N1") ) return(&quote_N1);
-	if( !strcmp(label,"quote_N2") ) return(&quote_N2);
-	if( !strcmp(label,"quote_f1") ) return(&quote_f1);
-	if( !strcmp(label,"quote_f2") ) return(&quote_f2);
-	if( !strcmp(label,"quote_n1") ) return(&quote_n1);
-	if( !strcmp(label,"quote_n2") ) return(&quote_n2);
-	if( !strcmp(label,"quote_rF") ) return(&quote_rF);
-	if( !strcmp(label,"quote_rN") ) return(&quote_rN);	
+    if (label == "pF01") return(&pF01);
+    if (label == "pF02") return(&pF02);
+    if (label == "pN01") return(&pN01);
+    if (label == "pN02") return(&pN02);
+    if (label == "p01") return(&p01);
+    if (label == "p02") return(&p02);
+    if (label == "p1") return(&p1);
+    if (label == "p2") return(&p2);
+    if (label == "pF1") return(&pF1);
+    if (label == "pF2") return(&pF2);
+    if (label == "pN1") return(&pN1);
+    if (label == "pN2") return(&pN2);
+    if (label == "Ed1") return(&Ed1);
+    if (label == "Ed2") return(&Ed2);
+    if (label == "var1") return(&var1);
+    if (label == "var2") return(&var2);
+    if (label == "d1") return(&d1);
+    if (label == "d2") return(&d2);
+    if (label == "return_f") return(&return_f);
+    if (label == "return_n") return(&return_n);
+    if (label == "cf") return(&cf);
+    if (label == "cn") return(&cn);
+    if (label == "rend_F") return(&rend_F);
+    if (label == "rend_N") return(&rend_N);
+    if (label == "rend_diff") return(&rend_diff);
+    if (label == "quote_F1") return(&quote_F1);
+    if (label == "quote_F2") return(&quote_F2);
+    if (label == "quote_N1") return(&quote_N1);
+    if (label == "quote_N2") return(&quote_N2);
+    if (label == "quote_f1") return(&quote_f1);
+    if (label == "quote_f2") return(&quote_f2);
+    if (label == "quote_n1") return(&quote_n1);
+    if (label == "quote_n2") return(&quote_n2);
+    if (label == "quote_rF") return(&quote_rF);
+    if (label == "quote_rN") return(&quote_rN);
 
 	
   return NULL;
@@ -358,7 +358,7 @@ void finanzmarkt_2Dim::initialize()
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim::loadParamset(ifstream& inFile)
+void finanzmarkt_2Dim::loadParamset(QDataStream& inFile)
 {
     inFile >> R;  	//risikoloser Zins (1+r)>0
     inFile >> F;	//Anzahl Fundamentalisten

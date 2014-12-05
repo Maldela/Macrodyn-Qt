@@ -138,25 +138,25 @@ qreal* affine3::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* affine3::setLabels(char* label)
+qreal* affine3::setLabels(const QString& label)
 {
-	if( !strcmp(label,"a") )
+    if (label == "a")
 		return( &a);
-	if( !strcmp(label,"x") )
+    if (label == "x")
 		return( &x);
-	if( !strcmp(label,"x0") )
+    if (label == "x0")
 		return( &x0 );
-	if( !strcmp(label,"p") )
+    if (label == "p")
 		return( &p );
-	if( !strcmp(label,"urv_p") )
+    if (label == "urv_p")
 		return( &urv_p );
-	if( !strcmp(label,"urv_e") )
+    if (label == "urv_e")
 		return( &urv_e );
-	if( !strcmp(label,"eta") )
+    if (label == "eta")
 		return( &eta );
-	if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 		return( &xBundle );
-	if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 		return( &yBundle );
 	return NULL;
 }
@@ -200,7 +200,7 @@ void affine3::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::loadParamset(ifstream& inFile)
+void affine3::loadParamset(QDataStream& inFile)
 {
  	inFile >> zvar_expr1;
 	//log() << zvar_expr1 << "\n";
@@ -236,7 +236,7 @@ void affine3::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::saveParamset(ofstream& outFile)
+void affine3::saveParamset(QDataStream& outFile)
 {
 	outFile << eta << "\t";
    	outFile << a  << "\t";

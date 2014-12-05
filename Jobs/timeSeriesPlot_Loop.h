@@ -30,7 +30,7 @@
 
 class timeSeriesPlot_Loop : public timeSeriesJob {
 protected:
-    ofstream outFile;
+    QFile outFile;
     int multiplot_num;		// number of additional variables to plot
     qreal ** multiplotAdr;	// addresses of additional variables
     qreal * multiplotOld;	// to store old values

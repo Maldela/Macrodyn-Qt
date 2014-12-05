@@ -56,12 +56,12 @@ protected:
 
 public:
     dornbusch();			// constructor
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
 
     qreal* sendModelVar();		// for compatibity reasons only

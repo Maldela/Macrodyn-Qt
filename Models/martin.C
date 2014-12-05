@@ -80,43 +80,43 @@ qreal* martin::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-qreal* martin::setLabels(char* label)
+qreal* martin::setLabels(const QString& label)
 {
-    if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
-    if( !strcmp(label,"theta") )
+    if (label == "theta")
 	return( &theta);
-    if( !strcmp(label,"then") )
-//    if( !strcmp(label,"beta") )
+    if (label == "then")
+//    if (label == "beta")
 	return( &beta);
-//    if( !strcmp(label,"beta_old") )
-    if( !strcmp(label,"theo") )
+//    if (label == "beta_old")
+    if (label == "theo")
 	return( &oldBeta);
-    if( !strcmp(label,"rho") )
+    if (label == "rho")
 	return( &rho);
-    if( !strcmp(label,"k") )
+    if (label == "k")
 	return( &k);
-    if( !strcmp(label,"p") ) 
+    if (label == "p") 
 	return( &p );
-    if( !strcmp(label,"perr") ) 
+    if (label == "perr") 
 	return( &perr );
-    if( !strcmp(label,"error") ) 
+    if (label == "error") 
 	return( &perr );
-    if( !strcmp(label,"perrp") ) 
+    if (label == "perrp") 
 	return( &perrp );
-    if( !strcmp(label,"perrlnp") ) 
+    if (label == "perrlnp") 
 	return( &perrlnp );
-    if( !strcmp(label,"g") )
+    if (label == "g")
 	return( &g);
-    if( !strcmp(label,"beta0") )
+    if (label == "beta0")
 	return( &beta0 );
-    if( !strcmp(label,"k0") )
+    if (label == "k0")
 	return( &k0);
-    if( !strcmp(label,"g0") )
+    if (label == "g0")
 	return( &g0 );
-    if( !strcmp(label,"p0") )
+    if (label == "p0")
 	return( &p0 );
 
     return NULL;
@@ -157,7 +157,7 @@ void martin::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::loadParamset(ifstream& inFile)
+void martin::loadParamset(QDataStream& inFile)
 {
     inFile >> beta0 >> k0 >> g0 >> p0;
     inFile >> theta >> rho;
@@ -176,7 +176,7 @@ void martin::loadParamset(ifstream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::saveParamset(ofstream& outFile)
+void martin::saveParamset(QDataStream& outFile)
 {
     outFile << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\t";
     outFile << theta  << "\t" << rho << "\t";
@@ -295,35 +295,35 @@ void martin::iteration(const qint64&)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* martin2::setLabels(char* label)
+qreal* martin2::setLabels(const QString& label)
 {
-    if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
-    if( !strcmp(label,"theta") )
+    if (label == "theta")
 	return( &theta);
-    if( !strcmp(label,"rho") )
+    if (label == "rho")
 	return( &rho);
-    if( !strcmp(label,"lambda") )
+    if (label == "lambda")
 	return( &lambda );
-    if( !strcmp(label,"then") )
-//    if( !strcmp(label,"beta") )
+    if (label == "then")
+//    if (label == "beta")
 	return( &beta);
-//    if( !strcmp(label,"beta_old") )
-    if( !strcmp(label,"theo") )
+//    if (label == "beta_old")
+    if (label == "theo")
 	return( &oldBeta);
-    if( !strcmp(label,"k") )
+    if (label == "k")
 	return( &k);
-    if( !strcmp(label,"g") )
+    if (label == "g")
 	return( &g);
-    if( !strcmp(label,"perr") ) 
+    if (label == "perr") 
 	return( &perr );
-    if( !strcmp(label,"beta0") )
+    if (label == "beta0")
 	return( &beta0 );
-    if( !strcmp(label,"k0") )
+    if (label == "k0")
 	return( &k0);
-    if( !strcmp(label,"g0") )
+    if (label == "g0")
 	return( &g0 );
 
     return NULL;
@@ -339,7 +339,7 @@ qreal* martin2::setLabels(char* label)
 /*                                                                            */
 /******************************************************************************/
 
-void martin2::loadParamset(ifstream& inFile)
+void martin2::loadParamset(QDataStream& inFile)
 {
     inFile >> beta0 >> k0 >> g0 >> p0;
     inFile >> theta >> rho >> lambda;
@@ -358,7 +358,7 @@ void martin2::loadParamset(ifstream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void martin2::saveParamset(ofstream& outFile)
+void martin2::saveParamset(QDataStream& outFile)
 {
     outFile << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\t";
     outFile << theta  << "\t" << rho << "\t" << lambda << "\t";
@@ -459,41 +459,41 @@ qreal martin3::savings(const qreal& x)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* martin4::setLabels(char* label)
+qreal* martin4::setLabels(const QString& label)
 {
-    if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
-    if( !strcmp(label,"theta") )
+    if (label == "theta")
 	return( &theta);
-    if( !strcmp(label,"rho") )
+    if (label == "rho")
 	return( &rho);
-    if( !strcmp(label,"lambda") )
+    if (label == "lambda")
 	return( &lambda );
-     if( !strcmp(label,"then") )
-//    if( !strcmp(label,"beta") )
+     if (label == "then")
+//    if (label == "beta")
 	return( &beta);
-//    if( !strcmp(label,"beta_old") )
-    if( !strcmp(label,"theo") )
+//    if (label == "beta_old")
+    if (label == "theo")
 	return( &oldBeta);
-    if( !strcmp(label,"k") )
+    if (label == "k")
 	return( &k);
-    if( !strcmp(label,"g") )
+    if (label == "g")
 	return( &g);
-    if( !strcmp(label,"perr") ) 
+    if (label == "perr") 
 	return( &perr );
-    if( !strcmp(label,"beta0") )
+    if (label == "beta0")
 	return( &beta0 );
-    if( !strcmp(label,"k0") )
+    if (label == "k0")
 	return( &k0);
-    if( !strcmp(label,"g0") )
+    if (label == "g0")
 	return( &g0 );
-    if( !strcmp(label,"a") )
+    if (label == "a")
 	return( &a );
-    if( !strcmp(label,"b") )
+    if (label == "b")
 	return( &b );
-    if( !strcmp(label,"c") )
+    if (label == "c")
 	return( &c );
 
     return NULL;
@@ -509,7 +509,7 @@ qreal* martin4::setLabels(char* label)
 /*                                                                            */
 /******************************************************************************/
 
-void martin4::loadParamset(ifstream& inFile)
+void martin4::loadParamset(QDataStream& inFile)
 {
     inFile >> beta0 >> k0 >> g0 >> p0;
     inFile >> theta >> rho >> lambda;
@@ -529,7 +529,7 @@ void martin4::loadParamset(ifstream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void martin4::saveParamset(ofstream& outFile)
+void martin4::saveParamset(QDataStream& outFile)
 {
     outFile << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\t";
     outFile << theta  << "\t" << rho << "\t" << lambda << "\t";

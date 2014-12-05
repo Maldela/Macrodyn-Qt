@@ -32,7 +32,7 @@ laborMarketFirstTax::laborMarketFirstTax()
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::loadParamset(ifstream& inputFile)
+void laborMarketFirstTax::loadParamset(QDataStream& inputFile)
 {
     inputFile >> A >> B >> deltaP >> Lmax ;
     inputFile >> betaS >> betaW >> rhoS >> rhoW ;
@@ -61,7 +61,7 @@ void laborMarketFirstTax::loadParamset(ifstream& inputFile)
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::saveParamset(ofstream& outputFile)
+void laborMarketFirstTax::saveParamset(QDataStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\t";
     outputFile << betaS << "\t" << betaW << "\t";
@@ -83,7 +83,7 @@ void laborMarketFirstTax::saveParamset(ofstream& outputFile)
 /* Last modified:                                   */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::saveParamsetWithNames(ofstream& outputFile)
+void laborMarketFirstTax::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "LaborMarketFirstTax:\n\t";
     outputFile << "A = " << A << "\tB = " << B << "\tdeltaP = " << deltaP << "\tLmax = " << Lmax << "\tbetaS = ";
@@ -208,80 +208,80 @@ void laborMarketFirstTax::receiveParameters(const qreal* parameters)
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal* laborMarketFirstTax::setLabels(char *name)
+qreal* laborMarketFirstTax::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(name,"A") )
+    if (name == "A")
         return( &A );
-    if( !strcmp(name,"B") )
+    if (name == "B")
         return( &B );
-    if( !strcmp(name,"deltaP") )
+    if (name == "deltaP")
         return( &deltaP );
-    if( !strcmp(name,"Lmax") )
+    if (name == "Lmax")
         return( &Lmax );
 
-    if( !strcmp(name,"betaS") )
+    if (name == "betaS")
         return( &betaS );
-    if( !strcmp(name,"betaW") )
+    if (name == "betaW")
         return( &betaW );
-    if( !strcmp(name,"rhoS") )
+    if (name == "rhoS")
         return( &rhoS );
-    if( !strcmp(name,"rhoW") )
+    if (name == "rhoW")
         return( &rhoW );
-    if( !strcmp(name,"deltaS") )
+    if (name == "deltaS")
         return( &deltaS );
-    if( !strcmp(name,"deltaW") )
+    if (name == "deltaW")
         return( &deltaW );
-    if( !strcmp(name,"tauS") )
+    if (name == "tauS")
 	return( (qreal*)(&tauS) );
-    if( !strcmp(name,"tauW") )
+    if (name == "tauW")
 	return( (qreal*)(&tauW) );
 
-    if( !strcmp(name,"g") )
+    if (name == "g")
         return( &g );
-    if( !strcmp(name,"tax") )
+    if (name == "tax")
         return( &tax );
 
-    if( !strcmp(name,"gamma") )
+    if (name == "gamma")
         return( &gamm );
-    if( !strcmp(name,"kappa") )
+    if (name == "kappa")
         return( &kappa );
-    if( !strcmp(name,"lambda") )
+    if (name == "lambda")
         return( &lambda );
-    if( !strcmp(name,"mu") )
+    if (name == "mu")
         return( &mu );
 
-    if( !strcmp(name,"w0") )
+    if (name == "w0")
 	return( &w0 );
-    if( !strcmp(name,"mS0") )
+    if (name == "mS0")
 	return( &mS0 );
-    if( !strcmp(name,"mW0") )
+    if (name == "mW0")
 	return( &mW0 );
-    if( !strcmp(name,"omega0") )
+    if (name == "omega0")
 	return( &omega0 );
-    if( !strcmp(name,"d0") )
+    if (name == "d0")
 	return( &d0 );
-    if( !strcmp(name,"theta0") )
+    if (name == "theta0")
         return( &theta0 );
 
-    if( !strcmp(name,"wtqreal") )
+    if (name == "wtqreal")
         return( &wtqreal );
-    if( !strcmp(name,"mtqrealS") )
+    if (name == "mtqrealS")
         return( &mtqrealS );
-    if( !strcmp(name,"mtqrealW") )
+    if (name == "mtqrealW")
         return( &mtqrealW );
-    if( !strcmp(name,"omegat") )
+    if (name == "omegat")
         return( &omegat );
-    if( !strcmp(name,"dt") )
+    if (name == "dt")
         return( &dt );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &employment );
 
-    if( !strcmp(name,"theta") )
+    if (name == "theta")
         return( theta );
 
     return( NULL );
@@ -395,7 +395,7 @@ void rlaborMarketFirstTax::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlaborMarketFirstTax::loadParamset(ifstream& inputFile)
+void rlaborMarketFirstTax::loadParamset(QDataStream& inputFile)
 {
   inputFile >> zvar_name;		// read the name of the stochastic parameter
   inputFile >> zvar_expr;		// read the definition

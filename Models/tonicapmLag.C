@@ -76,7 +76,7 @@ void tonicapmLag::initialize()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapmLag::loadParamset(ifstream& inputFile)
+void tonicapmLag::loadParamset(QDataStream& inputFile)
 {
 
     inputFile >> a >> b >> c >> d >> lambda >> sigma >> w >> L0;
@@ -116,7 +116,7 @@ void tonicapmLag::loadParamset(ifstream& inputFile)
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapmLag::saveParamset(ofstream& outputFile)
+void tonicapmLag::saveParamset(QDataStream& outputFile)
 {
   outputFile << a << "\t" << b << "\t" << c << "\t" << d << "\t";
   outputFile << lambda << "\t" << sigma << "\t" << w << "\t";
@@ -132,7 +132,7 @@ void tonicapmLag::saveParamset(ofstream& outputFile)
 /* Last modified:   20.02.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapmLag::saveParamsetWithNames(ofstream& outputFile)
+void tonicapmLag::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel TonicapmLag\n";
     outputFile << "a = " << a << "\tb = " << b << "\tc = " << c << "\td = " << d;
@@ -220,50 +220,53 @@ void tonicapmLag::receiveParameters(const qreal* parameters)
 /* Last modified:   09.03.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal* tonicapmLag::setLabels(char *name)
+qreal* tonicapmLag::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(name,"a") )
+    if (name == "a")
         return( &a );
-    if( !strcmp(name,"b") )
+    if (name == "b")
         return( &b );
-    if( !strcmp(name,"c") )
+    if (name == "c")
         return( &c );
-    if( !strcmp(name,"d") )
+    if (name == "d")
         return( &d );
-    if( !strcmp(name,"lambda") )
+    if (name == "lambda")
         return( &lambda );
-    if( !strcmp(name,"sigma") )
+    if (name == "sigma")
         return( &sigma );
-    if( !strcmp(name,"w") )
+    if (name == "w")
         return( &w );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &L0 );
 
-    if( !strcmp(name,"v") )
+    if (name == "v")
         return( &v );
-    if( !strcmp(name,"s") )
+    if (name == "s")
         return( &s );
-    if( !strcmp(name,"p0") )
+    if (name == "p0")
         return( pp0 );
     
-    if( (name[0] == 'p') && (name[1] == '_') )
+    if (name.startsWith("p_"))
     {
-      name+=2;
-      int ind = atoi(name);
+        QString temp = name;
+        temp.remove(0, 2);
+        int ind = temp.toInt();
 
-      if( ind <= L )
-        return ( pp+ind );
-      else
-        fatalError("toniLag::setlabels",
-                   "Too large: p_i > L");
+        if( ind <= L )
+            return ( pp+ind );
+        else
+        {
+            fatalError("toniLag::setlabels", "Too large: p_i > L");
+            return(NULL);
+        }
     }
 
-    /*    if( !strcmp(name,"p") )
+    /*    if (name == "p")
           return( pp );           */  
 
     return( NULL );

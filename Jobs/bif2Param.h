@@ -24,7 +24,7 @@ class bif2Param : public bif2D {
   protected:
     qreal zmin;                       // describes the second bifurcation
     qreal zmax;                       // parameter
-    char zLabel[20];
+    QString zLabel;
     qreal stepZ;
     qreal *zParam;
   public:

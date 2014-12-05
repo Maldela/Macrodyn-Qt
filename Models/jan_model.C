@@ -104,15 +104,15 @@ qreal* jan_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* jan_model::setLabels(char* label)
+qreal* jan_model::setLabels(const QString& label)
 {
-    if( !strcmp(label,"alpha") )
+    if (label == "alpha")
 	return( &alpha);
-    if( !strcmp(label,"x") )
+    if (label == "x")
 	return( &x);
-    if( !strcmp(label,"x0") )
+    if (label == "x0")
 	return( &x0 );
-    if( !strcmp(label,"delta") )
+    if (label == "delta")
 	return( &delta );
     return NULL;
 }
@@ -158,7 +158,7 @@ void jan_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::loadParamset(ifstream& inFile)
+void jan_model::loadParamset(QDataStream& inFile)
 {
     inFile >> x0 ;
     inFile >> alpha;
@@ -181,7 +181,7 @@ void jan_model::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::saveParamset(ofstream& outFile)
+void jan_model::saveParamset(QDataStream& outFile)
 {
     outFile << x0 << "\t";
     outFile << alpha  << "\t";

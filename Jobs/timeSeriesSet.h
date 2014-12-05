@@ -27,9 +27,9 @@
 class timeSeriesSet : public geometricJob {
 
 protected:
-	ofstream outFile;
+	QFile outFile;
 	qreal stepX;
-	char xLabel[20];
+	QString xLabel;
 	qreal xmin,xmax;
 	qreal ymin,ymax;
 	qint64 zmin;
@@ -40,7 +40,7 @@ protected:
 	
 public:
 	timeSeriesSet(baseModel* const, const xyRange& axes, 
-			 char* const filename, bool surf, qint64 res);
+             const QString& filename, bool surf, qint64 res);
 	void setStepX(const qreal&);
 	void simulation();
 };

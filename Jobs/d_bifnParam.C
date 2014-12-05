@@ -26,7 +26,8 @@ d_bifnParam::d_bifnParam(baseModel* const bMod,
     :bifnParam(bMod,axes,xDef,graph),
     h(axes.min[1],axes.max[1],axes.res[1])
 {
-    outFile.open("data3D_bifnParam.dat", ios::out);
+    outFile.setFileName("data3D_bifnParam.dat");
+    outFile.open(QFile::WriteOnly);
     stepY=(ymax-ymin) / (axes.res[1]-1);
     resolution_x = axes.res[0];
 }
@@ -79,10 +80,10 @@ void d_bifnParam::simulation()
     outFile.write((char*)&ymin, 8);
     outFile.write((char*)&ymax, 8);
   
-    int length_of_label = strlen(xLabel);
+    int length_of_label = xLabel.size();
     outFile.write((char*)&length_of_label, 4);
     outFile.write((char*)&xLabel, length_of_label);
-    length_of_label = strlen(yLabel);
+    length_of_label = yLabel.size();
     outFile.write((char*)&length_of_label, 4);
     outFile.write((char*)&yLabel, length_of_label);
 
@@ -120,7 +121,7 @@ void d_bifnParam::simulation()
 	if( screenGraphics ) 
 		screenGraphics->setPoint(x,dy,color);
 
-	outFile << char( color );
+    QDataStream(&outFile) << char( color );
 	}
 	h.reset();
     }

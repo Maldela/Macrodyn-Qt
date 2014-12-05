@@ -37,7 +37,7 @@ class indicator_2d : public geometricJob {
     qreal        stepY;
     qreal 	zmin;
     qreal 	zmax;
-    char 	zLabel[256];
+    QString 	zLabel;
     qreal	stepZ;
     qreal 	* zParam;
 

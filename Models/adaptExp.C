@@ -86,47 +86,47 @@ void adaptExp::iteration(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal* adaptExp::setLabels(char *name)
+qreal* adaptExp::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
-    if( !strcmp(name,"g") )
+    if (name == "g")
         return( &g );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &employment );
-    if( !strcmp(name,"A") )
+    if (name == "A")
         return( &A );
-    if( !strcmp(name,"B") )
+    if (name == "B")
         return( &B );
-    if( !strcmp(name,"wtqreal") )
+    if (name == "wtqreal")
         return( &wtqreal );
-    if( !strcmp(name,"mtqreal") )
+    if (name == "mtqreal")
         return( &mtqreal );
-    if( !strcmp(name,"theta") )
+    if (name == "theta")
         return( theta );
-    if( !strcmp(name,"gamma") )
+    if (name == "gamma")
         return( &gamm );
-    if( !strcmp(name,"kappa") )
+    if (name == "kappa")
         return( &kappa );
-    if( !strcmp(name,"lambda") )
+    if (name == "lambda")
         return( &lambda );
-    if( !strcmp(name,"my") )
+    if (name == "my")
         return( &my );
-    if( !strcmp(name,"delta") )
+    if (name == "delta")
         return( &delta );
-    if( !strcmp(name,"rho") )
+    if (name == "rho")
         return( &rho );
-    if( !strcmp(name,"tax") )
+    if (name == "tax")
         return( &tax );
-    if( !strcmp(name,"Lmax") )
+    if (name == "Lmax")
         return( &Lmax );
-    if( !strcmp(name,"m0") )
+    if (name == "m0")
 	return( &m0 );
-    if( !strcmp(name,"w0") )
+    if (name == "w0")
 	return( &w0 );
-    if( !strcmp(name,"eta") ) 
+    if (name == "eta")
 	return( &eta );
 
     return( NULL );
@@ -141,7 +141,7 @@ qreal* adaptExp::setLabels(char *name)
 /*                                                                            */
 /******************************************************************************/
 
-void adaptExp::loadParamset(ifstream& inputFile)
+void adaptExp::loadParamset(QDataStream& inputFile)
 {
     inputFile >> A >> B;
     inputFile >> gamm >> kappa >> lambda >> my;
@@ -168,7 +168,7 @@ void adaptExp::loadParamset(ifstream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void adaptExp::saveParamset(ofstream& outputFile)
+void adaptExp::saveParamset(QDataStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t";
     outputFile << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\t";

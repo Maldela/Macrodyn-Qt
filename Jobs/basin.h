@@ -29,7 +29,7 @@ class basin : public geometricJob {
     qreal *stateVars;                 // vector of the model's state variables
     qreal stepX;                      // stepsize in x-direction
     qreal stepY;                      // .. y-direction
-    void initCycle(char* const,qreal***,int&);
+    void initCycle(const QString& ,qreal***,int&);
 				       // read cycle out of a file
     uint isAttracting(qreal**,qreal**,const int&);
                                        // determine wether a given orbit tends

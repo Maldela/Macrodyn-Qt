@@ -223,7 +223,7 @@ armax::~armax()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax::loadParamset(ifstream& inFile)
+void armax::loadParamset(QDataStream& inFile)
 { 	
  	for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
@@ -871,23 +871,23 @@ log() << "\ndif_var="<<dif_var;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* armax::setLabels(char* label)
+qreal* armax::setLabels(const QString& label)
 {
-    if( !strcmp(label,"dif_var") ) return(&dif_var);
-    if( !strcmp(label,"var1") ) return(&var1);
-    if( !strcmp(label,"var2") ) return(&var2);
-    if( !strcmp(label,"sum_var1") ) return(&sum_var1);
-    if( !strcmp(label,"y") ) return(&y);
-    if( !strcmp(label,"u") ) return(&u);
-    if( !strcmp(label,"norm_u") ) return(&norm_u);
-    if( !strcmp(label,"norm_y") ) return(&norm_y);
-    if( !strcmp(label,"sum_u") ) return(&sum_u);
-    if( !strcmp(label,"sum_y") ) return(&sum_y);
-    if( !strcmp(label,"sum_uy") ) return(&sum_uy);
-    if( !strcmp(label,"normA1") ) return(&normA1);
-    if( !strcmp(label,"normA2") ) return(&normA2);
-    if( !strcmp(label,"normA3") ) return(&normA3);
-    if( !strcmp(label,"normB1") ) return(&normB1);
+    if (label == "dif_var") return(&dif_var);
+    if (label == "var1") return(&var1);
+    if (label == "var2") return(&var2);
+    if (label == "sum_var1") return(&sum_var1);
+    if (label == "y") return(&y);
+    if (label == "u") return(&u);
+    if (label == "norm_u") return(&norm_u);
+    if (label == "norm_y") return(&norm_y);
+    if (label == "sum_u") return(&sum_u);
+    if (label == "sum_y") return(&sum_y);
+    if (label == "sum_uy") return(&sum_uy);
+    if (label == "normA1") return(&normA1);
+    if (label == "normA2") return(&normA2);
+    if (label == "normA3") return(&normA3);
+    if (label == "normB1") return(&normB1);
 
 
     return NULL;
@@ -906,7 +906,7 @@ qreal* armax::setLabels(char* label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax::saveParamset(ofstream& outFile)
+void armax::saveParamset(QDataStream& outFile)
 {	
 	for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)

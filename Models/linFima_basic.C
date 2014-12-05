@@ -70,43 +70,43 @@ qreal* linFima_basic::sendModelVar()
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-qreal* linFima_basic::setLabels(char* label)
+qreal* linFima_basic::setLabels(const QString& label)
 {
 	
-	if( !strcmp(label,"xBundle")  	) return(&xBundle);
-	if( !strcmp(label,"x0")  	) return(&x0);
-	if( !strcmp(label,"x")  	) return(&x);
-	if( !strcmp(label,"x1")  	) return(&x1);
-	if( !strcmp(label,"x2")  	) return(&x2);
+    if (label == "xBundle") return(&xBundle);
+    if (label == "x0") return(&x0);
+    if (label == "x") return(&x);
+    if (label == "x1") return(&x1);
+    if (label == "x2") return(&x2);
 	
 	
-	if( !strcmp(label,"yBundle")  	) return(&yBundle);
-	if( !strcmp(label,"y0")  	) return(&y0);
-	if( !strcmp(label,"y")  	) return(&y);
-	if( !strcmp(label,"y1")  	) return(&y1);
-	if( !strcmp(label,"y2")  	) return(&y2);
+    if (label == "yBundle") return(&yBundle);
+    if (label == "y0") return(&y0);
+    if (label == "y") return(&y);
+    if (label == "y1") return(&y1);
+    if (label == "y2") return(&y2);
 
-	if( !strcmp(label,"xi0") 	) return(&xi0);
-	if( !strcmp(label,"xi_min") 	) return(&xi_min);
-	if( !strcmp(label,"xi_max") 	) return(&xi_max);
+    if (label == "xi0")  return(&xi0);
+    if (label == "xi_min")  return(&xi_min);
+    if (label == "xi_max")  return(&xi_max);
 		
-	if( !strcmp(label,"d0") 	) return(&d0);
-	if( !strcmp(label,"d")	 	) return(&d);
-	if( !strcmp(label,"d1") 	) return(&d1);
-	if( !strcmp(label,"d2")		) return(&d2);
-	if( !strcmp(label,"psi") 	) return(&psi);
+    if (label == "d0")  return(&d0);
+    if (label == "d")	 return(&d);
+    if (label == "d1")  return(&d1);
+    if (label == "d2")	 return(&d2);
+    if (label == "psi")  return(&psi);
 	
-	if( !strcmp(label,"alpha")  	) return(&alpha);
-	if( !strcmp(label,"beta")  	) return(&beta);
-	if( !strcmp(label,"gamma") 	) return(&gamma);
-	if( !strcmp(label,"L") 		) return(&L);
+    if (label == "alpha") return(&alpha);
+    if (label == "beta") return(&beta);
+    if (label == "gamma")  return(&gamma);
+    if (label == "L") 	 return(&L);
 	
-	if( !strcmp(label,"summex") 	) return(&summex);
-	if( !strcmp(label,"summe1x") 	) return(&summe1x);
-	if( !strcmp(label,"summey") 	) return(&summey);
-	if( !strcmp(label,"summe1y") 	) return(&summe1y);
-	if( !strcmp(label,"mx") 	) return(&mx);
-	if( !strcmp(label,"my") 	) return(&my);
+    if (label == "summex")  return(&summex);
+    if (label == "summe1x")  return(&summe1x);
+    if (label == "summey")  return(&summey);
+    if (label == "summe1y")  return(&summe1y);
+    if (label == "mx")  return(&mx);
+    if (label == "my")  return(&my);
 	
 		
 	return NULL;
@@ -134,7 +134,7 @@ void linFima_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 // Funktionsname:	loadParamset
 // Beschreibung:	Einlesen der Parameter aus der .sim Datei 
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::loadParamset(ifstream& inputFile) 
+void linFima_basic::loadParamset(QDataStream& inputFile)
 {
 	inputFile >> MODELL;
 	inputFile >> x0     >> y0;
@@ -152,7 +152,7 @@ void linFima_basic::loadParamset(ifstream& inputFile)
 // Funktionsname: saveParamset
 // Beschreibung:         write parameterset into a file
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::saveParamset(ofstream& outFile)
+void linFima_basic::saveParamset(QDataStream& outFile)
 {
 	outFile <<"\nlinFima_basic:"<<"\t";
 	outFile << MODELL<<"\t";

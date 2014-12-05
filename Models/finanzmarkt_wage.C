@@ -309,68 +309,68 @@ finanzmarkt_wage::~finanzmarkt_wage() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-qreal* finanzmarkt_wage::setLabels(char* label)
+qreal* finanzmarkt_wage::setLabels(const QString& label)
 {
-	if( !strcmp(label,"R") ) return(&R);
+    if (label == "R") return(&R);
 	
-	if( !strcmp(label,"xAll") ) return(&xAll);
-	if( !strcmp(label,"xF1") ) return(&xF1);
-	if( !strcmp(label,"xF_old") ) return(&xF_old);
-	if( !strcmp(label,"xF11") ) return(&xF11);
+    if (label == "xAll") return(&xAll);
+    if (label == "xF1") return(&xF1);
+    if (label == "xF_old") return(&xF_old);
+    if (label == "xF11") return(&xF11);
 	
-	if( !strcmp(label,"xf1") ) return(&xf1);
-  	if( !strcmp(label,"xn1") ) return(&xn1);
-	if( !strcmp(label,"rho1") ) return(&rho1);
+    if (label == "xf1") return(&xf1);
+    if (label == "xn1") return(&xn1);
+    if (label == "rho1") return(&rho1);
 
-	if( !strcmp(label,"Erho1") ) return(&Erho1);
+    if (label == "Erho1") return(&Erho1);
 
-	if( !strcmp(label,"pF01") ) return(&pF01);
-	if( !strcmp(label,"p01") ) return(&p01);
- 	if( !strcmp(label,"p1") ) return(&p1);
- 	if( !strcmp(label,"pF1") ) return(&pF1);
-	if( !strcmp(label,"pR1") ) return(&pR1);	
-	if( !strcmp(label,"Ed") ) return(&Ed);
-	if( !strcmp(label,"var") ) return(&var);
-	if( !strcmp(label,"div") ) return(&div);
-	if( !strcmp(label,"gamma") ) return(&gamma);
-	if( !strcmp(label,"Haben_F") ) return(&Haben_F);
-	if( !strcmp(label,"Haben_f") ) return(&Haben_f);
-	if( !strcmp(label,"return_F") ) return(&return_F);
-	if( !strcmp(label,"return_f") ) return(&return_f);
-	if( !strcmp(label,"rend_F") ) return(&rend_F);
-	if( !strcmp(label,"rend_f") ) return(&rend_f);
-	if( !strcmp(label,"ErendF_p") ) return(&ErendF_p);
-	if( !strcmp(label,"ErendF_ges") ) return(&ErendF_ges);
-	if( !strcmp(label,"rendf_neu") ) return(&rendf_neu);
+    if (label == "pF01") return(&pF01);
+    if (label == "p01") return(&p01);
+    if (label == "p1") return(&p1);
+    if (label == "pF1") return(&pF1);
+    if (label == "pR1") return(&pR1);
+    if (label == "Ed") return(&Ed);
+    if (label == "var") return(&var);
+    if (label == "div") return(&div);
+    if (label == "gamma") return(&gamma);
+    if (label == "Haben_F") return(&Haben_F);
+    if (label == "Haben_f") return(&Haben_f);
+    if (label == "return_F") return(&return_F);
+    if (label == "return_f") return(&return_f);
+    if (label == "rend_F") return(&rend_F);
+    if (label == "rend_f") return(&rend_f);
+    if (label == "ErendF_p") return(&ErendF_p);
+    if (label == "ErendF_ges") return(&ErendF_ges);
+    if (label == "rendf_neu") return(&rendf_neu);
 
-	if( !strcmp(label,"RPF") ) return(&RPF);
-	if( !strcmp(label,"sdRF") ) return(&sdRF);
-	if( !strcmp(label,"Eff_F") ) return(&Eff_F);
-	if( !strcmp(label,"delta_Eff") ) return(&delta_Eff);
+    if (label == "RPF") return(&RPF);
+    if (label == "sdRF") return(&sdRF);
+    if (label == "Eff_F") return(&Eff_F);
+    if (label == "delta_Eff") return(&delta_Eff);
 
-	if( !strcmp(label,"mRF") ) return(&mRF);
-	if( !strcmp(label,"sRF") ) return(&sRF);
-	if( !strcmp(label,"vRF") ) return(&vRF);
-	if( !strcmp(label,"SIZF") ) return(&SIZF);
-	if( !strcmp(label,"SIF") ) return(&SIF);
-	if( !strcmp(label,"delta_SI") ) return(&delta_SI);	
+    if (label == "mRF") return(&mRF);
+    if (label == "sRF") return(&sRF);
+    if (label == "vRF") return(&vRF);
+    if (label == "SIZF") return(&SIZF);
+    if (label == "SIF") return(&SIF);
+    if (label == "delta_SI") return(&delta_SI);
 
-	if( !strcmp(label,"a1") ) return(&a1);
-	if( !strcmp(label,"b1") ) return(&b1);
-	if( !strcmp(label,"c1") ) return(&c1);
-	if( !strcmp(label,"a2") ) return(&a2);
-	if( !strcmp(label,"b2") ) return(&b2);
-	if( !strcmp(label,"c2") ) return(&c2);	
-	if( !strcmp(label,"mu0") ) return(&mu0);	
-	if( !strcmp(label,"mu") ) return(&mu);	
+    if (label == "a1") return(&a1);
+    if (label == "b1") return(&b1);
+    if (label == "c1") return(&c1);
+    if (label == "a2") return(&a2);
+    if (label == "b2") return(&b2);
+    if (label == "c2") return(&c2);
+    if (label == "mu0") return(&mu0);
+    if (label == "mu") return(&mu);
 	
-	if( !strcmp(label,"err_div") ) return(&err_div);
+    if (label == "err_div") return(&err_div);
 
-	if( !strcmp(label,"delta_p") ) return(&delta_p);
-	if( !strcmp(label,"delta_div") ) return(&delta_div);
-	if( !strcmp(label,"delta_q") ) return(&delta_q);
+    if (label == "delta_p") return(&delta_p);
+    if (label == "delta_div") return(&delta_div);
+    if (label == "delta_q") return(&delta_q);
 	
-	if( !strcmp(label,"xBundle") ) return(&xBundle);
+    if (label == "xBundle") return(&xBundle);
 		
 
   return NULL;
@@ -389,7 +389,7 @@ qreal* finanzmarkt_wage::setLabels(char* label)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_wage::loadParamset(ifstream& inFile)
+void finanzmarkt_wage::loadParamset(QDataStream& inFile)
 {
     inFile >> pf_type;
     inFile >> A_pf;

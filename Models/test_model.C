@@ -151,45 +151,45 @@ qreal* test_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* test_model::setLabels(char* label)
+qreal* test_model::setLabels(const QString& label)
 {
-	if( !strcmp(label,"Ed") )
+    if (label == "Ed")
 		return( &Ed);
-	if( !strcmp(label,"Vd") )
+    if (label == "Vd")
 		return( &Vd);
-	if( !strcmp(label,"d") )
+    if (label == "d")
 		return( &d );
-	if( !strcmp(label,"d2") )
+    if (label == "d2")
 		return( &d2 );
-	if( !strcmp(label,"s1") )
+    if (label == "s1")
 		return( &s1 );
-	if( !strcmp(label,"s2") )
+    if (label == "s2")
 		return( &s2 );
-	if( !strcmp(label,"U") )
+    if (label == "U")
 		return( &U );
-	if( !strcmp(label,"x") )
+    if (label == "x")
 		return( &x );
-	if( !strcmp(label,"y") )
+    if (label == "y")
 		return( &y );
-	if( !strcmp(label,"z") )
+    if (label == "z")
 		return( &z );
-	if( !strcmp(label,"a") )
+    if (label == "a")
 		return( &a );
-	if( !strcmp(label,"b") )
+    if (label == "b")
 		return( &b );
-	if( !strcmp(label,"c") )
+    if (label == "c")
 		return( &c );
-	if( !strcmp(label,"x0") )
+    if (label == "x0")
 		return( &x0 );
-	if( !strcmp(label,"y0") )
+    if (label == "y0")
 		return( &y0 );
-	if( !strcmp(label,"z0") )
+    if (label == "z0")
 		return( &z0 );
-	if( !strcmp(label,"dx") )
+    if (label == "dx")
 		return( &dx );
-	if( !strcmp(label,"dy") )
+    if (label == "dy")
 		return( &dy );
-	if( !strcmp(label,"dz") )
+    if (label == "dz")
 		return( &dz );
 		
 	return NULL;
@@ -232,7 +232,7 @@ void test_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::loadParamset(ifstream& inFile)
+void test_model::loadParamset(QDataStream& inFile)
 {
 /*	inFile >> d;
 	inFile >> x0 >> y0 >> z0;
@@ -254,7 +254,7 @@ void test_model::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::saveParamset(ofstream& outFile)
+void test_model::saveParamset(QDataStream& outFile)
 {
 	outFile << d << "\t" << length;
 }
@@ -272,7 +272,7 @@ void test_model::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void test_model::saveParamsetWithNames(ofstream& outFile)
+void test_model::saveParamsetWithNames(QDataStream& outFile)
 {
 
 	outFile << "d=" << d << "\nlength = " << length << "\n";

@@ -66,10 +66,10 @@ extern "C" { void inrgcm(void); }
 //TODO
 //static base_gen_t identify ( const char * gen )
 //{
-//    if( !strcmp(gen,"drand48") ) {
+//    if( !strcmp(gen,"drand48") {
 //      return drand48;
 //    }
-//    if( !strcmp(gen,"ranf") ) {
+//    if( !strcmp(gen,"ranf") {
 //      (void) ignlgi(); 		// initialize the generator
 //      #ifdef INIT_RANDOM_TIME
 //      srand( time(NULL) );
@@ -97,19 +97,23 @@ extern "C" { void inrgcm(void); }
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-rand_var::rand_var ( baseModel * model, const char * gen, const char * zvar_expr )
-{   int n=0;
-    const char * pos  = zvar_expr;
-    char * expr = strdup(zvar_expr);
+rand_var::rand_var ( baseModel * model, const QString& gen, const QString& zvar_expr )
+{
+    int n=0;
+    QByteArray qba = zvar_expr.toLatin1();
+    const char *pos  = qba.data();
+    QByteArray qba2 = zvar_expr.toLatin1();
+    char *expr = qba2.data();
     const char * tpos, * tmark;
-    char * token  = strdup(zvar_expr);
+    QByteArray qba3 = zvar_expr.toLatin1();
+    char *token  = qba3.data();
 
     double sum = 0.0;
 
     //TODO
   //base_gen = identify(gen);
   
-  n_events=strnchr(zvar_expr, ';');
+  n_events = zvar_expr.count(';');
   prob = new double[n_events];
   range_min = new double[n_events];
   range_max = new double[n_events];
@@ -142,8 +146,6 @@ rand_var::rand_var ( baseModel * model, const char * gen, const char * zvar_expr
     
     n++;
   }
-  free(expr);
-  free(token);
   
   for( n=0; n<n_events; n++ ) { 	// now we do a rescale / normalization
     sum += prob[n];			// if the sum of the

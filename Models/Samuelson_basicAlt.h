@@ -46,14 +46,14 @@ protected:
 public:
     Samuelson_basic();			// constructor
     virtual ~Samuelson_basic();
-    void loadParamset(ifstream&);	
-    void saveParamset(ofstream&);
-    void saveParamsetWithNames(ofstream&);    
+    void loadParamset(QDataStream&);	
+    void saveParamset(QDataStream&);
+    void saveParamsetWithNames(QDataStream&);    
     void printParamset();
     virtual void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
@@ -71,9 +71,9 @@ protected:
 
 public:
 	void iteration(const qint64& );
-	void loadParamset(ifstream& );
+	void loadParamset(QDataStream& );
 	void initialize();
-	qreal* setLabels(char* label);
+	qreal* setLabels(const QString& label);
 };
 
 #endif	

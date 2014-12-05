@@ -9,16 +9,8 @@
 
 #include "hashTab.h"
 #include "error.h"
-#include <iostream>
-#include <stdlib.h>
-#include <cmath>
 
-#ifndef DOWNGRADE
-using namespace std;
-#define DOWNGRADE
-#endif
-
-extern void fatalError(const char*,const char *);
+extern void fatalError(const QString&, const QString&);
 
 /******************************************************************************/
 /*                                                                            */

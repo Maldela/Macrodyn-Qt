@@ -28,7 +28,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 class contourline : public geometricJob {
   protected:
-    char zLabel[20];
+    QString zLabel;
     qreal *zParam;
 
     qreal stepX;
@@ -42,7 +42,7 @@ class contourline : public geometricJob {
     void setXParams(const qreal&);	// update x-parameters
     void setYParams(const qreal&);	// update y-parameters
     floathisto_2d h;
-    ofstream outFile;
+    QFile outFile;
     	
   public:
     contourline(baseModel* const, const xyRange&, const xyRange&, const xyRange&,

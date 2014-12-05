@@ -24,7 +24,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 md_Map::md_Map(double min,double max,int res,int dim,int tlim
-	,char* filename,char* mothermap)
+    ,const QString& filename, const QString& mothermap)
 {
 	l_min=min;
 	l_max=max;
@@ -36,13 +36,8 @@ md_Map::md_Map(double min,double max,int res,int dim,int tlim
 	
 	int d = resolution*model_dim*time_limit;
 	
-	daugther = new char*[resolution];
-	if ( !daugther ) {
-		log() << "md_Map::md_Map can't allocate memory\n" << "\n";
-		exit (-1);
-	}
 	for (int i=0;i<resolution;i++)
-		daugther[i]="NULL";
+        daugther[i]="";
 		
 	value_field = new double[d];
 	if ( !value_field ) {
@@ -65,26 +60,26 @@ md_Map::md_Map(double min,double max,int res,int dim,int tlim
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-md_Map::md_Map(char* filename)
+md_Map::md_Map(const QString& filename)
 {
-	std::fstream inFile;
-	inFile.open(filename, ios::in|ios::binary);
-	if ( inFile.bad() ) {
+    QFile inFile(filename);
+
+    if (!inFile.open(QFile::ReadOnly)) {
 		log() << "md_Map::md_Map input file bad...\n" << "\n";
 		exit (-1);
 	}
 	
+    QDataStream stream(&inFile);
 	name=filename;
 	
-	inFile >> l_min >> l_max;
-	inFile >> resolution;
-	inFile >> model_dim;
-	inFile >> time_limit;
-	inFile >> (char*) mother;
+    stream >> l_min >> l_max;
+    stream >> resolution;
+    stream >> model_dim;
+    stream >> time_limit;
+    stream >> mother;
 	
-	daugther = new char* [resolution];
 	for (int i=0;i<resolution;i++){
-		inFile >> daugther[i];
+        stream >> daugther[i];
 	}
 	
     value_field = new double[qint64(resolution)*qint64(model_dim)*time_limit];
@@ -116,8 +111,6 @@ md_Map::md_Map(char* filename)
 
 md_Map::~md_Map()
 {
-	if ( daugther )
-		delete [] daugther;
 	if ( value_field ) 
 		delete [] value_field;	
 }
@@ -143,9 +136,9 @@ void md_Map::give_attributes()
     log() << "time_limit: " << time_limit << "\n";
     log() << "name: " << name << "\n";
 	for (int i=0; i<resolution ; i++)
-		if ( daugther[i] ) 
+        if ( !daugther[i].isEmpty() )
             log() << "daugther["<<i<<"]: "<<daugther[i]<<"\n";
-	if ( mother )
+    if ( !mother.isEmpty() )
         log() << "mother: " << mother << "\n";
 	log() << "values: \n";
     for (int i=0; i<resolution*model_dim*time_limit;i++)

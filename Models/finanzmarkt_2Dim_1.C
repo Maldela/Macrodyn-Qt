@@ -191,122 +191,122 @@ finanzmarkt_2Dim_1::~finanzmarkt_2Dim_1() {
 // Funktionsname:	setLabels
 // Beschreibung:	return a pointer to a variable or a parameter specified
 ///////////////////////////////////////////////////////////////////////////////
-qreal* finanzmarkt_2Dim_1::setLabels(char* label)
+qreal* finanzmarkt_2Dim_1::setLabels(const QString& label)
 {
-	if( !strcmp(label,"R") ) return(&R);
+    if (label == "R") return(&R);
 	
-	if( !strcmp(label,"xAll1") ) return(&xAll1);
-	if( !strcmp(label,"xAll2") ) return(&xAll2);
-	if( !strcmp(label,"xF1") ) return(&xF1);
-	if( !strcmp(label,"xF2") ) return(&xF2);
-  	if( !strcmp(label,"xN1") ) return(&xN1);
-	if( !strcmp(label,"xN2") ) return(&xN2);
+    if (label == "xAll1") return(&xAll1);
+    if (label == "xAll2") return(&xAll2);
+    if (label == "xF1") return(&xF1);
+    if (label == "xF2") return(&xF2);
+    if (label == "xN1") return(&xN1);
+    if (label == "xN2") return(&xN2);
 	
-	if( !strcmp(label,"xF_old1") ) return(&xF_old1);
-	if( !strcmp(label,"xF_old2") ) return(&xF_old2);
-  	if( !strcmp(label,"xN_old1") ) return(&xN_old1);
-	if( !strcmp(label,"xN_old2") ) return(&xN_old2);
+    if (label == "xF_old1") return(&xF_old1);
+    if (label == "xF_old2") return(&xF_old2);
+    if (label == "xN_old1") return(&xN_old1);
+    if (label == "xN_old2") return(&xN_old2);
 
 
-	if( !strcmp(label,"xF11") ) return(&xF11);
-	if( !strcmp(label,"xF22") ) return(&xF22);
-  	if( !strcmp(label,"xN11") ) return(&xN11);
-	if( !strcmp(label,"xN22") ) return(&xN22);	
+    if (label == "xF11") return(&xF11);
+    if (label == "xF22") return(&xF22);
+    if (label == "xN11") return(&xN11);
+    if (label == "xN22") return(&xN22);
 	
-	if( !strcmp(label,"xf1") ) return(&xf1);
-	if( !strcmp(label,"xf2") ) return(&xf2);
-  	if( !strcmp(label,"xn1") ) return(&xn1);
-	if( !strcmp(label,"xn2") ) return(&xn2);
-	if( !strcmp(label,"rho1") ) return(&rho1);
-	if( !strcmp(label,"rho2") ) return(&rho2);
+    if (label == "xf1") return(&xf1);
+    if (label == "xf2") return(&xf2);
+    if (label == "xn1") return(&xn1);
+    if (label == "xn2") return(&xn2);
+    if (label == "rho1") return(&rho1);
+    if (label == "rho2") return(&rho2);
 
-	if( !strcmp(label,"Erho1") ) return(&Erho1);
-	if( !strcmp(label,"Erho2") ) return(&Erho2);
+    if (label == "Erho1") return(&Erho1);
+    if (label == "Erho2") return(&Erho2);
 
-	if( !strcmp(label,"pF01") ) return(&pF01);
-	if( !strcmp(label,"pF02") ) return(&pF02);
-	if( !strcmp(label,"pN01") ) return(&pN01);
-	if( !strcmp(label,"pN02") ) return(&pN02);
-	if( !strcmp(label,"p01") ) return(&p01);
-  	if( !strcmp(label,"p02") ) return(&p02);
-  	if( !strcmp(label,"p1") ) return(&p1);
-	if( !strcmp(label,"p2") ) return(&p2);
-  	if( !strcmp(label,"pF1") ) return(&pF1);
-	if( !strcmp(label,"pF2") ) return(&pF2);
-  	if( !strcmp(label,"pN1") ) return(&pN1);
-	if( !strcmp(label,"pN2") ) return(&pN2);
-	if( !strcmp(label,"pR1") ) return(&pR1);	
-	if( !strcmp(label,"Ed1") ) return(&Ed1);
-	if( !strcmp(label,"Ed2") ) return(&Ed2);
-	if( !strcmp(label,"var1") ) return(&var1);
-	if( !strcmp(label,"var2") ) return(&var2);
-	if( !strcmp(label,"d1") ) return(&d1);
-	if( !strcmp(label,"d2") ) return(&d2);
-	if( !strcmp(label,"gamma1") ) return(&gamma1);
-	if( !strcmp(label,"gamma2") ) return(&gamma2);
-	if( !strcmp(label,"Haben_F") ) return(&Haben_F);
-	if( !strcmp(label,"Haben_N") ) return(&Haben_N);
-	if( !strcmp(label,"Haben_f") ) return(&Haben_f);
-	if( !strcmp(label,"Haben_n") ) return(&Haben_n);	
-	if( !strcmp(label,"return_F") ) return(&return_F);
-	if( !strcmp(label,"return_N") ) return(&return_N);	
-	if( !strcmp(label,"return_f") ) return(&return_f);
-	if( !strcmp(label,"return_n") ) return(&return_n);	
-	if( !strcmp(label,"rend_F") ) return(&rend_F);
-	if( !strcmp(label,"rend_N") ) return(&rend_N);
-	if( !strcmp(label,"rend_f") ) return(&rend_f);
-	if( !strcmp(label,"rend_n") ) return(&rend_n);
-	if( !strcmp(label,"ErendF_p") ) return(&ErendF_p);
-	if( !strcmp(label,"ErendF_ges") ) return(&ErendF_ges);
-	if( !strcmp(label,"ErendN_p") ) return(&ErendN_p);
-	if( !strcmp(label,"ErendN_ges") ) return(&ErendN_ges);
-	if( !strcmp(label,"rendf_neu") ) return(&rendf_neu);
-	if( !strcmp(label,"rendn_neu") ) return(&rendn_neu);
+    if (label == "pF01") return(&pF01);
+    if (label == "pF02") return(&pF02);
+    if (label == "pN01") return(&pN01);
+    if (label == "pN02") return(&pN02);
+    if (label == "p01") return(&p01);
+    if (label == "p02") return(&p02);
+    if (label == "p1") return(&p1);
+    if (label == "p2") return(&p2);
+    if (label == "pF1") return(&pF1);
+    if (label == "pF2") return(&pF2);
+    if (label == "pN1") return(&pN1);
+    if (label == "pN2") return(&pN2);
+    if (label == "pR1") return(&pR1);
+    if (label == "Ed1") return(&Ed1);
+    if (label == "Ed2") return(&Ed2);
+    if (label == "var1") return(&var1);
+    if (label == "var2") return(&var2);
+    if (label == "d1") return(&d1);
+    if (label == "d2") return(&d2);
+    if (label == "gamma1") return(&gamma1);
+    if (label == "gamma2") return(&gamma2);
+    if (label == "Haben_F") return(&Haben_F);
+    if (label == "Haben_N") return(&Haben_N);
+    if (label == "Haben_f") return(&Haben_f);
+    if (label == "Haben_n") return(&Haben_n);
+    if (label == "return_F") return(&return_F);
+    if (label == "return_N") return(&return_N);
+    if (label == "return_f") return(&return_f);
+    if (label == "return_n") return(&return_n);
+    if (label == "rend_F") return(&rend_F);
+    if (label == "rend_N") return(&rend_N);
+    if (label == "rend_f") return(&rend_f);
+    if (label == "rend_n") return(&rend_n);
+    if (label == "ErendF_p") return(&ErendF_p);
+    if (label == "ErendF_ges") return(&ErendF_ges);
+    if (label == "ErendN_p") return(&ErendN_p);
+    if (label == "ErendN_ges") return(&ErendN_ges);
+    if (label == "rendf_neu") return(&rendf_neu);
+    if (label == "rendn_neu") return(&rendn_neu);
 
-	if( !strcmp(label,"RPF") ) return(&RPF);
-	if( !strcmp(label,"RPN") ) return(&RPN);
-	if( !strcmp(label,"sdRF") ) return(&sdRF);
-	if( !strcmp(label,"sdRN") ) return(&sdRN);
-	if( !strcmp(label,"Eff_F") ) return(&Eff_F);
-	if( !strcmp(label,"Eff_N") ) return(&Eff_N);
-	if( !strcmp(label,"delta_Eff") ) return(&delta_Eff);
+    if (label == "RPF") return(&RPF);
+    if (label == "RPN") return(&RPN);
+    if (label == "sdRF") return(&sdRF);
+    if (label == "sdRN") return(&sdRN);
+    if (label == "Eff_F") return(&Eff_F);
+    if (label == "Eff_N") return(&Eff_N);
+    if (label == "delta_Eff") return(&delta_Eff);
 
-	if( !strcmp(label,"mRF") ) return(&mRF);
-	if( !strcmp(label,"mRN") ) return(&mRN);
-	if( !strcmp(label,"sRF") ) return(&sRF);
-	if( !strcmp(label,"sRN") ) return(&sRN);
-	if( !strcmp(label,"vRF") ) return(&vRF);
-	if( !strcmp(label,"vRN") ) return(&vRN);
-	if( !strcmp(label,"SIZF") ) return(&SIZF);
-	if( !strcmp(label,"SIZN") ) return(&SIZN);	
-	if( !strcmp(label,"SIF") ) return(&SIF);
-	if( !strcmp(label,"SIN") ) return(&SIN);	
-	if( !strcmp(label,"delta_SI") ) return(&delta_SI);	
+    if (label == "mRF") return(&mRF);
+    if (label == "mRN") return(&mRN);
+    if (label == "sRF") return(&sRF);
+    if (label == "sRN") return(&sRN);
+    if (label == "vRF") return(&vRF);
+    if (label == "vRN") return(&vRN);
+    if (label == "SIZF") return(&SIZF);
+    if (label == "SIZN") return(&SIZN);
+    if (label == "SIF") return(&SIF);
+    if (label == "SIN") return(&SIN);
+    if (label == "delta_SI") return(&delta_SI);
 
-	if( !strcmp(label,"a1") ) return(&a1);
-	if( !strcmp(label,"b1") ) return(&b1);
-	if( !strcmp(label,"c1") ) return(&c1);
-	if( !strcmp(label,"a2") ) return(&a2);
-	if( !strcmp(label,"b2") ) return(&b2);
-	if( !strcmp(label,"c2") ) return(&c2);	
-	if( !strcmp(label,"mu0") ) return(&mu0);	
-	if( !strcmp(label,"mu") ) return(&mu);	
+    if (label == "a1") return(&a1);
+    if (label == "b1") return(&b1);
+    if (label == "c1") return(&c1);
+    if (label == "a2") return(&a2);
+    if (label == "b2") return(&b2);
+    if (label == "c2") return(&c2);
+    if (label == "mu0") return(&mu0);
+    if (label == "mu") return(&mu);
 	
-	if( !strcmp(label,"err_div1") ) return(&err_div1);
-	if( !strcmp(label,"err_div2") ) return(&err_div2);
-	if( !strcmp(label,"err_pN1") ) return(&err_pN1);
-	if( !strcmp(label,"err_pN2") ) return(&err_pN2);
-	if( !strcmp(label,"err_qN1") ) return(&err_qN1);
-	if( !strcmp(label,"err_qN2") ) return(&err_qN2);
+    if (label == "err_div1") return(&err_div1);
+    if (label == "err_div2") return(&err_div2);
+    if (label == "err_pN1") return(&err_pN1);
+    if (label == "err_pN2") return(&err_pN2);
+    if (label == "err_qN1") return(&err_qN1);
+    if (label == "err_qN2") return(&err_qN2);
 
-	if( !strcmp(label,"delta_p1") ) return(&delta_p1);
-	if( !strcmp(label,"delta_p2") ) return(&delta_p2);
-	if( !strcmp(label,"delta_div1") ) return(&delta_div1);
-	if( !strcmp(label,"delta_div2") ) return(&delta_div2);
-	if( !strcmp(label,"delta_q1") ) return(&delta_q1);
-	if( !strcmp(label,"delta_q2") ) return(&delta_q2);
+    if (label == "delta_p1") return(&delta_p1);
+    if (label == "delta_p2") return(&delta_p2);
+    if (label == "delta_div1") return(&delta_div1);
+    if (label == "delta_div2") return(&delta_div2);
+    if (label == "delta_q1") return(&delta_q1);
+    if (label == "delta_q2") return(&delta_q2);
 	
-	if( !strcmp(label,"xBundle") ) return(&xBundle);
+    if (label == "xBundle") return(&xBundle);
 		
 
   return NULL;
@@ -325,7 +325,7 @@ qreal* finanzmarkt_2Dim_1::setLabels(char* label)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim_1::loadParamset(ifstream& inFile)
+void finanzmarkt_2Dim_1::loadParamset(QDataStream& inFile)
 {
     inFile >> R;  		//risikoloser Zins (1+r)>0
     inFile >> alphaf;		//Risikoaversionsparameter eines Fundamentalisten 

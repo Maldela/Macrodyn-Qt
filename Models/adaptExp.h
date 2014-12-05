@@ -26,9 +26,9 @@ protected:
 public:
     adaptExp();                        // default constructor
     void iteration(const qint64 &);           // perform one iteration
-    qreal* setLabels(char*);
-    void loadParamset(ifstream&);	    // load parameterset from a file
-    void saveParamset(ofstream&);	    // write parameterset into a file
+    qreal* setLabels(const QString&);
+    void loadParamset(QDataStream&);	    // load parameterset from a file
+    void saveParamset(QDataStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers

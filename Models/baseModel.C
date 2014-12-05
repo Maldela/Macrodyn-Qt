@@ -42,7 +42,7 @@ qint64 baseModel::getLength() const
 /*                                                                            */
 /******************************************************************************/
 
-void baseModel::saveParamsetWithNames(ofstream& outputFile)
+void baseModel::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nunable to print Parameterset ";
     outputFile << "- not implemented for this model\n";
@@ -62,7 +62,7 @@ void baseModel::saveParamsetWithNames(ofstream& outputFile)
 void baseModel::printParamset() {
 	error("macrodyn::baseModel::printParamset is not implemented");
 	}
-void baseModel::saveParamset(ofstream&) {
+void baseModel::saveParamset(QDataStream&) {
 	error("macrodyn::baseModel::saveParamset is not implemented");
 	}
 qreal* baseModel::sendModelVar(void) {

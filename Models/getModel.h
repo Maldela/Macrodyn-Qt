@@ -27,7 +27,7 @@
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getModel(const char* modelTyp);
+baseModel* getModel(const QString& modelTyp);
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -40,7 +40,7 @@ baseModel* getModel(const char* modelTyp);
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getModel(const char* modelTyp, const baseModel* sourceModel);
+baseModel* getModel(const QString& modelTyp, const baseModel* sourceModel);
 
 #endif // _GETMODEL_INCLUDED
 

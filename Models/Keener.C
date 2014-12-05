@@ -118,25 +118,25 @@ qreal* Keener::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* Keener::setLabels(char* label)
+qreal* Keener::setLabels(const QString& label)
 {
-	if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 		return( &xBundle );
-	if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 		return( &yBundle );
-	if( !strcmp(label,"x_0") )
+    if (label == "x_0")
 		return( &x_0);
-	if( !strcmp(label,"a") )
+    if (label == "a")
 		return( &a);		
-	if( !strcmp(label,"b") )
+    if (label == "b")
 		return( &b );
-	if( !strcmp(label,"lambda") )
+    if (label == "lambda")
 		return( &lambda );
-	if( !strcmp(label,"Modulo") )
+    if (label == "Modulo")
 		return( &Modulo );	
-	if( !strcmp(label,"x") )
+    if (label == "x")
 		return( &x );
-	if( !strcmp(label,"bias") )
+    if (label == "bias")
 		return( &bias );
 		
 	return NULL;
@@ -179,7 +179,7 @@ void Keener::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::loadParamset(ifstream& inFile)
+void Keener::loadParamset(QDataStream& inFile)
 {
 	inFile >> x_0 >> a >> b >> Modulo >> lambda >> myseed;
 	inFile >> length;
@@ -199,7 +199,7 @@ void Keener::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::saveParamset(ofstream& outFile)
+void Keener::saveParamset(QDataStream& outFile)
 {
 	outFile << x_0 << "\t" << a << "\t" << b << "\t";
 	outFile << Modulo << "\t" << lambda << "\t" << myseed;
@@ -219,7 +219,7 @@ void Keener::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void Keener::saveParamsetWithNames(ofstream& outFile)
+void Keener::saveParamsetWithNames(QDataStream& outFile)
 {
 	outFile << "x_0 = " << x_0;
 	outFile << "\na = " << a;

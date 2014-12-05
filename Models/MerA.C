@@ -80,85 +80,85 @@ log() << "Model MerA destructor" << "\n";
 // Author:		Marc Mueller
 // Last modified:	98/11/30
 ///////////////////////////////////////////////////////////////////////////////
-qreal* MerA::setLabels(char* label)
+qreal* MerA::setLabels(const QString& label)
 {
-	char * labelp;
+    QString labelp = label;
 	int num;
-//    if( !strcmp(label,"N") ) return( (qreal*)(&N) );
-	if( !strcmp(label,"R") ) return(&R);
+//    if (label == "N") return( (qreal*)(&N) );
+    if (label == "R") return(&R);
 
-	if( !strcmp(label,"d") ) return(d);
-	if( !strncmp(label,"d_",2) ) {
-		labelp=label+2;
-		num=atoi(labelp);
+    if (label == "d") return(d);
+    if (label.startsWith("d_")) {
+        labelp.remove(0, 2);
+        num = labelp.toInt();
 		return(&d[num]);
 	}
-	if( !strncmp(label,"d0_",3) ) {
-		labelp=label+3;
-		num=atoi(labelp);
+    if (label.startsWith("d0_") ) {
+        labelp.remove(0, 3);
+        num = labelp.toInt();
 		return(&d0[num]);
 	}
-	if( !strncmp(label,"dmin_",5) ) {
-		labelp=label+5;
-		num=atoi(labelp);
+    if (label.startsWith("dmin_") ) {
+        labelp.remove(0, 5);
+        num = labelp.toInt();
 		return(&dmin[num]);
 	}
-	if( !strncmp(label,"dmax_",5) ) {
-		labelp=label+5;
-		num=atoi(labelp);
+    if (label.startsWith("dmax_") ) {
+        labelp.remove(0, 5);
+        num = labelp.toInt();
 		return(&dmax[num]);
 	}
 
-	if( !strcmp(label,"p") ) return(p);
-	if( !strncmp(label,"p_",2) ) {
-		labelp=label+2;
-		num=atoi(labelp);
+    if (label == "p") return(p);
+    if (label.startsWith("p_") ) {
+        labelp.remove(0, 2);
+        num = labelp.toInt();
 		return(&p[num]);
 	}
 
-	if( !strcmp(label,"q") ) return(q);
-	if( !strncmp(label,"q_",2) ) {
-		labelp=label+2;
-		num=atoi(labelp);
+    if (label == "q") return(q);
+    if (label.startsWith("q_") ) {
+        labelp.remove(0, 2);
+        num = labelp.toInt();
 		return(&q[num]);
 	}
 
-	if( !strcmp(label,"qOld") ) return(qShift);
-	if( !strncmp(label,"qOld_",5) ) {
-		labelp=label+5;
-		num=atoi(labelp);
+    if (label == "qOld") return(qShift);
+    if (label.startsWith("qOld_") ) {
+        labelp.remove(0, 5);
+        num = labelp.toInt();
 		return(&qShift[num]);
 	}
-	if( !strncmp(label,"p0_",3) ) {
-		labelp=label+3;
-		num=atoi(labelp);
+    if (label.startsWith("p0_") ) {
+        labelp.remove(0, 3);
+        num = labelp.toInt();
 		return(&p0[num]);
 	}
-	if( !strncmp(label,"q0_",3) ) {
-		labelp=label+3;
-		num=atoi(labelp);
+    if (label.startsWith("q0_") ) {
+        labelp.remove(0, 3);
+        num = labelp.toInt();
 		return(&q0[num]);
 	}
-	if( !strncmp(label,"qmin_",5) ) {
-		labelp=label+5;
-		num=atoi(labelp);
+    if (label.startsWith("qmin_") ) {
+        labelp.remove(0, 5);
+        num = labelp.toInt();
 		return(&qmin[num]);
 	}
-	if( !strncmp(label,"qmax_",5) ) {
-		labelp=label+5;
-		num=atoi(labelp);
+    if (label.startsWith("qmax_") ) {
+        labelp.remove(0, 5);
+        num = labelp.toInt();
 		return(&dmax[num]);
 	}
 
-  	if( !strncmp(label,"ferr_",5) ) {
-		labelp=label+5;
-		num=atoi(labelp);
+    if (label.startsWith("ferr_") ) {
+        labelp.remove(0, 5);
+        num = labelp.toInt();
 		return(&ferr[num]);
 	}
-  	if( !strcmp(label,"pOld") ) return(&pOld);
-  	if( !strcmp(label,"deltap") ) return(&deltap);
-	if( !strcmp(label,"deltaq") ) return(&deltaq);
-	if( !strcmp(label,"mef") ) return(&mef);
+    if (label == "pOld") return(&pOld);
+    if (label == "deltap") return(&deltap);
+    if (label == "deltaq") return(&deltaq);
+    if (label == "mef") return(&mef);
 
   return NULL;
 }
@@ -237,16 +237,20 @@ mef=0;
 // Author:		Marc Mueller
 // Last modified:	98/11/30
 ///////////////////////////////////////////////////////////////////////////////
-void MerA::loadParamset(ifstream& inFile)
-{	char dummy[256];
+void MerA::loadParamset(QDataStream& inFile)
+{
+    QString dummy;
 	int i;
 
 	inFile >> dummy;
-	if( strcmp(dummy,"V1.1"))
+    if (dummy != "V1.1")
+    {
 	   fatalError("MerA::loadParamset - you need version V1.1 not",dummy);
+       return;
+    }
 
 	inFile >> dummy;
-	if( !strcmp(dummy,"perfect"))
+    if (dummy == "perfect")
 		perfectPredictor=1; // YES
 	else perfectPredictor=0; // No
 	inFile >> R;
@@ -280,24 +284,24 @@ void MerA::loadParamset(ifstream& inFile)
      if( !(dmax) )
 	   fatalError("macrodyn::MerA::initialize","can't create dmax");
 
-	char m_state[256];
-	char m_matrix[1024];
+    QString m_state;
+    QString m_matrix;
 	int statesNum,sn;
 	for(i=0;i<K;i++) {
 		inFile >> xAll[i];
 //		inFile >> d0[i];
 		inFile >> dmin[i] >> dmax[i];
-d0[i]=dmin[i];
+        d0[i]=dmin[i];
 		inFile >> p0[i];
 		inFile >> q0[i];
 	}
  
 	inFile >> m_state;
-	statesNum = strnchr(m_state,';');
+    statesNum = m_state.count(';');
 	for (sn = 0; sn < statesNum; sn++) {
 		inFile >> dummy;	
-		strcat(m_matrix,dummy);
-		strcat(m_matrix," ");		
+        m_matrix += dummy;
+        m_matrix += " ";
 	}
 
 
@@ -374,7 +378,7 @@ d0[i]=dmin[i];
 // Author:		Marc Mueller
 // Last modified:	
 ///////////////////////////////////////////////////////////////////////////////
-void MerA::saveParamsetWithNames(ofstream& outputFile)
+void MerA::saveParamsetWithNames(QDataStream& outputFile)
 {
     outputFile << "\nModel MerA\n";
     if(perfectPredictor)

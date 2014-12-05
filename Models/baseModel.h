@@ -13,16 +13,12 @@
 /*                                                                            */
 /******************************************************************************/
 
+#include <QDataStream>
 #include "../sim.h"
-//#include <fstream.h>
-#include <fstream>
-//#include <iostream.h>
-#include <iostream>
 #include "logger.h"
 
-using namespace std;
-
-class baseModel {
+class baseModel
+{
 protected:
     qint64 length;                            // length of simulation
     uint dimension;	                    // dimension of the system
@@ -31,10 +27,10 @@ protected:
 public:
     baseModel(const uint&);	            // constructor
     virtual ~baseModel()=0;
-    virtual qreal* setLabels(char*)=0;       // return pointer to a specified
+    virtual qreal* setLabels(const QString&)=0;       // return pointer to a specified
 				            //   parameter or variable
     virtual void initialize()=0;            // initialize the model
-    virtual void loadParamset(ifstream&)=0; // load set from a file
+    virtual void loadParamset(QDataStream&)=0; // load set from a file
     virtual void sendStateSpace(int&,const qreal***)=0;// return the system's
 				            //   dimension and pointers to all
 				            //   state variables
@@ -43,8 +39,8 @@ public:
  //following functions need not to be implemented in any model
 
     virtual void printParamset();           // print set to the screen
-    virtual void saveParamset(ofstream&);   // write set into a file
-    virtual void saveParamsetWithNames(ofstream&);// add parametset to
+    virtual void saveParamset(QDataStream&);   // write set into a file
+    virtual void saveParamsetWithNames(QDataStream&);// add parametset to
 					    //   printerfile (only xpm)
     virtual qreal* sendModelVar();           // return pointer to the main
                                             //   model variable

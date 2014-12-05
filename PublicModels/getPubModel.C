@@ -55,51 +55,51 @@ void PrintPubModelDate(void) {
 // Last modified:	Fri Jul 31 15:04:00 METDST 1998 Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getPubModel(const char* modelTyp)
+baseModel* getPubModel(const QString& modelTyp)
 {
-    if(!strcmp(modelTyp,"default") )
+    if (modelTyp == "default")
 	return new defaultModel;
-    if(!strcmp(modelTyp,"rdefault") )
+    if (modelTyp == "rdefault")
 	return new rdefaultModel;
-    if( !strcmp(modelTyp,"henon") )
+    if (modelTyp == "henon")
 	return new henon;
-    if( !strcmp(modelTyp,"quadHenon") )
+    if (modelTyp == "quadHenon")
 	return new quadHenon;
-    if( !strcmp(modelTyp,"logistic") )
+    if (modelTyp == "logistic")
 	return new logistic;
-    if( !strcmp(modelTyp,"rlogistic") )
+    if (modelTyp == "rlogistic")
 	return new rlogistic;
-    if( !strcmp(modelTyp,"perturbedDelayedLogisticMap") )
+    if (modelTyp == "perturbedDelayedLogisticMap")
 	return new perturbedDelayedLogisticMap;
-    if(!strcmp(modelTyp,"cobweb") )
+    if (modelTyp == "cobweb")
 	return new cobweb;
-    if(!strcmp(modelTyp,"cobweb_RLS") )
+    if (modelTyp == "cobweb_RLS")
 	return new cobweb_RLS;
-    if(!strcmp(modelTyp,"rdemand_cobweb") )
+    if (modelTyp == "rdemand_cobweb")
 	return new rdemand_cobweb;
 
-    if(!strcmp(modelTyp,"affine1") )
+    if (modelTyp == "affine1")
 	return new affine1;
 
-    if(!strcmp(modelTyp,"affine2") )
+    if (modelTyp == "affine2")
 	return new affine2; 
 
-    if(!strcmp(modelTyp,"affine3") )
+    if (modelTyp == "affine3")
 	return new affine3;
 
-    if(!strcmp(modelTyp,"Keener") )
+    if (modelTyp == "Keener")
 	return new Keener;
 
-    if(!strcmp(modelTyp,"HicksModel") )
+    if (modelTyp == "HicksModel")
 	return new HicksModel;
 
-    if(!strcmp(modelTyp,"logiDelay") )
+    if (modelTyp == "logiDelay")
 	return new logiDelay;
 
-    if(!strcmp(modelTyp,"onozaki_et_al") )
+    if (modelTyp == "onozaki_et_al")
 	return new onozaki_et_al;
 
-    if(!strcmp(modelTyp,"rSolow") )
+    if (modelTyp == "rSolow")
 	return new rSolow;
 
     error("macrodyn::getPubModel(const char*): Model %s not implemented yet", modelTyp);
@@ -114,44 +114,44 @@ baseModel* getPubModel(const char* modelTyp)
 // Last modified:	Wed May 19 11:30:13 METDST 1999 Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-baseModel* getPubModel(const char* modelTyp, const baseModel* sourceModel)
+baseModel* getPubModel(const QString& modelTyp, const baseModel* sourceModel)
 {
-    if(!strcmp(modelTyp,"default") )
+    if (modelTyp == "default")
 	return new defaultModel(*((defaultModel*)sourceModel));
-    if(!strcmp(modelTyp,"rdefault") )
+    if (modelTyp == "rdefault")
 	return new rdefaultModel(*((rdefaultModel*)sourceModel));
-    if(!strcmp(modelTyp,"henon") )
+    if (modelTyp == "henon")
 	return new henon(*((henon*)sourceModel));
-    if(!strcmp(modelTyp,"quadHenon") )
+    if (modelTyp == "quadHenon")
 	return new quadHenon(*((quadHenon*)sourceModel));
-    if(!strcmp(modelTyp,"logistic") )
+    if (modelTyp == "logistic")
 	return new logistic(*((logistic*)sourceModel));
-    if(!strcmp(modelTyp,"rlogistic") )
+    if (modelTyp == "rlogistic")
 	return new rlogistic(*((rlogistic*)sourceModel));
-    if( !strcmp(modelTyp,"perturbedDelayedLogisticMap") )
+    if (modelTyp == "perturbedDelayedLogisticMap")
 	return new perturbedDelayedLogisticMap(*((perturbedDelayedLogisticMap*)sourceModel));
-    if(!strcmp(modelTyp,"cobweb") )
+    if (modelTyp == "cobweb")
 	return new cobweb(*((cobweb*)sourceModel));
-    if(!strcmp(modelTyp,"cobweb_RLS") )
+    if (modelTyp == "cobweb_RLS")
 	return new cobweb_RLS(*((cobweb_RLS*)sourceModel));
-    if(!strcmp(modelTyp,"rdemand_cobweb") )
+    if (modelTyp == "rdemand_cobweb")
 	return new rdemand_cobweb(*((rdemand_cobweb*)sourceModel));
 
-    if( !strcmp(modelTyp,"affine1") )
+    if (modelTyp == "affine1")
 	return new affine1(*((affine1*)sourceModel));	
-    if( !strcmp(modelTyp,"affine2") )
+    if (modelTyp == "affine2")
 	return new affine2(*((affine2*)sourceModel));
-    if( !strcmp(modelTyp,"affine3") )
+    if (modelTyp == "affine3")
 	return new affine3(*((affine3*)sourceModel));
-    if( !strcmp(modelTyp,"logiDelay") )
+    if (modelTyp == "logiDelay")
 	return new logiDelay(*((logiDelay*)sourceModel));
-    if( !strcmp(modelTyp,"HicksModel") )
+    if (modelTyp == "HicksModel")
 	return new HicksModel(*((HicksModel*)sourceModel));
-    if( !strcmp(modelTyp,"Keener") )
+    if (modelTyp == "Keener")
 	return new Keener(*((Keener*)sourceModel));
-    if( !strcmp(modelTyp,"onozaki_et_al") )
+    if (modelTyp == "onozaki_et_al")
 	return new onozaki_et_al(*((onozaki_et_al*)sourceModel));
-    if( !strcmp(modelTyp,"rSolow") )
+    if (modelTyp == "rSolow")
 	return new rSolow(*((rSolow*)sourceModel));
 
     error("macrodyn::getPubModel(const char*, const baseModel*): Model %s not implemented yet", modelTyp);

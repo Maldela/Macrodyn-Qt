@@ -43,14 +43,14 @@ protected:
 
 public:
     cobweb();			// constructor
-    void loadParamset(ifstream&);
-    void saveParamset(ofstream&);
-    void saveParamsetWithNames(ofstream&);
+    void loadParamset(QDataStream&);
+    void saveParamset(QDataStream&);
+    void saveParamsetWithNames(QDataStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
@@ -82,10 +82,10 @@ private:
     qreal p_t1;
 
 public:
-	void loadParamset( ifstream& inFile );
+	void loadParamset( QDataStream& inFile );
 	void initialize();
 	void iteration( const qint64& );
-    qreal* setLabels(char*);
+    qreal* setLabels(const QString&);
 };
 
 
@@ -102,15 +102,15 @@ public:
 
 class rdemand_cobweb : public cobweb {
 private:
-	char zvar_expr[256];		//expression which defines a random variable
+	QString zvar_expr;		//expression which defines a random variable
 	rand_var *zvar;			//a random variable
-	char zvar_name[256];		//name of the stochastified parameter
+	QString zvar_name;		//name of the stochastified parameter
     qreal *zvar_ptr;			//pointer to the org/stoch parameter
     qreal buffer_a;			//buffer to store original value
 	
 public:
 	rdemand_cobweb();			//constructor
-	void loadParamset( ifstream& );		//load parameterset
+	void loadParamset( QDataStream& );		//load parameterset
 	void iteration( const qint64& );		//iterate ones
 	void initialize(void);			//initialize
 };

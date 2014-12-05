@@ -216,64 +216,64 @@ qreal* RBC_basic_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* RBC_basic_model::setLabels(char* label)
+qreal* RBC_basic_model::setLabels(const QString& label)
 {
 	//log() << "This is function 'setLabels()' in RBC_basic_model.C ." << "\n";
-    if( !strcmp(label,"k") )
+    if (label == "k")
 	return( &k);
-    if( !strcmp(label,"k_rate") )
+    if (label == "k_rate")
 	return( &k_rate);
-	if( !strcmp(label,"k_ln") )
+	if (label == "k_ln")
 	return( &k_ln);
-	if( !strcmp(label,"k_diff") )
+	if (label == "k_diff")
 	return( &k_diff);
-    if( !strcmp(label,"k_0") )
+    if (label == "k_0")
 	return( &k_0);
-   if( !strcmp(label,"k_old") )
+   if (label == "k_old")
 	return( &k_old);
-   	if( !strcmp(label,"k_rate_old") )
+   	if (label == "k_rate_old")
 	return( &k_rate_old);
-	if( !strcmp(label,"ln_k_rate") )
+	if (label == "ln_k_rate")
 	return( &ln_k_rate);
-	if( !strcmp(label,"k_ln_old") )
+	if (label == "k_ln_old")
 	return( &k_ln_old);
-	if( !strcmp(label,"k_diff_old") )
+	if (label == "k_diff_old")
 	return( &k_diff_old);
-    if( !strcmp(label,"K") )
+    if (label == "K")
 	return( &K);
-    if( !strcmp(label,"Y") )
+    if (label == "Y")
 	return( &Y);
-    if( !strcmp(label,"y") )
+    if (label == "y")
 	return( &y);
-	if( !strcmp(label,"C") )
+	if (label == "C")
 	return( &C);
-    if( !strcmp(label,"c") )
+    if (label == "c")
 	return( &c);
-	if( !strcmp(label,"w") )
+	if (label == "w")
 	return( &w);
-	if( !strcmp(label,"r") )
+	if (label == "r")
 	return( &r);
-	if( !strcmp(label,"epsilon") )
+	if (label == "epsilon")
 	return( &epsilon);
-	if( !strcmp(label,"eta") )
+	if (label == "eta")
 	return( &eta);
-	if( !strcmp(label,"Z") )
+	if (label == "Z")
 	return( &Z);
-	if( !strcmp(label,"Z_ln") )
+	if (label == "Z_ln")
 	return( &Z_ln);
-	if( !strcmp(label,"alpha") )
+	if (label == "alpha")
 	return( &alpha);
-	if( !strcmp(label,"beta") )
+	if (label == "beta")
 	return( &beta);
-	if( !strcmp(label,"gamma") )
+	if (label == "gamma")
 	return( &gamma);
-	if( !strcmp(label,"mu") )
+	if (label == "mu")
 	return( &mu);
-	if( !strcmp(label,"epsilon_param") )
+	if (label == "epsilon_param")
 	return( &epsilon_param);
-	if( !strcmp(label,"xBundle") )
+	if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
    	return NULL;
 	//log() << "Now returning...." << "\n"; 
@@ -320,7 +320,7 @@ void RBC_basic_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::loadParamset(ifstream& inFile)
+void RBC_basic_model::loadParamset(QDataStream& inFile)
 {
 //log() << "This is function 'loadParamset()' in 'RBC_basic_model.C' ." << "\n"; 
  
@@ -354,7 +354,7 @@ void RBC_basic_model::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::saveParamset(ofstream& outFile)
+void RBC_basic_model::saveParamset(QDataStream& outFile)
 {
 	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << "\n"; 
  	outFile << zvar_expr; 

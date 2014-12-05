@@ -184,20 +184,20 @@ void michael::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* michael::setLabels(char* label)
+qreal* michael::setLabels(const QString& label)
 {
-    if( !strcmp(label,"K") ) return(&K);
-    if( !strcmp(label,"L") ) return(&L);
-    if( !strcmp(label,"k") ) return(&k);
-    if( !strcmp(label,"k_0") ) return(&k_0);
-    if( !strcmp(label,"z_0") ) return(&z_0);
-    if( !strcmp(label,"z") ) return(&z);
-    if( !strcmp(label,"y") ) return(&y);
-    if( !strcmp(label,"w") ) return(&w);
-    if( !strcmp(label,"r") ) return(&r);       
-    if( !strcmp(label,"b") ) return(&b);    
-    if( !strcmp(label,"syr") ) return(&syr);    
-    if( !strcmp(label,"n") ) return(&n);
+    if (label == "K") return(&K);
+    if (label == "L") return(&L);
+    if (label == "k") return(&k);
+    if (label == "k_0") return(&k_0);
+    if (label == "z_0") return(&z_0);
+    if (label == "z") return(&z);
+    if (label == "y") return(&y);
+    if (label == "w") return(&w);
+    if (label == "r") return(&r);
+    if (label == "b") return(&b);
+    if (label == "syr") return(&syr);
+    if (label == "n") return(&n);
     return NULL;
 }
 
@@ -240,7 +240,7 @@ void michael::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void michael::loadParamset(ifstream& inFile)
+void michael::loadParamset(QDataStream& inFile)
 {
     inFile >> k_0;
     inFile >> z_0;    
@@ -270,7 +270,7 @@ void michael::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void michael::saveParamset(ofstream& outFile)
+void michael::saveParamset(QDataStream& outFile)
 {
     outFile << k_0 << "\t";
     outFile << z_0 << "\t";

@@ -43,7 +43,7 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
     fatalError("cyclogram_3d::cyclogram_3d",
            "Can't create vector of state variables");
     for(int i=0;i<stateSpace.dimension;i++) {
-    stateVars[i]=model->setLabels(stateSpace.label[i].toLatin1().data());
+    stateVars[i]=model->setLabels(stateSpace.label[i]);
                                           // get pointer to the model var.
     if( !stateVars[i] )
         fatalError("cyclogram_3d::cyclogram_3d",
@@ -93,10 +93,9 @@ void cyclogram_3d::simulation()
     qreal dummy_z;
     qint64 count_x,count_y,count_z;
     char data[resolution_x][resolution_y][resolution_z];
-    ofstream outFile;
-    char* filename = "cycle_data_3par.dat";
-    outFile.open( filename, ios::out );
-    if ( !outFile ) exit(-1);
+    QFile outFile("cycle_data_3par.dat");
+    if (!outFile.open(QFile::WriteOnly))
+        exit(-1);
     int jobtag_dummy = 26;
     
     outFile.write((char*)&jobtag_dummy, 4);
@@ -115,15 +114,11 @@ void cyclogram_3d::simulation()
     outFile.write((char*)&zmin, 8);
     outFile.write((char*)&zmax, 8);
     
-    int length_of_label = strlen(xLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&xLabel, length_of_label);
-    length_of_label = strlen(yLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&yLabel, length_of_label);
-    length_of_label = strlen(zLabel);
-    outFile.write((char*)&length_of_label, 4);
-    outFile.write((char*)&zLabel, length_of_label);
+    QTextStream stream(&outFile);
+
+    stream << xLabel;
+    stream << yLabel;
+    stream << zLabel;
     
     for(dummy_x=xmin, count_x=0;count_x<resolution_x; dummy_x+=stepX,count_x++) {
 	for(dummy_y=ymin,count_y=0;count_y<resolution_y;dummy_y+=stepY,count_y++) {
@@ -166,7 +161,7 @@ void cyclogram_3d::simulation()
     for(count_z=0;count_z<resolution_z;count_z++)
     	for(count_y=0;count_y<resolution_y;count_y++)
 		for(count_x=0;count_x<resolution_x;count_x++){
-			outFile << data[count_x][count_y][count_z];
+            outFile.write(&data[count_x][count_y][count_z], 1);
 		}
     outFile.flush();
     outFile.close();

@@ -59,10 +59,10 @@ void HicksModel::iteration(const qint64&)
 {
 	noise = distri.rectangular()*2.0*lambda;
 	Ct = m*y2;
-	Iind = max( v*(y2-y1), -If );
+    Iind = qMax( v*(y2-y1), -If );
 	It = Iind + Iaut + noise;
 	y1 = y2;
-	y2 = min( Ct+It, Yc );
+    y2 = qMin( Ct+It, Yc );
 }
     
     
@@ -117,39 +117,39 @@ qreal* HicksModel::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* HicksModel::setLabels(char* label)
+qreal* HicksModel::setLabels(const QString& label)
 {
-	if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 		return( &xBundle );
-	if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 		return( &yBundle );
-	if( !strcmp(label,"y1_0") )
+    if (label == "y1_0")
 		return( &y1_0);
-	if( !strcmp(label,"y2_0") )
+    if (label == "y2_0")
 		return( &y2_0);		
-	if( !strcmp(label,"y1") )
+    if (label == "y1")
 		return( &y1 );
-	if( !strcmp(label,"y2") )
+    if (label == "y2")
 		return( &y2 );
-	if( !strcmp(label,"If") )
+    if (label == "If")
 		return( &If );
-	if( !strcmp(label,"Yc") )
+    if (label == "Yc")
 		return( &Yc );
-	if( !strcmp(label,"v") )
+    if (label == "v")
 		return( &v );
-	if( !strcmp(label,"m") )
+    if (label == "m")
 		return( &m );
-	if( !strcmp(label,"It") )
+    if (label == "It")
 		return( &It );
-	if( !strcmp(label,"Iind") )
+    if (label == "Iind")
 		return( &Iind );
-	if( !strcmp(label,"Iaut") )
+    if (label == "Iaut")
 		return( &Iaut );				
-	if( !strcmp(label,"Ct") )
+    if (label == "Ct")
 		return( &Ct );
-	if( !strcmp(label,"lambda") )
+    if (label == "lambda")
 		return( &lambda );	
-	if( !strcmp(label,"noise") )
+    if (label == "noise")
 		return( &noise );			
 		
 	return NULL;
@@ -192,7 +192,7 @@ void HicksModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::loadParamset(ifstream& inFile)
+void HicksModel::loadParamset(QDataStream& inFile)
 {
 	inFile >> y1_0 >> y2_0 >> If >> Iaut >> Yc >> v >> m >> lambda >> myseed;
 	inFile >> length;
@@ -212,7 +212,7 @@ void HicksModel::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::saveParamset(ofstream& outFile)
+void HicksModel::saveParamset(QDataStream& outFile)
 {
 	outFile << y1_0 << "\t" << y2_0 << "\t" << If << "\t";
 	outFile << Iaut << "\t" << Yc << "\t" << v << "\t" << m << "\t" << lambda << "\t" << myseed;
@@ -232,7 +232,7 @@ void HicksModel::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void HicksModel::saveParamsetWithNames(ofstream& outFile)
+void HicksModel::saveParamsetWithNames(QDataStream& outFile)
 {
 	outFile << "y1_0 = " << y1_0;
 	outFile << "\ny2_0 = " << y2_0;

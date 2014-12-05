@@ -11,6 +11,6 @@ conParam::conParam()
     ymax = zmax = 2.0;
     realYmin = realZmin = 1000.0;
     realYmax = realZmax = 0.0;
-    zerox = zeroy = zeroz = -1;
+    zerox = zeroy = zeroz = QColor(Qt::black);
     graphTyp = BIF2D;
 }

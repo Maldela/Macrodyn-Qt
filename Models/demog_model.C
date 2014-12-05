@@ -322,60 +322,60 @@ qreal* demog_model::sendModelVar()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* demog_model::setLabels(char* label)
+qreal* demog_model::setLabels(const QString& label)
 {
-	if ( !strcmp(label, "xBundle") ) return( &xBundle );
-	if ( !strcmp(label, "yBundle") ) return( &yBundle );
+    if (label == "xBundle") return( &xBundle );
+    if (label == "yBundle") return( &yBundle );
 	
-	if ( !strcmp(label, "l_1") ) return( &l_1 );
-	if ( !strcmp(label, "l_2") ) return( &l_2 );
+    if (label == "l_1") return( &l_1 );
+    if (label == "l_2") return( &l_2 );
 	
-	if ( !strcmp(label, "k_t") ) return( &k_t );
-	if ( !strcmp(label, "K_t") ) return( &K_t );	
-	if ( !strcmp(label, "L_t") ) return( &L_t );
-	if ( !strcmp(label, "r_t") ) return( &r_t );
-	if ( !strcmp(label, "R_t") ) return( &R_t );
-	if ( !strcmp(label, "w_t") ) return( &w_t );
-	if ( !strcmp(label, "w_3") ) return( &w_3 );
+    if (label == "k_t") return( &k_t );
+    if (label == "K_t") return( &K_t );
+    if (label == "L_t") return( &L_t );
+    if (label == "r_t") return( &r_t );
+    if (label == "R_t") return( &R_t );
+    if (label == "w_t") return( &w_t );
+    if (label == "w_3") return( &w_3 );
 	
-	if ( !strcmp(label, "K_0") ) return( &K_0 );	
-	if ( !strcmp(label, "c_child") ) return( &c_child );
-	if ( !strcmp(label, "varphi") ) return( &varphi );
-	if ( !strcmp(label, "alpha0") ) return( &alpha0 );
-	if ( !strcmp(label, "alpha1") ) return( &alpha1 );
-	if ( !strcmp(label, "alpha2") ) return( &alpha2 );
-	if ( !strcmp(label, "alpha_max") ) return( &alpha_max );		
-	if ( !strcmp(label, "B") ) return( &B );
-	if ( !strcmp(label, "A") ) return( &A );
+    if (label == "K_0") return( &K_0 );
+    if (label == "c_child") return( &c_child );
+    if (label == "varphi") return( &varphi );
+    if (label == "alpha0") return( &alpha0 );
+    if (label == "alpha1") return( &alpha1 );
+    if (label == "alpha2") return( &alpha2 );
+    if (label == "alpha_max") return( &alpha_max );
+    if (label == "B") return( &B );
+    if (label == "A") return( &A );
 	
-	if ( !strcmp(label, "n0_t") ) return( &n0_t );
-	if ( !strcmp(label, "n1_t") ) return( &n1_t );
-	if ( !strcmp(label, "n2_t") ) return( &n2_t );
-	if ( !strcmp(label, "n3_t") ) return( &n3_t );
+    if (label == "n0_t") return( &n0_t );
+    if (label == "n1_t") return( &n1_t );
+    if (label == "n2_t") return( &n2_t );
+    if (label == "n3_t") return( &n3_t );
 	
-	if ( !strcmp(label, "eta0") ) return( &eta0 );
-	if ( !strcmp(label, "eta1") ) return( &eta1 );
-	if ( !strcmp(label, "eta2") ) return( &eta2 );
+    if (label == "eta0") return( &eta0 );
+    if (label == "eta1") return( &eta1 );
+    if (label == "eta2") return( &eta2 );
 	
-	if ( !strcmp(label, "delta") ) return( &delta );
+    if (label == "delta") return( &delta );
 	
-	if ( !strcmp(label, "s1_0_t") ) return( &s1_0_t );
-	if ( !strcmp(label, "s1_1_t") ) return( &s1_1_t );
-	if ( !strcmp(label, "s1_2_t") ) return( &s1_2_t );
+    if (label == "s1_0_t") return( &s1_0_t );
+    if (label == "s1_1_t") return( &s1_1_t );
+    if (label == "s1_2_t") return( &s1_2_t );
 	
-	if ( !strcmp(label, "s2_0_t") ) return( &s2_0_t );
-	if ( !strcmp(label, "s2_1_t") ) return( &s2_1_t );
-	if ( !strcmp(label, "s2_2_t") ) return( &s2_2_t );
+    if (label == "s2_0_t") return( &s2_0_t );
+    if (label == "s2_1_t") return( &s2_1_t );
+    if (label == "s2_2_t") return( &s2_2_t );
 	
-	if ( !strcmp(label, "theta_L") ) return( &theta_L );
-	if ( !strcmp(label, "theta_K") ) return( &theta_K );
-	if ( !strcmp(label, "theta_W") ) return( &theta_W );
-	if ( !strcmp(label, "theta_N") ) return( &theta_N );
-	if ( !strcmp(label, "theta_k") ) return( &theta_k );
+    if (label == "theta_L") return( &theta_L );
+    if (label == "theta_K") return( &theta_K );
+    if (label == "theta_W") return( &theta_W );
+    if (label == "theta_N") return( &theta_N );
+    if (label == "theta_k") return( &theta_k );
 	
-	if ( !strcmp(label, "tax_rate_0") ) return( &tax_rate_0 );
-	if ( !strcmp(label, "tax_rate_1") ) return( &tax_rate_1 );
-	if ( !strcmp(label, "tax_rate_2") ) return( &tax_rate_2 );
+    if (label == "tax_rate_0") return( &tax_rate_0 );
+    if (label == "tax_rate_1") return( &tax_rate_1 );
+    if (label == "tax_rate_2") return( &tax_rate_2 );
 	return NULL;
 }
 
@@ -416,7 +416,7 @@ void demog_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::loadParamset(ifstream& inFile)
+void demog_model::loadParamset(QDataStream& inFile)
 {
 	inFile >> type;
 	switch ( type ){
@@ -485,7 +485,7 @@ void demog_model::loadParamset(ifstream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::saveParamset(ofstream& outFile)
+void demog_model::saveParamset(QDataStream& outFile)
 {
 	outFile << k_t;
 	outFile << "\t" << length;
@@ -504,7 +504,7 @@ void demog_model::saveParamset(ofstream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void demog_model::saveParamsetWithNames(ofstream& outFile)
+void demog_model::saveParamsetWithNames(QDataStream& outFile)
 {
 	outFile << "no. generations = " << k_t << "\n";
 	outFile << "length = " << length << "\n";

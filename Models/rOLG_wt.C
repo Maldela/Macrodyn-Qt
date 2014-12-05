@@ -378,42 +378,42 @@ if ( rand_dis != NULL ) delete rand_dis;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal* rOLG_wt::setLabels(char* label)
+qreal* rOLG_wt::setLabels(const QString& label)
 {
-    if( !strcmp(label,"K_olg") ) return(&K_olg);
-    if( !strcmp(label,"K_olg_0") ) return(&K_olg_0);    
-    if( !strcmp(label,"A_olg") ) return(&A_olg);    
-    if( !strcmp(label,"alpha_olg") ) return(&alpha_olg);
-    if( !strcmp(label,"a_m") ) return(&a_m);
-    if( !strcmp(label,"b_m") ) return(&b_m);
-    if( !strcmp(label,"c_olg") ) return(&c_olg);
-    if( !strcmp(label,"n_olg") ) return(&n_olg);
-    if( !strcmp(label,"delta_olg") ) return(&delta_olg);
-    if( !strcmp(label,"R_olg") ) return(&R_olg);
-    if( !strcmp(label,"m_olg") ) return(&m_olg);
-    if( !strcmp(label,"z_st") ) return(&z_st);
-    if( !strcmp(label,"av_Ez") ) return(&av_Ez);
-    if( !strcmp(label,"Ez") ) return(&Ez);
-    if( !strcmp(label,"Y_olg") ) return(&Y_olg);
-    if( !strcmp(label,"W_olg") ) return(&W_olg);
-    if( !strcmp(label,"M_olg") ) return(&M_olg);
-    if( !strcmp(label,"r") ) return(&r);
-    if( !strcmp(label,"S_olg") ) return(&S_olg);
-    if( !strcmp(label,"c1") ) return(&c1);
-    if( !strcmp(label,"c2") ) return(&c2);
-    if( !strcmp(label,"K_olg_V") ) return(&K_olg_V);
-    if( !strcmp(label,"K_olg_E") ) return(&K_olg_E);
-    if( !strcmp(label,"K_olg_S") ) return(&K_olg_S);
-    if( !strcmp(label,"W_olg_V") ) return(&W_olg_V);
-    if( !strcmp(label,"W_olg_E") ) return(&W_olg_E);
-    if( !strcmp(label,"W_olg_S") ) return(&W_olg_S);
-    if( !strcmp(label,"ran_rec") ) return(&ran_rec);
-    if( !strcmp(label,"ran_norm") ) return(&ran_norm);
-    if( !strcmp(label,"ran_chi") ) return(&ran_chi);
-    if( !strcmp(label,"ran_cauchy") ) return(&ran_cauchy);
-	if( !strcmp(label,"ran_student_t") ) return(&ran_student_t);
-	if( !strcmp(label,"ran_exp") ) return(&ran_exp);
-	if( !strcmp(label,"ran_pareto") ) return(&ran_pareto);
+    if (label == "K_olg") return(&K_olg);
+    if (label == "K_olg_0") return(&K_olg_0);    
+    if (label == "A_olg") return(&A_olg);    
+    if (label == "alpha_olg") return(&alpha_olg);
+    if (label == "a_m") return(&a_m);
+    if (label == "b_m") return(&b_m);
+    if (label == "c_olg") return(&c_olg);
+    if (label == "n_olg") return(&n_olg);
+    if (label == "delta_olg") return(&delta_olg);
+    if (label == "R_olg") return(&R_olg);
+    if (label == "m_olg") return(&m_olg);
+    if (label == "z_st") return(&z_st);
+    if (label == "av_Ez") return(&av_Ez);
+    if (label == "Ez") return(&Ez);
+    if (label == "Y_olg") return(&Y_olg);
+    if (label == "W_olg") return(&W_olg);
+    if (label == "M_olg") return(&M_olg);
+    if (label == "r") return(&r);
+    if (label == "S_olg") return(&S_olg);
+    if (label == "c1") return(&c1);
+    if (label == "c2") return(&c2);
+    if (label == "K_olg_V") return(&K_olg_V);
+    if (label == "K_olg_E") return(&K_olg_E);
+    if (label == "K_olg_S") return(&K_olg_S);
+    if (label == "W_olg_V") return(&W_olg_V);
+    if (label == "W_olg_E") return(&W_olg_E);
+    if (label == "W_olg_S") return(&W_olg_S);
+    if (label == "ran_rec") return(&ran_rec);
+    if (label == "ran_norm") return(&ran_norm);
+    if (label == "ran_chi") return(&ran_chi);
+    if (label == "ran_cauchy") return(&ran_cauchy);
+	if (label == "ran_student_t") return(&ran_student_t);
+	if (label == "ran_exp") return(&ran_exp);
+	if (label == "ran_pareto") return(&ran_pareto);
 
  return NULL;
 }
@@ -457,7 +457,7 @@ void rOLG_wt::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::read_sim(ifstream& inFile, st_olg_paramset *temp_paramset){
+void rOLG_wt::read_sim(QDataStream& inFile, st_olg_paramset *temp_paramset){
    
   int	i,j;			// Index
 
@@ -512,16 +512,16 @@ void rOLG_wt::read_sim(ifstream& inFile, st_olg_paramset *temp_paramset){
 	     // we have a definition of a markov chain
             temp_paramset->mc_flag = 1; 
 	        
-           n_states = strnchr(in_string, ';');
+           n_states = in_string.count(';');
            temp_paramset->zvar_expr = in_string;
 
           	for (int n = 0; n < n_states; n++) {
             	 inFile >> in_string;	
 	    	 	// compose the matrix from
 		 //temp_paramset->mc_matrix[0] = '\0';	
-           	 strcat(temp_paramset->mc_matrix, in_string);	
+             temp_paramset->mc_matrix += in_string;
 	    	   // the input file with blank at the
-           	 strcat(temp_paramset->mc_matrix, " ");		
+             temp_paramset->mc_matrix += " ";
             	  // end of each row
 	 	}  
 		
@@ -555,7 +555,7 @@ void rOLG_wt::read_sim(ifstream& inFile, st_olg_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::loadParamset(ifstream& inFile)
+void rOLG_wt::loadParamset(QDataStream& inFile)
 {  
 	inFile >> dof;
 	inFile >> b_exponential;
@@ -612,7 +612,7 @@ void rOLG_wt::receiveParameters(const qreal* )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::save_st_olg_Paramset(ofstream& outFile, st_olg_paramset *temp_paramset){
+void rOLG_wt::save_st_olg_Paramset(QDataStream& outFile, st_olg_paramset *temp_paramset){
 
    int	i,j;			// Index
   
@@ -674,7 +674,7 @@ void rOLG_wt::save_st_olg_Paramset(ofstream& outFile, st_olg_paramset *temp_para
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::saveParamset(ofstream& outFile)
+void rOLG_wt::saveParamset(QDataStream& outFile)
 
 {     
     outFile << K_olg_0 << "\n" ;				
@@ -697,7 +697,7 @@ void rOLG_wt::saveParamset(ofstream& outFile)
 // By:		    Michael Meyer                                                          //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rOLG_wt::saveParamsetWithNames(ofstream& outFile)	
+void rOLG_wt::saveParamsetWithNames(QDataStream& outFile)	
 {
 outFile << "rOLG_wt:\n";
 outFile << "K_olg_0 =" << K_olg_0 << "\t";
@@ -719,7 +719,7 @@ outFile << "Length = " << length << "\n";
 // By:		    Michael Meyer                                                           //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rOLG_wt::save_st_olg_ParamsetWithNames(ofstream& outFile, st_olg_paramset *temp_paramset)	
+void rOLG_wt::save_st_olg_ParamsetWithNames(QDataStream& outFile, st_olg_paramset *temp_paramset)	
 {
    int	i,j;			// Index
   	

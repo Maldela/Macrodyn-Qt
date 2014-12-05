@@ -14,7 +14,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "matrix.h"
-#include <iostream>
 #include "error.h"
 
 
@@ -77,7 +76,7 @@ matrixDef::~matrixDef() {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-ostream& operator<<(ostream& ostr, const matrixDef& C)
+QDataStream& operator<<(QDataStream& ostr, const matrixDef& C)
 {
     ostr<<"\n";
     for(uint i=0;i<C.row;i++){
@@ -270,7 +269,7 @@ void matrixFn::transpose(const matrixDef* A,matrixDef* AT) { //in,out
 // Modified:        27.10.1999 Marc Mueller                                   //
 // Last Modified:   27.10.1999 Marc Mueller                                   //
 ////////////////////////////////////////////////////////////////////////////////
-matrixDef* matrixFn::transpose(const matrixDef* A) { //out=in 
+matrixDef* matrixFn::transpose(const matrixDef* A) {
 	matrixDef* AT;
 	AT = new matrixDef(A->column,A->row);
 	if( !AT )
@@ -412,21 +411,21 @@ matrixDef* matrixFn::multiply(const matrixDef* A, const matrixDef* B) {
 ////////////////////////////////////////////////////////////////////////////////
 // Class name:      matrixFn                                                  //
 // Member function: multiplyATB                                               //
-// Purpose:         C=A B  transpose A and multiply it with B                 //
+// Purpose:         C=A*B  transpose A and multiply it with B                 //
 //                 dimension and memory of C will not be done in this function//
 // Modified:        23.10.1999 Marc Mueller                                   //
 // Last Modified:   23.10.1999 Marc Mueller                                   //
 ////////////////////////////////////////////////////////////////////////////////
 void matrixFn::multiplyATB(const matrixDef* A,const matrixDef* B,matrixDef* C){
     uint z,s,i;
-    uint row = A->column; // A 
-    uint ac = A->row;  // A 
+    uint row = A->column;
+    uint ac = A->row;
     uint column = B->column;
 	for(z=0;z<row;z++)
 		for(s=0;s<column;s++) {
 			C->m[z][s]=0;
 			for(i=0;i<ac;i++)
-				C->m[z][s]+=A->m[i][z]*B->m[i][s]; // A 
+                C->m[z][s]+=A->m[i][z]*B->m[i][s];
 		}
 }
 
@@ -449,7 +448,7 @@ matrixDef* matrixFn::multiplyATB(const matrixDef* A, const matrixDef* B) {
 ////////////////////////////////////////////////////////////////////////////////
 // Class name:      matrixFn                                                  //
 // Member function: multiply                                                  //
-// Purpose:         C=AB  first transpose B then do multiplication AB         //
+// Purpose:         C=ABT first transpose B then do multiplication ABT        //
 //                 dimension and memory of C will not be done in this function//
 // Modified:        23.10.1999 Marc Mueller                                   //
 // Last Modified:   23.10.1999 Marc Mueller                                   //
@@ -458,12 +457,12 @@ void matrixFn::multiplyABT(const matrixDef* A,const matrixDef* B,matrixDef* C){
     uint z,s,i;
     uint row = A->row;
     uint ac = A->column;
-    uint column = B->row; // B 
+    uint column = B->row;
 	for(z=0;z<row;z++)
 		for(s=0;s<column;s++) {
 			C->m[z][s]=0;
 			for(i=0;i<ac;i++)
-				C->m[z][s]+=A->m[z][i]*B->m[s][i]; //B 
+                C->m[z][s]+=A->m[z][i]*B->m[s][i];
 		}
 }
 
@@ -526,7 +525,7 @@ olsClass::olsClass( qreal* y0, int& y_num0,
 // Last Modified:   24.01.2000 Marc Mueller                                   //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-olsClass::olsClass(ifstream& inFile,baseModel* const model) {
+olsClass::olsClass(QDataStream& inFile,baseModel* const model) {
 //log() << "ols constructor stream" << "\n";
 
 	matrix = NULL;	
@@ -565,7 +564,7 @@ olsClass::olsClass(ifstream& inFile,baseModel* const model) {
 	for(int j=0;j<varphi_var_num;j++) {
 		inFile >> varname;
 //log() <<"name["<<j<<"]="<<varname<<"\n";
-		if( !strcmp(varname,"CONST") ) {
+        if (varname == "CONST") {
 			varphi[j] = &constant;
 			inFile >> constant;
 			varphi_numPtr[j]=1;
@@ -826,7 +825,7 @@ rlsClass::rlsClass( qreal* y0,int& y_num0,int& varphi_var_num0,
 	PEC = NULL;
 	alpha=1000000;
 }
-rlsClass::rlsClass(ifstream& inFile,baseModel* const model)
+rlsClass::rlsClass(QDataStream& inFile,baseModel* const model)
 	: olsClass::olsClass(inFile,model) {
 //log() << "rls constructor stream" << "\n";
 	Pvarphi = NULL;	
@@ -1032,7 +1031,7 @@ elsClass::elsClass( qreal* y0,int& y_num0,int& varphi_var_num0,
 	upsilon = NULL;
 }
 
-elsClass::elsClass(ifstream& inFile,baseModel* const model)
+elsClass::elsClass(QDataStream& inFile,baseModel* const model)
 	: rlsClass::rlsClass(inFile,model) {
 //log() << "els constructor stream" << "\n";
 	TV = NULL;	
@@ -1220,7 +1219,7 @@ sgClass::sgClass( qreal* y0,int& y_num0,int& varphi_var_num0,
 	Kiid = NULL;
 }
 
-sgClass::sgClass(ifstream& inFile,baseModel* const model)
+sgClass::sgClass(QDataStream& inFile,baseModel* const model)
 	: elsClass::elsClass(inFile,model) {
 //log() << "sg constructor stream" << "\n";
 	B = NULL;

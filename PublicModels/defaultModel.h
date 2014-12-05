@@ -55,13 +55,13 @@ public:
     defaultModel();			    // default constructor
     virtual ~defaultModel();		    // destructor
     
-    void loadParamset(ifstream&);	    // load parameterset from a file
-    void saveParamset(ofstream&);	    // write parameterset into a file
-    void saveParamsetWithNames(ofstream&);  // add parametset to printerfile (so far only for xpm)
+    void loadParamset(QDataStream&);	    // load parameterset from a file
+    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void saveParamsetWithNames(QDataStream&);  // add parametset to printerfile (so far only for xpm)
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const qint64&);    // perform one iteration
-    qreal* setLabels(char*);		    // return a pointer to a variable
+    qreal* setLabels(const QString&);		    // return a pointer to a variable
 					    // or a parameter specified by its
 					    // name
     void initialize();			    // initialize the model, define
@@ -94,14 +94,14 @@ public:
 
 class rdefaultModel : public defaultModel {
 private:
-    char zvar_expr[256];        // expression which defines a random variable
+    QString zvar_expr;        // expression which defines a random variable
     rand_var * zvar;            // a random variable    
-    char zvar_name[256];        // name of the stochastified parameter
+    QString zvar_name;        // name of the stochastified parameter
     qreal * zvar_ptr;		// pointer to the stochastic parameter
     
 public:
     rdefaultModel();			// constructor
-    void loadParamset(ifstream&);	// load parameterset from a file
+    void loadParamset(QDataStream&);	// load parameterset from a file
     void iteration(const qint64&);	// perform one iteration
     void initialize(void);		// initialize the model
 };

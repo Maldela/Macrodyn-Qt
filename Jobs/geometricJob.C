@@ -31,12 +31,12 @@ geometricJob::geometricJob(baseModel* const bMod,const xyRange& axes,
 	resX=axes.res[0];
 	resY=axes.res[1];
     
-    strcpy(xLabel,axes.label[0].toLatin1().data());
+    xLabel = axes.label[0];
     xParam=model->setLabels(xLabel);
     if( !xParam )
 	fatalError("geometricJob::geometricJob  Can not find x label ",xLabel);
 
-    strcpy(yLabel,axes.label[1].toLatin1().data());
+    yLabel = axes.label[1];
     yParam=model->setLabels(yLabel);
     if( !yParam )
 	fatalError("geometricJob::geometricJob  Can not find y label ",yLabel);

@@ -156,55 +156,55 @@ void milano_bcw::classical_unemployment(qreal l_dem) {
 }
 
 /******************************************************************************/
-qreal* milano_bcw::setLabels(char *name) {       // return a pointer to a variable or
+qreal* milano_bcw::setLabels(const QString& name) {       // return a pointer to a variable or
 					// a parameter specified by its name
-	 if( !strcmp(name,"G") )
+	 if (name == "G")
 		  return( &G );
-	 if( !strcmp(name,"empl") )
+	 if (name == "empl")
 		  return( &empl );
-	 if( !strcmp(name,"unemp") )
+	 if (name == "unemp")
 		  return( &unemp );
-	 if( !strcmp(name,"teta1") )
+	 if (name == "teta1")
 		  return( &teta1 );
-	 if( !strcmp(name,"output") )
+	 if (name == "output")
 		  return( &output );
-	 if( !strcmp(name,"winf") )
+	 if (name == "winf")
 		  return( &winf );
-	 if( !strcmp(name,"a") )
+	 if (name == "a")
 		  return( &a );
-	 if( !strcmp(name,"b") )
+	 if (name == "b")
 		  return( &b );
-	 if( !strcmp(name,"alfa") )
+	 if (name == "alfa")
 		  return( &alfa );
-	 if( !strcmp(name,"mqreal") )
+	 if (name == "mqreal")
 		  return( &mqreal );
-	 if( !strcmp(name,"pgt") )
+	 if (name == "pgt")
 		  return( &pgt );
-	 if( !strcmp(name,"mtr") ) 
+	 if (name == "mtr") 
 		  return( &mtr );
-	 if( !strcmp(name,"wtr") )
+	 if (name == "wtr")
 		  return( &wtr );
-	 if( !strcmp(name,"mu1") )
+	 if (name == "mu1")
 		  return( &mu1 );
-	 if( !strcmp(name,"mu2") )
+	 if (name == "mu2")
 		  return( &mu2 );
-	 if( !strcmp(name,"nu1") )
+	 if (name == "nu1")
 		  return( &nu1 );
-	 if( !strcmp(name,"nu2") )
+	 if (name == "nu2")
 		  return( &nu2 );
-	 if( !strcmp(name,"h") )
+	 if (name == "h")
 		  return( &h );
-	 if( !strcmp(name,"tax") )
+	 if (name == "tax")
 		  return( &tax );
-	 if( !strcmp(name,"Ls") )
+	 if (name == "Ls")
 		  return( &Ls );
-	 if( !strcmp(name,"alfa0") )
+	 if (name == "alfa0")
 		  return( &alfa0 );
-	 if( !strcmp(name,"mqreal0") )
+	 if (name == "mqreal0")
 		  return( &mqreal0 );
-	 if( !strcmp(name,"pg0") )
+	 if (name == "pg0")
 		  return( &pg0 );
-	 if( !strcmp(name,"n1") )
+	 if (name == "n1")
 		  return( (qreal*) &n1 );
 	 return( NULL );
 }
@@ -217,7 +217,7 @@ void milano_bcw::initialize() {	    // initialize the model
 }
 
 /******************************************************************************/
-void milano_bcw::loadParamset(ifstream& inputFile) { // load parameterset from a file
+void milano_bcw::loadParamset(QDataStream& inputFile) { // load parameterset from a file
     inputFile >> a >> b;
     inputFile >> mu1 >> mu2 >> nu1 >> nu2;
     inputFile >> n1 >> length;
@@ -227,7 +227,7 @@ void milano_bcw::loadParamset(ifstream& inputFile) { // load parameterset from a
 }
 
 /******************************************************************************/
-void milano_bcw::saveParamsetWithNames(ofstream& outputFile) {  // add parametset to XPM printerfile
+void milano_bcw::saveParamsetWithNames(QDataStream& outputFile) {  // add parametset to XPM printerfile
     outputFile << "defaultModel:\n\t";
     outputFile << "a = " << a << "\tb = " << b << "\n\t";
     outputFile << "mu1 = " << mu1 << "\tmu2 = " << mu2 << "\t";

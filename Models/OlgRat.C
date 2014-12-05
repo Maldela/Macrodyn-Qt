@@ -71,23 +71,23 @@ qreal* OlgRat::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-qreal* OlgRat::setLabels(char* label)
+qreal* OlgRat::setLabels(const QString& label)
 {
-    if( !strcmp(label,"xBundle") )
+    if (label == "xBundle")
 	return &xBundle;
-    if( !strcmp(label,"yBundle") )
+    if (label == "yBundle")
 	return &yBundle;
-    if( !strcmp(label,"g") )
+    if (label == "g")
 	return( &g);
-    if( !strcmp(label,"tau") )
+    if (label == "tau")
 	return( &tau);
-    if( !strcmp(label,"s") )
+    if (label == "s")
 	return( &s);
-    if( !strcmp(label,"lambda") )
+    if (label == "lambda")
 	return( &lambda);
-    if( !strcmp(label,"m") ) 
+    if (label == "m") 
 	return( &m );
-    if( !strcmp(label,"m0") ) 
+    if (label == "m0") 
 	return( &m0 );
 
     return NULL;
@@ -126,7 +126,7 @@ void OlgRat::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::loadParamset(ifstream& inFile)
+void OlgRat::loadParamset(QDataStream& inFile)
 {
     inFile >> m0 >> g >> tau;
     inFile >> s >> lambda;
@@ -145,7 +145,7 @@ void OlgRat::loadParamset(ifstream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::saveParamset(ofstream& outFile)
+void OlgRat::saveParamset(QDataStream& outFile)
 {
     outFile << m0 << "\t" << g << "\t" << tau << "\t";
     outFile << s  << "\t" << lambda << "\t";

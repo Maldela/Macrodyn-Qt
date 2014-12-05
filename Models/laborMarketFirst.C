@@ -82,7 +82,7 @@ void laborMarketFirst::initialize()
 /* Last modified:   28.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::loadParamset(ifstream& inputFile)
+void laborMarketFirst::loadParamset(QDataStream& inputFile)
 {
     inputFile >> A >> B >> deltaP >> Lmax ;
     inputFile >> betaS >> betaW >> rhoS >> rhoW ;
@@ -111,7 +111,7 @@ void laborMarketFirst::loadParamset(ifstream& inputFile)
 /* Last modified:   28.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::saveParamset(ofstream& outputFile)
+void laborMarketFirst::saveParamset(QDataStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\t";
     outputFile << betaS << "\t" << betaW << "\t";
@@ -235,82 +235,82 @@ void laborMarketFirst::receiveParameters(const qreal* parameters)
 /* Last modified:   08.12.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-qreal* laborMarketFirst::setLabels(char *name)
+qreal* laborMarketFirst::setLabels(const QString& name)
 {
-    if( !strcmp(name,"xBundle") )
+    if (name == "xBundle")
 	return &xBundle;
-    if( !strcmp(name,"yBundle") )
+    if (name == "yBundle")
 	return &yBundle;
 
-    if( !strcmp(name,"A") )
+    if (name == "A")
         return( &A );
-    if( !strcmp(name,"B") )
+    if (name == "B")
         return( &B );
-    if( !strcmp(name,"deltaP") )
+    if (name == "deltaP")
         return( &deltaP );
-    if( !strcmp(name,"Lmax") )
+    if (name == "Lmax")
         return( &Lmax );
 
-    if( !strcmp(name,"betaS") )
+    if (name == "betaS")
         return( &betaS );
-    if( !strcmp(name,"betaW") )
+    if (name == "betaW")
         return( &betaW );
-    if( !strcmp(name,"rhoS") )
+    if (name == "rhoS")
         return( &rhoS );
-    if( !strcmp(name,"rhoW") )
+    if (name == "rhoW")
         return( &rhoW );
-    if( !strcmp(name,"deltaS") )
+    if (name == "deltaS")
         return( &deltaS );
-    if( !strcmp(name,"deltaW") )
+    if (name == "deltaW")
         return( &deltaW );
-    if( !strcmp(name,"tauS") )
+    if (name == "tauS")
 	return( (qreal*)(&tauS) );
-    if( !strcmp(name,"tauW") )
+    if (name == "tauW")
 	return( (qreal*)(&tauW) );
 
-    if( !strcmp(name,"g") )
+    if (name == "g")
         return( &g );
-    if( !strcmp(name,"taxS") )
+    if (name == "taxS")
         return( &taxS );
-    if( !strcmp(name,"taxW") )
+    if (name == "taxW")
         return( &taxW );
 
-    if( !strcmp(name,"gamma") )
+    if (name == "gamma")
         return( &gamm );
-    if( !strcmp(name,"kappa") )
+    if (name == "kappa")
         return( &kappa );
-    if( !strcmp(name,"lambda") )
+    if (name == "lambda")
         return( &lambda );
-    if( !strcmp(name,"mu") )
+    if (name == "mu")
         return( &mu );
 
-    if( !strcmp(name,"w0") )
+    if (name == "w0")
 	return( &w0 );
-    if( !strcmp(name,"mS0") )
+    if (name == "mS0")
 	return( &mS0 );
-    if( !strcmp(name,"mW0") )
+    if (name == "mW0")
 	return( &mW0 );
-    if( !strcmp(name,"omega0") )
+    if (name == "omega0")
 	return( &omega0 );
-    if( !strcmp(name,"d0") )
+    if (name == "d0")
 	return( &d0 );
-    if( !strcmp(name,"theta0") )
+    if (name == "theta0")
         return( &theta0 );
 
-    if( !strcmp(name,"wtqreal") )
+    if (name == "wtqreal")
         return( &wtqreal );
-    if( !strcmp(name,"mtqrealS") )
+    if (name == "mtqrealS")
         return( &mtqrealS );
-    if( !strcmp(name,"mtqrealW") )
+    if (name == "mtqrealW")
         return( &mtqrealW );
-    if( !strcmp(name,"omegat") )
+    if (name == "omegat")
         return( &omegat );
-    if( !strcmp(name,"dt") )
+    if (name == "dt")
         return( &dt );
-    if( !strcmp(name,"L") )
+    if (name == "L")
         return( &employment );
 
-    if( !strcmp(name,"theta") )
+    if (name == "theta")
         return( theta );
 
     return( NULL );

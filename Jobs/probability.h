@@ -27,7 +27,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 class probability: public geometricJob {
   protected:
-    char xLabel[20];
+    QString xLabel;
     qreal *xParam;
     qreal xmin,xmax;
 	qreal xStep;
