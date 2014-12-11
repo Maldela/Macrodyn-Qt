@@ -36,18 +36,18 @@ class d_var {
 protected:
 
     qreal x_qreal;	// the actual value of x
-    qreal x_qreal_min;	// bounds for the discrete
-    qreal x_qreal_max;	// representation of x
+    qreal x_real_min;	// bounds for the discrete
+    qreal x_real_max;	// representation of x
     int  dflt_res;	// default resolution
     qreal dflt_step_sz;	// default step size
 
     void dom_error ( qreal x );	// print an error message, but do not exit
 public:
     
-    d_var ( qreal x_r, qreal x_rmin,	// constructor with default values
-            qreal x_rmax, int res );
+    d_var ( qreal x_r, qreal x_min,	// constructor with default values
+            qreal x_max, int res );
 
-    int  is_in_range ( qreal x ) const;	// returns 1, if x is between min and max, 0 otherwise
+    int  is_in_range ( qreal x ) const;	// returns 1, if x is between qMin and qMax, 0 otherwise
     int  is_in_range ( int x_descr ) const;	// returns 1, if x_descr is between 0 and dflt_res, 0 otherwise
 
     void set_val( qreal x );		// sets a new qreal value

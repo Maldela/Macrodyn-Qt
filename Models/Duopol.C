@@ -107,7 +107,7 @@ qreal* Duopol::setLabels(const QString& label)
     if (label == "lambda2")
 	return( &lambda2);
     if (label == "Lmax")
-	return( &Lmax);
+    return( &Lmax);
     if (label == "mu")
 	return( &mu);			
     if (label == "dep")
@@ -183,7 +183,7 @@ void Duopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
- void Duopol::loadParamset(QDataStream& inFile)
+ void Duopol::loadParamset(QTextStream& inFile)
 {
     inFile >> beta10 >> beta20 >> z10 >> z20;
     inFile >> M0 >> w0 >> Pi0;
@@ -205,7 +205,7 @@ void Duopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol::saveParamset(QDataStream& outFile)
+void Duopol::saveParamset(QTextStream& outFile)
 {
     outFile << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20 << "\t";
     outFile << M0 << "\t" << w0 << "\t" << Pi0 << "\t";
@@ -228,13 +228,13 @@ void Duopol::saveParamset(QDataStream& outFile)
 
 void Duopol::printParamset()
 {
-    log() << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20 << "\n";
-    log() << M0 << "\t" << w0 << "\t" << Pi0 << "\n";
-    log() << g << "\t" << tau << "\t" << B1 << "\t" << B2 << "\n";
-    log() << eta1 << "\t" << eta2 << "\t" << alpha1 << "\t" << alpha2 << "\n";    
-    log() << lambda1 << "\t" << lambda2 << "\t" << Lmax << "\t" << mu << "\n";
-    log() << dep << "\t" << rho << "\t" << delta << "\n";
-    log() << cert << "\t" << length << "\n";
+    log() << beta10 << "\t" << beta20 << "\t" << z10 << "\t" << z20;
+    log() << M0 << "\t" << w0 << "\t" << Pi0;
+    log() << g << "\t" << tau << "\t" << B1 << "\t" << B2;
+    log() << eta1 << "\t" << eta2 << "\t" << alpha1 << "\t" << alpha2;
+    log() << lambda1 << "\t" << lambda2 << "\t" << Lmax << "\t" << mu;
+    log() << dep << "\t" << rho << "\t" << delta;
+    log() << cert << "\t" << length;
 
 }
 
@@ -295,7 +295,7 @@ void Duopol::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol::receiveParameters(const qreal* parameters)
+void Duopol::receiveParameters(const QList<qreal>& parameters)
 {
     beta10=parameters[0];
     beta20=parameters[1];
@@ -402,7 +402,7 @@ qreal Duopol::Gamma(const int firm)
 {	
     qreal eta; qreal alpha;
     qreal result, gamit, eps, h; 
-    int i, Nmax;
+    int i, NqMax;
 
     if(firm == 1)
       	{
@@ -423,7 +423,7 @@ else
 {
 	eps=0.000001;               // accuracy of Newton algorithm 
 	h= 0.000001;                // step size for approximation of derivatives
-	Nmax=1000;                  // maximal number of Newton iterations
+    NqMax=1000;                  // qMaximal number of Newton iterations
    	if(alpha == 2)
 		result=1/(eta-1);
 	else if(alpha == 3)
@@ -431,7 +431,7 @@ else
 	else
 		{
 		gamit = pow((alpha*eta-1)/(eta-1),1/(alpha-1))-1;
-		for (int i=1;(i<Nmax && (pow(nullst(gamit,alpha,eta),2) > pow(eps,2))) ;i++)
+        for (int i=1;(i<NqMax && (pow(nullst(gamit,alpha,eta),2) > pow(eps,2))) ;i++)
 			{
 			gamit=gamit-h*nullst(gamit,alpha,eta)/(nullst(gamit+h,alpha,eta)
 					-nullst(gamit,alpha,eta));
@@ -631,13 +631,13 @@ void Duopol::iteration(const qint64&)
    
 /*   labor market   */
 
-   Ltdem1= Finv(MAX(0,xnot(1)-z1),1);
-   Ltdem2= Finv(MAX(0,xnot(2)-z2),2);
+   Ltdem1= Finv(qMax(0.0,xnot(1)-z1),1);
+   Ltdem2= Finv(qMax(0.0,xnot(2)-z2),2);
    Ltdem=Ltdem1+Ltdem2;
    if(Ltdem != 0)
       {
-      Lt1=Ltdem1*MIN(Lmax/Ltdem,1);
-      Lt2=Ltdem2*MIN(Lmax/Ltdem,1);
+      Lt1=Ltdem1*qMin(Lmax/Ltdem,1.0);
+      Lt2=Ltdem2*qMin(Lmax/Ltdem,1.0);
       }
    else
       {
@@ -658,19 +658,19 @@ void Duopol::iteration(const qint64&)
       ctdO1=m*rewa1;                    
       gtd1=g;                         
       ytdem1=ctdY1+ctdO1+gtd1;        
-      ctY1=ctdY1*MIN(1,xtS1/ytdem1);  
-      ctO1=ctdO1*MIN(1,xtS1/ytdem1);  
-      gt1=gtd1*MIN(1,xtS1/ytdem1);
-      xt1=MIN(xtS1,ytdem1);    
+      ctY1=ctdY1*qMin(1.0,xtS1/ytdem1);
+      ctO1=ctdO1*qMin(1.,xtS1/ytdem1);
+      gt1=gtd1*qMin(1.0,xtS1/ytdem1);
+      xt1 = qMin(xtS1,ytdem1);
 
       /*  market 2    */
-      ctdY2=MAX(0,cprop(rewa1/rewa2)*(it*rewa2-(1+rewa2/rewa1)*ctY1));
-      ctdO2=MAX(0,(m-ctO1/rewa1)*rewa2); 
-      gtd2=MAX(0,g-gt1);
+      ctdY2 = qMax(0.0,cprop(rewa1/rewa2)*(it*rewa2-(1+rewa2/rewa1)*ctY1));
+      ctdO2 = qMax(0.0,(m-ctO1/rewa1)*rewa2);
+      gtd2 = qMax(0.0,g-gt1);
       ytdem2=ctdY2+ctdO2+gtd2;
-      xt2=MIN(xtS2,ytdem2);
+      xt2 = qMin(xtS2,ytdem2);
       if(ytdem2 != 0)
-         ctY2=ctdY2*MIN(1,xtS2/ytdem2);
+         ctY2=ctdY2*qMin(1.0,xtS2/ytdem2);
       else
          ctY2=0;
       }
@@ -681,19 +681,19 @@ void Duopol::iteration(const qint64&)
       ctdO2=m*rewa2;
       gtd2=g;
       ytdem2=ctdY2+ctdO2+gtd2;
-      ctY2=ctdY2*MIN(1,xtS2/ytdem2);
-      ctO2=ctdO2*MIN(1,xtS2/ytdem2);
-      gt2=gtd2*MIN(1,xtS2/ytdem2);
-      xt2=MIN(xtS2,ytdem2);
+      ctY2=ctdY2*qMin(1.0,xtS2/ytdem2);
+      ctO2=ctdO2*qMin(1.0,xtS2/ytdem2);
+      gt2=gtd2*qMin(1.0,xtS2/ytdem2);
+      xt2 = qMin(xtS2,ytdem2);
 
       /*    market 1    */
-      ctdY1=MAX(0,cprop(rewa2/rewa1)*(it*rewa1-(1+rewa1/rewa2)*ctY2));
-      ctdO1=MAX(0,(m-ctO2/rewa2)*rewa1);
-      gtd1=MAX(0,g-gt2);
+      ctdY1 = qMax(0.0,cprop(rewa2/rewa1)*(it*rewa1-(1+rewa1/rewa2)*ctY2));
+      ctdO1 = qMax(0.0,(m-ctO2/rewa2)*rewa1);
+      gtd1 = qMax(0.0,g-gt2);
       ytdem1=ctdY1+ctdO1+gtd1;
-      xt1=MIN(xtS1,ytdem1);
+      xt1 = qMin(xtS1,ytdem1);
       if(ytdem1 != 0)
-         ctY1=ctdY1*MIN(1,xtS1/ytdem1);
+         ctY1=ctdY1*qMin(1.0,xtS1/ytdem1);
       else
          ctY1=0;
       }
@@ -704,10 +704,10 @@ void Duopol::iteration(const qint64&)
       gtd1=g;
       ytdem1=xtS1*(ctdY1+ctdO1+gtd1)/(xtS1+xtS2);
       ytdem2=xtS2*(ctdY1+ctdO1+gtd1)/(xtS1+xtS2);
-      ctY1=ctdY1*xtS1/MAX((ctdY1+ctdO1+gtd1),(xtS1+xtS2));
-      ctY2=ctdY1*xtS2/MAX((ctdY1+ctdO1+gtd1),(xtS1+xtS2));
-      xt1=xtS1*MIN(1,((ctdY1+ctdO1+gtd1)/(xtS1+xtS2)));
-      xt2=xtS2*MIN(1,((ctdY1+ctdO1+gtd1)/(xtS1+xtS2)));
+      ctY1=ctdY1*xtS1/qMax((ctdY1+ctdO1+gtd1),(xtS1+xtS2));
+      ctY2=ctdY1*xtS2/qMax((ctdY1+ctdO1+gtd1),(xtS1+xtS2));
+      xt1=xtS1*qMin(1.0,((ctdY1+ctdO1+gtd1)/(xtS1+xtS2)));
+      xt2=xtS2*qMin(1.0,((ctdY1+ctdO1+gtd1)/(xtS1+xtS2)));
       }
        
 /*   Iteration   */
@@ -715,14 +715,14 @@ void Duopol::iteration(const qint64&)
     gam2 = Gamma(2);
 
     zeta1=(alpha1-1)/lambda1/alpha1*zeta1*(1+gam1*ytdem1/xtS1)/
-    		pow((1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax)) ,eta1);
+            pow((1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax)) ,eta1);
     zeta2=(alpha2-1)/lambda2/alpha2*zeta2*(1+gam2*ytdem2/xtS2)/
-    		pow((1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax)) ,eta2);
-    z1=MAX(0,dep*(xtS1-ytdem1));
-    z2=MAX(0,dep*(xtS2-ytdem2));
-    m=(it-ctY1/rewa1-ctY2/rewa2)/(1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax));
-    pi=(MAX(0,xt1/rewa1-Lt1)+MAX(0,xt2/rewa2-Lt2))/
-    		(1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax));
+            pow((1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax)) ,eta2);
+    z1 = qMax(0.0,dep*(xtS1-ytdem1));
+    z2 = qMax(0.0,dep*(xtS2-ytdem2));
+    m=(it-ctY1/rewa1-ctY2/rewa2)/(1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax));
+    pi=(qMax(0.0,xt1/rewa1-Lt1)+qMax(0.0,xt2/rewa2-Lt2))/
+            (1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax));
 }
 
 /******************************************************************************/
@@ -767,13 +767,13 @@ void Duopol2::iteration(const qint64&)
  
 /*   labor market   */
 
-   Ltdem1= Finv(MAX(0,xnot(1)-z1),1);
-   Ltdem2= Finv(MAX(0,xnot(2)-z2),2);
+   Ltdem1= Finv(qMax(0.0,xnot(1)-z1),1);
+   Ltdem2= Finv(qMax(0.0,xnot(2)-z2),2);
    Ltdem=Ltdem1+Ltdem2;
    if(Ltdem != 0)
       {
-      Lt1=Ltdem1*MIN(Lmax/Ltdem,1);
-      Lt2=Ltdem2*MIN(Lmax/Ltdem,1);
+      Lt1=Ltdem1*qMin(Lmax/Ltdem,1.0);
+      Lt2=Ltdem2*qMin(Lmax/Ltdem,1.0);
       }
    else
       {
@@ -792,15 +792,15 @@ void Duopol2::iteration(const qint64&)
       ctd1=m*rewa1;                    
       gtd1=g;                         
       ytdem1=ctd1+gtd1;        
-      ct1=ctd1*MIN(1,xtS1/ytdem1);  
-      gt1=gtd1*MIN(1,xtS1/ytdem1);
-      xt1=MIN(xtS1,ytdem1);    
+      ct1=ctd1*qMin(1.0,xtS1/ytdem1);
+      gt1=gtd1*qMin(1.0,xtS1/ytdem1);
+      xt1 = qMin(xtS1,ytdem1);
 
       /*  market 2    */
-      ctd2=MAX(0,(m-ct1/rewa1)*rewa2);
-      gtd2=MAX(0,g-gt1);
+      ctd2 = qMax(0.0,(m-ct1/rewa1)*rewa2);
+      gtd2 = qMax(0.0,g-gt1);
       ytdem2=ctd2+gtd2;
-      xt2=MIN(xtS2,ytdem2);
+      xt2 = qMin(xtS2,ytdem2);
       if (ytdem2 != 0)
       		gt2=gtd2*xt2/ytdem2;
       else
@@ -813,15 +813,15 @@ void Duopol2::iteration(const qint64&)
       ctd2=m*rewa2;
       gtd2=g;
       ytdem2=ctd2+gtd2;
-      ct2=ctd2*MIN(1,xtS2/ytdem2);
-      gt2=gtd2*MIN(1,xtS2/ytdem2);
-      xt2=MIN(xtS2,ytdem2);
+      ct2=ctd2*qMin(1.0,xtS2/ytdem2);
+      gt2=gtd2*qMin(1.0,xtS2/ytdem2);
+      xt2 = qMin(xtS2,ytdem2);
 
       /*    market 1    */
-      ctd1=MAX(0,(m-ct2/rewa2)*rewa1);
-      gtd1=MAX(0,g-gt2);
+      ctd1 = qMax(0.0,(m-ct2/rewa2)*rewa1);
+      gtd1 = qMax(0.0,g-gt2);
       ytdem1=ctd1+gtd1;
-      xt1=MIN(xtS1,ytdem1);
+      xt1 = qMin(xtS1,ytdem1);
       if (ytdem1 != 0)
       		gt1=gtd1*xt1/ytdem1;
       else
@@ -833,8 +833,8 @@ void Duopol2::iteration(const qint64&)
       gtd1=g;
       ytdem1=xtS1*(ctd1+gtd1)/(xtS1+xtS2);
       ytdem2=xtS2*(ctd1+gtd1)/(xtS1+xtS2);
-      xt1=xtS1*MIN(1,((ctd1+gtd1)/(xtS1+xtS2)));
-      xt2=xtS2*MIN(1,((ctd1+gtd1)/(xtS1+xtS2)));
+      xt1=xtS1*qMin(1.0,((ctd1+gtd1)/(xtS1+xtS2)));
+      xt2=xtS2*qMin(1.0,((ctd1+gtd1)/(xtS1+xtS2)));
       gt1=gtd1*xt1/(ctd1+gtd1);
       gt2=gtd1*xt2/(ctd1+gtd1);
       }
@@ -845,13 +845,13 @@ void Duopol2::iteration(const qint64&)
     gam2 = Gamma(2);
 
     zeta1=zeta1*pow(((alpha1-1)/lambda1/alpha1*(1+gam1*ytdem1/xtS1)),1/eta1)/
-    		(1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax));
+            (1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax));
     zeta2=zeta2*pow(((alpha2-1)/lambda2/alpha2*(1+gam2*ytdem2/xtS2)),1/eta2)/
-    		(1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax));
-    z1=MAX(0,dep*(xtS1-ytdem1));
-    z2=MAX(0,dep*(xtS2-ytdem2));
+            (1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax));
+    z1 = qMax(0.0,dep*(xtS1-ytdem1));
+    z2 = qMax(0.0,dep*(xtS2-ytdem2));
     m=(m+(gt1-tau*xt1)/rewa1+(gt2-tau*xt2)/rewa2)/
-    		 (1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax));
+             (1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax));
             
 }
 

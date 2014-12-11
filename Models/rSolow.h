@@ -20,7 +20,7 @@
 #include "markov_chain.h"
 
 
-const int trans_x_Max=100;
+const int Trans_x_Max=100;
 
 const int mc_states_max=10;
 
@@ -31,9 +31,9 @@ struct st_paramset
 	int theta_type;
     qreal my;
     qreal z_trans;
-    qreal trans_x[trans_x_Max];
-    qreal trans_a[trans_x_Max];
-    qreal trans_b[trans_x_Max];
+    qreal trans_x[Trans_x_Max];
+    qreal trans_a[Trans_x_Max];
+    qreal trans_b[Trans_x_Max];
         int mc_flag;
     QString zvar_expr;
     QString mc_matrix;
@@ -95,15 +95,15 @@ st_paramset *delta_p_paramset;
 
 public:
     rSolow();			// constructor
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
-    void save_st_Paramset(QDataStream&,st_paramset*);
-    void saveParamsetWithNames(QDataStream&); // add parametset to printerfile (so far only for xpm)
-    void save_st_ParamsetWithNames(QDataStream&,st_paramset*);
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
+    void save_st_Paramset(QTextStream&,st_paramset*);
+    void saveParamsetWithNames(QTextStream&); // add parametset to printerfile (so far only for xpm)
+    void save_st_ParamsetWithNames(QTextStream&,st_paramset*);
     void printParamset();
     void print_st_Paramset(st_paramset*);
     void noise_iteration(st_paramset*);
-    void read_sim(QDataStream&,st_paramset*);
+    void read_sim(QTextStream&,st_paramset*);
     void delete_st_paramset_stochptr(st_paramset*);
     void iteration(const qint64&);
     void initialize();
@@ -112,7 +112,7 @@ public:
 
     qreal* sendModelVar();		// for compatibity reasons only
     void sendParameters(int&,qreal**);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     virtual ~rSolow(void);            //destructor
 
 };
@@ -150,9 +150,9 @@ protected:
 	
 public:
 	RBC_delta_1();			//constructor
-   	void loadParamset(QDataStream&);	
-  	void saveParamset(QDataStream&);  
-	void saveParamsetWithNames(QDataStream&); // add parametset to printerfile (so far only for xpm)	
+   	void loadParamset(QTextStream&);	
+  	void saveParamset(QTextStream&);  
+	void saveParamsetWithNames(QTextStream&); // add parametset to printerfile (so far only for xpm)	
    	void printParamset();	   	
    	void iteration(const qint64&);
    	void initialize();

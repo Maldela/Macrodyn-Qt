@@ -36,7 +36,7 @@ class ExchangeRateModel: public baseModel {
 	real *theta;	// expected inflation rate
 	real iet;		// expected interest rate
 	real erealt;	// real exchange rate
-	real ymaxt;		// capacity output
+    real ymaxt;		// capacity output
 	real Lnt;		// notional labor demand
 	real yLt;		// notional output
 	real ydt;		// effective aggregate demand
@@ -49,10 +49,10 @@ class ExchangeRateModel: public baseModel {
 
 	//Parameters:
 
-    int tau;		// length of memory 
+    qint64 tau;		// length of memory
     real A;			// scaling parameter of the production function
 	real B;			// elasticity of production
-	real Lmax;		// constant labor supply
+    real Lmax;		// constant labor supply
 	real rho;		// parameter of substitution (utility function)
 	real delta;		// discount factor of the utility function
 	real deltaB;	// new bonds
@@ -70,7 +70,7 @@ class ExchangeRateModel: public baseModel {
 	virtual real expectedInflationRate(const long);                
 	void expectedInterestRate();
 	void realExchangeRate();
-	real MaxCapacityOutput(const real&);
+    real qMaxCapacityOutput(const real&);
 	void NotLaborDemand();
 	void NotOutput();
 	void effaggrdemand(real&);
@@ -86,14 +86,14 @@ public:
     virtual ~ExchangeRateModel();			// destructor
 
 	void initialize();						// initialize the model, define the initial state
-    void loadParamset(QDataStream&);			// load parameterset from a file
+    void loadParamset(QTextStream&);			// load parameterset from a file
 	void iteration(const long&);      		// perform one iteration 
     real* setLabels(char*);					// return a pointer to a variable or a parameter specified by its name
 
     void sendStateSpace(int &,const real***);// return pointers to all model variables and the dimension of the model
     void sendParameters(int&,real**);		// write all parameters into an array and return the numbers of parameters
-    void saveParamset(QDataStream&);			// write parameterset into a file
-    void saveParamsetWithNames(QDataStream&);	// add parametset to printerfile (so far only for xpm)
+    void saveParamset(QTextStream&);			// write parameterset into a file
+    void saveParamsetWithNames(QTextStream&);	// add parametset to printerfile (so far only for xpm)
     void receiveParameters(const real*);	// receive parameter values
     void printParamset();					// print parameterset on the screen    
 	real* sendModelVar();

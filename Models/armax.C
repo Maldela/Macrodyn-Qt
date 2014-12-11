@@ -1,6 +1,6 @@
  ///////////////////////////////////////////////////////////////////////////////
 //
-// $Header: armax.C, Thu Jul  6 17:09:23 METDST 2000 mmeyer 
+// $Header: armax.C, Thu Jul  6 17:09:23 METDST 2000 mmeyer
 //
 // Module name:		armax.C
 // Contents:		Member functions of the class armax
@@ -33,7 +33,7 @@ armax::armax() : baseModel(1)
 	if ( rand_dis != NULL ) delete rand_dis;
 	rand_dis = new distribution();
 	if( !(rand_dis) )
-		fatalError("armax:","can't create rand_dis");	
+        fatalError("armax:","can't create rand_dis");
 	B_1_inv = new matrix_neu(N1+0,M+0);
 	if( !B_1_inv )
 		fatalError("matrix_neu::matrix_neu","Can't allocate memory");
@@ -155,7 +155,7 @@ armax::armax() : baseModel(1)
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax	
+// Class name:	armax
 // Member function:	 ~armax
 // Purpose:		destructor
 //
@@ -165,7 +165,7 @@ armax::armax() : baseModel(1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-armax::~armax() 
+armax::~armax()
 {
 	if(rand_dis) 		delete rand_dis;
 	if(B_1_inv)			delete B_1_inv;
@@ -223,7 +223,7 @@ armax::~armax()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax::loadParamset(QDataStream& inFile)
+void armax::loadParamset(QTextStream& inFile)
 { 	
  	for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
@@ -286,7 +286,7 @@ void armax::loadParamset(QDataStream& inFile)
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax	
+// Class name:	armax
 // Member function:	initialize
 // Purpose:		initialize the model, define the systems initial state
 //
@@ -436,13 +436,13 @@ void armax::initialize()
 void armax::iteration(const qint64& t)
 { 	
 
-//	qreal temp_max = ((L>K) ? L : K);	//max of L,K
-//	const qreal maxLKR = ((temp_max>R) ? temp_max : R);	//max of L,K,R
-//	const qreal eps_max = 1/(4*(maxLKR + L*1));	// if m is changed, update
+//	qreal temp_max = ((L>K) ? L : K);	//qMax of L,K
+//	const qreal qMaxLKR = ((temp_max>R) ? temp_max : R);	//qMax of L,K,R
+//	const qreal eps_max = 1/(4*(qMaxLKR + L*1));	// if m is changed, update
 											// this calculation
     const qreal eps_max=1.0/12.0;
-	if((eps<=0)||(eps>=eps_max))
-		fatalError("armax::iteration","eps out of range");	
+    if((eps<=0)||(eps>=eps_max))
+        fatalError("armax::iteration","eps out of range");
 	
 	
 	rand_rec = rand_dis->rectangular(); // another r.u.variate
@@ -746,21 +746,21 @@ log() << "\ndif_var="<<dif_var;
 		if (H==1)
 			error_es_e = ((-1/b[0]) * e) - es_e;		
 // output on screen in the last period
-        log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << "\n";
+        log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] 
 		for (l=1;l<L+1;l++)
-            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << "\n";
+            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] 
 		for (k=0;k<K-1;k++)
-            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << "\n";
+            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] 
 		for (r=0;r<R;r++)
-            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << "\n";
+            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] 
 		if (G==1)
-            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << "\n";
+            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e 
 		if (H==1)
-            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e << "\n";
-        log() << "last dif_var=" << dif_var << "\n";
-        log() << "var1 = " << var1 << "\n";
-        log() << "var2 = " << var2 << "\n";
-        log() << "sum_var1 = " << sum_var1 << "\n";
+            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e 
+        log() << "last dif_var=" << dif_var 
+        log() << "var1 = " << var1 
+        log() << "var2 = " << var2 
+        log() << "sum_var1 = " << sum_var1 
 	}
 */
 
@@ -896,7 +896,7 @@ qreal* armax::setLabels(const QString& label)
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax	
+// Class name:	armax
 // Member function:	saveParamset
 // Purpose:		write parameterset into a file
 //
@@ -906,7 +906,7 @@ qreal* armax::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax::saveParamset(QDataStream& outFile)
+void armax::saveParamset(QTextStream& outFile)
 {	
 	for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
@@ -967,7 +967,7 @@ void armax::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax	
+// Class name:	armax
 // Member function:	printParamset
 // Purpose:		print parameterset on the screen
 //
@@ -981,62 +981,62 @@ void armax::printParamset()
 { 	
  	for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
-            log() << (*y_old_ini[l])(m,0) << "\n";
+            log() << (*y_old_ini[l])(m,0);
  	for (int k=0;k<K;k++)
  		for (int n1=0;n1<N1;n1++)	
-            log() << (*u_old_ini[k])(n1,0) << "\n";
+            log() << (*u_old_ini[k])(n1,0);
   	for (int r=0;r<R;r++)
  		for (int n2=0;n2<N2;n2++)
-            log() << (*v_old_ini[r])(n2,0) << "\n";
+            log() << (*v_old_ini[r])(n2,0);
     for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
  			for (int mm=0;mm<M;mm++)
-                log() << (*A[l])(m,mm) << "\n";
+                log() << (*A[l])(m,mm);
     for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
-                log() << (*B[k])(m,n1) << "\n";
+                log() << (*B[k])(m,n1);
     for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
-                log() << (*C[r])(m,n2) << "\n";
+                log() << (*C[r])(m,n2);
 	if (G==1)
 		for (int m=0;m<M;m++)	
 			for (int n3=0;n3<N3;n3++)	
-                log() << (*D)(m,n3) << "\n";
+                log() << (*D)(m,n3);
 	if (H==1)
 		for (int m=0;m<M;m++)
-            log() << (*E)(m,0) << "\n";
+            log() << (*E)(m,0);
     for (int l=0;l<L;l++)
  		for (int m=0;m<M;m++)
 			for (int mm=0;mm<M;mm++)
-                log() << (*A_e[l])(m,mm) << "\n";
+                log() << (*A_e[l])(m,mm);
     for (int k=0;k<K;k++)
 		for (int m=0;m<M;m++)	
 			for (int n1=0;n1<N1;n1++)	
-                log() << (*B_e[k])(m,n1) << "\n";
+                log() << (*B_e[k])(m,n1);
     for (int r=0;r<R;r++)
 		for (int m=0;m<M;m++)
 			for (int n2=0;n2<N2;n2++)
-                log() << (*C_e[r])(m,n2) << "\n";
+                log() << (*C_e[r])(m,n2);
 	if (G==1)
 		for (int m=0;m<M;m++)	
 			for (int n3=0;n3<N3;n3++)	
-                log() << (*D_e)(m,n3) << "\n";
+                log() << (*D_e)(m,n3);
 	if (H==1)
 		for (int m=0;m<M;m++)
-            log() << (*E_e)(m,0) << "\n";
+            log() << (*E_e)(m,0);
     log() << eps;
     log() << sigma_eps;
 
 			
-    log() << length << "\n";
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax	
+// Class name:	armax
 // Member function:	sendStateSpace
 // Purpose:		return pointers to the state variables and inform about
 //			the systems dimension
@@ -1053,7 +1053,7 @@ void armax::sendStateSpace(int &quantity,const qreal*** stateSpace)
 	delete stateSpace;
     *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
-	fatalError("armax::sendStateSpace",
+    fatalError("armax::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
     for (int m=0;m>M;m++)
@@ -1079,6 +1079,6 @@ qreal* armax::sendModelVar(void)
 void armax::sendParameters(int& ,qreal** )
 { error("macrodyn::armax::sendParameters is not implemented");
 }
-void armax::receiveParameters(const qreal* )
+void armax::receiveParameters(const QList<qreal>&)
 { error("macrodyn::armax::receiveParameters is not implemented");
 } 

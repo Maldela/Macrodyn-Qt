@@ -30,10 +30,10 @@ protected:
 	QFile outFile;
 	qreal stepX;
 	QString xLabel;
-	qreal xmin,xmax;
-	qreal ymin,ymax;
-	qint64 zmin;
-	qreal zmax;
+    qreal xmin, xmax;
+    qreal ymin, ymax;
+    qint64 zmin;
+    qreal zmax;
 	qreal* xParam;
 	qreal* yParam;
 	bool surface;

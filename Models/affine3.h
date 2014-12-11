@@ -47,8 +47,8 @@ protected:
 public:
 	affine3();				// constructor
 	virtual ~affine3();			//destructor
-	void loadParamset(QDataStream&);	
-	void saveParamset(QDataStream&);
+	void loadParamset(QTextStream&);	
+	void saveParamset(QTextStream&);
 	void printParamset();
 	void iteration(const qint64&);
 	void initialize();
@@ -58,5 +58,5 @@ public:
 	void sendParameters(int&,qreal**); 	// write all parameters
                          	       		// into an array and return the 
                                 		// numbers of parameters                                	
-	void receiveParameters(const qreal*);	// receive parameter values 
+    void receiveParameters(const QList<qreal>&);	// receive parameter values
 };

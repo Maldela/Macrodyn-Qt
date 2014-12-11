@@ -12,7 +12,7 @@
 
 #include "dynofin_rmv.h"
 #include "../error.h"
-#include "../strnchr.h"
+
 
 //*******************************************************************************   
 //*******************************************************************************
@@ -491,7 +491,7 @@ void dynofin_rmv::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::read_sim(QDataStream& inFile, st_fin_paramset *temp_paramset){
+void dynofin_rmv::read_sim(QTextStream& inFile, st_fin_paramset *temp_paramset){
 
   int	i,j;			// Index
 
@@ -515,7 +515,7 @@ void dynofin_rmv::read_sim(QDataStream& inFile, st_fin_paramset *temp_paramset){
     	inFile >> temp_paramset->z_0; 
       	
         i=0;
-        while(i<Trans_x_Max) {
+        while(i<Trans_X_Max) {
 	      inFile >> temp_paramset->trans_x[i];
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	  if(temp_paramset->trans_x[i]==1) break;
@@ -523,9 +523,9 @@ void dynofin_rmv::read_sim(QDataStream& inFile, st_fin_paramset *temp_paramset){
 	}
 	//printf("i=%i\n",i); 
  	
-        if(i==Trans_x_Max)
+        if(i==Trans_X_Max)
 	  error("macrodyn::dynofin_rmv",
-	      "the number i of x[i] must be less trans_x_Max");
+          "the number i of x[i] must be less Trans_X_Max");
 
         // length of trans_a and trans_b = trans_x - 1
         for (int j=0;j<i;j++) {
@@ -591,7 +591,7 @@ void dynofin_rmv::read_sim(QDataStream& inFile, st_fin_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::loadParamset(QDataStream& inFile){          
+void dynofin_rmv::loadParamset(QTextStream& inFile){          
     
     inFile >> w1_0;    
     inFile >> w2_0; 	         	  
@@ -632,7 +632,7 @@ qreal* dynofin_rmv::sendModelVar(void)
 void dynofin_rmv::sendParameters(int& ,qreal** )
 { error("macrodyn::dynofin_rmv::sendParameters is not implemented");
 }
-void dynofin_rmv::receiveParameters(const qreal* )
+void dynofin_rmv::receiveParameters(const QList<qreal>&)
 { error("macrodyn::dynofin_rmv::receiveParameters is not implemented");
 }  
 ///////////////////////////////////////////////////////////////////////////////
@@ -648,7 +648,7 @@ void dynofin_rmv::receiveParameters(const qreal* )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::save_st_fin_paramset(QDataStream& outFile, st_fin_paramset *temp_paramset){
+void dynofin_rmv::save_st_fin_paramset(QTextStream& outFile, st_fin_paramset *temp_paramset){
 
    int	i,j;			// Index
   
@@ -668,7 +668,7 @@ void dynofin_rmv::save_st_fin_paramset(QDataStream& outFile, st_fin_paramset *te
     	outFile << temp_paramset->z_0 << "\t"; 
 	
         i=0;
-        while(i<Trans_x_Max) {
+        while(i<Trans_X_Max) {
 	      outFile << temp_paramset->trans_x[i] << "\t";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
@@ -691,8 +691,6 @@ void dynofin_rmv::save_st_fin_paramset(QDataStream& outFile, st_fin_paramset *te
 	     outFile << temp_paramset->mc_matrix << "\t";
           }
        break;
-	
-    outFile << "\n";  
     }
 
  }
@@ -710,29 +708,28 @@ void dynofin_rmv::save_st_fin_paramset(QDataStream& outFile, st_fin_paramset *te
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void dynofin_rmv::saveParamset(QDataStream& outFile)
+void dynofin_rmv::saveParamset(QTextStream& outFile)
 
 {     
-    outFile << w1_0 << "\n" ;				
-    outFile << w2_0 << "\n";	
-    outFile << gam_0 << "\n" ;				
-    outFile << var_0 << "\n";	
-    outFile << expe_0 << "\n" ;				
-    outFile << p_0 << "\n";	
-    outFile << thetaA1_0 << "\n" ;				
-    outFile << thetaA2_0 << "\n";	
-    outFile << thetaB1_0 << "\n" ;				
-    outFile << thetaB2_0 << "\n";
+    outFile << w1_0;
+    outFile << w2_0;
+    outFile << gam_0;
+    outFile << var_0;
+    outFile << expe_0;
+    outFile << p_0;
+    outFile << thetaA1_0;
+    outFile << thetaA2_0;
+    outFile << thetaB1_0;
+    outFile << thetaB2_0;
             	
     save_st_fin_paramset(outFile,r_fin_paramset);
  
     save_st_fin_paramset(outFile,d_fin_paramset);
  
  
-    outFile << length << "\n";
+    outFile << length;
     
-    outFile << "\n";       
-    baseModel::saveParamset (outFile);
+    baseModel::saveParamset(outFile);
 }            	    
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -742,20 +739,20 @@ void dynofin_rmv::saveParamset(QDataStream& outFile)
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void dynofin_rmv::saveParamsetWithNames(QDataStream& outFile)	
+void dynofin_rmv::saveParamsetWithNames(QTextStream& outFile)	
 {
-outFile << "dynofin_rmv:\n";
-outFile << "w1_0 =" << w1_0 << "\tw2_0 =" << w2_0 << "\n";
-outFile << "gamma_0 =" << gam_0 << "\tvar_0 =" << var_0 << "\n";
-outFile << "expectation_0 =" << expe_0 << "\tp_0 =" << p_0 << "\n";
-outFile << "thetaA1_0 =" << thetaA1_0 << "\tthetaA2_0 =" << thetaA2_0 << "\n";
-outFile << "thetaB1_0 =" << thetaB1_0 << "\tthetaB2_0 =" << thetaB2_0 << "\n";
+outFile << "dynofin_rmv:";
+outFile << "w1_0 =" << w1_0 << "\tw2_0 =" << w2_0;
+outFile << "gamma_0 =" << gam_0 << "\tvar_0 =" << var_0;
+outFile << "expectation_0 =" << expe_0 << "\tp_0 =" << p_0;
+outFile << "thetaA1_0 =" << thetaA1_0 << "\tthetaA2_0 =" << thetaA2_0;
+outFile << "thetaB1_0 =" << thetaB1_0 << "\tthetaB2_0 =" << thetaB2_0;
 outFile << "r_fin Parameterset" << "\t";
 save_st_fin_paramsetWithNames(outFile,r_fin_paramset);  
 outFile << "d_fin Parameterset" << "\t";
 save_st_fin_paramsetWithNames(outFile,d_fin_paramset);
 
-outFile << "Length = " << length << "\n"; 
+outFile << "Length = " << length;
 }
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -765,7 +762,7 @@ outFile << "Length = " << length << "\n";
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void dynofin_rmv::save_st_fin_paramsetWithNames(QDataStream& outFile, st_fin_paramset *temp_paramset)	
+void dynofin_rmv::save_st_fin_paramsetWithNames(QTextStream& outFile, st_fin_paramset *temp_paramset)	
 {
    int	i,j;			// Index
   	
@@ -785,7 +782,7 @@ void dynofin_rmv::save_st_fin_paramsetWithNames(QDataStream& outFile, st_fin_par
     	outFile <<  "z_0 = " << temp_paramset->z_0 << "\t"; 
 	
         i=0;
-        while(i<Trans_x_Max) {
+        while(i<Trans_X_Max) {
 	      outFile << "trans_x = " << temp_paramset->trans_x[i] << "\t";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
@@ -809,9 +806,7 @@ void dynofin_rmv::save_st_fin_paramsetWithNames(QDataStream& outFile, st_fin_par
           }
        break;
 	
-    outFile << "\n";  
     }
-  outFile << "\n";
 }
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -829,47 +824,42 @@ void dynofin_rmv::print_st_fin_paramset(st_fin_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      log() << temp_paramset->type << "\n";
+      log() << temp_paramset->type;
       
       switch  (temp_paramset->type) {
       case -1:
- 	log() << temp_paramset->z_0 << "\n";  
+        log() << temp_paramset->z_0;
       break;
       case 0 :	
-    	log() << temp_paramset->z_0 << "\n";	 
+        log() << temp_paramset->z_0;
       break;
 	
       case 1 :		
-	log() << temp_paramset->theta_type << "\n";
-	log() << temp_paramset->my << "\n";
-    	log() << temp_paramset->z_0 << "\n"; 
+        log() << temp_paramset->theta_type;
+        log() << temp_paramset->my;
+        log() << temp_paramset->z_0;
 	
         i=0;
-        while(i<Trans_x_Max) {
-	      log() << temp_paramset->trans_x[i] << "\n";
+        while(i<Trans_X_Max) {
+          log() << temp_paramset->trans_x[i] ;
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       log() << "\n";
        for (int j=0;j<i;j++) {
-	 log() << temp_paramset->trans_a[j] << "\n";
+     log() << temp_paramset->trans_a[j];
 	}
-	log() << "\n";
        for (int j=0;j<i;j++) {
-	 log() << temp_paramset->trans_b[j] << "\n";
+     log() << temp_paramset->trans_b[j];
 	}
-        log() << "\n";
         break;
    
       case 2:
-        log() << temp_paramset->zvar_expr << "\n";
+        log() << temp_paramset->zvar_expr;
 	  if( temp_paramset->mc_flag == 1) {
-	     log() << temp_paramset->mc_matrix << "\n";
+         log() << temp_paramset->mc_matrix;
           }
        break;
-	
-    log() << "\n";  
     }
 
  }
@@ -890,25 +880,23 @@ void dynofin_rmv::print_st_fin_paramset(st_fin_paramset *temp_paramset){
 void dynofin_rmv::printParamset()
 
 {     
-    log() << w1_0 << "\n" ;				
-    log() << w2_0 << "\n";			
-    log() << gam_0 << "\n" ;				
-    log() << var_0 << "\n";
-    log() << expe_0 << "\n" ;				
-    log() << p_0 << "\n";    
-    log() << thetaA1_0 << "\n" ;				
-    log() << thetaA2_0 << "\n";	
-    log() << thetaB1_0 << "\n" ;				
-    log() << thetaB2_0 << "\n";
+    log() << w1_0;
+    log() << w2_0;
+    log() << gam_0;
+    log() << var_0;
+    log() << expe_0;
+    log() << p_0;
+    log() << thetaA1_0;
+    log() << thetaA2_0;
+    log() << thetaB1_0;
+    log() << thetaB2_0;
     
     print_st_fin_paramset(r_fin_paramset);
  
     print_st_fin_paramset(d_fin_paramset);
  
-    log() << length << "\n";
-    
-    log() << "\n";  
-         
+    log() << length;
+             
     baseModel::printParamset();
 }   
   

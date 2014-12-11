@@ -32,7 +32,7 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 struct matrixDef {		
-    friend QDataStream& operator<<(QDataStream&, const matrixDef&);
+    friend QTextStream& operator<<(QTextStream&, const matrixDef&);
     matrixDef(const uint&, const uint&);	// constructor
 	~matrixDef();	// destructor
 		
@@ -58,7 +58,7 @@ class matrixFn {
 
     void coutMatrix(const matrixDef*); // print matrix on standard out
 
-    qreal determinant(const matrixDef*);
+    qreal deterqMinant(const matrixDef*);
 
 	void inverse(const matrixDef*,matrixDef*); // in,out
       // dimension and memory of out matrix won't be done
@@ -146,7 +146,7 @@ class olsClass {
         olsClass( qreal* ,int& ,int& ,qreal** ,int* );
             //   qreal* y,int& y_num,
             //   int& varphi_var_num,qreal** varphi,int* varphi_numPtr
-        olsClass(QDataStream& inFile,baseModel* const model);
+        olsClass(QTextStream& inFile,baseModel* const model);
 			// input file stream must be:
 			// yName  y_num
 			// number_of_variables_in_varphi
@@ -177,7 +177,7 @@ class rlsClass : public olsClass {
 		matrixDef* TEC;  // help matrix Theta_Error_Correction
 		matrixDef* PEC;  // help matrix P_Error_Correction
         rlsClass( qreal* ,int& ,int& ,qreal** ,int* );
-        rlsClass( QDataStream&, baseModel* const ) ;
+        rlsClass( QTextStream&, baseModel* const ) ;
 		virtual ~rlsClass() ;
 		virtual void initialize();
 		virtual void estimate();
@@ -201,7 +201,7 @@ class elsClass : public rlsClass {
         qreal* upsilon;  // upsilon vector
 		int upsilonLag;  // lag of upsilon, not vector length
         elsClass( qreal* ,int& ,int& ,qreal** ,int* );
-        elsClass( QDataStream&, baseModel* const ) ;
+        elsClass( QTextStream&, baseModel* const ) ;
 		virtual ~elsClass() ;
 		virtual void initialize();
 		virtual void estimate();
@@ -233,7 +233,7 @@ class sgClass : public elsClass {
 		long ttime;
 	public:
         sgClass( qreal* ,int& ,int& ,qreal** ,int* );
-        sgClass( QDataStream&, baseModel* const ) ;
+        sgClass( QTextStream&, baseModel* const ) ;
 		~sgClass() ;
 		void initialize();
         void initializeUnbiasedForecast(const qreal& sigma,

@@ -10,8 +10,8 @@ class LoggerHelper
 
 public:
 
-    LoggerHelper() { ref++; }
-    ~LoggerHelper() { if (!ref--) *this << "\n"; }
+    LoggerHelper();
+    ~LoggerHelper();
 
     LoggerHelper& operator <<(const QString&);
     LoggerHelper& operator <<(qreal n);
@@ -20,6 +20,7 @@ public:
 protected:
 
     static int ref;
+    QString m_buffer;
 };
 
 class Logger : public QObject

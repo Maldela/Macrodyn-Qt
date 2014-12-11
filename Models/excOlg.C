@@ -89,7 +89,7 @@ qreal excOlg::expInflRateYoung(const qint64 t)
     qint64 T,counter;
     qreal help=0.0;
     
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ )
 	help += thetaVec[counter];
     return( help / T );
@@ -109,7 +109,7 @@ qreal excOlg::expInflRateOld(const qint64 t)
     qint64 T,counter;
     qreal help=0.0;
     
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ )
 	help += thetaVec[counter];
     return( help / T );
@@ -292,7 +292,7 @@ void excOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::loadParamset(QDataStream& inputFile)
+void excOlg::loadParamset(QTextStream& inputFile)
 {
     inputFile >> delta >> rho;
     inputFile >> tau >> length;
@@ -316,11 +316,11 @@ void excOlg::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::saveParamset(QDataStream& outputFile)
+void excOlg::saveParamset(QTextStream& outputFile)
 {
-    outputFile << delta << "\t" << rho << "\n";
-    outputFile << tau << "\t" << length << "\n";
-    outputFile << theta0 << "\n";
+    outputFile << delta << "\t" << rho;
+    outputFile << tau << "\t" << length;
+    outputFile << theta0;
 }
 
 /******************************************************************************/
@@ -334,9 +334,9 @@ void excOlg::saveParamset(QDataStream& outputFile)
 
 void excOlg::printParamset()
 {
-    log() << delta << "\t" << rho << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << theta0 << "\n";
+    log() << delta << "\t" << rho;
+    log() << tau << "\t" << length;
+    log() << theta0;
 }
 
 /******************************************************************************/
@@ -374,7 +374,7 @@ void excOlg::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::receiveParameters(const qreal* parameters)
+void excOlg::receiveParameters(const QList<qreal>& parameters)
 {
     delta=parameters[0];
     rho=parameters[1];
@@ -503,7 +503,7 @@ qreal* excOlgAdapt::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::loadParamset(QDataStream& inputFile)
+void excOlgAdapt::loadParamset(QTextStream& inputFile)
 {
     inputFile >> delta >> rho;
     inputFile >> tau >> length;
@@ -528,12 +528,12 @@ void excOlgAdapt::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::saveParamset(QDataStream& outputFile)
+void excOlgAdapt::saveParamset(QTextStream& outputFile)
 {
-    outputFile << delta << "\t" << rho << "\n";
-    outputFile << tau << "\t" << length << "\n";
-    outputFile << etaYoung << "\t" << etaOld << "\n";
-    outputFile << theta0 << "\n";
+    outputFile << delta << "\t" << rho;
+    outputFile << tau << "\t" << length;
+    outputFile << etaYoung << "\t" << etaOld;
+    outputFile << theta0;
 }
 
 /******************************************************************************/
@@ -547,10 +547,10 @@ void excOlgAdapt::saveParamset(QDataStream& outputFile)
 
 void excOlgAdapt::printParamset()
 {
-    log() << delta << "\t" << rho << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << etaYoung << "\t" << etaOld << "\n";
-    log() << theta0 << "\n";
+    log() << delta << "\t" << rho;
+    log() << tau << "\t" << length;
+    log() << etaYoung << "\t" << etaOld;
+    log() << theta0;
 }
 
 /******************************************************************************/
@@ -590,7 +590,7 @@ void excOlgAdapt::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgAdapt::receiveParameters(const qreal* parameters)
+void excOlgAdapt::receiveParameters(const QList<qreal>& parameters)
 {
     delta=parameters[0];
     rho=parameters[1];
@@ -649,7 +649,7 @@ qreal excOlgGeoExp::expInflRateYoung(const qint64 t)
     qreal exponent=0.0;
     qreal logEta=log(etaTildaYoung);
 
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ ) {
 	exponent=exp(counter*logEta);
 	etaSum += exponent;
@@ -675,7 +675,7 @@ qreal excOlgGeoExp::expInflRateOld(const qint64 t)
     qreal exponent=0.0;
     qreal logEta=log(etaTildaOld);
 
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ ) {
 	exponent=exp(counter*logEta);
 	etaSum += exponent;
@@ -751,7 +751,7 @@ qreal* excOlgGeoExp::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::loadParamset(QDataStream& inputFile)
+void excOlgGeoExp::loadParamset(QTextStream& inputFile)
 {
     inputFile >> delta >> rho;
     inputFile >> tau >> length;
@@ -776,12 +776,12 @@ void excOlgGeoExp::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::saveParamset(QDataStream& outputFile)
+void excOlgGeoExp::saveParamset(QTextStream& outputFile)
 {
-    outputFile << delta << "\t" << rho << "\n";
-    outputFile << tau << "\t" << length << "\n";
-    outputFile << etaYoung << "\t" << etaOld << "\n";
-    outputFile << theta0 << "\n";
+    outputFile << delta << "\t" << rho;
+    outputFile << tau << "\t" << length;
+    outputFile << etaYoung << "\t" << etaOld;
+    outputFile << theta0;
 }
 
 /******************************************************************************/
@@ -795,10 +795,10 @@ void excOlgGeoExp::saveParamset(QDataStream& outputFile)
 
 void excOlgGeoExp::printParamset()
 {
-    log() << delta << "\t" << rho << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << etaYoung << "\t" << etaOld << "\n";
-    log() << theta0 << "\n";
+    log() << delta << "\t" << rho;
+    log() << tau << "\t" << length;
+    log() << etaYoung << "\t" << etaOld;
+    log() << theta0;
 }
 
 /******************************************************************************/
@@ -838,7 +838,7 @@ void excOlgGeoExp::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void excOlgGeoExp::receiveParameters(const qreal* parameters)
+void excOlgGeoExp::receiveParameters(const QList<qreal>& parameters)
 {
     delta=parameters[0];
     rho=parameters[1];

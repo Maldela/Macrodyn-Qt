@@ -240,7 +240,7 @@ void michael::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void michael::loadParamset(QDataStream& inFile)
+void michael::loadParamset(QTextStream& inFile)
 {
     inFile >> k_0;
     inFile >> z_0;    
@@ -270,7 +270,7 @@ void michael::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void michael::saveParamset(QDataStream& outFile)
+void michael::saveParamset(QTextStream& outFile)
 {
     outFile << k_0 << "\t";
     outFile << z_0 << "\t";
@@ -301,17 +301,17 @@ void michael::saveParamset(QDataStream& outFile)
 
 void michael::printParamset()
 {
-    log() << k_0 << "\n";
-    log() << z_0 << "\n";
-    log() << r << "\n";
-    log() << tau << "\n";
-    log() << rho << "\n";
-    log() << gamma << "\n";
-    log() << B << "\n";
+    log() << k_0;
+    log() << z_0;
+    log() << r;
+    log() << tau;
+    log() << rho;
+    log() << gamma;
+    log() << B;
     
-    log() << n << "\n";
+    log() << n;
 
-    log() << length << "\n";
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -333,7 +333,7 @@ qreal* michael::sendModelVar(void)
 void michael::sendParameters(int& ,qreal** )
 { error("macrodyn::michael::sendParameters is not implemented");
 }
-void michael::receiveParameters(const qreal* )
+void michael::receiveParameters(const QList<qreal>&)
 { error("macrodyn::michael::receiveParameters is not implemented");
 }
 

@@ -93,8 +93,8 @@ void d_attractor::simulation()
   }
 
   h_max = double (h.get_max_hits());
-  log() << "h_max = " << h_max << "\n";
-  log() << "color step every " << h_max/94 << " hits in cell" << "\n";
+  log() << "h_max = " << h_max;
+  log() << "color step every " << h_max/94 << " hits in cell";
   if( h_max == 0 ) {
     h_max = 1;
   }
@@ -110,9 +110,9 @@ void d_attractor::simulation()
 /*neu*/
 	
 	hitshilf=h(k,l);
-	hitpoint = hitshilf / h_max;
-	if (hitshilf==h_max)
-    log() << "maximal hitcounts at: "<< dx << " , " << dy << "\n";
+    hitpoint = hitshilf / h_max;
+    if (hitshilf==h_max)
+    log() << "qMaximal hitcounts at: "<< dx << " , " << dy;
 
 	if(hitpoint>0){
 /*		for(int i=0;i<=dummy2;i++){
@@ -121,12 +121,12 @@ void d_attractor::simulation()
 			}
 		}*/
 		color=int (ceil (hitpoint*dummy2));
-//	    outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
+//	    outFile << dx << "\t" << dy << "\t" << hitpoint 
 	} else color=0;
 	
     if ( color>94 ) log() << "warning: color > 94\n";
-     //   outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
-    QDataStream(&outFile) << color;
+     //   outFile << dx << "\t" << dy << "\t" << hitpoint 
+    QTextStream(&outFile) << color;
 /*Ende neu*/
 
 
@@ -135,7 +135,7 @@ void d_attractor::simulation()
         screenGraphics->setPoint(dx,dy,color);
       }
     }
-    //outFile << "\n";
+    //outFile 
   }
   outFile.flush();
   outFile.close();  

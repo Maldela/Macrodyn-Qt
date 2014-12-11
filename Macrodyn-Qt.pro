@@ -113,7 +113,6 @@ SOURCES += main.cpp \
     error.C \
     eval_expr.C \
     get_expr.C \
-    strnchr.C \
     Jobs/3d_attractor.C \
     Jobs/3d_cyclogram.C \
     Jobs/acf_plot.C \
@@ -161,7 +160,8 @@ SOURCES += main.cpp \
     MDMap.C \
     logger.cpp \
     Jobs/distributionJob.C \
-    block.C
+    block.C \
+    simloader.cpp
 
 RESOURCES += qml.qrc
 
@@ -205,7 +205,6 @@ HEADERS += \
     Models/finanzmarkt_2Dim_1.h \
     Models/finanzmarkt_gruppenswitch.h \
     Models/finanzmarkt_Jan.h \
-    Models/finanzmarkt_JanE.h \
     Models/finanzmarkt_JanE_Andi.h \
     Models/finanzmarkt_old.h \
     Models/finanzmarkt_wage.h \
@@ -289,7 +288,6 @@ HEADERS += \
     distri/uniform_distri.h \
     eval_expr.h \
     get_expr.h \
-    strnchr.h \
     Random/ranlib.h \
     Jobs/3d_attractor.h \
     Jobs/3d_cyclogram.h \
@@ -338,4 +336,5 @@ HEADERS += \
     MDMap.h \
     logger.h \
     Jobs/distributionJob.h \
-    block.h
+    block.h \
+    simloader.h

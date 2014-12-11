@@ -131,12 +131,12 @@ protected:
 public:
     armax();				// constructor
     virtual ~armax();		// destructor
-    void loadParamset(QDataStream&);	// load parameterset from a file
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	// load parameterset from a file
+    void saveParamset(QTextStream&);
     void printParamset();
     void sendParameters(int &,qreal**);
     qreal* sendModelVar(void);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     qreal* setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const qint64&);	// perform one iteration

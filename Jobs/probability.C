@@ -55,12 +55,12 @@ probability::probability(int p_size, baseModel* const cMod, xyRange& axes,
 void probability::simulation()
 {
     qint64 t;
-	int cmax=100000;
+    int cqMax=100000;
 
     qreal old_x = 0;
     qreal old_y = 0;
 
-    qreal intervall=(xmax-xmin)/cmax;
+    qreal intervall=(xmax-xmin)/cqMax;
 
 	model->initialize();
 
@@ -68,7 +68,7 @@ void probability::simulation()
        {
 	    model->iteration(t+1);
         col=9;        
-           for(i=1;i<cmax;i+=1)
+           for(i=1;i<cqMax;i+=1)
               {
                  if(*xParam <= ((i*intervall)+xmin))
                    {  
@@ -88,7 +88,7 @@ old_x = relativeSum;
 	relativeCount=Count[i] / double (length);
 	relativeSum+=relativeCount;
 old_y = relativeSum;
-	xStep=(i*intervall)+xmin;
+    xStep=(i*intervall)+xmin;
 	prob=1-relativeSum; 
 
 //	    if( screenGraphics ) 

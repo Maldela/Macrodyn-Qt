@@ -251,7 +251,7 @@ qreal* pureExchange::sendModelVar()
 
 void pureExchange::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-    log() << "sendStateSpace" << "\n";
+    log() << "sendStateSpace";
     if( *stateSpace )
 	delete *stateSpace;
     *stateSpace= new const qreal* [dimension];
@@ -273,7 +273,7 @@ void pureExchange::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::loadParamset(QDataStream& inputFile)
+void pureExchange::loadParamset(QTextStream& inputFile)
 {
     inputFile 	>> sf_type >> theta_e_m1 >> theta_e_null >> gamma >> p0 
 				>> w1 >> w2 >> g0 >> delta >> rho >> job_type;
@@ -293,7 +293,7 @@ sf_init();
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::saveParamset(QDataStream& outputFile)
+void pureExchange::saveParamset(QTextStream& outputFile)
 {
     outputFile 	<< sf_type << theta_e_m1 << theta_e_null << gamma << p0 
 				<< w1 << w2 << g0 << delta << rho << job_type;
@@ -311,13 +311,13 @@ void pureExchange::saveParamset(QDataStream& outputFile)
 
 void pureExchange::printParamset()
 {
-    log() << sf_type << "\n";
-    log() << theta_e_m1 << "\t" << theta_e_null << "\n";
-    log() << gamma << "\t" << p0 << "\n";
-    log() << w1 << "\t" << w2 << "\n";
-    log() << g0 << "\t" << delta << "\n";
-    log() << rho << "\t" << job_type << "\n";
-    log() << length << "\n";
+    log() << sf_type;
+    log() << theta_e_m1 << "\t" << theta_e_null;
+    log() << gamma << "\t" << p0;
+    log() << w1 << "\t" << w2;
+    log() << g0 << "\t" << delta;
+    log() << rho << "\t" << job_type;
+    log() << length;
 }
 
 /******************************************************************************/
@@ -362,7 +362,7 @@ void pureExchange::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::receiveParameters(const qreal* parameters)
+void pureExchange::receiveParameters(const QList<qreal>& parameters)
 {
     sf_type=parameters[0];
     theta_e_m1=parameters[1];

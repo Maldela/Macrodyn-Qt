@@ -77,9 +77,9 @@ void martinNeu::initialize() {
     theta_e_tp1 = theta_e_t_0 ;
     theta_tm1 = theta_tm1_0 ;
 
-p_t = 1;
-p_tm1 = 1;
-p_e_tp1 = 1;
+    p_t = 1;
+    p_tm1 = 1;
+    p_e_tp1 = 1;
 
     if ( zvar != NULL ) delete zvar;
     zvar = new rand_var( this, "ranf", "1[0,25];" );
@@ -92,12 +92,29 @@ p_e_tp1 = 1;
 /* Member function: loadParamset                                              */
 /* Purpose:         load a parameterset from a specified input file           */
 /******************************************************************************/
-void martinNeu::loadParamset(QDataStream& inFile) {
+void martinNeu::loadParamset(QTextStream& inFile) {
     inFile >> g_tm1_0 >> theta_e_t_0 >> theta_tm1_0;
     inFile >> gamma >> rho >> lambda;
     inFile >> length;
 
     initialize();
+}
+
+void martinNeu::receiveParameters(const QList<qreal> &parameters)
+{
+    if (parameters.size() != 7) log() << "Wrong number of parameters!";
+    else
+    {
+        g_tm1_0 = parameters.at(0);
+        theta_e_t_0 = parameters.at(1);
+        theta_tm1_0 = parameters.at(2);
+        gamma = parameters.at(3);
+        rho = parameters.at(4);
+        lambda = parameters.at(5);
+        length = parameters.at(6);
+
+        initialize();
+    }
 }
 
 /******************************************************************************/
@@ -174,5 +191,5 @@ theta_e_tp1 = p_e_tp1 / p_t;
     theta_e_t = theta_e_tp1 ;
     theta_tm1 = theta_t ;
     p_tm1 = p_t ;
-    log() <<"t="<<t<<"  theta_e_tp1="<<theta_e_tp1<<"  theta_tm1="<<theta_tm1<<"  p_t="<< p_t << "\n";
+    log() <<"t="<<t<<"  theta_e_tp1="<<theta_e_tp1<<"  theta_tm1="<<theta_tm1<<"  p_t="<< p_t;
 }

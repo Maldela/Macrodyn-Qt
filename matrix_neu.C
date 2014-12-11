@@ -322,7 +322,7 @@ matrix_neu& matrix_neu::operator=(const matrix_neu& C)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-QDataStream& operator<<(QDataStream& ostr, const matrix_neu& C)
+QTextStream& operator<<(QTextStream& ostr, const matrix_neu& C)
 {
     ostr<<"\n";
     for(int i=0;i<C.row;i++){
@@ -359,8 +359,8 @@ void matrix_neu::set_to_zero()
 //
 //
 // Class name:		matrix_neu.C
-// Member Function:	determinat
-// Purpose:		computes determinant of a matrix				
+// Member Function:	deterqMinat
+// Purpose:		computes deterqMinant of a matrix
 //
 // Author:		Andreas Starke
 // Last modified:	
@@ -368,14 +368,14 @@ void matrix_neu::set_to_zero()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-qreal matrix_neu::determinant()
+qreal matrix_neu::deterqMinant()
 {
 	int s,z,sz,i,sign;
     qreal value;
 	matrix_neu* C;
 	C = new matrix_neu(row-1,col-1);
 	if( !C )
-		fatalError("matrix_neu::determinant","Can't allocate memory");
+        fatalError("matrix_neu::deterqMinant","Can't allocate memory");
 
 	if(row==1) {
 		value=m[0][0];
@@ -402,7 +402,7 @@ qreal matrix_neu::determinant()
 					if(i==sz)
 						i++;
 				}
-				value+=sign*m[0][sz]*C->determinant();
+                value+=sign*m[0][sz]*C->deterqMinant();
 				sign*=(-1);
 			}
 			delete C;
@@ -461,9 +461,9 @@ matrix_neu matrix_neu::eigenvalues()
 	matrix_neu::mat__temp2->new_cells( col, 2 );
 	(*matrix_neu::mat__temp1) = *this;
 	matrix_neu::mat__temp1->balance();
-	matrix_neu::mat__temp1->eliminate_to_Hessenberg();
+    matrix_neu::mat__temp1->eliqMinate_to_Hessenberg();
 	int n = row;
-	int nn,mm,l,k,j,its,i,mmin;
+    int nn,mm,l,k,j,its,i,mqMin;
 	double z,y,x,w,v,u,t,s,r,q,p,anorm;
 	
 	anorm = fabs((*matrix_neu::mat__temp1)(0,0));
@@ -568,8 +568,8 @@ matrix_neu matrix_neu::eigenvalues()
 								(*matrix_neu::mat__temp1)(k+1,j) -= p*y;
 								(*matrix_neu::mat__temp1)(k,j) -= p*x;
 							}
-							mmin = nn<k+3 ? nn : k+3;
-							for ( i=l; i<=mmin; i++){
+                            mqMin = nn<k+3 ? nn : k+3;
+                            for ( i=l; i<=mqMin; i++){
 								p = x*(*matrix_neu::mat__temp1)(i,k)+y*(*matrix_neu::mat__temp1)(i,k+1);
 								if ( k != (nn-1) ){
 									p += z*(*matrix_neu::mat__temp1)(i,k+2);
@@ -648,7 +648,7 @@ void matrix_neu::balance()
 //
 //
 // Class name:		matrix_neu.C
-// Member Function:	eliminate_to_Hessenberg
+// Member Function:	eliqMinate_to_Hessenberg
 // Purpose:		reduction to Hessenberg form
 //
 // Author:		Andreas Starke
@@ -657,9 +657,9 @@ void matrix_neu::balance()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void matrix_neu::eliminate_to_Hessenberg()
+void matrix_neu::eliqMinate_to_Hessenberg()
 {
-	if ( row != col ) fatalError("matrix_neu::eliminate_to_Hessenberg","no square matrix");
+    if ( row != col ) fatalError("matrix_neu::eliqMinate_to_Hessenberg","no square matrix");
 	
 	int l,j,i;
 	int n = row;
@@ -740,9 +740,9 @@ if(row==2){
     qreal det;
 	det = (m[0][0] * m[1][1]) - (m[1][0] * m[0][1]);
 	if(fabs(det)<0.0000000001) {
-        log() << "fabs(determinant)=" << fabs(det) << " < 0.0000000001";
-        log() << "  will be set to null !!!" << "\n";
-		fatalError("matrix_neu::inverse","determinant=0 break");
+        log() << "fabs(deterqMinant)=" << fabs(det) << " < 0.0000000001";
+        log() << "  will be set to null !!!";
+        fatalError("matrix_neu::inverse","deterqMinant=0 break");
 	}
 	matrix_neu::mat__temp1->m[0][0] = (1/det) * m[1][1];
 	matrix_neu::mat__temp1->m[0][1] = -(1/det) * m[0][1];
@@ -762,14 +762,14 @@ else{
     qreal	detm;
 	int	ss,zz,s,z,i,j,sign1,sign;
 
-	detm=determinant();
+    detm=deterqMinant();
 	if(fabs(detm)<0.0000000001) {
-        log() << "fabs(determinant)=" << fabs(detm) << " < 0.0000000001";
-        log() << "  will be set to null !!!" << "\n";
+        log() << "fabs(deterqMinant)=" << fabs(detm) << " < 0.0000000001";
+        log() << "  will be set to null !!!";
 		detm=0;
 	}
 	if(detm==0)
-		fatalError("matrix_neu::inverse","determinant=0 break");
+        fatalError("matrix_neu::inverse","deterqMinant=0 break");
 	if(row==1) {
 		if(m[0][0]==0)
 			matrix_neu::mat__temp3->m[0][0]=1/0.000001;
@@ -799,7 +799,7 @@ else{
 					if(i==ss)
 						i++;
 				}
-				matrix_neu::mat__temp3->m[ss][zz]=sign*(A->determinant()/detm); //[zz,ss] =[ss,zz]
+                matrix_neu::mat__temp3->m[ss][zz]=sign*(A->deterqMinant()/detm); //[zz,ss] =[ss,zz]
 				sign*=(-1);
 			}
 		}

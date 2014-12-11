@@ -2,7 +2,7 @@
 #include "milano3.h"
 #include "../error.h"
 
-static const uint max_iter=10000;
+static const uint qMax_iter=10000;
 static const uint iter_prec=1;
 
 //$Header: milano3.C,v 1.7 99/07/01 11:53:03 mmueller Exp $
@@ -134,7 +134,7 @@ qreal milano3::Zins_3(const qreal& r1, const qreal& r2)
         left=zero;
       }
   }
-    while ( ( left<r1 && left<r2 ) && iter < max_iter && qAbs(zero-oldzero) > 1E-8);
+    while ( ( left<r1 && left<r2 ) && iter < qMax_iter && qAbs(zero-oldzero) > 1E-8);
 
   return zero;
 }
@@ -209,7 +209,7 @@ void milano3::system_3(const qreal& r2)
     qreal oldzt=zt;
 //    qreal teta;
 
- //   log() << "Hi! System 3" << "\n";
+ //   log() << "Hi! System 3" 
     
    rqreal=r2;
     empl=1/(alfa*(1/a-h))*(h*((1-tax)*pgt+zt)+mqreal+G);
@@ -237,8 +237,8 @@ void milano3::system_3(const qreal& r2)
     log() << ":3: teta   =" << teta<<"\n";
    
 */
-    if (pgt<0) log() << "  Gewinn ist negativ." << "\n";
-    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << "\n";
+    if (pgt<0) log() << "  Gewinn ist negativ.";
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ.";
 
 }
 
@@ -264,7 +264,7 @@ void milano3::system_G6(const qreal& r3)
     qreal oldzt=zt;
 //    qreal teta;
 
-  //  log() << "Hi! System G6" << "\n";
+  //  log() << "Hi! System G6" 
 
     rqreal=r3;
     empl=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rqreal));
@@ -308,8 +308,8 @@ void milano3::system_G6(const qreal& r3)
     log() << ":G6: teta   =" << teta<<"\n";
  */   
 
-    if (pgt<0) log() << "  Gewinn ist negativ." << "\n";
-    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << "\n";
+    if (pgt<0) log() << "  Gewinn ist negativ.";
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ.";
 }
 
 
@@ -334,7 +334,7 @@ void milano3::system_8(const qreal& r1)
     qreal oldzt=zt;
 //    qreal teta;
 
-//    log() << "Hi! System 8" << "\n";
+//    log() << "Hi! System 8" 
     
     rqreal=r1;
     empl=Ls;
@@ -380,8 +380,8 @@ void milano3::system_8(const qreal& r1)
     log() << ":8: teta   =" << teta<<"\n";
   */
 
-    if (pgt<0) log() << "  Gewinn ist negativ." << "\n";
-    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ." << "\n";
+    if (pgt<0) log() << "  Gewinn ist negativ.";
+    if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ.";
 
 }
 
@@ -409,7 +409,7 @@ void milano3::iteration(const qint64& t)
 
     diseq_regime(r1,r2,r3);
 */
-log() << "model not active - contact A. Foerster" << "\n";
+log() << "model not active - contact A. Foerster";
 }
 
 
@@ -417,7 +417,7 @@ log() << "model not active - contact A. Foerster" << "\n";
 
 /* loadParamset Last modified: 31.05.1996 (Jorg Nikutta) */
 
-void milano3::loadParamset(QDataStream& inFile)
+void milano3::loadParamset(QTextStream& inFile)
 {
   inFile >> a >> b;
   inFile >> psi1 >> psi2 >> nu1 >> nu2;
@@ -441,15 +441,15 @@ void milano3::loadParamset(QDataStream& inFile)
 
 void milano3::printParamset()
 {
-    log() << "a      :  " << a <<"\talpha0 : " << alfa0 << "\n";
-    log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0 << "\n";
-    log() << "z0 : " << z0 << "\n";
-    log() << "n1     :  " << n1 << "\n";
-    log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2 << "\n";
-    log() << "nu1    :  " << nu1 << "\tG   : " << G << "\n";
-    log() << "nu2    :  " << nu2 << "\ttax : " << tax << "\n";
-    log() << "h      :  " << h << "\tsimd: " << simd << "\n";
-    log() << "pg0    :  " << pg0 << "\tLs  : " << Ls << "\n";
+    log() << "a      :  " << a <<"\talpha0 : " << alfa0;
+    log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0;
+    log() << "z0 : " << z0;
+    log() << "n1     :  " << n1;
+    log() << "psi1   :  " << psi1 << "\tpsi2 : " << psi2;
+    log() << "nu1    :  " << nu1 << "\tG   : " << G;
+    log() << "nu2    :  " << nu2 << "\ttax : " << tax;
+    log() << "h      :  " << h << "\tsimd: " << simd;
+    log() << "pg0    :  " << pg0 << "\tLs  : " << Ls;
 }
 
 /******************************************************************************/
@@ -459,15 +459,15 @@ void milano3::printParamset()
 /*   Last modified:                                                          */
 /*                                                                           */
 /*****************************************************************************/
-void milano3::saveParamset(QDataStream& outFile)
+void milano3::saveParamset(QTextStream& outFile)
 {
-    outFile << a << " " << b << "\n";
-    outFile << psi1 << " " << psi2 << "\n"; 
-    outFile << nu1 << " " << nu2 << "\n";
-    outFile << n1 << " " << simd << "\n";
-    outFile << h << "\n";
-    outFile << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0 << "\n";
-    outFile << Ls << " " << G << " " << tax << "\n";
+    outFile << a << " " << b;
+    outFile << psi1 << " " << psi2;
+    outFile << nu1 << " " << nu2;
+    outFile << n1 << " " << simd;
+    outFile << h;
+    outFile << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0;
+    outFile << Ls << " " << G << " " << tax;
 }
 
 /******************************************************************************/
@@ -600,11 +600,32 @@ void milano3::sendParameters(int&,qreal**)
                    
                              // into an array and return the numbers
 				// of parameters
-void milano3::receiveParameters(const qreal*)
+void milano3::receiveParameters(const QList<qreal> &parameters)
 {
+    if (parameters.size() != 16) log() << "Wrong number of parameters!";
+    else
+    {
+        a = parameters.at(0);
+        b = parameters.at(1);
+        psi1 = parameters.at(2);
+        psi2 = parameters.at(3);
+        nu1 = parameters.at(4);
+        nu2 = parameters.at(5);
+        n1 = parameters.at(6);
+        simd = parameters.at(7);
+        h = parameters.at(8);
+        pg0 = parameters.at(9);
+        alfa0 = parameters.at(10);
+        mqreal0 = parameters.at(11);
+        z0 = parameters.at(12);
+        Ls = parameters.at(13);
+        G = parameters.at(14);
+        tax = parameters.at(15);
+
+        initialize();
+    }
 }
 // receive parameter values 
-
 
 
 

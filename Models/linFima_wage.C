@@ -129,7 +129,7 @@ static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal , qreal d)
 { return ( a*k<b ? a*k+d : b+d );
   //
-  // expression:	min{a*k,b}+c
+  // expression:	qMin{a*k,b}+c
 }
 
 static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
@@ -305,7 +305,7 @@ if(zvar) delete zvar;
 // Funktionsname:	loadParamset
 // Beschreibung:	Einlesen der Parameter aus der .sim Datei 
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_wage::loadParamset(QDataStream& inFile){
+void linFima_wage::loadParamset(QTextStream& inFile){
 
 	inFile >> pf_type;
 
@@ -333,6 +333,32 @@ void linFima_wage::loadParamset(QDataStream& inFile){
 
 	initialize();
 }
+
+void linFima_wage::receiveParameters(const QList<qreal> &parameters)
+{
+    if (parameters.size() != 17) log() << "Wrong number of parameters!";
+    else
+    {
+        pf_type = parameters.at(0);
+        A  = parameters.at(1);
+        B = parameters.at(2);
+        C = parameters.at(3);
+        D = parameters.at(4);
+        nF = parameters.at(5);
+        tauF = parameters.at(6);
+        k_0 = parameters.at(7);
+        delta = parameters.at(8);
+        rF = parameters.at(9);
+        eF = parameters.at(10);
+        xAll = parameters.at(11);
+        p0 = parameters.at(12);
+        zetamin = parameters.at(13);
+        zetamax = parameters.at(14);
+        gamma = parameters.at(15);
+        length = parameters.at(16);
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Funktionsname:	initialize
 // Beschreibung:	initialize the model, define the systems initial state
@@ -340,12 +366,12 @@ void linFima_wage::loadParamset(QDataStream& inFile){
 void linFima_wage::initialize()
 {
 
-	zvar = new rand_var( "ranf",1,zetamin,zetamax );	
+    zvar = new rand_var( "ranf",1,zetamin,zetamax );
 	if( !(zvar) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
 
-	div=((zetamax-zetamin)/2)/(1-gamma);
-	varDiv=((zetamax-zetamin)*(zetamax-zetamin))/12; // ist konstant !
+    div=((zetamax-zetamin)/2)/(1-gamma);
+    varDiv=((zetamax-zetamin)*(zetamax-zetamin))/12; // ist konstant !
 
   	pf_init();
 	wagerate_t= (*pf)(k_0,a,b,c,d)-k_0*(*pf_prime)(k_0,a,b,c,d);
@@ -375,7 +401,7 @@ void linFima_wage::initialize()
 void linFima_wage::Wagebill()
 {
 	Wagebill_t=nF*wagerate_t;
-log() << "Wagebill=" << Wagebill_t << "\n";
+    log() << "Wagebill=" << Wagebill_t;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -385,9 +411,9 @@ log() << "Wagebill=" << Wagebill_t << "\n";
 void linFima_wage::Savings()
 {
 	Savings_t=Wagebill_t-(pF-Ed)*xAll;
-log() << "pF=" << pF << "\n";
-log() << "Ed=" << Ed << "\n";
-log() << "Savings=" << Savings_t << "\n";
+    log() << "pF=" << pF;
+    log() << "Ed=" << Ed;
+    log() << "Savings=" << Savings_t;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -396,12 +422,12 @@ log() << "Savings=" << Savings_t << "\n";
 ///////////////////////////////////////////////////////////////////////////////
 void linFima_wage::wagerate()
 {
-    qreal wagerate_max = MAX(0,Savings_t);
+    qreal wagerate_max = qMax(0.0,Savings_t);
 	
-log() << "max=" << wagerate_max << "\n";
+log() << "qMax=" << wagerate_max;
 
-	wagerate_t= (*pf)(wagerate_max,a,b,c,d)-wagerate_max*(*pf_prime)(wagerate_max,a,b,c,d);
-log() << "wagerate_dyn=" << wagerate_t << "\n";
+    wagerate_t= (*pf)(wagerate_max,a,b,c,d)-wagerate_max*(*pf_prime)(wagerate_max,a,b,c,d);
+log() << "wagerate_dyn=" << wagerate_t;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -412,9 +438,9 @@ log() << "wagerate_dyn=" << wagerate_t << "\n";
 
 void linFima_wage::EndogenR()
 {
-qreal dummy=MAX(0,Savings_t);
+qreal dummy = qMax(0.0,Savings_t);
 R=(1-delta)+(*pf_prime)(dummy,a,b,c,d);
-log() << "R=" << R << "\n";
+log() << "R=" << R;
 }
 
 
@@ -428,7 +454,7 @@ void linFima_wage::iteration(const qint64& t)
 
 // Dividendenprozess (zuf�llig)
 	div=gamma * div + zvar->dice();
-	Ed= gamma * div + ((zetamax-zetamin)/2) ;
+    Ed= gamma * div + ((zetamax-zetamin)/2) ;
 
 
 	Wagebill();
@@ -440,24 +466,24 @@ void linFima_wage::iteration(const qint64& t)
 
 // Perfekte Prognose
 	if(t>1)
-		{ 			// in Periode 1 werden die Startwerte genommen
-					// wenn Fundis perfekte Prognosen machen sollen
-		if(perfectPredictor) 
-			Fi=1/(nF*tauF)*xAll;
- 			pF=R*(pF-Ed)+Fi;
-log() << "pF=" << pF << "\n";
-//Mark			pF=((R*pF-r*pC-Ed)/(1-r))+(1/rF)*VF*xAll;
-		
-		 // falls Fundis extern vorgeschaltet sind, dann wird
-		 // ihre Prognose mit der perfekten Prognose "uberschrieben
-		
-		 	pFperf=((R*pFperf-r*pCperf-Ed)/(1-r))+(1/rF)*VF*xAll; 
-		
-		 // zum Vergleich !
-		 // kann in der gleichen Zeitreihe mit p dargestellt werden
-		 // qCperf muss dazu zus"atzlich vorgeschaltet werden und in
-		 // der gleichen Weise wie qC gebildet werden !!!
-		}
+    { 			// in Periode 1 werden die Startwerte genommen
+                // wenn Fundis perfekte Prognosen machen sollen
+        if(perfectPredictor)
+            Fi=1/(nF*tauF)*xAll;
+        pF=R*(pF-Ed)+Fi;
+        log() << "pF=" << pF;
+        //Mark			pF=((R*pF-r*pC-Ed)/(1-r))+(1/rF)*VF*xAll;
+
+     // falls Fundis extern vorgeschaltet sind, dann wird
+     // ihre Prognose mit der perfekten Prognose "uberschrieben
+
+        pFperf=((R*pFperf-r*pCperf-Ed)/(1-r))+(1/rF)*VF*xAll;
+
+     // zum Vergleich !
+     // kann in der gleichen Zeitreihe mit p dargestellt werden
+     // qCperf muss dazu zus"atzlich vorgeschaltet werden und in
+     // der gleichen Weise wie qC gebildet werden !!!
+    }
 
 // Dynamik
 	pPerfOld2=pPerfOld;
@@ -481,7 +507,7 @@ log() << "pF=" << pF << "\n";
 	pPerf=(r*pCperf+(1-r)*pFperf+de-b_preis)/R; // nur zum Vergleich !!!
 
 // Portfolio
-	xF=rF*(pF+Ed-R*p)/Vd; // tatsaechliches Portfolio der Jungen (varianzminimal)
+    xF=rF*(pF+Ed-R*p)/Vd; // tatsaechliches Portfolio der Jungen (varianzminimal)
 	xC=rC*(pC+Ed-R*p)/Vd;
 	xFrel=xF/xAll;	// rel. Portfolio bezug zur Aktienanzahl
 	xCrel=xC/xAll;
@@ -582,16 +608,15 @@ qreal* linFima_wage::setLabels(const QString& label)
 // Funktionsname: saveParamsetWithNames
 // Beschreibung:         add  parameterset to printfile
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_wage::saveParamsetWithNames(QDataStream& outputFile)
+void linFima_wage::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nModel linFima_wage\n";
     if(perfectPredictor)
-	outputFile << "perfectPredictor" << "\n";
-    outputFile << "R = " << R << "\n";
+    outputFile << "perfectPredictor";
+    outputFile << "R = " << R;
     outputFile << "xAll= " << xAll << " ";
     outputFile << "p0= " << p0 << " ";
-    outputFile << "\n";
-    outputFile << "length = "<< length << "\n";
+    outputFile << "length = "<< length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

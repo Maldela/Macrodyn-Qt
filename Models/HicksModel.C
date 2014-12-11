@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
 #include "HicksModel.h"
 
 
@@ -192,7 +191,7 @@ void HicksModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::loadParamset(QDataStream& inFile)
+void HicksModel::loadParamset(QTextStream& inFile)
 {
 	inFile >> y1_0 >> y2_0 >> If >> Iaut >> Yc >> v >> m >> lambda >> myseed;
 	inFile >> length;
@@ -212,7 +211,7 @@ void HicksModel::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::saveParamset(QDataStream& outFile)
+void HicksModel::saveParamset(QTextStream& outFile)
 {
 	outFile << y1_0 << "\t" << y2_0 << "\t" << If << "\t";
 	outFile << Iaut << "\t" << Yc << "\t" << v << "\t" << m << "\t" << lambda << "\t" << myseed;
@@ -232,7 +231,7 @@ void HicksModel::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void HicksModel::saveParamsetWithNames(QDataStream& outFile)
+void HicksModel::saveParamsetWithNames(QTextStream& outFile)
 {
 	outFile << "y1_0 = " << y1_0;
 	outFile << "\ny2_0 = " << y2_0;
@@ -243,7 +242,7 @@ void HicksModel::saveParamsetWithNames(QDataStream& outFile)
 	outFile << "\nm = " << m;
 	outFile << "\nlambda = " << lambda;
 	outFile << "\nseed = " << myseed;
-	outFile << "\nlength = " << length << "\n";
+    outFile << "\nlength = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -261,7 +260,7 @@ void HicksModel::saveParamsetWithNames(QDataStream& outFile)
 void HicksModel::printParamset()
 {
     log() << y1_0 << "\t" << y2_0 << "\t" << If << "\t" << Iaut << "\t";
-    log() << Yc << "\t" << v << "\t" << m  << "\t" << lambda << "\t" << myseed << "\t" << length << "\n";
+    log() << Yc << "\t" << v << "\t" << m  << "\t" << lambda << "\t" << myseed << "\t" << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -308,7 +307,7 @@ void HicksModel::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void HicksModel::receiveParameters(const qreal* parameters)
+void HicksModel::receiveParameters(const QList<qreal>& parameters)
 {
     y1_0=parameters[0];
     y2_0=parameters[1];

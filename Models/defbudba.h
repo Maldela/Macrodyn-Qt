@@ -25,10 +25,10 @@ class defbudba : public baseModel {
     qreal my,lambda;                       // wage adjustment parameters    
     qreal w0,p0,m0;                        // initial values                
     qreal wtqreal,mtqreal,ptrate,wtrate;     // qreal wage, qreal balance       
-    qreal Lmax;                            // maximum labour supply
-    qreal ymax;                            // maximum capacity output
+    qreal Lmax;                            // qMaximum labour supply
+    qreal ymax;                            // qMaximum capacity output
     qreal rho, delta;                      // utility function parameters   
-    int tau;                                // length of expectations memory
+    qint64 tau;                                // length of expectations memory
     qreal rhoTilda;
     qreal g,tax;                           // government demand, tax rate   
     qreal g0;				  // initial value for g
@@ -49,8 +49,8 @@ public:
     defbudba();			    // default constructor
     virtual ~defbudba();		    // destructor
     
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const qint64&);    // perform one iteration 
@@ -69,7 +69,7 @@ public:
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*); // receive parameter values 
+    void receiveParameters(const QList<qreal>&); // receive parameter values
 };
 
 #endif

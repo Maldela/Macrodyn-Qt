@@ -141,7 +141,7 @@ qreal* adaptExp::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void adaptExp::loadParamset(QDataStream& inputFile)
+void adaptExp::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B;
     inputFile >> gamm >> kappa >> lambda >> my;
@@ -168,7 +168,7 @@ void adaptExp::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void adaptExp::saveParamset(QDataStream& outputFile)
+void adaptExp::saveParamset(QTextStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t";
     outputFile << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\t";
@@ -189,12 +189,12 @@ void adaptExp::saveParamset(QDataStream& outputFile)
 
 void adaptExp::printParamset()
 {
-    log() << A << "\t" << B << "\n";
-    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << delta << "\t" << beta << "\t" << eta << "\n";
-    log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
+    log() << A << "\t" << B;
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my;
+    log() << tau << "\t" << length;
+    log() << delta << "\t" << beta << "\t" << eta;
+    log() << w0 << "\t" << p0 << "\t" << m0;
+    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax;
 }
 
 /******************************************************************************/
@@ -245,24 +245,28 @@ void adaptExp::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void adaptExp::receiveParameters(const qreal* parameters)
+void adaptExp::receiveParameters(const QList<qreal> parameters)
 {
-    A=parameters[0];
-    B=parameters[1];
-    gamm=parameters[2];
-    kappa=parameters[3];
-    lambda=parameters[4];
-    my=parameters[5];
-    tau=(int)(parameters[6]);
-    length=(qint64)(parameters[7]);
-    delta=parameters[8];
-    beta=parameters[9];
-    eta=parameters[10];
-    w0=parameters[11];
-    p0=parameters[12];
-    m0=parameters[13];
-    Lmax=parameters[14];
-    rho=parameters[15];
-    g=parameters[16];
-    tax=parameters[17];
+    if (parameters.size() != 18) log() << "Wrong number of parameters!";
+    else
+    {
+        A=parameters[0];
+        B=parameters[1];
+        gamm=parameters[2];
+        kappa=parameters[3];
+        lambda=parameters[4];
+        my=parameters[5];
+        tau=(int)(parameters[6]);
+        length=(qint64)(parameters[7]);
+        delta=parameters[8];
+        beta=parameters[9];
+        eta=parameters[10];
+        w0=parameters[11];
+        p0=parameters[12];
+        m0=parameters[13];
+        Lmax=parameters[14];
+        rho=parameters[15];
+        g=parameters[16];
+        tax=parameters[17];
+    }
 }

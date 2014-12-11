@@ -56,8 +56,8 @@ protected:
 
 public:
     dornbusch();			// constructor
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
@@ -66,7 +66,7 @@ public:
 
     qreal* sendModelVar();		// for compatibity reasons only
     void sendParameters(int&,qreal**);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     virtual ~dornbusch(void);
 };
 

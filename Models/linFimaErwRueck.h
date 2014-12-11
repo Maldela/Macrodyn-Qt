@@ -13,8 +13,7 @@
 #define linFimaErwRueck_H
 
 #include "baseModel.h"
-#include "../strnchr.h"
-#include<stdlib.h>
+
 
 class linFimaErwRueck : public baseModel {
 
@@ -91,19 +90,20 @@ protected:
 	qreal divvar;	// berechnete Schaetzer der Varianz der Dividende
 
 // Funktionen
-	void getString(QDataStream&,char*); // l"asst Kommentare im .sim File zu	
-	qreal getqreal(QDataStream&); 		 // l"asst Kommentare im .sim File zu
-	int getInt(QDataStream&); 			 // l"asst Kommentare im .sim File zu
+	void getString(QTextStream&,char*); // l"asst Kommentare im .sim File zu	
+	qreal getqreal(QTextStream&); 		 // l"asst Kommentare im .sim File zu
+	int getInt(QTextStream&); 			 // l"asst Kommentare im .sim File zu
 
 public:
 	linFimaErwRueck();
 	virtual ~linFimaErwRueck();
 	qreal* setLabels(const QString&);
 	void initialize();
-	void loadParamset(QDataStream&);	
-	void saveParamsetWithNames(QDataStream&); 
+	void loadParamset(QTextStream&);	
+	void saveParamsetWithNames(QTextStream&); 
 	void sendStateSpace(int &,const qreal***);
 	void iteration(const qint64&);
+    void receiveParameters(const QList<qreal>&);
 };
 
 #endif

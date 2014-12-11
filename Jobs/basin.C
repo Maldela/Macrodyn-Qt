@@ -17,7 +17,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-basin::basin(baseModel* const bMod,const xyRange& axes, char* const cycleFile,
+basin::basin(baseModel* const bMod,const xyRange& axes, const QString& cycleFile,
          MacrodynGraphicsItem* const graph)
           :geometricJob(bMod,axes,graph)
 {
@@ -45,7 +45,7 @@ void basin::initCycle(const QString& name, qreal*** cycle, int& period)
         return;
     }
 
-    QDataStream stream(&cycleFile);
+    QTextStream stream(&cycleFile);
 
     stream >> period >> dimension;
     if( !(*cycle = new qreal*[dimension]) )
@@ -69,7 +69,7 @@ void basin::initCycle(const QString& name, qreal*** cycle, int& period)
 /*                                                                            */
 /* Class name:      basin                                                     */
 /* Member function: isAttracting                                              */
-/* Purpose:         determine wether the computed orbit tends to the given    */
+/* Purpose:         deterqMine wether the computed orbit tends to the given    */
 /*                  cycle or not                                              */
 /* Last modified:   11.10.1994 (Markus Lohmann)                               */
 /*                                                                            */

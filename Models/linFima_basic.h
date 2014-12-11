@@ -16,8 +16,6 @@
 #include "baseModel.h"
 #include "rand_var.h"
 
-#include "../strnchr.h"
-#include<stdlib.h>
 
 class linFima_basic : public baseModel
 {
@@ -80,15 +78,15 @@ protected:
 public:
 	linFima_basic();
 	//virtual ~linFima_basic();	
-    void loadParamset(QDataStream&);
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);
+    void saveParamset(QTextStream&);
 	void printParamset();
 	void initialize();
     qreal* sendModelVar();
     qreal* setLabels(const QString&);
     void sendStateSpace(int &,const qreal***);
     void sendParameters(int&, qreal**);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     void iteration(const qint64&t);
 
 };

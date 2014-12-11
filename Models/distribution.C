@@ -115,7 +115,7 @@ qreal distribution::rectangular(){
 	static qreal random;
 
 	do {
-		random = rand()/qreal(RAND_MAX);
+        random = rand()/qreal(RAND_MAX);
 	} while((random==0)||(random==1));
 
 	return random;

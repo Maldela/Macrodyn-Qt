@@ -13,8 +13,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef _MAX_LYAPUNOV_EXP_INCLUDED
-#define _MAX_LYAPUNOV_EXP_INCLUDED
+#ifndef _max_LYAPUNOV_EXP_INCLUDED
+#define _max_LYAPUNOV_EXP_INCLUDED
 
 #include	"d_var.h"
 #include	"geometricJob.h"
@@ -108,5 +108,5 @@ class max_lyapunov_exp_t : public max_lyapunov_exp_1d {
 };
 
 
-#endif	// _MAX_LYAPUNOV_EXP_INCLUDED
+#endif	// _max_LYAPUNOV_EXP_INCLUDED
 //eof

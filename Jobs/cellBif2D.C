@@ -40,13 +40,13 @@ void cellBif2D::simulation()
 
     for(*xParam=xmin;*xParam<=xmax; *xParam+=stepX) {
 	model->initialize();
-	*xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
-	*yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
+    *xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
+    *yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
 
 	for(t=0;t<length;t++) {
 	    model->iteration(t+1);
-	    *xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
-	    *yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
+        *xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
+        *yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
 	    if( t >= limit && inRange(*xParam,*yParam) ) {
                                        // only points inside the state space
 				       // section under consideration are

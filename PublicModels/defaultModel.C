@@ -116,7 +116,7 @@ qreal defaultModel::expectedInflationRate(const qint64 t)
     qint64 T,counter;
     qreal help=0.0;
     
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ )
 	help += theta[counter];
     return( help / T );
@@ -167,10 +167,10 @@ void defaultModel::notCom(qreal &xtnot,qreal &ct,qreal &ptratex)
 
 void defaultModel::empAndOut(qreal &xtnot, qreal &ytnot)
 {
-    output = MIN( MIN(xtnot,ytnot), ymax );
+    output = qMin( qMin(xtnot,ytnot), ymax );
 
     if( output == ymax )
-	employment = Lmax;
+    employment = Lmax;
     else
 	employment = exp( log(B/A * output) * (1/B) );
 }
@@ -179,7 +179,7 @@ void defaultModel::empAndOut(qreal &xtnot, qreal &ytnot)
 /*                                                                            */
 /* Class name:      defaultModel                                              */
 /* Member function: detDiseq                                                  */
-/* Purpose:         determination of the type of disequilibrium state         */
+/* Purpose:         deterqMination of the type of disequilibrium state         */
 /*                  (eq. 2.20)                                                */
 /* Last modified:   09.11.1994 (Markus Lohmann)                               */
 /*                                                                            */
@@ -191,7 +191,7 @@ void defaultModel::detDiseq(qreal &xtnot,qreal &ytnot,char *x1)
         if( ymax > ytnot)
 	    strcpy(x1,"C ");
 	else {
-	    if( ymax == ytnot )
+        if( ymax == ytnot )
 	        strcpy(x1,"CI");
 	    else
 		strcpy(x1,"I ");
@@ -199,10 +199,10 @@ void defaultModel::detDiseq(qreal &xtnot,qreal &ytnot,char *x1)
     }
     else {
         if( xtnot == ytnot ) {
-	    if( ymax > ytnot )
+        if( ymax > ytnot )
 		strcpy(x1,"CK");
 	    else {
-	        if( ymax == ytnot )
+            if( ymax == ytnot )
 		    strcpy(x1,"WE");
 		else
 		    strcpy(x1,"I ");
@@ -210,10 +210,10 @@ void defaultModel::detDiseq(qreal &xtnot,qreal &ytnot,char *x1)
 	}
 	else {
 	    if( xtnot < ytnot ) {
-	        if( ymax > xtnot )
+            if( ymax > xtnot )
 		    strcpy(x1,"K ");
 		else {
-		    if( ymax == xtnot )
+            if( ymax == xtnot )
 		        strcpy(x1,"IK");
 		    else
 		        strcpy(x1,"I ");
@@ -244,7 +244,7 @@ void defaultModel::wageAndPrice(qreal &xtnot, qreal &ytnot,
     if( !strcmp(state,"I "))
 	wtrate= 1 + my*((ztnot-employment)/ztnot) ;
     else
-	wtrate= 1 + lambda*((employment-Lmax)/Lmax) ;
+    wtrate= 1 + lambda*((employment-Lmax)/Lmax) ;
     
     if (ptrate<1e-5)
 	ptrate=1e-5;
@@ -263,7 +263,7 @@ void defaultModel::wageAndPrice(qreal &xtnot, qreal &ytnot,
 
 void defaultModel::dynamics()
 {
-    mtqreal  = ( MIN( output,g+mtqreal) - tax*output ) / ptrate;
+    mtqreal  = ( qMin( output,g+mtqreal) - tax*output ) / ptrate;
     wtqreal  = wtqreal * (wtrate / ptrate);
     for(int i=0; i<=tau; i++ )
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
@@ -436,7 +436,7 @@ void defaultModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::loadParamset(QDataStream& inputFile)
+void defaultModel::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B;
     inputFile >> gamm >> kappa >> lambda >> my;
@@ -463,7 +463,7 @@ void defaultModel::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::saveParamset(QDataStream& outputFile)
+void defaultModel::saveParamset(QTextStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t";
     outputFile << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\t";
@@ -482,7 +482,7 @@ void defaultModel::saveParamset(QDataStream& outputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::saveParamsetWithNames(QDataStream& outputFile)
+void defaultModel::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "defaultModel:\n\t";
     outputFile << "A = " << A << "\tB = " << B << "\n\tgamma = ";
@@ -492,7 +492,7 @@ void defaultModel::saveParamsetWithNames(QDataStream& outputFile)
     outputFile << delta << "\tbeta = " << beta << "\n\tw0 = ";
     outputFile << w0 << "\tp0 = " << p0 << "\tm0 = " << m0 << "\n\tLmax = ";
     outputFile << Lmax << "\trho = " << rho << "\tg = ";
-    outputFile << g << "\ttax = " << tax << "\n";
+    outputFile << g << "\ttax = " << tax;
 }
 
 /******************************************************************************/
@@ -506,12 +506,12 @@ void defaultModel::saveParamsetWithNames(QDataStream& outputFile)
 
 void defaultModel::printParamset()
 {
-    log() << A << "\t" << B << "\n";
-    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << delta << "\t" << beta << "\n";
-    log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
+    log() << A << "\t" << B;
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my;
+    log() << tau << "\t" << length;
+    log() << delta << "\t" << beta;
+    log() << w0 << "\t" << p0 << "\t" << m0;
+    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax;
 }
 
 /******************************************************************************/
@@ -561,25 +561,29 @@ void defaultModel::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void defaultModel::receiveParameters(const qreal* parameters)
+void defaultModel::receiveParameters(const QList<qreal>& parameters)
 {
-    A=parameters[0];
-    B=parameters[1];
-    gamm=parameters[2];
-    kappa=parameters[3];
-    lambda=parameters[4];
-    my=parameters[5];
-    tau=(int)(parameters[6]);
-    length=(qint64)(parameters[7]);
-    delta=parameters[8];
-    beta=parameters[9];
-    w0=parameters[10];
-    p0=parameters[11];
-    m0=parameters[12];
-    Lmax=parameters[13];
-    rho=parameters[14];
-    g=parameters[15];
-    tax=parameters[16];
+    if (parameters.size() != 17) log() << "Wrong number of parameters!";
+    else
+    {
+        A=parameters[0];
+        B=parameters[1];
+        gamm=parameters[2];
+        kappa=parameters[3];
+        lambda=parameters[4];
+        my=parameters[5];
+        tau=(int)(parameters[6]);
+        length=(qint64)(parameters[7]);
+        delta=parameters[8];
+        beta=parameters[9];
+        w0=parameters[10];
+        p0=parameters[11];
+        m0=parameters[12];
+        Lmax=parameters[13];
+        rho=parameters[14];
+        g=parameters[15];
+        tax=parameters[16];
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -632,7 +636,7 @@ void rdefaultModel::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rdefaultModel::loadParamset(QDataStream& inputFile)
+void rdefaultModel::loadParamset(QTextStream& inputFile)
 {
   inputFile >> zvar_name;		// read the name of the stochastic parameter
   inputFile >> zvar_expr;		// read the definition

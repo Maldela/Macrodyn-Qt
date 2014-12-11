@@ -20,9 +20,9 @@
 #include "markov_chain.h"
 #include "distribution.h"
 
-const int trans_x_MAX=100;
+const int trans_x_Max=100;
 
-const int mc_states_MAX=10;
+const int mc_states_Max=10;
 
 struct st_olg_paramset 
 {
@@ -31,9 +31,9 @@ struct st_olg_paramset
 	int theta_type;
     qreal my;
     qreal z_trans;
-    qreal trans_x[trans_x_MAX];
-    qreal trans_a[trans_x_MAX];
-    qreal trans_b[trans_x_MAX];
+    qreal trans_x[trans_x_Max];
+    qreal trans_a[trans_x_Max];
+    qreal trans_b[trans_x_Max];
     int mc_flag;
     QString zvar_expr;
     QString mc_matrix;
@@ -98,15 +98,15 @@ protected:
 
 public:
     rOLG_wt();			// constructor
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
-    void save_st_olg_Paramset(QDataStream&,st_olg_paramset*);
-    void saveParamsetWithNames(QDataStream&); // add parametset to printerfile (so far only for xpm)
-    void save_st_olg_ParamsetWithNames(QDataStream&,st_olg_paramset*);
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
+    void save_st_olg_Paramset(QTextStream&,st_olg_paramset*);
+    void saveParamsetWithNames(QTextStream&); // add parametset to printerfile (so far only for xpm)
+    void save_st_olg_ParamsetWithNames(QTextStream&,st_olg_paramset*);
     void printParamset();
     void print_st_olg_Paramset(st_olg_paramset*);
     void noise_iteration(st_olg_paramset*);
-    void read_sim(QDataStream&,st_olg_paramset*);
+    void read_sim(QTextStream&,st_olg_paramset*);
     void delete_st_olg_paramset_stochptr(st_olg_paramset*);
     void iteration(const qint64&);
     void expection(qreal,qreal);
@@ -116,7 +116,7 @@ public:
 
     qreal* sendModelVar();		// for compatibity reasons only
     void sendParameters(int&,qreal**);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     virtual ~rOLG_wt(void);            //destructor
 
 };

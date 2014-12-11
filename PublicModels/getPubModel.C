@@ -40,7 +40,7 @@ void PrintPubModelDate(void) {
         #ifdef __TIME__
           log() << "public macrodyn  built on " << __DATE__ << " (" << __TIME__ << ")\n";
         #else
-          log() << "public macrodyn  built on " << __DATE__ << "\n";
+          log() << "public macrodyn  built on " << __DATE__ 
         #endif
       #else
         log() << "Sorry, no build date stored of public macrodyn.\n";
@@ -57,6 +57,7 @@ void PrintPubModelDate(void) {
 ///////////////////////////////////////////////////////////////////////////////
 baseModel* getPubModel(const QString& modelTyp)
 {
+    log() << "get public model: " << modelTyp;
     if (modelTyp == "default")
 	return new defaultModel;
     if (modelTyp == "rdefault")
@@ -116,6 +117,7 @@ baseModel* getPubModel(const QString& modelTyp)
 ///////////////////////////////////////////////////////////////////////////////
 baseModel* getPubModel(const QString& modelTyp, const baseModel* sourceModel)
 {
+    log() << "get public model: " << modelTyp;
     if (modelTyp == "default")
 	return new defaultModel(*((defaultModel*)sourceModel));
     if (modelTyp == "rdefault")

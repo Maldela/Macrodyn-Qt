@@ -18,9 +18,9 @@ class capOlg : public baseModel {
     qreal k0,r0;                           // initial values                
     qreal wt;                              // qreal wage
     qreal n;      
-    qreal ymax;                            // maximum capacity output
+    qreal ymax;                            // qMaximum capacity output
     qreal rho, delta;                      // utility function parameters   
-    int tau;                              // length of expectations memory
+    qint64 tau;                              // length of expectations memory
     qreal rhoTilda;
     qreal rt;		                  // return rate
     qreal kt;                              // capital
@@ -36,8 +36,8 @@ public:
     capOlg();			    // default constructor
     virtual ~capOlg();		    // destructor
     
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const qint64&);    // perform one iteration 
@@ -54,7 +54,7 @@ public:
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*); // receive parameter values 
+    void receiveParameters(const QList<qreal>&); // receive parameter values 
 };
 
 class capOlgAdapt : public capOlg {
@@ -67,13 +67,13 @@ public:
     capOlgAdapt();                          // default constructor
     qreal* setLabels(const QString&);
     void iteration(const qint64&);    // perform one iteration 
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values 
 };
 
 
@@ -100,12 +100,12 @@ public:
     capOlgGeoExp();                         // default constructor
     void iteration(const qint64&);    // perform one iteration 
     qreal* setLabels(const QString&);
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values 
 };
 #endif

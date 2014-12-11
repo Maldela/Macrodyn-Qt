@@ -325,7 +325,7 @@ qreal* finanzmarkt_2Dim_1::setLabels(const QString& label)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim_1::loadParamset(QDataStream& inFile)
+void finanzmarkt_2Dim_1::loadParamset(QTextStream& inFile)
 {
     inFile >> R;  		//risikoloser Zins (1+r)>0
     inFile >> alphaf;		//Risikoaversionsparameter eines Fundamentalisten 
@@ -342,7 +342,7 @@ void finanzmarkt_2Dim_1::loadParamset(QDataStream& inFile)
     inFile >> xAll2;		//Gesamtzahl an Anteilsscheinen der Firma 2
     inFile >> p1;		//Startwert fuer den Preis eines Anteilscheines der Firma 1
     inFile >> p2;		//Startwert fuer den Preis eines Anteilscheines der Firma 2
-    inFile >> zetamin1 >> zetamax1 >> gamma1; //Parameterwerte fuer die 
+    inFile >> zetamin1 >> zetamax1 >> gamma1; //Parameterwerte fuer die
     inFile >> zetamin2 >> zetamax2 >> gamma2;  //Dividenenprozesse
     
     inFile >> var1err;		//Fehlerwerte, die die Noise--Trader auf die 
@@ -358,6 +358,51 @@ void finanzmarkt_2Dim_1::loadParamset(QDataStream& inFile)
     inFile >>length;	//Iterationslaenge
 	
     initialize();  
+}
+
+void finanzmarkt_2Dim_1::receiveParameters(const QList<qreal> &parameters)
+{
+    if (parameters.size() != 25) log() << "Wrong number of parameters";
+    else
+    {
+        R = parameters.at(0);  		//risikoloser Zins (1+r)>0
+        alphaf = parameters.at(1);		//Risikoaversionsparameter eines Fundamentalisten
+        alphan = parameters.at(2);		//Risikoaversionsparameter eines Noise--Trader
+        ef = parameters.at(3);
+        en = parameters.at(4);
+        mu0 = parameters.at(5);		//Startwert fuer Anteil an Fundamentalisten [0,1]
+
+    //    beta;             //Variablen fuer Gruppenswitch
+    //   etafix;           //Achtung!!! bei etafix=1 gibt es keinen Gruppenswitch
+    //    etaF;             //Unbelehrbare Fundamentalisten
+
+        xAll1 = parameters.at(6);		//Gesamtzahl an Anteilsscheinen der Firma 1
+        xAll2 = parameters.at(7);		//Gesamtzahl an Anteilsscheinen der Firma 2
+        p1 = parameters.at(8);		//Startwert fuer den Preis eines Anteilscheines der Firma 1
+        p2 = parameters.at(9);		//Startwert fuer den Preis eines Anteilscheines der Firma 2
+        zetamin1 = parameters.at(10);
+        zetamax1 = parameters.at(11);
+        gamma1 = parameters.at(12); //Parameterwerte fuer die
+        zetamin2 = parameters.at(13);
+        zetamax2 = parameters.at(14);
+        gamma2 = parameters.at(15);  //Dividenenprozesse
+
+        var1err = parameters.at(16);		//Fehlerwerte, die die Noise--Trader auf die
+        var2err = parameters.at(17);		//Werte der Kovarianzmatrix addieren, der
+        coerr = parameters.at(18);		//Fundamentalisten addieren
+
+         noise = parameters.at(19);		//
+         b1 = parameters.at(20);
+         c1 = parameters.at(21);	//Parameter fuer die Dreieicksverteilung,
+         b2 = parameters.at(22);
+         c2 = parameters.at(23);	//mit welcher die Fehleinschaetzung der
+                    //Noise--Trader modelliert wird	(in der Initialisierung wird
+                    //der untere Rand auf -b1 bzw.-b2 gestetzt)
+
+        length = parameters.at(24);	//Iterationslaenge
+
+        initialize();
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -412,10 +457,10 @@ void finanzmarkt_2Dim_1::initialize()
 	Id->m[0][1]= 0;	
 	Id->m[1][1]= 1;
 	
-	zvar1 = new rand_var( "ranf",1,zetamin1,zetamax1 );	
+    zvar1 = new rand_var( "ranf",1,zetamin1,zetamax1 );
 	if( !(zvar1) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
-	zvar2 = new rand_var( "ranf",1,zetamin2,zetamax2 );	
+    zvar2 = new rand_var( "ranf",1,zetamin2,zetamax2 );
 	if( !(zvar2) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
 	zvar3 = new rand_var( "ranf",1,0,1 );	
@@ -426,11 +471,11 @@ void finanzmarkt_2Dim_1::initialize()
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
 	
 	
-	d1=((zetamax1-zetamin1)/2)/(1-gamma1);
-	var1=((zetamax1-zetamin1)*(zetamax1-zetamin1))/12; // ist konstant !
+    d1=((zetamax1-zetamin1)/2)/(1-gamma1);
+    var1=((zetamax1-zetamin1)*(zetamax1-zetamin1))/12; // ist konstant !
 
-	d2=((zetamax2-zetamin2)/2)/(1-gamma2);
-	var2=((zetamax2-zetamin2)*(zetamax2-zetamin2))/12; // ist konstant !
+    d2=((zetamax2-zetamin2)/2)/(1-gamma2);
+    var2=((zetamax2-zetamin2)*(zetamax2-zetamin2))/12; // ist konstant !
 	
 
 
@@ -601,17 +646,17 @@ else {
 	
 //Zufallsdividende fuer die laufende Periode:
 
-    Ed11= gamma1*gamma1*d1+(1+gamma1)*((zetamax1-zetamin1)/2);	
+    Ed11= gamma1*gamma1*d1+(1+gamma1)*((zetamax1-zetamin1)/2);
 	d1=gamma1 * d1 + zvar1->dice();
 	delta_d1=d1-Ed1;	           //fuer alternative Renditenberchnung
-	Ed1= gamma1 * d1 + ((zetamax1-zetamin1)/2) ;
+    Ed1= gamma1 * d1 + ((zetamax1-zetamin1)/2) ;
 
 	
 	
-    Ed22= gamma2*gamma2*d2+(1+gamma2)*((zetamax2-zetamin2)/2);		
+    Ed22= gamma2*gamma2*d2+(1+gamma2)*((zetamax2-zetamin2)/2);
 	d2=gamma2 * d2 + zvar2->dice();	
 	delta_d2=d2-Ed2;                   //fuer alternative Renditenberchnung
-	Ed2= gamma2 * d2 + ((zetamax2-zetamin2)/2) ;
+    Ed2= gamma2 * d2 + ((zetamax2-zetamin2)/2) ;
 
 	
 	
@@ -856,7 +901,7 @@ else {	//XN=(Xi_N*VN)^(-1)*[PN+ED-R*P]
 }
 
 ///////////////////////////////////////////////////////////////////////////
-//Habenstand:  Anfangsaustattung minus Kosten der Risikoanlage
+//Habenstand:  Anfangsaustattung qMinus Kosten der Risikoanlage
 //		Haben=e-px
 ///////////////////////////////////////////////////////////////////////////
 

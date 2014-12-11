@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
+
 #include "demog_model.h"
 
 
@@ -74,8 +74,8 @@ void demog_model::iteration(const qint64& time)
 		s2_0_t = delta/(1+delta)*(w_2+R_t*s1_0_old+w_3/R_t)-w_3/R_t;
 		s2_1_t = s2_0_t;
 		s2_2_t = s2_1_t;
-		eta2 = 1.0-1.0/2.0 * log(1.0+2.0*varphi) / alpha_max;
-		eta2 = MAX(eta2,0);
+        eta2 = 1.0-1.0/2.0 * log(1.0+2.0*varphi) / alpha_max;
+        eta2 = qMax(eta2,0.0);
 		eta0 = 1.0- eta2;
 		eta1 = 0;
 	break;
@@ -95,8 +95,8 @@ void demog_model::iteration(const qint64& time)
 		s2_0_t = delta/(1.0+delta)*((1.0-tax_rate_0)*w_2+R_t*s1_0_old+w_3/R_t)-w_3/R_t;
 		s2_1_t = s2_0_t;
 		s2_2_t = s2_1_t;
-		eta2 = 1.0-1.0/2.0 * log(1.0+2.0*varphi) / alpha_max;
-		eta2 = MAX(eta2,0);
+        eta2 = 1.0-1.0/2.0 * log(1.0+2.0*varphi) / alpha_max;
+        eta2 = qMax(eta2,0.0);
 		eta0 = 1.0- eta2;
 		eta1 = 0;
 	break;
@@ -118,8 +118,8 @@ void demog_model::iteration(const qint64& time)
 		s2_0_t = delta/(1.0+delta)*((1.0-tax_rate_0)*w_2+R_t*s1_0_old+w_3/R_t)-w_3/R_t;
 		s2_1_t = delta/(1.0+delta)*((1.0-tax_rate_1)*w_2+R_t*s1_1_old+w_3/R_t)-w_3/R_t;
 		s2_2_t = delta/(1.0+delta)*((1.0-tax_rate_2)*w_2+R_t*s1_2_old+w_3/R_t)-w_3/R_t;
-		eta2 = 1.0-1.0/2.0 * log(1.0+2.0*varphi) / alpha_max;
-		eta2 = MAX(eta2,0);
+        eta2 = 1.0-1.0/2.0 * log(1.0+2.0*varphi) / alpha_max;
+        eta2 = qMax(eta2,0.0);
 		eta0 = 1.0- eta2;
 		eta1 = 0;
 	break;
@@ -149,8 +149,8 @@ void demog_model::iteration(const qint64& time)
 		alpha0 = (1.0+delta+delta*delta)/delta*log(W_0/W_1);
 		alpha1 = (1.0+delta+delta*delta)/delta*log(W_1/W_2);
 		
-		eta0 = MIN(alpha0/alpha_max , 1.0);
-		eta2 = MAX(1.0-alpha1/alpha_max , 0.0);
+        eta0 = qMin(alpha0/alpha_max , 1.0);
+        eta2 = qMax(1.0-alpha1/alpha_max , 0.0);
 		eta1 = 1.0-eta0-eta2;
 	break;
 	case 5:
@@ -179,8 +179,8 @@ void demog_model::iteration(const qint64& time)
 		alpha0 = (1.0+delta+delta*delta)/delta*log(W_0/W_1);
 		alpha1 = (1.0+delta+delta*delta)/delta*log(W_1/W_2);
 		
-		eta0 = MIN(alpha0/alpha_max , 1.0);
-		eta2 = MAX(1.0-alpha1/alpha_max , 0.0);
+        eta0 = qMin(alpha0/alpha_max , 1.0);
+        eta2 = qMax(1.0-alpha1/alpha_max , 0.0);
 		eta1 = 1.0-eta0-eta2;
 	break;
 	case 6:
@@ -211,11 +211,11 @@ void demog_model::iteration(const qint64& time)
 		alpha2 = (1.0+delta+delta*delta)/(2.0*delta)*log(W_0/W_2);
 		
 		if ( alpha0 > alpha1 ){
-			eta0 = MIN(alpha0/alpha_max , 1.0);
-			eta2 = MAX(1.0-alpha1/alpha_max , 0.0);
+            eta0 = qMin(alpha_max , 1.0);
+            eta2 = qMax(1.0-alpha1/alpha_max , 0.0);
 			eta1 = 1.0-eta0-eta2;
 		} else {
-			eta0 = MIN(alpha2/alpha_max , 1.0 );
+            eta0 = qMin(alpha_max , 1.0 );
 			eta2 = 1.0 - eta0;
 			eta1 = 0.0;
 		}
@@ -416,41 +416,41 @@ void demog_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::loadParamset(QDataStream& inFile)
+void demog_model::loadParamset(QTextStream& inFile)
 {
 	inFile >> type;
 	switch ( type ){
 	case 1:	
 		inFile >> K_0 >> w_0 >> R_0;
 		inFile >> n0_0 >> n1_0 >> n2_0 >> n3_0;
-		inFile >> l_1 >> l_2 >> alpha_max >> varphi;
+        inFile >> l_1 >> l_2 >> alpha_max >> varphi;
 		inFile >> A >> B >> delta;
 	break;
 	case 2:
 		inFile >> K_0 >> w_0 >> R_0;
 		inFile >> n0_0 >> n1_0 >> n2_0 >> n3_0;
-		inFile >> l_1 >> l_2 >> alpha_max >> varphi;
+        inFile >> l_1 >> l_2 >> alpha_max >> varphi;
 		inFile >> A >> B >> delta;
 		inFile >> tax_rate_0;
 	break;
 	case 3:
 		inFile >> K_0 >> w_0 >> R_0;
 		inFile >> n0_0 >> n1_0 >> n2_0 >> n3_0;
-		inFile >> l_1 >> l_2 >> alpha_max >> varphi;
+        inFile >> l_1 >> l_2 >> alpha_max >> varphi;
 		inFile >> A >> B >> delta;
 		inFile >> tax_rate_0 >> tax_rate_1 >> tax_rate_2;
 	break;
 	case 4:
 		inFile >> K_0 >> w_0 >> R_0;
 		inFile >> n0_0 >> n1_0 >> n2_0 >> n3_0;
-		inFile >> l_1 >> l_2 >> alpha_max >> varphi;
+        inFile >> l_1 >> l_2 >> alpha_max >> varphi;
 		inFile >> A >> B >> delta;
 		inFile >> c_child;
 	break;
 	case 5:
 		inFile >> K_0 >> w_0 >> R_0;
 		inFile >> n0_0 >> n1_0 >> n2_0 >> n3_0;
-		inFile >> l_1 >> l_2 >> alpha_max >> varphi;
+        inFile >> l_1 >> l_2 >> alpha_max >> varphi;
 		inFile >> A >> B >> delta;
 		inFile >> c_child;
 		inFile >> tax_rate_0;
@@ -458,7 +458,7 @@ void demog_model::loadParamset(QDataStream& inFile)
 	case 6:
 		inFile >> K_0 >> w_0 >> R_0;
 		inFile >> n0_0 >> n1_0 >> n2_0 >> n3_0;
-		inFile >> l_1 >> l_2 >> alpha_max >> varphi;
+        inFile >> l_1 >> l_2 >> alpha_max >> varphi;
 		inFile >> A >> B >> delta;
 		inFile >> c_child;
 		inFile >> tax_rate_0 >> tax_rate_1 >> tax_rate_2;
@@ -485,7 +485,7 @@ void demog_model::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::saveParamset(QDataStream& outFile)
+void demog_model::saveParamset(QTextStream& outFile)
 {
 	outFile << k_t;
 	outFile << "\t" << length;
@@ -504,10 +504,10 @@ void demog_model::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void demog_model::saveParamsetWithNames(QDataStream& outFile)
+void demog_model::saveParamsetWithNames(QTextStream& outFile)
 {
-	outFile << "no. generations = " << k_t << "\n";
-	outFile << "length = " << length << "\n";
+    outFile << "no. generations = " << k_t;
+    outFile << "length = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -524,8 +524,8 @@ void demog_model::saveParamsetWithNames(QDataStream& outFile)
 
 void demog_model::printParamset()
 {
-    log() << "no. generations = " << k_t << "\n";
-    log() << "length = " << length << "\n";
+    log() << "no. generations = " << k_t;
+    log() << "length = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -565,7 +565,7 @@ void demog_model::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::receiveParameters(const qreal* parameters)
+void demog_model::receiveParameters(const QList<qreal>& parameters)
 {
     k_t=parameters[0];
     length=qint64(parameters[1]);

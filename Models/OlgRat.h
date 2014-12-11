@@ -37,8 +37,8 @@ public:
     OlgRat();			// constructor
     virtual ~OlgRat();		// destructor;
 
-    virtual void loadParamset(QDataStream&);	
-    virtual void saveParamset(QDataStream&);
+    virtual void loadParamset(QTextStream&);	
+    virtual void saveParamset(QTextStream&);
     virtual void printParamset();
     void initialize();
     virtual void iteration(const qint64&);
@@ -49,7 +49,7 @@ public:
                                                 // array and return the numbers
 				                // of parameters
 
-    virtual void receiveParameters(const qreal*);// receive parameter values 
+    virtual void receiveParameters(const QList<qreal>&);// receive parameter values 
 };
 
 class OlgRat2 : public OlgRat {

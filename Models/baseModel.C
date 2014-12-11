@@ -14,6 +14,7 @@
 baseModel::baseModel(const uint &dim) : dimension(dim)
 {
 }
+
 baseModel::~baseModel()
 {
 }
@@ -42,7 +43,7 @@ qint64 baseModel::getLength() const
 /*                                                                            */
 /******************************************************************************/
 
-void baseModel::saveParamsetWithNames(QDataStream& outputFile)
+void baseModel::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nunable to print Parameterset ";
     outputFile << "- not implemented for this model\n";
@@ -62,7 +63,7 @@ void baseModel::saveParamsetWithNames(QDataStream& outputFile)
 void baseModel::printParamset() {
 	error("macrodyn::baseModel::printParamset is not implemented");
 	}
-void baseModel::saveParamset(QDataStream&) {
+void baseModel::saveParamset(QTextStream&) {
 	error("macrodyn::baseModel::saveParamset is not implemented");
 	}
 qreal* baseModel::sendModelVar(void) {
@@ -72,6 +73,4 @@ qreal* baseModel::sendModelVar(void) {
 void baseModel::sendParameters(int&,qreal**) {
 	error("macrodyn::baseModel::sendParameters is not implemented");
 	}
-void baseModel::receiveParameters(const qreal*) {
-	error("macrodyn::baseModel::receiveParameters is not implemented");
-	}
+

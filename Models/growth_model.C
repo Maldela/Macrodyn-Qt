@@ -151,7 +151,7 @@ static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal , qreal alpha)
 { return ( a*k<b ? a*k+alpha : b+alpha );
   //
-  // expression:	min{a*k,b}+c
+  // expression:	qMin{a*k,b}+c
 }
 
 static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
@@ -446,7 +446,7 @@ void growth_model::iteration(const qint64& )
   d_K_kL = K - k_fix*L;
 //log() << a << " " << b << " " << c << " " << alpha << " : ";
 //log() << syr << " " << swr << " " << srr << " : ";
-//log() << sav_y << " " << sav_w << " " << sav_r << " " << k_n << "\n";
+//log() << sav_y << " " << sav_w << " " << sav_r << " " << k_n 
 }
     
 ///////////////////////////////////////////////////////////////////////////////
@@ -561,7 +561,7 @@ void growth_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void growth_model::loadParamset(QDataStream& inFile)
+void growth_model::loadParamset(QTextStream& inFile)
 {
     inFile >> k_0 ;
     inFile >> pf_type;
@@ -592,7 +592,7 @@ void growth_model::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void growth_model::saveParamset(QDataStream& outFile)
+void growth_model::saveParamset(QTextStream& outFile)
 {
     outFile << k_0 << "\t";
     outFile << pf_type << "\t";
@@ -624,19 +624,19 @@ void growth_model::saveParamset(QDataStream& outFile)
 
 void growth_model::printParamset()
 {
-    log() << k_0 << "\n";
-    log() << pf_type << "\n";
-    log() << A << "\n";
-    log() << B << "\n";
-    log() << C << "\n";
-    log() << D << "\n";
-    log() << syr << "\n";
-    log() << swr << "\n";
-    log() << srr << "\n";
-    log() << n << "\n";
-    log() << delta_p << "\n";
+    log() << k_0;
+    log() << pf_type;
+    log() << A;
+    log() << B;
+    log() << C;
+    log() << D;
+    log() << syr;
+    log() << swr;
+    log() << srr;
+    log() << n;
+    log() << delta_p;
     
-    log() << length << "\n";
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -658,7 +658,7 @@ qreal* growth_model::sendModelVar(void)
 void growth_model::sendParameters(int& ,qreal** )
 { error("macrodyn::growth_model::sendParameters is not implemented");
 }
-void growth_model::receiveParameters(const qreal* )
+void growth_model::receiveParameters(const QList<qreal>&)
 { error("macrodyn::growth_model::receiveParameters is not implemented");
 }
 
@@ -724,7 +724,7 @@ void rgrowth_model::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rgrowth_model::loadParamset(QDataStream& inputFile)
+void rgrowth_model::loadParamset(QTextStream& inputFile)
 {
   inputFile >> zvar_name;		// read the name of the stochastic parameter
   inputFile >> zvar_expr;		// read the definition
@@ -977,7 +977,7 @@ void depreciate::initialize()
 // By:                  Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-void depreciate::loadParamset(QDataStream& inputFile)
+void depreciate::loadParamset(QTextStream& inputFile)
 {
   inputFile >> theta_type;
   inputFile >> my;
@@ -996,7 +996,7 @@ void depreciate::loadParamset(QDataStream& inputFile)
  	
   if(i==trans_x_max)
 	error("macrodyn::depreciate::loadParamset",
-	      "the number i of x[i] must be less trans_x_max");
+          "the number i of x[i] must be less trans_x_max");
 
   // remember that a,b have one number less than x
   for (int j=0;j<i;j++) {
@@ -1024,28 +1024,25 @@ void depreciate::loadParamset(QDataStream& inputFile)
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-void depreciate::saveParamset(QDataStream& outFile)
+void depreciate::saveParamset(QTextStream& outFile)
 {
     int i,j;
     outFile << theta_type << "\t";
-    outFile << my << "\n";
+    outFile << my;
     outFile << _z_0 << "\t";
-    outFile << _z_var_name << "\n";
+    outFile << _z_var_name;
     i=0;
     while(i<trans_x_max) {
 	 outFile << trans_x[i] << "\t";
 	 if(trans_x[i]==1) break;
 	 i++;
 	}
-    outFile << "\n";
     for (int j=0;j<i;j++) {
 	 outFile << trans_a[i] << "\t";
 	}
-    outFile << "\n";
     for (int j=0;j<i;j++) {
 	 outFile << trans_b[i] << "\t";
 	}
-    outFile << "\n";
     growth_model::saveParamset(outFile);
 }
 
@@ -1064,25 +1061,22 @@ void depreciate::saveParamset(QDataStream& outFile)
 void depreciate::printParamset()
 {
     int i,j;
-    log() << theta_type << "\n";
-    log() << my << "\n";
-    log() << _z_0 << "\n";
-    log() << _z_var_name << "\n";
+    log() << theta_type;
+    log() << my;
+    log() << _z_0;
+    log() << _z_var_name;
     i=0;
     while(i<trans_x_max) {
      log() << trans_x[i] << "\t";
 	 if(trans_x[i]==1) break;
 	 i++;
 	}
-    log() << "\n";
     for (int j=0;j<i;j++) {
      log() << trans_a[i] << "\t";
 	}
-    log() << "\n";
     for (int j=0;j<i;j++) {
      log() << trans_b[i] << "\t";
 	}
-    log() << "\n";
     growth_model::printParamset();
 }
 
@@ -1163,7 +1157,7 @@ pasinetti::~pasinetti()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void pasinetti::loadParamset(QDataStream& inFile)
+void pasinetti::loadParamset(QTextStream& inFile)
 {
     inFile >> k_1 ;
     growth_model::loadParamset(inFile);
@@ -1182,7 +1176,7 @@ void pasinetti::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void pasinetti::saveParamset(QDataStream& outFile)
+void pasinetti::saveParamset(QTextStream& outFile)
 {
     outFile << k_1 << "\t";
     growth_model::saveParamset(outFile);
@@ -1203,7 +1197,7 @@ void pasinetti::saveParamset(QDataStream& outFile)
 
 void pasinetti::printParamset()
 {
-    log() << k_1 << "\n";
+    log() << k_1;
     growth_model::printParamset();
 }
 
@@ -1414,14 +1408,14 @@ if(pf_type==0){
 	
 	E_f_pr_n=steady_ces*(*pf_second_prime)(steady_ces,a,b,c,alpha)/(*pf_prime)(steady_ces,a,b,c,alpha);
 	bif_point=-2*(n+1)/(n+delta_p);	
-//log() << "point =" << bif_point << "\n";
+//log() << "point =" << bif_point 
 	
 	s_hat=srr*(E_f_pr_n + bif_point)/(  E_f_pr_n/E_f-2*((1+n)/(2+n+delta_p) )  )  ;
    
 	Konsum_A=(1-swr)*(srr*y_steady-steady_ces*(n+delta_p))/(srr-swr);
 	Konsum_C=(1-srr)*(n+delta_p)/(srr-swr)*steady_ces*(1-swr/(E_f*srr));
 
-//log() << "CES Fixpunkt =" << steady_ces << "\n";
+//log() << "CES Fixpunkt =" << steady_ces 
 }
 
 ////Leontief Technologie:
@@ -1443,10 +1437,10 @@ if(pf_type==5){
 	Konsum_C=(1-srr)*(n+delta_p)/(srr-swr)*steady_leon*(1-swr/(E_f*srr));
 
 //		if(t==length){
-//			log() << "Leontief Steady-State =" << steady_leon << "\n";
-//			log() << "Leontief Steady-State_kc =" << steady_kc_leon << "\n";
-//			log() << "Leontief Steady-State_kw =" << steady_kw_leon << "\n";
-//			log() << "Leontief Elastiziaet von f' =" << E_steady_leon_prime << "\n";
+//			log() << "Leontief Steady-State =" << steady_leon 
+//			log() << "Leontief Steady-State_kc =" << steady_kc_leon 
+//			log() << "Leontief Steady-State_kw =" << steady_kw_leon 
+//			log() << "Leontief Elastiziaet von f' =" << E_steady_leon_prime 
 //		}
 }
 }  	

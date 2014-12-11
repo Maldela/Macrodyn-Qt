@@ -126,12 +126,12 @@ void linFimaErwRueck::initialize()
 	b=xAll/((rC/VC)+(rF/VF));
 //	b=((1-r)*VF*xAll)/rF;     // Problem bei rF=0 !!!
 
-log() <<"Ed=" << Ed <<"Vd=" << Vd <<"d=" << d <<"\n";
-log() <<"r=" << r << "\n";
-log() <<"b=" << b << "\n";
-qreal beta=1.03;qreal L=2;
-printf("THETA=%10.10f %10.10f %10.10f %10.10f %10.10f \n",
-	(beta/(L*R))*rC/(rC+rF), (beta/(L*R))*rC/(rC+rF), ((1-r)/R), 1/R, -b/R );
+    log() <<"Ed=" << Ed <<"Vd=" << Vd <<"d=" << d;
+    log() <<"r=" << r;
+    log() <<"b=" << b;
+    qreal beta=1.03;qreal L=2;
+    printf("THETA=%10.10f %10.10f %10.10f %10.10f %10.10f \n",
+        (beta/(L*R))*rC/(rC+rF), (beta/(L*R))*rC/(rC+rF), ((1-r)/R), 1/R, -b/R );
 
 }
 
@@ -141,7 +141,7 @@ printf("THETA=%10.10f %10.10f %10.10f %10.10f %10.10f \n",
 // Beschreibung:	Einlesen der Parameter aus der .sim Datei 
 ///////////////////////////////////////////////////////////////////////////////
 
-void linFimaErwRueck::loadParamset(QDataStream& inFile)
+void linFimaErwRueck::loadParamset(QTextStream& inFile)
 {
     QString str;
     inFile >> str;
@@ -182,20 +182,38 @@ void linFimaErwRueck::loadParamset(QDataStream& inFile)
 	initialize();
 }
 
+void linFimaErwRueck::receiveParameters(const QList<qreal> &parameters)
+{
+    if (parameters.size() != 11) log() << "Wrong number of parameters!";
+    else
+    {
+        perfectPredictor = parameters.at(0);
+        DividendenErwartung = parameters.at(1) ? bekannt : unbekannt;
+        vc = parameters.at(2);
+        R = parameters.at(3);
+        rF = parameters.at(4);
+        rC = parameters.at(5);
+        eF = parameters.at(6);
+        eC = parameters.at(7);
+        xAll = parameters.at(8);
+        p0 = parameters.at(9);
+        length = parameters.at(10);
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Funktionsname: saveParamsetWithNames
 // Beschreibung:         add  parameterset to printfile
 ///////////////////////////////////////////////////////////////////////////////
-void linFimaErwRueck::saveParamsetWithNames(QDataStream& outputFile)
+void linFimaErwRueck::saveParamsetWithNames(QTextStream& outputFile)
 {
-    outputFile << "\nModel linFimaErwRueck\n";
+    outputFile << "Model linFimaErwRueck";
     if(perfectPredictor)
-	outputFile << "perfectPredictor" << "\n";
-    outputFile << "R = " << R << "\n";
+    outputFile << "perfectPredictor";
+    outputFile << "R = " << R;
     outputFile << "xAll= " << xAll << " ";
     outputFile << "p0= " << p0 << " ";
-    outputFile << "\n";
-    outputFile << "length = "<< length << "\n";
+    outputFile << "length = "<< length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -299,7 +317,7 @@ printf("pCperf=%6.6f \n",pCperf);
 
 
 // Portfolio
-	xF=rF*(pF+Ed-R*p)/Vd; // tatsaechliches Portfolio der Jungen (varianzminimal)
+    xF=rF*(pF+Ed-R*p)/Vd; // tatsaechliches Portfolio der Jungen (varianzminimal)
 	xC=rC*(pC+Ed-R*p)/Vd;
 	xFrel=xF/xAll;	// rel. Portfolio bezug zur Aktienanzahl
 	xCrel=xC/xAll;
@@ -330,14 +348,14 @@ printf("pCperf=%6.6f \n",pCperf);
 	pDiff=(pPerf-p)/p;
 
 
-//log() << t << " pCperf=" << pCperf << " pC=" << pC ;//<< "\n";
-//log() << " p=" << p << " pPerf=" << pPerf << "\n";
-//log() << " errvar=" << errvar  << "\n";
-//log() << "d=" << d << " Ed=" << Ed << " de=" << de << "\n"; 
+//log() << t << " pCperf=" << pCperf << " pC=" << pC ;//
+//log() << " p=" << p << " pPerf=" << pPerf 
+//log() << " errvar=" << errvar  
+//log() << "d=" << d << " Ed=" << Ed << " de=" << de  
 
-//log() << " p=" << p << " pF=" << pF << "\n";
-//log() << " xF=" << xF << " xC=" << xC << "\n";
-//log() << "\nPeriode=" << t << "\n";
+//log() << " p=" << p << " pF=" << pF 
+//log() << " xF=" << xF << " xC=" << xC 
+//log() << "\nPeriode=" << t 
 //printf(" pF=%10.10f Ed=%10.10f\n",pF, Ed);
 //printf("p=%6.6f ",p);
 //printf("pPerf=%6.6f \n\n",pPerf);

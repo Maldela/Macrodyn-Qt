@@ -11,10 +11,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <stdlib.h>
-#include <string.h>
 #include "../Random/ranlib.h"
-#include "../strnchr.h"
 #include "../eval_expr.h"
 #include "../get_expr.h"
 
@@ -63,22 +60,24 @@ static double ranf_d ( void )		// a wrapper for the ranlib function
 
 extern "C" { void inrgcm(void); }
 
-//TODO
-//static base_gen_t identify ( const char * gen )
-//{
-//    if( !strcmp(gen,"drand48") {
-//      return drand48;
-//    }
-//    if( !strcmp(gen,"ranf") {
+static base_gen_t identify ( const QString& gen )
+{
+    if (gen == "drand48")
+    {
+      return drand48;
+    }
+    if (gen == "ranf")
+    {
 //      (void) ignlgi(); 		// initialize the generator
-//      #ifdef INIT_RANDOM_TIME
-//      srand( time(NULL) );
-//      #endif
+      #ifdef INIT_RANDOM_TIME
+      srand( time(NULL) );
+      #endif
 //      setall(sd1,sd2);		// set the default seed values
-//      return ranf_d;
-//    }
-//   return NULL;
-//}
+      return ranf_d;
+    }
+    log() << "Generator couldn't be identified: "<< gen;
+    return NULL;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -110,8 +109,7 @@ rand_var::rand_var ( baseModel * model, const QString& gen, const QString& zvar_
 
     double sum = 0.0;
 
-    //TODO
-  //base_gen = identify(gen);
+   base_gen = identify(gen);
   
   n_events = zvar_expr.count(';');
   prob = new double[n_events];
@@ -122,23 +120,23 @@ rand_var::rand_var ( baseModel * model, const QString& gen, const QString& zvar_
     tpos = get_expr(tpos,token,'[');			// the probability
     prob[n] = eval_expr(model, token);
 
-    tpos = get_expr(tpos,token,",:");			// the min value
+    tpos = get_expr(tpos,token,",:");			// the qMin value
     tmark = tpos-1;
     range_min[n] = eval_expr(model, token);
  
-    tpos = get_expr(tpos,token,']');			// the max value
+    tpos = get_expr(tpos,token,']');			// the qMax value
     range_max[n] = eval_expr(model, token);
 
     switch (*tmark) {			// postprocessing
 
-      case ':' :			// in case of `:' , the max value 
+      case ':' :			// in case of `:' , the qMax value
         range_min[n]-=range_max[n];	// defines the radius of the interval
-        range_max[n]+=range_max[n]+range_min[n];	// and the min value
+        range_max[n]+=range_max[n]+range_min[n];	// and the qMin value
       break;				// defines the midpoint
     
       case ',' :		// ensure that the 
-        double m_in = MIN(range_min[n],range_max[n]);
-        double m_ax = MAX(range_min[n],range_max[n]);
+        double m_in = qMin(range_min[n],range_max[n]);
+        double m_ax = qMax(range_min[n],range_max[n]);
         range_min[n] = m_in;	// lower value is in range_min
         range_max[n] = m_ax;	// higher value is in range_max
       break;
@@ -170,15 +168,14 @@ rand_var::rand_var ( baseModel * model, const QString& gen, const QString& zvar_
 ///////////////////////////////////////////////////////////////////////////////
 rand_var::rand_var(const char * gen,const qreal& probab,const qreal& min,const qreal& max) {
 
-    //TODO
-//	base_gen = identify(gen);
+    base_gen = identify(gen);
 	prob = new double[1];
-	range_min = new double[1];
-	range_max = new double[1];
+    range_min = new double[1];
+    range_max = new double[1];
 
 	prob[0] = probab;
-	range_min[0] = MIN(min,max);
-	range_max[0] = MAX(min,max);
+    range_min[0] = qMin(min, max);
+    range_max[0] = qMax(min, max);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

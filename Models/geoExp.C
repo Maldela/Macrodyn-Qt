@@ -63,7 +63,7 @@ qreal geoExp::expectedInflationRate(const qint64 t)
     qreal exponent=0.0;
     qreal logEta=log(etaTilda);
 
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ ) {
 	exponent=exp(counter*logEta);
 	etaSum += exponent;
@@ -164,7 +164,7 @@ qreal* geoExp::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void geoExp::loadParamset(QDataStream& inputFile)
+void geoExp::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B;
     inputFile >> gamm >> kappa >> lambda >> my;
@@ -191,7 +191,7 @@ void geoExp::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void geoExp::saveParamset(QDataStream& outputFile)
+void geoExp::saveParamset(QTextStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t";
     outputFile << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\t";
@@ -212,12 +212,12 @@ void geoExp::saveParamset(QDataStream& outputFile)
 
 void geoExp::printParamset()
 {
-    log() << A << "\t" << B << "\n";
-    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << delta << "\t" << beta << "\t" << eta << "\n";
-    log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
+    log() << A << "\t" << B;
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my;
+    log() << tau << "\t" << length;
+    log() << delta << "\t" << beta << "\t" << eta;
+    log() << w0 << "\t" << p0 << "\t" << m0;
+    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax;
 }
 
 /******************************************************************************/
@@ -268,7 +268,7 @@ void geoExp::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void geoExp::receiveParameters(const qreal* parameters)
+void geoExp::receiveParameters(const QList<qreal>& parameters)
 {
     A=parameters[0];
     B=parameters[1];

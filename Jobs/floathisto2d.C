@@ -21,10 +21,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
   
-floathisto_2d::floathisto_2d ( qreal x_min = 0 , qreal x_max = 1 , int x_res = 100,
-                     qreal y_min = 0 , qreal y_max = 1 , int y_res = 100 ):
-                     x(0,x_min,x_max,x_res),
-                     y(0,y_min,y_max,y_res) {
+floathisto_2d::floathisto_2d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
+                     qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100 ):
+                     x(0,x_qMin,x_max,x_res),
+                     y(0,y_qMin,y_max,y_res) {
 
     hits = new double * [x_res];
     for( int k=0; k<x_res; k++ ) {
@@ -191,24 +191,24 @@ void floathisto_2d::get_y_d_var ( d_var * to_get ) const {
 
 double floathisto_2d::get_max ( void ) const {
     int k,l;
-    double histmax=0;
+    double histqMax=0;
     for( k=0; k<get_x_res(); k++) {
       for( l=0; l<get_y_res(); l++) {
-        histmax=MAX(histmax,hits[k][l]);
+        histqMax = qMax(histqMax,hits[k][l]);
       }
     }
-    return histmax;
+    return histqMax;
   };
 
-double floathisto_2d::get_min ( void ) const {
+double floathisto_2d::get_qMin ( void ) const {
     int k,l;
-    double histmin=0;
+    double histqMin=0;
     for( k=0; k<get_x_res(); k++) {
       for( l=0; l<get_y_res(); l++) {
-        histmin=MIN(histmin,hits[k][l]);
+        histqMin = qMin(histqMin,hits[k][l]);
       }
     }
-    return histmin;
+    return histqMin;
   };
   
 // eof

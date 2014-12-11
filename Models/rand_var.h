@@ -31,7 +31,8 @@
 
 typedef double (* base_gen_t ) (void);
 
-class rand_var {
+class rand_var
+{
   protected:
     base_gen_t	base_gen;		// Basic Random Number Generator
     int n_events;			// number of events
@@ -41,7 +42,7 @@ class rand_var {
     
   public:
     rand_var ( baseModel* model,const QString& gen,const QString& zvar_expr);// constructor
-    rand_var ( const char* gen,const qreal& probab,const qreal& min,const qreal& max);
+    rand_var ( const char* gen,const qreal& probab,const qreal& qMin,const qreal& qMax);
     ~rand_var ( void );			// distructor
 
     double dice (void);			// returns the next dice

@@ -14,8 +14,8 @@
 
 #include "histo.h"
 
-histo_1d::histo_1d ( qreal x_min = 0 , qreal x_max = 1 , int x_res = 100 ):
-                     x(0,x_min,x_max,x_res) {
+histo_1d::histo_1d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100 ):
+                     x(0,x_qMin,x_max,x_res) {
     hits = new int[x_res];
     reset();
   };
@@ -58,7 +58,7 @@ void histo_1d::get_x_d_var ( d_var * to_get ) const {
 int histo_1d::get_max_hits ( void ) const {
     int k, h_max(0);
     for( k=0; k<get_x_res(); k++) {
-      h_max=MAX(h_max,hits[k]);
+      h_max = qMax(h_max,hits[k]);
     }
     return h_max;
   };
@@ -67,10 +67,10 @@ int histo_1d::get_no_hits ( void ) const {
     return no_hits;
   };
   
-histo_2d::histo_2d ( qreal x_min = 0 , qreal x_max = 1 , int x_res = 100,
-                     qreal y_min = 0 , qreal y_max = 1 , int y_res = 100 ):
-                     x(0,x_min,x_max,x_res),
-                     y(0,y_min,y_max,y_res) {
+histo_2d::histo_2d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
+                     qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100 ):
+                     x(0,x_qMin,x_max,x_res),
+                     y(0,y_qMin,y_max,y_res) {
 
     hits = new int * [x_res];
     for( int k=0; k<x_res; k++ ) {
@@ -132,7 +132,7 @@ int histo_2d::get_max_hits ( void ) const {
     int k,l, h_max(0);
     for( k=0; k<get_x_res(); k++) {
       for( l=0; l<get_y_res(); l++) {
-        h_max=MAX(h_max,hits[k][l]);
+        h_max = qMax(h_max,hits[k][l]);
       }
     }
     return h_max;
@@ -156,12 +156,12 @@ int histo_2d::get_no_hits ( void ) const {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-histo_3d::histo_3d ( qreal x_min = 0 , qreal x_max = 1 , int x_res = 100,
-                     qreal y_min = 0 , qreal y_max = 1 , int y_res = 100,
-		     qreal z_min = 0 , qreal z_max = 1 , int z_res = 100 ):
-                     x(0,x_min,x_max,x_res),
-                     y(0,y_min,y_max,y_res),
-		     z(0,z_min,z_max,z_res) 
+histo_3d::histo_3d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
+                     qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100,
+		     qreal z_qMin = 0 , qreal z_max = 1 , int z_res = 100 ):
+                     x(0,x_qMin,x_max,x_res),
+                     y(0,y_qMin,y_max,y_res),
+		     z(0,z_qMin,z_max,z_res) 
 {
 	hits = new int ** [x_res];
 	for( int k=0; k<x_res; k++ ) {
@@ -252,7 +252,7 @@ int histo_3d::get_max_hits ( void ) const
 	for( k=0; k<get_x_res(); k++) {
 		for( l=0; l<get_y_res(); l++) {
       			for ( m=0; m<get_z_res(); m++) {
-			        h_max=MAX(h_max,hits[k][l][m]);
+			        h_max = qMax(h_max,hits[k][l][m]);
 			}
       		}
     	}

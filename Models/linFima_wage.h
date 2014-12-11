@@ -13,9 +13,7 @@
 #define linFima_wage_H
 
 #include "baseModel.h"
-#include "../strnchr.h"
 #include "rand_var.h"
-#include<stdlib.h>
 
 class linFima_wage : public baseModel {
 
@@ -88,7 +86,7 @@ protected:
 	qreal div;
 	qreal varDiv;
 	qreal Ed11,delta_d1,Ed1;
-	qreal zetamin, zetamax, gamma;
+    qreal zetamin, zetamax, gamma;
 
 	qreal dOld;
 //	qreal div;	// Dividende
@@ -116,8 +114,9 @@ public:
 	virtual ~linFima_wage();
 	qreal* setLabels(const QString&);
 	void initialize();
-	void loadParamset(QDataStream&);	
-	void saveParamsetWithNames(QDataStream&); 
+	void loadParamset(QTextStream&);	
+	void saveParamsetWithNames(QTextStream&); 
+    void receiveParameters(const QList<qreal>&);
 	void sendStateSpace(int &,const qreal***);
 	void iteration(const qint64&);
 	void wagerate();

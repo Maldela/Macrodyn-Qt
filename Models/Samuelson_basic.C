@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
 #include "Samuelson_basic.h"
 
 
@@ -60,9 +59,9 @@ void Samuelson_basic::iteration(const qint64&)
 	noise = distri.rectangular()*2.0*lambda;
 	v_0noise = distri.rectangular();
 	if (v_0noise < v_0prob){
-	v_0=v_0min;}
-	else {v_0=v_0max;}  
-    //log() << v_0noise << "\n";
+	v_0=v_0qMin;}
+	else {v_0=v_0qMax;}  
+    //log() << v_0noise 
 	y2 = y1;
 	y1 = y;
 	y = m_0+v_0+(m+v)*y1-v*y2+noise;
@@ -89,8 +88,8 @@ void Samuelson_basic::initialize()
 		distri.setseed( myseed );
 	}
 	v_0prob=0.5;
-	v_0max=0.8;
-	v_0min=0.31;
+	v_0qMax=0.8;
+	v_0qMin=0.31;
 }
  
     
@@ -192,7 +191,7 @@ void Samuelson_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::loadParamset(QDataStream& inFile)
+void Samuelson_basic::loadParamset(QTextStream& inFile)
 {
 	inFile >> y1_0 >> y2_0 >> m_0 >> v_0 >> m >> v >> lambda >> myseed;
 	inFile >> length;
@@ -212,7 +211,7 @@ void Samuelson_basic::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::saveParamset(QDataStream& outFile)
+void Samuelson_basic::saveParamset(QTextStream& outFile)
 {
 	outFile << y1_0 << "\t" << y2_0 << "\t" << m_0 << "\t";
 	outFile << v_0 << "\t" << m << "\t" << v << "\t" << lambda << "\t" << myseed;
@@ -232,7 +231,7 @@ void Samuelson_basic::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void Samuelson_basic::saveParamsetWithNames(QDataStream& outFile)
+void Samuelson_basic::saveParamsetWithNames(QTextStream& outFile)
 {
 	outFile << "y1_0 = " << y1_0;
 	outFile << "\ny2_0 = " << y2_0;
@@ -242,7 +241,7 @@ void Samuelson_basic::saveParamsetWithNames(QDataStream& outFile)
 	outFile << "\nv = " << v;
 	outFile << "\nlambda = " << lambda;
 	outFile << "\nseed = " << myseed;
-	outFile << "\nlength = " << length << "\n";
+    outFile << "\nlength = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -260,7 +259,7 @@ void Samuelson_basic::saveParamsetWithNames(QDataStream& outFile)
 void Samuelson_basic::printParamset()
 {
     log() << y1_0 << "\t" << y2_0 << "\t" << m_0 << "\t" << v_0 << "\t";
-    log() << m << "\t" << v << "\t" <<  lambda << "\t" << myseed << "\t" << length << "\n";
+    log() << m << "\t" << v << "\t" <<  lambda << "\t" << myseed << "\t" << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -306,7 +305,7 @@ void Samuelson_basic::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::receiveParameters(const qreal* parameters)
+void Samuelson_basic::receiveParameters(const QList<qreal>& parameters)
 {
     y1_0=parameters[0];
     y2_0=parameters[1];
@@ -351,7 +350,7 @@ void Samuelson_ar1::iteration(const qint64&)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_ar1::loadParamset(QDataStream& inFile)
+void Samuelson_ar1::loadParamset(QTextStream& inFile)
 {
 	inFile >> a;
 	Samuelson_basic::loadParamset( inFile );

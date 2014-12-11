@@ -77,8 +77,8 @@ void bifnParam::setXParams(const qreal& newX)
 {
     static qreal divisor=xmax-xmin;
     for(int i=0;i<effectiveX.dimension;i++)
-	*xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
-	    (effectiveX.max[i]-effectiveX.min[i]);
+    *xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
+        (effectiveX.max[i]-effectiveX.min[i]);
 }
 
 /******************************************************************************/

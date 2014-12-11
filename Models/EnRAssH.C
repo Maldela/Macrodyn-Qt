@@ -63,7 +63,7 @@ qreal* EnRAssH::setLabels(const QString& label)
     if (label == "x_") return( (qreal*)(&x_) );
     if (label == "c_a") return(&c_a);
     if (label == "alpha") return(&alpha);
-    if (label == "alphamin") return(&alphamin);
+    if (label == "alphaqMin") return(&alphaqMin);
     if (label == "theta0") return(&theta0);
     if (label == "theta") return(&theta);
     if (label == "thetaE") return(&thetaE);
@@ -72,7 +72,7 @@ qreal* EnRAssH::setLabels(const QString& label)
     if (label == "dmid") return(&dmid);
     if (label == "dmax") return(&dmax);
     if (label == "p0") return(&p0);
-    if (label == "pmax") return(&pmax);
+    if (label == "pqMax") return(&pqMax);
     if (label == "p") return(&p);
     if (label == "pOld") return(&pOld);
     if (label == "pmid") return(&pmid);
@@ -96,7 +96,7 @@ qreal* EnRAssH::setLabels(const QString& label)
 ///////////////////////////////////////////////////////////////////////////////
 qreal EnRAssH::get_new_d()
 {
-	return  (zvar->dice() * dmax);
+    return  (zvar->dice() * dmax);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -143,7 +143,7 @@ static qreal ols_k(qreal *y, qreal *,const qint64 &k, const qint64&) {
 	if (term!=0) b=(xy_-x_*y_)/term;
 		else b=0;
 	a=y_-b*x_;
-//log() << " a=" << a << " b=" << b << " count=" << count << "\n";
+//log() << " a=" << a << " b=" << b << " count=" << count 
 
     return ( a+b*count );
 }
@@ -214,14 +214,14 @@ void EnRAssH::initialize()
 
 	learn_init ();
 
-	alphamin = ( 1 / ( R*e - ( x_ / N ) ) );
+    alphaqMin = ( 1 / ( R*e - ( x_ / N ) ) );
 
-	dmid = dmax/2 ;
+    dmid = dmax/2 ;
 	dOld = get_new_d();
 
 	thetaOld = theta0;
 	pOld = p0;
-	pmax = N*e/x_;
+    pqMax = N*e/x_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -233,7 +233,7 @@ void EnRAssH::initialize()
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void EnRAssH::loadParamset(QDataStream& inFile)
+void EnRAssH::loadParamset(QTextStream& inFile)
 {
 	int i;
 //	inFile >> ni;
@@ -242,7 +242,7 @@ void EnRAssH::loadParamset(QDataStream& inFile)
 	inFile >> N;
 	inFile >> e;
 	inFile >> R;
-	inFile >> dmax;
+    inFile >> dmax;
 	inFile >> theta0;    
 	inFile >> p0;
 	inFile >> learntype;
@@ -261,15 +261,15 @@ void EnRAssH::loadParamset(QDataStream& inFile)
 // Last modified:	98/10/15
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void EnRAssH::saveParamsetWithNames(QDataStream& outputFile)
+void EnRAssH::saveParamsetWithNames(QTextStream& outputFile)
 {
-    outputFile << "\nModel EnRAssH\n";
-    outputFile << "N = " << N << "\tx_ = " << x_ << "\te = " << e << "\n";
-    outputFile << "R = " << R << "\tdmax = " << dmax << "\n";
-    outputFile << "alpha = " << alpha << "\n";
-    outputFile << "theta0 = " << theta0 << "\tp0 = " << p0  << "\n";
-    outputFile << "learn type = " << learntype << "\tmemory = " << mem << "\n";
-    outputFile << "length = "<< length << "\n";
+    outputFile << "\nModel EnRAssH";
+    outputFile << "N = " << N << "\tx_ = " << x_ << "\te = " << e;
+    outputFile << "R = " << R << "\tdmax = " << dmax;
+    outputFile << "alpha = " << alpha;
+    outputFile << "theta0 = " << theta0 << "\tp0 = " << p0;
+    outputFile << "learn type = " << learntype << "\tmemory = " << mem;
+    outputFile << "length = "<< length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -310,15 +310,15 @@ void EnRAssH::iteration(const qint64& t)
 	dOld = d;
 	pOld = p;
 
-	if (alpha<alphamin) {
-		alpha=alphamin;
-		log() << "alpha=alphamin=" << alphamin << "\n";
+    if (alpha<alphaqMin) {
+        alpha=alphaqMin;
+        log() << "alpha=alphaqMin=" << alphaqMin;
 	}
 
-	qreal dmaxAbs =(  (N/x_) * ( (R*e) - (1/alpha) )  );
-	if ( dmax > dmaxAbs )  {
-	  log() << "\n time=" << t << " dmax=" << dmax << " > ";
-	  log() << dmaxAbs << "=N/x_ * (R*e - 1/alpha) \n";
+    qreal dmaxAbs =(  (N/x_) * ( (R*e) - (1/alpha) )  );
+    if ( dmax > dmaxAbs )  {
+      log() << "\n time=" << t << " dmax=" << dmax << " > ";
+      log() << dmaxAbs << "=N/x_ * (R*e - 1/alpha) \n";
 	  exit (-1);
 	  }
 
@@ -336,10 +336,10 @@ void EnRAssH::iteration(const qint64& t)
 	if (theta < 0) theta=0;	// billiger als geschenkt geht nicht
 
 	p = (N*theta)/(R*(alphax*theta+N)) + (d/R);
-	qreal	min = N*e/x_ ;
-	if (p > min) {
-		p = min;
-		log() << " min=" << p;
+    qreal	qMin = N*e/x_ ;
+    if (p > qMin) {
+        p = qMin;
+        log() << " qMin=" << p;
 		}
 //		else log() << " p=" << p;
 

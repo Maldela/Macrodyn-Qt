@@ -13,7 +13,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-#include <QDataStream>
+#include <QTextStream>
 #include "../sim.h"
 #include "logger.h"
 
@@ -30,7 +30,7 @@ public:
     virtual qreal* setLabels(const QString&)=0;       // return pointer to a specified
 				            //   parameter or variable
     virtual void initialize()=0;            // initialize the model
-    virtual void loadParamset(QDataStream&)=0; // load set from a file
+    virtual void loadParamset(QTextStream&)=0; // load set from a file
     virtual void sendStateSpace(int&,const qreal***)=0;// return the system's
 				            //   dimension and pointers to all
 				            //   state variables
@@ -39,12 +39,12 @@ public:
  //following functions need not to be implemented in any model
 
     virtual void printParamset();           // print set to the screen
-    virtual void saveParamset(QDataStream&);   // write set into a file
-    virtual void saveParamsetWithNames(QDataStream&);// add parametset to
+    virtual void saveParamset(QTextStream&);   // write set into a file
+    virtual void saveParamsetWithNames(QTextStream&);// add parametset to
 					    //   printerfile (only xpm)
     virtual qreal* sendModelVar();           // return pointer to the main
                                             //   model variable
-    virtual void receiveParameters(const qreal*);// receive parameter values
+    virtual void receiveParameters(const QList<qreal>&)=0;// receive parameter values
     virtual void sendParameters(int&,qreal**);// write all parameters
                                             //   into an array and return
 				            //   the numbers of parameters

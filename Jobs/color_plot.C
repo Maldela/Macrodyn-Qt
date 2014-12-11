@@ -55,9 +55,9 @@ void color_plot::simulation()
 {
     qint64 t;
 	int col,i;
-	int cmax=17;
-	qreal min=zmax;
-	qreal max=zmin;	
+    int cmax=17;
+    qreal min = zmax;
+    qreal max = zmin;
     qreal intv=(zmax-zmin)/cmax;
 
 if((zmax <= 0) && (zmin < 0)){
@@ -66,9 +66,9 @@ if((zmax <= 0) && (zmin < 0)){
 		model->iteration(t+1);	
 	for(t=limit;t<length;t++) {
 		model->iteration(t+1);
-		if(*zParam<min) min=*zParam;
-		if(*zParam>max) max=*zParam;
-        col=cmax+1;        
+        if(*zParam<min) min=*zParam;
+        if(*zParam>max) max=*zParam;
+        col=cmax+1;
 if(*zParam<zmax)
 	{
         for(i=1;i<cmax;i+=1)
@@ -83,13 +83,13 @@ if(*zParam<zmax)
             screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
      }	
    
-   log() << "min=" << min << "\t max=" << max << "\n";
+   log() << "min=" << min << "\t max=" << max;
 
  //TODO if( screenGraphics ) screenGraphics->draw_color_count();
 }
 if((zmax > 0) && (zmin < 0)){
-    qreal smin=zmin/cmax; // 17 colors under Zero 
-    qreal smax=zmax/cmax; // 17 colors under Zero 
+    qreal smin=zmin/cmax; // 17 colors under Zero
+    qreal smax=zmax/cmax; // 17 colors under Zero
       
 	model->initialize();
 
@@ -97,29 +97,29 @@ if((zmax > 0) && (zmin < 0)){
 		model->iteration(t+1);	
 	for(t=limit;t<length;t++) {
 		model->iteration(t+1);
-		if(*zParam<min) min=*zParam;
-		if(*zParam>max) max=*zParam;
+        if(*zParam<min) min=*zParam;
+        if(*zParam>max) max=*zParam;
 
 		if(*zParam>0) {
-			col=cmax;
-			for(i=1;i<cmax;i+=1) {
-				if(*zParam > i*smax) {
-					col=cmax-i;
+            col=cmax;
+            for(i=1;i<cmax;i+=1) {
+                if(*zParam > i*smax) {
+                    col=cmax-i;
 				}
 			}
 		}
 		else	{
-			col=cmax+1;
-			for(i=1;i<cmax;i+=1) {
-				if(*zParam < i*smin) {
-					col=cmax+1+i;
+            col=cmax+1;
+            for(i=1;i<cmax;i+=1) {
+                if(*zParam < i*smin) {
+                    col=cmax+1+i;
 				}
 			}
 		}
 		if( screenGraphics ) 
             screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
 	}
- log() << "min=" << min << "\t max=" << max << "\n";
+ log() << "min=" << min << "\t max=" << max;
 //TODO if( screenGraphics ) screenGraphics->draw_color_count();
 }
 if(zmax>0 && zmin >= 0)
@@ -129,9 +129,9 @@ model->initialize();
 		model->iteration(t+1);	
 	for(t=limit;t<length;t++) {
 		model->iteration(t+1);
-		if(*zParam<min) min=*zParam;
-		if(*zParam>max) max=*zParam;
-        col=cmax;        
+        if(*zParam<min) min=*zParam;
+        if(*zParam>max) max=*zParam;
+        col=cmax;
 if(*zParam>zmin){
         for(i=1;i<cmax;i+=1)
           {
@@ -144,7 +144,7 @@ if(*zParam>zmin){
             screenGraphics->setBigPoint(*xParam,*yParam,col,psize);
      }	
    
-   log() << "min=" << min << "\t max=" << max << "\n";
+   log() << "min=" << min << "\t max=" << max;
 
 //TODO if( screenGraphics ) screenGraphics->draw_color_count();
 	

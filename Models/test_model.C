@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
 #include "test_model.h"
 
 
@@ -83,7 +82,7 @@ void test_model::iteration(const qint64& time)
     //qreal R=1.0;
 	
 	s1 = l_1*w-1.0/(1.0+delta+delta*delta)*(l_1*w+l_2*w/R);
-    log() << "w: " << w <<"\tR: " << R << "\ts1: " << s1 << "\ts2: " << s2 << "\n";
+    log() << "w: " << w <<"\tR: " << R << "\ts1: " << s1 << "\ts2: " << s2 
 	s2 = delta/(1.0+delta)*(l_2*w+R*s1);
 	d2 = 1.0/(l_2*(1.0+sqrt(l_2/l_1)))*(sqrt(l_2/l_1)*s1+s2)-d;
 
@@ -232,7 +231,7 @@ void test_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::loadParamset(QDataStream& inFile)
+void test_model::loadParamset(QTextStream& inFile)
 {
 /*	inFile >> d;
 	inFile >> x0 >> y0 >> z0;
@@ -254,7 +253,7 @@ void test_model::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::saveParamset(QDataStream& outFile)
+void test_model::saveParamset(QTextStream& outFile)
 {
 	outFile << d << "\t" << length;
 }
@@ -272,10 +271,9 @@ void test_model::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void test_model::saveParamsetWithNames(QDataStream& outFile)
+void test_model::saveParamsetWithNames(QTextStream& outFile)
 {
-
-	outFile << "d=" << d << "\nlength = " << length << "\n";
+    outFile << "d=" << d << "\nlength = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -292,8 +290,7 @@ void test_model::saveParamsetWithNames(QDataStream& outFile)
 
 void test_model::printParamset()
 {
-
-    log() << d << "\t" << length << "\n";
+    log() << d << "\t" << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -333,7 +330,7 @@ void test_model::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::receiveParameters(const qreal* parameters)
+void test_model::receiveParameters(const QList<qreal>& parameters)
 {
     d=parameters[0];
     length=qint64(parameters[1]);

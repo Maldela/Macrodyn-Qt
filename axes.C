@@ -67,13 +67,11 @@ xyRange::xyRange(int dim, const QList<QString>& names, const QList<qreal>& mins,
 /* Last modified:   22.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
-xyRange::xyRange(QDataStream& inFile)
+xyRange::xyRange(QTextStream& inFile)
 {
     inFile >> dimension;
-    inFile >> label;
-    inFile >> min;
-    inFile >> max;
-    inFile >> res;
+    for (int i=0; i<dimension; i++)
+    inFile >> label[i] >> min[i] >> max[i] >> res[i];
 }
 
 /******************************************************************************/
@@ -124,17 +122,17 @@ bool xyRange::inRange(const qreal **toCheck) const
 /* Last modified:   Wed Jun  2 16:03:59 CEST 1999  (Marc Mueller)             */
 /*                                                                            */
 /******************************************************************************/
-QDataStream& operator<<(QDataStream& os,const xyRange& axes)
+QTextStream& operator<<(QTextStream& os,const xyRange& axes)
 {
-    os << "Dimension: " << axes.dimension << "\n";
+    os << "Dimension: " << axes.dimension;
     os << "Rest: ";
     for(int i=0;i<axes.dimension;i++)
     {
-        os << "label[" << i << "]=" << axes.label[i] << "\n";
-        os << "min[" << i << "]=" << axes.min[i] << "\n";
-        os << "max[" << i << "]=" << axes.max[i] << "\n";
-        os << "res[" << i << "]=" << axes.res[i] << "\n";
-    //	os << "zl[" << i << "]=" << axes.zeroline[i] << "\n";
+        os << "label[" << i << "]=" << axes.label[i];
+        os << "min[" << i << "]=" << axes.min[i];
+        os << "max[" << i << "]=" << axes.max[i];
+        os << "res[" << i << "]=" << axes.res[i];
+    //	os << "zl[" << i << "]=" << axes.zeroline[i];
     }
     return os;
 }

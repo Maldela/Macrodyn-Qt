@@ -1,9 +1,25 @@
 #include "logger.h"
+#include <QDebug>
 
 
 int LoggerHelper::ref = 0;
 
 QList<Logger *> Logger::m_logger = QList<Logger *>();
+
+LoggerHelper::LoggerHelper()
+{
+    ref++;
+}
+
+LoggerHelper::~LoggerHelper()
+{
+    ref--;
+    if (ref <= 0)
+    {
+        ref = 0;
+        *this << "\n";
+    }
+}
 
 LoggerHelper& LoggerHelper::operator <<(const QString& str)
 {
@@ -46,6 +62,7 @@ void Logger::print(const QString &str)
                 m_oldLine = str;
                 m_oldLine.chop(2);
                 emit lineChanged();
+                qDebug() << m_oldLine;
             }
         }
         else
@@ -55,6 +72,7 @@ void Logger::print(const QString &str)
             m_oldLine = m_line;
             m_line.clear();
             emit lineChanged();
+            qDebug() << m_oldLine;
         }
     }
     else

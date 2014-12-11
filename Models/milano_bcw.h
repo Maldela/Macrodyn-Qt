@@ -20,7 +20,7 @@ class milano_bcw : public baseModel {
     qreal alfa0,mqreal0,pg0;              /* initial values                    */
     qreal alfa,mqreal,pgt,mtr,wtr;        /* wage, money stock, price, profit  */
     qreal winf;
-    qreal Ls;                            /* maximal aggregate labour supply   */
+    qreal Ls;                            /* qMaximal aggregate labour supply   */
     qreal h;                             /* utility function parameters       */
     qreal G,tax;                         /* government demand, tax rate       */
     qreal empl;                          /* actual employment                 */
@@ -43,8 +43,8 @@ public:
     qreal* setLabels(const QString&);		    // return a pointer to a variable or
 					    // a parameter specified by its name
     void initialize();			    // initialize the model
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamsetWithNames(QDataStream&);  // add parametset to XPM printerfile
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamsetWithNames(QTextStream&);  // add parametset to XPM printerfile
     void sendStateSpace(int &,const qreal***);// return pointers to all model
 					    // variables and the dimension
 					    // of the model
@@ -53,10 +53,10 @@ public:
 
 
 //void printParamset();
-//void saveParamset(QDataStream&);
+//void saveParamset(QTextStream&);
 //qreal* sendModelVar();
 //void sendParameters(int& amount,qreal**);
-//void receiveParameters(const qreal*);
+//void receiveParameters(const QList<qreal>&);
 
 
 };

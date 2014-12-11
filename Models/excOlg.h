@@ -18,7 +18,7 @@ class excOlg : public baseModel {
   protected:
     qreal theta0;                          // initial value                
     qreal rho, delta;                      // utility function parameters   
-    int tau;                              // length of expectations memory
+    qint64 tau;                              // length of expectations memory
     qreal rhoTilda;
     qreal thetat;		          // inflation rate
     qreal oldThetat;		          // old inflation rate
@@ -36,8 +36,8 @@ public:
     excOlg();			    // default constructor
     virtual ~excOlg();		    // destructor
     
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const qint64&);    // perform one iteration 
@@ -56,7 +56,7 @@ public:
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*); // receive parameter values 
+    void receiveParameters(const QList<qreal>&); // receive parameter values 
 };
 
 
@@ -72,13 +72,13 @@ public:
     excOlgAdapt();                          // default constructor
     void iteration(const qint64&);            // perform one iteration 
     qreal* setLabels(const QString&);
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values 
 };
 
 
@@ -107,12 +107,12 @@ public:
     excOlgGeoExp();                         // default constructor
     void iteration(const qint64&);            // perform one iteration 
     qreal* setLabels(const QString&);
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     void sendParameters(int&,qreal**);       // write all parameters
 				// into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values 
 };
 #endif

@@ -189,13 +189,13 @@ void  randomBits::random_bits(uint needed_bits, uint *words,
 
        for ( ; defined_bits < needed_bits  &&  state->availible_bits ; i++ )
        {
-           uint  max_bits =
+           uint  qMax_bits =
                               state->availible_bits + gap_bits < bits_per_word ?
                               state->availible_bits : bits_per_word - gap_bits
 ;
            uint  next_bits =
-                               defined_bits + max_bits > needed_bits ?
-                               needed_bits - defined_bits  :  max_bits ;
+                               defined_bits + qMax_bits > needed_bits ?
+                               needed_bits - defined_bits  :  qMax_bits ;
            uint  next = twist(state->word[i]);
            if (gap_bits)
            {   //  remove the lower used bits in state->word[i] before usage
@@ -251,7 +251,7 @@ uint  randomBits::search_next_1_bit(bool const  skip)
 
        for ( ; state->availible_bits ; i++ )
        {
-           uint  max_bits =
+           uint  qMax_bits =
                               state->availible_bits + gap_bits < bits_per_word ?
                               state->availible_bits : bits_per_word - gap_bits ;
            uint  next = twist(state->word[i]);
@@ -260,8 +260,8 @@ uint  randomBits::search_next_1_bit(bool const  skip)
                next >>= gap_bits;
                gap_bits = 0;
            }
-           if (max_bits < bits_per_word)
-               next &= (1U<<max_bits)-1;
+           if (qMax_bits < bits_per_word)
+               next &= (1U<<qMax_bits)-1;
            for  (; next ; next >>= 1 )
                if (next&1)
                {   state->availible_bits -= skip;
@@ -272,8 +272,8 @@ uint  randomBits::search_next_1_bit(bool const  skip)
                    state->availible_bits --;
                    zero_bits ++;
                }
-           state->availible_bits -= max_bits;
-           zero_bits += max_bits;
+           state->availible_bits -= qMax_bits;
+           zero_bits += qMax_bits;
        }
    }
 }

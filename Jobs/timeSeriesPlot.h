@@ -39,7 +39,7 @@ public:
 	static int pointsize;
     
 public:
-    timeSeriesPlot(baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
+    timeSeriesPlot(baseModel* const, const QString&, MacrodynGraphicsItem* const=NULL,
         const QString& = "", int const=0, char** const=NULL);
     ~timeSeriesPlot();
     void simulation();
@@ -65,8 +65,7 @@ protected:
     qreal * i_vals;	// the vector of initial values
     
 public:
-    m_timeSeriesPlot(qreal * ivalues,
-                     baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
+    m_timeSeriesPlot(qreal * ivalues, baseModel* const, const QString&, MacrodynGraphicsItem* const=NULL,
              char* const=NULL);
     ~m_timeSeriesPlot( void );
     void simulation();
@@ -94,8 +93,8 @@ protected:
     qreal * modelVar2;	// Pointer to be changed variable
     
 public:
-    m_timeSeriesPlot_v( char* const,qreal * ivalues,
-                     baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
+    m_timeSeriesPlot_v(const QString& ,qreal * ivalues,
+                     baseModel* const, const QString&, MacrodynGraphicsItem* const=NULL,
              char* const=NULL);
     ~m_timeSeriesPlot_v( void );
     void simulation();

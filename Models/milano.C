@@ -228,7 +228,7 @@ void milano::iteration(const qint64& t)
 
 /* loadParamset Last modified: 31.05.1996 (Jorg Nikutta) */
 
-void milano::loadParamset(QDataStream& inFile)
+void milano::loadParamset(QTextStream& inFile)
 {
     inFile >> a >> b;
     inFile >> mu1 >> mu2 >> nu1 >> nu2;
@@ -249,14 +249,14 @@ void milano::loadParamset(QDataStream& inFile)
 
 void milano::printParamset()
 {
-    log() << "a     :  " << a <<"\talpha0 : " << alfa0 << "\n";
-    log() << "b     :  " << b <<"\tmqreal0 : " << mqreal0 << "\n";
-    log() << "n1    :  " << n1 << "\n";
-    log() << "mu1   :  " << mu1 << "\tmu2 : " << mu2 << "\n";
-    log() << "nu1   :  " << nu1 << "\tG   : " << G << "\n";
-    log() << "nu2   :  " << nu2 << "\ttax : " << tax << "\n";
-    log() << "h     :  " << h << "\tsimd: " << simd << "\n";
-    log() << "pg0   :  " << pg0 << "\tLs  : " << Ls << "\n";
+    log() << "a     :  " << a <<"\talpha0 : " << alfa0;
+    log() << "b     :  " << b <<"\tmqreal0 : " << mqreal0;
+    log() << "n1    :  " << n1;
+    log() << "mu1   :  " << mu1 << "\tmu2 : " << mu2;
+    log() << "nu1   :  " << nu1 << "\tG   : " << G;
+    log() << "nu2   :  " << nu2 << "\ttax : " << tax;
+    log() << "h     :  " << h << "\tsimd: " << simd;
+    log() << "pg0   :  " << pg0 << "\tLs  : " << Ls;
 }
 
 /******************************************************************************/
@@ -266,13 +266,13 @@ void milano::printParamset()
 /*   Last modified:  31.05.1996 (Jorg Nikutta)                             */
 /*                                                                           */
 /*****************************************************************************/
-void milano::saveParamset(QDataStream& outFile)
+void milano::saveParamset(QTextStream& outFile)
 {
-    outFile << a << " " << b << "\n";
-    outFile << mu1 << " " << mu2 << " " << nu1 << " " << nu2 << "\n";
-    outFile << n1 << " " << simd << "\n";
-    outFile << h << " " << pg0 << " " << alfa0 << " " << mqreal0 << "\n";
-    outFile << Ls << " " << G << " " << tax << "\n";
+    outFile << a << " " << b;
+    outFile << mu1 << " " << mu2 << " " << nu1 << " " << nu2;
+    outFile << n1 << " " << simd;
+    outFile << h << " " << pg0 << " " << alfa0 << " " << mqreal0;
+    outFile << Ls << " " << G << " " << tax;
 }
 
 /******************************************************************************/
@@ -370,8 +370,29 @@ void milano::sendParameters(int&,qreal**)
 } // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-void milano::receiveParameters(const qreal*)
+void milano::receiveParameters(const QList<qreal> &parameters)
 {
+    if (parameters.size() != 15) log() << "Wrong number of parameters!";
+    else
+    {
+        a = parameters.at(0);
+        b = parameters.at(1);
+        mu1 = parameters.at(2);
+        mu2 = parameters.at(3);
+        nu1 = parameters.at(4);
+        nu2 = parameters.at(5);
+        n1 = parameters.at(6);
+        simd = parameters.at(7);
+        h = parameters.at(8);
+        pg0 = parameters.at(9);
+        alfa0 = parameters.at(10);
+        mqreal0 = parameters.at(11);
+        Ls = parameters.at(12);
+        G = parameters.at(13);
+        tax = parameters.at(14);
+
+        initialize();
+    }
 }
 // receive parameter values 
 

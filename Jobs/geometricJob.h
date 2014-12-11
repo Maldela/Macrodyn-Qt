@@ -5,16 +5,16 @@
 // Modified:	Tue Oct 29 15:16:47 MEZ 1996
 // Changes:	
 
-#ifndef GEOMETRICJOB_H
-#define GEOMETRICJOB_H
+#ifndef GEOMETRICJob_H
+#define GEOMETRICJob_H
 #include	"job.h"
 #include	"../hashTab.h"
 
 /******************************************************************************/
 /*                                                                            */
 /* Class name:    geometricJob                                                */
-/* Derived from:  job                                                         */
-/* Purpose:       Virtual base class for all jobs that perform a geometric    */
+/* Derived from:  Job                                                         */
+/* Purpose:       Virtual base class for all Jobs that perform a geometric    */
 /*                analysis of the model under consideration; a graphical      */
 /*                output is the result of that analysis                       */
 /* Author:        Markus Lohmann                                              */
@@ -22,10 +22,10 @@
 /*                                                                            */
 /******************************************************************************/
 
-class geometricJob : public job
+class geometricJob : public Job
 {
   protected:
-    QString xLabel;                   // variables that determine the
+    QString xLabel;                   // variables that deterqMine the
     QString yLabel;                   // coordinate system
     qreal xmin;
     qreal xmax;

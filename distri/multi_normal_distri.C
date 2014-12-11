@@ -8,10 +8,10 @@
 //
 //  Class name:       multi_normal_Distri
 //
-//  Member function:  compute_lowerleft_inverse_and_sqrt_of_determinate
+//  Member function:  compute_lowerleft_inverse_and_sqrt_of_deterqMinate
 //
 //  Purpose:          check positive definiteness, compute its lower_left, the
-//                    determinante and inverse and then initialize the corres-
+//                    deterqMinante and inverse and then initialize the corres-
 //                    ponding member elements 
 //                    direct solution in the cases dim <= 3
 //
@@ -22,7 +22,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void multi_normal_Distri::compute_lowerleft_inverse_and_sqrt_of_determinate()
+void multi_normal_Distri::compute_lowerleft_inverse_and_sqrt_of_deterqMinate()
 {
     sqrt_det = 1.0;
     if (dim == 0)
@@ -98,7 +98,7 @@ void multi_normal_Distri::compute_lowerleft_inverse_and_sqrt_of_determinate()
            fatalError("multi_normal_Distri::compute_lowerleft_inverse","covariance matrix is not positive definite");
     }
 
-//  Compute Sqrt of Determinate of Covariance-Matrix
+//  Compute Sqrt of DeterqMinate of Covariance-Matrix
     sqrt_det = 1.0;
     for (uint h=0; h < dim*dim ; h+=dim+1)
        sqrt_det *= lower_left[h];
@@ -160,7 +160,7 @@ prob_Distri(0), dim(d), median(new qreal[d]), lower_left(new qreal[d*d]), inver(
         for (uint h=0, i=0; i<dim ; i++)
         for (uint j=i; j<dim ; j++, h++)
             inver[j+dim*i] = covar[h];
-        compute_lowerleft_inverse_and_sqrt_of_determinate();
+        compute_lowerleft_inverse_and_sqrt_of_deterqMinate();
     }
 
 }
@@ -328,7 +328,7 @@ qreal multi_normal_Distri::density(const qreal x[]) const
 //  Purpose:          random value in R with normal probability distribution
 //                    Ratio method for normal deviates
 //                    A.J. Kinderman & J.F. Monahan 1976
-//                    see: D.E. Knuth Seminumerical Algorithm Vol. 2 Chap. 3.4.1
+//                    see: D.E. Knuth SeqMinumerical Algorithm Vol. 2 Chap. 3.4.1
 //
 //
 //  Created:          2001-12-08 (Achim Flammenkamp)

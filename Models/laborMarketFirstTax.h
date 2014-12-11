@@ -22,13 +22,13 @@ protected:
     qreal tax;
     void setTax();			// set taxS,taxW by tax
 public:
-    void loadParamset(QDataStream&);	// load parameterset from a file
-    void saveParamset(QDataStream&);	// write parameterset into a file
-    void saveParamsetWithNames(QDataStream&); // add parametset to printerfile (so far only for xpm)
+    void loadParamset(QTextStream&);	// load parameterset from a file
+    void saveParamset(QTextStream&);	// write parameterset into a file
+    void saveParamsetWithNames(QTextStream&); // add parametset to printerfile (so far only for xpm)
     void printParamset();		// print parameterset on the screen
     void sendParameters(int&,qreal**);   // write all parameters into an array
                                         // and return the numbers of parameters
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values
 
     qreal* setLabels(const QString&);		 // return a pointer to a variable or
     laborMarketFirstTax();		// constructor
@@ -57,7 +57,7 @@ private:
     
 public:
     rlaborMarketFirstTax();		// constructor
-    void loadParamset(QDataStream&);	// load parameterset from a file
+    void loadParamset(QTextStream&);	// load parameterset from a file
     void iteration(const qint64&);	// perform one iteration 
     void initialize(void);		// initialize the model
 };

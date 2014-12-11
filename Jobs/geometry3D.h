@@ -13,8 +13,8 @@
 /******************************************************************************/
 /*                                                                            */
 /* Class name:    geometry3D                                                  */
-/* Derived from:  job                                                         */
-/* Purpose:       Virtual base class for all jobs that perform a geometric    */
+/* Derived from:  Job                                                         */
+/* Purpose:       Virtual base class for all Jobs that perform a geometric    */
 /*                3D analysis of the model under consideration; a graphical   */
 /*                output is the result of that analysis                       */
 /* Author:        Andreas Starke                                              */
@@ -22,9 +22,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-class geometry3D : public job {
+class geometry3D : public Job {
   protected:
-    QString xLabel;                   // variables that determine the
+    QString xLabel;                   // variables that deterqMine the
     QString yLabel;                   // coordinate system
     QString zLabel;
     qreal xmin;

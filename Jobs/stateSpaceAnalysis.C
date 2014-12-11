@@ -24,7 +24,7 @@ stateSpaceAnalysis::stateSpaceAnalysis(baseModel* const bMod,
     int modelDim;
     
     model->sendStateSpace(modelDim,&stateVars);
-    maxCell=hash->noCells();
+    qMaxCell=hash->noCells();
     limit =(qint64)(length *0.66); // first two thirds are thrown away
 }                                      
 
@@ -64,7 +64,7 @@ void stateSpaceAnalysis::simulation()
     param[0]=xParam;
     param[1]=yParam;
       
-    for(cell=0;cell<maxCell;cell++) {
+    for(cell=0;cell<qMaxCell;cell++) {
 	hash->discrete2Cont(cell,param);
 	model->initialize();
 	outside=0;

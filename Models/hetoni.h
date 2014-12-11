@@ -38,13 +38,13 @@ public:
 
     void initialize();			 // initialize the model, define
 					 // the initial state
-    void loadParamset(QDataStream&);	 // load parameterset from a file
-    void saveParamset(QDataStream&);	 // write parameterset into a file
+    void loadParamset(QTextStream&);	 // load parameterset from a file
+    void saveParamset(QTextStream&);	 // write parameterset into a file
     void printParamset();		 // print parameterset on the screen
-    void saveParamsetWithNames(QDataStream&);// add parametset to printerfile
+    void saveParamsetWithNames(QTextStream&);// add parametset to printerfile
     void sendParameters(int&,qreal**);    // write all parameters into an array
                                          // and return the numbers of parameters
-    void receiveParameters(const qreal*); // receive parameter values 
+    void receiveParameters(const QList<qreal>&); // receive parameter values 
 
     qreal* setLabels(const QString&);		 // return a pointer to a variable or
 					 // a parameter specified by its name

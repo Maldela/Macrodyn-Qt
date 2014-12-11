@@ -18,15 +18,15 @@
 /*                                                                            */
 /******************************************************************************/
 
-mapping::mapping(baseModel* const bMod, MacrodynGraphicsItem* const graph, double min, double max, int res, int dim, int tlim, char*
-	filename, char* mothermap)
-    :job(bMod,graph)
+mapping::mapping(baseModel* const bMod, MacrodynGraphicsItem* const graph, double min, double max, int res, int dim, int tlim,
+    const QString& filename, const QString& mothermap)
+    :Job(bMod,graph)
 {
-	m = new md_Map(min,max,res,dim,tlim,filename,mothermap);
+    m = new md_Map(min,max,res,dim,tlim,filename,mothermap);
 	if ( !m )
 		fatalError("mapping::mapping","can't allocate map");
-	lmin=min;
-	lmax=max;
+    lmin = min;
+    Lmax = max;
 	resolution=res;
 	model_dim=dim;
 	time_limit=tlim;
@@ -50,14 +50,14 @@ void mapping::simulation()
 	
 	for (int i=0; i<resolution; i++) {
 		model->initialize();
-        log() << "\nmodel length:" << model->getLength() << "\n" << "\n";
+        log() << "model length:" << model->getLength();
 		for (int j=0; j<time_limit; j++) {
 			model->iteration(j+1);
 			model->sendStateSpace(dummy, &states);
 			for (int k=0; k<model_dim; k++) {
-            //	log() << i*time_limit*model_dim+j*model_dim+k << " " << "\n";
-            //	log() << (states)[0] << " " << (states)[1] << "\n" << "\n";
-            //	log() << ((*states)[0]) << " " << ((*states)[1]) << "\n" << "\n";
+            //	log() << i*time_limit*model_dim+j*model_dim+k << " " 
+            //	log() << (states)[0] << " " << (states)[1] << "\n" 
+            //	log() << ((*states)[0]) << " " << ((*states)[1]) << "\n" 
 				m->value_field[i*time_limit*model_dim+j*model_dim+k]=((*states)[k-1]);
 			}
 		}

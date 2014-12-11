@@ -40,8 +40,8 @@ public:
     void sendStateSpace(int &,const qreal***);
     qreal * setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
-//    void loadParamset(QDataStream&);	// load parameterset from a file
-//    void saveParamset(QDataStream&);
+//    void loadParamset(QTextStream&);	// load parameterset from a file
+//    void saveParamset(QTextStream&);
 //    void printParamset();
     void iteration(const qint64&);	// perform one iteration 
 };

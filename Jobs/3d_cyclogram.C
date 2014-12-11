@@ -33,7 +33,7 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
     resolution_y = axes.res[1];
     resolution_z = axes.res[2];
     log() << "resx: " << resolution_x << " resy: " << resolution_y << " resz: "
-    << resolution_z << "\n";
+    << resolution_z;
     dx = bif3D_dx;
     dy = bif3D_dy;
     dz = bif3D_dz;
@@ -121,8 +121,8 @@ void cyclogram_3d::simulation()
     stream << zLabel;
     
     for(dummy_x=xmin, count_x=0;count_x<resolution_x; dummy_x+=stepX,count_x++) {
-	for(dummy_y=ymin,count_y=0;count_y<resolution_y;dummy_y+=stepY,count_y++) {
-	   for(dummy_z=zmin,count_z=0;count_z<resolution_z;dummy_z+=stepZ,count_z++) {
+    for(dummy_y=ymin,count_y=0;count_y<resolution_y;dummy_y+=stepY,count_y++) {
+       for(dummy_z=zmin,count_z=0;count_z<resolution_z;dummy_z+=stepZ,count_z++) {
 	   	    *xParam=dummy_x;
 		    *yParam=dummy_y;
 		    *zParam=dummy_z;
@@ -133,7 +133,7 @@ void cyclogram_3d::simulation()
                     if( hash->storePoint(stateVars) ) {
                         hash->resetHashTable();
                         order=-1;    // out of domain, leave it blue
-        //			    log() << *(stateVars[0]) << "\n";
+        //			    log() << *(stateVars[0]) 
                         break;
                     }
                     if( !(t % tDiv) || (t==(length-1)) ) {
@@ -141,7 +141,7 @@ void cyclogram_3d::simulation()
                             hash->resetHashTable();
                             break;	// a cycle has been detected
                                 // so the analysis of this parameterset
-                                // can be terminated and the hash table
+                                // can be terqMinated and the hash table
                                 // should be initialized for the next
                                 // parameterset
                         }

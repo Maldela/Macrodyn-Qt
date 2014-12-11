@@ -29,13 +29,13 @@ int timeSeriesPlot::pointsize = 1;
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-timeSeriesPlot::timeSeriesPlot(baseModel* const bMod,char* const label,
+timeSeriesPlot::timeSeriesPlot(baseModel* const bMod, const QString& label,
                    MacrodynGraphicsItem* const graph,
                    const QString& fileName,int const mp_num,char** const mp_ptr)
           :timeSeriesJob(bMod,label,graph)
 {
     log() << "constructing time series plot..."<<"\n";
-	qreal xmin, xmax;
+    qreal xmin, xmax;
     if(!fileName.isEmpty())
         outFile.setFileName(fileName);
     else
@@ -50,14 +50,14 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod,char* const label,
       multiplotAdr=new qreal*[multiplot_num];
       if( !(multiplotAdr) ) {
     log() << "macrodyn::timeSeriesPlot::timeSeriesPlot  \
-        Can't create array for *multiplot[]"<< "\n" << "\n";
+        Can't create array for *multiplot[]";
 	exit(-1);
 	}
 
       multiplotOld=new qreal[multiplot_num];
       if( !(multiplotAdr) ) {
     log() << "macrodyn::timeSeriesPlot::timeSeriesPlot  \
-        Can't create array for multiplot[]"<< "\n" << "\n";
+        Can't create array for multiplot[]";
 	exit(-1);
 	}
       QList<QString> list;
@@ -71,7 +71,7 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod,char* const label,
       }
 
     }
-    log() << "finished\n" << "\n";
+    log() << "finished";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -132,7 +132,7 @@ void timeSeriesPlot::simulation()
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
 
 	      }
-        QDataStream(&outFile) << t << "\t" << timeSeriesqreal[t] << "\n";
+        QTextStream(&outFile) << t << "\t" << timeSeriesqreal[t];
         }
         oldX=t;
         oldY=timeSeriesqreal[t];	
@@ -157,7 +157,7 @@ void timeSeriesPlot::simulation()
 ///////////////////////////////////////////////////////////////////////////////
 
 m_timeSeriesPlot::m_timeSeriesPlot(qreal * ivalues, baseModel* const bMod,
-				   char* const label,
+                   const QString& label,
                        MacrodynGraphicsItem* const graph,
 			           char* ) 
                                   :timeSeriesPlot(bMod,label,graph)
@@ -201,14 +201,14 @@ void m_timeSeriesPlot::simulation()
     qint64 t;
     qreal oldX, oldY;
     int  k;
-    QDataStream stream(&outFile);
+    QTextStream stream(&outFile);
 
   for( k=0; k<n_i_vals; k++) {
     model->initialize();                // initialize the model
     *modelVar = i_vals[k];		// pick the next initial value
     oldX=0;
     oldY=*modelVar;
-    stream << oldX << "\t" << oldY << "\n";
+    stream << oldX << "\t" << oldY;
     for(t=1;t<length+1;t++) {
 	model->iteration(t);          // compute the orbit
 	if( t >= limit )  {
@@ -218,7 +218,7 @@ void m_timeSeriesPlot::simulation()
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
           }
 //	    }
-        stream << t << "\t" << timeSeriesqreal[t] << "\n";
+        stream << t << "\t" << timeSeriesqreal[t];
 	    oldX=t;
 	    oldY=timeSeriesqreal[t];
 	}
@@ -238,9 +238,9 @@ void m_timeSeriesPlot::simulation()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-m_timeSeriesPlot_v::m_timeSeriesPlot_v(char* const labelm,
+m_timeSeriesPlot_v::m_timeSeriesPlot_v(const QString& labelm,
 				   qreal * ivalues, baseModel* const bMod,
-				   char* const label,
+                   const QString& label,
                        MacrodynGraphicsItem* const graph,
 			           char* ) 
                                   :timeSeriesPlot(bMod,label,graph)
@@ -288,14 +288,14 @@ void m_timeSeriesPlot_v::simulation()
     qint64 t;
     qreal oldX, oldY;
     int  k;
-    QDataStream stream(&outFile);
+    QTextStream stream(&outFile);
 
   for( k=0; k<n_i_vals; k++) {
     *modelVar2 = i_vals[k];		// pick the next initial value
     model->initialize();                // initialize the model
     oldX=0;
     oldY=*modelVar;
-    stream << oldX << "\t" << oldY << "\n";
+    stream << oldX << "\t" << oldY;
     for(t=1;t<length+1;t++) {
 	model->iteration(t);          // compute the orbit
 	if( t >= limit )  {
@@ -304,7 +304,7 @@ void m_timeSeriesPlot_v::simulation()
 	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
           }
-        stream << t << "\t" << timeSeriesqreal[t] << "\n";
+        stream << t << "\t" << timeSeriesqreal[t];
 	    oldX=t;
 	    oldY=timeSeriesqreal[t];
 	}

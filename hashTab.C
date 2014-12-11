@@ -93,19 +93,19 @@ qreal hashTable::whichCell(const qreal** actualState) const
 {
     qreal cell=0.0;
     static qreal logBase=log(double(base));
-    
-    for(int i=0;i<domain.dimension;i++) {
-    discreteState[i]=(uint) ( (domain.res[i]-1)*
-				    (*actualState[i]-domain.min[i])/
-				   (domain.max[i]-domain.min[i]) );
 
-	cell += discreteState[i]*exp(i*logBase);
-/**************	
-	prod=1;
-	for(l=0;l<i;l++)
-	    prod *= domain.res[l];
-	    cell += discreteState[i]*prod;
-******************/	    
+    for(int i=0;i<domain.dimension;i++) {
+    discreteState[i]=(unsigned) ( (domain.res[i]-1)*
+                    (*actualState[i]-domain.min[i])/
+                   (domain.max[i]-domain.min[i]) );
+
+    cell += discreteState[i]*exp(i*logBase);
+/**************
+    prod=1;
+    for(l=0;l<i;l++)
+        prod *= domain.res[l];
+        cell += discreteState[i]*prod;
+******************/
     }
     return cell;
 }
@@ -126,8 +126,8 @@ void hashTable::discrete2Cont(const qreal& cell,qreal** state)
     qreal divResult;
     qreal *a,*b;
     for(int i=0;i<domain.dimension;i++) {
-	a=&(domain.min[i]);
-	b=&(domain.max[i]);
+    a=&(domain.min[i]);
+    b=&(domain.max[i]);
 	divResult=floor(cell/exp(i*baseLog));
     discreteState[i]=(uint)(divResult-base*floor(divResult/base));
 	*state[i]=*a+(discreteState[i]-1) * (*b - *a)/domain.res[i] +
@@ -172,7 +172,7 @@ int hashTable::storePoint(const qreal** state)
 
     if( !domain.inRange(state) ) {      // check wether the point is in the 
       					// domain to be considered or not
-//	log() << "Domain error\t" << state[0] << "\t" << state[1] << "\n";
+//	log() << "Domain error\t" << state[0] << "\t" << state[1] 
 	return 1;
     }
     cell=whichCell(state);    		// transform the coordinates into a

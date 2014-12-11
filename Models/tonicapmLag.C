@@ -58,14 +58,14 @@ void tonicapmLag::initialize()
     for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-        //log() << "k=" << k  << " wsum=" << wsum << "\n";
+        //log() << "k=" << k  << " wsum=" << wsum 
 	   }
     //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
+        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko 
 	   }
 }
 /******************************************************************************/
@@ -76,7 +76,7 @@ void tonicapmLag::initialize()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapmLag::loadParamset(QDataStream& inputFile)
+void tonicapmLag::loadParamset(QTextStream& inputFile)
 {
 
     inputFile >> a >> b >> c >> d >> lambda >> sigma >> w >> L0;
@@ -116,7 +116,7 @@ void tonicapmLag::loadParamset(QDataStream& inputFile)
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapmLag::saveParamset(QDataStream& outputFile)
+void tonicapmLag::saveParamset(QTextStream& outputFile)
 {
   outputFile << a << "\t" << b << "\t" << c << "\t" << d << "\t";
   outputFile << lambda << "\t" << sigma << "\t" << w << "\t";
@@ -132,7 +132,7 @@ void tonicapmLag::saveParamset(QDataStream& outputFile)
 /* Last modified:   20.02.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapmLag::saveParamsetWithNames(QDataStream& outputFile)
+void tonicapmLag::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nModel TonicapmLag\n";
     outputFile << "a = " << a << "\tb = " << b << "\tc = " << c << "\td = " << d;
@@ -141,7 +141,6 @@ void tonicapmLag::saveParamsetWithNames(QDataStream& outputFile)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
     for (int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
-    outputFile << "\n";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -154,8 +153,8 @@ void tonicapmLag::saveParamsetWithNames(QDataStream& outputFile)
 void tonicapmLag::printParamset()
 {
   log() << a  << "\t" << b << "\t" << c << "\t" << d << "\t";
-  log() << lambda << "\t" << sigma << "\t" << w << "\t" << L0 << "\n";
-    log() << length << "\n";
+  log() << lambda << "\t" << sigma << "\t" << w << "\t" << L0;
+    log() << length;
     for(int k=0;k<=L;k++)
         log() << pp0[k] << "\t";
 }
@@ -197,7 +196,7 @@ void tonicapmLag::sendParameters(int& amount,qreal** parameters)
 /* Last modified:   30.01.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapmLag::receiveParameters(const qreal* parameters)
+void tonicapmLag::receiveParameters(const QList<qreal>& parameters)
 {
     a=parameters[0];
     b=parameters[1];

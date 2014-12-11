@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
 #include "Keener.h"
 
 
@@ -179,7 +178,7 @@ void Keener::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::loadParamset(QDataStream& inFile)
+void Keener::loadParamset(QTextStream& inFile)
 {
 	inFile >> x_0 >> a >> b >> Modulo >> lambda >> myseed;
 	inFile >> length;
@@ -199,7 +198,7 @@ void Keener::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::saveParamset(QDataStream& outFile)
+void Keener::saveParamset(QTextStream& outFile)
 {
 	outFile << x_0 << "\t" << a << "\t" << b << "\t";
 	outFile << Modulo << "\t" << lambda << "\t" << myseed;
@@ -219,7 +218,7 @@ void Keener::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void Keener::saveParamsetWithNames(QDataStream& outFile)
+void Keener::saveParamsetWithNames(QTextStream& outFile)
 {
 	outFile << "x_0 = " << x_0;
 	outFile << "\na = " << a;
@@ -227,7 +226,7 @@ void Keener::saveParamsetWithNames(QDataStream& outFile)
 	outFile << "\nModulo = " << Modulo;
 	outFile << "\nlambda = " << lambda;
 	outFile << "\nseed = " << myseed;
-	outFile << "\nlength = " << length << "\n";
+    outFile << "\nlength = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -245,7 +244,7 @@ void Keener::saveParamsetWithNames(QDataStream& outFile)
 void Keener::printParamset()
 {
 	log() << x_0 << "\t" << a << "\t" << b << "\t" << Modulo << "\t";
-	log() << lambda << "\t" << myseed << "\t" << length << "\n";
+    log() << lambda << "\t" << myseed << "\t" << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -289,7 +288,7 @@ void Keener::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::receiveParameters(const qreal* parameters)
+void Keener::receiveParameters(const QList<qreal>& parameters)
 {
     x_0=parameters[0];
     a=parameters[1];

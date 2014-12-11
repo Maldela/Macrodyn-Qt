@@ -16,9 +16,7 @@
 #include "rand_var.h"
 #include "distribution.h"
 #include "markov_chain.h"
-#include "../strnchr.h"
 #include "../matrix.h"
-#include<stdlib.h>
 
 class manipulate : public baseModel {
 
@@ -50,8 +48,8 @@ protected:
         QString m_matrix;	// Uebergangsmatrix als Zeichenkette
 		qreal states[32];	// Zustaende als qreal-Feld angeordnent
 		qreal umatrix[32][32];	// Uebergangsmatrix als qreal-Matrix
-		qreal zetamin;
-		qreal zetamax;
+        qreal zetamin;
+        qreal zetamax;
 		qreal* expname;		// Modellvariable in die der Erwartungswert eingetragen wird
 		qreal* variancename; 		// Modellvariable in die die Varianz eingetragen wird
 		//qreal* randname;		// Modellvariable in die die gezogene Zufallsvariable eingetragen wird
@@ -60,8 +58,8 @@ protected:
 		void F_stoch_ar();
 		//rand_var * zvar;	// ptr random function   
 		qreal gamma;
-		//qreal zetamin;
-		//qreal zetamax;
+        //qreal zetamin;
+        //qreal zetamax;
 		//qreal* expname;		// Modellvariable in die der Erwartungswert eingetragen wird
 		//qreal* variancename;		// Modellvariable in die die Varianz eingetragen wird
 		//qreal* randname;		// Modellvariable in die die gezogene Zufallsvariable eingetragen wird
@@ -182,13 +180,13 @@ public:
 		qint64 getLength() const;
 		qreal* sendModelVar();
 		void sendStateSpace(int &,const qreal***);
-		void receiveParameters(const qreal*);
+        void receiveParameters(const QList<qreal>&);
 		void sendParameters(int&,qreal**);
 		void printParamset();
-		void saveParamset(QDataStream&);
+		void saveParamset(QTextStream&);
 
-		void saveParamsetWithNames(QDataStream&);
-		void loadParamset(QDataStream&);
+		void saveParamsetWithNames(QTextStream&);
+		void loadParamset(QTextStream&);
 		void initialize();
 		void iteration(const qint64&);
 };

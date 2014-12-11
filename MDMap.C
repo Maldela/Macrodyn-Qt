@@ -23,11 +23,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-md_Map::md_Map(double min,double max,int res,int dim,int tlim
+md_Map::md_Map(double qMin,double qMax,int res,int dim,int tlim
     ,const QString& filename, const QString& mothermap)
 {
-	l_min=min;
-	l_max=max;
+    l_min = qMin;
+    l_max = qMax;
 	resolution=res;
 	model_dim=dim;
 	time_limit=tlim;
@@ -41,7 +41,7 @@ md_Map::md_Map(double min,double max,int res,int dim,int tlim
 		
 	value_field = new double[d];
 	if ( !value_field ) {
-		log() << "md_Map::md_Map can't allocate memory\n" << "\n";
+        log() << "md_Map::md_Map can't allocate memory";
 		exit (-1);
 	} else { for (int j=0;j<d;j++)
 			value_field[j]=0;
@@ -65,11 +65,11 @@ md_Map::md_Map(const QString& filename)
     QFile inFile(filename);
 
     if (!inFile.open(QFile::ReadOnly)) {
-		log() << "md_Map::md_Map input file bad...\n" << "\n";
+        log() << "md_Map::md_Map input file bad...";
 		exit (-1);
 	}
 	
-    QDataStream stream(&inFile);
+    QTextStream stream(&inFile);
 	name=filename;
 	
     stream >> l_min >> l_max;
@@ -84,7 +84,7 @@ md_Map::md_Map(const QString& filename)
 	
     value_field = new double[qint64(resolution)*qint64(model_dim)*time_limit];
 	if ( !value_field ) 
-		log() << "mdMap::mdMap can't allocate memory\n" << "\n";
+        log() << "mdMap::mdMap can't allocate memory";
 /*	for (i=0;i<resolution;i++){
 		values[i] = new const double* [model_dim];
 		for (int j=0;j<model_dim;j++){
@@ -129,19 +129,18 @@ md_Map::~md_Map()
 
 void md_Map::give_attributes()
 {
-    log() << "l_min: " << l_min << "\n";
-    log() << "l_max: " << l_max << "\n";
-    log() << "resolution: " << resolution << "\n";
-    log() << "model_dim: " << model_dim << "\n";
-    log() << "time_limit: " << time_limit << "\n";
-    log() << "name: " << name << "\n";
+    log() << "l_min: " << l_min;
+    log() << "l_max: " << l_max;
+    log() << "resolution: " << resolution;
+    log() << "model_dim: " << model_dim;
+    log() << "time_limit: " << time_limit;
+    log() << "name: " << name;
 	for (int i=0; i<resolution ; i++)
         if ( !daugther[i].isEmpty() )
-            log() << "daugther["<<i<<"]: "<<daugther[i]<<"\n";
+            log() << "daugther["<<i<<"]: "<<daugther[i];
     if ( !mother.isEmpty() )
-        log() << "mother: " << mother << "\n";
-	log() << "values: \n";
+        log() << "mother: " << mother;
+    log() << "values:";
     for (int i=0; i<resolution*model_dim*time_limit;i++)
 		log() << value_field[i] <<  " ";
-    log() << "\n";
 }

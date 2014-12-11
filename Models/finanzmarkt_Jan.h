@@ -1,9 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// $Header: armax_eindim.h Dec 20 METDST 2000
+// $Header: arqMax_eindim.h Dec 20 METDST 2000
 //
-// Module name:		armax_eindim.h
-// Contents:		Class definition of the class armax_eindim
+// Module name:		arqMax_eindim.h
+// Contents:		Class definition of the class arqMax_eindim
 //
 // Author:		    mhoffman
 // Last modified:	Feb 27 METDST 2001
@@ -109,12 +109,12 @@ protected:
 public:
     finanzmarkt_Jan();				// constructor
     virtual ~finanzmarkt_Jan();		// destructor
-    void loadParamset(QDataStream&);	// load parameterset from a file
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	// load parameterset from a file
+    void saveParamset(QTextStream&);
     void printParamset();
     void sendParameters(int &,qreal**);
     qreal* sendModelVar(void);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     qreal* setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const qint64&);	// perform one iteration

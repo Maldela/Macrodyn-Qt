@@ -110,7 +110,7 @@ qreal capOlg::expReturnRate(const qint64 t)
     qint64 T,counter;
     qreal help=0.0;
     
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ )
 	help += rVec[counter];
     return( help / T );
@@ -262,7 +262,7 @@ void capOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::loadParamset(QDataStream& inputFile)
+void capOlg::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B >> d;
     inputFile >> n >> delta >> rho;
@@ -287,12 +287,12 @@ void capOlg::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::saveParamset(QDataStream& outputFile)
+void capOlg::saveParamset(QTextStream& outputFile)
 {
-    outputFile << A << "\t" << B << "\t" << d << "\n";
-    outputFile << n << "\t" << delta << "\t" << rho << "\n";
-    outputFile << tau << "\t" << length << "\n";
-    outputFile << k0 << "\t" << r0 << "\n";
+    outputFile << A << "\t" << B << "\t" << d;
+    outputFile << n << "\t" << delta << "\t" << rho;
+    outputFile << tau << "\t" << length;
+    outputFile << k0 << "\t" << r0;
 }
 
 /******************************************************************************/
@@ -306,10 +306,10 @@ void capOlg::saveParamset(QDataStream& outputFile)
 
 void capOlg::printParamset()
 {
-    log() << A << "\t" << B <<  "\t" << d << "\n";
-    log() << n << "\t" << delta << "\t" << rho << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << k0 << "\t" << r0 << "\n";
+    log() << A << "\t" << B <<  "\t" << d;
+    log() << n << "\t" << delta << "\t" << rho;
+    log() << tau << "\t" << length;
+    log() << k0 << "\t" << r0;
 }
 
 /******************************************************************************/
@@ -352,7 +352,7 @@ void capOlg::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::receiveParameters(const qreal* parameters)
+void capOlg::receiveParameters(const QList<qreal>& parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -478,7 +478,7 @@ qreal* capOlgAdapt::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::loadParamset(QDataStream& inputFile)
+void capOlgAdapt::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B >> d;
     inputFile >> n >> delta >> rho;
@@ -503,12 +503,12 @@ void capOlgAdapt::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::saveParamset(QDataStream& outputFile)
+void capOlgAdapt::saveParamset(QTextStream& outputFile)
 {
-    outputFile << A << "\t" << B << "\t" << d << "\n";
-    outputFile << n << "\t" << delta << "\t" << rho << "\n";
-    outputFile << tau << "\t" << eta << "\t" << length << "\n";
-    outputFile << k0 << "\t" << r0 << "\n";
+    outputFile << A << "\t" << B << "\t" << d;
+    outputFile << n << "\t" << delta << "\t" << rho;
+    outputFile << tau << "\t" << eta << "\t" << length;
+    outputFile << k0 << "\t" << r0;
 }
 
 /******************************************************************************/
@@ -522,10 +522,10 @@ void capOlgAdapt::saveParamset(QDataStream& outputFile)
 
 void capOlgAdapt::printParamset()
 {
-    log() << A << "\t" << B <<  "\t" << d << "\n";
-    log() << n << "\t" << delta << "\t" << rho << "\n";
-    log() << tau << "\t" << eta << "\t" << length << "\n";
-    log() << k0 << "\t" << r0 << "\n";
+    log() << A << "\t" << B <<  "\t" << d;
+    log() << n << "\t" << delta << "\t" << rho;
+    log() << tau << "\t" << eta << "\t" << length;
+    log() << k0 << "\t" << r0;
 }
 
 /******************************************************************************/
@@ -569,7 +569,7 @@ void capOlgAdapt::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgAdapt::receiveParameters(const qreal* parameters)
+void capOlgAdapt::receiveParameters(const QList<qreal>& parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -632,7 +632,7 @@ qreal capOlgGeoExp::expectedReturnRate(const qint64 t)
     qreal exponent=0.0;
     qreal logEta=log(etaTilda);
 
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter < T; counter++ ) {
 	exponent=exp(counter*logEta);
 	etaSum += exponent;
@@ -720,7 +720,7 @@ qreal* capOlgGeoExp::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::loadParamset(QDataStream& inputFile)
+void capOlgGeoExp::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B >> d;
     inputFile >> n >> delta >> rho;
@@ -745,12 +745,12 @@ void capOlgGeoExp::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::saveParamset(QDataStream& outputFile)
+void capOlgGeoExp::saveParamset(QTextStream& outputFile)
 {
-    outputFile << A << "\t" << B << "\t" << d << "\n";
-    outputFile << n << "\t" << delta << "\t" << rho << "\n";
-    outputFile << tau << "\t" << eta << "\t" << length << "\n";
-    outputFile << k0 << "\t" << r0 << "\n";
+    outputFile << A << "\t" << B << "\t" << d ;
+    outputFile << n << "\t" << delta << "\t" << rho;
+    outputFile << tau << "\t" << eta << "\t" << length;
+    outputFile << k0 << "\t" << r0;
 }
 
 /******************************************************************************/
@@ -764,10 +764,10 @@ void capOlgGeoExp::saveParamset(QDataStream& outputFile)
 
 void capOlgGeoExp::printParamset()
 {
-    log() << A << "\t" << B <<  "\t" << d << "\n";
-    log() << n << "\t" << delta << "\t" << rho << "\n";
-    log() << tau << "\t" << eta << "\t" << length << "\n";
-    log() << k0 << "\t" << r0 << "\n";
+    log() << A << "\t" << B <<  "\t" << d;
+    log() << n << "\t" << delta << "\t" << rho;
+    log() << tau << "\t" << eta << "\t" << length;
+    log() << k0 << "\t" << r0;
 }
 
 /******************************************************************************/
@@ -811,7 +811,7 @@ void capOlgGeoExp::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void capOlgGeoExp::receiveParameters(const qreal* parameters)
+void capOlgGeoExp::receiveParameters(const QList<qreal>& parameters)
 {
     A=parameters[0];
     B=parameters[1];

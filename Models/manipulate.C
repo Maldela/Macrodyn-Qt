@@ -55,8 +55,9 @@ manipulate::manipulate() : baseModel(0) { // dimension is set zero! do not use
 // Author:		Marc Mueller  Jul 12 1999
 // Last modified:	2000/6/20
 ///////////////////////////////////////////////////////////////////////////////
-manipulate::~manipulate() {
-log() << "manipulate destructor" << "\n";
+manipulate::~manipulate()
+{
+    log() << "manipulate destructor";
 
 	if( model ) delete model;
 	if( manipulateTag ) delete [] manipulateTag;
@@ -157,10 +158,10 @@ qreal* manipulate::setLabels(const QString& label) {
 qint64  manipulate::getLength() const {return model->getLength();}
 qreal* manipulate::sendModelVar() {return model->sendModelVar();}
 void  manipulate::sendStateSpace(int &i,const qreal*** r) {model->sendStateSpace(i,r);}
-void  manipulate::receiveParameters(const qreal* r) {model->receiveParameters(r);} 
+void  manipulate::receiveParameters(const QList<qreal> &r) {model->receiveParameters(r);}
 void  manipulate::sendParameters(int& i,qreal** r) {model->sendParameters(i,r);}
 void  manipulate::printParamset() {model->printParamset();}
-void  manipulate::saveParamset(QDataStream& os) {model->saveParamset(os);}
+void  manipulate::saveParamset(QTextStream& os) {model->saveParamset(os);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Class name:		manipulate
@@ -170,7 +171,7 @@ void  manipulate::saveParamset(QDataStream& os) {model->saveParamset(os);}
 // Author:		Marc Mueller  Jul 12 1999
 // Last modified:	Mon Jul 12 12:11:54 CEST 1999  Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void manipulate::saveParamsetWithNames(QDataStream& outputFile) {
+void manipulate::saveParamsetWithNames(QTextStream& outputFile) {
 	outputFile << "\nManipulate Model\n";
 	model->saveParamsetWithNames(outputFile);
 }
@@ -183,7 +184,7 @@ void manipulate::saveParamsetWithNames(QDataStream& outputFile) {
 // Author:		Marc Mueller  Jul 12 1999
 // Last modified:	2000/5/25
 ///////////////////////////////////////////////////////////////////////////////
-void manipulate::loadParamset(QDataStream& inFile) {
+void manipulate::loadParamset(QTextStream& inFile) {
 	int i,j;
     QString dummy, dummy2;
     QString name;
@@ -206,7 +207,7 @@ void manipulate::loadParamset(QDataStream& inFile) {
 
 	for (int hm=0;hm<howMany;hm++) {
 		inFile >> manipulateTag[hm];
-log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
+    log() << "manipulateTag[" << hm << "]" << manipulateTag[hm];
 		switch( manipulateTag[hm] ) {
 
 		  case stoch_uni:
@@ -263,14 +264,14 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
                 for (i = 0; i < list.size(); i++)
                 {
                     umatrix[j][i] = list[i].toDouble(); // trage Uebergangsmatrix ein
-					//log() << sdummy << " " << umatrix[j][i] << "\n";
+					//log() << sdummy << " " << umatrix[j][i] 
 				}
                 m_matrix += dummy += " "; // anhaengen der Zeilen !
 			}
             break;
         }
 		  case stoch_ar: 
-			// 12 expectationname variancename randomname gammavalue zetaminvalue zetamaxvalue
+            // 12 expectationname variancename randomname gammavalue zetaminvqMaxe zetamaxvalue
 			// Bsp.: 12 Ed Vd d 0.75 0.01 0.13
 			inFile >> varname;
 			expname=model->setLabels(varname);
@@ -287,8 +288,8 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 			if( !randname )
 				fatalError("manipulate::loadParamset stoch_ar can't find",varname);
 			inFile >> gamma;
-			inFile >> zetamin;
-			inFile >> zetamax;
+            inFile >> zetamin;
+            inFile >> zetamax;
 			break;
 		  case errcor: // 50 num price forecast alpha
 			inFile >> errcor_num;		  
@@ -541,7 +542,7 @@ log() << "manipulateTag[" << hm << "]" << manipulateTag[hm] << "\n";
 
 		  default:
             log() << "manipulate::loadParamset  Do not know manipulate Tag ";
-            log() << manipulateTag[hm] << "\n";
+            log() << manipulateTag[hm];
 			exit(-1);
 		}
 	}
@@ -588,19 +589,19 @@ void manipulate::initialize() {
 			break;
 		   case stoch_ar:
 			if ( zvar != NULL ) delete zvar;
-				zvar = new rand_var( "ranf",1,zetamin,zetamax );
+                zvar = new rand_var( "ranf",1,zetamin,zetamax );
 			if( !(zvar) )
 				fatalError("manipulate::initialize stoch_ar ","can't create rand_var");
 				
 // Aenderung 09.12.03 Erwartungswert 	A.Starke
 //
 //			*randname=((zetamax-zetamin)/2)/(1-gamma);
-			*randname=((zetamax+zetamin)/2)/(1-gamma);
-			*variancename=((zetamax-zetamin)*(zetamax-zetamin))/12; // ist konstant !
+            *randname=((zetamax+zetamin)/2)/(1-gamma);
+            *variancename=((zetamax-zetamin)*(zetamax-zetamin))/12; // ist konstant !
 // Aenderung 09.12.03 bedingter Erwartungswert	A.Starke
 //		
 //			*expname= gamma * *randname + ((zetamax-zetamin)/2) ;
-			*expname= gamma * *randname + ((zetamax+zetamin)/2);
+            *expname= gamma * *randname + ((zetamax+zetamin)/2);
 			*randname=gamma * *randname + zvar->dice();
 			break;
 		}
@@ -636,7 +637,7 @@ void manipulate::initialize() {
 				for ( i = 0; i < ma_k_a_ptr[j].k ; i++ )
 					ma_k_a_ptr[j].vn_k[i] = *ma_k_a_ptr[j].vname;
 			}
-			//log() << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a << "\n";
+			//log() << ma_k_a_ptr[0].vn_k[0] << " a=" << ma_k_a_ptr[0].a 
 			break;									
 		   case rls0:
 			beta_tm1 = 0 ;
@@ -723,7 +724,7 @@ void manipulate::F_stoch_markov() {
 	*expname=exp;
 	*variancename=exp2-(exp*exp);
 	*randname=markov->dice();
-//log() << "F_stoch_markov() " << *randname << "\n";
+//log() << "F_stoch_markov() " << *randname 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -737,7 +738,7 @@ void manipulate::F_stoch_markov() {
 void manipulate::F_stoch_ar() {
 // Aenderung 09.12.03 bedingter Erwartungswert	A.Starke
 //	*expname= gamma * *randname + ((zetamax-zetamin)/2) ;
-	*expname= gamma * *randname + ((zetamax+zetamin)/2);
+    *expname= gamma * *randname + ((zetamax+zetamin)/2);
 	*randname=gamma * *randname + zvar->dice();
 }
 
@@ -835,7 +836,7 @@ void manipulate::F_ma_k_a() {
 void manipulate::F_rls0() {
     qreal theta_tm1,theta2;
 //log() << " *p_tm1=" << *p_tm1 << " p_tm2=" << p_tm2;
-//log() << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 << "\n";
+//log() << " g_tm1=" << g_tm1 << " *p_e_tp1=" << *p_e_tp1 
 
     theta_tm1= *p_tm1 / p_tm2; // calculate inflation factor
     beta_tm1 += g_tm1 * ( theta_tm1 - beta_tm1 ) ;  // recursiv estimate
@@ -998,7 +999,7 @@ void manipulate::Sequper(const qint64& t) {
 // Class name:		manipulate														//
 // Member function:	Bisec															//
 // Purpose:		    Given a continuous function f:R->R defined over the intervall	//
-//					[a,b] such that f(a)*f(b)<0, the function determines a scalar	//
+//					[a,b] such that f(a)*f(b)<0, the function deterqMines a scalar	//
 //					x* in [a,b] such that f(x*)=0									//
 //																					//
 // Author:			Mathias Hoffmann & Michael Meyer								//
@@ -1052,7 +1053,7 @@ void manipulate::FXRoot() {
 		fx1 = FX1();
 		fx2 = FX2();
 		if (eps1 > fabs(fx1)) {
-			log() << "FXROOT::First derivative at current root estitmate extremely small" << "\n";
+            log() << "FXROOT::First derivative at current root estitmate extremely small";
 			x = x_save ;
 			break;
 		}
@@ -1061,7 +1062,7 @@ void manipulate::FXRoot() {
 		if (eps2 >= fabs(x - x_old)) break;  		
 	}
     if (i==101) {
-		log() << "FXROOT::No convergence under current conditions (100, 10^(-10))" << "\n";
+        log() << "FXROOT::No convergence under current conditions (100, 10^(-10))";
 		x = x_save;
 	}
 }
@@ -1245,7 +1246,9 @@ void manipulate::iteration(const qint64& t) {
 			Sequper(t); 
 			if(t==length)
 			{
-				QDataStream stat_output("statistic_output.tex");
+                QFile file("statistic_output.tex");
+                file.open(QFile::WriteOnly);
+                QTextStream stat_output(&file);
 				stat_output << "\\begin{tabular}{|l||l|}\\hline\n";
 				stat_output << "statistic&estimate\\\\ \\hline\\hline\n"; 
 				stat_output << "mean&" << mr[0] << "\\\\ \\hline\n"; 
@@ -1255,13 +1258,13 @@ void manipulate::iteration(const qint64& t) {
 				stat_output << "kurtosis&" << ku << "\\\\ \\hline\n"; 
 				stat_output << "quantile (" << u << ")&" << xi << "\\\\ \\hline\n"; 
 				stat_output << "\\end{tabular}";
-				stat_output << "\n";
 				stat_output << "\\begin{tabular}{|l|l|}\\hline\n";
 				for (j = 1; j<=4; j++)
 					stat_output <<  j << ". moment&" << mr[j-1] <<"\\\\ \\hline\n";
 				for (j = 1; j<=4; j++)
 					stat_output <<  j << ". centered moment&" << mc[j-1] <<"\\\\ \\hline\n";
 				stat_output << "\\end{tabular}";
+
 			}
 			break;		
 		}

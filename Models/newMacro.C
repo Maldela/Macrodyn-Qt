@@ -24,7 +24,7 @@
 void newMacro::notProd(qreal &ztnot,qreal &yteff)
 {
     ztnot= exp( log(A/wtqreal) / (1-B) );
-    employment=MIN(Lmax,ztnot);
+    employment = qMin(Lmax,ztnot);
     yteff= prodFunction(employment);
 }
 
@@ -68,7 +68,7 @@ void newMacro::wageAndPrice(qreal &xteff, qreal &yteff,qreal &ztnot,
 	ptrate= 1 + gamm*(yDiff/xteff) ;
     
     if( lDiff < 0 )
-	wtrate= 1 + lambda*(lDiff/Lmax) ;
+    wtrate= 1 + lambda*(lDiff/Lmax) ;
     else
 	wtrate= 1 + my*(lDiff/ztnot) ;
     
@@ -89,7 +89,7 @@ void newMacro::wageAndPrice(qreal &xteff, qreal &yteff,qreal &ztnot,
 
 void newMacro::dynamics()
 {
-    mtqreal  = ( MIN(output,g+mtqreal) + (1-tax)*wtqreal*employment - output )
+    mtqreal  = ( qMin(output,g+mtqreal) + (1-tax)*wtqreal*employment - output )
 	      / ptrate;
     wtqreal  = wtqreal * (wtrate / ptrate);
     for(int i=0; i<=tau; i++ )
@@ -117,7 +117,7 @@ void newMacro::iteration(const qint64& t)
     notProd(ztnot,yteff);
     ptratex=expectedInflationRate(t);
     notCom(xteff,ct,ptratex);
-    output=MIN(xteff,yteff);
+    output = qMin(xteff,yteff);
     wageAndPrice(xteff,yteff,ztnot,NULL);
     dynamics();
 }

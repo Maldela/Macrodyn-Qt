@@ -58,10 +58,10 @@ void attractor::simulation()
 				       // look if the orbit shows a periodic
                                        // behaviour
 /***************
-    log() << "Number of hits: " << hash->numberOfHits() << "\n";
-    log() << "Number of buckets: " << hash->numberOfBuckets() << "\n";
-    log() << "Number of collisions: " << hash->numberOfCollisions() << "\n";
-    log() << "Order of cycle: " << hash->orderOfCycle() << "\n";
+    log() << "Number of hits: " << hash->numberOfHits() 
+    log() << "Number of buckets: " << hash->numberOfBuckets() 
+    log() << "Number of collisions: " << hash->numberOfCollisions() 
+    log() << "Order of cycle: " << hash->orderOfCycle() 
     *******************************/
 }
 

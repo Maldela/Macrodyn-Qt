@@ -19,12 +19,12 @@
 
 pacf_plot::pacf_plot(baseModel* const bMod, const xyRange& axes, 
          MacrodynGraphicsItem* const graph, qint64 lag_1, qint64 lag_2)
-          :job(bMod,graph), l_min(lag_1), l_max(lag_2)
+          :Job(bMod,graph), l_min(lag_1), l_max(lag_2)
 {
-	xmax = axes.max[0];
-	xmin = axes.min[0];
-	ymin = axes.min[1];
-	ymax = axes.max[1];
+    xmax = axes.max.at(0);
+    xmin = axes.min.at(0);
+    ymin = axes.min.at(1);
+    ymax = axes.max.at(1);
     length=qint64(xmax);			// last iteration to be analysed
     limit=qint64(xmin);				// first iteration to be analysed
     how_many = qint64(xmax-xmin);
@@ -34,9 +34,9 @@ pacf_plot::pacf_plot(baseModel* const bMod, const xyRange& axes,
 	acv_0 = 0;
     yParam = model->setLabels( axes.label[1] );
 	if ( !yParam ) fatalError("pacf_plot::pacf_plot","can't find ylabel!");
-	v_correlations = new matrix_neu( l_max+2, 1 );
+    v_correlations = new matrix_neu( l_max+2, 1 );
 	if ( !v_correlations ) fatalError("pacf_plot::pacf_plot","can't allocate correlation vector!");
-	v_YW_estimators = new matrix_neu( l_max+2, 1 );
+    v_YW_estimators = new matrix_neu( l_max+2, 1 );
 }
 
 /******************************************************************************/
@@ -50,7 +50,7 @@ pacf_plot::pacf_plot(baseModel* const bMod, const xyRange& axes,
 
 void pacf_plot::drawBox(qreal lo_x, qreal lo_y, qreal ru_x, qreal ru_y, int color)
 {
-	qreal draw_step = double((l_max - l_min))/double(500);
+    qreal draw_step = double((l_max - l_min))/double(500);
 	if ( screenGraphics ){
 		for (qreal dummy = lo_x; dummy<= ru_x; dummy+=draw_step){
 			screenGraphics->drawLine(dummy, ru_y, dummy, lo_y, color);
@@ -76,10 +76,11 @@ void pacf_plot::simulation()
 	low_bound = -(2*sqrt(double(1)/double(how_many)));
 	high_bound = 2*sqrt(double(1)/double(how_many));
 	model->initialize();
-	if( screenGraphics ){
-		screenGraphics->drawLine(l_min,0,l_max,0,24);
-		screenGraphics->drawLine(l_min,low_bound,l_max,low_bound,6);
-		screenGraphics->drawLine(l_min,high_bound,l_max,high_bound,6);
+    if( screenGraphics )
+    {
+        screenGraphics->drawLine(l_min,0,l_max,0,24);
+        screenGraphics->drawLine(l_min,low_bound,l_max,low_bound,6);
+        screenGraphics->drawLine(l_min,high_bound,l_max,high_bound,6);
     }
 		
 	for(t=0;t<limit;t++) {
@@ -98,10 +99,10 @@ void pacf_plot::simulation()
 	for( j=0; j<how_many; j++){
 		acv_0 += (ts_data[j]-mean_x)*(ts_data[j]-mean_x)/how_many;
 	}
-	// computing autocorrelations for all lags ymin to ymax
+    // computing autocorrelations for all lags ymin tqMaxmax
 	qreal acv;
 	qreal acf;
-	for( i=0;i<=l_max+1;i++ ){
+    for( i=0;i<=l_max+1;i++ ){
 		acv = 0;
 		for( j=0; j<how_many-i; j++ ){
 			acv += (ts_data[j]-mean_x)*(ts_data[j+i]-mean_x)/how_many;
@@ -113,7 +114,7 @@ void pacf_plot::simulation()
 		if( printDev )
 			printDev->drawLine(i,0,i,acf,9);*/
 	}
-//	log() << "vector of correlations: " << (*v_correlations) << "\n";
+//	log() << "vector of correlations: " << (*v_correlations) 
 	// drawing zero pacf value
 
 	// looping in for partial correlations
@@ -150,7 +151,7 @@ void pacf_plot::simulation()
 //		log() << (*v_int_correlations);
         log() << (*v_YW_estimators);
 		
-        log() << l << ": " << (*v_YW_estimators)(l-1,0) << "\n";
+        log() << l << ": " << (*v_YW_estimators)(l-1,0) 
 		// drawing value
 		if ( screenGraphics )
 			screenGraphics->drawLine(l,0,l,(*v_YW_estimators)(l-1,0),9);
@@ -165,7 +166,7 @@ void pacf_plot::simulation()
 	
 	qreal det1, det2, coef;
 	
-	for ( l=l_min;l<l_max;l++){
+    for ( l=l_min;Lmaxmax;l++){
 		m_kappa1 = new matrix_neu(l+1,l+1);
 		m_kappa2 = new matrix_neu(l+1,l+1);
 		// arranging kappa1
@@ -188,12 +189,12 @@ void pacf_plot::simulation()
 //		log() << "kappa1:" << "\n" << (*m_kappa1);
 //		log() << "kappa2:" << "\n" << (*m_kappa2);
 		
-		det1 = m_kappa1->determinant();
-		det2 = m_kappa2->determinant();
+        det1 = m_kappa1->deterqMinant();
+        det2 = m_kappa2->deterqMinant();
 		
 		coef = pow( double(-1), double(l)) * det2 / det1;
 		
-//		log() << "value: " << coef << "\n";
+//		log() << "value: " << coef 
 		
 		if ( screenGraphics )
 			screenGraphics->drawLine(l+1,0,l+1,coef,9);
@@ -213,12 +214,12 @@ void pacf_plot::simulation()
 
 	drawBox(-0.4,1,0.4,0,9);
 	drawBox(0.6,(*v_YW_estimators)(1,0),1.4,0,9);
-    log() << "vector of partial correlations:\n";
-    log() << "lag " << 0 << ":\t" << (*v_YW_estimators)(0,0) << "\n";
-    log() << "lag " << 1 << ":\t" << (*v_YW_estimators)(1,0) << "\n";
+    log() << "vector of partial correlations:";
+    log() << "lag " << 0 << ":\t" << (*v_YW_estimators)(0,0);
+    log() << "lag " << 1 << ":\t" << (*v_YW_estimators)(1,0);
 	
 	matrix_neu* dummy_YW;
-	for ( l=2; l<=l_max; l++){
+    for ( l=2; l<=l_max; l++){
 		delta = (*v_correlations)(l,0);
 		for ( i=1; i<l; i++){
 			delta -= ((*v_YW_estimators)(i,0)) * ((*v_correlations)(l-i,0));
@@ -234,7 +235,7 @@ void pacf_plot::simulation()
 		Q_p = Q_p*(1-(((*v_YW_estimators)(l,0))*((*v_YW_estimators)(l,0))));
 		drawBox(l-0.4, (*v_YW_estimators)(l,0), l+0.4, 0, 9);
 
-        log() << "lag " << l << ":\t" << (*v_YW_estimators)(l,0) << "\n";
+        log() << "lag " << l << ":\t" << (*v_YW_estimators)(l,0);
 		delete dummy_YW;
 	}
 	

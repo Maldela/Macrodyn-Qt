@@ -64,7 +64,7 @@
 #include "Bankintermed.h"
 #include "finanzmarkt_2Dim_1.h"
 #include "finanzmarkt_wage.h"
-#include "finanzmarkt_JanE.h"
+#include "finanzmarkt_JanE_Andi.h"
 #include "ExchangeRateModel.h"
 #include "ExchangeRateModel2.h"
 #include "ELS.h"
@@ -89,6 +89,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 baseModel* getModel(const QString& modelTyp)
 {
+    qDebug() << "get model: " << modelTyp;
     if (modelTyp == "radio")
 	return new radio;
     if (modelTyp == "newMacro")
@@ -196,9 +197,9 @@ baseModel* getModel(const QString& modelTyp)
     if (modelTyp == "dynofin_rmv")
 	return new dynofin_rmv;
     if (modelTyp == "armax_eindim")
-	return new armax_eindim;
+    return new armax_eindim;
     if (modelTyp == "armax")
-	return new armax;
+    return new armax;
     if (modelTyp == "rOLG_wt")
 	return new rOLG_wt;
     if (modelTyp == "dornbusch")
@@ -269,6 +270,7 @@ baseModel* getModel(const QString& modelTyp)
 ///////////////////////////////////////////////////////////////////////////////
 baseModel* getModel(const QString& modelTyp, const baseModel* sourceModel)
 {
+    qDebug() << "get model: " << modelTyp;
     if (modelTyp == "radio")
 	return new radio(*((radio*)sourceModel));
     if (modelTyp == "newMacro")
@@ -378,7 +380,7 @@ baseModel* getModel(const QString& modelTyp, const baseModel* sourceModel)
     if (modelTyp == "armax_eindim")
         return new armax_eindim(*((armax_eindim*)sourceModel));
     if (modelTyp == "armax")
-	return new armax(*((armax*)sourceModel));
+    return new armax(*((armax*)sourceModel));
     if (modelTyp == "rOLG_wt")
 	return new rOLG_wt(*((rOLG_wt*)sourceModel));
     if (modelTyp == "dornbusch")

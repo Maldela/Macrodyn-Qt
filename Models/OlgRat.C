@@ -126,7 +126,7 @@ void OlgRat::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::loadParamset(QDataStream& inFile)
+void OlgRat::loadParamset(QTextStream& inFile)
 {
     inFile >> m0 >> g >> tau;
     inFile >> s >> lambda;
@@ -145,7 +145,7 @@ void OlgRat::loadParamset(QDataStream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::saveParamset(QDataStream& outFile)
+void OlgRat::saveParamset(QTextStream& outFile)
 {
     outFile << m0 << "\t" << g << "\t" << tau << "\t";
     outFile << s  << "\t" << lambda << "\t";
@@ -164,9 +164,9 @@ void OlgRat::saveParamset(QDataStream& outFile)
 
 void OlgRat::printParamset()
 {
-    log() << m0 << "\t" << g << "\t" << tau << "\n";
-    log() << s << "\t" << lambda << "\n";
-    log() << length << "\n";
+    log() << m0 << "\t" << g << "\t" << tau;
+    log() << s << "\t" << lambda;
+    log() << length;
 }
 
 
@@ -207,7 +207,7 @@ void OlgRat::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::receiveParameters(const qreal* parameters)
+void OlgRat::receiveParameters(const QList<qreal>& parameters)
 {
     m0=parameters[0];
     g=parameters[1];
@@ -230,31 +230,31 @@ void OlgRat::receiveParameters(const qreal* parameters)
 void OlgRat::iteration(const qint64&)
 {
     qreal mg=m+g;
-    qreal min;
-    qreal max;
+    qreal qMin;
+    qreal qMax;
     
     if( s <= mg ) {
-      min=s; max=mg;
+      qMin=s; qMax=mg;
     } else {
-      min=mg; max=s;
+      qMin=mg; qMax=s;
     }
    
-    m = (1-tau) * min * exp( (-lambda) * (mg-s) / max );
+    m = (1-tau) * qMin * exp( (-lambda) * (mg-s) / qMax );
 }
 
 void OlgRat2::iteration(const qint64&)
 {
     qreal mg=m+g;
-    qreal min;
-    qreal max;
+    qreal qMin;
+    qreal qMax;
     
     if( s <= mg ) {
-      min=s; max=mg;
+      qMin=s; qMax=mg;
     } else {
-      min=mg; max=s;
+      qMin=mg; qMax=s;
     }
    
-    m = (1-tau) * 2 * min * exp( (-lambda) * (mg-s) / max );
+    m = (1-tau) * 2 * qMin * exp( (-lambda) * (mg-s) / qMax );
 }
 
 

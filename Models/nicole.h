@@ -31,15 +31,15 @@ public:
     nicole();				// constructor
     virtual ~nicole();			// destructor
     void initialize();			 // initialize the model
-    void loadParamset(QDataStream&);	 // load parameterset from a file
-    void saveParamset(QDataStream&);	 // write parameterset into a file
+    void loadParamset(QTextStream&);	 // load parameterset from a file
+    void saveParamset(QTextStream&);	 // write parameterset into a file
     void printParamset();		 // print parameterset on the screen
-    void saveParamsetWithNames(QDataStream&);// add parametset to printerfile
+    void saveParamsetWithNames(QTextStream&);// add parametset to printerfile
     qreal* setLabels(const QString&);		 // return a pointer to a variable
     virtual void iteration(const qint64&); // perform one iteration 
     qreal* sendModelVar();		 // obsolete and unused
     void sendStateSpace(int &,const qreal***);// obsolete
     void sendParameters(int&,qreal**); 	 // unused
-    void receiveParameters(const qreal*); // unused 
+    void receiveParameters(const QList<qreal>&); // unused 
 };
 #endif

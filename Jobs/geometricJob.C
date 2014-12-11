@@ -19,8 +19,8 @@
 
 geometricJob::geometricJob(baseModel* const bMod,const xyRange& axes,
                 MacrodynGraphicsItem* const graph)
-          :job(bMod,graph), xmin(axes.min[0]), xmax(axes.max[0]),
-	   ymin(axes.min[1]),ymax(axes.max[1])
+          :Job(bMod,graph), xmin(axes.min[0]), xmax(axes.max[0]),
+       ymin(axes.min[1]), ymax(axes.max[1])
 {
 //    uint entries = (uint) (length < 103409 ? (length/2+1) : 103409);
 // changed to entries mod 4 = 3 , A.Starke
@@ -34,16 +34,16 @@ geometricJob::geometricJob(baseModel* const bMod,const xyRange& axes,
     xLabel = axes.label[0];
     xParam=model->setLabels(xLabel);
     if( !xParam )
-	fatalError("geometricJob::geometricJob  Can not find x label ",xLabel);
+    fatalError("geometricJob::geometricJob  Can not find x label ",xLabel);
 
     yLabel = axes.label[1];
     yParam=model->setLabels(yLabel);
     if( !yParam )
-	fatalError("geometricJob::geometricJob  Can not find y label ",yLabel);
+    fatalError("geometricJob::geometricJob  Can not find y label ",yLabel);
 
     hash = new hashTable(entries,axes);
     if( !hash )
-	fatalError("geometricJob::geometricJob","Can't allocate hash table");
+    fatalError("geometricJob::geometricJob","Can't allocate hash table");
 }
 
 /******************************************************************************/
@@ -66,7 +66,7 @@ geometricJob::~geometricJob()
 /*                                                                            */
 /* Class name:      geometricJob                                              */
 /* Member function: inRange                                                   */
-/* Purpose:         determine wether the simulation results lay in the section*/
+/* Purpose:         deterqMine wether the simulation results lay in the section*/
 /*                  under consideration or not                                */
 /* Modified:        11.10.1994 (Markus Lohmann)                               */
 /* Last modified:   11.10.1994 (Markus Lohmann)                               */

@@ -23,7 +23,7 @@
 class dorn: public baseModel {
   protected:
     qreal p0,w0,s0,B0,x0,i0,xe0,ie0;
-    int tau; 
+    qint64 tau; 
     qreal *p;
     qreal pexp_t;                      
     qreal Im;      // import            
@@ -35,7 +35,7 @@ class dorn: public baseModel {
     qreal pt;      // goods price
     qreal A;       // scaling parameter of the production function
     qreal B;       // elasticity of production
-    qreal wt;      // nominal wage
+    qreal wt;      // noqMinal wage
     qreal Lmax;    // constant labor supply
     qreal Lt;      // employment
     qreal yt;      // production 
@@ -89,10 +89,10 @@ public:
     void bondMarket();
     void ExchangeRate();
     void pwBerechnung();
-    void loadParamset(QDataStream&);	      // load parameterset from a file
-    void saveParamset(QDataStream&);	      // write parameterset into a file
-    void saveParamsetWithNames(QDataStream&);    // add parametset to printerfile (so far only for xpm)
-    void receiveParameters(const qreal*);      // receive parameter values
+    void loadParamset(QTextStream&);	      // load parameterset from a file
+    void saveParamset(QTextStream&);	      // write parameterset into a file
+    void saveParamsetWithNames(QTextStream&);    // add parametset to printerfile (so far only for xpm)
+    void receiveParameters(const QList<qreal>&);      // receive parameter values
     void printParamset();		      // print parameterset on the screen    
     virtual void iteration(const qint64&);      // perform one iteration 
     qreal* setLabels(const QString&);		      // return a pointer to a variable

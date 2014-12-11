@@ -25,7 +25,7 @@ protected:
     qreal nu1,nu2;                       // wage adjustment parameters      
     qreal alfa0,mqreal0,pg0;                  // initial values                  
     qreal alfa,mqreal,pgt,mtr,wtr;          // wage, money stock, price, profit
-    qreal Ls;                            // maximal aggregate labour supply
+    qreal Ls;                            // qMaximal aggregate labour supply
     qreal h;                             // utility function parameters
     qreal G,tax;                         // government demand, tax rate
     qreal empl;                    // actual employment
@@ -40,8 +40,8 @@ public:
     milano();
     virtual ~milano();
   
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const qint64&);    // perform one iteration 
@@ -57,7 +57,7 @@ public:
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*); // receive parameter values 
+    void receiveParameters(const QList<qreal>&); // receive parameter values 
 };
 
 #endif

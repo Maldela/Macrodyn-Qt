@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
+
 #include "cobweb.h"
 #include <cmath>
 
@@ -172,7 +172,7 @@ void cobweb::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::loadParamset(QDataStream& inFile)
+void cobweb::loadParamset(QTextStream& inFile)
 {
 	inFile >> lambda;
 	inFile >> a >> b;
@@ -195,7 +195,7 @@ void cobweb::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::saveParamset(QDataStream& outFile)
+void cobweb::saveParamset(QTextStream& outFile)
 {
 /*	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
@@ -215,14 +215,14 @@ void cobweb::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void cobweb::saveParamsetWithNames(QDataStream& outFile)
+void cobweb::saveParamsetWithNames(QTextStream& outFile)
 {
 /*	outFile << "c0 = " << c0;
 	outFile << "\nc1 = " << c1;
     outFile << "\nqreal_money = " << qreal_money;
 	outFile << "\nG = " << G << "\tT = " << T;
 	outFile << "\nalpha = " << alpha << "\ty0 = " << y0;
-	outFile << "length = " << length << "\n";*/
+	outFile << "length = " << length */
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -241,7 +241,7 @@ void cobweb::printParamset()
 {
 /*	log() << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
     log() << G << "\t" << T << "\t" << alpha  << "\t" << y0;
-    log() << "\t" << length << "\n";*/
+    log() << "\t" << length */
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -281,7 +281,7 @@ void cobweb::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::receiveParameters(const qreal* parameters)
+void cobweb::receiveParameters(const QList<qreal>& parameters)
 {
     p=parameters[0];
     length=qint64(parameters[1]);
@@ -339,7 +339,7 @@ void rdemand_cobweb::iteration( const qint64& t )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rdemand_cobweb::loadParamset( QDataStream& inFile )
+void rdemand_cobweb::loadParamset( QTextStream& inFile )
 {
 	inFile >> zvar_name;
 	inFile >> zvar_expr;
@@ -379,7 +379,7 @@ void rdemand_cobweb::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb_RLS::loadParamset( QDataStream& inFile )
+void cobweb_RLS::loadParamset( QTextStream& inFile )
 {
 	inFile >> p_0 >> X_0 >> theta_0;
 	cobweb::loadParamset( inFile );

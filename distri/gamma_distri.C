@@ -3,7 +3,7 @@
 #include "gamma_distri.h"
 #include <math.h>
 #include "error.h"
-const uint  l_max = 40;  // maximal l_max/2 iterations in each loop
+const uint  l_max = 40;  // qMaximal l_max/2 iterations in each loop
 
 
 const double  gam=0.57721566490153286060651209;// Euler-Mac-Laurin'sche constant
@@ -143,7 +143,7 @@ inline qreal gamma_Distri::density(const qreal arg) const
 //  Member function:  random
 //
 //  Purpose:          random value in R with Gamma probability distribution
-//                    see: D.E. Knuth Seminumerical Algorithm Vol. 2 Chap. 3.4.1
+//                    see: D.E. Knuth SeqMinumerical Algorithm Vol. 2 Chap. 3.4.1
 //
 //
 //  Created:          2001-12-27 (Achim Flammenkamp)

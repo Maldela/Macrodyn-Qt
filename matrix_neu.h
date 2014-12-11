@@ -22,7 +22,7 @@ class matrix_neu
     friend matrix_neu operator*(const matrix_neu&, const matrix_neu&);
     friend matrix_neu operator+(const matrix_neu&, const matrix_neu&);
     friend matrix_neu operator-(const matrix_neu&, const matrix_neu&);
-    friend QDataStream& operator<<(QDataStream&, const matrix_neu&);
+    friend QTextStream& operator<<(QTextStream&, const matrix_neu&);
 
 	static matrix_neu* mat__temp1;
 	static matrix_neu* mat__temp2;
@@ -33,7 +33,7 @@ public:
 	~matrix_neu();					//destructor
 	matrix_neu& operator=(const matrix_neu&);	//overload =
     qreal& operator()(const int&, const int&);	//overload ()
-    qreal determinant();				//compute determinant
+    qreal deterqMinant();				//compute deterqMinant
     qreal trace();					//compute trace
 	matrix_neu eigenvalues();			//compute eigenvalues
 	void set_to_zero();				//set all a(i,j)=0
@@ -48,7 +48,7 @@ public:
 
 private:
  	void balance();			//balance the matrix (!)changing values 
-	void eliminate_to_Hessenberg(); //reduction to Hessenberg form
+	void eliqMinate_to_Hessenberg(); //reduction to Hessenberg form
     void swap_elements( qreal a, qreal b ); //swap values of a and b
 };
 

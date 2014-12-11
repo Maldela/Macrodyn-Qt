@@ -1,9 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// $Header: armax_eindim.h Dec 20 METDST 2000
+// $Header: arqMax_eindim.h Dec 20 METDST 2000
 //
 // Module name:		finanzmarkt_JanE.h
-// Contents:		Class definition of the class armax_eindim
+// Contents:		Class definition of the class arqMax_eindim
 //
 // Author:		    mhoffman
 // Last modified:	Feb 27 METDST 2001
@@ -19,8 +19,6 @@
 #include "rand_var.h"
 
 #include "../matrix_neu.h"
-#include <stdio.h>
-#include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -35,7 +33,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-class finanzmarkt_JanE : public baseModel {
+class finanzmarkt_JanE : public baseModel
+{
 
 protected:
 	static const int L=2;
@@ -181,12 +180,12 @@ protected:
 public:
     finanzmarkt_JanE();				// constructor
     virtual ~finanzmarkt_JanE();		// destructor
-    void loadParamset(QDataStream&);	// load parameterset from a file
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	// load parameterset from a file
+    void saveParamset(QTextStream&);
     void printParamset();
     void sendParameters(int &,qreal**);
     qreal* sendModelVar(void);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     qreal* setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const qint64&);	// perform one iteration

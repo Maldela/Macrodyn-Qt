@@ -85,8 +85,8 @@ protected:
 
 public:
     growth_model();			// constructor
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
@@ -95,7 +95,7 @@ public:
 
     qreal* sendModelVar();		// for compatibity reasons only
     void sendParameters(int&,qreal**);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
 
 };
 
@@ -121,7 +121,7 @@ private:
     
 public:
     rgrowth_model();			// constructor
-    void loadParamset(QDataStream&);	// load parameterset from a file
+    void loadParamset(QTextStream&);	// load parameterset from a file
     void iteration(const qint64&);	// perform one iteration 
     void initialize(void);		// initialize the model
 };
@@ -140,7 +140,7 @@ public:
 // By:                  Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-const int trans_x_max=100; 		// max. number of i in trans_x[i]
+const int trans_x_max=100; 		// Max. number of i in trans_x[i]
 
 class depreciate : public growth_model {
 
@@ -165,8 +165,8 @@ public:
     void sendStateSpace(int &,const qreal***);
     qreal * setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
-    void loadParamset(QDataStream&);	// load parameterset from a file
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	// load parameterset from a file
+    void saveParamset(QTextStream&);
     void printParamset();
     void iteration(const qint64&);	// perform one iteration 
 };
@@ -234,8 +234,8 @@ private:
 public:
     pasinetti();			// constructor
 	virtual ~pasinetti();
-    void loadParamset(QDataStream&);	// load parameterset from a file
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	// load parameterset from a file
+    void saveParamset(QTextStream&);
     void printParamset();
     qreal * setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model

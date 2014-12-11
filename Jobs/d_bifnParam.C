@@ -100,20 +100,20 @@ void d_bifnParam::simulation()
 		}
 	}
 	
-	h_max = double (h.get_max_hits());
-    log() << "h_max = " << h_max << "\n";
+    h_max = double (h.get_max_hits());
+    log() << "h_max = " << h_max;
     log() << "color step every " << h_max/94 << " hits in cell\n";
-	if ( h_max == 0 ) h_max=1;
+    if ( h_max == 0 ) h_max=1;
 	
 	double dummy2=94;
 	double hitshilf;
 	double hitpoint;
 	
-	for ( dy=ymin, k=0; k<h.get_x_res(); dy+=stepY, k++ ){
+    for ( dy=ymin, k=0; k<h.get_x_res(); dy+=stepY, k++ ){
 		hitshilf = h(k);
-		hitpoint = hitshilf/h_max;
-		if ( hitshilf==h_max )
-            log() << "maximal hitcounts at: (" << x << " , " << dy <<")\n";
+        hitpoint = hitshilf/h_max;
+        if ( hitshilf==h_max )
+            log() << "qMaximal hitcounts at: (" << x << " , " << dy <<")\n";
 		if ( hitpoint>0 ){
 			color = int(ceil(hitpoint*dummy2));
 		} else color = 0;
@@ -121,7 +121,7 @@ void d_bifnParam::simulation()
 	if( screenGraphics ) 
 		screenGraphics->setPoint(x,dy,color);
 
-    QDataStream(&outFile) << char( color );
+    QTextStream(&outFile) << char( color );
 	}
 	h.reset();
     }

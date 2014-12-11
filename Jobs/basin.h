@@ -32,11 +32,11 @@ class basin : public geometricJob {
     void initCycle(const QString& ,qreal***,int&);
 				       // read cycle out of a file
     uint isAttracting(qreal**,qreal**,const int&);
-                                       // determine wether a given orbit tends
+                                       // deterqMine wether a given orbit tends
                                        // to the cycle or not
 
   public:
-    basin(baseModel* const,const xyRange&, char* const, MacrodynGraphicsItem* const=NULL);
+    basin(baseModel* const,const xyRange&, const QString&, MacrodynGraphicsItem* const=NULL);
     virtual ~basin();
     void setStepX(const qreal&);
     void simulation();

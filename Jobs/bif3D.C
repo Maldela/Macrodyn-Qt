@@ -10,16 +10,16 @@
 void bif3D_1par::progress( qint64 state, qint64 range )
 {
     screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
-	(xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
-	(ymax-ymin)*0.5+ymin, 9 );
+                              (xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
+                              (ymax-ymin)*0.5+ymin, 9 );
 }
 
 
 void bif3D_2par::progress( qint64 state, qint64 range )
 {
     screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
-	(xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
-	(ymax-ymin)*0.5+ymin, 9 );
+                              (xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
+                              (ymax-ymin)*0.5+ymin, 9 );
 }
 
 /******************************************************************************/
@@ -44,7 +44,7 @@ bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes,
     resolution_z = axes.res[2];
 //    resolution_x = resolution_y = resolution_z =axes.res[2];
     log() << "resx: " << resolution_x << " resy: " << resolution_y
-    << " resz: " << resolution_z << "\n";
+    << " resz: " << resolution_z;
     dx = bif3D_dx;
     dy = bif3D_dy;
     dz = bif3D_dz;
@@ -66,7 +66,7 @@ bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes,
          MacrodynGraphicsItem* const graph, const qint64 bif3D_dx,
          const qint64 bif3D_dy, const qint64 bif3D_dz)
           :geometry3D(bMod,axes,graph),h(axes.min[1],axes.max[1],
-	  axes.res[1],axes.min[2],axes.max[2],axes.res[2])
+          axes.res[1],axes.min[2],axes.max[2],axes.res[2])
 {
     length=model->getLength();
     limit=(qint64)(0.2*length);			// 20% are thrown away
@@ -75,22 +75,23 @@ bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes,
     resolution_z = axes.res[2];
 //    resolution_x = resolution_y = resolution_z =axes.res[2];
     log() << "resx: " << resolution_x << " resy: " << resolution_y
-    << " resz: " << resolution_z << "\n";
+    << " resz: " << resolution_z;
     dx = bif3D_dx;
     dy = bif3D_dy;
     dz = bif3D_dz;
     stepX=(xmax-xmin) / (resolution_x-1);
     stepY=(ymax-ymin) / (resolution_y-1);
     stepZ=(zmax-zmin) / (resolution_z-1);
-    if ( screenGraphics ){
-	screenGraphics->clear_window();
-	screenGraphics->drawString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
-	"progress", 9 );
-	screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
-	(xmax-xmin)*0.25+xmin, (ymax-ymin)*0.55+ymin, 9);
-	screenGraphics->drawLine( (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.45+ymin,
-	(xmax-xmin)*0.75+xmin, (ymax-ymin)*0.55+ymin, 9);
-	}
+    if ( screenGraphics )
+    {
+        screenGraphics->clear_window();
+        screenGraphics->drawString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
+        "progress", 9 );
+        screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
+        (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.55+ymin, 9);
+        screenGraphics->drawLine( (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.45+ymin,
+        (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.55+ymin, 9);
+    }
 }
 /******************************************************************************/
 /*                                                                            */
@@ -151,7 +152,7 @@ void bif3D_2par::simulation()
     char data[resolution_x][resolution_y][resolution_z];
     
     //information
-    //log() << "h.x_res: " << h.get_x_res() << "\n";
+    //log() << "h.x_res: " << h.get_x_res() 
 
     // initialize the output file writing header for vrend data
     QFile outFile("pseudo_data_2par.dat");
@@ -183,7 +184,7 @@ void bif3D_2par::simulation()
     h.reset();
     for (dummy_z=zmin, count_z=0; count_z<resolution_z; dummy_z+=stepZ, count_z++) {
     for (dummy_x=xmin, count_x=0; count_x<resolution_x; dummy_x+=stepX, count_x++) {
-//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << "\n";
+//    	log() << "x: " << dummy_x << "\tz: " << dummy_z 
     	*xParam=dummy_x;
 	*zParam=dummy_z;
 	model->initialize();
@@ -200,12 +201,12 @@ void bif3D_2par::simulation()
 	}
     
     h_max = double (h.get_max_hits());
-//    log() << "x: " << dummy_x << "\th_max: " << h_max << "\n";
+//    log() << "x: " << dummy_x << "\th_max: " << h_max 
     if ( h.get_max_hits()==0 ) h_max=1;
     for( dummy_y=ymin, dummy_a = 0; dummy_a<h.get_x_res(); dummy_y+=stepY,
     dummy_a++){
     	hitshilf=double(h(dummy_a));
-	hitpoint=hitshilf/h_max;
+    hitpoint=hitshilf/h_max;
 	if (hitpoint>0){
 		color=int(ceil(hitpoint*94.0));
 	}
@@ -219,7 +220,7 @@ void bif3D_2par::simulation()
     for ( count_z=0;count_z<resolution_z;count_z++)    
     	for ( dummy_a=0; dummy_a<resolution_y; dummy_a++)
 		for ( count_x=0;count_x<resolution_x;count_x++){
-            QDataStream(&outFile) << data[count_x][dummy_a][count_z];
+            QTextStream(&outFile) << data[count_x][dummy_a][count_z];
 //			log() << int ( data[count_x][dummy_a][count_z] ) << " ";
 		}
     outFile.flush();
@@ -271,7 +272,7 @@ void bif3D_1par::simulation()
 
     h.reset();
     for (dummy_x=xmin, count_x=0; count_x<resolution_x; dummy_x+=stepX, count_x++) {
-//    	log() << "x: " << dummy_x << "\tz: " << dummy_z << "\n";
+//    	log() << "x: " << dummy_x << "\tz: " << dummy_z 
     	*xParam=dummy_x;
 	model->initialize();
 	for(t=0;t<limit;t++) 
@@ -287,14 +288,14 @@ void bif3D_1par::simulation()
 	}
     
     h_max = double (h.get_max_hits());
-//    log() << "x: " << dummy_x << "\th_max: " << h_max << "\n";
+//    log() << "x: " << dummy_x << "\th_max: " << h_max 
     if ( h_max==0 ) h_max=1;
     for( dummy_z=zmin, dummy_b = 0; dummy_b<h.get_y_res(); dummy_z+=stepZ,
     dummy_b++){
     for( dummy_y=ymin, dummy_a = 0; dummy_a<h.get_x_res(); dummy_y+=stepY,
     dummy_a++){
     	hitshilf=h(dummy_a,dummy_b);
-	hitpoint=hitshilf/h_max;
+    hitpoint=hitshilf/h_max;
 	// progress report to be included...
 	if (hitpoint>0){
 		color=int(ceil(hitpoint*94));
@@ -310,7 +311,7 @@ void bif3D_1par::simulation()
     for ( dummy_b = 0; dummy_b<resolution_z; dummy_b++)
     	for ( dummy_a = 0; dummy_a<resolution_y; dummy_a++)
 	    for ( count_x = 0; count_x<resolution_x; count_x++)
-            QDataStream(&outFile) << data[count_x][dummy_a][dummy_b];
+            QTextStream(&outFile) << data[count_x][dummy_a][dummy_b];
 //			outFile.write((char*)&data[count_x][dummy_a][dummy_b],1);
     outFile.flush();
     outFile.close();

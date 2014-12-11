@@ -50,7 +50,7 @@ void laborMarketFirst::thetaInit(qreal *theta)
 {
     int i,tau;
 
-    tau = MAX(tauS,tauW);
+    tau = qMax(tauS,tauW);
     for( i=1; i<=tau+1; i++ )
         theta[i] = 0.0;
     theta[0]=theta0;
@@ -82,7 +82,7 @@ void laborMarketFirst::initialize()
 /* Last modified:   28.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::loadParamset(QDataStream& inputFile)
+void laborMarketFirst::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B >> deltaP >> Lmax ;
     inputFile >> betaS >> betaW >> rhoS >> rhoW ;
@@ -111,7 +111,7 @@ void laborMarketFirst::loadParamset(QDataStream& inputFile)
 /* Last modified:   28.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::saveParamset(QDataStream& outputFile)
+void laborMarketFirst::saveParamset(QTextStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\t";
     outputFile << betaS << "\t" << betaW << "\t";
@@ -135,14 +135,14 @@ void laborMarketFirst::saveParamset(QDataStream& outputFile)
 /******************************************************************************/
 void laborMarketFirst::printParamset()
 {
-    log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
-    log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
-    log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
-    log() << g << "\t" << taxS << "\t" << taxW << "\n"; 
-    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
-    log() << length << "\n";
+    log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax;
+    log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW;
+    log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW;
+    log() << g << "\t" << taxS << "\t" << taxW;
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu;
+    log() << length;
     log() << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
-    log() << d0 << "\t" << theta0 << "\n";
+    log() << d0 << "\t" << theta0;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -197,7 +197,7 @@ void laborMarketFirst::sendParameters(int& amount,qreal** parameters)
 /* Last modified:   29.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::receiveParameters(const qreal* parameters)
+void laborMarketFirst::receiveParameters(const QList<qreal>& parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -374,7 +374,7 @@ qreal laborMarketFirst::laborDemand()
 /******************************************************************************/
 qreal laborMarketFirst::actualEmployment(qreal& ztnot)
 {
-	return( MIN(ztnot,Lmax) );
+    return( qMin(ztnot,Lmax) );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -387,7 +387,7 @@ qreal laborMarketFirst::actualEmployment(qreal& ztnot)
 qreal laborMarketFirst::detSigmaL(qreal& ztnot)
 {
     if ( Lmax > employment )
-	return( (employment-Lmax)/Lmax );
+    return( (employment-Lmax)/Lmax );
     else return( (ztnot-employment)/ztnot ); 
 }
 /******************************************************************************/
@@ -400,7 +400,7 @@ qreal laborMarketFirst::detSigmaL(qreal& ztnot)
 /******************************************************************************/
 qreal laborMarketFirst::detWtRate(qreal& sigmaL)
 {
-	if ( Lmax > employment )
+    if ( Lmax > employment )
 		return( (1+lambda*sigmaL) );
 	  else	return( (1+mu*sigmaL) );	
 }
@@ -417,7 +417,7 @@ qreal laborMarketFirst::expectedInflationRateW(const qint64 t)
 	qint64 I,index;
 	qreal help=0.0;
 
-	I=MIN(t,tauW);
+    I = qMin(t,tauW);
 	for ( index=0; index < I; index++ )
 		help += theta[index];
 	return( help/I ); 
@@ -463,7 +463,7 @@ qreal laborMarketFirst::expectedInflationRateS(const qint64 t)
 	qint64 I,index;
 	qreal help=0.0;
 
-	I=MIN(t,tauS);
+    I = qMin(t,tauS);
 	for ( index=0; index < I; index++ )
 		help += theta[index];
 	return( help/I ); 
@@ -530,7 +530,7 @@ qreal laborMarketFirst::productionFunction(const qreal& L)
 /******************************************************************************/
 qreal laborMarketFirst::actualOutput(qreal& ytD,qreal& yteff)
 {
-	return( MIN(ytD,yteff) ); 
+    return( qMin(ytD,yteff) );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -542,7 +542,7 @@ qreal laborMarketFirst::actualOutput(qreal& ytD,qreal& yteff)
 /******************************************************************************/
 qreal laborMarketFirst::remainingOutputYoung()
 {
-	return( MAX( 0,( output - g - betaS*mtqrealS - betaW*mtqrealW ) ) );
+    return( qMax( 0.0,( output - g - betaS*mtqrealS - betaW*mtqrealW ) ) );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -608,14 +608,14 @@ void laborMarketFirst::dynamics(qreal& yteff,qreal& xtS,qreal& xtW)
 {
 	int i,tau;
 	
-	tau = MAX(tauS,tauW);
+    tau = qMax(tauS,tauW);
 	for ( i = 0; i <= tau; i++ ) 
 		theta[tau+1-i]=theta[tau-i];
 	theta[0]=ptrate;
 	omegat = yteff-output;
 	mtqrealW = ( (1-taxW)*wtqreal*employment - xtW )/ptrate;
 	mtqrealS = ( dt - xtS )/ptrate;
-	dt = (1-taxS)*(MAX(0,(output-wtqreal*employment)) /ptrate);
+    dt = (1-taxS)*(qMax(0.0,(output-wtqreal*employment)) /ptrate);
 	wtqreal *= wtrate/ptrate;
 }
 /******************************************************************************/

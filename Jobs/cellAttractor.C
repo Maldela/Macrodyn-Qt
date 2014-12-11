@@ -49,8 +49,8 @@ void cellAttractor::simulation()
 
     for(qint64 t=0;t<length;t++) {
 	model->iteration(t+1);
-	*xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
-	*yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
+    *xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
+    *yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
 	if( t >= limit && inRange(*xParam,*yParam) ) {
 	    hash->storePoint(state);
 	    if( screenGraphics ) 
@@ -58,9 +58,9 @@ void cellAttractor::simulation()
                      (int)((t/colChange)+1));
 	}
     }
-    log() << "Number of hits: " << hash->numberOfHits() << "\n";
-    log() << "Number of buckets: " << hash->numberOfBuckets() << "\n";
-    log() << "Number of collisions: " << hash->numberOfCollisions() << "\n";
-    log() << "Order of cycle: " << hash->orderOfCycle() << "\n";
+    log() << "Number of hits: " << hash->numberOfHits();
+    log() << "Number of buckets: " << hash->numberOfBuckets();
+    log() << "Number of collisions: " << hash->numberOfCollisions();
+    log() << "Order of cycle: " << hash->orderOfCycle();
 }
 

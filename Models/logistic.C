@@ -12,7 +12,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
+
 #include "logistic.h"
 
 
@@ -159,7 +159,7 @@ void logistic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::loadParamset(QDataStream& inFile)
+void logistic::loadParamset(QTextStream& inFile)
 {
     inFile >> x0 ;
     inFile >> alpha;
@@ -181,7 +181,7 @@ void logistic::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::saveParamset(QDataStream& outFile)
+void logistic::saveParamset(QTextStream& outFile)
 {
     outFile << x0 << "\t";
     outFile << alpha  << "\t";
@@ -203,9 +203,9 @@ void logistic::saveParamset(QDataStream& outFile)
 
 void logistic::printParamset()
 {
-    log() << x0 << "\n";
-    log() << alpha << "\n";
-    log() << length << "\n";
+    log() << x0;
+    log() << alpha;
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -248,7 +248,7 @@ void logistic::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::receiveParameters(const qreal* parameters)
+void logistic::receiveParameters(const QList<qreal>& parameters)
 {
     x0=parameters[0];
     alpha=parameters[1];
@@ -316,7 +316,7 @@ void rlogistic::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlogistic::loadParamset(QDataStream& inputFile)
+void rlogistic::loadParamset(QTextStream& inputFile)
 {
     int n_states;
     
@@ -420,7 +420,7 @@ qreal* rlogistic::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlogistic::saveParamset(QDataStream& outFile)
+void rlogistic::saveParamset(QTextStream& outFile)
 {
     outFile << zvar_name << "\t";
     outFile << zvar_expr << "\t";
@@ -444,10 +444,10 @@ void rlogistic::saveParamset(QDataStream& outFile)
 
 void rlogistic::printParamset()
 {
-    log() << zvar_name << "\n";
-    log() << zvar_expr << "\n";
-    log() << a << "\n";
-    log() << b << "\n";
+    log() << zvar_name;
+    log() << zvar_expr;
+    log() << a;
+    log() << b;
     logistic::printParamset();
 }
 

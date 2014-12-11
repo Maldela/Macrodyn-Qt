@@ -26,8 +26,8 @@ protected:
 
 public:
 
-    floathisto_2d ( qreal x_min, qreal x_max, int x_res,
-               qreal y_min, qreal y_max, int y_res );
+    floathisto_2d ( qreal x_qMin, qreal x_max, int x_res,
+               qreal y_qMin, qreal y_max, int y_res );
 
    ~floathisto_2d (void);
              
@@ -40,7 +40,7 @@ public:
     void get_x_d_var ( d_var * to_get ) const;
     void get_y_d_var ( d_var * to_get ) const; 
     double get_max ( void ) const;
-    double get_min ( void ) const;
+    double get_qMin ( void ) const;
 }; 
 
 #endif

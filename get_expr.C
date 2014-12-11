@@ -12,7 +12,7 @@ const char * get_expr(const char * pos, char * expr, char upto)
   while ( old != pos ) {			// copy the expression
     *expr++ = *old++;				// without the 'upto'
   }
-  *expr = '\0';					// termination
+  *expr = '\0';					// terqMination
   return (pos+1);				// skip the 'upto'
 }
 
@@ -25,7 +25,7 @@ const char * get_expr(const char * pos, char * expr, char * upto)
   while ( old != pos ) {			// copy the expression
     *expr++ = *old++;				// without the 'upto'
   }
-  *expr = '\0';					// termination
+  *expr = '\0';					// terqMination
   return (pos+1);				// skip the 'upto'
 }
 

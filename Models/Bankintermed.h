@@ -36,20 +36,20 @@ protected:
     qreal e,e_0,e_alpha,e_beta,e_old;							// Eigenkapital					// e > 0
     qreal I;							// Fremdkapital				// I > 0, e < I
     qreal I_ini;						// Fremdkapital Initialisierung
-    qreal I_min;
+    qreal I_qMin;
     qreal S,s;						// Sparaufkommen			// S > 0, S < nu*I
     qreal S_vol;						// Gesamtsparvolumen
     qreal nu;						// Anteil Unternehmer 		// 0 < nu < 1
     qreal alpha,beta,gamma,delta;	// Regulierungsparameter	// 0 < alpha,beta,gamma,delta < 1
     qreal q;							// Störung					// 0 < q_min < q_max
 	rand_var *zvar;
-    qreal q_max;						// maximale Störung
-    qreal q_min;						// minimale Störung
+    qreal q_max;						// qMaximale Störung
+    qreal q_min;						// qMinimale Störung
     qreal a,b,c,d;					// Produktionsparameter		// 0 < a,b,c,d
     qreal df_0;						// Startwert Defizit
     qreal df;						// Defizit
-    qreal df_max;					// maximales Defizit
-    qreal df_min;					// minimales Defizit
+    qreal df_max;					// qMaximales Defizit
+    qreal df_min;					// qMinimales Defizit
     qreal df_reg;					// Defizit Regulierung
     qreal y;							// Einkommen
     qreal Y;							// Output
@@ -57,7 +57,7 @@ protected:
     qreal R;							// Gleichgewichtszinsfaktor
     qreal R_c;						// Kreditzinsfaktor
     qreal R_reg;						// Einlagenzinsfaktor
-    qreal R_min;						// minimaler Einlagenzinsfaktor
+    qreal R_min;						// qMinimaler Einlagenzinsfaktor
     qreal I_B;						// Firmenbankrott
     qreal P;							// Aggr. Output der Firmen
     qreal G;							// Dynamik
@@ -77,7 +77,7 @@ protected:
 	void R_Fktn();
 	void R_c_Fktn();
 	void R_reg_Fktn();
-	void R_min_Fktn();
+    void R_min_Fktn();
 	void I_B_Fktn();
 	void P_Fktn();
 	void I_Fktn();
@@ -85,12 +85,12 @@ protected:
 public:
     Bankintermed();				// constructor
     virtual ~Bankintermed();		// destructor
-    void loadParamset(QDataStream&);	// load parameterset from a file
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	// load parameterset from a file
+    void saveParamset(QTextStream&);
     void printParamset();
     void sendParameters(int &,qreal**);
     qreal* sendModelVar(void);
-    void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
     qreal* setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
     void iteration(const qint64&);	// perform one iteration

@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../error.h"
-#include "../strnchr.h"
+
 #include "ELS.h"
 
 
@@ -159,7 +159,7 @@ void ELS::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::loadParamset(QDataStream& inFile)
+void ELS::loadParamset(QTextStream& inFile)
 {
 	inFile >> c0 >> c1 >> qreal_money >> G >> T;
 	inFile >> alpha >> y0;
@@ -180,7 +180,7 @@ void ELS::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::saveParamset(QDataStream& outFile)
+void ELS::saveParamset(QTextStream& outFile)
 {
 	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
@@ -200,14 +200,14 @@ void ELS::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void ELS::saveParamsetWithNames(QDataStream& outFile)
+void ELS::saveParamsetWithNames(QTextStream& outFile)
 {
 	outFile << "c0 = " << c0;
 	outFile << "\nc1 = " << c1;
 	outFile << "\nqreal_money = " << qreal_money;
 	outFile << "\nG = " << G << "\tT = " << T;
 	outFile << "\nalpha = " << alpha << "\ty0 = " << y0;
-	outFile << "length = " << length << "\n";
+    outFile << "length = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -226,7 +226,7 @@ void ELS::printParamset()
 {
 	log() << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
 	log() << G << "\t" << T << "\t" << alpha  << "\t" << y0;
-	log() << "\t" << length << "\n";
+    log() << "\t" << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -272,7 +272,7 @@ void ELS::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::receiveParameters(const qreal* parameters)
+void ELS::receiveParameters(const QList<qreal>& parameters)
 {
     c0=parameters[0];
     c1=parameters[1];

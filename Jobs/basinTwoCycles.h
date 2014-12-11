@@ -25,7 +25,7 @@ class basinTwoCycles : public basin {
     int period2;                       // period of the second cycle
     qreal **cycle2;                   // matrix to store the second cycle
   public:
-    basinTwoCycles(baseModel* const, const xyRange&, char* const, char* const, 
+    basinTwoCycles(baseModel* const, const xyRange&, const QString&, const QString&,
            MacrodynGraphicsItem* const=NULL);
     ~basinTwoCycles();
     void simulation();

@@ -16,17 +16,17 @@
 /*                                                                            */
 /******************************************************************************/
 
-timeSeriesJob::timeSeriesJob(baseModel* const bMod,char* const label,
+timeSeriesJob::timeSeriesJob(baseModel* const bMod, const QString& label,
                  MacrodynGraphicsItem* const graph)
-          :job(bMod,graph)
+          :Job(bMod,graph)
 {
     timeSeriesqreal=new qreal[length+1];
     if( !timeSeriesqreal )
-	fatalError("timeSeriesJob::timeSeriesJob",
+    fatalError("timeSeriesJob::timeSeriesJob",
 		   "Can't allocate enough memory");
     modelVar=model->setLabels(label);
     if( !modelVar )
-	fatalError("timeSeriesJob::timeSeriesJob",
+    fatalError("timeSeriesJob::timeSeriesJob",
 		   "Null pointer as model var");
 }
 

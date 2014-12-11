@@ -44,8 +44,8 @@ protected:
 
 public:
     logistic();			// constructor
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
@@ -56,7 +56,7 @@ public:
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,12 +97,12 @@ public:
 //    qreal* sendModelVar();			// obsolete and unused
     qreal* setLabels(const QString&);
 //  void sendStateSpace(int &,const qreal***);	// obsolete
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
     void printParamset();
 
 //    void sendParameters(int&,qreal**); 	// unused
-//    void receiveParameters(const qreal*);	// unused 
+//    void receiveParameters(const QList<qreal>&);	// unused
 }; 
 
 #endif	// _LOGISTICMAP_INCLUDED

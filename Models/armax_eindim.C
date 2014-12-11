@@ -77,13 +77,13 @@ armax_eindim::armax_eindim() : baseModel(1)
 	if ( rand_dis != NULL ) delete rand_dis;
 	rand_dis = new distribution();
 	if( !(rand_dis) )
-		fatalError("armax_eindim:","can't create rand_dis");
+        fatalError("armax_eindim:","can't create rand_dis");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax_eindim	
+// Class name:	armax_eindim
 // Member function:	 ~armax_eindim
 // Purpose:		destructor
 //
@@ -123,7 +123,7 @@ armax_eindim::~armax_eindim()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax_eindim::loadParamset(QDataStream& inFile)
+void armax_eindim::loadParamset(QTextStream& inFile)
 { 	
  	for (int l=0;l<L;l++)
 		inFile >> y_old_ini[l];
@@ -165,7 +165,7 @@ void armax_eindim::loadParamset(QDataStream& inFile)
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax_eindim	
+// Class name:	armax_eindim
 // Member function:	initialize
 // Purpose:		initialize the model, define the systems initial state
 //
@@ -269,12 +269,12 @@ void armax_eindim::initialize()
 void armax_eindim::iteration(const qint64& t)
 { 	
     qreal sum1, sum2, sum3;
-    qreal temp_max = ((L>K) ? L : K);	//max of L,K
-    const qreal maxLKR = ((temp_max>R) ? temp_max : R);	//max of L,K,R
-    const qreal eps_max = 1.0/(2.0*(maxLKR + L*1.0));	// if m is changed, update
+    qreal temp_max = ((L>K) ? L : K);	//qMax of L,K
+    const qreal qMaxLKR = ((temp_max>R) ? temp_max : R);	//qMax of L,K,R
+    const qreal eps_max = 1.0/(2.0*(qMaxLKR + L*1.0));	// if m is changed, update
 												// this calculation
-	if((eps<=0)||(eps>=eps_max))
-		fatalError("armax::iteration","eps out of range");		
+    if((eps<=0)||(eps>=eps_max))
+        fatalError("armax::iteration","eps out of range");
 	
 	rand_rec = rand_dis->rectangular(); // generates rectangular unit variate
 										// in (0,1)
@@ -440,21 +440,21 @@ void armax_eindim::iteration(const qint64& t)
 			error_es_e = ((-1/b[0]) * e) - es_e;		
 // output on screen in the last period
 	if (t==length){		
-        log() << "\nas[0] - as_e[0] = " << 1/b[0] - as_e[0] << "\n";
+        log() << "\nas[0] - as_e[0] = " << (1/b[0] - as_e[0]);
         for (int l=1;l<L+1;l++)
-            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l] << "\n";
+            log() << "as[" << l << "] - as_e[" << l << "] = " << ((-1/b[0]) * a[l-1]) - as_e[l];
         for (int k=0;k<K-1;k++)
-            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k] << "\n";
+            log() << "bs[" << k << "] - bs_e[" << k << "] = " << ((-1/b[0]) * b[k+1]) - bs_e[k];
         for (int r=0;r<R;r++)
-            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r] << "\n";
+            log() << "cs[" << r << "] - cs_e[" << r << "] = " << ((-1/b[0]) * c[r]) - cs_e[r];
 		if (G==1)
-            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e << "\n";
+            log() << "ds - ds_e = " << ((-1/b[0]) * d) - ds_e;
 		if (H==1)
-            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e << "\n";
-//		log() << "last dif_var=" << dif_var << "\n";
-//		log() << "var1 = " << var1 << "\n";
-//		log() << "var2 = " << var2 << "\n";
-//		log() << "sum_var1 = " << sum_var1 << "\n";
+            log() << "es - es_e = " << ((-1/b[0]) * e) - es_e;
+//		log() << "last dif_var=" << dif_var 
+//		log() << "var1 = " << var1 
+//		log() << "var2 = " << var2 
+//		log() << "sum_var1 = " << sum_var1 
 	}
 	
 	
@@ -527,7 +527,7 @@ if(H!=0)
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax_eindim	
+// Class name:	armax_eindim
 // Member function:	saveParamset
 // Purpose:		write parameterset into a file
 //
@@ -537,7 +537,7 @@ if(H!=0)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax_eindim::saveParamset(QDataStream& outFile)
+void armax_eindim::saveParamset(QTextStream& outFile)
 {	
 	for (int l=0;l<L;l++)
 		outFile << y_old_ini[l] << "\t";
@@ -576,7 +576,7 @@ void armax_eindim::saveParamset(QDataStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax_eindim	
+// Class name:	armax_eindim
 // Member function:	printParamset
 // Purpose:		print parameterset on the screen
 //
@@ -589,42 +589,42 @@ void armax_eindim::saveParamset(QDataStream& outFile)
 void armax_eindim::printParamset()
 { 	
  	for (int l=0;l<L;l++)
-        log() << y_old_ini[l] << "\n";
+        log() << y_old_ini[l];
  	for (int k=0;k<K;k++)
-        log() << u_old_ini[k] << "\n";
+        log() << u_old_ini[k];
 	for (int r=0;r<R;r++)
-        log() << v_old_ini[r] << "\n";
+        log() << v_old_ini[r];
     for (int l=0;l<L;l++)
-        log() << a[l] << "\n";
+        log() << a[l];
     for (int k=0;k<K;k++)
-        log() << b[k] << "\n";
+        log() << b[k];
     for (int r=0;r<R;r++)
-        log() << c[r] << "\n";
+        log() << c[r];
 	if (G==1)
-        log() << d << "\n";
+        log() << d;
 	if (H==1)
-        log() << e << "\n";
+        log() << e;
     for (int l=0;l<L;l++)
-        log() << a_e[l] << "\n";
+        log() << a_e[l];
     for (int k=0;k<K;k++)
-        log() << b_e[k] << "\n";
+        log() << b_e[k];
     for (int r=0;r<R;r++)
-        log() << c_e[r] << "\n";
+        log() << c_e[r];
 	if (G==1)
-        log() << d_e << "\n";
+        log() << d_e;
 	if (H==1)
-        log() << e_e << "\n";
+        log() << e_e;
  	
-    log() << eps << "\n";
-    log() << sigma_eps << "\n";
+    log() << eps;
+    log() << sigma_eps;
 		
-    log() << length << "\n";
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
-// Class name:	armax_eindim	
+// Class name:	armax_eindim
 // Member function:	sendStateSpace
 // Purpose:		return pointers to the state variables and inform about
 //			the systems dimension
@@ -641,7 +641,7 @@ void armax_eindim::sendStateSpace(int &quantity,const qreal*** stateSpace)
 	delete stateSpace;
     *stateSpace= new const qreal* [dimension];
     if( !(*stateSpace) )
-	fatalError("armax_eindim::sendStateSpace",
+    fatalError("armax_eindim::sendStateSpace",
 		   "Can't create state space vector");
     quantity=dimension;
     (*stateSpace)[0]=&y_t;
@@ -666,6 +666,6 @@ qreal* armax_eindim::sendModelVar(void)
 void armax_eindim::sendParameters(int& ,qreal** )
 { error("macrodyn::armax_eindim::sendParameters is not implemented");
 }
-void armax_eindim::receiveParameters(const qreal* )
+void armax_eindim::receiveParameters(const QList<qreal>&)
 { error("macrodyn::armax_eindim::receiveParameters is not implemented");
 } 

@@ -13,7 +13,7 @@
 #define FINANZMARKT_2DIM_1_INCLUDED
 
 #include "baseModel.h"
-// #include "../strnchr.h"
+// 
 #include "../matrix.h"
 #include <stdlib.h>
 #include "rand_var.h"
@@ -119,8 +119,8 @@ public:
 	virtual ~finanzmarkt_2Dim_1();
     real* setLabels(const QString&);
 	void initialize();
-    void loadParamset(QDataStream&);
-/*	void saveParamsetWithNames(QDataStream&);*/
+    void loadParamset(QTextStream&);
+/*	void saveParamsetWithNames(QTextStream&);*/
 	void sendStateSpace(int &,const real***);
 	void iteration(const long&);
 /*	void saveParamset();	

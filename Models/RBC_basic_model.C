@@ -1,6 +1,6 @@
 
 #include "../error.h"
-#include "../strnchr.h"
+
 #include "RBC_basic_model.h"
 
 
@@ -57,7 +57,7 @@ void RBC_basic_model::iteration(const qint64&)
 {
 qreal Z_old;
 
-// Determine random shock for current period
+// DeterqMine random shock for current period
 
 
 
@@ -67,7 +67,7 @@ epsilon = zvar->dice();	// Set a new random value for the Parameter
 eta = exp(mu + epsilon); 
 Z = pow(Z_old, gamma)*eta;
 Z_ln = log(Z);
-// Determine output and consumption (per capita) for current period
+// DeterqMine output and consumption (per capita) for current period
 
 
 
@@ -90,24 +90,24 @@ K = k;
 //k_ln = log(k);
 
 /*
-log() << "********************************" << "\n";
-log() << " New iteration " << "\n";
-log() << "********************************" << "\n";
-log() << "k = "  << k << "\n";
-log() << "k_old = "  << k_old << "\n";
-log() << "k_diff = "  << k_diff << "\n";
-log() << "k_rate = "  << k_rate << "\n";
-log() << "epsilon = "  << epsilon << "\n";
-log() << "eta = "  << eta << "\n";
-log() << "Z = "  << Z << "\n";
-log() << "Z_old = "  << Z_old << "\n";
-log() << "y = "  << y << "\n";
-log() << "c = "  << c << "\n";
-log() << "\n";
+log() << "********************************" 
+log() << " New iteration " 
+log() << "********************************" 
+log() << "k = "  << k 
+log() << "k_old = "  << k_old 
+log() << "k_diff = "  << k_diff 
+log() << "k_rate = "  << k_rate 
+log() << "epsilon = "  << epsilon 
+log() << "eta = "  << eta 
+log() << "Z = "  << Z 
+log() << "Z_old = "  << Z_old 
+log() << "y = "  << y 
+log() << "c = "  << c 
+log() 
 */
  
 
-// Determine capital stock for the next period
+// DeterqMine capital stock for the next period
 
 
 //Save old values
@@ -118,7 +118,7 @@ k_rate_old = k_rate;
 k_diff_old = k_diff;
 
 
-// Determine new derived values
+// DeterqMine new derived values
 
 k = alpha*beta*y;
 k_ln = log(k);
@@ -166,16 +166,16 @@ void RBC_basic_model::initialize()
 	r = Z*alpha*pow(k,alpha-1);
 	
 
-	log() << "********************************" << "\n";
-	log() << "Parameters of the simulation" << "\n";
-	log() << "********************************" << "\n";
-	log() << "epsilon_param = " << epsilon_param << "\n";
-	log() << "alpha = " << alpha << "\n";
-	log() << "beta  = " << beta << "\n";
-	log() << "gamma  = " << gamma << "\n";
-	log() << "mu  = " << mu << "\n";
-	log() << "k_0  = " << k_0 << "\n";
-	log() << "Z_0  = " << Z_0 << "\n";
+    log() << "********************************";
+    log() << "Parameters of the simulation";
+    log() << "********************************";
+    log() << "epsilon_param = " << epsilon_param;
+    log() << "alpha = " << alpha;
+    log() << "beta  = " << beta;
+    log() << "gamma  = " << gamma;
+    log() << "mu  = " << mu;
+    log() << "k_0  = " << k_0;
+    log() << "Z_0  = " << Z_0;
 
 
 }
@@ -196,11 +196,11 @@ void RBC_basic_model::initialize()
 
 qreal* RBC_basic_model::sendModelVar()
 {
-	//log() << "This is function 'sendModelVar()' in RBC_basic_model.C" << "\n";
+	//log() << "This is function 'sendModelVar()' in RBC_basic_model.C" 
     
 	return &k;
 	
-	//log() << "Now returning...." << "\n"; 
+	//log() << "Now returning...."  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -218,7 +218,7 @@ qreal* RBC_basic_model::sendModelVar()
 
 qreal* RBC_basic_model::setLabels(const QString& label)
 {
-	//log() << "This is function 'setLabels()' in RBC_basic_model.C ." << "\n";
+	//log() << "This is function 'setLabels()' in RBC_basic_model.C ." 
     if (label == "k")
 	return( &k);
     if (label == "k_rate")
@@ -276,7 +276,7 @@ qreal* RBC_basic_model::setLabels(const QString& label)
     if (label == "yBundle")
 	return &yBundle;
    	return NULL;
-	//log() << "Now returning...." << "\n"; 
+	//log() << "Now returning...."  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ qreal* RBC_basic_model::setLabels(const QString& label)
 
 void RBC_basic_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 {
-	//log() << "This is function 'sendStateSpace()' in RBC_basic_model.C ." << "\n"; 
+	//log() << "This is function 'sendStateSpace()' in RBC_basic_model.C ."  
     if( stateSpace )
 	delete stateSpace;
     *stateSpace= new const qreal* [dimension];
@@ -304,8 +304,8 @@ void RBC_basic_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 		   "Can't create state space vector");
     quantity=dimension;
     (*stateSpace)[0]=&k;
- 	log() << "Now returning...." << "\n"; 
-};
+    log() << "Now returning....";
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -320,9 +320,9 @@ void RBC_basic_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::loadParamset(QDataStream& inFile)
+void RBC_basic_model::loadParamset(QTextStream& inFile)
 {
-//log() << "This is function 'loadParamset()' in 'RBC_basic_model.C' ." << "\n"; 
+//log() << "This is function 'loadParamset()' in 'RBC_basic_model.C' ."  
  
  	inFile >> zvar_expr;
 
@@ -354,9 +354,9 @@ void RBC_basic_model::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::saveParamset(QDataStream& outFile)
+void RBC_basic_model::saveParamset(QTextStream& outFile)
 {
-	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ." << "\n"; 
+	//log() << "This is function 'saveParamset()' in 'AFFINE1.C' ."  
  	outFile << zvar_expr; 
 	outFile << alpha;
 	outFile << beta;
@@ -366,7 +366,7 @@ void RBC_basic_model::saveParamset(QDataStream& outFile)
 	outFile << Z_0;
 	outFile << length;
 
-	//log() << "Now returning...." << "\n"; 
+	//log() << "Now returning...."  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -384,18 +384,18 @@ void RBC_basic_model::saveParamset(QDataStream& outFile)
 
 void RBC_basic_model::printParamset()
 {
-    //log() << "This is function 'printParamset()' in 'AFFINE.C' ." << "\n"; 
-	log() << zvar_expr << "\n"; 
-	log() << alpha << "\n";
-	log() << beta << "\n";
-	log() << gamma << "\n";
-	log() << mu << "\n";
-	log() << k_0 << "\n";
-	log() << Z_0 << "\n";
-	log() << length << "\n";
+    //log() << "This is function 'printParamset()' in 'AFFINE.C' .";
+    log() << zvar_expr;
+    log() << alpha;
+    log() << beta;
+    log() << gamma;
+    log() << mu;
+    log() << k_0;
+    log() << Z_0;
+    log() << length;
   
 
-	//log() << "Now returning...." << "\n"; 
+	//log() << "Now returning...."  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -413,7 +413,7 @@ void RBC_basic_model::printParamset()
 
 void RBC_basic_model::sendParameters(int& amount,qreal** parameters)
 {
- 	//log() << "This is function 'sendParameters()' in 'RBC_basic_model.C' ." << "\n"; 
+ 	//log() << "This is function 'sendParameters()' in 'RBC_basic_model.C' ."  
     
     if( *parameters )
 	delete *parameters;
@@ -430,7 +430,7 @@ void RBC_basic_model::sendParameters(int& amount,qreal** parameters)
 	(*parameters[5])= Z_0;
 	(*parameters[6])= length;
 
-	//log() << "Now returning...." << "\n"; 
+	//log() << "Now returning...."  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -446,9 +446,9 @@ void RBC_basic_model::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::receiveParameters(const qreal* parameters)
+void RBC_basic_model::receiveParameters(const QList<qreal>& parameters)
 {	
-	//log() << "This is function 'receiveParameters()' in 'RBC_basic_model.C' ." << "\n"; 
+	//log() << "This is function 'receiveParameters()' in 'RBC_basic_model.C' ."  
 	alpha = parameters[0];
 	beta  = parameters[1];
 	gamma = parameters[2];
@@ -456,6 +456,6 @@ void RBC_basic_model::receiveParameters(const qreal* parameters)
 	k_0	  = parameters[4];
 	Z_0	  = parameters[5];
 	length= (qint64) parameters[6];
-	//log() << "Now returning...." << "\n"; 
+	//log() << "Now returning...."  
 }
 

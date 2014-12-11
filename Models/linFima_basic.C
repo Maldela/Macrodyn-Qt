@@ -39,7 +39,7 @@ void linFima_basic::initialize()
 	d1 =	d0;
 	d2 =	d0;
 	
-	zvar = new rand_var( "ranf",1,xi_min,xi_max );	
+    zvar = new rand_var( "ranf",1,xi_min,xi_max );
 	if( !(zvar) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
 	
@@ -134,13 +134,13 @@ void linFima_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
 // Funktionsname:	loadParamset
 // Beschreibung:	Einlesen der Parameter aus der .sim Datei 
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::loadParamset(QDataStream& inputFile)
+void linFima_basic::loadParamset(QTextStream& inputFile)
 {
 	inputFile >> MODELL;
 	inputFile >> x0     >> y0;
 	inputFile >> alpha  >> beta;
 	inputFile >> d0     >> psi;
-	inputFile >> xi_min >> xi_max;	
+    inputFile >> xi_min >> xi_max;
 	inputFile >> gamma;
 	inputFile >> L;
 	inputFile >> length;
@@ -152,14 +152,14 @@ void linFima_basic::loadParamset(QDataStream& inputFile)
 // Funktionsname: saveParamset
 // Beschreibung:         write parameterset into a file
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::saveParamset(QDataStream& outFile)
+void linFima_basic::saveParamset(QTextStream& outFile)
 {
 	outFile <<"\nlinFima_basic:"<<"\t";
 	outFile << MODELL<<"\t";
 	outFile << x0     << "\t" << y0   <<"\t"; 
 	outFile << alpha  << "\t" << beta <<"\t";
 	outFile << d0     << "\t" << psi  <<"\t";
-	outFile << xi_min << "\t" << xi_max <<"\t";
+    outFile << xi_min << "\t" << xi_max <<"\t";
 	outFile << gamma;
 	outFile << L;
 	outFile << length;
@@ -176,7 +176,7 @@ void linFima_basic::printParamset()
 	log() << x0     << "\t" << y0     <<"\n"; 
 	log() << alpha  << "\t" << beta   <<"\n";
 	log() << d0     << "\t" << psi    <<"\n";
-	log() << xi_min << "\t" << xi_max <<"\n";
+    log() << xi_min << "\t" << xi_max <<"\n";
 	log() << gamma  <<"\n";
 	log() << L      <<"\n";
 	log() << length <<"\n";
@@ -202,8 +202,8 @@ void linFima_basic::sendParameters(int& amount,qreal** parameters)
 	(*parameters[3]) =beta;
 	(*parameters[4]) =d0;
 	(*parameters[5]) =psi;
-	(*parameters[6]) =xi_min;
-	(*parameters[7]) =xi_max;
+    (*parameters[6]) =xi_min;
+    (*parameters[7]) =xi_max;
 	(*parameters[8]) =gamma;
 	(*parameters[9]) =L;
 	(*parameters[10])=length;
@@ -213,7 +213,7 @@ void linFima_basic::sendParameters(int& amount,qreal** parameters)
 // Funktionsname: receiveParameters
 // Beschreibung:         receive parameter values
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::receiveParameters(const qreal* parameters)
+void linFima_basic::receiveParameters(const QList<qreal>& parameters)
 {
 	x0	= parameters[0];
 	y0	= parameters[1];
@@ -221,8 +221,8 @@ void linFima_basic::receiveParameters(const qreal* parameters)
 	beta	= parameters[3];
 	d0	= parameters[4];
 	psi	= parameters[5];
-	xi_min	= parameters[6];
-	xi_max	= parameters[7];
+    xi_min	= parameters[6];
+    xi_max	= parameters[7];
 	gamma	= parameters[8];
 	L	= parameters[9];
 	length	= (qint64) (parameters[10]);

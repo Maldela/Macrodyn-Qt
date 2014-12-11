@@ -17,9 +17,8 @@
 #include "rand_var.h"
 #include "markov_chain.h"
 
-const int Trans_x_Max=100;
-
-const int mc_states_Max=10;
+const int Trans_X_Max = 100;
+const int Mc_States_Max = 10;
 
 struct st_fin_paramset 
 {
@@ -28,9 +27,9 @@ struct st_fin_paramset
 	int theta_type;
 	qreal my;
 	qreal z_trans;
-	qreal trans_x[Trans_x_Max];
-	qreal trans_a[Trans_x_Max];
-	qreal trans_b[Trans_x_Max];		
+    qreal trans_x[Trans_X_Max];
+    qreal trans_a[Trans_X_Max];
+    qreal trans_b[Trans_X_Max];
     int mc_flag;
     QString zvar_expr;
     QString mc_matrix;
@@ -64,15 +63,15 @@ protected:
     QString in_string;
 public:	
 	dynofin_rmv();
-	void loadParamset(QDataStream&);	
-  	void saveParamset(QDataStream&);
-    void save_st_fin_paramset(QDataStream&,st_fin_paramset*);
-    void saveParamsetWithNames(QDataStream&);
-    void save_st_fin_paramsetWithNames(QDataStream&,st_fin_paramset*);
+	void loadParamset(QTextStream&);	
+  	void saveParamset(QTextStream&);
+    void save_st_fin_paramset(QTextStream&,st_fin_paramset*);
+    void saveParamsetWithNames(QTextStream&);
+    void save_st_fin_paramsetWithNames(QTextStream&,st_fin_paramset*);
     void printParamset();
     void print_st_fin_paramset(st_fin_paramset*);
     void noise_iteration(st_fin_paramset*);
-    void read_sim(QDataStream&,st_fin_paramset*);
+    void read_sim(QTextStream&,st_fin_paramset*);
     void delete_st_fin_paramset_stochptr(st_fin_paramset*);
     void iteration(const qint64&);
     void initialize();
@@ -80,7 +79,7 @@ public:
     void sendStateSpace(int &,const qreal***);
     qreal* sendModelVar();
     void sendParameters(int&,qreal**);
-  	void receiveParameters(const qreal*);
+    void receiveParameters(const QList<qreal>&);
         virtual ~dynofin_rmv(void);            //destructor
 };
 #endif //  _DYNOFIN_RMV_INCLUDED

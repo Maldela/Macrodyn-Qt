@@ -32,7 +32,7 @@ laborMarketFirstTax::laborMarketFirstTax()
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::loadParamset(QDataStream& inputFile)
+void laborMarketFirstTax::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B >> deltaP >> Lmax ;
     inputFile >> betaS >> betaW >> rhoS >> rhoW ;
@@ -61,7 +61,7 @@ void laborMarketFirstTax::loadParamset(QDataStream& inputFile)
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::saveParamset(QDataStream& outputFile)
+void laborMarketFirstTax::saveParamset(QTextStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\t";
     outputFile << betaS << "\t" << betaW << "\t";
@@ -83,7 +83,7 @@ void laborMarketFirstTax::saveParamset(QDataStream& outputFile)
 /* Last modified:                                   */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::saveParamsetWithNames(QDataStream& outputFile)
+void laborMarketFirstTax::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "LaborMarketFirstTax:\n\t";
     outputFile << "A = " << A << "\tB = " << B << "\tdeltaP = " << deltaP << "\tLmax = " << Lmax << "\tbetaS = ";
@@ -97,7 +97,6 @@ void laborMarketFirstTax::saveParamsetWithNames(QDataStream& outputFile)
     outputFile << length << "\tw0 = ";
     outputFile << w0 << "\tmS0 = " << mS0 << "\tmW0 = " << mW0 << "\tomega0 = ";
     outputFile << omega0 << "\td0 = " << d0 << "\ttheta0 = " << theta0;
-    outputFile << "\n";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -109,14 +108,14 @@ void laborMarketFirstTax::saveParamsetWithNames(QDataStream& outputFile)
 /******************************************************************************/
 void laborMarketFirstTax::printParamset()
 {
-    log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax << "\n";
-    log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW << "\n";
-    log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW << "\n";
-    log() << g << "\t" << tax << "\n"; 
-    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu << "\n";
-    log() << length << "\n";
+    log() << A  << "\t" << B << "\t" << deltaP << "\t" << Lmax;
+    log() << betaS << "\t" << betaW << "\t" << rhoS << "\t" << rhoW;
+    log() << deltaS << "\t" << deltaW << "\t" << tauS << "\t" << tauW;
+    log() << g << "\t" << tax;
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << mu;
+    log() << length;
     log() << w0 << "\t" << mS0 << "\t" << mW0 << "\t" << omega0 << "\t";
-    log() << d0 << "\t" << theta0 << "\n";
+    log() << d0 << "\t" << theta0;
 }
 
 /******************************************************************************/
@@ -171,7 +170,7 @@ void laborMarketFirstTax::sendParameters(int& amount,qreal** parameters)
 /* Last modified:   18.03.1996 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirstTax::receiveParameters(const qreal* parameters)
+void laborMarketFirstTax::receiveParameters(const QList<qreal>& parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -395,7 +394,7 @@ void rlaborMarketFirstTax::iteration(const qint64& t)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rlaborMarketFirstTax::loadParamset(QDataStream& inputFile)
+void rlaborMarketFirstTax::loadParamset(QTextStream& inputFile)
 {
   inputFile >> zvar_name;		// read the name of the stochastic parameter
   inputFile >> zvar_expr;		// read the definition

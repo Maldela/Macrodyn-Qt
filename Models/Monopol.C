@@ -152,7 +152,7 @@ void Monopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::loadParamset(QDataStream& inFile)
+void Monopol::loadParamset(QTextStream& inFile)
 {
     inFile >> beta0 >> M0 >> w0 >> z0;
     inFile >> g >> tau >> B; 
@@ -173,7 +173,7 @@ void Monopol::loadParamset(QDataStream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::saveParamset(QDataStream& outFile)
+void Monopol::saveParamset(QTextStream& outFile)
 {
     outFile << beta0 << "\t" << M0 << "\t" << w0 << "\t";
     outFile << z0 << "\t" << g << "\t" << tau << "\t";
@@ -195,12 +195,12 @@ void Monopol::saveParamset(QDataStream& outFile)
 
 void Monopol::printParamset()
 {
-    log() << beta0 << "\t" << M0 << "\t" << w0 << "\n";
-    log() << z0 << "\t" << g << "\t" << tau << "\n";
-    log() << B << "\t" << eta << "\t" << alpha << "\n";
-    log() << Lmax << "\t" << lambda << "\t" << mu << "\n";        
-    log() << delta << "\t" << cert << "\n";
-    log() << length << "\n";
+    log() << beta0 << "\t" << M0 << "\t" << w0;
+    log() << z0 << "\t" << g << "\t" << tau;
+    log() << B << "\t" << eta << "\t" << alpha;
+    log() << Lmax << "\t" << lambda << "\t" << mu;
+    log() << delta << "\t" << cert;
+    log() << length;
 }
 
 
@@ -251,7 +251,7 @@ void Monopol::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::receiveParameters(const qreal* parameters)
+void Monopol::receiveParameters(const QList<qreal>& parameters)
 {
     beta0=parameters[0];
     M0=parameters[1];
@@ -423,16 +423,16 @@ void Monopol::iteration(const qint64&)
     qreal gam;
     
     gam=gamma();
-    Ltdem= Finv(MAX(0,xnot()-z));
-    Lt=MIN(Lmax,Ltdem);
+    Ltdem= Finv(qMax(0.0,xnot()-z));
+    Lt = qMin(Lmax,Ltdem);
     rewat=rewa(FF(Lt)+z);
     ytdem=m*rewat+g;
-    xt=MIN(ytdem,FF(Lt)+z);
+    xt = qMin(ytdem,FF(Lt)+z);
        
     zeta=zeta*pow(((alpha-1)/lambda/alpha*(1+gam*ytdem/(FF(Lt)+z))),1/eta)
-    		/(1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax));
-    m= (m+(g-tau*xt)/rewat)/(1+mu*(Ltdem-Lmax)/MAX(Ltdem,Lmax));
-    z=MAX(0,delta*(FF(Lt)+z-ytdem));
+    		/(1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax));
+    m= (m+(g-tau*xt)/rewat)/(1+mu*(Ltdem-Lmax)/qMax(Ltdem,Lmax));
+    z = qMax(0.0,delta*(FF(Lt)+z-ytdem));
 }
 
 

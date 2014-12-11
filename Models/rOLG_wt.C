@@ -12,7 +12,6 @@
 
 #include "rOLG_wt.h"
 #include "../error.h"
-#include "../strnchr.h"
 
 //*****************************************************************************
 //*****************************************************************************
@@ -457,7 +456,7 @@ void rOLG_wt::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::read_sim(QDataStream& inFile, st_olg_paramset *temp_paramset){
+void rOLG_wt::read_sim(QTextStream& inFile, st_olg_paramset *temp_paramset){
    
   int	i,j;			// Index
 
@@ -481,7 +480,7 @@ void rOLG_wt::read_sim(QDataStream& inFile, st_olg_paramset *temp_paramset){
     	inFile >> temp_paramset->z_0; 
       
         i=0;
-        while(i<trans_x_MAX) {
+        while(i<trans_x_Max) {
 	      inFile >> temp_paramset->trans_x[i];
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	  if(temp_paramset->trans_x[i]==1) break;
@@ -489,9 +488,9 @@ void rOLG_wt::read_sim(QDataStream& inFile, st_olg_paramset *temp_paramset){
 	}
 	//printf("i=%i\n",i); 
  	
-        if(i==trans_x_MAX)
+        if(i==trans_x_Max)
 	  error("macrodyn::rOLG_wt",
-	      "the number i of x[i] must be less trans_x_Max");
+          "the number i of x[i] must be less trans_x_Max");
 
         // length of trans_a and trans_b = trans_x - 1
         for (int j=0;j<i;j++) {
@@ -555,7 +554,7 @@ void rOLG_wt::read_sim(QDataStream& inFile, st_olg_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::loadParamset(QDataStream& inFile)
+void rOLG_wt::loadParamset(QTextStream& inFile)
 {  
 	inFile >> dof;
 	inFile >> b_exponential;
@@ -595,7 +594,7 @@ qreal* rOLG_wt::sendModelVar(void)
 void rOLG_wt::sendParameters(int& ,qreal** )
 { error("macrodyn::rOLG_wt::sendParameters is not implemented");
 }
-void rOLG_wt::receiveParameters(const qreal* )
+void rOLG_wt::receiveParameters(const QList<qreal>&)
 { error("macrodyn::rOLG_wt::receiveParameters is not implemented");
 }
 
@@ -612,7 +611,7 @@ void rOLG_wt::receiveParameters(const qreal* )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::save_st_olg_Paramset(QDataStream& outFile, st_olg_paramset *temp_paramset){
+void rOLG_wt::save_st_olg_Paramset(QTextStream& outFile, st_olg_paramset *temp_paramset){
 
    int	i,j;			// Index
   
@@ -632,7 +631,7 @@ void rOLG_wt::save_st_olg_Paramset(QDataStream& outFile, st_olg_paramset *temp_p
     	outFile << temp_paramset->z_0 << "\t"; 
 	
         i=0;
-        while(i<trans_x_MAX) {
+        while(i<trans_x_Max) {
 	      outFile << temp_paramset->trans_x[i] << "\t";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
@@ -656,7 +655,6 @@ void rOLG_wt::save_st_olg_Paramset(QDataStream& outFile, st_olg_paramset *temp_p
           }
        break;
 	
-    outFile << "\n";  
     }
 
  }
@@ -674,19 +672,18 @@ void rOLG_wt::save_st_olg_Paramset(QDataStream& outFile, st_olg_paramset *temp_p
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::saveParamset(QDataStream& outFile)
+void rOLG_wt::saveParamset(QTextStream& outFile)
 
 {     
-    outFile << K_olg_0 << "\n" ;				
-    outFile << Ez_0 << "\n";			
+    outFile << K_olg_0 ;				
+    outFile << Ez_0;
     save_st_olg_Paramset(outFile,z_st_paramset);			
-    outFile << A_olg << "\n";
-    outFile << delta_olg << "\n" ;				
-    outFile << n_olg << "\n";
-    outFile << alpha_olg << "\n" ;				
-    outFile << length << "\n";    
-    outFile << "\n";  
-    baseModel::saveParamset (outFile);
+    outFile << A_olg;
+    outFile << delta_olg ;				
+    outFile << n_olg;
+    outFile << alpha_olg ;				
+    outFile << length;
+    baseModel::saveParamset(outFile);
 }            	    
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -697,7 +694,7 @@ void rOLG_wt::saveParamset(QDataStream& outFile)
 // By:		    Michael Meyer                                                          //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rOLG_wt::saveParamsetWithNames(QDataStream& outFile)	
+void rOLG_wt::saveParamsetWithNames(QTextStream& outFile)	
 {
 outFile << "rOLG_wt:\n";
 outFile << "K_olg_0 =" << K_olg_0 << "\t";
@@ -708,7 +705,7 @@ outFile << "A_olg =" << A_olg << "\t";
 outFile << "delta_olg =" << delta_olg << "\t";
 outFile << "n_olg =" << n_olg << "\t";
 outFile << "alpha_olg =" << alpha_olg << "\t";
-outFile << "Length = " << length << "\n"; 
+outFile << "Length = " << length;
 }
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -719,7 +716,7 @@ outFile << "Length = " << length << "\n";
 // By:		    Michael Meyer                                                           //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rOLG_wt::save_st_olg_ParamsetWithNames(QDataStream& outFile, st_olg_paramset *temp_paramset)	
+void rOLG_wt::save_st_olg_ParamsetWithNames(QTextStream& outFile, st_olg_paramset *temp_paramset)	
 {
    int	i,j;			// Index
   	
@@ -739,7 +736,7 @@ void rOLG_wt::save_st_olg_ParamsetWithNames(QDataStream& outFile, st_olg_paramse
     	outFile <<  "z_st_0 = " << temp_paramset->z_0 << "\t"; 
 	
         i=0;
-        while(i<trans_x_MAX) {
+        while(i<trans_x_Max) {
 	      outFile << "trans_x = " << temp_paramset->trans_x[i] << "\t";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
@@ -763,9 +760,7 @@ void rOLG_wt::save_st_olg_ParamsetWithNames(QDataStream& outFile, st_olg_paramse
           }
        break;
 	
-    outFile << "\n";  
     }
-  outFile << "\n";
 }
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -783,47 +778,43 @@ void rOLG_wt::print_st_olg_Paramset(st_olg_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      log() << temp_paramset->type << "\n";
+      log() << temp_paramset->type;
       
       switch  (temp_paramset->type) {
       case -1:
-    log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->z_0;
       break;
       case 0 :	
-        log() << temp_paramset->z_0 << "\n";
+        log() << temp_paramset->z_0;
       break;
 	
       case 1 :		
-    log() << temp_paramset->theta_type << "\n";
-    log() << temp_paramset->my << "\n";
-        log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->theta_type;
+    log() << temp_paramset->my;
+        log() << temp_paramset->z_0;
 	
         i=0;
-        while(i<trans_x_MAX) {
-          log() << temp_paramset->trans_x[i] << "\n";
+        while(i<trans_x_Max) {
+          log() << temp_paramset->trans_x[i];
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       log() << "\n";
        for (int j=0;j<i;j++) {
-     log() << temp_paramset->trans_a[j] << "\n";
+     log() << temp_paramset->trans_a[j];
 	}
-    log() << "\n";
        for (int j=0;j<i;j++) {
-     log() << temp_paramset->trans_b[j] << "\n";
+     log() << temp_paramset->trans_b[j];
 	}
-        log() << "\n";
         break;
    
       case 2:
-        log() << temp_paramset->zvar_expr << "\n";
+        log() << temp_paramset->zvar_expr;
 	  if( temp_paramset->mc_flag == 1) {
-         log() << temp_paramset->mc_matrix << "\n";
+         log() << temp_paramset->mc_matrix;
           }
        break;
 	
-    log() << "\n";
     }
 
  }
@@ -843,14 +834,13 @@ void rOLG_wt::print_st_olg_Paramset(st_olg_paramset *temp_paramset){
 
 void rOLG_wt::printParamset()
 {     
-    log() << K_olg_0 << "\n" ;
-    log() << Ez_0 << "\n";
+    log() << K_olg_0 ;
+    log() << Ez_0;
     print_st_olg_Paramset(z_st_paramset);			
-    log() << A_olg << "\n";
-    log() << delta_olg << "\n" ;
-    log() << n_olg << "\n";
-    log() << alpha_olg << "\n";
-    log() << length << "\n";
-    log() << "\n";
+    log() << A_olg;
+    log() << delta_olg;
+    log() << n_olg;
+    log() << alpha_olg;
+    log() << length;
     baseModel::printParamset();
 } 

@@ -29,7 +29,7 @@
 
 class xyRange {
 
-friend QDataStream& operator<<(QDataStream&, const xyRange&);
+friend QTextStream& operator<<(QTextStream&, const xyRange&);
 
 public:
 
@@ -44,7 +44,7 @@ public:
 
     xyRange(int, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&, const QList<QColor>&);	// constructor
     xyRange(int, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&);	// old constructor
-    xyRange(QDataStream&);         // create instance from a file
+    xyRange(QTextStream&);         // create instance from a file
     xyRange(const xyRange&);	// copy constructor
     ~xyRange() {}			// destructor
     bool inRange(const qreal **) const; // determines wether the argument

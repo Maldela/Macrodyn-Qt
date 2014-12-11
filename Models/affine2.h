@@ -37,15 +37,15 @@ protected:
     qreal p;					//probability that map 1 is chosen
 	qreal urv;			//a random variable
 	int count1, count2; //counter for map1 and map2
-	bool incase1;
+    int incase1;
 	rand_var *zvar;
     QString zvar_expr;
 
 public:
     affine2();			// constructor
     virtual ~affine2();	//destructor
-	void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
+	void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
@@ -56,7 +56,7 @@ public:
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values
 };
 
 

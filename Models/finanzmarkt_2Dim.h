@@ -13,7 +13,7 @@
 #define FINANZMARKT_2DIM_INCLUDED
 
 #include "baseModel.h"
-// #include "../strnchr.h"
+// 
 #include "../matrix.h"
 #include <stdlib.h>
 #include "rand_var.h"
@@ -34,7 +34,7 @@ protected:
     qreal p1, p2, pF1, pF2, pN1, pN2;	//Preise, Preisvorhersagen
     qreal p01, p02, pF01, pF02, pN01, pN02;	//Startwerte fuer Preise und Vorhersagen
     qreal zetamin1, zetamax1, gamma1;	//Parameter fuer Dividendenprozess 1
-    qreal zetamin2, zetamax2,gamma2;		//Parameter fuer Dividendenprozess 2
+    qreal zetamin2, zetamax2, gamma2;		//Parameter fuer Dividendenprozess 2
     qreal d1, d2;				//Dividendenzufallsvariablen
     qreal Ed1, Ed2, var1, var2, cov12;	//Momente der Dividendenprozesse
     qreal zetamin3, zetamax3;		//Parameter fuer Fehleinschaetzung
@@ -89,8 +89,8 @@ public:
 	virtual ~finanzmarkt_2Dim();
     qreal* setLabels(const QString&);
 	void initialize();
-    void loadParamset(QDataStream&);
-/*	void saveParamsetWithNames(QDataStream&);*/
+    void loadParamset(QTextStream&);
+/*	void saveParamsetWithNames(QTextStream&);*/
     void sendStateSpace(int &,const qreal***);
 	void iteration(const long&);
 /*	void saveParamset();	

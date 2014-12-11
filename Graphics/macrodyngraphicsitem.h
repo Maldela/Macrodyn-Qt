@@ -4,6 +4,7 @@
 #include <QQuickPaintedItem>
 #include <QImage>
 #include <QPainter>
+#include <QTimer>
 
 
 #include "../sim.h"
@@ -13,7 +14,7 @@
 #define LOWMARGIN 20
 #define RMARGIN 60
 #define UPMARGIN 20
-#define MAXLABELLENGTH 8
+#define qMaxLABELLENGTH 8
 #define AXISCOLOR QColor(Qt::black)
 #define AXISLABELCOLOR QColor(Qt::red)
 #define XICSMARKSCOLOR QColor(Qt::darkGreen)
@@ -29,19 +30,18 @@ class MacrodynGraphicsItem : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
-    Q_PROPERTY(QObject *pointer READ pointer)
 
 public:
 
     explicit MacrodynGraphicsItem(QQuickItem *parent = 0);
-    virtual ~MacrodynGraphicsItem() { delete image; }
+    virtual ~MacrodynGraphicsItem();
 
     int drawAxis();                     // draw axis according to the domain
 
     void draw_mp_names(const QList<QString>&);// write multiple names in the window
 //    void draw_color_count();	// Job color_map
-    void set_axis(int, qreal, qreal);	// set max & min of axis
-    void get_axis(int, qreal*, qreal*); // get max & min of axis
+    void set_axis(int, qreal, qreal);	// set qMax & qMin of axis
+    void get_axis(int, qreal*, qreal*); // get qMax & qMin of axis
     void clear_window();		// clear output window
 
     void setPoint(const qreal&, const qreal&, const QColor&);
@@ -51,7 +51,7 @@ public:
     void setBigPoint(const qreal&, const qreal&, const QColor&, int);
     void drawLine(const qreal&, const qreal&, const qreal&, const qreal&, const QColor&);
                         // draw a line on the screen
-    void drawString(const qreal&, const qreal&, const QString&, const QColor&);
+    void drawString(const qreal&, const qreal&, const QString&, const QColor&, bool = true);
     void reset(const xyRange&);         // reset domain under consideration that
                     // should be displayed on the screen
     void dumpGraphics(const QString&) const; // dump output window
@@ -62,7 +62,6 @@ public:
     void clearColumn(qreal);	// clear a specified column of the
                     // output window
     void closeGraphics();
-    QObject *pointer() { return qobject_cast<QObject *>(this); }
 
 
 signals:
@@ -70,14 +69,18 @@ signals:
     void backgroundColorChanged();
 
 
-public slots:
+protected slots:
+
+    void handleSizeChanged();
+    void resizeImage();
 
 
 protected:
 
     void paint(QPainter *painter);
 
-    QImage *image;
+    QImage image;
+    QTimer timer;
     int job;
     xyRange *axis;
     QColor backgroundColor;
@@ -88,7 +91,7 @@ protected:
     uint lowmargin;
     uint wid;
     uint hig;
-    uint xinit, yinit, xpix_Min, ypix_Min, xpix_Max, ypix_Max;
+    uint xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
     uint right;
     uint down;
     void getCoordinates(qreal, qreal, int&, int&);

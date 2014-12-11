@@ -1,26 +1,16 @@
 #ifndef SIM_H
 #define SIM_H
 
-#include <stdio.h>
-#include <math.h>
 #include <QtCore>
-#include "logger.h"
 
 // enum BOOLS { FALSE, TRUE, NOTSET, EQUALSET, USERBREAK, STREAMERROR };
 //enum ADJUST { OLDADJUST, WALRASIAN, EXPECTEDOLD, NEWADJUST };
 //enum OUTMOD { OLD, NEW };
-enum window { NOWINDOW,PARZEN,HANNING,WELCH,HAMMING,EXACTBLACKMAN };
-enum printMode { NONE, HP, PS, COLOR, XPM=10, XPMC=11 };
-enum colors { White, Yellow, Magenta, Red, Cyan, Green, Blue, CompBlack, Black};
+enum window { NOWINDOW,PARZEN,HANNING,WELCH,HAMqMinG,EXACTBLACKMAN };
 
 #define ROWS 500                           /* Rows containing PCL information */
 #define WIDTH ROWS * 8                     /* No. of bits in the rows         */
 #define COLUMNS 5000                       /* No. of columns                  */
-#define WINWIDTH 600                       /* Width of the graphics window    */
-#define WINHEIGHT 300                      /* Height of the graphics window   */
-#define XPM_XSIZE 500
-#define XPM_YSIZE 260                      /*Default Size for XPM-File (TAG 11) */
-#define DEFAULT_XPM_COLOR 24;              /* Default color for non-color prints */
 #define EPSILON 1e-20
 
 ////////////////////////////////////////////////////////////////////////
@@ -47,9 +37,9 @@ enum colors { White, Yellow, Magenta, Red, Cyan, Green, Blue, CompBlack, Black};
 #define CELLATTRA	10
 #define CELLBIF2D	11
 #define SIMPLECELL	12	// simple cell mapping
-#define STATEANAL	13	// analysis of the state space 
+#define STATEANAL	13	// analysis of the state space
 
-#define DISCBIF2D	14	// bifurcation diagram for a discrete parameter 
+#define DISCBIF2D	14	// bifurcation diagram for a discrete parameter
 #define NPARMAP		15	// parameter map for n parameters
 
 #define TSPLOT		16	// time series plot
@@ -62,7 +52,7 @@ enum colors { White, Yellow, Magenta, Red, Cyan, Green, Blue, CompBlack, Black};
 #define MAX_LAYP_EXP_T	23	// print the trend of the lyapunov exponent
 
 #define BIF3D_1PAR	24	// 3D bifurcation data
-#define BIF3D_2PAR 	25	// 3D Bifurcation data	     
+#define BIF3D_2PAR 	25	// 3D Bifurcation data
 #define CYCLO3D		26	// 3D cyclogram data
 
 #define D_BIF2D	       		31      // density 2D Bifurcation diagram
@@ -79,7 +69,7 @@ enum colors { White, Yellow, Magenta, Red, Cyan, Green, Blue, CompBlack, Black};
 #define L_ATTRA			62	// Attractor plot with points connected by lines
 #define ATTRA3D			63	// 3d attractor plot
 
-#define PHASE_PLOT		70	// plot x_t vs x_{t+k} 
+#define PHASE_PLOT		70	// plot x_t vs x_{t+k}
 
 #define COLOR_PLOT		80	// rainbow with variable size of points
 #define COLOR_PLOT_B	81	        // rainbow with black line with variable size of points
@@ -100,14 +90,9 @@ enum colors { White, Yellow, Magenta, Red, Cyan, Green, Blue, CompBlack, Black};
 //
 ////////////////////////////////////////////////////////////////////////
 
-#define maxtau 10
-#define MAX(X,Y) ( (X) > (Y) ? (X) : (Y) )
-#define MIN(X,Y) ( (X) < (Y) ? (X) : (Y) )
 
-//#ifndef KSR
-//#define __shared
-//#define __private
-//#endif
+#define maxtau 10
+
 
 #endif
 

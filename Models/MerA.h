@@ -15,8 +15,6 @@
 
 #include "baseModel.h"
 #include "markov_chain.h"
-#include "../strnchr.h"
-#include<stdlib.h>
 
 class MerA : public baseModel {
 
@@ -31,8 +29,8 @@ qreal pOld;
 	qreal *q;
 	qreal *qShift;
 	qreal *qOld;
-	qreal *qmin;
-	qreal *qmax;
+    qreal *qmin;
+    qreal *qmax;
 	qreal *p0;
 	qreal *q0;
  	qreal *ferr;
@@ -50,8 +48,8 @@ qreal mean_d,expectation_d,variance_d,standardDeviation_d;
 	qreal *d;
 	qreal *d0;
 	qreal *dmid;
-	qreal *dmin;
-	qreal *dmax;
+    qreal *dmin;
+    qreal *dmax;
 	qreal get_new_d(int &);		// get new random dividend
 
 	qreal *tau1x;
@@ -62,8 +60,9 @@ public:
 	virtual ~MerA();
 	qreal* setLabels(const QString&);
 	void initialize();
-	void loadParamset(QDataStream&);	
-	void saveParamsetWithNames(QDataStream&); 
+	void loadParamset(QTextStream&);	
+	void saveParamsetWithNames(QTextStream&); 
+    void receiveParameters(const QList<qreal>&);
 	void sendStateSpace(int &,const qreal***);
 	void iteration(const qint64&);
 

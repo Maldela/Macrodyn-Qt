@@ -26,8 +26,8 @@ contourline::contourline(baseModel* const cMod,const xyRange& axes,
 		         const xyRange& xDef, const xyRange& yDef,
              MacrodynGraphicsItem* const graph)
             :geometricJob(cMod,axes,graph),effectiveX(xDef),effectiveY(yDef),
-	               h(axes.min[0],axes.max[0],axes.res[0],
-	               axes.min[1],axes.max[1],axes.res[1])
+                   h(axes.min[0],axes.max[0],axes.res[0],
+                   axes.min[1],axes.max[1],axes.res[1])
 {
     int i;
 //    limit= length / 10;			// 10% are thrown away
@@ -58,12 +58,12 @@ contourline::contourline(baseModel* const cMod,const xyRange& axes,
 			fatalError("contourline::contourline","unknown y parameter specified");
 	}
 	
-	if ( axes.min[2]==axes.max[2] ) {
-		min=0;
-		max=0;
+    if ( axes.min[2]==axes.max[2] ) {
+        min=0;
+        max=0;
 	} else {
-		min=axes.min[2];
-		max=axes.max[2];
+        min=axes.min[2];
+        max=axes.max[2];
 	}
 
     outFile.setFileName("data3D_contour.dat");
@@ -100,10 +100,10 @@ contourline::~contourline()
 
 void contourline::setXParams(const qreal& newX)
 {
-	static qreal divisor=xmax-xmin;
-    for(int i=0;i<effectiveX.dimension;i++)
-		*xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
-			(effectiveX.max[i]-effectiveX.min[i]);
+    static qreal divisor=xmax-xmin;
+    for(short i=0;i<effectiveX.dimension;i++)
+        *xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
+            (effectiveX.max[i]-effectiveX.min[i]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,10 +118,10 @@ void contourline::setXParams(const qreal& newX)
 
 void contourline::setYParams(const qreal& newY)
 {
-	static qreal divisor=ymax-ymin;
-    for(int i=0;i<effectiveY.dimension;i++)
-		*yVars[i]=effectiveY.min[i]+(newY-ymin)/divisor*
-			(effectiveY.max[i]-effectiveY.min[i]);
+    static qreal divisor=ymax-ymin;
+    for(short i=0;i<effectiveY.dimension;i++)
+        *yVars[i]=effectiveY.min[i]+(newY-ymin)/divisor*
+            (effectiveY.max[i]-effectiveY.min[i]);
 }
 
                          
@@ -150,13 +150,13 @@ void contourline::simulation()
   log() << "using value after		: "<< length<<" iterations\n";
   log() << "for variable			: "<< zLabel<<"\n";
 
-	if (min!=max) {
-	for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {       
-		setXParams(dummy_x);
+    if (min != max) {
+        for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
+        setXParams(dummy_x);
 		fortschritt+=schritt;
-        log() << "\r" << int(fortschritt) << " % " << "\n";
-	     for(dummy_y=ymin;dummy_y<=ymax;dummy_y+=stepY) {
-		setYParams(dummy_y);
+        log() << "\r" << int(fortschritt) << " % ";
+        for(dummy_y=ymin;dummy_y<=ymax;dummy_y+=stepY) {
+        setYParams(dummy_y);
 
 		model->initialize();
 
@@ -167,60 +167,59 @@ void contourline::simulation()
 		}
 	}
 	} else {
-	setXParams(xmin);
-	setYParams(ymin);
+    setXParams(xmin);
+    setYParams(ymin);
 	model->initialize();
 	for (t=0; t<length; t++)
 		model->iteration(t+1);
-	min=max=*zParam;
+    min = max=*zParam;
 	
-	for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {       
-		setXParams(dummy_x);
+    for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
+        setXParams(dummy_x);
 		fortschritt+=schritt;
-        log() << "\r" << int(fortschritt) << " % " << "\n";
-	     for(dummy_y=ymin;dummy_y<=ymax;dummy_y+=stepY) {
-		setYParams(dummy_y);
+        log() << "\r" << int(fortschritt) << " % ";
+        for(dummy_y=ymin;dummy_y<=ymax;dummy_y+=stepY) {
+        setYParams(dummy_y);
 
 		model->initialize();
 
 		for (t=0; t<length ; t++)
 		model->iteration(t+1);
 
-		if(*zParam<min) min=*zParam;
-		if(*zParam>max) max=*zParam;
+        if(*zParam<min) min=*zParam;
+        if(*zParam>max) max=*zParam;
 		h.set_to(dummy_x,dummy_y,*zParam);
 		}
 	}	
 	}
 	
 	screenGraphics->clear_window();
-	screenGraphics->set_axis(2,min,max);
-	screenGraphics->drawAxis();
+    screenGraphics->set_axis(2,min,max);
+    screenGraphics->drawAxis();
 
     qreal scala=(max-min)/double(cmax); // 34 colors for complete range of values
     qreal dummy_value;
-    QDataStream stream(&outFile);
+    QTextStream stream(&outFile);
 
     for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
-		for(dummy_y=ymin;dummy_y<=ymax;dummy_y+=stepY) {
-		dummy_value=h(dummy_x,dummy_y);
+        for(dummy_y=ymin;dummy_y<=ymax;dummy_y+=stepY) {
+        dummy_value=h(dummy_x,dummy_y);
 /*		if ((min<0)&&(max>0))
 			col=17-int((dummy_value/scala));
-		if ((min>=0)&&(max>0))*/
-			col=34-int(floor((dummy_value-min)/scala));
+        if ((min>max&&(max>0))*/
+            col=34-int(floor((dummy_value-min)/scala));
 /*		if ((min<0)&&(max<=0))
 			col=1-int((dummy_value/scala));
-		if ((min==max)&&(max==0))
+        if ((min= = max)&&(max==0))
 			col=18;*/
 		if (col>34) col=34;
 		if (col<1) col=1;
 		if( screenGraphics ) 
             screenGraphics->setPoint(dummy_x,dummy_y,col);
-        stream << dummy_x << "\t" << dummy_y << "\t" << dummy_value << "\n";
+        stream << dummy_x << "\t" << dummy_y << "\t" << dummy_value;
        }
-       stream << "\n";
     }
-    log() << "\nmin=" << min << "\t max=" << max << "\n";
+    log() << "\nmin=" << min << "\t max=" << max;
 	outFile.close();
 }
 

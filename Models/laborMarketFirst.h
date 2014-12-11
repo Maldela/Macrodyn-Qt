@@ -19,12 +19,12 @@ class laborMarketFirst : public baseModel {
   //Parameters
     qreal A,B;                             // production function parameters
     qreal deltaP;			  // depreciationrate
-    qreal Lmax;                            // maximum labour supply
+    qreal Lmax;                            // qMaximum labour supply
   //Consumer
     qreal betaS,betaW;
     qreal rhoS,rhoW,deltaS,deltaW;         // utility function parameters   
     qreal rhoTildaS,rhoTildaW;
-    int  tauS,tauW;                       // length of expectations memory
+    qint64  tauS,tauW;                       // length of expectations memory
   //Government
     qreal g,taxS,taxW;                     // government demand, tax rates   
   //Velocity
@@ -67,12 +67,12 @@ public:
     void thetaInit(qreal*);		 // vector of recent inflationrates
     void initialize();			 // initialize the model, define
 					 // the initial state
-    void loadParamset(QDataStream&);	 // load parameterset from a file
-    void saveParamset(QDataStream&);	 // write parameterset into a file
+    void loadParamset(QTextStream&);	 // load parameterset from a file
+    void saveParamset(QTextStream&);	 // write parameterset into a file
     void printParamset();		 // print parameterset on the screen
     void sendParameters(int&,qreal**);    // write all parameters into an array
                                          // and return the numbers of parameters
-    void receiveParameters(const qreal*); // receive parameter values 
+    void receiveParameters(const QList<qreal>&); // receive parameter values 
 
     qreal* setLabels(const QString&);		 // return a pointer to a variable or
 					 // a parameter specified by its name

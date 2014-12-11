@@ -12,7 +12,8 @@
 #include "baseModel.h"
 #include "rand_var.h"
 
-class martinNeu : public baseModel {
+class martinNeu : public baseModel
+{
 protected:
     rand_var * zvar;
     qreal rho ;
@@ -34,7 +35,8 @@ public:
 //    virtual ~martinNeu();
     qreal* setLabels(const QString&);
     void initialize();
-    void loadParamset(QDataStream&);	
+    void loadParamset(QTextStream&);
+    void receiveParameters(const QList<qreal>&);
     void sendStateSpace(int &,const qreal***);
     void iteration(const qint64&);
 };

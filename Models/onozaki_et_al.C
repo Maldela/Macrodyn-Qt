@@ -133,7 +133,7 @@ void onozaki_et_al::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::loadParamset(QDataStream& inFile)
+void onozaki_et_al::loadParamset(QTextStream& inFile)
 {
     inFile >> z_0 ;
     inFile >> alpha;
@@ -156,7 +156,7 @@ void onozaki_et_al::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::saveParamset(QDataStream& outFile)
+void onozaki_et_al::saveParamset(QTextStream& outFile)
 {
     outFile << z_0 << "\t";
     outFile << alpha << "\t";
@@ -180,11 +180,11 @@ void onozaki_et_al::saveParamset(QDataStream& outFile)
 
 void onozaki_et_al::printParamset()
 {
-    log() << z_0 << "\n";
-    log() << alpha << "\n";
-    log() << beta << "\n";
+    log() << z_0;
+    log() << alpha;
+    log() << beta;
     
-    log() << length << "\n";
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -200,7 +200,7 @@ void onozaki_et_al::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::saveParamsetWithNames(QDataStream& outputFile)
+void onozaki_et_al::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "growthModel:\n\t";
 		outputFile << "z_0 =" << z_0 << "\nalpha =" << alpha << "\nbeta=" << beta
@@ -226,7 +226,7 @@ qreal* onozaki_et_al::sendModelVar(void)
 void onozaki_et_al::sendParameters(int& ,qreal** )
 { error("macrodyn::onozaki_et_al::sendParameters is not implemented");
 }
-void onozaki_et_al::receiveParameters(const qreal* )
+void onozaki_et_al::receiveParameters(const QList<qreal>&)
 { error("macrodyn::onozaki_et_al::receiveParameters is not implemented");
 }
 

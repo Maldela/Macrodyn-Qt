@@ -94,7 +94,7 @@ qreal* leo::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void leo::loadParamset(QDataStream& inputFile)
+void leo::loadParamset(QTextStream& inputFile)
 {
     inputFile >> A >> B;
     inputFile >> gamm >> kappa >> lambda >> my;
@@ -121,7 +121,7 @@ void leo::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void leo::saveParamset(QDataStream& outputFile)
+void leo::saveParamset(QTextStream& outputFile)
 {
     outputFile << A << "\t" << B << "\t";
     outputFile << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\t";
@@ -142,12 +142,12 @@ void leo::saveParamset(QDataStream& outputFile)
 
 void leo::printParamset()
 {
-    log() << A << "\t" << B << "\n";
-    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my << "\n";
-    log() << tau << "\t" << length << "\n";
-    log() << delta << "\t" << beta << "\t" << eta << "\t" << zeta << "\n";
-    log() << w0 << "\t" << p0 << "\t" << m0 << "\n";
-    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax << "\n";
+    log() << A << "\t" << B;
+    log() << gamm << "\t" << kappa << "\t" << lambda << "\t" << my;
+    log() << tau << "\t" << length;
+    log() << delta << "\t" << beta << "\t" << eta << "\t" << zeta;
+    log() << w0 << "\t" << p0 << "\t" << m0;
+    log() << Lmax << "\t" << rho << "\t" << g << "\t" << tax;
 }
 
 /******************************************************************************/
@@ -199,7 +199,7 @@ void leo::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void leo::receiveParameters(const qreal* parameters)
+void leo::receiveParameters(const QList<qreal>& parameters)
 {
     A=parameters[0];
     B=parameters[1];
@@ -239,7 +239,7 @@ void leo::leoDynamics()
 
     wtqreal  = wtqreal * (wtrate / ptrate);
 
-    mtqreal  = ( MIN(output,g+mtqreal) -tax*output ) / ptrate /
+    mtqreal  = ( qMin(output,g+mtqreal) -tax*output ) / ptrate /
                                                 exp(zeta*log(theta[0]));
 }
 

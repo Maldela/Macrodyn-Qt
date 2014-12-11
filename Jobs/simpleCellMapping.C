@@ -230,7 +230,7 @@ void simpleCellMapping::simulation()
     uint finished;
     qreal x,y;
     
-    log() << K << " cells at all" << "\n";
+    log() << K << " cells at all";
 
     model->initialize();
    
@@ -256,17 +256,17 @@ void simpleCellMapping::simulation()
     }
     uint *groups=new uint[lastGroup+1];
 
-    log() << "group[0]=" << Gr[0] << "\n";
+    log() << "group[0]=" << Gr[0];
     for(uint i=0;i<=K;i++)
        	if( Gr[i] != 0 ) {
 	    discrete2Cont(i,x,y);
         screenGraphics->setPoint(x,y,Gr[i]+1);
 	    if( !groups[Gr[i]] ){
 		groups[Gr[i]]=1;
-        log() << "Group " << Gr[i] << " with period " << P[i] << "\n";
+        log() << "Group " << Gr[i] << " with period " << P[i];
 	    }
 	}
-    log() << lastGroup << " groups at all" << "\n";
+    log() << lastGroup << " groups at all";
     delete groups;
 }
 

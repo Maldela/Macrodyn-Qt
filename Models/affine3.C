@@ -1,6 +1,6 @@
 
 #include "../error.h"
-#include "../strnchr.h"
+
 #include "affine3.h"
 
 
@@ -62,21 +62,21 @@ void affine3::iteration(const qint64&)
 	qreal oldX = x;
 	
 	if(urv_p < p){
-		//log() << "map1 is chosen" << "\n";
+		//log() << "map1 is chosen" 
 		count1++;
 		x = (a+urv_e)*oldX;
 	} else {
-		//log() << "map2 is chosen" << "\n";
+		//log() << "map2 is chosen" 
 		count2++;
 		x = (a-1+urv_e)*oldX + 1;
 	}
 
-	/*log() << "oldX = " << oldX << "\n";
-	log() << "urv_p = " << urv_p << "\n";
-	log() << "urv_e = " << urv_e << "\n";
-	log() << "x = " << x << "\n";
-	log() << "count1 = " << count1 << "\n";
-	log() << "count2 = " << count2 << "\n";*/
+	/*log() << "oldX = " << oldX 
+	log() << "urv_p = " << urv_p 
+	log() << "urv_e = " << urv_e 
+	log() << "x = " << x 
+	log() << "count1 = " << count1 
+	log() << "count2 = " << count2 */
 }
     
     
@@ -200,12 +200,12 @@ void affine3::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::loadParamset(QDataStream& inFile)
+void affine3::loadParamset(QTextStream& inFile)
 {
  	inFile >> zvar_expr1;
-	//log() << zvar_expr1 << "\n";
+	//log() << zvar_expr1 
 	//inFile >> zvar_expr2;
-	//log() << zvar_expr2 << "\n";
+	//log() << zvar_expr2 
 	inFile >> eta;
 	inFile >> a;
 	if( (a<0) || (a>1)) fatalError("affine3::loadParamset","Parameter a out of range");
@@ -214,11 +214,11 @@ void affine3::loadParamset(QDataStream& inFile)
 	inFile >> p;
 	inFile >> length;
 
-	/*log() << "eta = " << eta << "\n";
-	log() << "a = " << a << "\n";
-	log() << "x0 = " << x0 << "\n";
-	log() << "p = " << p << "\n";
-	log() << "length = " << length << "\n";*/
+	/*log() << "eta = " << eta 
+	log() << "a = " << a 
+	log() << "x0 = " << x0 
+	log() << "p = " << p 
+	log() << "length = " << length */
  	
     	initialize();
 }
@@ -236,7 +236,7 @@ void affine3::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::saveParamset(QDataStream& outFile)
+void affine3::saveParamset(QTextStream& outFile)
 {
 	outFile << eta << "\t";
    	outFile << a  << "\t";
@@ -260,11 +260,11 @@ void affine3::saveParamset(QDataStream& outFile)
 
 void affine3::printParamset()
 {
-	log() << eta << "\n";
-	log() << a << "\n";
-	log() << x0 << "\n";
-	log() << p << "\n";
-	log() << length << "\n";
+    log() << eta;
+    log() << a;
+    log() << x0;
+    log() << p;
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -309,7 +309,7 @@ void affine3::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::receiveParameters(const qreal* parameters)
+void affine3::receiveParameters(const QList<qreal>& parameters)
 {	
 	eta=parameters[0];
 	a=parameters[1];

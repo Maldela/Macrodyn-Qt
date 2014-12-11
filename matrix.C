@@ -76,7 +76,7 @@ matrixDef::~matrixDef() {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-QDataStream& operator<<(QDataStream& ostr, const matrixDef& C)
+QTextStream& operator<<(QTextStream& ostr, const matrixDef& C)
 {
     ostr<<"\n";
     for(uint i=0;i<C.row;i++){
@@ -116,19 +116,18 @@ void matrixFn::coutMatrix(const matrixDef* A) {
     for(uint i=0;i<A->row;i++) {
         for(uint j=0;j<A->column;j++)
             log() << A->m[i][j] << " ";
-        log() << "\n";
 		}
 //	printf("\n");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class name:      matrixFn                                                  //
-// Member function: determinant                                               //
-// Purpose:         calculate the determinant of a matrix                     //
+// Member function: deterqMinant                                               //
+// Purpose:         calculate the deterqMinant of a matrix                     //
 // Modified:        26.10.1999 Marc Mueller                                   //
 // Last Modified:   26.10.1999 Marc Mueller                                   //
 ////////////////////////////////////////////////////////////////////////////////
-qreal matrixFn::determinant(const matrixDef* m) {
+qreal matrixFn::deterqMinant(const matrixDef* m) {
 	int s,z,sz,i,sign;
     qreal value;
 	matrixDef* a;
@@ -142,7 +141,7 @@ qreal matrixFn::determinant(const matrixDef* m) {
 		else {
 			a = new matrixDef(row-1,(m->column)-1);
 			if( !a )
-				fatalError("matrixFn::determinant",
+                fatalError("matrixFn::deterqMinant",
 						"Can't allocate memory");
 			value=0;
 			sign=1;
@@ -157,7 +156,7 @@ qreal matrixFn::determinant(const matrixDef* m) {
 					if(i==sz)
 						i++;
 				}
-				value+=sign*m->m[0][sz]*determinant(a);
+                value+=sign*m->m[0][sz]*deterqMinant(a);
 				sign*=(-1);
 			}
 			delete a;
@@ -180,14 +179,14 @@ void matrixFn::inverse(const matrixDef* m,matrixDef* mi) {
 	int	ss,zz,s,z,i,j,sign1,sign;
     int row = m->row;
 
-	detm=determinant(m);
+    detm=deterqMinant(m);
 	if(fabs(detm)<0.0000000001) {
-        log() << "fabs(determinant)=" << fabs(detm) << " < 0.0000000001";
-        log() << "  will be set to null !!!" << "\n";
+        log() << "fabs(deterqMinant)=" << fabs(detm) << " < 0.0000000001";
+        log() << "  will be set to null !!!";
 		detm=0;
 	}
 	if(detm==0)
-		fatalError("matrixFn::inverse","determinant=0 break");
+        fatalError("matrixFn::inverse","deterqMinant=0 break");
 
 	if(row==1) {
 		if(m->m[0][0]==0)
@@ -222,7 +221,7 @@ void matrixFn::inverse(const matrixDef* m,matrixDef* mi) {
 					if(i==ss)
 						i++;
 				}
-                mi->m[ss][zz]=sign*(determinant(a)/detm);
+                mi->m[ss][zz]=sign*(deterqMinant(a)/detm);
 				sign*=(-1);
 			}
 		}
@@ -493,7 +492,7 @@ matrixDef* matrixFn::multiplyABT(const matrixDef* A, const matrixDef* B) {
 ////////////////////////////////////////////////////////////////////////////////
 olsClass::olsClass( qreal* y0, int& y_num0,
         int& varphi_var_num0, qreal** varphi0, int* varphi_numPtr0){
-//log() << "ols constructor" << "\n";
+//log() << "ols constructor" 
 
 	y = y0 ;
 	y_num = y_num0 ;
@@ -525,8 +524,8 @@ olsClass::olsClass( qreal* y0, int& y_num0,
 // Last Modified:   24.01.2000 Marc Mueller                                   //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-olsClass::olsClass(QDataStream& inFile,baseModel* const model) {
-//log() << "ols constructor stream" << "\n";
+olsClass::olsClass(QTextStream& inFile,baseModel* const model) {
+//log() << "ols constructor stream" 
 
 	matrix = NULL;	
 	VARPHI = NULL;	
@@ -607,7 +606,7 @@ olsClass::olsClass(QDataStream& inFile,baseModel* const model) {
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 olsClass::~olsClass() {
-//log() << "ols destructor" << "\n";
+//log() << "ols destructor" 
 
 	if( matrix ) delete matrix;
 
@@ -634,7 +633,7 @@ olsClass::~olsClass() {
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 void olsClass::initialize() {
-//log() << "ols initialize" << "\n";
+//log() << "ols initialize" 
 
 	int i,j,jj,ij;
 	matrix = new matrixFn();
@@ -651,16 +650,16 @@ void olsClass::initialize() {
 	// initialize varphi
 	ij=0;
 	for(i=0;i<varphi_var_num;i++) { // for each pointer
-// log() << "i="<<i<< "\n";
+// log() << "i="<<i
 		for(jj=0;jj<varphi_numPtr[i];jj++) { // number of assets
 			VARPHI->m[ij][0]=varphi[i][jj]; // set in asset jj
-// log() << "VARPHI->m["<<ij<<"]="<< VARPHI->m[ij][0] << "\n";
+// log() << "VARPHI->m["<<ij<<"]="<< VARPHI->m[ij][0] 
 			ij++;
 		}
 		for(j=1;j<varphi_lagPtr[i];j++) { // time lag 
 			for(jj=0;jj<varphi_numPtr[i];jj++) { // number of assets
 				VARPHI->m[ij][0]=0;
-// log() << "VARPHI->m["<<ij<<"]="<< VARPHI->m[ij][0] << "\n";
+// log() << "VARPHI->m["<<ij<<"]="<< VARPHI->m[ij][0] 
 				ij++;
 			}
 		}
@@ -750,17 +749,17 @@ void olsClass::updateY() {
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 void olsClass::estimate() {
-//log() << "ols estimate" << "\n";
+//log() << "ols estimate" 
 	matrix->multiplyABT(VARPHI,VARPHI,Rt); // P*VPY=THETA
 	matrix->add(R,Rt,R);
 	matrix->inverse(R,P);
-//log() <<"P:" << "\n"; matrix->log()Matrix(P);
+//log() <<"P:"  matrix->log()Matrix(P);
 
 	// updateY
 	updateY();
 
 	matrix->multiplyABT(VARPHI,Y,VPYt); // VARPHI*Y'=VPYt
-//log() <<"VPYt:" << "\n"; matrix->log()Matrix(VPYt);
+//log() <<"VPYt:"  matrix->log()Matrix(VPYt);
 
 	// update varphi
 	updateVARPHI();
@@ -769,7 +768,7 @@ void olsClass::estimate() {
 	matrix->add(VPY,VPYt,VPY); // VPY+VPYt=VPY
 	matrix->multiply(P,VPY,THETA); // P*VPY=THETA
 
-//log() <<"THETA:" << "\n"; matrix->log()Matrix(THETA);
+//log() <<"THETA:"  matrix->log()Matrix(THETA);
 
 //fatalError("olsClass","break");
 }
@@ -784,7 +783,7 @@ void olsClass::estimate() {
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 void olsClass::forecast() {
-//log() << "ols forecast" << "\n";
+//log() << "ols forecast" 
 	matrix->multiplyATB(THETA,VARPHI,YF); // Forecast
 	for(int j=0;j<y_num;j++)	// set forecast y_t+1
 		y[j] = YF->m[j][0];
@@ -799,9 +798,10 @@ void olsClass::forecast() {
 // Last Modified:   Marc Mueller                                              //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void olsClass::forecast2() {
-log() << "ols forecast2 not implemented yet - exit" << "\n";
-exit(-1);
+void olsClass::forecast2()
+{
+    log() << "ols forecast2 not implemented yet - exit";
+    exit(-1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -817,7 +817,7 @@ exit(-1);
 rlsClass::rlsClass( qreal* y0,int& y_num0,int& varphi_var_num0,
                     qreal** varphi0, int* varphi_numPtr0 )
 	: olsClass::olsClass( y0,y_num0,varphi_var_num0,varphi0,varphi_numPtr0) {
-//log() << "rls constructor" << "\n";
+//log() << "rls constructor" 
 	Pvarphi = NULL;	
 	VtP = NULL;
 	vPv = NULL;
@@ -825,9 +825,9 @@ rlsClass::rlsClass( qreal* y0,int& y_num0,int& varphi_var_num0,
 	PEC = NULL;
 	alpha=1000000;
 }
-rlsClass::rlsClass(QDataStream& inFile,baseModel* const model)
+rlsClass::rlsClass(QTextStream& inFile,baseModel* const model)
 	: olsClass::olsClass(inFile,model) {
-//log() << "rls constructor stream" << "\n";
+//log() << "rls constructor stream" 
 	Pvarphi = NULL;	
 	VtP = NULL;
 	vPv = NULL;
@@ -844,7 +844,7 @@ rlsClass::rlsClass(QDataStream& inFile,baseModel* const model)
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 rlsClass::~rlsClass() {
-//log() << "rls destructor" << "\n";
+//log() << "rls destructor" 
 	if( Pvarphi ) delete Pvarphi;
 	if( VtP ) delete VtP;
 	if( vPv ) delete vPv;
@@ -864,16 +864,16 @@ rlsClass::~rlsClass() {
 ///////////////////////////////////////////////////////////////////////////////
 void rlsClass::initialize() {
 
-//log() << "rls init 1" << "\n";
+//log() << "rls init 1" 
 	olsClass::initialize();
-//log() << "rls init 2" << "\n";
+//log() << "rls init 2" 
 	int i,j;
 
 // initialize matrix THETA
 	for(i=0; i<varphi_num; i++)
 		for(j=0;j<y_num;j++)
 			THETA->m[i][j]=0;
-    //log() <<"THETA:" << "\n"; matrix->log()Matrix(THETA);
+    //log() <<"THETA:"  matrix->log()Matrix(THETA);
 
 // VARPHI is already initialized in olsClass::initialize
 
@@ -883,21 +883,21 @@ void rlsClass::initialize() {
 			P->m[i][j]=0;
 		P->m[i][i]=alpha;
 	}
-//log() <<"P:" << "\n"; matrix->log()Matrix(P);
+//log() <<"P:"  matrix->log()Matrix(P);
 
 // initialize scalar lambda
 	Pvarphi= new matrixDef(varphi_num,1);
 	if( !Pvarphi )
 		fatalError("rlsClass::initialize ","Pvarphi break");
 	matrix->multiply(P,VARPHI,Pvarphi); // P*VARPHI=Pvarphi
-    //log() <<"Pvarphi:" << "\n"; matrix->log()Matrix(Pvarphi);
+    //log() <<"Pvarphi:"  matrix->log()Matrix(Pvarphi);
 	vPv= new matrixDef(1,1);
 	if( !vPv )
 		fatalError("rlsClass::initialize ","vPv break");
 	matrix->multiplyATB(VARPHI,Pvarphi,vPv); // VARPHI'*Pvarphi=vPv
 	lambda= 1/ ( 1 + vPv->m[0][0] ) ;
-    //log() <<"vPv:" << "\n"; matrix->log()Matrix(vPv);
-    //log() <<"lambda=" << lambda<< "\n";
+    //log() <<"vPv:"  matrix->log()Matrix(vPv);
+    //log() <<"lambda=" << lambda
 
 // build matrix ThetaErrorCorrection
 	TEC = new matrixDef(varphi_num,y_num);
@@ -914,12 +914,12 @@ void rlsClass::initialize() {
 	if( !PEC )
 		fatalError("rlsClass::initialize ","PEC break");
 
-// log() <<"THETA:" << "\n"; matrix->log()Matrix(THETA);
-// log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
-// log() <<"P:" << "\n"; matrix->log()Matrix(P);
-// log() <<"Pvarphi:" << "\n"; matrix->log()Matrix(Pvarphi);
-// log() <<"vPv:" << "\n"; matrix->log()Matrix(vPv);
-// log() <<"lambda=" << lambda<< "\n";
+// log() <<"THETA:"  matrix->log()Matrix(THETA);
+// log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
+// log() <<"P:"  matrix->log()Matrix(P);
+// log() <<"Pvarphi:"  matrix->log()Matrix(Pvarphi);
+// log() <<"vPv:"  matrix->log()Matrix(vPv);
+// log() <<"lambda=" << lambda
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -932,7 +932,7 @@ void rlsClass::initialize() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void rlsClass::estimate() {
-//log() << "rls estimate" << "\n";
+//log() << "rls estimate" 
 
 // compute THETA recursive
 	matrix->multiplyATB(THETA,VARPHI,YF); //  THETA'*VARPHI=YF Forecast for this period
@@ -941,34 +941,34 @@ void rlsClass::estimate() {
 	matrix->multiplyScalar(lambda,Pvarphi,Pvarphi);
 	matrix->multiplyABT(Pvarphi,FE,TEC); //  
 	matrix->add(THETA,TEC,THETA); //  THETA+TEC=THETA
-// log() <<"YF:" << "\n"; matrix->log()Matrix(YF);
-// log() <<"Y:" << "\n"; matrix->log()Matrix(Y);
-// log() <<"FE" << "\n"; matrix->log()Matrix(FE);
-// log() <<"lambda*Pvarphi:" << "\n"; matrix->log()Matrix(Pvarphi);
-// log() <<"TEC:" << "\n"; matrix->log()Matrix(TEC);
-// log() <<"THETA:" << "\n"; matrix->log()Matrix(THETA);
+// log() <<"YF:"  matrix->log()Matrix(YF);
+// log() <<"Y:"  matrix->log()Matrix(Y);
+// log() <<"FE"  matrix->log()Matrix(FE);
+// log() <<"lambda*Pvarphi:"  matrix->log()Matrix(Pvarphi);
+// log() <<"TEC:"  matrix->log()Matrix(TEC);
+// log() <<"THETA:"  matrix->log()Matrix(THETA);
 
 // update P recursive
 	matrix->multiplyATB(VARPHI,P,VtP); // VARPHI'*P=VtP 
 	matrix->multiply(Pvarphi,VtP,PEC); 
 	//multiplyScalar lambda on PEC is already done before in Pvarphi
 	matrix->subtract(P,PEC,P);
-// log() <<"VtP:" << "\n"; matrix->log()Matrix(VtP);
-// log() <<"PEC:" << "\n"; matrix->log()Matrix(PEC);
-// log() <<"P:" << "\n"; matrix->log()Matrix(P);
+// log() <<"VtP:"  matrix->log()Matrix(VtP);
+// log() <<"PEC:"  matrix->log()Matrix(PEC);
+// log() <<"P:"  matrix->log()Matrix(P);
 
 // update VARPHI
 	updateVARPHI();
-// log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
+// log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
 
 // update lambda
 	matrix->multiply(P,VARPHI,Pvarphi); // P*VARPHI=Pvarphi
 	matrix->multiplyATB(VARPHI,Pvarphi,vPv); // VARPHI'*Pvarphi=vPv
 	lambda= 1/ ( 1 + vPv->m[0][0] ) ;
-// log() <<"Pvarphi:" << "\n"; matrix->log()Matrix(Pvarphi);
-// log() <<"vPv:" << "\n"; matrix->log()Matrix(vPv);
-// log() <<"lambda=" << lambda<< "\n";
-// log() <<"lambda*P=" << lambda*P->m[0][0]<< "\n";
+// log() <<"Pvarphi:"  matrix->log()Matrix(Pvarphi);
+// log() <<"vPv:"  matrix->log()Matrix(vPv);
+// log() <<"lambda=" << lambda
+// log() <<"lambda*P=" << lambda*P->m[0][0]
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -981,7 +981,7 @@ void rlsClass::estimate() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void rlsClass::forecast2() {
-log() << "rls forecast2" << "\n";
+    log() << "rls forecast2";
 
 // Forecast y_{t+1}
 	matrix->multiplyATB(THETA,VARPHI,YF); // Forecast y_{t+1}
@@ -1026,14 +1026,14 @@ elsClass::elsClass( qreal* y0,int& y_num0,int& varphi_var_num0,
 	: rlsClass::rlsClass( y0,y_num0,varphi_var_num0,varphi0,varphi_numPtr0) {
 // remark : given vectors must already include space for upsilon in varphi !!!
 //          and full data in varphi_numPtr,varphi_lagPtr !!!
-//log() << "els constructor" << "\n";
+//log() << "els constructor" 
 	TV = NULL;	
 	upsilon = NULL;
 }
 
-elsClass::elsClass(QDataStream& inFile,baseModel* const model)
+elsClass::elsClass(QTextStream& inFile,baseModel* const model)
 	: rlsClass::rlsClass(inFile,model) {
-//log() << "els constructor stream" << "\n";
+//log() << "els constructor stream" 
 	TV = NULL;	
 	upsilon = NULL;
 // remark: variable varphi_var_num = number of pointers
@@ -1069,7 +1069,7 @@ elsClass::elsClass(QDataStream& inFile,baseModel* const model)
 //
 ////////////////////////////////////////////////////////////////////////////////
 elsClass::~elsClass() {
-//log() << "els destructor" << "\n";
+//log() << "els destructor" 
 	if( TV ) delete TV;
 	if( upsilon ) delete upsilon;
 }
@@ -1103,9 +1103,9 @@ void elsClass::initialize() {
 	if(upsilonLag>0)
 		varphi[varphi_var_num-1] = upsilon; // others come from model->setLabels(varname);
 
-//log() << "els init 1" << "\n";
+//log() << "els init 1" 
 	rlsClass::initialize(); // all other matricies will be build in memory
-//log() << "els init 2" << "\n";
+//log() << "els init 2" 
 
 }
 
@@ -1136,11 +1136,11 @@ void elsClass::estimate() {
 	matrix->multiplyATB(THETA,VARPHI,TV); //  THETA'*VARPHI=TV
 	for(int j=0;j<y_num;j++) // upsilon_num is defined as y_num
 		upsilon[j]=Y->m[j][0] - TV->m[j][0];
-//for(j=0;j<y_num;j++) log() <<"upsilon["<<j<<"]="<<upsilon[j];log() << "\n";
+//for(j=0;j<y_num;j++) log() <<"upsilon["<<j<<"]="<<upsilon[j];log() 
 
 // update VARPHI 
 	updateVARPHI();
-//log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
+//log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
 
 // compute lambda
 	matrix->multiply(P,VARPHI,Pvarphi); // P*VARPHI=Pvarphi
@@ -1158,7 +1158,7 @@ void elsClass::estimate() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void elsClass::forecast2() {
-//log() << "els forecast2" << "\n";
+//log() << "els forecast2" 
 	int i,j,jj,ij;
 
 // Forecast y_{t+1}
@@ -1212,16 +1212,16 @@ sgClass::sgClass( qreal* y0,int& y_num0,int& varphi_var_num0,
 	: elsClass::elsClass( y0,y_num0,varphi_var_num0,varphi0,varphi_numPtr0) {
 // remark : given vectors must already include space for upsilon in varphi !!!
 //          and full data in varphi_numPtr,varphi_lagPtr !!!
-//log() << "sg constructor" << "\n";
+//log() << "sg constructor" 
 	B = NULL;
 	BI = NULL;
 	ye = NULL;
 	Kiid = NULL;
 }
 
-sgClass::sgClass(QDataStream& inFile,baseModel* const model)
+sgClass::sgClass(QTextStream& inFile,baseModel* const model)
 	: elsClass::elsClass(inFile,model) {
-//log() << "sg constructor stream" << "\n";
+//log() << "sg constructor stream" 
 	B = NULL;
 	BI = NULL;
 	ye = NULL;
@@ -1239,7 +1239,7 @@ sgClass::sgClass(QDataStream& inFile,baseModel* const model)
 //
 ////////////////////////////////////////////////////////////////////////////////
 sgClass::~sgClass() {
-//log() << "sg destructor" << "\n";
+//log() << "sg destructor" 
 
 	if( B ) delete B;
 	if( BI ) delete BI;
@@ -1264,20 +1264,20 @@ sgClass::~sgClass() {
 ///////////////////////////////////////////////////////////////////////////////
 void sgClass::initialize() {
 
-//log() << "sg init 1" << "\n";
+//log() << "sg init 1" 
 	elsClass::initialize();
-//log() << "sg init 2" << "\n";
+//log() << "sg init 2" 
 
 //	matrix->multiplyATB(VARPHI,VARPHI,vPv); // VARPHI' * VARPHI = vPv
 	r = 1 ;//+ vPv->m[0][0] ;
 
 	upsilonStart=-1; // idea: upsilon in period 1 is still 0 !!!
 
-//log() <<"THETA:" << "\n"; matrix->log()Matrix(THETA);
-//for(int j=0;j<y_num;j++) log() <<"upsilon["<<j<<"]="<<upsilon[j];log() << "\n";
-//log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
-//log() << "r=" << r << "\n";
-//log() << "alpha=" << alpha << "\n";
+//log() <<"THETA:"  matrix->log()Matrix(THETA);
+//for(int j=0;j<y_num;j++) log() <<"upsilon["<<j<<"]="<<upsilon[j];log() 
+//log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
+//log() << "r=" << r 
+//log() << "alpha=" << alpha 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1293,7 +1293,7 @@ void sgClass::initialize() {
 ///////////////////////////////////////////////////////////////////////////////
 void sgClass::initializeUnbiasedForecast(const qreal& sigma,const qreal& epsilon,
                      qreal* p3, const qreal* start) {
-//log() << "sg initializeUnbiasedForecast" << "\n";
+//log() << "sg initializeUnbiasedForecast" 
 	int i,j,ij,ii,jj;
 
 	//   y^e_Init must be in position 2 in varphi and lag must be >= 1 !!!
@@ -1306,16 +1306,16 @@ void sgClass::initializeUnbiasedForecast(const qreal& sigma,const qreal& epsilon
 		bKiid=0;
 	 else	{ 	// not
 		bKiid=1;
-		int lagMax=0;
+        int lagqMax=0;
 		for(i=0;i<varphi_var_num;i++)
-			lagMax=MAX(lagMax,varphi_lagPtr[i]);
+            lagqMax = qMax(lagqMax,varphi_lagPtr[i]);
 		if(upsilonLag>0)
-			lagMax=MAX(lagMax,(upsilonLag+1));
-        //log() << "lagMax=" << lagMax << "\n";
+            lagqMax = qMax(lagqMax,(upsilonLag+1));
+        //log() << "lagqMax=" << lagqMax 
 
-        qreal epsval=1.0/(4.0*(y_num+2)*lagMax);
+        qreal epsval=1.0/(4.0*(y_num+2)*lagqMax);
 		if(epsilon > epsval ) {
-            log()  <<"epsilon="<<epsilon<<" > "<< epsval << "\n";
+            log()  <<"epsilon="<<epsilon<<" > "<< epsval;
 			fatalError("sgClass::initializeUnbiasedForecast ","epsilon too high");
 		}
         //log()  <<"epsilon="<<epsilon<<" <= "<<epsval<<"\n";
@@ -1362,7 +1362,7 @@ void sgClass::initializeUnbiasedForecast(const qreal& sigma,const qreal& epsilon
 			ij++;
 		}
 	}
-    //log() <<"sgClass::initializeUnbiasedForecast VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
+    //log() <<"sgClass::initializeUnbiasedForecast VARPHI:"  matrix->log()Matrix(VARPHI);
 
     ye = new qreal[y_num];
 	if( !ye )
@@ -1387,7 +1387,7 @@ void sgClass::initializeUnbiasedForecast(const qreal& sigma,const qreal& epsilon
 		for(j=0;j<y_num;j++)  
 			THETA->m[ij+j][j]=1; // this makes computation of forecast work
 	}// end start values
-//log() <<"initunbF  THETA:" << "\n"; matrix->log()Matrix(THETA);
+//log() <<"initunbF  THETA:"  matrix->log()Matrix(THETA);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1409,7 +1409,7 @@ void sgClass::estimate() {
 // compute r (can not be done after update VARPHI, because of unbiased forecast!!!)
 	matrix->multiplyATB(VARPHI,VARPHI,vPv); // VARPHI' * VARPHI = vPv
 	r+= vPv->m[0][0] ;
-//log() << "r=" << r << "\n";
+//log() << "r=" << r 
 	matrix->multiplyScalar(alpha/r,VARPHI,Pvarphi);
 	matrix->multiplyABT(Pvarphi,FE,TEC); //  
 	matrix->add(THETA,TEC,THETA); //  THETA+TEC=THETA
@@ -1421,11 +1421,11 @@ void sgClass::estimate() {
 		for(j=0;j<y_num;j++) // upsilon_num is defined as y_num
 			upsilon[j]=FE->m[j][0];
 
-//for(j=0;j<y_num;j++) log() <<"upsilon["<<j<<"]="<<upsilon[j];log() << "\n";
+//for(j=0;j<y_num;j++) log() <<"upsilon["<<j<<"]="<<upsilon[j];log() 
 
 // update VARPHI 
 	updateVARPHI();
-//log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
+//log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1438,7 +1438,7 @@ void sgClass::estimate() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void sgClass::unbiasedForecast(int fp) {
-//log() << "sg unbiasedForecast" << "\n";
+//log() << "sg unbiasedForecast" 
 /*
 qreal R=1.01 ;
 qreal a=0.65 ;
@@ -1462,35 +1462,35 @@ THETA->m[4][0]=-tau1x/R;
 		YF->m[i][0]=VARPHI->m[ij+i][0]; // save first ye
 		VARPHI->m[ij+i][0]=0; // set first null
 	}
-//log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
-//log() <<"yeSav:" << "\n"; matrix->log()Matrix(YF);
+//log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
+//log() <<"yeSav:"  matrix->log()Matrix(YF);
 
 	for(i=0;i<y_num;i++)
 		for(j=0;j<y_num;j++)
 			B->m[j][i]=THETA->m[i+ij][j]; // copy B1 from THETA into dummy B
-//log() <<"B:" << "\n"; matrix->log()Matrix(B);
+//log() <<"B:"  matrix->log()Matrix(B);
 
 	matrix->inverse(B,BI); // BI=B^-1
-//log() <<"BI:" << "\n"; matrix->log()Matrix(BI);
+//log() <<"BI:"  matrix->log()Matrix(BI);
 
 	if(tPointer) {
 		jj=ij+varphi_numPtr[1]*varphi_lagPtr[1]; // pos of divident
 		for(i=0;i<varphi_numPtr[2];i++)
 			VARPHI->m[jj+i][0]=tPointer[i];  // set in ediv
-//log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
+//log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
 		matrix->multiplyATB(THETA,VARPHI,FE);
 		for(i=0;i<varphi_numPtr[2];i++)
 			VARPHI->m[jj+i][0]=varphi[2][i]; // set in divident
-//log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
+//log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
 	}
 	else	matrix->multiplyATB(THETA,VARPHI,FE); // no tPointer
-//log() <<"FE:" << "\n"; matrix->log()Matrix(FE);
+//log() <<"FE:"  matrix->log()Matrix(FE);
 
 	matrix->subtract(YF,FE,FE); // FE = YF - FE  
-//log() <<"FE:" << "\n"; matrix->log()Matrix(FE);
+//log() <<"FE:"  matrix->log()Matrix(FE);
 
 	matrix->multiply(BI,FE,YF);// Forecast
-//log() <<"YF:" << "\n"; matrix->log()Matrix(YF);
+//log() <<"YF:"  matrix->log()Matrix(YF);
 
 	if(bKiid) {
 		ttime++;
@@ -1499,9 +1499,9 @@ THETA->m[4][0]=-tau1x/R;
 
 		for(j=0;j<y_num;j++) {	// copy newest forecast t+q into vector ye
 			b_t=( Kiid[j]->dice() );
-log() << 1/powTimeEps << "  "<< b_t;
-			b_t/=powTimeEps;
-log()  << "  " <<  b_t << "\n";
+            log() << 1/powTimeEps << "  "<< b_t;
+            b_t/=powTimeEps;
+            log()  << "  " <<  b_t;
 			ye[j] = YF->m[j][0] + b_t;
 		}
 	}
@@ -1511,7 +1511,7 @@ log()  << "  " <<  b_t << "\n";
 //  updating y^e_t+q in varphi (pos is ij) ,because it was unknown while updating in estimate part
 	for(j=0;j<y_num;j++)
 		VARPHI->m[ij+j][0]=ye[j];
-//log() <<"VARPHI:" << "\n"; matrix->log()Matrix(VARPHI);
+//log() <<"VARPHI:"  matrix->log()Matrix(VARPHI);
 // set in Forecast
 	jj=ij+y_num*(varphi_lagPtr[1]-fp); // pos of fp in y^e 
 	for(j=0;j<y_num;j++)

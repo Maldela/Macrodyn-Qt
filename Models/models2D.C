@@ -121,7 +121,7 @@ void models2D::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::loadParamset(QDataStream& inFile)
+void models2D::loadParamset(QTextStream& inFile)
 {
     inFile >> x0 >> y0;
     inFile >> alpha >> beta;
@@ -139,7 +139,7 @@ void models2D::loadParamset(QDataStream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::saveParamset(QDataStream& outFile)
+void models2D::saveParamset(QTextStream& outFile)
 {
     outFile << x0 << "\t" << y0 << "\t";
     outFile << alpha  << "\t" << beta << "\t";
@@ -157,9 +157,9 @@ void models2D::saveParamset(QDataStream& outFile)
 
 void models2D::printParamset()
 {
-    log() << x0 << "\t" << y0 << "\n";
-    log() << alpha << "\t" << beta << "\n";
-    log() << length << "\n";
+    log() << x0 << "\t" << y0;
+    log() << alpha << "\t" << beta;
+    log() << length;
 }
 
 /******************************************************************************/
@@ -197,12 +197,16 @@ void models2D::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::receiveParameters(const qreal* parameters)
+void models2D::receiveParameters(const QList<qreal>& parameters)
 {
-    x0=parameters[0];
-    y0=parameters[1];
-    alpha=parameters[2];
-    beta=parameters[3];
-    length=(qint64)(parameters[4]);
+    if (parameters.size() != 5) log() << "Wrong number of parameters!";
+    else
+    {
+        x0=parameters[0];
+        y0=parameters[1];
+        alpha=parameters[2];
+        beta=parameters[3];
+        length=(qint64)(parameters[4]);
+    }
 }
 

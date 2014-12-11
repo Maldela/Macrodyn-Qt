@@ -202,7 +202,7 @@ qreal normal_Distri::inverse(const qreal arg) const
 //  Purpose:          random value in R with normal probability distribution
 //                    Ratio method for normal deviates
 //                    A.J. Kinderman & J.F. Monahan 1976
-//                    see: D.E. Knuth Seminumerical Algorithm Vol. 2 Chap. 3.4.1
+//                    see: D.E. Knuth SeqMinumerical Algorithm Vol. 2 Chap. 3.4.1
 //
 //
 //  Created:          2001-12-08 (Achim Flammenkamp)

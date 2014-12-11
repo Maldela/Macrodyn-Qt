@@ -25,10 +25,10 @@
 timeSeriesSet::timeSeriesSet(baseModel* const bMod, const xyRange& axes, 
                 const QString& fileName, bool surf, qint64 res)
           :geometricJob(bMod,axes,NULL), xmin(axes.min[0])
-	  , xmax(axes.max[0]), ymin(axes.min[1]), ymax(axes.max[1]),
-	  zmin(res), zmax(axes.max[2]), surface(surf)
+          , xmax(axes.max[0]), ymin(axes.min[1]), ymax(axes.max[1]),
+                zmin(res), zmax(axes.max[2]), surface(surf)
 {
-    log() << "constructing time series set..."<<"\n";
+    log() << "constructing time series set...";
 
     xParam = model->setLabels(axes.label[0]);
 	if( !xParam )
@@ -41,9 +41,16 @@ timeSeriesSet::timeSeriesSet(baseModel* const bMod, const xyRange& axes,
         outFile.setFileName(fileName);
     else
         outFile.setFileName("data3D_timeseries.dat");
-    outFile.open(QFile::WriteOnly);
+    if (outFile.open(QFile::WriteOnly))
+    {
+        log() << "Opened file" << outFile.fileName();
+    }
+    else
+    {
+        log() << "Failed to open file" << outFile.fileName();
+    }
 
-	stepX=(xmax-xmin) / ymax;
+    stepX=(xmax-xmin) / ymax;
     limit=qint64(ymin);		// definiert den ersten Beobachtungszeitpunkt
     log() << zmin << " " ;
     log() << "finished\n" << "\n";
@@ -79,30 +86,30 @@ void timeSeriesSet::setStepX(const qreal& toSet)
 
 void timeSeriesSet::simulation()
 {
-    log() << "time series set simulation...\n";
+    log() << "time series set simulation...";
 	double fortschritt = 0;
-	double schritt = double(100/((xmax-xmin)/stepX));
-	qreal oldy, oldx;
+    double schritt = double(100/((xmax-xmin)/stepX));
+    qreal oldy, oldx;
     qint64 t;
 	model->initialize();
-    QDataStream stream(&outFile);
+    QTextStream stream(&outFile);
 	if ( surface==true ){
-		for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
-			fortschritt+=schritt;
-            log() << "\r" << fortschritt << "Prozent..." << "\n";
+        for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
+            fortschritt+=schritt;
+            log() << "\r" << fortschritt << "Prozent...";
 			model->initialize();
 			for(t=1;t<=length;t++) {
 				model->iteration(t);
-				if( (t >= limit) && ( t % zmin == 0 ) )  {
-                    stream << *xParam << "\t" << t << "\t" << *yParam << "\n";
+                if( (t >= limit) && ( t % zmin == 0 ) )  {
+                    stream << *xParam << "\t" << t << "\t" << *yParam;
 			        }
 			}
             stream << "\n";
 		}
 	} else {
-		for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
-			fortschritt+=schritt;
-            log() << "\r" << fortschritt << "Prozent..." << "\n";
+        for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX) {
+            fortschritt+=schritt;
+            log() << "\r" << fortschritt << "Prozent...";
 			model->iteration(1);
 			model->initialize();
 			for(t=1;t<=length;t++) {
@@ -110,13 +117,14 @@ void timeSeriesSet::simulation()
 				oldy=*yParam;	
 				model->iteration(t);
 				if( t >= limit )  {
-                    stream << oldx << "\t" << t-1 << "\t" << oldy << "\n";
-                    stream << *xParam << "\t" << t << "\t" << *yParam << "\n";
+                    stream << oldx << "\t" << t-1 << "\t" << oldy;
+                    stream << *xParam << "\t" << t << "\t" << *yParam;
                     stream << "\n" << "\n";
 			        }
 			}
 		}	
 	}
+    stream.flush();
 	outFile.close();
     log() << "done\n";
 }

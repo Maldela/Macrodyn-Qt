@@ -30,7 +30,7 @@ attractor_3d::attractor_3d(baseModel* const bMod,const xyRange& axes,
             :geometry3D(bMod,axes,graph),
              h(axes.min[0],axes.max[0],axes.res[0],
                axes.min[1],axes.max[1],axes.res[1],
-	       axes.min[2],axes.max[2],axes.res[2])
+               axes.min[2],axes.max[2],axes.res[2])
 {
 //    if( fileName )
 //	outFile.open(fileName,ios::out);
@@ -89,9 +89,9 @@ void attractor_3d::simulation()
   outFile.write((char*)&zmin, 8);
   outFile.write((char*)&zmax, 8);
   
-  log() << "xmin: " << xmin << "\txmax: " << xmax << "\n";
-  log() << "ymin: " << ymin << "\tymax: " << ymax << "\n";
-  log() << "zmin: " << zmin << "\tzmax: " << zmax << "\n";
+  log() << "xmin: " << xmin << "\txmax: " << xmax;
+  log() << "ymin: " << ymin << "\tymax: " << ymax;
+  log() << "zmin: " << zmin << "\tzmax: " << zmax;
   
   QTextStream stream(&outFile);
 
@@ -109,8 +109,8 @@ void attractor_3d::simulation()
   }
 
   h_max = double (h.get_max_hits());
-  log() << "h_max = " << h_max << "\n";
-  log() << "color step every " << h_max/94 << " hits in cell" << "\n";
+  log() << "h_max = " << h_max;
+  log() << "color step every " << h_max/94 << " hits in cell";
   if( h_max == 0 ) {
     h_max = 1;
   }
@@ -127,9 +127,9 @@ void attractor_3d::simulation()
 /*neu*/
 	
 	hitshilf=h(k,l,m);
-	hitpoint = hitshilf / h_max;
-	if (hitshilf==h_max)
-    log() << "maximal hitcounts at: "<< dx << " , " << dy << " , " << dz << "\n";
+    hitpoint = hitshilf / h_max;
+    if (hitshilf==h_max)
+    log() << "qMaximal hitcounts at: "<< dx << " , " << dy << " , " << dz;
 
 	if(hitpoint>0){
 /*		for(int i=0;i<=dummy2;i++){
@@ -138,12 +138,12 @@ void attractor_3d::simulation()
 			}
 		}*/
 		color=int (ceil (hitpoint*dummy2));
-//	    outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
+//	    outFile << dx << "\t" << dy << "\t" << hitpoint 
 	} else color=0;
 	
     if ( color>94 ) log() << "warning: color > 94\n";
-     //   outFile << dx << "\t" << dy << "\t" << hitpoint << "\n";
-    QDataStream(&outFile) << color;
+     //   outFile << dx << "\t" << dy << "\t" << hitpoint 
+    QTextStream(&outFile) << color;
 /*Ende neu*/
 
 
@@ -153,7 +153,7 @@ void attractor_3d::simulation()
 //      }
 
     }
-    //outFile << "\n";
+    //outFile 
   }
   }
   outFile.flush();

@@ -26,13 +26,13 @@ protected:
 	qreal	R;			// risk free rate of return
 	qreal	x_;			// fixed number of shares
 	qreal	c_a;			// consum of a
-	qreal	alpha,alphamin;		// risk aversion
+    qreal	alpha,alphaqMin;		// risk aversion
 	qreal	theta0,theta,thetaOld;	// price expectation
 	qreal	*thetaPtr;
 	qreal	thetaE,thetaDiff;	// error free theta
-	qreal	dmax,d,dOld,dmid;	// random dividend
+    qreal	dmax,d,dOld,dmid;	// random dividend
 	qreal	*dPtr;
-	qreal	p0,pmax,p,pOld,pmid;	// stockprice
+    qreal	p0,pqMax,p,pOld,pmid;	// stockprice
 	qreal	*pPtr;
 	qreal	MEP;			// 
 	qreal	eps,epsmid,avEps,relEps,avRelEps;// error function
@@ -57,8 +57,8 @@ public:
 	~EnRAss();
     qreal* setLabels(const QString&);
 	void initialize();
-	void loadParamset(QDataStream&);	
-	void saveParamsetWithNames(QDataStream&); 
+	void loadParamset(QTextStream&);	
+	void saveParamsetWithNames(QTextStream&); 
 //	void printParamset();
 	void sendStateSpace(int &,const qreal***);
 	void iteration(const qint64&);

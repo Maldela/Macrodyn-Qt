@@ -12,7 +12,7 @@
 
 #include "rSolow.h"
 #include "../error.h"
-#include "../strnchr.h"
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( a*k<b ? a*k+c : b+c );
   //
-  // expression:	min{a*k,b}+c
+  // expression:	qMin{a*k,b}+c
 }
 
 static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
@@ -671,7 +671,7 @@ void rSolow::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::read_sim(QDataStream& inFile, st_paramset *temp_paramset){
+void rSolow::read_sim(QTextStream& inFile, st_paramset *temp_paramset){
 
   int	i,j;			// Index
 
@@ -695,7 +695,7 @@ void rSolow::read_sim(QDataStream& inFile, st_paramset *temp_paramset){
     	inFile >> temp_paramset->z_0; 
       	
         i=0;
-        while(i<trans_x_Max) {
+        while(i<Trans_x_Max) {
 	      inFile >> temp_paramset->trans_x[i];
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	  if(temp_paramset->trans_x[i]==1) break;
@@ -703,9 +703,9 @@ void rSolow::read_sim(QDataStream& inFile, st_paramset *temp_paramset){
 	}
 	//printf("i=%i\n",i); 
  	
-        if(i==trans_x_Max)
+        if(i==Trans_x_Max)
 	  error("macrodyn::rSolow",
-	      "the number i of x[i] must be less trans_x_Max");
+          "the number i of x[i] must be less Trans_x_Max");
 
         // length of trans_a and trans_b = trans_x - 1
         for (int j=0;j<i;j++) {
@@ -771,7 +771,7 @@ void rSolow::read_sim(QDataStream& inFile, st_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::loadParamset(QDataStream& inFile){
+void rSolow::loadParamset(QTextStream& inFile){
     
     inFile >> k_0 ;    
     			  // read the starting point
@@ -824,7 +824,7 @@ qreal* rSolow::sendModelVar(void)
 void rSolow::sendParameters(int& ,qreal** )
 { error("macrodyn::rSolow::sendParameters is not implemented");
 }
-void rSolow::receiveParameters(const qreal* )
+void rSolow::receiveParameters(const QList<qreal>&)
 { error("macrodyn::rSolow::receiveParameters is not implemented");
 }
 
@@ -841,7 +841,7 @@ void rSolow::receiveParameters(const qreal* )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::save_st_Paramset(QDataStream& outFile, st_paramset *temp_paramset){
+void rSolow::save_st_Paramset(QTextStream& outFile, st_paramset *temp_paramset){
 
    int	i,j;			// Index
   
@@ -861,7 +861,7 @@ void rSolow::save_st_Paramset(QDataStream& outFile, st_paramset *temp_paramset){
     	outFile << temp_paramset->z_0 << "\t"; 
 	
         i=0;
-        while(i<trans_x_Max) {
+        while(i<Trans_x_Max) {
 	      outFile << temp_paramset->trans_x[i] << "\t";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
@@ -885,7 +885,6 @@ void rSolow::save_st_Paramset(QDataStream& outFile, st_paramset *temp_paramset){
           }
        break;
 	
-    outFile << "\n";  
     }
 
  }
@@ -903,11 +902,11 @@ void rSolow::save_st_Paramset(QDataStream& outFile, st_paramset *temp_paramset){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::saveParamset(QDataStream& outFile)
+void rSolow::saveParamset(QTextStream& outFile)
 
 {     
-    outFile << k_0 << "\n" ;				
-    outFile << pf_type << "\n";			
+    outFile << k_0 ;				
+    outFile << pf_type;
 
     save_st_Paramset(outFile,a_paramset);
  
@@ -923,10 +922,9 @@ void rSolow::saveParamset(QDataStream& outFile)
     
     save_st_Paramset(outFile,delta_p_paramset);
  
-    outFile << length << "\n";
+    outFile << length;
     
-    outFile << "\n";       
-    baseModel::saveParamset (outFile);
+    baseModel::saveParamset(outFile);
 }            	    
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -936,25 +934,25 @@ void rSolow::saveParamset(QDataStream& outFile)
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rSolow::saveParamsetWithNames(QDataStream& outFile)
+void rSolow::saveParamsetWithNames(QTextStream& outFile)
 {
-outFile << "rSolow:\n";
-outFile << "k_0 =" << k_0 << "\tpf_type =" << pf_type << "\n";
-outFile << "A Parameterset" << "\t";
-save_st_ParamsetWithNames(outFile,a_paramset);  
-outFile << "B Parameterset" << "\t";
-save_st_ParamsetWithNames(outFile,b_paramset);
-outFile << "C Parameterset" << "\t";
-save_st_ParamsetWithNames(outFile,c_paramset);
-outFile << "D Parameterset" << "\t";
-save_st_ParamsetWithNames(outFile,d_paramset);
-outFile << "n Parameterset" << "\t";
-save_st_ParamsetWithNames(outFile,n_paramset);
-outFile << "s Parameterset" << "\t";
-save_st_ParamsetWithNames(outFile,s_paramset);
-outFile << "delta Parameterset" << "\t";
-save_st_ParamsetWithNames(outFile,delta_p_paramset);
-outFile << "Length = " << length << "\n"; 
+    outFile << "rSolow:\n";
+    outFile << "k_0 =" << k_0 << "\tpf_type =" << pf_type;
+    outFile << "A Parameterset" << "\t";
+    save_st_ParamsetWithNames(outFile,a_paramset);
+    outFile << "B Parameterset" << "\t";
+    save_st_ParamsetWithNames(outFile,b_paramset);
+    outFile << "C Parameterset" << "\t";
+    save_st_ParamsetWithNames(outFile,c_paramset);
+    outFile << "D Parameterset" << "\t";
+    save_st_ParamsetWithNames(outFile,d_paramset);
+    outFile << "n Parameterset" << "\t";
+    save_st_ParamsetWithNames(outFile,n_paramset);
+    outFile << "s Parameterset" << "\t";
+    save_st_ParamsetWithNames(outFile,s_paramset);
+    outFile << "delta Parameterset" << "\t";
+    save_st_ParamsetWithNames(outFile,delta_p_paramset);
+    outFile << "Length = " << length;
 }
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -964,7 +962,7 @@ outFile << "Length = " << length << "\n";
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void rSolow::save_st_ParamsetWithNames(QDataStream& outFile, st_paramset *temp_paramset)
+void rSolow::save_st_ParamsetWithNames(QTextStream& outFile, st_paramset *temp_paramset)
 {
    int	i,j;			// Index
   	
@@ -984,7 +982,7 @@ void rSolow::save_st_ParamsetWithNames(QDataStream& outFile, st_paramset *temp_p
     	outFile <<  "z_0 = " << temp_paramset->z_0 << "\t"; 
 	
         i=0;
-        while(i<trans_x_Max) {
+        while(i<Trans_x_Max) {
 	      outFile << "trans_x = " << temp_paramset->trans_x[i] << "\t";
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
@@ -1008,9 +1006,7 @@ void rSolow::save_st_ParamsetWithNames(QDataStream& outFile, st_paramset *temp_p
           }
        break;
 	
-    outFile << "\n";  
     }
-  outFile << "\n";
 }
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -1028,47 +1024,43 @@ void rSolow::print_st_Paramset(st_paramset *temp_paramset){
 
     int	i,j;			// Index
       	
-      log() << temp_paramset->type << "\n";
+      log() << temp_paramset->type;
       
       switch  (temp_paramset->type) {
       case -1:
-    log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->z_0;
       break;
       case 0 :	
-        log() << temp_paramset->z_0 << "\n";
+        log() << temp_paramset->z_0;
       break;
 	
       case 1 :		
-    log() << temp_paramset->theta_type << "\n";
-    log() << temp_paramset->my << "\n";
-        log() << temp_paramset->z_0 << "\n";
+    log() << temp_paramset->theta_type;
+    log() << temp_paramset->my;
+        log() << temp_paramset->z_0;
 	
         i=0;
-        while(i<trans_x_Max) {
-          log() << temp_paramset->trans_x[i] << "\n";
+        while(i<Trans_x_Max) {
+          log() << temp_paramset->trans_x[i];
 	      //printf("x[%i]=%f\n",i,trans_x[i]); 
 	      if(temp_paramset->trans_x[i]==1) break;
 	      i++;
 	}
-       log() << "\n";
        for (int j=0;j<i;j++) {
-     log() << temp_paramset->trans_a[j] << "\n";
+     log() << temp_paramset->trans_a[j];
 	}
-    log() << "\n";
        for (int j=0;j<i;j++) {
-     log() << temp_paramset->trans_b[j] << "\n";
+     log() << temp_paramset->trans_b[j];
 	}
-        log() << "\n";
         break;
    
       case 2:
-        log() << temp_paramset->zvar_expr << "\n";
+        log() << temp_paramset->zvar_expr;
 	  if( temp_paramset->mc_flag == 1) {
-         log() << temp_paramset->mc_matrix << "\n";
+         log() << temp_paramset->mc_matrix;
           }
        break;
 	
-    log() << "\n";
     }
 
  }
@@ -1089,8 +1081,8 @@ void rSolow::print_st_Paramset(st_paramset *temp_paramset){
 void rSolow::printParamset()
 
 {     
-    log() << k_0 << "\n" ;
-    log() << pf_type << "\n";
+    log() << k_0 ;
+    log() << pf_type;
 
     print_st_Paramset(a_paramset);
  
@@ -1106,9 +1098,8 @@ void rSolow::printParamset()
     
     print_st_Paramset(delta_p_paramset);
  
-    log() << length << "\n";
+    log() << length;
     
-    log() << "\n";
     baseModel::printParamset();
 } 
 //*******************************************************************************   
@@ -1142,7 +1133,7 @@ void rSolow::printParamset()
 // Member function:	rSolow
 // Purpose:		constructor
 //
-// Author:		Michael Meyer & Stefan L ke
+// Author:		Michael Meyer & Stefan Lüke
 // Last modified:	Mon Mar 10 14:09:17 MET 1999
 // By:			Michael Meyer 
 //
@@ -1315,7 +1306,7 @@ qreal* RBC_delta_1::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_delta_1::loadParamset(QDataStream& inFile){
+void RBC_delta_1::loadParamset(QTextStream& inFile){
     
     inFile >> k_RBC_0 ;
     
@@ -1358,13 +1349,13 @@ void RBC_delta_1::loadParamset(QDataStream& inFile){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_delta_1::saveParamset(QDataStream& outFile)
+void RBC_delta_1::saveParamset(QTextStream& outFile)
 { 
-    outFile << k_RBC_0 << "\n" ;	
+    outFile << k_RBC_0 ;	
               
-    outFile << z_RBC_0 << "\n" ;
+    outFile << z_RBC_0 ;
 		
-    outFile << c_RBC_0 << "\n" ;		
+    outFile << c_RBC_0 ;		
     
     rSolow::save_st_Paramset(outFile,beta_paramset);
     
@@ -1376,10 +1367,8 @@ void RBC_delta_1::saveParamset(QDataStream& outFile)
     
     rSolow::save_st_Paramset(outFile,alpha_paramset);
     
-    outFile << length << "\n";
-    
-    outFile << "\n";  
-         
+    outFile << length;
+             
     baseModel::saveParamset (outFile);
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -1390,7 +1379,7 @@ void RBC_delta_1::saveParamset(QDataStream& outFile)
 // Last modified:                                                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-void RBC_delta_1::saveParamsetWithNames(QDataStream& outFile)
+void RBC_delta_1::saveParamsetWithNames(QTextStream& outFile)
 {
 outFile << "RBC_delta_1:\n";
 outFile << "k_RBC_0 =" << k_RBC_0 << "\tz_RBC_0 =" << z_RBC_0 << "\tc_RBC_0 =" << c_RBC_0 <<"\n";
@@ -1405,7 +1394,7 @@ rSolow::save_st_ParamsetWithNames(outFile,rho_paramset);
 outFile << "Epsilon Parameterset" << "\t";
 rSolow::save_st_ParamsetWithNames(outFile,epsilon_paramset);
 
-outFile << "Length = " << length << "\n"; 
+outFile << "Length = " << length;
 }
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -1423,11 +1412,11 @@ outFile << "Length = " << length << "\n";
 void RBC_delta_1::printParamset()
 {
    
-    log() << k_RBC_0 << "\n" ;
+    log() << k_RBC_0 ;
     
-    log() << z_RBC_0 << "\n" ;
+    log() << z_RBC_0 ;
 		
-    log() << c_RBC_0 << "\n" ;
+    log() << c_RBC_0 ;
 
     rSolow::print_st_Paramset(beta_paramset);
     
@@ -1439,9 +1428,7 @@ void RBC_delta_1::printParamset()
     
     rSolow::print_st_Paramset(alpha_paramset);
     
-    log() << length << "\n";
-    
-    log() << "\n";
-        
+    log() << length;
+            
     baseModel::printParamset();
 }

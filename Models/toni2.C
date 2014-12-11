@@ -58,14 +58,14 @@ void toni2::initialize()
     for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-        //log() << "k=" << k  << " wsum=" << wsum << "\n";
+        //log() << "k=" << k  << " wsum=" << wsum 
 	   }
     //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
+        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko 
 	   }
 }
 /******************************************************************************/
@@ -76,7 +76,7 @@ void toni2::initialize()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::loadParamset(QDataStream& inputFile)
+void toni2::loadParamset(QTextStream& inputFile)
 {
 
     inputFile >> gamma >> beta >> alpha >> w >> L0;
@@ -116,7 +116,7 @@ void toni2::loadParamset(QDataStream& inputFile)
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::saveParamset(QDataStream& outputFile)
+void toni2::saveParamset(QTextStream& outputFile)
 {
     outputFile << gamma << "\t" << beta << "\t" << alpha << "\t" << w << "\t";
     outputFile << L0 << "\t"<< length << "\t";
@@ -131,7 +131,7 @@ void toni2::saveParamset(QDataStream& outputFile)
 /* Last modified:   20.02.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::saveParamsetWithNames(QDataStream& outputFile)
+void toni2::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nModel Toni2\n";
     outputFile << "gamma = " << gamma << "\tbeta = " << beta << "\talpha = " << alpha ;
@@ -140,7 +140,6 @@ void toni2::saveParamsetWithNames(QDataStream& outputFile)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
     for (int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
-    outputFile << "\n";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -152,8 +151,8 @@ void toni2::saveParamsetWithNames(QDataStream& outputFile)
 /******************************************************************************/
 void toni2::printParamset()
 {
-    log() << gamma  << "\t" << beta << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
-    log() << length << "\n";
+    log() << gamma  << "\t" << beta << "\t" << alpha << "\t" << w << "\t" << L0;
+    log() << length;
     for(int k=0;k<=L;k++)
         log() << pp0[k] << "\t";
 }
@@ -192,7 +191,7 @@ void toni2::sendParameters(int& amount,qreal** parameters)
 /* Last modified:   30.01.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::receiveParameters(const qreal* parameters)
+void toni2::receiveParameters(const QList<qreal>& parameters)
 {
     gamma=parameters[0];
     beta=parameters[1];

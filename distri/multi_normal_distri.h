@@ -34,7 +34,7 @@ class multi_normal_Distri : public prob_Distri {
     private:
         uint  dim;
         qreal  *median, *lower_left, *inver, sqrt_det;
-        void compute_lowerleft_inverse_and_sqrt_of_determinate();
+        void compute_lowerleft_inverse_and_sqrt_of_deterqMinate();
 };
 
 #endif

@@ -34,7 +34,7 @@ finanzmarkt_JanE::finanzmarkt_JanE() : baseModel(2)
 	zvar2	= NULL;
 	zvar3	= NULL;
 	zvar4	= NULL;
-    log() << "Reached constructor in finanzmarkt_JanE" << "\n";
+    log() << "Reached constructor in finanzmarkt_JanE";
 
 	d = new matrix_neu(2,1);
 	if( !(d) )
@@ -219,7 +219,7 @@ finanzmarkt_JanE::finanzmarkt_JanE() : baseModel(2)
 
 finanzmarkt_JanE::~finanzmarkt_JanE()
 {
-    log() << "Reached destructor in finanzmarkt_JanE" << "\n";
+    log() << "Reached destructor in finanzmarkt_JanE";
 	if(zvar1) 		delete zvar1;
 	if(zvar2) 		delete zvar2;
 	if(zvar3) 		delete zvar3;
@@ -303,9 +303,9 @@ finanzmarkt_JanE::~finanzmarkt_JanE()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_JanE::loadParamset(QDataStream& inFile)
+void finanzmarkt_JanE::loadParamset(QTextStream& inFile)
 { 	
-
+    qDebug() << "load parameters";
 	inFile >> eta1_F_0 >> eta2_F_0 >> eta3_F_0;			//Gruppenanteile d. Fundamentalisten (Startwert)			
     inFile >> eta1_C_0 >> eta2_C_0 >> eta3_C_0;			//Gruppenanteile d. Chartisten (Startwert)		
 	inFile >>  alpha_1 >> alpha_2 >> alpha_3;		//Risikoparameter d.HH
@@ -342,14 +342,14 @@ void finanzmarkt_JanE::loadParamset(QDataStream& inFile)
    	if(delta>=1||delta<=-1)
 		fatalError("finanzmarkt_JanE::loadParameterset","invalid correlation-parameter");	
 		   	
-	inFile >> zetamin1 >> zetamax1 >> gamma1; //Parameterwerte fuer die 
+    inFile >> zetamin1 >> zetamax1 >> gamma1; //Parameterwerte fuer die
     inFile >> zetamin2 >> zetamax2 >> gamma2;  //Dividenenprozesse
 	inFile >> length;
 /*auskommentiert!!!
 if(zvar1) delete zvar1;
-	zvar1	=	new rand_var("ranf",1, zetamin1, zetamax1);
+    zvar1	=	new rand_var("ranf",1, zetamin1, zetamax1);
 if(zvar2) delete zvar2;
-	zvar2	=	new rand_var("ranf",1, zetamin2, zetamax2);
+    zvar2	=	new rand_var("ranf",1, zetamin2, zetamax2);
 */
 
 // ACHTUNG: HIER UMDREHEN FUER ALLE JOBS AUSSER BIFURCATIONEN!
@@ -433,8 +433,8 @@ void finanzmarkt_JanE::initialize()
 (*x_N)(1,0) = x_N2;
 
 //Startwert der Dividenden = unbedingter Mittelwert
-	d1 = ((zetamax1-zetamin1)/2)/(1-gamma1);	
-	d2 = ((zetamax2-zetamin2)/2)/(1-gamma2);
+    d1 = ((zetamax1-zetamin1)/2)/(1-gamma1);
+    d2 = ((zetamax2-zetamin2)/2)/(1-gamma2);
 	(*d)(0,0) = d1;
 	(*d)(1,0) = d2;
 
@@ -502,8 +502,8 @@ Ed2 = gamma1*d2;
 
 	//Berechnung der subjektiven VCV Matrizen: gleich unbedingter Varianz der Dividenden
 
-	var1 = ((zetamax1-zetamin1)*(zetamax1-zetamin1))/12;
-	var2 = ((zetamax2-zetamin2)*(zetamax2-zetamin2))/12;
+    var1 = ((zetamax1-zetamin1)*(zetamax1-zetamin1))/12;
+    var2 = ((zetamax2-zetamin2)*(zetamax2-zetamin2))/12;
 	(*V_F)(0,0)=var1;
 	(*V_F)(1,1)=var2;
 	(*V_F)(1,0)=0;
@@ -534,50 +534,50 @@ Ed2 = gamma1*d2;
 		(*q_MA[i]) = (*p);	
 
 /*	
-log() << "Parameterset"	<< "\n";
-log() <<	"eta1_F = " << eta1_F << "\n";
-log() <<	"eta2_F = " << eta2_F << "\n";
-log() << "eta3_F = " << eta3_F << "\n";
+log() << "Parameterset"	
+log() <<	"eta1_F = " << eta1_F 
+log() <<	"eta2_F = " << eta2_F 
+log() << "eta3_F = " << eta3_F 
 
-log() <<	"eta1_C = " << eta1_C << "\n";
-log() <<	"eta2_C = " << eta2_C << "\n";
-log() << "eta3_C = " << eta3_C << "\n";
+log() <<	"eta1_C = " << eta1_C 
+log() <<	"eta2_C = " << eta2_C 
+log() << "eta3_C = " << eta3_C 
 
-log() <<	"eta1_N = " << eta1_N << "\n";
-log() <<	"eta2_N = " << eta2_N << "\n";
-log() << "eta3_N = " << eta3_N << "\n";
+log() <<	"eta1_N = " << eta1_N 
+log() <<	"eta2_N = " << eta2_N 
+log() << "eta3_N = " << eta3_N 
 
-log() <<	"alpha_1 = " << alpha_1 << "\n";
-log() <<	"alpha_2 = " << alpha_2 << "\n";
-log() << "alpha_3 = " << alpha_3 << "\n";
+log() <<	"alpha_1 = " << alpha_1 
+log() <<	"alpha_2 = " << alpha_2 
+log() << "alpha_3 = " << alpha_3 
 
-log() <<	"beta_1 = " << beta_1 << "\n";
-log() <<	"beta_2 = " << beta_2 << "\n";
-log() << "beta_3 = " << beta_3 << "\n";
+log() <<	"beta_1 = " << beta_1 
+log() <<	"beta_2 = " << beta_2 
+log() << "beta_3 = " << beta_3 
 
-log() <<	"e_1 = " << e_1 << "\n";
-log() <<	"e_2 = " << e_2 << "\n";
-log() <<	"e_3 = " << e_3 << "\n";
+log() <<	"e_1 = " << e_1 
+log() <<	"e_2 = " << e_2 
+log() <<	"e_3 = " << e_3 
 
-log() <<	"sr_F = " << sr_F << "\n";
-log() <<	"sr_C = " << sr_C << "\n";
-log() <<	"sr_N = " << sr_N << "\n";
+log() <<	"sr_F = " << sr_F 
+log() <<	"sr_C = " << sr_C 
+log() <<	"sr_N = " << sr_N 
 
-log() <<	"a1 = " << a1 << "\n";
-log() <<	"b1 = " << b1 << "\n";
-log() <<	"c1 = " << c1 << "\n";
-log() <<	"a2 = " << a2 << "\n";
-log() <<	"b2 = " << b2 << "\n";
-log() <<	"c2 = " << c2 << "\n";
+log() <<	"a1 = " << a1 
+log() <<	"b1 = " << b1 
+log() <<	"c1 = " << c1 
+log() <<	"a2 = " << a2 
+log() <<	"b2 = " << b2 
+log() <<	"c2 = " << c2 
 
-log() <<	"r = " << r << "\n";
+log() <<	"r = " << r 
 */
 
 //Achtung: Jetzt in initialize(), vorher in loadParamset()
 if(zvar1) delete zvar1;
-	zvar1	=	new rand_var("ranf",1, zetamin1, zetamax1);
+    zvar1	=	new rand_var("ranf",1, zetamin1, zetamax1);
 if(zvar2) delete zvar2;
-	zvar2	=	new rand_var("ranf",1, zetamin2, zetamax2);
+    zvar2	=	new rand_var("ranf",1, zetamin2, zetamax2);
 if(zvar3) delete zvar3;
 	zvar3	=	new rand_var("ranf",1, 0, 1);
 if(zvar4) delete zvar4;
@@ -922,24 +922,24 @@ void finanzmarkt_JanE::iteration(const qint64& t)
 	//Ausgabe zur Kontrolle:
 
 /*	
-    log() << "sr_F =" << sr_F << "\n";
-    log() << "sr_C =" << sr_C << "\n";
-    log() << "sr_N =" << sr_N << "\n";
-    log() << "mu_F =" << mu_F << "\n";
-    log() << "mu_C =" << mu_C << "\n";
-    log() << "mu_N =" << mu_N << "\n";
-    log() << "sigma_F =" << sigma_F << "\n";
-    log() << "sigma_C =" << sigma_C << "\n";
-    log() << "sigma_N =" << sigma_N << "\n";
-    log() << "eta1_F =" << eta1_F << "\n";
-    log() << "eta2_F =" << eta2_F << "\n";
-    log() << "eta3_F =" << eta3_F << "\n";
-    log() << "eta1_C =" << eta1_C << "\n";
-    log() << "eta2_C =" << eta2_C << "\n";
-    log() << "eta3_C =" << eta3_C << "\n";
-    log() << "eta1_N =" << eta1_N << "\n";
-    log() << "eta2_N =" << eta2_N << "\n";
-    log() << "eta3_N =" << eta3_N << "\n";
+    log() << "sr_F =" << sr_F 
+    log() << "sr_C =" << sr_C 
+    log() << "sr_N =" << sr_N 
+    log() << "mu_F =" << mu_F 
+    log() << "mu_C =" << mu_C 
+    log() << "mu_N =" << mu_N 
+    log() << "sigma_F =" << sigma_F 
+    log() << "sigma_C =" << sigma_C 
+    log() << "sigma_N =" << sigma_N 
+    log() << "eta1_F =" << eta1_F 
+    log() << "eta2_F =" << eta2_F 
+    log() << "eta3_F =" << eta3_F 
+    log() << "eta1_C =" << eta1_C 
+    log() << "eta2_C =" << eta2_C 
+    log() << "eta3_C =" << eta3_C 
+    log() << "eta1_N =" << eta1_N 
+    log() << "eta2_N =" << eta2_N 
+    log() << "eta3_N =" << eta3_N 
 */
 
 }
@@ -1095,7 +1095,7 @@ qreal* finanzmarkt_JanE::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_JanE::saveParamset(QDataStream& outFile)
+void finanzmarkt_JanE::saveParamset(QTextStream& outFile)
 {	
 
 	outFile << eta1_F << eta2_F << eta3_F;
@@ -1120,8 +1120,8 @@ void finanzmarkt_JanE::saveParamset(QDataStream& outFile)
 	outFile << 	a2 << b2 << c2;
 	outFile << delta;
    	outFile << 	b_1 << b_2;
-	outFile << 	zetamin1 << zetamax1 << gamma1;
-   	outFile << 	zetamin2 << zetamax2 << gamma2;
+    outFile << 	zetamin1 << zetamax1 << gamma1;
+    outFile << 	zetamin2 << zetamax2 << gamma2;
 	outFile << 	length;
 
 }
@@ -1142,30 +1142,30 @@ void finanzmarkt_JanE::saveParamset(QDataStream& outFile)
 void finanzmarkt_JanE::printParamset()
 { 	
 	
-    log() << eta1_F << eta2_F << eta3_F << "\n";
-    log() << eta1_C << eta2_C << eta3_C << "\n";
-    log() <<  alpha_1 << alpha_2 << alpha_3 << "\n";
-    log() <<  beta_1 << beta_2 << beta_3 << "\n";
-    log() << e_1 << e_2 << e_3 << "\n";
-    log() << r << "\n";
-    log() << x_all1 << x_all2 << "\n";
+    log() << eta1_F << eta2_F << eta3_F;
+    log() << eta1_C << eta2_C << eta3_C;
+    log() <<  alpha_1 << alpha_2 << alpha_3;
+    log() <<  beta_1 << beta_2 << beta_3;
+    log() << e_1 << e_2 << e_3;
+    log() << r;
+    log() << x_all1 << x_all2;
     log() << zeta1_F << zeta2_F;
     log() << zeta1_C << zeta2_C;
     log() << zeta1_N << zeta2_N;
     log() << switch_F << switch_C << switch_N;
 	
 	for(int i=0;i<L;i++)
-        log() << (*Rho[i])(0,0) << "\n";
+        log() << (*Rho[i])(0,0);
     for(int i=0;i<2;i++)
-        log() << (*q0)(i,0) << "\n";
+        log() << (*q0)(i,0);
 	
-    log() << a1 << b1 << c1 << "\n";
-    log() << a2 << b2 << c2 << "\n";
-    log() << delta << "\n";
-    log() << b_1 << b_2 << "\n";
-    log() << zetamin1 << zetamax1 << gamma1 << "\n";
-    log() << zetamin2 << zetamax2 << gamma2 << "\n";
-    log() << length << "\n";
+    log() << a1 << b1 << c1;
+    log() << a2 << b2 << c2;
+    log() << delta;
+    log() << b_1 << b_2;
+    log() << zetamin1 << zetamax1 << gamma1;
+    log() << zetamin2 << zetamax2 << gamma2;
+    log() << length;
 
 }
 
@@ -1216,7 +1216,7 @@ qreal* finanzmarkt_JanE::sendModelVar(void)
 
 void finanzmarkt_JanE::sendParameters(int& amount ,qreal** parameters)
 { 
-   log() << "Warning: function sendParameters() is in use" << "\n";
+   log() << "Warning: function sendParameters() is in use";
    if( *parameters )
 	delete *parameters;
     amount=47;
@@ -1263,18 +1263,18 @@ void finanzmarkt_JanE::sendParameters(int& amount ,qreal** parameters)
 	(*parameters[37])=delta;
 	(*parameters[38])=b_1;
 	(*parameters[39])=b_2;
-	(*parameters[40])=zetamin1;
-	(*parameters[41])=zetamax1;
+    (*parameters[40])=zetamin1;
+    (*parameters[41])=zetamax1;
 	(*parameters[42])=gamma1;
-	(*parameters[43])=zetamin2;
-	(*parameters[44])=zetamax2;
+    (*parameters[43])=zetamin2;
+    (*parameters[44])=zetamax2;
 	(*parameters[45])=gamma2;
     (*parameters[46])=length;
 }
 
-void finanzmarkt_JanE::receiveParameters(const qreal* parameters)
+void finanzmarkt_JanE::receiveParameters(const QList<qreal>& parameters)
 {
-  log() << "Warning: function receiveParameters() is in use" << "\n";
+  log() << "Warning: function receiveParameters() is in use";
    eta1_F_0 = parameters[0];
    eta2_F_0 = parameters[1];
    eta3_F_0 = parameters[2];
@@ -1315,11 +1315,11 @@ void finanzmarkt_JanE::receiveParameters(const qreal* parameters)
 	delta	= parameters[37];
 	b_1 = parameters[38];
 	b_2 = parameters[39];
-	zetamin1 = parameters[40];
-	zetamax1 = parameters[41];
+    zetamin1 = parameters[40];
+    zetamax1 = parameters[41];
 	gamma1 	 = parameters[42];
-	zetamin2 = parameters[43];
-	zetamax2 = parameters[44];
+    zetamin2 = parameters[43];
+    zetamax2 = parameters[44];
 	gamma2 	 = parameters[45];
     length=(qint64)(parameters[46]);
 } 

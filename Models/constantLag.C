@@ -27,7 +27,7 @@
 
 qreal constantLag::expectedInflationRate(const qint64 t)
 {
-    qint64 T=MIN(t,tau);
+    qint64 T = qMin(t,tau);
     if( !tau )
 	return 1;
     return( theta[T-1] );

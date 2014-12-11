@@ -217,7 +217,7 @@ void milano_bcw::initialize() {	    // initialize the model
 }
 
 /******************************************************************************/
-void milano_bcw::loadParamset(QDataStream& inputFile) { // load parameterset from a file
+void milano_bcw::loadParamset(QTextStream& inputFile) { // load parameterset from a file
     inputFile >> a >> b;
     inputFile >> mu1 >> mu2 >> nu1 >> nu2;
     inputFile >> n1 >> length;
@@ -227,7 +227,7 @@ void milano_bcw::loadParamset(QDataStream& inputFile) { // load parameterset fro
 }
 
 /******************************************************************************/
-void milano_bcw::saveParamsetWithNames(QDataStream& outputFile) {  // add parametset to XPM printerfile
+void milano_bcw::saveParamsetWithNames(QTextStream& outputFile) {  // add parametset to XPM printerfile
     outputFile << "defaultModel:\n\t";
     outputFile << "a = " << a << "\tb = " << b << "\n\t";
     outputFile << "mu1 = " << mu1 << "\tmu2 = " << mu2 << "\t";
@@ -235,7 +235,7 @@ void milano_bcw::saveParamsetWithNames(QDataStream& outputFile) {  // add parame
     outputFile << "n1 = " << n1 << "\tlength = " << length << "\n\t";
     outputFile << "h = " << h << "\tpg0 = " << pg0 << "\t";
     outputFile << "alfa0 = " << alfa0 << "\tmqreal0 = " << mqreal0 << "\n\t";
-    outputFile << "Ls = " << Ls << "\tG = " << G << "\ttax = " << tax << "\n";
+    outputFile << "Ls = " << Ls << "\tG = " << G << "\ttax = " << tax;
 }
 
 /******************************************************************************/
@@ -261,5 +261,5 @@ void milano_bcw::iteration(const qint64&) {  // perform one iteration
 	K_emp=virtual_Kemployment();
 	l_dem=labour_demand();
 	diseq_regime(K_emp,l_dem);
-//log() << "teta1=" << teta1 << "\tunemp=" << unemp << "\n";
+//log() << "teta1=" << teta1 << "\tunemp=" << unemp 
 }

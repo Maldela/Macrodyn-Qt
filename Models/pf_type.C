@@ -136,7 +136,7 @@ static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal c, qreal )
 { return ( a*k<b ? a*k+c : b+c );
   //
-  // expression:	min{a*k,b}+c
+  // expression:	qMin{a*k,b}+c
 }
 
 static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )

@@ -13,7 +13,7 @@
 /******************************************************************************/
 /*                                                                            */
 /* Class name:    pacf_plot                                                    */
-/* Derived from:  geometric job                                               */
+/* Derived from:  geometric Job                                               */
 /* Purpose:       computes and draws a 2D acf diagram 			      */
 /*                							      */
 /* Author:        Andreas Starke                                              */
@@ -21,7 +21,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-class pacf_plot : public job {
+class pacf_plot : public Job {
   protected:
     qreal* ts_data;
     qint64 how_many,l_min,l_max;

@@ -49,7 +49,7 @@ protected:
     qreal m;			//
     qreal pi;
     
-    qreal beta10;		// initial values (nominal)
+    qreal beta10;		// initial values (noqMinal)
     qreal beta20;
     qreal z10;
     qreal z20;
@@ -71,8 +71,8 @@ public:
     Duopol();			// constructor
     virtual ~Duopol();		// destructor;
 
-    virtual void loadParamset(QDataStream&);	
-    virtual void saveParamset(QDataStream&);
+    virtual void loadParamset(QTextStream&);	
+    virtual void saveParamset(QTextStream&);
     virtual void printParamset();
     virtual void initialize();
     virtual void iteration(const qint64&);
@@ -83,7 +83,7 @@ public:
                                                 // array and return the numbers
 				                // of parameters
 
-    virtual void receiveParameters(const qreal*);// receive parameter values 
+    virtual void receiveParameters(const QList<qreal>&);// receive parameter values 
 };
 
 class Duopol2 : public Duopol {

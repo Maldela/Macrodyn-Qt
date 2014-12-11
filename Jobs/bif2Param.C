@@ -49,7 +49,7 @@ void bif2Param::simulation()
     qreal dummy_z;
 
     for(dummy_z=zmin;dummy_z<=zmax; dummy_z+=stepZ) {
-	for(dummy_x=xmin;dummy_x<=xmax;dummy_x+=stepX) {
+    for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
 	    *xParam = dummy_x;
 	    *zParam = dummy_z;
 	    model->initialize();

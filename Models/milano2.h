@@ -26,7 +26,7 @@ protected:
     qreal omikron1,omikron2;             // interest rate adjustment parameters
     qreal alfa0,mqreal0,pg0,rqreal0,z0;    // initial values                  
     qreal alfa,mqreal,pgt,rqreal,zt,mtr,wtr,rtr;       // wage, money stock, price, profit,interest,interest rate   
-    qreal Ls;                            // maximal aggregate labour supply
+    qreal Ls;                            // qMaximal aggregate labour supply
     qreal h;                             // utility function parameters
     qreal G,tax;                         // government demand, tax rate
     qreal empl;                          // actual employment
@@ -44,15 +44,15 @@ protected:
     qreal labour_demand();
     qreal mu_function(const qreal& mu, const qreal& epsilon, 
                      const qreal& b, const qreal& c);
-    qreal regfal(int max_iter, qreal start_left, qreal start_right,
+    qreal regfal(int qMax_iter, qreal start_left, qreal start_right,
                 qreal c); 
     void diseq_regime(const qreal&,const qreal&,const qreal&);
 public:
     milano2();
     virtual ~milano2();
   
-    void loadParamset(QDataStream&);	    // load parameterset from a file
-    void saveParamset(QDataStream&);	    // write parameterset into a file
+    void loadParamset(QTextStream&);	    // load parameterset from a file
+    void saveParamset(QTextStream&);	    // write parameterset into a file
     void printParamset();		    // print parameterset on the screen
     
     virtual void iteration(const qint64&);    // perform one iteration 
@@ -68,7 +68,7 @@ public:
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const qreal*); // receive parameter values 
+    void receiveParameters(const QList<qreal>&); // receive parameter values 
 };
 
 #endif

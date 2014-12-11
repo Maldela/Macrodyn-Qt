@@ -19,9 +19,9 @@
 
 geometry3D::geometry3D(baseModel* const bMod,const xyRange& axes,
                 MacrodynGraphicsItem* const graph)
-          :job(bMod,graph), xmin(axes.min[0]), xmax(axes.max[0]),
-	  ymin(axes.min[1]), ymax(axes.max[1]), zmin(axes.min[2]),
-	  zmax(axes.max[2])
+          :Job(bMod,graph), xmin(axes.min[0]), xmax(axes.max[0]),
+      ymin(axes.min[1]), ymax(axes.max[1]), zmin(axes.min[2]),
+      zmax(axes.max[2])
 {
     uint entries = (uint) (length < 103409 ? (length/2+1) : 103409);
     uint resX;
@@ -71,7 +71,7 @@ geometry3D::~geometry3D()
 /*                                                                            */
 /* Class name:      geometry3D                                                */
 /* Member function: inRange                                                   */
-/* Purpose:         determine wether the simulation results lay in the section*/
+/* Purpose:         deterqMine wether the simulation results lay in the section*/
 /*                  under consideration or not                                */
 /* Modified:        			                                      */
 /* Last modified:   			                                      */

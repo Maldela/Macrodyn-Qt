@@ -92,16 +92,14 @@ void density_1d::simulation()
       screenGraphics->setPoint(*xParam,d,color);
     }
   }
-  log() << "\n";				// this is for external usage
-  log() << "class width = " << stepX << "\n";
-  log() << "possible number of hits = " << length - limit << "\n";
+  log() << "class width = " << stepX;
+  log() << "possible number of hits = " << length - limit;
   for( k=0 ; k< h.get_x_res() ; k++) {
   // d=((double) h(k))/h.get_no_hits();
     d=((double) h(k))/double(length - limit);
     d=d/stepX;
     log() << "\t" << d;
   }
-  log() << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -205,8 +203,8 @@ density_1d_var::density_1d_var(baseModel* const bMod, xyRange & axes,
                       :density_1d_1p(bMod,axes,graph)
 {
 	var_res = axes.res[2]+1;
-    log() << "no. of runs: " << var_res << "\tT: " << length << "\n" << "\n";
-    log() << "z: " << zLabel << "\tzmin: " << zmin << "\tzmax: " << zmax << "\n" << "\n";
+    log() << "no. of runs: " << var_res << "\tT: " << length;
+    log() << "z: " << zLabel << "\tzmin: " << zmin << "\tzmax: " << zmax;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -232,8 +230,8 @@ void density_1d_var::simulation()
     n_axes->label[1] = "den";	// relabel the y-axis
 
 	// looping in for varying zParam
-	for ( *zParam=zmin, how_many=1; *zParam<=zmax; *zParam+=stepZ, how_many++ ){
-		model->initialize();		// run one simulation with a fixed
+    for ( *zParam=zmin, how_many=1; *zParam<=zmax; *zParam+=stepZ, how_many++ ){
+        model->initialize();		// run one simulation with a fixed
 		for(t=0;t<length;t++) {		// zParameter to T
 			model->iteration(t+1);
 		}
@@ -243,16 +241,15 @@ void density_1d_var::simulation()
             if ( how_many%(qint64(var_res/100))==0 ){
 				plot_current_data(how_many);
 				percent+=1;
-                log() << "percent: " << percent << "\n" << "\n";
+                log() << "percent: " << percent;
 			}
 			}
 	}
 	// make final picture and file
 	if ( screenGraphics ) plot_current_data(how_many);
 
-    log() << "\n";				// this is for external usage
-    log() << "class width = " << stepX << "\n";
-    log() << "possible number of hits = " << var_res << "\n";
+    log() << "class width = " << stepX;
+    log() << "possible number of hits = " << var_res;
 	int k;
 	double d;
 	double d_cum = 0;
@@ -262,9 +259,8 @@ void density_1d_var::simulation()
 		d_cum+=d;
 		d=d/stepX;		
         log() << "F(" << double(k)*stepX+xmin << ")= " << d_cum << "\t"
-        << "f()= " << d << "\n";
+        << "f()= " << d;
 	}
-    log() << "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -290,18 +286,18 @@ void density_1d_var::plot_current_data(qint64 how_many)
 	qreal d;
 	qreal y_plot;
 	
-	y_plot = double(h.get_max_hits()) / double(how_many);
+    y_plot = double(h.get_max_hits()) / double(how_many);
 // plotting pseudo density
 //	y_plot = y_plot/stepX*1.01;
 // plotting relative occurence
 	y_plot = y_plot*1.01;
 
-	n_axes->max[1] = y_plot;
+    n_axes->max[1] = y_plot;
 	
 	screenGraphics->reset(*n_axes);
 	
-	for( dummyx=xmin, k=0 ;dummyx<=xmax; dummyx+=stepX, k++) {
-		// d=((double) h(k))/h.get_no_hits();
+    for( dummyx=xmin, k=0 ;dummyx<=xmax; dummyx+=stepX, k++) {
+        // d=((double) h(k))/h.get_no_hits();
 		
 		// Introducing new density calculation for qreal probability
 		d= ((double) h(k))/double(how_many);
@@ -334,16 +330,16 @@ void density_1d_var::save_current_picture(qint64 how_many)
 	qreal d;
 	qreal y_plot;
 	
-	y_plot = double(h.get_max_hits()) / double(how_many);
+    y_plot = double(h.get_max_hits()) / double(how_many);
 // plotting pseudo density
 //	y_plot = y_plot/stepX*1.01;
 // plotting qrealtive occurence
 	y_plot = y_plot*1.01;
 	
-	n_axes->max[1] = y_plot;
+    n_axes->max[1] = y_plot;
 
-	for( dummyx=xmin, k=0 ; dummyx<=xmax; dummyx+=stepX, k++) {
-		// d=((double) h(k))/h.get_no_hits();
+    for( dummyx=xmin, k=0 ; dummyx<=xmax; dummyx+=stepX, k++) {
+        // d=((double) h(k))/h.get_no_hits();
 		
 		// Introducing new density calculation for qreal probability
 		d= ((double) h(k))/double(how_many);

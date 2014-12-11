@@ -157,7 +157,7 @@ void martin::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::loadParamset(QDataStream& inFile)
+void martin::loadParamset(QTextStream& inFile)
 {
     inFile >> beta0 >> k0 >> g0 >> p0;
     inFile >> theta >> rho;
@@ -176,7 +176,7 @@ void martin::loadParamset(QDataStream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::saveParamset(QDataStream& outFile)
+void martin::saveParamset(QTextStream& outFile)
 {
     outFile << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\t";
     outFile << theta  << "\t" << rho << "\t";
@@ -195,9 +195,9 @@ void martin::saveParamset(QDataStream& outFile)
 
 void martin::printParamset()
 {
-    log() << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\n";
-    log() << theta << "\t" << rho << "\n";
-    log() << length << "\n";
+    log() << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0;
+    log() << theta << "\t" << rho;
+    log() << length;
 }
 
 
@@ -239,7 +239,7 @@ void martin::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::receiveParameters(const qreal* parameters)
+void martin::receiveParameters(const QList<qreal>& parameters)
 {
     beta0=parameters[0];
     k0=parameters[1];
@@ -339,7 +339,7 @@ qreal* martin2::setLabels(const QString& label)
 /*                                                                            */
 /******************************************************************************/
 
-void martin2::loadParamset(QDataStream& inFile)
+void martin2::loadParamset(QTextStream& inFile)
 {
     inFile >> beta0 >> k0 >> g0 >> p0;
     inFile >> theta >> rho >> lambda;
@@ -358,7 +358,7 @@ void martin2::loadParamset(QDataStream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void martin2::saveParamset(QDataStream& outFile)
+void martin2::saveParamset(QTextStream& outFile)
 {
     outFile << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\t";
     outFile << theta  << "\t" << rho << "\t" << lambda << "\t";
@@ -377,9 +377,9 @@ void martin2::saveParamset(QDataStream& outFile)
 
 void martin2::printParamset()
 {
-    log() << beta0 << "\t" << k0 << "\t" << g0 << "\n";
-    log() << theta << "\t" << rho << "\t" << lambda << "\n";
-    log() << length << "\n";
+    log() << beta0 << "\t" << k0 << "\t" << g0;
+    log() << theta << "\t" << rho << "\t" << lambda;
+    log() << length;
 }
 
 
@@ -422,7 +422,7 @@ void martin2::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void martin2::receiveParameters(const qreal* parameters)
+void martin2::receiveParameters(const QList<qreal>& parameters)
 {
     beta0=parameters[0];
     k0=parameters[1];
@@ -509,7 +509,7 @@ qreal* martin4::setLabels(const QString& label)
 /*                                                                            */
 /******************************************************************************/
 
-void martin4::loadParamset(QDataStream& inFile)
+void martin4::loadParamset(QTextStream& inFile)
 {
     inFile >> beta0 >> k0 >> g0 >> p0;
     inFile >> theta >> rho >> lambda;
@@ -529,7 +529,7 @@ void martin4::loadParamset(QDataStream& inFile)
 /*                                                                            */
 /******************************************************************************/
 
-void martin4::saveParamset(QDataStream& outFile)
+void martin4::saveParamset(QTextStream& outFile)
 {
     outFile << beta0 << "\t" << k0 << "\t" << g0 << "\t" << p0 << "\t";
     outFile << theta  << "\t" << rho << "\t" << lambda << "\t";
@@ -549,10 +549,10 @@ void martin4::saveParamset(QDataStream& outFile)
 
 void martin4::printParamset()
 {
-    log() << beta0 << "\t" << k0 << "\t" << g0 << "\n";
-    log() << theta << "\t" << rho << "\t" << lambda << "\n";
-    log() << a << "\t" << b << "\t" << c << "\n";
-    log() << length << "\n";
+    log() << beta0 << "\t" << k0 << "\t" << g0;
+    log() << theta << "\t" << rho << "\t" << lambda;
+    log() << a << "\t" << b << "\t" << c;
+    log() << length;
 }
 
 
@@ -598,7 +598,7 @@ void martin4::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void martin4::receiveParameters(const qreal* parameters)
+void martin4::receiveParameters(const QList<qreal>& parameters)
 {
     beta0=parameters[0];
     k0=parameters[1];

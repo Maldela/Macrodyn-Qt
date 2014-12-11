@@ -1,5 +1,5 @@
-// File:	job.h
-// Contents:	definition of class job
+// File:	Job.h
+// Contents:	definition of class Job
 // Author:	Uli Middelberg
 // Creation:	Mon Oct 28 20:40:04 MEZ 1996
 // Modified:	Tue Oct 29 15:16:47 MEZ 1996
@@ -15,7 +15,7 @@
 /******************************************************************************/
 /*                                                                            */
 /* Class name:    mapping                                                     */
-/* Derived from:  job                                                         */
+/* Derived from:  Job                                                         */
 /* Purpose:       mapping of model for successive and complete analysis       */
 /*                			                                      */
 /* Author:        Andreas Starke                                              */
@@ -23,22 +23,22 @@
 /*                                                                            */
 /******************************************************************************/
 
-class mapping : public job
+class mapping : public Job
 {
   protected:
 	md_Map* m;
-	double lmin;
-	double lmax;
+    double lmin;
+    double Lmax;
 	int resolution;
 	int model_dim;
 	int time_limit;
-	char* name;
-	char* mother;
+    QString name;
+    QString mother;
 	
   public:
     mapping(baseModel * const, MacrodynGraphicsItem* const=NULL,
-    	double min=0, double max=0, int res=0, int dim=0, int tlim=0, char*
-	filename=NULL, char* mothermap=NULL);
+        double qMin=0, double qMax=0, int res=0, int dim=0, int tlim=0,
+    const QString& = "", const QString& = "");
     virtual ~mapping();
     
     void simulation();

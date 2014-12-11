@@ -158,7 +158,7 @@ void jan_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::loadParamset(QDataStream& inFile)
+void jan_model::loadParamset(QTextStream& inFile)
 {
     inFile >> x0 ;
     inFile >> alpha;
@@ -181,7 +181,7 @@ void jan_model::loadParamset(QDataStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::saveParamset(QDataStream& outFile)
+void jan_model::saveParamset(QTextStream& outFile)
 {
     outFile << x0 << "\t";
     outFile << alpha  << "\t";
@@ -204,10 +204,10 @@ void jan_model::saveParamset(QDataStream& outFile)
 
 void jan_model::printParamset()
 {
-    log() << x0 << "\n";
-    log() << alpha << "\n";
-    log() << delta << "\n";
-    log() << length << "\n";
+    log() << x0;
+    log() << alpha;
+    log() << delta;
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -251,7 +251,7 @@ void jan_model::sendParameters(int& amount,qreal** parameters)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::receiveParameters(const qreal* parameters)
+void jan_model::receiveParameters(const QList<qreal>& parameters)
 {
     x0=parameters[0];
     alpha=parameters[1];

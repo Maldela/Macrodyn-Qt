@@ -18,7 +18,7 @@
 /******************************************************************************/
 
 basinTwoCycles::basinTwoCycles(baseModel* const bMod,const xyRange& axes,
-			       char* const name1, char* const name2,
+                   const QString& name1, const QString& name2,
                    MacrodynGraphicsItem* const graph)
           :basin(bMod,axes,name1,graph)
 {
@@ -69,7 +69,7 @@ void basinTwoCycles::simulation()
 					// tends to the cycle
     const qreal **stateVars=NULL;      // pointer to the state vars.
 
-    int period= period1 > period2 ? period1: period2; // max(period1,period2);
+    int period= period1 > period2 ? period1: period2; // qMax(period1,period2);
 
 					// the algorithm is done in the same
 					// way as in the method 

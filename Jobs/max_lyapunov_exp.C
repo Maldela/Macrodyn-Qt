@@ -98,8 +98,8 @@ void max_lyapunov_exp_1d::simulation()
       }
     }
     evaluate();
-    l_min=MIN(l_min,l_exp);
-    l_max=MAX(l_max,l_exp);
+    l_min = qMin(l_min,l_exp);
+    l_max = qMax(l_max,l_exp);
     l_vals[l++]=l_exp;
   }
   l_min=floor(l_min);
@@ -180,13 +180,13 @@ void max_lyapunov_exp_2d::simulation()
     const qreal l_exp_eps=0.000001;
     qreal  l_exp_old;
     qreal  l_exp_diff = 0;
-  log() << "\nData-file for conversion to xpm-file" << "\n";
-  log() << "Format: y x z" << "\n";
-  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\t" << (xmax-xmin)/stepX << "\n";
-  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\t" << (ymax-ymin)/stepY << "\n";
-  log() << "\nSTART DATA NOW:" << "\n";
+  log() << "\nData-file for conversion to xpm-file";
+  log() << "Format: y x z";
+  log() << "xparam" << "\t"<< xmin << "\t"<< xmax << "\t" << (xmax-xmin)/stepX;
+  log() << "yparam" << "\t"<< ymin << "\t"<< ymax << "\t" << (ymax-ymin)/stepY;
+  log() << "\nSTART DATA NOW:";
  
- for( *yParam=ymax; *yParam>=(ymin-stepY/2) ;*yParam -= stepY) { 
+ for( *yParam=ymax; *yParam>=(ymin-stepY/2) ;*yParam -= stepY) {
     if (*yParam < ymin)
       *yParam = ymin;
     for( *xParam=xmin; *xParam<=(xmax+stepX/2) ;*xParam += stepX) {
@@ -214,7 +214,7 @@ void max_lyapunov_exp_2d::simulation()
       log() << *yParam << "\t" << *xParam << "\t" << l_exp <<  "\n";
     }  
   }
-   log() << "STOP DATA NOW\n" << "\n";
+   log() << "STOP DATA NOW\n";
 }
 
 int max_lyapunov_exp_2d::get_encoding( void ) {
@@ -281,8 +281,8 @@ void max_lyapunov_exp_t::simulation()
     if( t >= limit ) {
       update_sum();
       evaluate(t);
-      l_min=MIN(l_min,l_exp);
-      l_max=MAX(l_max,l_exp);
+      l_min = qMin(l_min,l_exp);
+      l_max = qMax(l_max,l_exp);
       l_vals[t]=l_exp;
     }
   }

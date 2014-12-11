@@ -131,7 +131,7 @@ static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal , qreal d)
 { return ( a*k<b ? a*k+d : b+d );
   //
-  // expression:	min{a*k,b}+c
+  // expression:	qMin{a*k,b}+c
 }
 
 static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
@@ -389,7 +389,7 @@ qreal* finanzmarkt_wage::setLabels(const QString& label)
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_wage::loadParamset(QDataStream& inFile)
+void finanzmarkt_wage::loadParamset(QTextStream& inFile)
 {
     inFile >> pf_type;
     inFile >> A_pf;
@@ -406,7 +406,7 @@ void finanzmarkt_wage::loadParamset(QDataStream& inFile)
 	
     inFile >> xAll;		//Gesamtzahl an Anteilsscheinen der Firma 1
     inFile >> p_0;		//Startwert fuer den Preis eines Anteilscheines der Firma 1
-    inFile >> zetamin >> zetamax >> gamma; //Parameterwerte fuer die 
+    inFile >> zetamin >> zetamax >> gamma; //Parameterwerte fuer die
     
     inFile >> var1err;		//Fehlerwerte, die die Noise--Trader auf die 
     inFile >> var2err;		//Werte der Kovarianzmatrix addieren, der 
@@ -420,6 +420,47 @@ void finanzmarkt_wage::loadParamset(QDataStream& inFile)
     inFile >>length;		//Iterationslaenge
 	
     initialize();  
+}
+
+void finanzmarkt_wage::receiveParameters(const QList<qreal> &parameters)
+{
+    if (parameters.size() != 23) log() << "Wrong number of parameters!";
+    else
+    {
+        pf_type = parameters.at(0);
+        A_pf = parameters.at(1);
+        B_pf = parameters.at(2);
+        C_pf = parameters.at(3);
+        D_pf = parameters.at(4);
+
+        n_F = parameters.at(5);
+        tau_F = parameters.at(6);
+        k_0 = parameters.at(7);
+
+        alpha = parameters.at(8);	//Risikoaversionsparameter eines Fundamentalisten
+        ef = parameters.at(9);
+
+        xAll = parameters.at(10);		//Gesamtzahl an Anteilsscheinen der Firma 1
+        p_0 = parameters.at(11);		//Startwert fuer den Preis eines Anteilscheines der Firma 1
+        zetamin = parameters.at(12);
+        zetamax = parameters.at(13);
+        gamma = parameters.at(14); //Parameterwerte fuer die
+
+        var1err = parameters.at(15);		//Fehlerwerte, die die Noise--Trader auf die
+        var2err = parameters.at(16);		//Werte der Kovarianzmatrix addieren, der
+        coerr = parameters.at(17);		//Fundamentalisten addieren
+
+        b1 = parameters.at(18);
+        c1 = parameters.at(19);	//Parameter fuer die Dreieicksverteilung,
+        b2 = parameters.at(20);
+        c2 = parameters.at(21);	//mit welcher die Fehleinschaetzung der
+                                //Noise--Trader modelliert wird	(in der Initialisierung wird
+                                //der untere Rand auf -b1 bzw.-b2 gestetzt)
+
+        length = parameters.at(22);		//Iterationslaenge
+
+        initialize();
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -439,12 +480,12 @@ void finanzmarkt_wage::initialize()
 	p1_old=p_0;		//Erstellen des Startvektors der alten Wertpapierpreise
 	pF01=p1;		//Erstellen des Startvektors fuer die Preisvorhersage
 	
-	zvar = new rand_var( "ranf",1,zetamin,zetamax);	
+    zvar = new rand_var( "ranf",1,zetamin,zetamax);
 	if( !(zvar) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
 	
-	div=((zetamax-zetamin)/2)/(1-gamma);
-	var=((zetamax-zetamin)*(zetamax-zetamin))/12; // ist konstant !	
+    div=((zetamax-zetamin)/2)/(1-gamma);
+    var=((zetamax-zetamin)*(zetamax-zetamin))/12; // ist konstant !
 	VF=var;	//Erstellen der Kovarianzmatrix der Fundamentalisten
 
 //b2=b1;
@@ -492,9 +533,9 @@ void finanzmarkt_wage::Savings()
 ///////////////////////////////////////////////////////////////////////////////
 void finanzmarkt_wage::wagerate()
 {
-qreal wagerate_max = MAX(0,Savings_t);
+qreal wagerate_max = qMax(0.0,Savings_t);
 
-	wagerate_t= (*pf)(wagerate_max,a,b,c,d)-wagerate_t*(*pf_prime)(wagerate_max,a,b,c,d);
+    wagerate_t= (*pf)(wagerate_max,a,b,c,d)-wagerate_t*(*pf_prime)(wagerate_max,a,b,c,d);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -505,7 +546,7 @@ qreal wagerate_max = MAX(0,Savings_t);
 
 void finanzmarkt_wage::EndogenR()
 {
-qreal dummy=MAX(0,Savings_t);
+qreal dummy = qMax(0.0,Savings_t);
 
 	R=(1-delta)+(*pf_prime)(dummy,a,b,c,d);
 }
@@ -536,10 +577,10 @@ void finanzmarkt_wage::SaveValue()
 ///////////////////////////////////////////////////////////////////////////////
 void finanzmarkt_wage::Dividende()
 {
-    Ed= gamma*gamma*div+(1+gamma)*((zetamax-zetamin)/2);	
+    Ed= gamma*gamma*div+(1+gamma)*((zetamax-zetamin)/2);
 	div=gamma * d + zvar->dice();
 	delta_d1=div-Ed;	           //fuer alternative Renditenberchnung
-	Ed= gamma * div + ((zetamax-zetamin)/2) ;
+    Ed= gamma * div + ((zetamax-zetamin)/2) ;
 	
 	D = div;
 
@@ -719,7 +760,7 @@ else {
 
 
 ///////////////////////////////////////////////////////////////////////////
-//Habenstand:  Anfangsaustattung minus Kosten der Risikoanlage
+//Habenstand:  Anfangsaustattung qMinus Kosten der Risikoanlage
 //			   Haben=e-px
 ///////////////////////////////////////////////////////////////////////////
 

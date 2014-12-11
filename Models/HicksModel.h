@@ -50,9 +50,9 @@ protected:
 public:
     HicksModel();			// constructor
     virtual ~HicksModel();		// destructor
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
-    void saveParamsetWithNames(QDataStream&);    
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
+    void saveParamsetWithNames(QTextStream&);    
     void printParamset();
     void iteration(const qint64&);
     void initialize();
@@ -63,7 +63,7 @@ public:
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const qreal*);// receive parameter values 
+    void receiveParameters(const QList<qreal>&);// receive parameter values 
 };
 
 #endif	

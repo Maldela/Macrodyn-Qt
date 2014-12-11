@@ -87,7 +87,7 @@ samuelson1::~samuelson1()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void samuelson1::loadParamset(QDataStream& inFile)
+void samuelson1::loadParamset(QTextStream& inFile)
 {
     inFile >> N;
     inFile >> x01;
@@ -405,7 +405,7 @@ for(;1;) {					// correct the value of pN
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void samuelson1::saveParamset(QDataStream& outFile)
+void samuelson1::saveParamset(QTextStream& outFile)
 {
     outFile << N << "\t";
     outFile << x01 << "\t";
@@ -436,9 +436,9 @@ void samuelson1::saveParamset(QDataStream& outFile)
 
 void samuelson1::printParamset()
 {
-    log() << N  << "\n";
-    log() << x01 << "\n";
-    log() << x02 << "\n";
+    log() << N;
+    log() << x01;
+    log() << x02;
 
     for(uint i=0; i<=N-1;i++) {
 		for(int j=0;j<=4;j++) {
@@ -446,7 +446,7 @@ void samuelson1::printParamset()
 		}	
 	}
 
-    log() << length << "\n";
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -495,6 +495,6 @@ qreal* samuelson1::sendModelVar(void)
 void samuelson1::sendParameters(int& ,qreal** )
 { error("macrodyn::samuelson1::sendParameters is not implemented");
 }
-void samuelson1::receiveParameters(const qreal* )
+void samuelson1::receiveParameters(const QList<qreal>&)
 { error("macrodyn::samuelson1::receiveParameters is not implemented");
 } 

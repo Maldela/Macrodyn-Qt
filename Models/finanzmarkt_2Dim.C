@@ -264,29 +264,29 @@ void finanzmarkt_2Dim::initialize()
 	Id->m[0][1]= 0;	
 	Id->m[1][1]= 1;
 	
-	zvar1 = new rand_var( "ranf",1,zetamin1,zetamax1 );	
+    zvar1 = new rand_var( "ranf",1,zetamin1,zetamax1 );
 	if( !(zvar1) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
-	zvar2 = new rand_var( "ranf",1,zetamin2,zetamax2 );	
+    zvar2 = new rand_var( "ranf",1,zetamin2,zetamax2 );
 	if( !(zvar2) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
-	zvar3 = new rand_var( "ranf",1,zetamin3,zetamax3 );	
+    zvar3 = new rand_var( "ranf",1,zetamin3,zetamax3 );
 	if( !(zvar3) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
-	zvar4 = new rand_var( "ranf",1,zetamin4,zetamax4 );	
+    zvar4 = new rand_var( "ranf",1,zetamin4,zetamax4 );
 	if( !(zvar4) )
 		fatalError("rand_var::initialize stoch_ar","can't create rand_var");
 	
 	
-	d1=((zetamax1-zetamin1)/2)/(1-gamma1);
-	var1=((zetamax1-zetamin1)*(zetamax1-zetamin1))/12; // ist konstant !
+    d1=((zetamax1-zetamin1)/2)/(1-gamma1);
+    var1=((zetamax1-zetamin1)*(zetamax1-zetamin1))/12; // ist konstant !
 	d1=gamma1*d1 + zvar1->dice();
-	Ed1= gamma1*d1 + ((zetamax1-zetamin1)/2);
+    Ed1= gamma1*d1 + ((zetamax1-zetamin1)/2);
 
-	d2=((zetamax2-zetamin2)/2)/(1-gamma2);
-	var2=((zetamax2-zetamin2)*(zetamax2-zetamin2))/12; // ist konstant !
+    d2=((zetamax2-zetamin2)/2)/(1-gamma2);
+    var2=((zetamax2-zetamin2)*(zetamax2-zetamin2))/12; // ist konstant !
 	d2=gamma2*d2 + zvar2->dice();
-	Ed2= gamma2*d2 + ((zetamax2-zetamin2)/2);
+    Ed2= gamma2*d2 + ((zetamax2-zetamin2)/2);
 
 
 //	rho1=((zetamax3-zetamin3)/2)/(1-gamma3);
@@ -330,8 +330,8 @@ void finanzmarkt_2Dim::initialize()
 
 //for(int j=0;j<=1;j++)	
 //{		
-//	log() << "A" << j << 0 << "=" << A->m[j][0] << "\n";
-//	log() << "A" << j << 1 << "=" << A->m[j][1] << "\n";
+//	log() << "A" << j << 0 << "=" << A->m[j][0] 
+//	log() << "A" << j << 1 << "=" << A->m[j][1] 
 //}
 
 //B=Id-A
@@ -358,7 +358,7 @@ void finanzmarkt_2Dim::initialize()
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim::loadParamset(QDataStream& inFile)
+void finanzmarkt_2Dim::loadParamset(QTextStream& inFile)
 {
     inFile >> R;  	//risikoloser Zins (1+r)>0
     inFile >> F;	//Anzahl Fundamentalisten
@@ -419,9 +419,9 @@ if(t>1)	{ //in Periode 1 werden die Startwerte genommen
 
 //Zufallsdividende:
 	d1=gamma1 * d1 + zvar1->dice();
-	Ed1= gamma1 * d1 + ((zetamax1-zetamin1)/2) ;
+    Ed1= gamma1 * d1 + ((zetamax1-zetamin1)/2) ;
 	d2=gamma2 * d2 + zvar2->dice();	
-	Ed2= gamma2 * d2 + ((zetamax2-zetamin2)/2) ;
+    Ed2= gamma2 * d2 + ((zetamax2-zetamin2)/2) ;
 
 	D->m[0][0]= d1;
 	D->m[1][0]= d2;

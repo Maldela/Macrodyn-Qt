@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import QtQuick.Dialogs 1.2
 import MacrodynQML 1.0
 
 ApplicationWindow {
@@ -13,15 +14,45 @@ ApplicationWindow {
         Menu {
             title: qsTr("File")
             MenuItem {
-                text: qsTr("&Open")
-                onTriggered: console.log("Open action triggered");
+                text: qsTr("Open simulation")
+                onTriggered: fileDialog.open();
             }
+            MenuItem {
+                text: qsTr("Run Simulation")
+                onTriggered: loader.runSimulation();
+            }
+            MenuItem {
+                text: "Print parameters"
+                onTriggered: loader.printModelParameters();
+            }
+
             MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
             }
         }
     }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a simulation"
+        modality: Qt.NonModal
+        nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
+        selectedNameFilter: "Macrodyn simulation"
+        onAccepted: {
+            loader.loadSimulationfromUrl(fileDialog.fileUrl);
+            close()
+        }
+        onRejected: {
+            close()
+        }
+    }
+
+    SimLoader {
+        id: loader
+        graphItem: graph
+    }
+
     MacrodynGraphicsItem {
         id: graph
         width: 392

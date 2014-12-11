@@ -22,7 +22,7 @@
 
 class stateSpaceAnalysis: public attractor {
   protected:
-    qreal maxCell;		        // number of cells in the state Space
+    qreal qMaxCell;		        // number of cells in the state Space
     const qreal **stateVars;
 
   public:

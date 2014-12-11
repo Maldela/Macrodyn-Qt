@@ -62,27 +62,27 @@ void hetoni::initialize()
     for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-        //log() << "k=" << k  << " wsum=" << wsum << "\n";
+        //log() << "k=" << k  << " wsum=" << wsum 
 	   }
     //qreal ko=0;
     for (int k=0;k<=Ls;k++)
 	   {
 		wwsum+=hoch(w,k);
-        //log() << "k=" << k  << " wsum=" << wsum << "\n";
+        //log() << "k=" << k  << " wsum=" << wsum 
 	   }
     //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
+        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko 
 	   }
 
     for(int i=0;i<=Ls;i++)
 	   {
 		vvs[i]=hoch(w,i)/wwsum;
 		//ko+=vv[i];
-        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
+        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko 
 	   }
 }
 /******************************************************************************/
@@ -93,7 +93,7 @@ void hetoni::initialize()
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::loadParamset(QDataStream& inputFile)
+void hetoni::loadParamset(QTextStream& inputFile)
 {
 
     inputFile >> a >> b >> alpha >> w >> L0 >> L1 >> shr;
@@ -141,7 +141,7 @@ void hetoni::loadParamset(QDataStream& inputFile)
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::saveParamset(QDataStream& outputFile)
+void hetoni::saveParamset(QTextStream& outputFile)
 {
     outputFile << a << "\t" << b << "\t" << alpha << "\t" << w << "\t";
     outputFile << L0 << "\t"<< L1 << "\t" << shr << "\t" << length << "\t";
@@ -156,7 +156,7 @@ void hetoni::saveParamset(QDataStream& outputFile)
 /* Last modified:   20.04.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::saveParamsetWithNames(QDataStream& outputFile)
+void hetoni::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nModel Hetoni\n";
     outputFile << "a = " << a << "\tb = " << b << "\talpha = " << alpha ;
@@ -166,7 +166,6 @@ void hetoni::saveParamsetWithNames(QDataStream& outputFile)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
     for (int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
-    outputFile << "\n";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -178,8 +177,8 @@ void hetoni::saveParamsetWithNames(QDataStream& outputFile)
 /******************************************************************************/
 void hetoni::printParamset()
 {
-    log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
-    log() << Ls << "\t" << shr << "\t" << length << "\n";
+    log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0;
+    log() << Ls << "\t" << shr << "\t" << length;
     for(int k=0;k<=L;k++)
         log() << pp0[k] << "\t";
 }
@@ -220,7 +219,7 @@ void hetoni::sendParameters(int& amount,qreal** parameters)
 /* Last modified:   20.04.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::receiveParameters(const qreal* parameters)
+void hetoni::receiveParameters(const QList<qreal>& parameters)
 {
     a=parameters[0];
     b=parameters[1];

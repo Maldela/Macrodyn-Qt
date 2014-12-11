@@ -156,7 +156,7 @@ qreal dorn::pexpBerechnung(const qint64 t)
     qreal sum=0.0;
     
     assert(t>0);
-    T=MIN(t,tau);
+    T = qMin(t,tau);
     for( counter=0; counter<T; counter++ )
       {
         sum += p[counter];
@@ -268,7 +268,7 @@ xtdy = (g+((Bt*d)/pt)+((Im*xt)/pt))*
 
 void dorn::production()
 {
-yt=MIN( MIN(ytf,ytz),xtdy );
+yt = qMin( qMin(ytf,ytz),xtdy );
 
 }
 
@@ -369,13 +369,13 @@ void dorn::pwBerechnung()
         if( ytf > ytz)
 	  {
             pt = pt *( 1 + gamma *( (xtdy-yt)/xtdy ));
-            wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ; 
+            wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ;
 	  }
 	else {
 	    if( ytf == ytz )
 	      {
                 pt = pt *( 1 + gamma *( (xtdy-yt)/xtdy ));
-                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ; 
+                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ;
               }
 	    else
               {
@@ -389,13 +389,13 @@ void dorn::pwBerechnung()
 	    if( ytf > ytz )
               {
                 pt = pt *( 1 + gamma *( (xtdy-yt)/xtdy ));
-                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ; 
+                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ;
               }
 	    else {
 	        if( ytf == ytz )
 	      {  
                 pt = pt *( 1 + gamma *( (xtdy-yt)/xtdy ));
-                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ; 
+                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ;
               }
 		else
 	      { 
@@ -409,13 +409,13 @@ void dorn::pwBerechnung()
 	        if( ytf > xtdy )
 	      {
                 pt = pt *( 1 + kappa *((yt-ytz)/ytz));
-                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ;  
+                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ;
               }
 		else {
 		    if( ytf == xtdy )
 	      {
                 pt = pt *( 1 + gamma *( (xtdy-yt)/xtdy ));
-                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ; 
+                wt = wt *( 1 + lambda *((Lt-Lmax)/Lmax)) ;
               }
 		    else
 	      {
@@ -465,7 +465,7 @@ qreal* dorn::setLabels(const QString& name)
     if (name == "iet")
 	return( (qreal*)(&iet) );
     if (name == "Lmax")
-	return( (qreal*)(&Lmax) );
+    return( (qreal*)(&Lmax) );
     if (name == "tax")
 	return( (qreal*)(&tax) );
     if (name == "d")
@@ -556,9 +556,9 @@ void dorn::sendStateSpace(int &quantity,const qreal*** stateSpace)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::loadParamset(QDataStream& inputFile)
+void dorn::loadParamset(QTextStream& inputFile)
 {
-  /* cerr << "loadps:" << "\n"; */
+  /* cerr << "loadps:"  */
     inputFile >> tau >> p0 >> w0 >> s0 >>  B0 >> x0
               >> A >> B >> Lmax >> tax >> delta >> rho >> d
               >> deltaB >> g >> fi
@@ -584,7 +584,7 @@ void dorn::loadParamset(QDataStream& inputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::saveParamset(QDataStream& outputFile)
+void dorn::saveParamset(QTextStream& outputFile)
 {
     outputFile << tau << "\t" << p0 << "\t" << w0 << "\t" << s0 << "\t"
                << B0 << "\t" << x0 << "\t"
@@ -603,7 +603,7 @@ void dorn::saveParamset(QDataStream& outputFile)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::saveParamsetWithNames(QDataStream& outputFile)
+void dorn::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "dornModel:\n\t";
     outputFile << "Tau = " << tau 
@@ -659,7 +659,7 @@ void dorn::printParamset()
 /* Last modified:   31.3.2000                                                 */
 /*                                                                            */
 /******************************************************************************/
-void dorn::receiveParameters(const qreal* parameters)
+void dorn::receiveParameters(const QList<qreal>& parameters)
 {
   tau=parameters[0];
   p0=parameters[1];

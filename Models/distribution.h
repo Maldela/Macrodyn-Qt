@@ -15,10 +15,6 @@
 #define _DISTRIBUTION_INCLUDED
 
 #include "baseModel.h"
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 //

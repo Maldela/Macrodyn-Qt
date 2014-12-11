@@ -27,8 +27,8 @@ MerA::MerA() : baseModel(1)
 	p = NULL;
 	q = NULL;
 	qShift = NULL;
-	qmin = NULL;
-	qmax = NULL;
+    qmin = NULL;
+    qmax = NULL;
 	p0 = NULL;
 	q0 = NULL;
 	qOld = NULL;
@@ -36,8 +36,8 @@ MerA::MerA() : baseModel(1)
 	d = NULL;
 	d0 = NULL;
 	dmid = NULL;
-	dmin = NULL;
-	dmax = NULL;
+    dmin = NULL;
+    dmax = NULL;
 	tau1x = NULL;
 	
 }
@@ -52,7 +52,7 @@ MerA::MerA() : baseModel(1)
 ///////////////////////////////////////////////////////////////////////////////
 MerA::~MerA()
 {
-log() << "Model MerA destructor" << "\n";
+    log() << "Model MerA destructor";
 
 	if( zvar ) delete zvar;
 	if( markov ) delete markov;
@@ -60,15 +60,15 @@ log() << "Model MerA destructor" << "\n";
 	if ( p ) delete [] p;
 	if ( q ) delete [] q;
 	if ( qShift ) delete [] qShift;
-	if ( qmin ) delete [] qmin;
-	if ( qmax ) delete [] qmax;
+    if ( qmin ) delete [] qmin;
+    if ( qmax ) delete [] qmax;
 	if ( p0 ) delete [] p0;
 	if ( q0 ) delete [] q0;
 	if ( d ) delete [] d;
 	if ( dmid ) delete [] dmid;
 	if ( d0 ) delete [] d0;
-	if ( dmin ) delete [] dmin;
-	if ( dmax ) delete [] dmax;
+    if ( dmin ) delete [] dmin;
+    if ( dmax ) delete [] dmax;
 	if ( tau1x ) delete [] tau1x;
 }
 
@@ -101,12 +101,12 @@ qreal* MerA::setLabels(const QString& label)
     if (label.startsWith("dmin_") ) {
         labelp.remove(0, 5);
         num = labelp.toInt();
-		return(&dmin[num]);
+        return(&dmin[num]);
 	}
     if (label.startsWith("dmax_") ) {
         labelp.remove(0, 5);
         num = labelp.toInt();
-		return(&dmax[num]);
+        return(&dmax[num]);
 	}
 
     if (label == "p") return(p);
@@ -142,12 +142,12 @@ qreal* MerA::setLabels(const QString& label)
     if (label.startsWith("qmin_") ) {
         labelp.remove(0, 5);
         num = labelp.toInt();
-		return(&qmin[num]);
+        return(&qmin[num]);
 	}
     if (label.startsWith("qmax_") ) {
         labelp.remove(0, 5);
         num = labelp.toInt();
-		return(&dmax[num]);
+        return(&dmax[num]);
 	}
 
     if (label.startsWith("ferr_") ) {
@@ -197,35 +197,35 @@ mef=0;
 		q[count]=q0[count];
 		qShift[count]=q0[count];
 		qOld[count]=q0[count];
-		dmid[count] = ((dmax[count]-dmin[count])/2)+dmin[count] ;
-		d[count]=d0[count];
+        dmid[count] = ((dmax[count]-dmin[count])/2)+dmin[count] ;
+        d[count]=d0[count];
 	}
 
 
     qreal DMAX;
-	for(int i=0;i<K;i++){
-		tau1x[i]= 0.05;
+    for(int i=0;i<K;i++){
+            tau1x[i]= 0.05;
 
-		if(perfectPredictor) {//bed. perfekter praediktor
-			if(q0[i]<=((dmax[i]-dmin[i])/R)) {
-                log() <<"Asset "<<i<<" : q0["<<i<<"]="<<q0[i];
-                log() <<" <= (dmax-dmin)/R=";
-                log() <<((dmax[i]-dmin[i])/R)<<"\n";
-				exit(-1);	
-			}
-			qmin[i]=(tau1x[i]-dmin[i])/(1-R);
-			qmax[i]=(tau1x[i]-dmax[i])/(1-R);
+            if(perfectPredictor) {//bed. perfekter praediktor
+                if(q0[i]<=((dmax[i]-dmin[i])/R)) {
+                    log() <<"Asset "<<i<<" : q0["<<i<<"]="<<q0[i];
+                    log() <<" <= (dmax-dmin)/R=";
+                    log() <<((dmax[i]-dmin[i])/R)<<"\n";
+                    exit(-1);
+                }
+                qmin[i]=(tau1x[i]-dmin[i])/(1-R);
+                qmax[i]=(tau1x[i]-dmax[i])/(1-R);
 
-			DMAX=((dmax[i]-dmin[i])/R)+dmin[i];
-			if(dmax[i]>DMAX)
-				DMAX=dmax[i];
-			if(tau1x[i]<=DMAX) {
-                log() << "Asset "<<i<<" : tau^-1x="<<tau1x[i];
-                log() <<" <= DMAX="<<DMAX<<"\n";
-				exit(-1);
-			}
-		}
-	}
+                DMAX=((dmax[i]-dmin[i])/R)+dmin[i];
+                if(dmax[i]>DMAX)
+                    DMAX=dmax[i];
+                if(tau1x[i]<=DMAX) {
+                    log() << "Asset "<<i<<" : tau^-1x="<<tau1x[i];
+                    log() <<" <= DMAX="<<DMAX<<"\n";
+                    exit(-1);
+                }
+            }
+        }
 
 }
 
@@ -237,7 +237,7 @@ mef=0;
 // Author:		Marc Mueller
 // Last modified:	98/11/30
 ///////////////////////////////////////////////////////////////////////////////
-void MerA::loadParamset(QDataStream& inFile)
+void MerA::loadParamset(QTextStream& inFile)
 {
     QString dummy;
 	int i;
@@ -274,15 +274,15 @@ void MerA::loadParamset(QDataStream& inFile)
         if( !(d0) )
 	   fatalError("macrodyn::MerA::initialize","can't create d0");
 
-	if ( dmin != NULL ) delete [] dmin;
+    if ( dmin != NULL ) delete [] dmin;
     dmin = new qreal[K+1];
      if( !(dmin) )
-	   fatalError("macrodyn::MerA::initialize","can't create dmin");
+       fatalError("macrodyn::MerA::initialize","can't create dmin");
 
-	if ( dmax != NULL ) delete [] dmax;
+    if ( dmax != NULL ) delete [] dmax;
     dmax = new qreal[K+1];
      if( !(dmax) )
-	   fatalError("macrodyn::MerA::initialize","can't create dmax");
+       fatalError("macrodyn::MerA::initialize","can't create dmax");
 
     QString m_state;
     QString m_matrix;
@@ -290,10 +290,10 @@ void MerA::loadParamset(QDataStream& inFile)
 	for(i=0;i<K;i++) {
 		inFile >> xAll[i];
 //		inFile >> d0[i];
-		inFile >> dmin[i] >> dmax[i];
+        inFile >> dmin[i] >> dmax[i];
         d0[i]=dmin[i];
 		inFile >> p0[i];
-		inFile >> q0[i];
+        inFile >> q0[i];
 	}
  
 	inFile >> m_state;
@@ -337,15 +337,15 @@ void MerA::loadParamset(QDataStream& inFile)
 	if( !(qOld) )
 	   fatalError("macrodyn::MerA::initialize","can't create qOld");
 
-	if ( qmin != NULL ) delete [] qmin;
+    if ( qmin != NULL ) delete [] qmin;
         qmin = new qreal[K+1];
-	if( !(qmin) )
-	   fatalError("macrodyn::MerA::initialize","can't create qmin");
+    if( !(qmin) )
+       fatalError("macrodyn::MerA::initialize","can't create qmin");
 
-	if ( qmax != NULL ) delete [] qmax;
+    if ( qmax != NULL ) delete [] qmax;
         qmax = new qreal[K+1];
-	if( !(qmax) )
-	   fatalError("macrodyn::MerA::initialize","can't create qmax");
+    if( !(qmax) )
+       fatalError("macrodyn::MerA::initialize","can't create qmax");
 
 	if ( ferr != NULL ) delete [] ferr;
         ferr = new qreal[K+1];
@@ -370,6 +370,12 @@ void MerA::loadParamset(QDataStream& inFile)
 	initialize();
 }
 
+void MerA::receiveParameters(const QList<qreal> &parameters)
+{
+    //TODO
+    //initialize();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Class name:		MerA
 // Member function: saveParamsetWithNames
@@ -378,22 +384,21 @@ void MerA::loadParamset(QDataStream& inFile)
 // Author:		Marc Mueller
 // Last modified:	
 ///////////////////////////////////////////////////////////////////////////////
-void MerA::saveParamsetWithNames(QDataStream& outputFile)
+void MerA::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nModel MerA\n";
     if(perfectPredictor)
-    outputFile << "perfectPredictor" << "\n";
-    outputFile << "R = " << R << "\n";
-    outputFile << "K = " << K << "\n";
+    outputFile << "perfectPredictor";
+    outputFile << "R = " << R;
+    outputFile << "K = " << K;
     for(int i=0;i<K;i++) {
      	outputFile << "xAll[" << i << "] = " << xAll[i] << " ";
-     	outputFile << "dmin[" << i << "] = " << dmin[i] << " ";
-     	outputFile << "dmax[" << i << "] = " << dmin[i] << " ";
+        outputFile << "dmin[" << i << "] = " << dmin[i] << " ";
+        outputFile << "dmax[" << i << "] = " << dmin[i] << " ";
      	outputFile << "p0[" << i << "] = " << p0[i] << " ";
      	outputFile << "q0[" << i << "] = " << q0[i] << " ";
-    outputFile << "\n";
 	}
-    outputFile << "length = "<< length << "\n";
+    outputFile << "length = "<< length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -475,13 +480,13 @@ standardDeviation_d = sqrt(variance_d);
 mean_d *= t-1; mean_d+=d[0]; mean_d/=t;
 
 log() << t << " d=" << d[0];
-log() << " q=" << q[0] << " qOld=" << qOld[0] << " p=" << p[0] << "\n";
-log() << " d=" << d[0] << " Mean_d="  << mean_d << " SD_d="  << standardDeviation_d << "\n";
-//log() << " p=" << p[0] << " Mean_p="  << mean_p << " SD_p="  << standardDeviation_p << "\n";
-//log() << " ferr=" << ferr[0] << " Mean_ferr="  << mean_ferr << " SD_ferr="  << standardDeviation_ferr << "\n";
-//log() << " deltaq=" << deltaq << " Mean_deltaq="  << mean_deltaq << " SD_deltaq="  << standardDeviation_deltaq << "\n";
-//log() << " deltap=" << deltap << " Mean_deltap="  << mean_deltap << " SD_deltap="  << standardDeviation_deltap << "\n";
+log() << " q=" << q[0] << " qOld=" << qOld[0] << " p=" << p[0];
+log() << " d=" << d[0] << " Mean_d="  << mean_d << " SD_d="  << standardDeviation_d;
+//log() << " p=" << p[0] << " Mean_p="  << mean_p << " SD_p="  << standardDeviation_p 
+//log() << " ferr=" << ferr[0] << " Mean_ferr="  << mean_ferr << " SD_ferr="  << standardDeviation_ferr 
+//log() << " deltaq=" << deltaq << " Mean_deltaq="  << mean_deltaq << " SD_deltaq="  << standardDeviation_deltaq 
+//log() << " deltap=" << deltap << " Mean_deltap="  << mean_deltap << " SD_deltap="  << standardDeviation_deltap 
 
-//log() << " q=" << q[0] << " qOld=" << qOld[0] << " mef" << mef << "\n" ;
+//log() << " q=" << q[0] << " qOld=" << qOld[0] << " mef" << mef ;
 
 }

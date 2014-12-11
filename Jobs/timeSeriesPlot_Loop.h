@@ -36,8 +36,8 @@ protected:
     qreal * multiplotOld;	// to store old values
     int loop_size;		//
 public:
-    timeSeriesPlot_Loop(int, baseModel* const, char* const, MacrodynGraphicsItem* const=NULL,
-        char* const=NULL, int const=0, char** const=NULL);
+    timeSeriesPlot_Loop(int, baseModel* const, const QString&, MacrodynGraphicsItem* const=NULL,
+        const QString& = "", int const=0, char** const=NULL);
     ~timeSeriesPlot_Loop();
     void simulation();
 };

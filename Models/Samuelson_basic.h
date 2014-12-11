@@ -36,7 +36,7 @@ protected:
     qreal	y2_0;
     qreal	lambda;
     qreal	noise;
-    qreal	v_0noise, v_0prob, v_0max, v_0min;
+    qreal	v_0noise, v_0prob, v_0qMax, v_0qMin;
 	qint64	myseed;
 	
     qreal y;			// state variable
@@ -47,9 +47,9 @@ protected:
 public:
     Samuelson_basic();			// constructor
     virtual ~Samuelson_basic();
-    void loadParamset(QDataStream&);	
-    void saveParamset(QDataStream&);
-    void saveParamsetWithNames(QDataStream&);    
+    void loadParamset(QTextStream&);	
+    void saveParamset(QTextStream&);
+    void saveParamsetWithNames(QTextStream&);    
     void printParamset();
     virtual void iteration(const qint64&);
     void initialize();
@@ -60,7 +60,7 @@ public:
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const qreal*);// receive parameter values
+    void receiveParameters(const QList<qreal>&);// receive parameter values
 };
 
 
@@ -72,7 +72,7 @@ protected:
 
 public:
 	void iteration(const qint64& );
-	void loadParamset(QDataStream& );
+	void loadParamset(QTextStream& );
 	void initialize();
     qreal* setLabels(const QString& label);
 };

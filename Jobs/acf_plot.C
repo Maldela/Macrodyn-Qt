@@ -19,12 +19,12 @@
 
 acf_plot::acf_plot(baseModel* const bMod, const xyRange& axes, 
          MacrodynGraphicsItem* const graph, qint64 lag_1, qint64 lag_2)
-          :job(bMod,graph), l_min(lag_1), l_max(lag_2)
+          :Job(bMod,graph), l_min(lag_1), l_max(lag_2)
 {
-	xmax = axes.max[0];
-	xmin = axes.min[0];
-	ymin = axes.min[1];
-	ymax = axes.max[1];
+    xmax = axes.max[0];
+    xmin = axes.min[0];
+    ymin = axes.min[1];
+    ymax = axes.max[1];
     length=qint64(xmax);			// last iteration to be analysed
     limit=qint64(xmin);				// first iteration to be analysed
     how_many = qint64(xmax-xmin);
@@ -47,7 +47,7 @@ acf_plot::acf_plot(baseModel* const bMod, const xyRange& axes,
 
 void acf_plot::drawBox(qreal lo_x, qreal lo_y, qreal ru_x, qreal ru_y, int color)
 {
-	qreal draw_step = double((l_max - l_min))/double(500);
+    qreal draw_step = double(l_max - l_min)/double(500);
     if ( screenGraphics ){
         for (qreal dummy = lo_x; dummy<= ru_x; dummy+=draw_step){
             screenGraphics->drawLine(dummy, ru_y, dummy, lo_y, color);
@@ -96,18 +96,18 @@ void acf_plot::simulation()
 	for( j=0; j<how_many; j++){
 		acv_0 += (ts_data[j]-mean_x)*(ts_data[j]-mean_x)/how_many;
 	}
-	// computing autocorrelations for all lags ymin to ymax
+    // computing autocorrelations for all lags ymin tqMaxmax
 	qreal acv;
 	qreal acf;
     log() << "vector of correlations:\n";
-	for( i=l_min;i<=l_max;i++ ){
+    for( i=l_min;i<l_max;i++ ){
 		acv = 0;
 		for( j=0; j<how_many-i; j++ ){
 			acv += (ts_data[j]-mean_x)*(ts_data[j+i]-mean_x)/how_many;
 		}
 		acf = acv / acv_0;
 		drawBox(i-0.4,acf,i+0.4,0,9);
-        log() << "lag " << i << ":\t" << acf << "\n";
+        log() << "lag " << i << ":\t" << acf;
 	}
 	delete []ts_data;			
 }

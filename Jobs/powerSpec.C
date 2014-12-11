@@ -17,10 +17,10 @@
 /*                                                                            */
 /******************************************************************************/
 
-powerSpec::powerSpec(baseModel* const bMod,const window& wind,char* const label,
-             MacrodynGraphicsItem* const graph)
+powerSpec::powerSpec(baseModel* const bMod, const window& w,
+             const QString& label, MacrodynGraphicsItem* const graph)
           :timeSeriesJob(bMod,label,graph),
-	   Pi(3.141592635897932),win(wind)
+       Pi(3.141592635897932), win(w)
 {
     timeSeriesImag=new qreal[length];
     if( !timeSeriesImag )
@@ -124,7 +124,7 @@ void powerSpec::FFTSolve(const int& flag)
     maxpower=0;
     i=length;
     while(i != 1){
-	maxpower++;
+    maxpower++;
 	i /= 2;
     }
     harm = 2 * Pi / length;
@@ -135,7 +135,7 @@ void powerSpec::FFTSolve(const int& flag)
     }
     a=2;
     b=1;
-    for(cntr=1;cntr<=maxpower;cntr++) {
+    for(cntr=1;cntr <= maxpower;cntr++) {
 	pnt0=length / a;
 	pnt1=0;
 	for(k=0;k<=b-1;k++){
@@ -252,7 +252,7 @@ qreal powerSpec::welch(const qint64& t)
 /*                                                                            */
 /******************************************************************************/
 
-qreal powerSpec::hamming(const qint64& t)
+qreal powerSpec::hamqMing(const qint64& t)
 {
     return( .54 - .46 * cos(2.0 * Pi * t / (length-1)) );
 }
@@ -275,7 +275,7 @@ qreal powerSpec::exactBlackman(const qint64& t)
 /*                                                                            */
 /* Class name:      powerSpec                                                 */
 /* Member function: windowData                                                */
-/* Purpose:         determines the multiplier according to the value of win,  */
+/* Purpose:         deterqMines the multiplier according to the value of win,  */
 /*                  and windows the data                                      */
 /* Last modified:   11.10.1994 (Markus Lohmann)                               */
 /*                                                                            */
@@ -294,7 +294,7 @@ void powerSpec::windowData (qreal *x)
 		break;
 	    case WELCH:multiplier = welch(i);
 		break;
-	    case HAMMING:multiplier = hamming(i);
+        case HAMqMinG:multiplier = hamqMing(i);
 		break;
 	    case EXACTBLACKMAN:multiplier = exactBlackman(i);
 		break;
@@ -330,26 +330,26 @@ void powerSpec::simulation()
     windowData(timeSeriesqreal);         // compute a window of the data
     powerSpecCalc(1.0);                 // compute the powerspectrum
 
-    for(t=0;t<=length/2;t++){           // search for minimal and maximal
+    for(t=0;t<=length/2;t++){           // search for qMinimal and qMaximal
 	dummy = log10(timeSeriesqreal[t]);   // values in the results
-	ymax = dummy > ymax ? dummy : ymax;
-	ymin = dummy < ymin ? dummy : ymin;
+    ymax = dummy > ymax ? dummy : ymax;
+    ymin = dummy < ymin ? dummy : ymin;
     }
     if( screenGraphics ) {
     QList<qreal> min;
-	min[0]=0.0;
-	min[1]=ymin;
+    min[0]=0.0;
+    min[1]=ymin;
 
     QList<qreal> max;
-	max[0]=0.5;
-	max[1]=ymax;
+    max[0]=0.5;
+    max[1]=ymax;
 	
     QList<qint64> res;
 	res[0]=res[1]=0;
-    QList<QString> string;
+    QStringList string;
 	string[0]="1/t";
 	string[1]="N";
-	xyRange range(2,string,min,max,res);
+    xyRange range(2,string,min,max,res);
 	if( screenGraphics ) 
 	    screenGraphics->reset(range);
 	

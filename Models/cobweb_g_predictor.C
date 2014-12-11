@@ -58,14 +58,14 @@ void cobweb_g_predictor::initialize()
     for(int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-        //log() << "k=" << k  << " wsum=" << wsum << "\n";
+        //log() << "k=" << k  << " wsum=" << wsum 
 	   }
     //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
+        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko 
 	   }
 }
 /******************************************************************************/
@@ -76,7 +76,7 @@ void cobweb_g_predictor::initialize()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::loadParamset(QDataStream& inputFile)
+void cobweb_g_predictor::loadParamset(QTextStream& inputFile)
 {
 
     inputFile >> a >> b >> alpha >> w >> L0;
@@ -116,7 +116,7 @@ void cobweb_g_predictor::loadParamset(QDataStream& inputFile)
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::saveParamset(QDataStream& outputFile)
+void cobweb_g_predictor::saveParamset(QTextStream& outputFile)
 {
     outputFile << a << "\t" << b << "\t" << alpha << "\t" << w << "\t";
     outputFile << L0 << "\t"<< length << "\t";
@@ -131,7 +131,7 @@ void cobweb_g_predictor::saveParamset(QDataStream& outputFile)
 /* Last modified:   20.02.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::saveParamsetWithNames(QDataStream& outputFile)
+void cobweb_g_predictor::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nModel cobweb_g_predictor\n";
     outputFile << "a = " << a << "\tb = " << b << "\talpha = " << alpha ;
@@ -140,7 +140,6 @@ void cobweb_g_predictor::saveParamsetWithNames(QDataStream& outputFile)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
     for(int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
-    outputFile << "\n";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -152,8 +151,8 @@ void cobweb_g_predictor::saveParamsetWithNames(QDataStream& outputFile)
 /******************************************************************************/
 void cobweb_g_predictor::printParamset()
 {
-    log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
-    log() << length << "\n";
+    log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0;
+    log() << length;
     for(int k=0;k<=L;k++)
         log() << pp0[k] << "\t";
 }
@@ -192,7 +191,7 @@ void cobweb_g_predictor::sendParameters(int& amount,qreal** parameters)
 /* Last modified:   30.01.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::receiveParameters(const qreal* parameters)
+void cobweb_g_predictor::receiveParameters(const QList<qreal>& parameters)
 {
     a=parameters[0];
     b=parameters[1];

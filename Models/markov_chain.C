@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include "../error.h"
-#include "../strnchr.h"
+
 #include "../eval_expr.h"
 #include "../get_expr.h"
 

@@ -43,9 +43,9 @@ protected:
 
 public:
     cobweb();			// constructor
-    void loadParamset(QDataStream&);
-    void saveParamset(QDataStream&);
-    void saveParamsetWithNames(QDataStream&);
+    void loadParamset(QTextStream&);
+    void saveParamset(QTextStream&);
+    void saveParamsetWithNames(QTextStream&);
     void printParamset();
     void iteration(const qint64&);
     void initialize();
@@ -56,7 +56,7 @@ public:
                                 	// into an array and return the 
                                 	// numbers of parameters
                                 	
-    void receiveParameters(const qreal*);// receive parameter values
+    void receiveParameters(const QList<qreal>&);// receive parameter values
 };
 
 
@@ -82,7 +82,7 @@ private:
     qreal p_t1;
 
 public:
-	void loadParamset( QDataStream& inFile );
+	void loadParamset( QTextStream& inFile );
 	void initialize();
 	void iteration( const qint64& );
     qreal* setLabels(const QString&);
@@ -110,7 +110,7 @@ private:
 	
 public:
 	rdemand_cobweb();			//constructor
-	void loadParamset( QDataStream& );		//load parameterset
+	void loadParamset( QTextStream& );		//load parameterset
 	void iteration( const qint64& );		//iterate ones
 	void initialize(void);			//initialize
 };

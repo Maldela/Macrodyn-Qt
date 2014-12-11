@@ -58,7 +58,7 @@ void nicole::initialize()
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::loadParamset(QDataStream& inputFile)
+void nicole::loadParamset(QTextStream& inputFile)
 {
     inputFile >> pi >> dl >> dh >> d0 >> e >> alpha >> xhat >> theta >> R;
     inputFile >> length ;
@@ -73,7 +73,7 @@ void nicole::loadParamset(QDataStream& inputFile)
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::saveParamset(QDataStream& outputFile)
+void nicole::saveParamset(QTextStream& outputFile)
 {
     outputFile << pi << "\t" << dl << "\t" << dh << "\t" << d0 << "\t" ;
     outputFile << e << "\t" << alpha << "\t" << xhat << "\t";
@@ -87,12 +87,12 @@ void nicole::saveParamset(QDataStream& outputFile)
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::saveParamsetWithNames(QDataStream& outputFile)
+void nicole::saveParamsetWithNames(QTextStream& outputFile)
 {
-    outputFile << "\nModel nicole\n" << "pi = " << pi << "\tdl = " << dl ;
+    outputFile << "\nModel nicole\n" << "pi = " << pi << "\tdl = " << dl;
     outputFile << "\tdh = " << dh << "\td0 = " << d0 << "\te = " << e << "\talpha = " << alpha ;
     outputFile << "\txhat = " << xhat << "\ttheta = " << theta  << "\tR = "<< R;
-    outputFile << "\tlength = "<< length << "\n";
+    outputFile << "\tlength = "<< length;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -106,7 +106,7 @@ void nicole::printParamset()
 {
     log() << pi << "\t" << dl << "\t" << dh << "\t" << d0 << "\t" << e  << "\t" << alpha ;
     log() << "\t" << xhat << "\t";
-    log() << theta << "\t" << R << "\n" << length << "\n";
+    log() << theta << "\t" << R << "\n" << length;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -125,7 +125,7 @@ void nicole::sendParameters(int& amount,qreal** parameters)
 /* Purpose:         unused                                                    */
 /*                                                                            */
 /******************************************************************************/
-void nicole::receiveParameters(const qreal* parameters)
+void nicole::receiveParameters(const QList<qreal>& parameters)
 {
 }
 /******************************************************************************/
@@ -229,7 +229,7 @@ void nicole::getD()
 /******************************************************************************/
 void nicole::dynamics()
 {
-	p=MIN((e/xhat),((theta*(1+alpha*d*xhat)+d)/(R*(alpha*theta*xhat+1))));
+	p = qMin((e/xhat),((theta*(1+alpha*d*xhat)+d)/(R*(alpha*theta*xhat+1))));
 }
 /******************************************************************************/
 /*                                                                            */

@@ -28,7 +28,7 @@ class powerSpec : public timeSeriesJob {
     qreal parzen(const qint64&);
     qreal hanning(const qint64&);
     qreal welch(const qint64&);
-    qreal hamming(const qint64&);
+    qreal hamqMing(const qint64&);
     qreal exactBlackman(const qint64&);
     void windowData(qreal*);
 
@@ -36,7 +36,7 @@ class powerSpec : public timeSeriesJob {
     const qreal Pi;
     const window win;
   public:
-    powerSpec(baseModel* const,const window&, char* const, MacrodynGraphicsItem* const=NULL);
+    powerSpec(baseModel* const, const window&, const QString&, MacrodynGraphicsItem* const=NULL);
     virtual ~powerSpec();
     void simulation();
 };

@@ -58,14 +58,14 @@ void toniadp::initialize()
     for (int k=0;k<=L;k++)
 	   {
 		wsum+=hoch(w,k);
-        //log() << "k=" << k  << " wsum=" << wsum << "\n";
+        //log() << "k=" << k  << " wsum=" << wsum 
 	   }
     //qreal ko=0;
 	for(int i=0;i<=L;i++)
 	   {
 		vv[i]=hoch(w,i)/wsum;
 		//ko+=vv[i];
-        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko << "\n";
+        //log() << "i=" << i  << " w_i=" << vv[i] << " ko="<< ko 
 	   }
 }
 /******************************************************************************/
@@ -76,7 +76,7 @@ void toniadp::initialize()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp::loadParamset(QDataStream& inputFile)
+void toniadp::loadParamset(QTextStream& inputFile)
 {
 
     inputFile >> a >> b >> alpha >> w >> L0;
@@ -116,7 +116,7 @@ void toniadp::loadParamset(QDataStream& inputFile)
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp::saveParamset(QDataStream& outputFile)
+void toniadp::saveParamset(QTextStream& outputFile)
 {
     outputFile << a << "\t" << b << "\t" << alpha << "\t" << w << "\t";
     outputFile << L0 << "\t"<< length << "\t";
@@ -131,7 +131,7 @@ void toniadp::saveParamset(QDataStream& outputFile)
 /* Last modified:   20.02.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp::saveParamsetWithNames(QDataStream& outputFile)
+void toniadp::saveParamsetWithNames(QTextStream& outputFile)
 {
     outputFile << "\nModel Toniadp\n";
     outputFile << "a = " << a << "\tb = " << b << "\talpha = " << alpha ;
@@ -140,7 +140,6 @@ void toniadp::saveParamsetWithNames(QDataStream& outputFile)
         outputFile << "p0_" << k << " = " << pp0[k] << "\t";
     for (int k=0;k<=L;k++)
         outputFile << "p_t-" << k << " = " << pp[k] << "\t";
-    outputFile << "\n";
 }
 /******************************************************************************/
 /*                                                                            */
@@ -152,8 +151,8 @@ void toniadp::saveParamsetWithNames(QDataStream& outputFile)
 /******************************************************************************/
 void toniadp::printParamset()
 {
-    log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0 << "\n";
-    log() << length << "\n";
+    log() << b  << "\t" << b << "\t" << alpha << "\t" << w << "\t" << L0;
+    log() << length;
     for(int k=0;k<=L;k++)
         log() << pp0[k] << "\t";
 }
@@ -192,7 +191,7 @@ void toniadp::sendParameters(int& amount,qreal** parameters)
 /* Last modified:   30.01.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp::receiveParameters(const qreal* parameters)
+void toniadp::receiveParameters(const QList<qreal>& parameters)
 {
     a=parameters[0];
     b=parameters[1];

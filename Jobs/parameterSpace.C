@@ -77,7 +77,7 @@ void parameterSpace::simulation()
 					// been detected
 
     for(*xParam=xmin;*xParam<=xmax; *xParam+=stepX) {
-	for(*yParam=ymin;*yParam<=ymax;*yParam+=stepY) {
+    for(*yParam=ymin;*yParam<=ymax;*yParam+=stepY) {
 	    model->initialize();
 	    for(t=0;t<length;t++) {
             model->iteration(t+1);
@@ -85,7 +85,7 @@ void parameterSpace::simulation()
                 if( hash->storePoint(stateVars) ) {
                     hash->resetHashTable();
                     order=-1;    // out of domain, leave it blue
-    //			    log() << *(stateVars[0]) << "\n";
+    //			    log() << *(stateVars[0]) 
                     break;
                 }
                 if( !(t % tDiv) || (t==(length-1)) ) {
@@ -93,7 +93,7 @@ void parameterSpace::simulation()
                         hash->resetHashTable();
                         break;	// a cycle has been detected
                             // so the analysis of this parameterset
-                            // can be terminated and the hash table
+                            // can be terqMinated and the hash table
                             // should be initialized for the next
                             // parameterset
                     }

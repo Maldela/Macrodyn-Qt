@@ -13,21 +13,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "d_var.h"
+#include "../logger.h"
 
 void d_var::dom_error ( qreal x ) {
-    log() << "DOMAIN ERROR: "<< x << " is not in [" <<  x_qreal_min << "," <<x_qreal_max << "]" << "\n";
+    log() << "DOMAIN ERROR: "<< x << " is not in [" <<  x_real_min << "," << x_real_max << "]";
   }
 
 // constructor with default values
-d_var::d_var ( qreal x_r = 0.5 , qreal x_rmin = 0 ,
-               qreal x_rmax = 1 , int res = 100 ):
-               x_qreal(x_r), x_qreal_min(x_rmin), x_qreal_max(x_rmax) {
+d_var::d_var ( qreal x_r = 0.5 , qreal x_min = 0 ,
+               qreal x_max = 1 , int res = 100 ):
+               x_qreal(x_r), x_real_min(x_min), x_real_max(x_max) {
     set_res(res);
   }
 
-// returns 1, if x is between min and max, 0 otherwise
+// returns 1, if x is between qMin and qMax, 0 otherwise
 int  d_var::is_in_range ( qreal x ) const {
-    return ( x >= x_qreal_min && x <= x_qreal_max );
+    return ( x >= x_real_min && x <= x_real_max );
   }
 
 // returns 1, if x_descr is between 0 and dflt_res, 0 otherwise
@@ -64,7 +65,7 @@ void d_var::set_val( int x_descr, int resolution ) {
 // sets a new discretesation
 void d_var::set_res( int resolution ) {
     dflt_res = resolution;
-    dflt_step_sz =  (x_qreal_max - x_qreal_min) / dflt_res;
+    dflt_step_sz =  (x_real_max - x_real_min) / dflt_res;
   }
  
 // returns a qreal with the current value
@@ -74,10 +75,10 @@ qreal d_var::get_val( void ) const {
 
 // returns an int with the discrete current value
 int d_var::get_dval( void ) const { 
-    if( x_qreal == x_qreal_max ) {
+    if( x_qreal == x_real_max ) {
       return (dflt_res -1);
     } else {
-      return (int) ((x_qreal - x_qreal_min) / dflt_step_sz);
+      return (int) ((x_qreal - x_real_min) / dflt_step_sz);
     }
   }
          

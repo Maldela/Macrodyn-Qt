@@ -18,7 +18,7 @@
 class md_Map {
 
 public:
-	md_Map(double min,double max,int res,int dim,int tlim
+    md_Map(double min,double max,int res,int dim,int tlim
         ,const QString& filename, const QString& mothermap);		// constructor new
     md_Map(const QString& filename);					// constructor to load
 	~md_Map();						// destructor
@@ -28,7 +28,7 @@ public:
     qreal* value_field;			// pointer to store values
 
 private:
-	double l_min, l_max;		// limits of map
+    double l_min, l_max;		// limits of map
 	int resolution;			// resolution of map
 	int model_dim;			// dimension of model variables space
 	int time_limit;			// upper end of time dimension

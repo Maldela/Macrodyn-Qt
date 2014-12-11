@@ -87,7 +87,7 @@ frepm::~frepm()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void frepm::loadParamset(QDataStream& inFile)
+void frepm::loadParamset(QTextStream& inFile)
 {
 
     inFile >> N;
@@ -502,7 +502,7 @@ for(;1;) {					// correct the value of pN
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void frepm::saveParamset(QDataStream& outFile)
+void frepm::saveParamset(QTextStream& outFile)
 {
     outFile << N << "\t";
     outFile << x01 << "\t";
@@ -533,9 +533,9 @@ void frepm::saveParamset(QDataStream& outFile)
 
 void frepm::printParamset()
 {
-    log() << N  << "\n";
-    log() << x01 << "\n";
-    log() << x02 << "\n";
+    log() << N;
+    log() << x01;
+    log() << x02;
 
     for (uint i=0; i<=N-1;i++) {
 		for(int j=0;j<=10;j++) {
@@ -543,7 +543,7 @@ void frepm::printParamset()
 		}	
 	}
 
-    log() << length << "\n";
+    log() << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -592,6 +592,6 @@ qreal* frepm::sendModelVar(void)
 void frepm::sendParameters(int& ,qreal** )
 { error("macrodyn::frepm::sendParameters is not implemented");
 }
-void frepm::receiveParameters(const qreal* )
+void frepm::receiveParameters(const QList<qreal>&)
 { error("macrodyn::frepm::receiveParameters is not implemented");
 } 
