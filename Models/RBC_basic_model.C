@@ -293,17 +293,12 @@ qreal* RBC_basic_model::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void RBC_basic_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void RBC_basic_model::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
 	//log() << "This is function 'sendStateSpace()' in RBC_basic_model.C ."  
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("RBC_basic_model::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&k;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &k;
     log() << "Now returning....";
 }
 

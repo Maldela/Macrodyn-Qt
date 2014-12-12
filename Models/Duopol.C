@@ -156,22 +156,17 @@ qreal* Duopol::setLabels(const QString& label)
 /*                                                                            */
 /******************************************************************************/
 
-void Duopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void Duopol::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !stateSpace )
-	fatalError("Duopol::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&zeta1;
-    (*stateSpace)[1]=&zeta2;
-    (*stateSpace)[2]=&z1;
-    (*stateSpace)[3]=&z2;
-    (*stateSpace)[4]=&m;
-    (*stateSpace)[5]=&pi;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &zeta1;
+    *stateSpace << &zeta2;
+    *stateSpace << &z1;
+    *stateSpace << &z2;
+    *stateSpace << &m;
+    *stateSpace << &pi;
+}
 
 
 /******************************************************************************/

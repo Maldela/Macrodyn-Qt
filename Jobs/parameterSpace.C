@@ -25,12 +25,9 @@ parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes,
     hash->resetDomain(stateSpace);        // save bounderies of the state
 					  // space section
     stepY=(ymax-ymin)/(axes.res[1]-1);
-    stateVars=new const qreal* [stateSpace.dimension];
-    if( !stateVars )
-    fatalError("parameterSpace::parameterSpace",
-           "Can't create vector of state variables");
-    for(int i=0;i<stateSpace.dimension;i++) {
-    stateVars[i]=model->setLabels(stateSpace.label[i]);
+    stateVars.clear();
+    for (int i=0;i<stateSpace.dimension;i++) {
+    stateVars << model->setLabels(stateSpace.label[i]);
                                           // get pointer to the model var.
 	if( !stateVars[i] )
 	    fatalError("parameterSpace::parameterSpace",
@@ -50,8 +47,6 @@ parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes,
 
 parameterSpace::~parameterSpace()
 {
-    if( stateVars )
-    delete stateVars;
 }
 
 /******************************************************************************/

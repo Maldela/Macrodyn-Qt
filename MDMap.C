@@ -37,7 +37,7 @@ md_Map::md_Map(double qMin,double qMax,int res,int dim,int tlim
 	int d = resolution*model_dim*time_limit;
 	
 	for (int i=0;i<resolution;i++)
-        daugther[i]="";
+        daugther << "";
 		
 	value_field = new double[d];
 	if ( !value_field ) {

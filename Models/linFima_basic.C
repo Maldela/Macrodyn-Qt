@@ -116,17 +116,13 @@ qreal* linFima_basic::setLabels(const QString& label)
 // Funktionsname:	sendStateSpace
 // Beschreibung:		return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void linFima_basic::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension]; // 1 asset in Model linFima_basic
-    if( !stateSpace )
-	fatalError("linFima_basic::sendStateSpace","Speicherfehler");
-    quantity=dimension; // 1 asset in Model linFima_basic
-   (*stateSpace)[0]=&x;
-   (*stateSpace)[1]=&y;
-};
+    stateSpace->clear();
+    quantity = dimension; // 1 asset in Model linFima_basic
+    *stateSpace << &x;
+    *stateSpace << &y;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////

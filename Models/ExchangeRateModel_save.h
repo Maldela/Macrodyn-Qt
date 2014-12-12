@@ -90,7 +90,7 @@ public:
 	void iteration(const long&);      		// perform one iteration 
     real* setLabels(char*);					// return a pointer to a variable or a parameter specified by its name
 
-    void sendStateSpace(int &,const real***);// return pointers to all model variables and the dimension of the model
+    void sendStateSpace(int &, real***);// return pointers to all model variables and the dimension of the model
     void sendParameters(int&,real**);		// write all parameters into an array and return the numbers of parameters
     void saveParamset(QTextStream&);			// write parameterset into a file
     void saveParamsetWithNames(QTextStream&);	// add parametset to printerfile (so far only for xpm)

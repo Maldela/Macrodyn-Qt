@@ -134,7 +134,7 @@ public:
     void loadParamset(QTextStream&);
     void receiveParameters(const QList<qreal>&);
 /*	void saveParamsetWithNames(QTextStream&);*/
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
     void iteration(const qint64&);
 	void wagerate();
 	void Wagebill();

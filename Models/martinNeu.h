@@ -37,7 +37,7 @@ public:
     void initialize();
     void loadParamset(QTextStream&);
     void receiveParameters(const QList<qreal>&);
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
     void iteration(const qint64&);
 };
 

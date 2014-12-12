@@ -135,17 +135,12 @@ qreal* ELS::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void ELS::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void ELS::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("ELS::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&y;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &y;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

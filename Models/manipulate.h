@@ -179,7 +179,7 @@ public:
 		qreal* setLabels(const QString&);
 		qint64 getLength() const;
 		qreal* sendModelVar();
-		void sendStateSpace(int &,const qreal***);
+		void sendStateSpace(int &, QList<qreal *> *);
         void receiveParameters(const QList<qreal>&);
 		void sendParameters(int&,qreal**);
 		void printParamset();

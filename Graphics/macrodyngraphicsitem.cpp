@@ -1,6 +1,17 @@
 #include "macrodyngraphicsitem.h"
 #include "../logger.h"
 
+
+#define LMARGIN 40
+#define LOWMARGIN 20
+#define RMARGIN 60
+#define UPMARGIN 30
+#define MAXLABELLENGTH 8
+#define AXISCOLOR QColor(Qt::black)
+#define AXISLABELCOLOR QColor(Qt::red)
+#define XICSMARKSCOLOR QColor(Qt::darkGreen)
+
+
 MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     lmargin = LMARGIN;
@@ -11,7 +22,7 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     timer.setSingleShot(true);
     backgroundColor = QColor(Qt::white);
 
-    connect(&timer, SIGNAL(timeout()), this, SLOT(resizeImage()));
+//    connect(&timer, SIGNAL(timeout()), this, SLOT(resizeImage()));
     connect(this, SIGNAL(widthChanged()), this, SLOT(handleSizeChanged()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(handleSizeChanged()));
 }
@@ -22,27 +33,30 @@ MacrodynGraphicsItem::~MacrodynGraphicsItem()
 
 void MacrodynGraphicsItem::paint(QPainter *painter)
 {
-    painter->drawImage(QRectF(0, 0, width(), height()), image);
+    painter->drawImage(boundingRect(), image);
 }
 
 void MacrodynGraphicsItem::handleSizeChanged()
 {
-    if (image.isNull())
-    {
-        image = QImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
-        image.fill(backgroundColor);
-    }
-    else
-    {
-        timer.start(50);
-    }
+    image = QImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
+    image.fill(backgroundColor);
+    if (!axis.label.isEmpty() && !axis.max.isEmpty() && !axis.min.isEmpty()) drawAxis();
+    update();
 }
 
 void MacrodynGraphicsItem::resizeImage()
 {
-    if (width() != image.width()) image = image.scaledToWidth(width());
-    if (height() != image.height()) image = image.scaledToHeight(height());
-    qDebug() << "resized image";
+//    if (width() != image.width()) image = image.scaledToWidth(width());
+//    if (height() != image.height()) image = image.scaledToHeight(height());
+    update();
+}
+
+void MacrodynGraphicsItem::setXYRange(const xyRange &range)
+{
+    axis = range;
+    qDebug() << "New yxRange set";
+    clear_window();
+    drawAxis();
 }
 
 /******************************************************************************/
@@ -52,7 +66,7 @@ void MacrodynGraphicsItem::resizeImage()
 /* Purpose:         drawing the axis                                          */
 /*                                                                            */
 /* This function is responsible for drawing the axis,                         */
-/* computing the marks and labeling the axis->                                 */
+/* computing the marks and labeling the axis.                                 */
 /* there are 3 possible color options to set:                                 */
 /* AXISCOLOR sets the color of the axis                                       */
 /* AXISLABELCOLOR sets the color of the string written                        */
@@ -68,18 +82,17 @@ int MacrodynGraphicsItem::drawAxis()
     int i;
     int axisMark;
     QString markLabel;
-    QString intxLabel = axis->label.at(0).left(qMaxLABELLENGTH + 2);
-    QString intyLabel = axis->label.at(1).left(qMaxLABELLENGTH + 2);;
-    QString char_chain;
+    QString intxLabel = axis.label.at(0).left(MAXLABELLENGTH + 2);
+    QString intyLabel = axis.label.at(1).left(MAXLABELLENGTH + 2);
     QPolygon pointsX;
     pointsX << QPoint(0, 0);         /* coords for arrow on x-axis */
-    pointsX << QPoint(-6, 3);
-    pointsX << QPoint(-6, -3);
+    pointsX << QPoint(-10, 5);
+    pointsX << QPoint(-10, -5);
 
     QPolygon pointsY;
     pointsY << QPoint(0, 0);         /* coords for arrow on y-axis */
-    pointsY << QPoint(-3, 6);
-    pointsY << QPoint(3, 6);
+    pointsY << QPoint(-5, 10);
+    pointsY << QPoint(5, 10);
 
 
 //    /* create Graphics Contexts */
@@ -90,7 +103,7 @@ int MacrodynGraphicsItem::drawAxis()
 
 //    /* check if left margin big enough for vertical numbers, if not enlarge */
 //    for (i=0;i<=4;i++){
-//        sprintf(markLabel,"%-1.4g",axis->min[1]+i*(axis->max[1]-axis->min[1])/4);
+//        sprintf(markLabel,"%-1.4g",axis.min[1]+i*(axis.max[1]-axis.min[1])/4);
 //        textWidth=XTextWidth(fontStruct,markLabel,strlen(markLabel));
 //        if( (textWidth+12) > (int)lmargin ){//create enough space to hold numbers
 //            cerr << "INFORMATION:increase left margin from " << lmargin;
@@ -102,65 +115,66 @@ int MacrodynGraphicsItem::drawAxis()
 
     /* Draw Axis + ar(height()) */
     QPainter painter(&image);
-    painter.setBrush(QBrush(AXISCOLOR));
+    painter.setPen(AXISCOLOR);
+    painter.setBrush(QColor(AXISCOLOR));
     painter.drawLine(lmargin, height()-lowmargin, width()-rmargin+5, height()-lowmargin); /* X */
     pointsX.translate(width()-rmargin+10, height()-lowmargin);/*set starting point for x-arrow*/
     /*draw x-arrow */
     painter.drawPolygon(pointsX);
 
-    painter.drawLine(lmargin, height()-lowmargin, lmargin, upmargin-5); /* Y */
-    pointsX.translate(lmargin, upmargin-10);/*set starting point for y-arrow*/
+    painter.drawLine(lmargin, height()-lowmargin, lmargin, upmargin-10); /* Y */
+    pointsY.translate(lmargin, upmargin-10);/*set starting point for y-arrow*/
     /*draw y-arrow */
     painter.drawPolygon(pointsY);
 
     // draw zeroline
-    if ((axis->zeroline[1].isValid()) && (axis->min[1] < 0))
+    if ((axis.zeroline[1].isValid()) && (axis.min[1] < 0))
     {
-        int zl = (int)(upmargin+((height())-lowmargin-upmargin) * axis->max[1] / (axis->max[1]-axis->min[1]));
+        int zl = (int)(upmargin+((height())-lowmargin-upmargin) * axis.max[1] / (axis.max[1]-axis.min[1]));
         painter.drawLine(lmargin, zl, width()-rmargin+5, zl);
     }
 
-    painter.setBrush(QBrush(AXISLABELCOLOR));
+    painter.setPen(AXISLABELCOLOR);
 
     /* Put Label on axis */
     painter.drawText(width()-rmargin+2, height()-lowmargin-5, intxLabel);
-    painter.drawText(5, upmargin-7, intyLabel);
+    painter.drawText(5, upmargin-17, intyLabel);
 
-    painter.setBrush(QBrush(XICSMARKSCOLOR));
+    painter.setPen(XICSMARKSCOLOR);
 
     /* Draw Marks on horizontal axis */
     for (i=0; i<=4; i++)
     {
         axisMark = i*((width())-lmargin-rmargin)/4;
-        markLabel.number(axis->min[0]+i*(axis->max[0]-axis->min[0])/4);
+        markLabel.number(axis.min[0]+i*(axis.max[0]-axis.min[0])/4);
         painter.drawLine(lmargin+axisMark, height()-lowmargin, lmargin+axisMark, height()-lowmargin+5);
         painter.drawText(lmargin+axisMark-10, height()-lowmargin+18, markLabel);
     }
 
     /* Draw Marks on vertical axis */
     int j,ii;
-    if (axis->zeroline[1].isValid() && axis->min[1] < 0)
+    if (axis.zeroline[1].isValid() && axis.min[1] < 0)
     {
-       int zerow = (int)(((height())-lowmargin-upmargin)*axis->max[1]/(axis->max[1]-axis->min[1]));
-       if((axis->max[1]/(-axis->min[1]))>3.8) {i=4;j=1;}
-       else if((axis->max[1]/(-axis->min[1]))>1.9) {i=4;j=2;}
-       else if((axis->max[1]/(-axis->min[1]))>1.3) {i=3;j=2;}
-       else if((axis->max[1]/(-axis->min[1]))>0.76) {i=2;j=2;}
-       else if((axis->max[1]/(-axis->min[1]))>0.53) {i=2;j=3;}
-       else if((axis->max[1]/(-axis->min[1]))>0.26) {i=2;j=4;}
+       int zerow = (int)(((height())-lowmargin-upmargin)*axis.max[1]/(axis.max[1]-axis.min[1]));
+       if((axis.max[1]/(-axis.min[1]))>3.8) {i=4;j=1;}
+       else if((axis.max[1]/(-axis.min[1]))>1.9) {i=4;j=2;}
+       else if((axis.max[1]/(-axis.min[1]))>1.3) {i=3;j=2;}
+       else if((axis.max[1]/(-axis.min[1]))>0.76) {i=2;j=2;}
+       else if((axis.max[1]/(-axis.min[1]))>0.53) {i=2;j=3;}
+       else if((axis.max[1]/(-axis.min[1]))>0.26) {i=2;j=4;}
        else {i=1;j=4;}
        for (ii=0;ii<j;ii++)
        {
            axisMark = ii*(height()-upmargin-lowmargin-zerow)/j;
            painter.drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
-           markLabel.number(axis->min[1]+ii*(-axis->min[1])/j);
+           markLabel.number(axis.min[1]+ii*(-axis.min[1])/j);
            painter.drawText(lmargin-7, height()-lowmargin-axisMark+5, markLabel);
        }
        for (ii=0;ii<=i;ii++)
        {
            axisMark = ii*zerow/i;
            painter.drawLine(lmargin-5, upmargin+zerow-axisMark, lmargin, upmargin+zerow-axisMark);
-           markLabel.number(ii*axis->max[1]/i);
+           markLabel.number(ii*axis.max[1]/i);
            painter.drawText(lmargin-7, upmargin+zerow-axisMark+5, markLabel);
        }
     }
@@ -169,7 +183,7 @@ int MacrodynGraphicsItem::drawAxis()
        {
            axisMark = i*(height()-upmargin-lowmargin)/4;
            painter.drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
-           markLabel.number(axis->min[1]+i*(axis->max[1]-axis->min[1])/4);
+           markLabel.number(axis.min[1]+i*(axis.max[1]-axis.min[1])/4);
            painter.drawText(lmargin-7, height()-lowmargin-axisMark+5, markLabel);
        }
     }
@@ -181,12 +195,12 @@ int MacrodynGraphicsItem::drawAxis()
 //        qreal lval,rval;
 //        int cqMin=base->cqMin;
 //        int cqMax=base->cqMax;
-//        qreal sqMin=axis->min[2]/cqMax;
-//        qreal sqMax=axis->max[2]/cqMax;
+//        qreal sqMin=axis.min[2]/cqMax;
+//        qreal sqMax=axis.max[2]/cqMax;
 //    //Print color caskets
 //        int yPosCount=upmargin-1;
 //        int yPosStep=(WINHEIGHT-upmargin-lowmargin)/(cqMax+17-cqMin+1+1);
-//        char_chain = QString("color scale of").append(axis->label[2]);
+//        char_chain = QString("color scale of").append(axis.label[2]);
 //        XDrawString(base->displ,buffer_pix,base->ColorGC[29],
 //                (width()),yPosCount,
 //                char_chain,strlen(char_chain));
@@ -197,11 +211,11 @@ int MacrodynGraphicsItem::drawAxis()
 //                (width())+50,yPosCount-yPosStep/8,15,9);
 //        }
 //    // print color range for interval
-//        sqMax=(axis->max[2]-axis->min[2])/(cqMax+17);
+//        sqMax=(axis.max[2]-axis.min[2])/(cqMax+17);
 //        yPosCount=upmargin+5+yPosStep;
 //        i=1;
-//        lval=axis->max[2]-(i*sqMax);
-//        sprintf(char_chain,"[%4.3f,%4.3f]",lval,axis->max[2]);
+//        lval=axis.max[2]-(i*sqMax);
+//        sprintf(char_chain,"[%4.3f,%4.3f]",lval,axis.max[2]);
 
 //        XFillRectangle(base->displ,buffer_pix,base->ColorGC[29],
 //            (width())+35,yPosCount-yPosStep/30,30,1);
@@ -212,7 +226,7 @@ int MacrodynGraphicsItem::drawAxis()
 //        for(i=2;i<34;i+=2)
 //        {
 //            yPosCount+=yPosStep*2;
-//            rval=axis->max[2]-((i+1)*sqMax);
+//            rval=axis.max[2]-((i+1)*sqMax);
 //            sprintf(char_chain,"%4.3f",rval);
 
 //            XFillRectangle(base->displ,buffer_pix,base->ColorGC[29],
@@ -224,7 +238,7 @@ int MacrodynGraphicsItem::drawAxis()
 //        }
 //        yPosCount+=yPosStep+3;
 //        i=34;
-//                lval = axis->max[2]-(i*sqMax);
+//                lval = axis.max[2]-(i*sqMax);
 //        sprintf(char_chain,"%4.3f",lval);
 
 //        XFillRectangle(base->displ,buffer_pix,base->ColorGC[29],
@@ -234,6 +248,7 @@ int MacrodynGraphicsItem::drawAxis()
 //            (width())-40,yPosCount+2,
 //            char_chain,strlen(char_chain));
 //    }
+    update();
     return(0);
 }
 
@@ -245,18 +260,19 @@ int MacrodynGraphicsItem::drawAxis()
 // Author:		Marc Mueller May 30 1999
 // Last modified:	Sun May 30 23:47:21 CEST 1999 Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void MacrodynGraphicsItem::draw_mp_names(const QList<QString>& names)
+void MacrodynGraphicsItem::draw_mp_names(const QStringList& names)
 {
     QString string;
-    for (int j=0;j<names.size();j++)
+    for (int j=0; j<names.size(); j++)
     {
-        string.append(names.at(j));
-        string.append(" ");
+        string += names.at(j);
+        string += " ";
     }
     QRect rect(QPoint(lmargin+10, upmargin-5), QPoint(width()-rmargin-10, height()-lowmargin));
     QPainter painter(&image);
     //TODO
-    //painter.setBrush(QBrush(QColor(jnngfvtdxljn)));
+    //painter.setPen(QBrush(QColor(jnngfvtdxljn)));
+    update();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -277,7 +293,7 @@ void MacrodynGraphicsItem::drawString(const qreal& x,const qreal& y, const QStri
         pixY = y;
     }
     QPainter painter(&image);
-    painter.setBrush(QBrush(color));
+    painter.setPen(color);
     painter.drawText(pixX, pixY, text);
     update();
 }
@@ -301,7 +317,7 @@ void MacrodynGraphicsItem::drawString(const qreal& x,const qreal& y, const QStri
 //    int yPosStep;
 //    int yPosCount;
 
-//    if ((axis->min[2]<0)&&(axis->max[2]>0))
+//    if ((axis.min[2]<0)&&(axis.max[2]>0))
 //    {
 //        yPosStep=(WINHEIGHT-upmargin-lowmargin)/(cqMax+17-cqMin+2);
 //        yPosCount=upmargin+yPosStep;
@@ -316,7 +332,7 @@ void MacrodynGraphicsItem::drawString(const qreal& x,const qreal& y, const QStri
 //            yPosCount+=yPosStep;
 //        }
 //    }
-//    if((axis->max[2]>0) && (axis->min[2]>=0)){
+//    if((axis.max[2]>0) && (axis.min[2]>=0)){
 //        yPosStep=(WINHEIGHT-upmargin-lowmargin)/(cqMax+17-cqMin+2);
 //        yPosCount=upmargin+yPosStep;
 //        for(i=cqMin;i<=cqMax;i++) {
@@ -330,7 +346,7 @@ void MacrodynGraphicsItem::drawString(const qreal& x,const qreal& y, const QStri
 //            yPosCount+=yPosStep;
 //        }
 //    }
-//    if((axis->max[2]<=0) && (axis->min[2]<0)){
+//    if((axis.max[2]<=0) && (axis.min[2]<0)){
 //        yPosStep=(WINHEIGHT-upmargin-lowmargin)/(cqMax+17-cqMin+2);
 //        yPosCount=upmargin+yPosStep+120;
 //        for(i=cqMin+17;i<=cqMax+17;i++) {
@@ -358,8 +374,8 @@ void MacrodynGraphicsItem::drawString(const qreal& x,const qreal& y, const QStri
 
 void MacrodynGraphicsItem::set_axis(int which, qreal to_qMin, qreal to_max)
 {
-    axis->min[which] = to_qMin;
-    axis->max[which] = to_max;
+    axis.min[which] = to_qMin;
+    axis.max[which] = to_max;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -374,8 +390,8 @@ void MacrodynGraphicsItem::set_axis(int which, qreal to_qMin, qreal to_max)
 
 void MacrodynGraphicsItem::get_axis(int which, qreal *to_qMin, qreal *to_max)
 {
-    *to_qMin = axis->min[which];
-    *to_max = axis->max[which];
+    *to_qMin = axis.min[which];
+    *to_max = axis.max[which];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -390,7 +406,9 @@ void MacrodynGraphicsItem::get_axis(int which, qreal *to_qMin, qreal *to_max)
 
 void MacrodynGraphicsItem::clear_window()
 {
-    image = QImage(boundingRect().size().toSize(), QImage::Format_ARGB32_Premultiplied);
+    image = QImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
+    image.fill(backgroundColor);
+    update();
 }
 
 /******************************************************************************/
@@ -418,9 +436,10 @@ void MacrodynGraphicsItem::setPoint(const qreal& v, const qreal& w, const QColor
     else
     {
         QPainter painter(&image);
-        painter.setBrush(QBrush(color));
+        painter.setPen(color);
         painter.drawPoint(pixv, pixw);
     }
+    update();
 }
 
 /******************************************************************************/
@@ -451,7 +470,7 @@ void MacrodynGraphicsItem::setBigPoint(const qreal& v, const qreal& w, const QCo
         QPainter painter(&image);
         painter.fillRect(rect, color);
     }
-
+    update();
 }
 
 /******************************************************************************/
@@ -472,64 +491,64 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
     y2=y0;
     x3=x1;
     y3=y1;
-    if ( (x0>axis->max[0]) || (x1>axis->max[0]) || (x0<axis->min[0]) || (x1<axis->min[0])
-         || (y0>axis->max[1]) || (y1>axis->max[1]) || (y0<axis->min[1]) || (y1<axis->min[1]) )
+    if ( (x0>axis.max[0]) || (x1>axis.max[0]) || (x0<axis.min[0]) || (x1<axis.min[0])
+         || (y0>axis.max[1]) || (y1>axis.max[1]) || (y0<axis.min[1]) || (y1<axis.min[1]) )
     {
-        if ( (y0>axis->max[1]) && (y1<=axis->max[1]) ){
+        if ( (y0>axis.max[1]) && (y1<=axis.max[1]) ){
             qreal a,b;
             a=y0;
             b=(y1-y0)/(x1-x0);
-            x2=(axis->max[1]-a)/b+x0;
-            y2=axis->max[1];
+            x2=(axis.max[1]-a)/b+x0;
+            y2=axis.max[1];
         }
-        if ( (y1>axis->max[1]) && (y0<=axis->max[1]) ){
+        if ( (y1>axis.max[1]) && (y0<=axis.max[1]) ){
             qreal a,b;
             a=y0;
             b=(y1-y0)/(x1-x0);
-            x3=(axis->max[1]-a)/b+x0;
-            y3=axis->max[1];
+            x3=(axis.max[1]-a)/b+x0;
+            y3=axis.max[1];
         }
-        if ( (y0<axis->min[1]) && (y1>=axis->min[1]) ){
+        if ( (y0<axis.min[1]) && (y1>=axis.min[1]) ){
             qreal a,b;
             a=y0;
             b=(y1-y0)/(x1-x0);
-            x2=(axis->min[1]-a)/b+x0;
-            y2=axis->min[1];
+            x2=(axis.min[1]-a)/b+x0;
+            y2=axis.min[1];
         }
-        if ( (y1<axis->min[1]) && (y0>=axis->min[1]) ){
+        if ( (y1<axis.min[1]) && (y0>=axis.min[1]) ){
             qreal a,b;
             a=y0;
             b=(y1-y0)/(x1-x0);
-            x3=(axis->min[1]-a)/b+x0;
-            y3=axis->min[1];
+            x3=(axis.min[1]-a)/b+x0;
+            y3=axis.min[1];
         }
-        if ( (x0>axis->max[0]) && (x1<=axis->max[0]) ){
+        if ( (x0>axis.max[0]) && (x1<=axis.max[0]) ){
             qreal a,b;
             a=x0;
             b=(x1-x0)/(y1-y0);
-            y2=(axis->max[0]-a)/b+y0;
-            x2=axis->max[0];
+            y2=(axis.max[0]-a)/b+y0;
+            x2=axis.max[0];
         }
-        if ( (x1>axis->max[0]) && (x0<=axis->max[0]) ){
+        if ( (x1>axis.max[0]) && (x0<=axis.max[0]) ){
             qreal a,b;
             a=x0;
             b=(x1-x0)/(y1-y0);
-            y3=(axis->max[0]-a)/b+y0;
-            x3=axis->max[0];
+            y3=(axis.max[0]-a)/b+y0;
+            x3=axis.max[0];
         }
-        if ( (x0<axis->min[0]) && (x1>=axis->min[0]) ){
+        if ( (x0<axis.min[0]) && (x1>=axis.min[0]) ){
             qreal a,b;
             a=x0;
             b=(x1-x0)/(y1-y0);
-            y2=(axis->min[0]-a)/b+y0;
-            x2=axis->min[0];
+            y2=(axis.min[0]-a)/b+y0;
+            x2=axis.min[0];
         }
-        if ( (x1<axis->min[0]) && (x0>=axis->min[0]) ){
+        if ( (x1<axis.min[0]) && (x0>=axis.min[0]) ){
             qreal a,b;
             a=x0;
             b=(x1-x0)/(y1-y0);
-            y3=(axis->min[0]-a)/b+y0;
-            x3=axis->min[0];
+            y3=(axis.min[0]-a)/b+y0;
+            x3=axis.min[0];
         }
     }
     //log() << "coordinates: ("<<x2<<","<<y2<<") ("<<x3<<","<<y3<<")"<<"\n";
@@ -546,7 +565,7 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
         pixY0 < (int)upmargin ||
         pixY0 >= ((height()) - (int)lowmargin) )
     {
-        log() << "Warning: Not available pixel: " << pixX0 << " " << pixY0;
+        log() << "Warning: Pixel not available:" << pixX0 << pixY0;
         return;
     }
     if( pixX1 <= (int)lmargin ||
@@ -554,12 +573,13 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
         pixY1 < (int)upmargin ||
         pixY1 >= ((height()) - (int)lowmargin) )
     {
-        log() << "Warning: Not available pixel: " << pixX1 << " " << pixY1;
+        log() << "Warning: Pixel not available:" << pixX1 << pixY1;
         return;
     }
     QPainter painter(&image);
-    painter.setBrush(QBrush(color));
+    painter.setPen(color);
     painter.drawLine(pixX0, pixY0, pixX1, pixY1);
+    update();
 }
 
 /******************************************************************************/
@@ -570,10 +590,10 @@ void MacrodynGraphicsItem::drawLine(const qreal& x0, const qreal& y0,
 /* Last modified:   17.10.1994 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
-void MacrodynGraphicsItem::getCoordinates(qreal v,qreal w,int& x,int& y)
+void MacrodynGraphicsItem::getCoordinates(qreal v, qreal w, int& x, int& y)
 {
-    x=(int)((v-axis->min[0])*(wid-1)/(axis->max[0]-axis->min[0])+0.5)+1;
-    y=(int)((w-axis->min[1])*(hig-1)/(axis->max[1]-axis->min[1])+0.5)+1;
+    x=(int)((v-axis.min[0])*(wid-1)/(axis.max[0]-axis.min[0])+0.5)+1;
+    y=(int)((w-axis.min[1])*(hig-1)/(axis.max[1]-axis.min[1])+0.5)+1;
 //    if( w != 1 )
 //	printf("%22.20lf\n", w);
 }
@@ -612,10 +632,11 @@ void MacrodynGraphicsItem::clearColumn(qreal x)
                     // coordinates
     col += lmargin;
     QPainter painter(&image);
-    painter.setBrush(QBrush(backgroundColor));
+    painter.setPen(backgroundColor);
     painter.drawLine(col, 0, col, image.height());
                         // draw the hole column in the
                     // background color
+    update();
 }
 /******************************************************************************/
 /*                                                                            */
@@ -629,7 +650,7 @@ void MacrodynGraphicsItem::clearColumn(qreal x)
 /******************************************************************************/
 void MacrodynGraphicsItem::reset(const xyRange& newDomain)
 {
-    *axis = newDomain;
+    axis = newDomain;
     lmargin = LMARGIN;
     rmargin = RMARGIN;
     lowmargin = LOWMARGIN;
@@ -689,6 +710,7 @@ void MacrodynGraphicsItem::draw_zoom_rect(int& xcurr, int& ycurr)
 
     zoomRect.setWidth(rect_width);
     zoomRect.setHeight(rect_height);
+    update();
 }
 
 /*********************************
@@ -697,7 +719,7 @@ void MacrodynGraphicsItem::draw_zoom_rect(int& xcurr, int& ycurr)
  *********************************/
 double MacrodynGraphicsItem::pixel_to_x(int xpix)
 {
-    return (xpix-lmargin) * (axis->max[0] - axis->min[0]) / wid + axis->min[0];
+    return (xpix-lmargin) * (axis.max[0] - axis.min[0]) / wid + axis.min[0];
 }
 /*********************************
  * function to convert
@@ -705,7 +727,7 @@ double MacrodynGraphicsItem::pixel_to_x(int xpix)
  *********************************/
 double MacrodynGraphicsItem::pixel_to_y(int ypix)
 {
-    return (height()-lowmargin-ypix) * (axis->max[1]-axis->min[1]) / hig + axis->min[1];
+    return (height()-lowmargin-ypix) * (axis.max[1]-axis.min[1]) / hig + axis.min[1];
 }
 
 void MacrodynGraphicsItem::setBackgroundColor(const QColor& c)

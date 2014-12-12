@@ -530,21 +530,16 @@ qreal* dorn::setLabels(const QString& name)
 /*                                                                            */
 /******************************************************************************/
 
-void dorn::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void dorn::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("defaultModel::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&pt;
-    (*stateSpace)[1]=&wt;
-    (*stateSpace)[2]=&Bt;
-    (*stateSpace)[3]=&iet;
-    (*stateSpace)[4]=&xt;
-    (*stateSpace)[5]=&xet;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &pt;
+    *stateSpace << &wt;
+    *stateSpace << &Bt;
+    *stateSpace << &iet;
+    *stateSpace << &xt;
+    *stateSpace << &xet;
 }
     
 /******************************************************************************/

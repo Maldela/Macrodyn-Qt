@@ -6,18 +6,9 @@
 #include <QPainter>
 #include <QTimer>
 
-
 #include "../sim.h"
 #include "../axes.h"
 
-#define LMARGIN 40
-#define LOWMARGIN 20
-#define RMARGIN 60
-#define UPMARGIN 20
-#define qMaxLABELLENGTH 8
-#define AXISCOLOR QColor(Qt::black)
-#define AXISLABELCOLOR QColor(Qt::red)
-#define XICSMARKSCOLOR QColor(Qt::darkGreen)
 
 //TODO:
 // - draw image
@@ -38,7 +29,7 @@ public:
 
     int drawAxis();                     // draw axis according to the domain
 
-    void draw_mp_names(const QList<QString>&);// write multiple names in the window
+    void draw_mp_names(const QStringList&);// write multiple names in the window
 //    void draw_color_count();	// Job color_map
     void set_axis(int, qreal, qreal);	// set qMax & qMin of axis
     void get_axis(int, qreal*, qreal*); // get qMax & qMin of axis
@@ -62,6 +53,7 @@ public:
     void clearColumn(qreal);	// clear a specified column of the
                     // output window
     void closeGraphics();
+    void setXYRange(const xyRange& range);
 
 
 signals:
@@ -82,7 +74,7 @@ protected:
     QImage image;
     QTimer timer;
     int job;
-    xyRange *axis;
+    xyRange axis;
     QColor backgroundColor;
     QRect zoomRect;
     uint lmargin;

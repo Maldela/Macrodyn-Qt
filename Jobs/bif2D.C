@@ -53,19 +53,22 @@ void bif2D::simulation()
     qreal dummy_x;
 
 //    for(*xParam=xmin;*xParam<=xmax; *xParam+=stepX) {
-    for (dummy_x=xmin; dummy_x<=xmax; dummy_x+=stepX) {
+    for (dummy_x=xmin; dummy_x<=xmax; dummy_x+=stepX)
+    {
     	*xParam=dummy_x;
-	model->initialize();
-	for(t=0;t<length;t++) {
-	    model->iteration(t+1);
-	    if( t >= limit && inRange(dummy_x,*yParam) ) {
-                       	// only points inside the state space
-			// section under consideration are
-			// analysed
-        if( screenGraphics )
-            screenGraphics->setPoint(dummy_x,*yParam,9);
+        model->initialize();
+        for(t=0;t<length;t++)
+        {
+            model->iteration(t+1);
+            if( t >= limit && inRange(dummy_x,*yParam) )
+            {
+                            // only points inside the state space
+                // section under consideration are
+                // analysed
+                if( screenGraphics )
+                    screenGraphics->setPoint(dummy_x,*yParam,9);
 
-	    }
-	}
+            }
+        }
     }
 }

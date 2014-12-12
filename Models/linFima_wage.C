@@ -623,13 +623,9 @@ void linFima_wage::saveParamsetWithNames(QTextStream& outputFile)
 // Funktionsname:	sendStateSpace
 // Beschreibung:		return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void linFima_wage::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void linFima_wage::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [1]; // 1 asset in Model linFima_wage
-    if( !(*stateSpace) )
-	fatalError("linFima_wage::sendStateSpace","Speicherfehler");
-    quantity=1; // 1 asset in Model linFima_wage
-   (*stateSpace)[0]=&p;
-};
+    stateSpace->clear();
+    quantity = 1; // 1 asset in Model linFima_wage
+    *stateSpace << &p;
+}

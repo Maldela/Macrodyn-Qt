@@ -108,17 +108,12 @@ qreal* onozaki_et_al::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void onozaki_et_al::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void onozaki_et_al::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("onozaki_et_al::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&z;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &z;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

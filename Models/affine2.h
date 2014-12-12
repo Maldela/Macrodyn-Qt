@@ -51,7 +51,7 @@ public:
     void initialize();
     qreal* sendModelVar();
     qreal* setLabels(const QString&);
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
     void sendParameters(int&,qreal**); 	// write all parameters
                                 	// into an array and return the 
                                 	// numbers of parameters

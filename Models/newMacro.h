@@ -13,7 +13,8 @@
 
 #include "defaultModel.h"
 
-class newMacro : public defaultModel {
+class newMacro : public defaultModel
+{
 protected:
     void notProd(qreal&,qreal&);
     void notCom(qreal&,qreal&,qreal&);                         

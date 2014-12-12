@@ -215,17 +215,12 @@ qreal* michael::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void michael::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void michael::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("michael::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&k;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &k;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

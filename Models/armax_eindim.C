@@ -376,7 +376,7 @@ void armax_eindim::iteration(const qint64& t)
         var1 = 1.0/qreal(t-49) * sum_var1;
 		sum_var2 += v_t * v_t;
 //		var2 = 1/qreal(t-49) * sum_var2;
-		var2=(0.2 * 0.2 * 0.2)/12.0;	//for iid: var=(b-a) /12
+        var2=(0.2 * 0.2 * 0.2)/12.0;	//for iid: var=(b-a)/12
 		dif_var = var1 - var2;	//should converge to zero
 	}
 	
@@ -635,16 +635,11 @@ void armax_eindim::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax_eindim::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void armax_eindim::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-    fatalError("armax_eindim::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&y_t;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &y_t;
 
 };
 ///////////////////////////////////////////////////////////////////////////////

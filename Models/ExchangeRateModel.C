@@ -645,21 +645,15 @@ qreal* ExchangeRateModel::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void ExchangeRateModel::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("ExchangeRateModel::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&wart;
-    (*stateSpace)[1]=&part;
-    (*stateSpace)[2]=theta;
-    (*stateSpace)[3]=st_shift;
-    (*stateSpace)[4]=&eqrealt;
-
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &wart;
+    *stateSpace << &part;
+    *stateSpace << theta;
+    *stateSpace << st_shift;
+    *stateSpace << &eqrealt;
 }
     
 /******************************************************************************/

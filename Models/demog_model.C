@@ -392,17 +392,12 @@ qreal* demog_model::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void demog_model::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace = new const qreal* [1];
-    if( !(*stateSpace) )
-	fatalError("demog_model::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=1;
-    (*stateSpace)[0]=&k_t;
-};
+    stateSpace->clear();
+    quantity = 1;
+    *stateSpace << &k_t;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

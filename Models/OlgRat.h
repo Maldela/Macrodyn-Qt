@@ -44,7 +44,7 @@ public:
     virtual void iteration(const qint64&);
     qreal* sendModelVar();
     virtual qreal* setLabels(const QString&);
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
     virtual void sendParameters(int&,qreal**);   // write all parameters into an 
                                                 // array and return the numbers
 				                // of parameters

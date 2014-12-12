@@ -34,7 +34,7 @@ class cyclogram_3d : public bif3D_2par {
     qint64 resolution_z;
     qint64 dx,dy,dz;
     
-    const qreal **stateVars;          // pointer to the state variables
+    QList<qreal *> stateVars;           // pointer to the state variables
     
     
     

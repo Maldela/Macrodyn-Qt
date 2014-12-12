@@ -38,7 +38,7 @@ public:
     qreal* setLabels(const QString&);		 // return a pointer to a variable
     virtual void iteration(const qint64&); // perform one iteration 
     qreal* sendModelVar();		 // obsolete and unused
-    void sendStateSpace(int &,const qreal***);// obsolete
+    void sendStateSpace(int &, QList<qreal *> *);// obsolete
     void sendParameters(int&,qreal**); 	 // unused
     void receiveParameters(const QList<qreal>&); // unused 
 };

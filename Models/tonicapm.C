@@ -276,17 +276,12 @@ qreal* tonicapm::sendModelVar()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void tonicapm::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void tonicapm::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
     //log() << "tonicapm sendStateSpace";
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("tonicapm::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=pp;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << pp;
 }
 /******************************************************************************/
 /*                                                                            */

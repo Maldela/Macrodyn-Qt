@@ -857,15 +857,11 @@ else {	//return_F=(P+D-R*P_old)^(T)*XF_old
 // Funktionsname:	sendStateSpace
 // Beschreibung:	return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_wage::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void finanzmarkt_wage::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [1]; // 2 asset in Model finanzmarkt_wage
-    if( !(*stateSpace) )
-	fatalError("finanzmarkt_wage::sendStateSpace","Speicherfehler");
-    quantity=1; // 2 asset in Model finanzmarkt_wage
-   (*stateSpace)[0]=&p1;
-};
+    stateSpace->clear();
+    quantity = 1; // 2 asset in Model finanzmarkt_wage
+    *stateSpace << &p1;
+}
 
 

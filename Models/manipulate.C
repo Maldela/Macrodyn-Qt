@@ -157,7 +157,7 @@ qreal* manipulate::setLabels(const QString& label) {
 
 qint64  manipulate::getLength() const {return model->getLength();}
 qreal* manipulate::sendModelVar() {return model->sendModelVar();}
-void  manipulate::sendStateSpace(int &i,const qreal*** r) {model->sendStateSpace(i,r);}
+void  manipulate::sendStateSpace(int &i,QList<qreal *> *r) {model->sendStateSpace(i,r);}
 void  manipulate::receiveParameters(const QList<qreal> &r) {model->receiveParameters(r);}
 void  manipulate::sendParameters(int& i,qreal** r) {model->sendParameters(i,r);}
 void  manipulate::printParamset() {model->printParamset();}

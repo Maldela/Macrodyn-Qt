@@ -37,13 +37,11 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
     dx = bif3D_dx;
     dy = bif3D_dy;
     dz = bif3D_dz;
-    
-    stateVars=new const qreal* [stateSpace.dimension];
-    if( !stateVars )
-    fatalError("cyclogram_3d::cyclogram_3d",
-           "Can't create vector of state variables");
-    for(int i=0;i<stateSpace.dimension;i++) {
-    stateVars[i]=model->setLabels(stateSpace.label[i]);
+
+    stateVars.clear();
+    for (int i=0;i<stateSpace.dimension;i++)
+    {
+    stateVars << model->setLabels(stateSpace.label[i]);
                                           // get pointer to the model var.
     if( !stateVars[i] )
         fatalError("cyclogram_3d::cyclogram_3d",
@@ -63,8 +61,6 @@ cyclogram_3d::cyclogram_3d(baseModel* const bMod, const xyRange& axes,
 
 cyclogram_3d::~cyclogram_3d()
 {
-    if( stateVars )
-    delete stateVars;
 }
 
 /******************************************************************************/

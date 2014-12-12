@@ -207,17 +207,12 @@ qreal* test_model::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void test_model::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("test_model::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&d;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &d;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

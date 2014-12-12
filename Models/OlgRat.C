@@ -104,17 +104,12 @@ qreal* OlgRat::setLabels(const QString& label)
 /*                                                                            */
 /******************************************************************************/
 
-void OlgRat::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void OlgRat::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !stateSpace )
-	fatalError("OlgRat::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&m;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &m;
+}
 
 
 /******************************************************************************/

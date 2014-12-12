@@ -62,7 +62,7 @@ public:
     void initialize();			    // initialize the model, define
 					    // the initial state
     qreal* sendModelVar();		    // return the main model variable
-    void sendStateSpace(int &,const qreal***); // return pointers to all model
+    void sendStateSpace(int &, QList<qreal *> *); // return pointers to all model
 					    // variables and the dimension
 					    // of the model
     void sendParameters(int&,qreal**); // write all parameters

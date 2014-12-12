@@ -463,19 +463,13 @@ void samuelson1::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void samuelson1::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void samuelson1::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("samuelson1::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&x01;   
-    (*stateSpace)[1]=&x02;
-
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &x01;   
+    *stateSpace << &x02;
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //

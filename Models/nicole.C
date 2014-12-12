@@ -190,8 +190,9 @@ qreal* nicole::sendModelVar()
 /*                  returns the dimension of the system for rho=0             */
 /*                                                                            */
 /******************************************************************************/
-void nicole::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void nicole::sendStateSpace(int &quantity, QList<qreal *> *stateSpace)
 {
+    log() << "nicole::sendStateSpace is not implemented";
 }
 /******************************************************************************/
 /*                                                                            */

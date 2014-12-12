@@ -154,17 +154,12 @@ qreal* Keener::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keener::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void Keener::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("Keener::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&x;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &x;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

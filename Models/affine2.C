@@ -17,7 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 affine2::affine2() : baseModel(1)
 {
-zvar=NULL;
+    zvar=NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -35,7 +35,7 @@ zvar=NULL;
 
 affine2::~affine2()
 {
-if(zvar) delete zvar;
+    if(zvar) delete zvar;
 }
 
 
@@ -198,17 +198,12 @@ qreal* affine2::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine2::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void affine2::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
 	//log() << "This is function 'sendStateSpace()' in AFFINE2.C ."  
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("affine2::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&x;
+    quantity = dimension;
+    stateSpace->clear();
+    *stateSpace << &x;
     log() << "Now returning....";
 }
 

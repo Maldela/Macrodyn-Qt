@@ -1,5 +1,4 @@
 #include "simloader.h"
-#include "Jobs/job.h"
 #include "Jobs/attractor.h"
 #include "Jobs/basin.h"
 #include "Jobs/basinTwoCycles.h"
@@ -44,7 +43,6 @@
 
 #include "logger.h"
 #include "sim.h"
-#include "axes.h"
 #include "error.h"
 #include "MDMap.h"
 
@@ -100,6 +98,8 @@ SimLoader::SimLoader(QObject *parent) : QObject(parent)
 {
     m_modelPointer = NULL;
     m_graph = NULL;
+    m_axes = NULL;
+    m_runJob = NULL;
 }
 
 SimLoader::~SimLoader()
@@ -273,176 +273,173 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
         m_conBlock.xmax = lag_2;
     break;
     }
-}
 
-void SimLoader::runSimulation()
-{
-    qDebug() << "Run simulation";
-    Job *runJob;
-    qDebug() << "New RunJob*";
+    m_axes = conParam2xyRange(m_conBlock, 2);
+    if (m_graph) m_graph->setXYRange(*m_axes);
 
-    xyRange* axes = conParam2xyRange(m_conBlock, 2);
+    qDebug() << "New m_runJob*";
+
     window wind = HANNING; // only case Power, leave it here
 
     qDebug() << "switch reached...\n";
     switch( m_conBlock.graphTyp )
     {
         case ATTRA:
-            runJob = new attractor(m_modelPointer,*axes,m_graph);
+            m_runJob = new attractor(m_modelPointer,*m_axes,m_graph);
             break;
         case D_ATTRA:
-            runJob = new d_attractor(m_modelPointer,*axes,m_graph);
+            m_runJob = new d_attractor(m_modelPointer,*m_axes,m_graph);
             break;
         case L_ATTRA:
-            runJob = new l_attractor(m_modelPointer,*axes,m_graph,timeSeriesPlot::pointsize);
+            m_runJob = new l_attractor(m_modelPointer,*m_axes,m_graph,timeSeriesPlot::pointsize);
             break;
         case PHASE_PLOT:
-            runJob = new phase_plot(pp_lag_size,m_modelPointer,*axes,m_graph,timeSeriesPlot::pointsize);
+            m_runJob = new phase_plot(pp_lag_size,m_modelPointer,*m_axes,m_graph,timeSeriesPlot::pointsize);
             break;
         case CELLATTRA:
-            runJob = new cellAttractor(m_modelPointer,*axes,m_graph);
+            m_runJob = new cellAttractor(m_modelPointer,*m_axes,m_graph);
             break;
         case BIF2D:
-            runJob = new bif2D(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new bif2D(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case BIF3D_1PAR:
-            if ( axes )
-                delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-            axes->res[0]=bif3D_resx;
-            axes->res[1]=bif3D_resy;
-            axes->res[2]=bif3D_resz;
-            runJob = new bif3D_1par(m_modelPointer,*axes,m_graph,bif3D_dx,
+            if ( m_axes )
+                delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+            m_axes->res[0]=bif3D_resx;
+            m_axes->res[1]=bif3D_resy;
+            m_axes->res[2]=bif3D_resz;
+            m_runJob = new bif3D_1par(m_modelPointer,*m_axes,m_graph,bif3D_dx,
             bif3D_dy,bif3D_dz);
             break;
         case BIF3D_2PAR:
-            if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-            axes->res[0]=bif3D_resx;
-            axes->res[1]=bif3D_resy;
-            axes->res[2]=bif3D_resz;
-            runJob = new bif3D_2par(m_modelPointer,*axes,m_graph,bif3D_dx,
+            if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+            m_axes->res[0]=bif3D_resx;
+            m_axes->res[1]=bif3D_resy;
+            m_axes->res[2]=bif3D_resz;
+            m_runJob = new bif3D_2par(m_modelPointer,*m_axes,m_graph,bif3D_dx,
             bif3D_dy,bif3D_dz);
             break;
         case CYCLO3D:
-            if ( axes )
-                delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-            axes->res[0]=bif3D_resx;
-            axes->res[1]=bif3D_resy;
-            axes->res[2]=bif3D_resz;
-            runJob = new cyclogram_3d(m_modelPointer,*axes,*stateSpace,m_graph,bif3D_dx,
+            if ( m_axes )
+                delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+            m_axes->res[0]=bif3D_resx;
+            m_axes->res[1]=bif3D_resy;
+            m_axes->res[2]=bif3D_resz;
+            m_runJob = new cyclogram_3d(m_modelPointer,*m_axes,*stateSpace,m_graph,bif3D_dx,
             bif3D_dy,bif3D_dz);
             break;
         case ATTRA3D:
-            if ( axes )
-                delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-            axes->res[0]=bif3D_resx;
-            axes->res[1]=bif3D_resy;
-            axes->res[2]=bif3D_resz;
-            runJob = new attractor_3d(m_modelPointer,*axes,m_graph);
+            if ( m_axes )
+                delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+            m_axes->res[0]=bif3D_resx;
+            m_axes->res[1]=bif3D_resy;
+            m_axes->res[2]=bif3D_resz;
+            m_runJob = new attractor_3d(m_modelPointer,*m_axes,m_graph);
             break;
         case D_BIF2D:
-            runJob = new d_bif2D(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new d_bif2D(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case D_BIF2D_F2:
-            runJob = new d_bif2D_f2(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new d_bif2D_f2(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case D_BIF2D_F4:
-            runJob = new d_bif2D_f4(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new d_bif2D_f4(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case DENSITY_1D:
-            runJob = new density_1d(m_modelPointer,*axes,m_graph);
+            m_runJob = new density_1d(m_modelPointer,*m_axes,m_graph);
             break;
         case DENSITY_1D_1P:
                 if( !m_graph )
             break;
-            if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-            axes->res[2]=10;
-            runJob = new density_1d_1p(m_modelPointer,*axes,m_graph);
+            if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+            m_axes->res[2]=10;
+            m_runJob = new density_1d_1p(m_modelPointer,*m_axes,m_graph);
             break;
         case DENSITY_1D_VAR:
-            if ( axes ) delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-            axes->res[2]=lag_1;
-            runJob = new density_1d_var(m_modelPointer,*axes,m_graph);
+            if ( m_axes ) delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+            m_axes->res[2]=lag_1;
+            m_runJob = new density_1d_var(m_modelPointer,*m_axes,m_graph);
             break;
         case INDICATOR_2D:
                 if( !m_graph )
             break;
-            if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);	// what a pity
-            runJob = new indicator_2d(m_modelPointer,*axes,m_graph);
+            if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);	// what a pity
+            m_runJob = new indicator_2d(m_modelPointer,*m_axes,m_graph);
             break;
         case DISCBIF2D:
-                axes->res[0]=(short)(axes->max[0]-axes->min[0]+1);
-            runJob = new discreteBif2D(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+                m_axes->res[0]=(short)(m_axes->max[0]-m_axes->min[0]+1);
+            m_runJob = new discreteBif2D(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case CELLBIF2D:
-            runJob = new cellBif2D(m_modelPointer,*axes,m_graph);
+            m_runJob = new cellBif2D(m_modelPointer,*m_axes,m_graph);
             break;
         case PARSPACE:
-            runJob = new parameterSpace(m_modelPointer,*axes,*stateSpace,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new parameterSpace(m_modelPointer,*m_axes,*stateSpace,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case MAX_LAYP_EXP_1D:
-            runJob = new max_lyapunov_exp_1d(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new max_lyapunov_exp_1d(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case MAX_LAYP_EXP_2D:
-            runJob = new max_lyapunov_exp_2d(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new max_lyapunov_exp_2d(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case MAX_LAYP_EXP_T:
-            runJob = new max_lyapunov_exp_t(m_modelPointer,*axes,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new max_lyapunov_exp_t(m_modelPointer,*m_axes,m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case NPARMAP:
-                runJob = new nParameterAnalysis(m_modelPointer,*axes,*stateSpace,
+                m_runJob = new nParameterAnalysis(m_modelPointer,*m_axes,*stateSpace,
                           *xDef,*yDef,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob->setStepX(stepX);
             break;
         case BIFNPARAM:
-                runJob = new bifnParam(m_modelPointer,*axes,
+                m_runJob = new bifnParam(m_modelPointer,*m_axes,
                           *xDef,m_graph);
-            runJob->setStepX(stepX);
+            m_runJob->setStepX(stepX);
             break;
         case D_BIFNPARAM:
-            runJob = new d_bifnParam(m_modelPointer, *axes, *xDef, m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new d_bifnParam(m_modelPointer, *m_axes, *xDef, m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case SIMPLECELL:
-            runJob = new simpleCellMapping(m_modelPointer,*axes,m_graph);
+            m_runJob = new simpleCellMapping(m_modelPointer,*m_axes,m_graph);
             break;
         case STATEANAL:
-            runJob = new stateSpaceAnalysis(m_modelPointer,*axes,m_graph);
+            m_runJob = new stateSpaceAnalysis(m_modelPointer,*m_axes,m_graph);
             break;
         case BIF2PAR:
                 if( !m_graph )
             break;
-            if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-            axes->res[2]=10;
-            runJob = new bif2Param(m_modelPointer,*axes,m_graph);
+            if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+            m_axes->res[2]=10;
+            m_runJob = new bif2Param(m_modelPointer,*m_axes,m_graph);
             break;
         case BASIN:
-            runJob = new basin(m_modelPointer,*axes,"cycle.asc",m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new basin(m_modelPointer,*m_axes,"cycle.asc",m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case BASIN2:
-            runJob = new basinTwoCycles(m_modelPointer,*axes,"cycle1.asc", "cycle2.asc",m_graph);
-            runJob->setStepX(stepX);
+            m_runJob = new basinTwoCycles(m_modelPointer,*m_axes,"cycle1.asc", "cycle2.asc",m_graph);
+            m_runJob->setStepX(stepX);
             break;
         case HORSE: break;
         /**********************************
@@ -452,111 +449,117 @@ void SimLoader::runSimulation()
             xDim=graph->sizeX();
             yDim=graph->sizeY();
             }
-            axes=new xyRange(m_conBlock.xLabel,m_conBlock.xmin,
+            m_axes=new xyRange(m_conBlock.xLabel,m_conBlock.xmin,
                      m_conBlock.xmax,xDim,m_conBlock.yLabel,
                      m_conBlock.ymin,m_conBlock.ymax,yDim);
-            printDevice=createPrinter(*axes);
-            runJob = new horseshoe(m_modelPointer,*axes,m_graph);
+            printDevice=createPrinter(*m_axes);
+            m_runJob = new horseshoe(m_modelPointer,*m_axes,m_graph);
             break;
          ************************************/
         case POWER:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new powerSpec(m_modelPointer,wind,axes->label[2],m_graph);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new powerSpec(m_modelPointer,wind,m_axes->label[2],m_graph);
             break;
         case TSPLOT:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new timeSeriesPlot(m_modelPointer,axes->label[1],m_graph,NULL,multiplot_num,multiplotPtrs);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new timeSeriesPlot(m_modelPointer,m_axes->label[1],m_graph,NULL,multiplot_num,multiplotPtrs);
             break;
         case M_TSPLOT:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new m_timeSeriesPlot(ts_init_values,
-                                        m_modelPointer,axes->label[1],m_graph);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new m_timeSeriesPlot(ts_init_values,
+                                        m_modelPointer,m_axes->label[1],m_graph);
             break;
         case M_TSPLOT_v:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new m_timeSeriesPlot_v(axes->label[2],ts_init_values,
-                                m_modelPointer,axes->label[1],m_graph);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new m_timeSeriesPlot_v(m_axes->label[2],ts_init_values,
+                                m_modelPointer,m_axes->label[1],m_graph);
             break;
         case TSPLOT_LOOP:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new timeSeriesPlot_Loop(loop_size,m_modelPointer,axes->label[1],m_graph,
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new timeSeriesPlot_Loop(loop_size,m_modelPointer,m_axes->label[1],m_graph,
                     NULL,multiplot_num,multiplotPtrs);
             break;
         case COLOR_PLOT:
         case COLOR_PLOT_B:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new color_plot(point_size,m_modelPointer,*axes,m_graph);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new color_plot(point_size,m_modelPointer,*m_axes,m_graph);
             break;
         case CONTOURLINE:
         case CONTOURLINE_B:
         case CONTOURLINE_C:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new contourline(m_modelPointer,*axes,*xDef,*yDef,m_graph);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new contourline(m_modelPointer,*m_axes,*xDef,*yDef,m_graph);
             break;
         case PROBABILITY:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new probability(point_size,m_modelPointer,*axes,m_graph);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new probability(point_size,m_modelPointer,*m_axes,m_graph);
             break;
         case DISTRIBUTION:
-                if( axes )
-            delete axes;
-            axes=conParam2xyRange(m_conBlock,3);
-                runJob = new distributionJob(point_size,m_modelPointer,*axes,m_graph);
+                if( m_axes )
+            delete m_axes;
+            m_axes=conParam2xyRange(m_conBlock,3);
+                m_runJob = new distributionJob(point_size,m_modelPointer,*m_axes,m_graph);
             break;
         case ACF_PLOT:
-            axes->min[0]=m_conBlock.zmin;
-            axes->max[0]=m_conBlock.zmax;
-            runJob = new acf_plot(m_modelPointer,*axes,m_graph,lag_1,lag_2);
+            m_axes->min[0]=m_conBlock.zmin;
+            m_axes->max[0]=m_conBlock.zmax;
+            m_runJob = new acf_plot(m_modelPointer,*m_axes,m_graph,lag_1,lag_2);
             break;
         case PACF_PLOT:
-            axes->min[0]=m_conBlock.zmin;
-            axes->max[0]=m_conBlock.zmax;
-            runJob = new pacf_plot(m_modelPointer,*axes,m_graph,lag_1,lag_2);
+            m_axes->min[0]=m_conBlock.zmin;
+            m_axes->max[0]=m_conBlock.zmax;
+            m_runJob = new pacf_plot(m_modelPointer,*m_axes,m_graph,lag_1,lag_2);
             break;
         case MDMAP:
-            runJob = new mapping(m_modelPointer,m_graph,0,1,5,3,10,"maps/default_test.map",NULL);
+            m_runJob = new mapping(m_modelPointer,m_graph,0,1,5,3,10,"maps/default_test.map",NULL);
             break;
         case TSSET:
             if (m_conBlock.zLabel == "true") {
-            runJob = new timeSeriesSet(m_modelPointer,*axes,"",true,long(m_conBlock.zmin));
+            m_runJob = new timeSeriesSet(m_modelPointer,*m_axes,"",true,long(m_conBlock.zmin));
             } else {
-            runJob = new timeSeriesSet(m_modelPointer,*axes,"",false,long(m_conBlock.zmin));
+            m_runJob = new timeSeriesSet(m_modelPointer,*m_axes,"",false,long(m_conBlock.zmin));
             }
             break;
         default:
-            log() << "macrodyn::doRun m_conBlock.graphTyp %i not implemented " << m_conBlock.graphTyp;
+            log() << "GraphTyp not implemented:" << m_conBlock.graphTyp;
             break;
     }
 //    saveFile("actualSet.par");
     qDebug() << "Switch left...\n";
-    if( runJob )
+}
+
+void SimLoader::runSimulation()
+{
+    qDebug() << "Run simulation";
+
+    if( m_runJob )
     {
-        log() << "starting simulation...\n";
-        runJob->simulation();
-        delete runJob;
+        log() << "starting simulation...";
+        m_runJob->simulation();
+        delete m_runJob;
     }
-    else log() << "job misspecified...\n";
+    else log() << "job misspecified...";
 
 //	log() << "closing job...\n";
 
-    if( axes )
-    delete axes;
+    if( m_axes )
+    delete m_axes;
 }
 
 void SimLoader::setModel(const QString &model)

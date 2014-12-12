@@ -31,7 +31,7 @@ public:
 				            //   parameter or variable
     virtual void initialize()=0;            // initialize the model
     virtual void loadParamset(QTextStream&)=0; // load set from a file
-    virtual void sendStateSpace(int&,const qreal***)=0;// return the system's
+    virtual void sendStateSpace(int&,QList<qreal *> *)=0;// return the system's
 				            //   dimension and pointers to all
 				            //   state variables
     virtual void iteration(const qint64&)=0;  // perform one iteration

@@ -175,17 +175,12 @@ qreal* affine3::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void affine3::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void affine3::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-	if( stateSpace )
-		delete stateSpace;
-	*stateSpace = new const qreal* [dimension];
-	if( !(*stateSpace) )
-		fatalError("affine3::sendStateSpace",
-			   "Can't create state space vector");
-	quantity=dimension;
-	(*stateSpace)[0]=&x;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &x;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

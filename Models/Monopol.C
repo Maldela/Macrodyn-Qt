@@ -128,19 +128,14 @@ qreal* Monopol::setLabels(const QString& label)
 /*                                                                            */
 /******************************************************************************/
 
-void Monopol::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void Monopol::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !stateSpace )
-	fatalError("Monopol::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&zeta;
-    (*stateSpace)[1]=&m;
-    (*stateSpace)[2]=&z;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &zeta;
+    *stateSpace << &m;
+    *stateSpace << &z;
+}
 
 
 /******************************************************************************/

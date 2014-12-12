@@ -45,7 +45,7 @@ public:
     void initialize();			    // initialize the model
     void loadParamset(QTextStream&);	    // load parameterset from a file
     void saveParamsetWithNames(QTextStream&);  // add parametset to XPM printerfile
-    void sendStateSpace(int &,const qreal***);// return pointers to all model
+    void sendStateSpace(int &, QList<qreal *> *);// return pointers to all model
 					    // variables and the dimension
 					    // of the model
     void iteration(const qint64&);            // perform one iteration 

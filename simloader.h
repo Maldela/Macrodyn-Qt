@@ -7,6 +7,8 @@
 #include "block.h"
 #include "Models/baseModel.h"
 #include "Graphics/macrodyngraphicsitem.h"
+#include "Jobs/job.h"
+
 
 class SimLoader : public QObject
 {
@@ -49,6 +51,8 @@ protected:
     baseModel *m_modelPointer;
     conParam m_conBlock;
     MacrodynGraphicsItem *m_graph;
+    xyRange *m_axes;
+    Job *m_runJob;
 
     int m_graphTyp;
     int m_paramCount;

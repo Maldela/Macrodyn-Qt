@@ -67,7 +67,7 @@ void basinTwoCycles::simulation()
 					// is done every tDiv periods until
 					// length is reached or the orbit
 					// tends to the cycle
-    const qreal **stateVars=NULL;      // pointer to the state vars.
+    QList<qreal *> stateVars;      // pointer to the state vars.
 
     int period= period1 > period2 ? period1: period2; // qMax(period1,period2);
 
@@ -125,8 +125,6 @@ void basinTwoCycles::simulation()
 	    }                               // end of for(t=..  
 	}
     }
-    if( stateVars )
-	delete stateVars;
     for(i=0;i<dimension;i++)
 	delete lastOrbit[i];
     delete lastOrbit;

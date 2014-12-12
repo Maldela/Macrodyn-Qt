@@ -281,17 +281,12 @@ void EnRAssH::saveParamsetWithNames(QTextStream& outputFile)
 // Last modified:	
 // By:			Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
-void EnRAssH::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void EnRAssH::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("EnRAssH::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&p;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &p;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Class name:		EnRAssH

@@ -644,18 +644,12 @@ qreal* rSolow::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rSolow::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void rSolow::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	error("rSolow::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&k;                                
-
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &k;                                
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -91,7 +91,7 @@ public:
     void iteration(const qint64&);
     void initialize();
     qreal* setLabels(const QString&);
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
 
     qreal* sendModelVar();		// for compatibity reasons only
     void sendParameters(int&,qreal**);
@@ -162,7 +162,7 @@ private:
     
 public:
     depreciate();			// constructor
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
     qreal * setLabels(const QString&);		// get a variable by a name
     void initialize(void);		// initialize the model
     void loadParamset(QTextStream&);	// load parameterset from a file

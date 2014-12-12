@@ -35,7 +35,7 @@ simpleCellMapping::simpleCellMapping(baseModel* const bMod,const xyRange& axes,
     for(uint i=0;i<=K;i++)
 	Gr[i]=P[i]=St[i]=0;
     lastGroup=0;
-    model->sendStateSpace(modelDim,&modelVars);
+    model->sendStateSpace(modelDim,&stateVars);
 }
 
 /******************************************************************************/
@@ -54,9 +54,7 @@ simpleCellMapping::~simpleCellMapping()
     if( P )
 	delete P;
     if( St )
-	delete St;
-    if( modelVars )
-	delete modelVars;
+    delete St;
 }
 
 /******************************************************************************/
@@ -105,11 +103,11 @@ uint simpleCellMapping::iteration(const uint& startCell)
     model->initialize();
     model->iteration(1);
 
-    if( !inRange(*modelVars[0],*modelVars[1]) )
+    if( !inRange(*stateVars[0],*stateVars[1]) )
 	return 0;
 
-    cellX=(uint)((*modelVars[0]-xmin)/(xmax-xmin)*h[0]) + 1;
-    cellY=(uint)((*modelVars[1]-ymin)/(ymax-ymin)*h[1]);
+    cellX=(uint)((*stateVars[0]-xmin)/(xmax-xmin)*h[0]) + 1;
+    cellY=(uint)((*stateVars[1]-ymin)/(ymax-ymin)*h[1]);
 
     return ( h[0]*cellY + cellX );
 }

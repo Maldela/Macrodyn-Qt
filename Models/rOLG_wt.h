@@ -112,7 +112,7 @@ public:
     void expection(qreal,qreal);
     void initialize();
     qreal* setLabels(const QString&);
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
 
     qreal* sendModelVar();		// for compatibity reasons only
     void sendParameters(int&,qreal**);

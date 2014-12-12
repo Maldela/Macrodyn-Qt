@@ -633,18 +633,14 @@ void finanzmarkt_Jan::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_Jan::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void finanzmarkt_Jan::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("finanzmarkt_Jan::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&r;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &r;
 
-};
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //

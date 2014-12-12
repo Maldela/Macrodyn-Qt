@@ -395,17 +395,12 @@ void finanzmarkt_2Dim::loadParamset(QTextStream& inFile)
 // Funktionsname:	sendStateSpace
 // Beschreibung:	return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void finanzmarkt_2Dim::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [2]; // 2 asset in Model finanzmarkt_2Dim
-    if( !(*stateSpace) )
-	fatalError("finanzmarkt_2Dim::sendStateSpace","Speicherfehler");
-    quantity=2; // 2 asset in Model finanzmarkt_2Dim
-   (*stateSpace)[0]=&p1;
-   (*stateSpace)[1]=&p2;
-};
+    quantity = dimension;
+    *stateSpace << &p1;
+    *stateSpace << &p2;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Funktionsname:	iteration

@@ -134,17 +134,12 @@ qreal* logistic::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void logistic::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void logistic::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("logistic::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&x;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &x;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

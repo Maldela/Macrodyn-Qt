@@ -412,19 +412,14 @@ qreal* defbudba::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void defbudba::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("defbudba::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&mtqreal;
-    (*stateSpace)[1]=&wtqreal;
-    (*stateSpace)[2]=theta;
-    (*stateSpace)[3]=&g;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &mtqreal;
+    *stateSpace << &wtqreal;
+    *stateSpace << theta;
+    *stateSpace << &g;
 }
     
 /******************************************************************************/

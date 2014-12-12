@@ -6,8 +6,8 @@ import MacrodynQML 1.0
 ApplicationWindow {
     id: applicationWindow1
     visible: true
-    width: 640
-    height: 480
+    width: 1024
+    height: 768
     title: qsTr("Hello World")
 
     menuBar: MenuBar {
@@ -41,10 +41,10 @@ ApplicationWindow {
         selectedNameFilter: "Macrodyn simulation"
         onAccepted: {
             loader.loadSimulationfromUrl(fileDialog.fileUrl);
-            close()
+            close();
         }
         onRejected: {
-            close()
+            close();
         }
     }
 
@@ -55,7 +55,7 @@ ApplicationWindow {
 
     MacrodynGraphicsItem {
         id: graph
-        width: 392
+        width: 640
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left

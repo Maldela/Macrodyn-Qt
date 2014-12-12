@@ -63,7 +63,7 @@ public:
 	void loadParamset(QTextStream&);	
 	void saveParamsetWithNames(QTextStream&); 
     void receiveParameters(const QList<qreal>&);
-	void sendStateSpace(int &,const qreal***);
+	void sendStateSpace(int &, QList<qreal *> *);
 	void iteration(const qint64&);
 
 };

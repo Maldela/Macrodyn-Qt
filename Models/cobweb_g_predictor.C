@@ -262,17 +262,12 @@ qreal* cobweb_g_predictor::sendModelVar()
 /* Last modified:   30.01.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void cobweb_g_predictor::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
     //log() << "cobweb_g_predictor sendStateSpace";
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("cobweb_g_predictor::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=pp;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << pp;
 }
 /******************************************************************************/
 /*                                                                            */

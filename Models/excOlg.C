@@ -271,16 +271,11 @@ qreal* excOlg::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-void excOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void excOlg::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("excOlg::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&thetat;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &thetat;
 }
     
 /******************************************************************************/

@@ -28,7 +28,7 @@ class simpleCellMapping : public geometricJob {
     int *St;			        // vector of the step numbers
     uint K;			        // number of cells
     uint lastGroup;			// id of the last detected group
-    const qreal **modelVars;
+    QList<qreal *> stateVars;
 
     void discrete2Cont(const uint&,qreal&,qreal&); // transformation of
 					// a discrete cell to the corresponding

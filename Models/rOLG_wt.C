@@ -431,17 +431,12 @@ qreal* rOLG_wt::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rOLG_wt::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void rOLG_wt::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	error("rOLG_wt::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&K_olg;                                
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &K_olg;                                
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

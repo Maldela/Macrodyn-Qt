@@ -56,7 +56,7 @@ class hashTable {
     uint noHits;            // # hits at all
     uint noBuckets;         // # hit buckets
     uint collisions;        // # collisions
-    qreal whichCell(const qreal**) const; // computes the cell number of
+    qreal whichCell(const QList<qreal *>&) const; // computes the cell number of
         			// the state space that has been hit
     uint hashFunction(const qreal&); // the hash function
     QTextStream logFile;
@@ -64,7 +64,7 @@ class hashTable {
   public:
     hashTable(const uint&,const xyRange&);    // constructor
     virtual ~hashTable();	   // destructor
-    int storePoint(const qreal**);
+    int storePoint(const QList<qreal *>&);
     void discrete2Cont(const qreal&,qreal**); //computes the middle
                                    // point of a given cell
     uint numberOfHits();	   // returns noHits

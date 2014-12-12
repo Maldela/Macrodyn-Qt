@@ -23,7 +23,7 @@
 class stateSpaceAnalysis: public attractor {
   protected:
     qreal qMaxCell;		        // number of cells in the state Space
-    const qreal **stateVars;
+    QList<qreal *> stateVars;
 
   public:
     stateSpaceAnalysis(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);

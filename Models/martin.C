@@ -133,19 +133,14 @@ qreal* martin::setLabels(const QString& label)
 /*                                                                            */
 /******************************************************************************/
 
-void martin::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void martin::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !stateSpace )
-	fatalError("martin::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&beta;
-    (*stateSpace)[1]=&k;
-    (*stateSpace)[2]=&g;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &beta;
+    *stateSpace << &k;
+    *stateSpace << &g;
+}
 
 
 /******************************************************************************/

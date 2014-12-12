@@ -295,17 +295,12 @@ qreal* hetoni::sendModelVar()
 /* Last modified:   20.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void hetoni::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
     //log() << "hetoni sendStateSpace";
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("hetoni::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=pp;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << pp;
 }
 /******************************************************************************/
 /*                                                                            */

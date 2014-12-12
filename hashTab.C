@@ -9,6 +9,7 @@
 
 #include "hashTab.h"
 #include "error.h"
+#include "logger.h"
 
 extern void fatalError(const QString&, const QString&);
 
@@ -89,11 +90,16 @@ hashTable::~hashTable()
 /*                                                                            */
 /******************************************************************************/
 
-qreal hashTable::whichCell(const qreal** actualState) const
+qreal hashTable::whichCell(const QList<qreal *>& actualState) const
 {
     qreal cell=0.0;
     static qreal logBase=log(double(base));
 
+    if (actualState.size() < domain.dimension-1)
+    {
+        log() << "ActualState does not contain enough elements!";
+        return 0;
+    }
     for(int i=0;i<domain.dimension;i++) {
     discreteState[i]=(unsigned) ( (domain.res[i]-1)*
                     (*actualState[i]-domain.min[i])/
@@ -162,7 +168,7 @@ uint hashTable::hashFunction(const qreal &cell)
 /*                                                                            */
 /******************************************************************************/
 
-int hashTable::storePoint(const qreal** state)
+int hashTable::storePoint(const QList<qreal*>& stateVars)
 {
     qreal cell;		        // id of the cell that represents the
 					// point to be stored
@@ -170,12 +176,12 @@ int hashTable::storePoint(const qreal** state)
     qreal *value;			// pointer to a bucket in the hash table
     uint finished=0;		// 0 until the hashing is finished
 
-    if( !domain.inRange(state) ) {      // check wether the point is in the 
+    if( !domain.inRange(stateVars) ) {      // check wether the point is in the
       					// domain to be considered or not
 //	log() << "Domain error\t" << state[0] << "\t" << state[1] 
 	return 1;
     }
-    cell=whichCell(state);    		// transform the coordinates into a
+    cell=whichCell(stateVars);    		// transform the coordinates into a
 				        // cell id
     bucket=hashFunction(cell);		// perform the hashing
     srand48(bucket);			// initialize the random number 

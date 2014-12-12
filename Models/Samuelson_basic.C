@@ -167,17 +167,12 @@ qreal* Samuelson_basic::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Samuelson_basic::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void Samuelson_basic::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("Samuelson_basic::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&y;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &y;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

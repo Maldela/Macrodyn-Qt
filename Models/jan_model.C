@@ -131,18 +131,13 @@ qreal* jan_model::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void jan_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void jan_model::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("jan_model::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&x;
-    // (*stateSpace)[1]=&y; // (fuer 2-dimensionalen Phasenraum);
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &x;
+    // *stateSpace << &y; // (fuer 2-dimensionalen Phasenraum);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////

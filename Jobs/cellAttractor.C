@@ -38,10 +38,10 @@ void cellAttractor::simulation()
     qint64 colChange=length/6;
     qreal hx=(xmax-xmin+0.001)/940000000.0;
     qreal hy=(ymax-ymin+0.001)/860000000.0;
-    const qreal *state[2];
+    QList<qreal *> stateVars;
 
-    state[0]=xParam;
-    state[1]=yParam;
+    stateVars << xParam;
+    stateVars << yParam;
 
     model->initialize();
     *xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
@@ -52,7 +52,7 @@ void cellAttractor::simulation()
     *xParam=xmin+( ((int) ((*xParam-xmin)/hx) ) + 0.5)*hx;
     *yParam=ymin+( ((int) ((*yParam-ymin)/hy) ) + 0.5)*hy;
 	if( t >= limit && inRange(*xParam,*yParam) ) {
-	    hash->storePoint(state);
+        hash->storePoint(stateVars);
 	    if( screenGraphics ) 
 		screenGraphics->setPoint(*xParam,*yParam,
                      (int)((t/colChange)+1));

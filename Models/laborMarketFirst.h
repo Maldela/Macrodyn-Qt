@@ -77,7 +77,7 @@ public:
     qreal* setLabels(const QString&);		 // return a pointer to a variable or
 					 // a parameter specified by its name
     qreal* sendModelVar();		 // return the main model variable
-    void sendStateSpace(int &,const qreal***); // return pointers to all model
+    void sendStateSpace(int &, QList<qreal *> *); // return pointers to all model
 					 // variables and the dimension
 					 // of the model
     virtual void iteration(const qint64&); // perform one iteration 

@@ -240,17 +240,12 @@ qreal* capOlg::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-void capOlg::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void capOlg::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("capOlg::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&kt;
-    (*stateSpace)[1]=&rt;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &kt;
+    *stateSpace << &rt;
 }
     
 /******************************************************************************/

@@ -44,21 +44,22 @@ void mapping::simulation()
 {
     log() << "mapping initialized...\n";
 	int dummy;
-	const qreal** states;
-	
+    QList<qreal *> stateVars;
 	m->give_attributes();
 	
-	for (int i=0; i<resolution; i++) {
+    for (int i=0; i<resolution; i++)
+    {
 		model->initialize();
         log() << "model length:" << model->getLength();
 		for (int j=0; j<time_limit; j++) {
 			model->iteration(j+1);
-			model->sendStateSpace(dummy, &states);
-			for (int k=0; k<model_dim; k++) {
+            model->sendStateSpace(dummy, &stateVars);
+            for (int k=0; k<model_dim; k++)
+            {
             //	log() << i*time_limit*model_dim+j*model_dim+k << " " 
             //	log() << (states)[0] << " " << (states)[1] << "\n" 
             //	log() << ((*states)[0]) << " " << ((*states)[1]) << "\n" 
-				m->value_field[i*time_limit*model_dim+j*model_dim+k]=((*states)[k-1]);
+                m->value_field[i*time_limit*model_dim+j*model_dim+k] = *stateVars[k]; //Weird
 			}
 		}
 	}

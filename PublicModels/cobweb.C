@@ -148,17 +148,12 @@ qreal* cobweb::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void cobweb::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("cobweb::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&p;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &p;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //

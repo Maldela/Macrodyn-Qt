@@ -39,8 +39,6 @@ stateSpaceAnalysis::stateSpaceAnalysis(baseModel* const bMod,
 
 stateSpaceAnalysis::~stateSpaceAnalysis()
 {
-    if( stateVars )
-    delete stateVars;
 }
 
 /******************************************************************************/

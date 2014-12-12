@@ -409,17 +409,13 @@ void MerA::saveParamsetWithNames(QTextStream& outputFile)
 // Author:		Marc Mueller
 // Last modified:	
 ///////////////////////////////////////////////////////////////////////////////
-void MerA::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void MerA::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [K]; // K assets in Model MerA
-    if( !(*stateSpace) )
-	fatalError("MerA::sendStateSpace","Can't create state space vector");
+    stateSpace->clear();
     quantity=K; // K assets in Model MerA
     for(int i=0;i<K;i++)
-	    (*stateSpace)[i]=&p[i];
-};
+        *stateSpace << &p[i];
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Class name:		MerA

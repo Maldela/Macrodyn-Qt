@@ -336,21 +336,16 @@ qreal* laborMarketFirst::sendModelVar()
 /* Last modified:   29.11.1995 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void laborMarketFirst::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void laborMarketFirst::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("defaultModel::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&wtqreal;
-    (*stateSpace)[1]=&omegat;
-    (*stateSpace)[2]=theta;
-    (*stateSpace)[3]=&dt;
-    (*stateSpace)[4]=&mtqrealS;
-    (*stateSpace)[5]=&mtqrealW;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &wtqreal;
+    *stateSpace << &omegat;
+    *stateSpace << theta;
+    *stateSpace << &dt;
+    *stateSpace << &mtqrealS;
+    *stateSpace << &mtqrealW;
 }
 /******************************************************************************/
 /*                                                                            */

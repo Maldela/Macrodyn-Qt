@@ -239,18 +239,13 @@ void milano_bcw::saveParamsetWithNames(QTextStream& outputFile) {  // add parame
 }
 
 /******************************************************************************/
-void milano_bcw::sendStateSpace(int &quantity,const qreal*** stateSpace) {
+void milano_bcw::sendStateSpace(int &quantity,QList<qreal *> *stateSpace) {
 //return pointers to all model variables and the dimension of the model
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("milano_bcw::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&mqreal;
-    (*stateSpace)[1]=&alfa;
-    (*stateSpace)[2]=&pgt;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &mqreal;
+    *stateSpace << &alfa;
+    *stateSpace << &pgt;
 }
 
 /******************************************************************************/

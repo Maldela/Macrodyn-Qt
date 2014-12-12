@@ -536,17 +536,12 @@ qreal* growth_model::setLabels(const QString& label)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void growth_model::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void growth_model::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("growth_model::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&k;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &k;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -811,17 +806,12 @@ depreciate::depreciate() : growth_model()
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-void depreciate::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void depreciate::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("depreciate::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&k;
-    (*stateSpace)[1]=&delta_p;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &k;
+    *stateSpace << &delta_p;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

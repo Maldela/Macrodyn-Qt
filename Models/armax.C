@@ -677,7 +677,7 @@ void armax::iteration(const qint64& t)
 		*Temp2 = v_t->multiplyATB(*Temp1);
 		sum_var2 += (*Temp2)(0,0);
 //		var2 = 1/qreal(t-49) * sum_var2;
-		var2=(0.2 * 0.2 * 0.2)/12.0;	//for iid: var=(b-a) /12
+        var2=(0.2 * 0.2 * 0.2)/12.0;	//for iid: var=(b-a)/12
 		delete(Temp1);delete(Temp2);
 		dif_var = var1 - var2;	//should converge to zero
 	}
@@ -1047,19 +1047,13 @@ void armax::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void armax::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void armax::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-    fatalError("armax::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
+    stateSpace->clear();
+    quantity = dimension;
     for (int m=0;m>M;m++)
-        (*stateSpace)[m]=&((*y_t)(m,0));
-
-};
+        *stateSpace << &((*y_t)(m,0));
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //

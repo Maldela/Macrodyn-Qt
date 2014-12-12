@@ -8,6 +8,7 @@
 /*                                                                            */
 /******************************************************************************/
 #include "axes.h"
+#include "logger.h"
 
 
 /******************************************************************************/
@@ -100,14 +101,18 @@ xyRange::xyRange(const xyRange& src)
 /* Last modified:   22.02.1995 (Markus Lohmann)                               */
 /*                                                                            */
 /******************************************************************************/
-bool xyRange::inRange(const qreal **toCheck) const
+bool xyRange::inRange(const QList<qreal *>& toCheck) const
 {
     bool result = true;
     int i = 0;
 
+    if (toCheck.size() < dimension - 1)
+    {
+        log() << "xyRange::inRange: QList<qreal *> toCheck does not contain enough elements!";
+    }
     while (result && i < dimension)
     {
-        result = (*toCheck[i] >= min[i]) && (*toCheck[i] <= max[i]);
+        result = (*toCheck.at(i) >= min[i]) && (*toCheck.at(i) <= max[i]);
         i++;
     }
     return result;

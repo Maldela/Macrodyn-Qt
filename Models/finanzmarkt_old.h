@@ -121,7 +121,7 @@ public:
 	void initialize();
     void loadParamset(QTextStream&);
 /*	void saveParamsetWithNames(QTextStream&);*/
-	void sendStateSpace(int &,const real***);
+	void sendStateSpace(int &, real***);
 	void iteration(const long&);
 /*	void saveParamset();	
 	void printParamset();

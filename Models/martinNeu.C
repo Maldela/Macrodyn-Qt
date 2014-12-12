@@ -123,17 +123,13 @@ void martinNeu::receiveParameters(const QList<qreal> &parameters)
 /* Purpose:         return pointers to the state variables and inform about   */
 /*                  the systems dimension                                     */
 /******************************************************************************/
-void martinNeu::sendStateSpace(int &quantity,const qreal*** stateSpace) {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !stateSpace )
-      fatalError("martinNeu::sendStateSpace","Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&g_t;
-    (*stateSpace)[1]=&theta_e_tp1;
-    (*stateSpace)[2]=&theta_t;
-};
+void martinNeu::sendStateSpace(int &quantity,QList<qreal *> *stateSpace) {
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &g_t;
+    *stateSpace << &theta_e_tp1;
+    *stateSpace << &theta_t;
+}
 
 /******************************************************************************/
 /* Class name:      martinNeu                                                 */

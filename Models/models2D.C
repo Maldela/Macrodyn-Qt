@@ -99,18 +99,13 @@ qreal* models2D::setLabels(const QString& label)
 /*                                                                            */
 /******************************************************************************/
 
-void models2D::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void models2D::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !stateSpace )
-	fatalError("models2D::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&x;
-    (*stateSpace)[1]=&y;
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &x;
+    *stateSpace << &y;
+}
 
 /******************************************************************************/
 /*                                                                            */

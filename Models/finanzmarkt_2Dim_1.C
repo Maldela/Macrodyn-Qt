@@ -555,17 +555,13 @@ else {
 // Funktionsname:	sendStateSpace
 // Beschreibung:	return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim_1::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void finanzmarkt_2Dim_1::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [2]; // 2 asset in Model finanzmarkt_2Dim_1
-    if( !(*stateSpace) )
-	fatalError("finanzmarkt_2Dim_1::sendStateSpace","Speicherfehler");
-    quantity=2; // 2 asset in Model finanzmarkt_2Dim_1
-   (*stateSpace)[0]=&p1;
-   (*stateSpace)[1]=&p2;
-};
+    stateSpace->clear();
+    quantity = 2; // 2 asset in Model finanzmarkt_2Dim_1
+    *stateSpace << &p1;
+    *stateSpace << &p2;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////

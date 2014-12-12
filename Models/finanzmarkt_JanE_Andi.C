@@ -1078,7 +1078,6 @@ qreal* finanzmarkt_JanE::setLabels(const QString& label)
     if (label == "c2") return(&c2);
     if (label == "b_2") return(&b_2);
 
-	
     return NULL;
 }
 
@@ -1183,20 +1182,13 @@ void finanzmarkt_JanE::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void finanzmarkt_JanE::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void finanzmarkt_JanE::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("finanzmarkt_JanE::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&p1;
-	(*stateSpace)[1]=&p2;
-
-
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &p1;
+	*stateSpace << &p2;
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //

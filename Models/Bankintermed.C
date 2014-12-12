@@ -542,18 +542,12 @@ void Bankintermed::printParamset(){
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Bankintermed::sendStateSpace(int &quantity,const qreal*** stateSpace){
-
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("Bankintermed::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&G;   
-
-};
+void Bankintermed::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
+{
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &G;
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //

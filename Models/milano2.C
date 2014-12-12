@@ -600,23 +600,18 @@ qreal* milano2::sendModelVar()
     return &alfa; // return the main model variable
 }
 
-void milano2::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void milano2::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("milano2::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
+    stateSpace->clear();
+    quantity = dimension;
 
 
-    (*stateSpace)[0]=&mqreal;
-    (*stateSpace)[1]=&alfa;
-/*    (*stateSpace)[2]=&pt;*/
-    (*stateSpace)[2]=&pgt;
-    (*stateSpace)[3]=&rqreal;
-    (*stateSpace)[4]=&zt; 
+    *stateSpace << &mqreal;
+    *stateSpace << &alfa;
+/*    *stateSpace << &pt;*/
+    *stateSpace << &pgt;
+    *stateSpace << &rqreal;
+    *stateSpace << &zt; 
 }
 
 

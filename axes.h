@@ -27,7 +27,8 @@
 /*                                                                            */
 /******************************************************************************/
 
-class xyRange {
+class xyRange
+{
 
 friend QTextStream& operator<<(QTextStream&, const xyRange&);
 
@@ -42,12 +43,13 @@ public:
     QList<qint64> res;			// resolution used in each dimension
     QList<QColor> zeroline;		// -1 non; > color of zeroline
 
+    xyRange() {}
     xyRange(int, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&, const QList<QColor>&);	// constructor
     xyRange(int, const QList<QString>&, const QList<qreal>&, const QList<qreal>&, const QList<qint64>&);	// old constructor
     xyRange(QTextStream&);         // create instance from a file
     xyRange(const xyRange&);	// copy constructor
     ~xyRange() {}			// destructor
-    bool inRange(const qreal **) const; // determines wether the argument
+    bool inRange(const QList<qreal *>&) const; // determines wether the argument
 				// lies in the state space or parameter space
 				// under consideration or not
 };   

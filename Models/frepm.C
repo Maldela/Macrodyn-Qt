@@ -560,19 +560,13 @@ void frepm::printParamset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void frepm::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void frepm::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("frepm::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&x01;   
-    (*stateSpace)[1]=&x02;
-
-};
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &x01;   
+    *stateSpace << &x02;
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //

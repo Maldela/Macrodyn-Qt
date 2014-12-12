@@ -84,7 +84,7 @@ public:
 	void initialize();
     qreal* sendModelVar();
     qreal* setLabels(const QString&);
-    void sendStateSpace(int &,const qreal***);
+    void sendStateSpace(int &, QList<qreal *> *);
     void sendParameters(int&, qreal**);
     void receiveParameters(const QList<qreal>&);
     void iteration(const qint64&t);

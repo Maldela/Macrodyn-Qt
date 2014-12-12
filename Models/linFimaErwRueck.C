@@ -220,15 +220,11 @@ void linFimaErwRueck::saveParamsetWithNames(QTextStream& outputFile)
 // Funktionsname:	sendStateSpace
 // Beschreibung:		return pointers to the state variables
 ///////////////////////////////////////////////////////////////////////////////
-void linFimaErwRueck::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void linFimaErwRueck::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
-    if( stateSpace )
-	delete stateSpace;
-    *stateSpace= new const qreal* [1]; // 1 asset in Model linFimaErwRueck
-    if( !(*stateSpace) )
-	fatalError("linFimaErwRueck::sendStateSpace","Speicherfehler");
-    quantity=1; // 1 asset in Model linFimaErwRueck
-    (*stateSpace)[0]=&p;
+    stateSpace->clear();
+    quantity = 1; // 1 asset in Model linFimaErwRueck
+    *stateSpace << &p;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

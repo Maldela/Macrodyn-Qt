@@ -148,7 +148,7 @@ void basin::simulation()
 					// length is reached or the orbit
 					// tends to the cycle
     
-    const qreal **stateVars=NULL;      // pointer to the state vars.
+    QList<qreal *> stateVars;      // pointer to the state vars.
 
     int dummy;
     
@@ -192,8 +192,6 @@ void basin::simulation()
 	    }				// end of for(t=..  
 	}
     }
-    if( stateVars )
-	delete stateVars;
     for(i=0;i<dimension;i++)
 	delete lastOrbit[i];
     delete lastOrbit;

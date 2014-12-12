@@ -249,19 +249,14 @@ qreal* pureExchange::sendModelVar()
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::sendStateSpace(int &quantity,const qreal*** stateSpace)
+void pureExchange::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
     log() << "sendStateSpace";
-    if( *stateSpace )
-	delete *stateSpace;
-    *stateSpace= new const qreal* [dimension];
-    if( !(*stateSpace) )
-	fatalError("pureExchange::sendStateSpace",
-		   "Can't create state space vector");
-    quantity=dimension;
-    (*stateSpace)[0]=&g_tm1;
-	(*stateSpace)[1]=&theE_You;
-	(*stateSpace)[2]=&theta_t;
+    stateSpace->clear();
+    quantity = dimension;
+    *stateSpace << &g_tm1;
+	*stateSpace << &theE_You;
+	*stateSpace << &theta_t;
 }
     
 /******************************************************************************/
