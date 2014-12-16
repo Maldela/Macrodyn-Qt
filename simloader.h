@@ -53,6 +53,10 @@ protected:
     MacrodynGraphicsItem *m_graph;
     xyRange *m_axes;
     Job *m_runJob;
+    xyRange *stateSpace;
+    xyRange *xDef;
+    xyRange *yDef;
+    qreal *plotLines;
 
     int m_graphTyp;
     int m_paramCount;

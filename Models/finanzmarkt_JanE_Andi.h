@@ -37,7 +37,7 @@ class finanzmarkt_JanE : public baseModel
 {
 
 protected:
-	static const int L=2;
+    static const int L = 2;
 
 	rand_var *zvar1;
 	rand_var *zvar2;

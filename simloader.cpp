@@ -46,18 +46,12 @@
 #include "error.h"
 #include "MDMap.h"
 
-const int qMaxArgc = 4;
-
-qreal stepX;
 
 //TODO
 uint idx = 0;
-xyRange *stateSpace = NULL;
-xyRange *xDef = NULL;
-xyRange *yDef = NULL;
+
 
 int whichColorMap = 0;
-qreal *plotLines = NULL;
 int i; //counter
 
 // additional parameters for certain jobs
@@ -100,11 +94,21 @@ SimLoader::SimLoader(QObject *parent) : QObject(parent)
     m_graph = NULL;
     m_axes = NULL;
     m_runJob = NULL;
+    stateSpace = NULL;
+    xDef = NULL;
+    yDef = NULL;
+    plotLines = NULL;
 }
 
 SimLoader::~SimLoader()
 {
     if (m_modelPointer) delete m_modelPointer;
+    if (m_axes) delete m_axes;
+    if (m_runJob) delete m_runJob;
+    if (stateSpace) delete stateSpace;
+    if (xDef) delete xDef;
+    if (yDef) delete yDef;
+    if (plotLines) delete plotLines;
 }
 
 void SimLoader::loadSimulationfromFile(const QString& fileName)
@@ -112,7 +116,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     QFile file(fileName);
     int divisor = 1;
 
-    if(!file.open(QFile::ReadOnly))
+    if (!file.open(QFile::ReadOnly))
     {
         log() << "macrodyn.C::loadSimulation  Can't open input file " << fileName;
         return;
@@ -203,7 +207,15 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     log() << "Y:" << m_conBlock.yLabel << "from" << m_conBlock.ymin << "to" << m_conBlock.ymax;
     log() << "Z:" << m_conBlock.zLabel << "from" << m_conBlock.zmin << "to" << m_conBlock.zmax;
 
-    stepX = (m_conBlock.xmax-m_conBlock.xmin) / divisor;
+    qreal stepX = (m_conBlock.xmax-m_conBlock.xmin) / divisor;
+
+    if (stateSpace) delete stateSpace;
+    stateSpace = NULL;
+    if (xDef) delete xDef;
+    xDef = NULL;
+    if (yDef) delete yDef;
+    yDef = NULL;
+
     switch( m_conBlock.graphTyp )
     {
     case PARSPACE:
@@ -282,6 +294,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     window wind = HANNING; // only case Power, leave it here
 
     qDebug() << "switch reached...\n";
+    if (m_runJob) delete m_runJob;
     switch( m_conBlock.graphTyp )
     {
         case ATTRA:
@@ -373,15 +386,15 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
             m_runJob = new density_1d_var(m_modelPointer,*m_axes,m_graph);
             break;
         case INDICATOR_2D:
-                if( !m_graph )
-            break;
+            if( !m_graph )
+                break;
             if( m_axes )
-            delete m_axes;
+                delete m_axes;
             m_axes=conParam2xyRange(m_conBlock,3);	// what a pity
             m_runJob = new indicator_2d(m_modelPointer,*m_axes,m_graph);
             break;
         case DISCBIF2D:
-                m_axes->res[0]=(short)(m_axes->max[0]-m_axes->min[0]+1);
+            m_axes->res[0]=(short)(m_axes->max[0]-m_axes->min[0]+1);
             m_runJob = new discreteBif2D(m_modelPointer,*m_axes,m_graph);
             m_runJob->setStepX(stepX);
             break;
@@ -405,13 +418,12 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
             m_runJob->setStepX(stepX);
             break;
         case NPARMAP:
-                m_runJob = new nParameterAnalysis(m_modelPointer,*m_axes,*stateSpace,
+            m_runJob = new nParameterAnalysis(m_modelPointer,*m_axes,*stateSpace,
                           *xDef,*yDef,m_graph);
             m_runJob->setStepX(stepX);
             break;
         case BIFNPARAM:
-                m_runJob = new bifnParam(m_modelPointer,*m_axes,
-                          *xDef,m_graph);
+            m_runJob = new bifnParam(m_modelPointer,*m_axes,*xDef,m_graph);
             m_runJob->setStepX(stepX);
             break;
         case D_BIFNPARAM:
@@ -425,10 +437,10 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
             m_runJob = new stateSpaceAnalysis(m_modelPointer,*m_axes,m_graph);
             break;
         case BIF2PAR:
-                if( !m_graph )
-            break;
+            if( !m_graph )
+                break;
             if( m_axes )
-            delete m_axes;
+                delete m_axes;
             m_axes=conParam2xyRange(m_conBlock,3);
             m_axes->res[2]=10;
             m_runJob = new bif2Param(m_modelPointer,*m_axes,m_graph);
@@ -457,22 +469,22 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
             break;
          ************************************/
         case POWER:
-                if( m_axes )
-            delete m_axes;
+            if( m_axes )
+                delete m_axes;
             m_axes=conParam2xyRange(m_conBlock,3);
-                m_runJob = new powerSpec(m_modelPointer,wind,m_axes->label[2],m_graph);
+            m_runJob = new powerSpec(m_modelPointer,wind,m_axes->label[2],m_graph);
             break;
         case TSPLOT:
-                if( m_axes )
-            delete m_axes;
+            if( m_axes )
+                delete m_axes;
             m_axes=conParam2xyRange(m_conBlock,3);
-                m_runJob = new timeSeriesPlot(m_modelPointer,m_axes->label[1],m_graph,NULL,multiplot_num,multiplotPtrs);
+            m_runJob = new timeSeriesPlot(m_modelPointer,m_axes->label[1],m_graph,NULL,multiplot_num,multiplotPtrs);
             break;
         case M_TSPLOT:
-                if( m_axes )
-            delete m_axes;
+            if( m_axes )
+                delete m_axes;
             m_axes=conParam2xyRange(m_conBlock,3);
-                m_runJob = new m_timeSeriesPlot(ts_init_values,
+            m_runJob = new m_timeSeriesPlot(ts_init_values,
                                         m_modelPointer,m_axes->label[1],m_graph);
             break;
         case M_TSPLOT_v:
@@ -553,6 +565,7 @@ void SimLoader::runSimulation()
         log() << "starting simulation...";
         m_runJob->simulation();
         delete m_runJob;
+        m_runJob = NULL;
     }
     else log() << "job misspecified...";
 
@@ -560,6 +573,7 @@ void SimLoader::runSimulation()
 
     if( m_axes )
     delete m_axes;
+    m_axes = NULL;
 }
 
 void SimLoader::setModel(const QString &model)

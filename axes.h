@@ -49,6 +49,7 @@ public:
     xyRange(QTextStream&);         // create instance from a file
     xyRange(const xyRange&);	// copy constructor
     ~xyRange() {}			// destructor
+    void toLog();
     bool inRange(const QList<qreal *>&) const; // determines wether the argument
 				// lies in the state space or parameter space
 				// under consideration or not

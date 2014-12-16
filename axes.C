@@ -71,8 +71,34 @@ xyRange::xyRange(int dim, const QList<QString>& names, const QList<qreal>& mins,
 xyRange::xyRange(QTextStream& inFile)
 {
     inFile >> dimension;
+    log() << "Dimension:" << dimension;
     for (int i=0; i<dimension; i++)
-    inFile >> label[i] >> min[i] >> max[i] >> res[i];
+    {
+        QString string;
+        inFile >> string;
+        label << string;
+        qreal num;
+        inFile >> num;
+        min << num;
+        inFile >> num;
+        max << num;
+        inFile >> num;
+        res << num;
+    }
+}
+
+void xyRange::toLog()
+{
+    log() << "Axes.C::toLog():";
+    log() << "Dimension:" << dimension;
+    for (int i=0; i<dimension; i++)
+    {
+        log() << "axis:" << i;
+        log() << "label:" << label[i];
+        log() << "min:" << min[i];
+        log() << "max:" << max[i];
+        log() << "res:" << res[i];
+    }
 }
 
 /******************************************************************************/

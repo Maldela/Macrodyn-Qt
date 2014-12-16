@@ -35,14 +35,14 @@ public:
     void get_axis(int, qreal*, qreal*); // get qMax & qMin of axis
     void clear_window();		// clear output window
 
-    void setPoint(const qreal&, const qreal&, const QColor&);
+    void setPoint(qreal, qreal, const QColor&);
                     // highlights a pixel on the screen
                     // according to the given point
 
-    void setBigPoint(const qreal&, const qreal&, const QColor&, int);
-    void drawLine(const qreal&, const qreal&, const qreal&, const qreal&, const QColor&);
+    void setBigPoint(qreal, qreal, const QColor&, int);
+    void drawLine(qreal, qreal, qreal, qreal, const QColor&);
                         // draw a line on the screen
-    void drawString(const qreal&, const qreal&, const QString&, const QColor&, bool = true);
+    void drawString(qreal, qreal, const QString&, const QColor&, bool = true);
     void reset(const xyRange&);         // reset domain under consideration that
                     // should be displayed on the screen
     void dumpGraphics(const QString&) const; // dump output window
@@ -77,6 +77,9 @@ protected:
     xyRange axis;
     QColor backgroundColor;
     QRect zoomRect;
+    QList<QLine> m_lines;
+    QList<QPoint> m_points;
+    QList<QPoint> m_bigPoints;
     uint lmargin;
     uint rmargin;
     uint upmargin;
@@ -86,7 +89,9 @@ protected:
     uint xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
     uint right;
     uint down;
-    void getCoordinates(qreal, qreal, int&, int&);
+    int transformX(qreal);
+    int transformY(qreal);
+    QPoint transform(const QPointF&);
     void draw_zoom_rect(int&, int&);
     double pixel_to_x(int);
     double pixel_to_y(int);

@@ -31,21 +31,20 @@ bifnParam::bifnParam(baseModel* const bMod,
     effectiveX(xDef)
 {
 
-    length=model->getLength();
-    limit=(qint64)(0.99*length);
+    length = model->getLength();
+    limit = (qint64)(0.99*length);
 
-    xVars=new qreal* [effectiveX.dimension];
+    xVars = new qreal* [effectiveX.dimension];
     if( !xVars )
 	fatalError("bifnParam::bifnParam",
 		   "Can't create vector of x-variables");
-    for(int i=0;i<effectiveX.dimension;i++) {
-    xVars[i]=model->setLabels(effectiveX.label[i]);
-                                          // get pointer to the model var.
-	if( !xVars[i] )
-	    fatalError("bifnParam::bifnParam",
-		       "illegal x parameter specified");
-    stepX=(xmax-xmin) / (axes.res[0]-1);
-
+    for (int i=0;i<effectiveX.dimension;i++)
+    {
+        xVars[i] = model->setLabels(effectiveX.label[i]);
+                                              // get pointer to the model var.
+        if( !xVars[i] )
+            fatalError("bifnParam::bifnParam: illegal x parameter specified:", effectiveX.label[i]);
+        stepX=(xmax-xmin) / (axes.res[0]-1);
     }
 }
 
@@ -75,9 +74,9 @@ bifnParam::~bifnParam()
 
 void bifnParam::setXParams(const qreal& newX)
 {
-    static qreal divisor=xmax-xmin;
-    for(int i=0;i<effectiveX.dimension;i++)
-    *xVars[i]=effectiveX.min[i]+(newX-xmin)/divisor*
+    static qreal divisor = xmax-xmin;
+    for (int i=0; i<effectiveX.dimension; i++)
+    *xVars[i] = effectiveX.min[i]+(newX-xmin)/divisor*
         (effectiveX.max[i]-effectiveX.min[i]);
 }
 

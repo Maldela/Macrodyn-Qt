@@ -57,8 +57,8 @@ void affine1::iteration(const qint64&)
 	//log() << "This is function 'iteration()' in affine1.C" 
     
  	a = zvar->dice();	// Set a new random value for the Parameter
-    qreal oldX=x;
-	x = a*(oldX + r);
+    qreal oldX = x;
+    x = a * (oldX + r);
 	/*log() << "oldX = " << oldX 
 	log() << "a  = " << a 
 	log() << "x = " << x */
@@ -80,10 +80,10 @@ void affine1::iteration(const qint64&)
 
 void affine1::initialize()
 {
-	x=x0;
+    x = x0;
     zvar = new rand_var(this,"ranf",zvar_expr);
-	if(!zvar)	
-	fatalError("randvar::initialize stoch_ar", "can't create rand_var");
+    if (!zvar)
+        fatalError("randvar::initialize stoch_ar", "can't create rand_var");
     else log() << "New zvar from zvar_expr: " << zvar_expr;
 }
  

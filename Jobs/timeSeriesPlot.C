@@ -109,37 +109,43 @@ void timeSeriesPlot::simulation()
     qreal oldX, oldY;
     int j;
     model->initialize();
-    t=0;
-    oldX=t;
+    t = 0;
+    oldX = t;
     saveSeries(t);
-    oldY=timeSeriesqreal[t];	
-    if (multiplotAdr) {
+    oldY = timeSeriesqreal[t];
+    if (multiplotAdr)
+    {
         for(j=0;j<multiplot_num;j++)
-            multiplotOld[j]=*multiplotAdr[j];	    
+            multiplotOld[j] = *multiplotAdr[j];
     }
-    for(t=1;t<length+1;t++) {
-	model->iteration(t);
-	if( t >= limit )  {
-	    saveSeries(t);
-              if( screenGraphics ) {
-                if (multiplotAdr) {
-                  for(j=0;j<multiplot_num;j++){ 
-                     screenGraphics->drawLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],41+j);
-		     screenGraphics->setBigPoint(double(t),*multiplotAdr[j],41+j,pointsize);
-		  }
-               }
-	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],40);
-		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
-
-	      }
-        QTextStream(&outFile) << t << "\t" << timeSeriesqreal[t];
+    for(t=1;t<length+1;t++)
+    {
+        model->iteration(t);
+        if( t >= limit )
+        {
+            saveSeries(t);
+            if( screenGraphics )
+            {
+                if (multiplotAdr)
+                {
+                    for(j=0;j<multiplot_num;j++)
+                    {
+                        screenGraphics->drawLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],41+j);
+                        screenGraphics->setBigPoint(double(t),*multiplotAdr[j],41+j,pointsize);
+                    }
+                }
+                screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],40);
+                screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
+            }
+            QTextStream(&outFile) << t << "\t" << timeSeriesqreal[t];
         }
-        oldX=t;
-        oldY=timeSeriesqreal[t];	
-        if (multiplotAdr) {
+        oldX = t;
+        oldY = timeSeriesqreal[t];
+        if (multiplotAdr)
+        {
            for(j=0;j<multiplot_num;j++)
-               multiplotOld[j]=*multiplotAdr[j];	    
-	}
+               multiplotOld[j] = *multiplotAdr[j];
+        }
     }
     log() << "finished...\n";
 }

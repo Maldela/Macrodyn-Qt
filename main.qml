@@ -4,11 +4,12 @@ import QtQuick.Dialogs 1.2
 import MacrodynQML 1.0
 
 ApplicationWindow {
+
     id: applicationWindow1
     visible: true
     width: 1024
     height: 768
-    title: qsTr("Hello World")
+    title: qsTr("Macrodyn-Qt5")
 
     menuBar: MenuBar {
         Menu {
