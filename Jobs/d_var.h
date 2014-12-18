@@ -44,8 +44,8 @@ protected:
     void dom_error ( qreal x );	// print an error message, but do not exit
 public:
     
-    d_var ( qreal x_r, qreal x_min,	// constructor with default values
-            qreal x_max, int res );
+    d_var ( qreal x_r = 0.5 , qreal x_min = 0 ,
+            qreal x_max = 1 , int res = 100 );
 
     int  is_in_range ( qreal x ) const;	// returns 1, if x is between qMin and qMax, 0 otherwise
     int  is_in_range ( int x_descr ) const;	// returns 1, if x_descr is between 0 and dflt_res, 0 otherwise

@@ -14,7 +14,7 @@
 
 #include "histo.h"
 
-histo_1d::histo_1d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100 ):
+histo_1d::histo_1d (qreal x_qMin, qreal x_max, int x_res ):
                      x(0,x_qMin,x_max,x_res) {
     hits = new int[x_res];
     reset();
@@ -67,8 +67,8 @@ int histo_1d::get_no_hits ( void ) const {
     return no_hits;
   };
   
-histo_2d::histo_2d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
-                     qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100 ):
+histo_2d::histo_2d ( qreal x_qMin, qreal x_max, int x_res,
+                     qreal y_qMin, qreal y_max, int y_res ):
                      x(0,x_qMin,x_max,x_res),
                      y(0,y_qMin,y_max,y_res) {
 
@@ -156,9 +156,9 @@ int histo_2d::get_no_hits ( void ) const {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-histo_3d::histo_3d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
-                     qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100,
-		     qreal z_qMin = 0 , qreal z_max = 1 , int z_res = 100 ):
+histo_3d::histo_3d ( qreal x_qMin, qreal x_max, int x_res,
+                     qreal y_qMin, qreal y_max, int y_res,
+                 qreal z_qMin, qreal z_max, int z_res ):
                      x(0,x_qMin,x_max,x_res),
                      y(0,y_qMin,y_max,y_res),
 		     z(0,z_qMin,z_max,z_res) 

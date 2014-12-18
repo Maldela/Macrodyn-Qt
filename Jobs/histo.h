@@ -39,7 +39,7 @@ protected:
 
 public:
 
-    histo_1d ( qreal x_qMin, qreal x_max, int x_res );
+    histo_1d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100 );
               
    ~histo_1d (void);
              
@@ -78,8 +78,8 @@ protected:
 
 public:
 
-    histo_2d ( qreal x_qMin, qreal x_max, int x_res,
-               qreal y_qMin, qreal y_max, int y_res );
+    histo_2d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
+               qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100 );
 
    ~histo_2d (void);
              
@@ -119,9 +119,9 @@ protected:
 
 public:
 
-    histo_3d ( qreal x_qMin, qreal x_max, int x_res,
-               qreal y_qMin, qreal y_max, int y_res,
-	       qreal z_qMin, qreal z_max, int z_res );
+    histo_3d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
+               qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100,
+       qreal z_qMin = 0 , qreal z_max = 1 , int z_res = 100 );
 
    ~histo_3d (void);
              

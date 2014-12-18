@@ -29,7 +29,7 @@ class matrix_neu
 	static matrix_neu* mat__temp3;
 
 public:
-	matrix_neu(const int &, const int &);		//constructor
+    matrix_neu(const int& r=2, const int& c=2);		//constructor
 	~matrix_neu();					//destructor
 	matrix_neu& operator=(const matrix_neu&);	//overload =
     qreal& operator()(const int&, const int&);	//overload ()

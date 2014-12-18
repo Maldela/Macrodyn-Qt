@@ -20,8 +20,8 @@ void d_var::dom_error ( qreal x ) {
   }
 
 // constructor with default values
-d_var::d_var ( qreal x_r = 0.5 , qreal x_min = 0 ,
-               qreal x_max = 1 , int res = 100 ):
+d_var::d_var ( qreal x_r , qreal x_min ,
+               qreal x_max , int res ):
                x_qreal(x_r), x_real_min(x_min), x_real_max(x_max) {
     set_res(res);
   }

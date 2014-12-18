@@ -43,7 +43,7 @@ matrix_neu* matrix_neu::mat__temp3=new matrix_neu(1,1);
 // By:			
 //
 ///////////////////////////////////////////////////////////////////////////////
-matrix_neu::matrix_neu(const int& r=2, const int& c=2) : row(r), col(c)
+matrix_neu::matrix_neu(const int& r, const int& c) : row(r), col(c)
 //default value is a 2x2-Matrix
 {
     m = new qreal* [r];

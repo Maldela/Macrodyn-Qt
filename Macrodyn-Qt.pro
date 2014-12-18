@@ -7,6 +7,8 @@ QMAKE_CXXFLAGS += -Wno-unused-parameter \
                   -Wno-unused-variable \
                   -Wno-unused-function
 
+QMAKE_MAC_SDK = macosx10.9
+
 SOURCES += main.cpp \
     Models/adaptExp.C \
     Models/affine1.C \

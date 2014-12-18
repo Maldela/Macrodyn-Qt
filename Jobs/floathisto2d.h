@@ -26,8 +26,8 @@ protected:
 
 public:
 
-    floathisto_2d ( qreal x_qMin, qreal x_max, int x_res,
-               qreal y_qMin, qreal y_max, int y_res );
+    floathisto_2d ( qreal x_qMin = 0 , qreal x_max = 1 , int x_res = 100,
+                    qreal y_qMin = 0 , qreal y_max = 1 , int y_res = 100 );
 
    ~floathisto_2d (void);
              
