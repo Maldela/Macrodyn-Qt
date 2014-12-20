@@ -245,7 +245,7 @@ void adaptExp::sendParameters(int& amount,qreal** parameters)
 /*                                                                            */
 /******************************************************************************/
 
-void adaptExp::receiveParameters(const QList<qreal> parameters)
+void adaptExp::receiveParameters(const QList<qreal>& parameters)
 {
     if (parameters.size() != 18) log() << "Wrong number of parameters!";
     else

@@ -712,7 +712,7 @@ void manipulate::F_stoch_uni() {
 // Last modified:	2000/5/25
 ///////////////////////////////////////////////////////////////////////////////
 void manipulate::F_stoch_markov() {
-	int j,jj=0;
+    int jj=0;
 	for (int j=0;j<statesNum;j++) // find state
 		if(states[j]==*randname) jj=j;
 	qreal exp=0;			
@@ -1199,7 +1199,7 @@ void manipulate::ZX() {
 // Last modified:	Thu Sep 21 11:50:25 METDST 2000 (M. Hoffmann & M. Meyer)//
 //////////////////////////////////////////////////////////////////////////////
 void manipulate::iteration(const qint64& t) {
-	int i,j;
+    int j;
 	for (int i=0;i<howMany;i++) {
 		switch( manipulateTag[i] ) {
 		   case errcor: F_errcor(); break;

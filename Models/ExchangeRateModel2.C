@@ -391,7 +391,7 @@ st=(1-c)*(1-tax)*(betat*d+g+E*eqrealt)/( betat*(tax+deltaB*( 1-c*(1-tax) ) ) );
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::ratioRegime(qreal &ydt,qreal &yLt,char *x1)
+void ExchangeRateModel2::ratioRegime(qreal&,qreal&,char *)
 {
     log() << "Unused";
 }
@@ -406,7 +406,7 @@ void ExchangeRateModel2::ratioRegime(qreal &ydt,qreal &yLt,char *x1)
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel2::wageAndpriceAdjust(qreal &ydt, qreal &yLt, qreal &Lnt, char *state)
+void ExchangeRateModel2::wageAndpriceAdjust(qreal &ydt, qreal &yLt, qreal &Lnt, char *)
 {
 
 // Pyperbolic Tangent Function

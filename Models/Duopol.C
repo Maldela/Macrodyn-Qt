@@ -397,7 +397,7 @@ qreal Duopol::Gamma(const int firm)
 {	
     qreal eta; qreal alpha;
     qreal result, gamit, eps, h; 
-    int i, NqMax;
+    int NqMax;
 
     if(firm == 1)
       	{

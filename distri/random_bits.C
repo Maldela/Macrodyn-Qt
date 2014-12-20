@@ -100,7 +100,7 @@ void randomBits::discrete_random_state_generator()
 {
     static const uint  M = 7, mag01[2]={ 0x0, 0x8ebfd028 };
     uint i;
-    for (uint i=0;i<state_size-M;i++)
+    for (i=0;i<state_size-M;i++)
         state->word[i] = state->word[i+M] ^ (state->word[i] >> 1) ^ mag01[state->word[i]&1];
     for (;i<state_size;i++)
         state->word[i] = state->word[i+M-state_size] ^ (state->word[i] >> 1) ^ mag01[state->word[i]&1];

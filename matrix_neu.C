@@ -607,7 +607,7 @@ void matrix_neu::balance()
 	const double RADIX = 2.0;
 	double s,r,g,f,c;
 	int n = row;
-	int last,i,j;
+    int last,j;
 	double sqrdx = RADIX*RADIX;
 	last=0;
 	

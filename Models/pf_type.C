@@ -28,20 +28,22 @@
 #include "pf_type.h"
 
 
-static qreal pf_ces ( qreal k, qreal a, qreal b, qreal c, qreal )
-{ return ( exp ( log ( a + b * exp(log(k)*c) ) * 1/c) );
-  //
-  // expression:	[ a + b * k^c ] ^ {1/c}
-  // constraints:	c <= 1, c # 0	
-}
+//static qreal pf_ces(qreal k, qreal a, qreal b, qreal c, qreal)
+//{
+//    return ( exp ( log ( a + b * exp(log(k)*c) ) * 1/c) );
+//  //
+//  // expression:	[ a + b * k^c ] ^ {1/c}
+//  // constraints:	c <= 1, c # 0
+//}
 
-static qreal pf_ces_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
-{ return ( (1/c) * exp ( log ( a + b * exp(log(k)*c) ) * (1/c - 1) ) * \
-                             b * c * exp(log(k)*(c-1)) );
-  //
-  // expression:	(1/c) [ a + b * k^c ] ^ (1/c-1) * [ b * c * k^(c-1) ]
-  // constraints:	c <= 1, c # 0
-}
+//static qreal pf_ces_prime(qreal k, qreal a, qreal b, qreal c, qreal)
+//{
+//    return ( (1/c) * exp ( log ( a + b * exp(log(k)*c) ) * (1/c - 1) ) * \
+//                             b * c * exp(log(k)*(c-1)) );
+//  //
+//  // expression:	(1/c) [ a + b * k^c ] ^ (1/c-1) * [ b * c * k^(c-1) ]
+//  // constraints:	c <= 1, c # 0
+//}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -54,23 +56,23 @@ static qreal pf_ces_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static qreal pf_ces2 ( qreal k, qreal a, qreal b, qreal c, qreal )
-{ return ( c==0 ? a * exp(log(k)*b) : exp ( log ( a * ( (1-b) + b * exp(log(k)*c) ) ) * 1/c) );
-  //
-  // expression:	a * [ (1-b) + b * k^c ] ^ {1/c}		c != 0
-  //			a * k ^ b				c == 0
-  // constraints:	c <= 1	
-}
+//static qreal pf_ces2 ( qreal k, qreal a, qreal b, qreal c, qreal )
+//{ return ( c==0 ? a * exp(log(k)*b) : exp ( log ( a * ( (1-b) + b * exp(log(k)*c) ) ) * 1/c) );
+//  //
+//  // expression:	a * [ (1-b) + b * k^c ] ^ {1/c}		c != 0
+//  //			a * k ^ b				c == 0
+//  // constraints:	c <= 1
+//}
 
-static qreal pf_ces2_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
-{ return ( c==0 ? b * a * exp(log(k)*(b-1)) : \
-                (1/c) * exp(log( a * ((1-b) + b * exp(log(k)*c)) ) * (1/c - 1) ) * \
-                      a * b * c * exp(log(k)*(c-1)) );
-  //
-  // expression:	(1/c) * [ a * [ (1-b) + b * k^c ] ] ^ (1/c-1) * [ a * b * c * k^(c-1) ] 	c!=0
-  // 			b * a * k ^ (b-1)			c == 0
-  // constraints:	c <= 1
-}
+//static qreal pf_ces2_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
+//{ return ( c==0 ? b * a * exp(log(k)*(b-1)) : \
+//                (1/c) * exp(log( a * ((1-b) + b * exp(log(k)*c)) ) * (1/c - 1) ) * \
+//                      a * b * c * exp(log(k)*(c-1)) );
+//  //
+//  // expression:	(1/c) * [ a * [ (1-b) + b * k^c ] ] ^ (1/c-1) * [ a * b * c * k^(c-1) ] 	c!=0
+//  // 			b * a * k ^ (b-1)			c == 0
+//  // constraints:	c <= 1
+//}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -83,19 +85,19 @@ static qreal pf_ces2_prime ( qreal k, qreal a, qreal b, qreal c, qreal )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static qreal pf_leo ( qreal k, qreal a, qreal b, qreal c, qreal )
-{ return ( a / b * ( 1 + c - exp (-b * k) ) );
-  //
-  // expression:	a/b * ( 1 - e^(-b * k) )
-  // constraints:	a,b >= 0
-}
+//static qreal pf_leo ( qreal k, qreal a, qreal b, qreal c, qreal )
+//{ return ( a / b * ( 1 + c - exp (-b * k) ) );
+//  //
+//  // expression:	a/b * ( 1 - e^(-b * k) )
+//  // constraints:	a,b >= 0
+//}
 
-static qreal pf_leo_prime ( qreal k, qreal a, qreal b, qreal , qreal )
-{ return ( a * exp (-b * k) );
-  //
-  // expression:	a * e^(-b * k)
-  // constraints:	a,b >= 0
-}
+//static qreal pf_leo_prime ( qreal k, qreal a, qreal b, qreal , qreal )
+//{ return ( a * exp (-b * k) );
+//  //
+//  // expression:	a * e^(-b * k)
+//  // constraints:	a,b >= 0
+//}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -108,19 +110,19 @@ static qreal pf_leo_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
-static qreal pf_cd ( qreal k, qreal a, qreal b, qreal , qreal )
-{ return ( a/b * exp( b * log(k) ) );
-  //
-  // expression:	a/b * e^(b * log(k) )
-  // constraints:	a > 0, 0<b<=1
-}
+//static qreal pf_cd ( qreal k, qreal a, qreal b, qreal , qreal )
+//{ return ( a/b * exp( b * log(k) ) );
+//  //
+//  // expression:	a/b * e^(b * log(k) )
+//  // constraints:	a > 0, 0<b<=1
+//}
 
-static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
-{ return ( a/k * exp( b * log(k) ) );
-  //
-  // expression:	a/k * e^(b * log(k) )
-  // constraints:	a > 0, 0<b<=1
-}
+//static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
+//{ return ( a/k * exp( b * log(k) ) );
+//  //
+//  // expression:	a/k * e^(b * log(k) )
+//  // constraints:	a > 0, 0<b<=1
+//}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -133,18 +135,18 @@ static qreal pf_cd_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal c, qreal )
-{ return ( a*k<b ? a*k+c : b+c );
-  //
-  // expression:	qMin{a*k,b}+c
-}
+//static qreal pf_leontiev ( qreal k, qreal a, qreal b, qreal c, qreal )
+//{ return ( a*k<b ? a*k+c : b+c );
+//  //
+//  // expression:	qMin{a*k,b}+c
+//}
 
-static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
-{ return ( k<=b/a ? a : 0);
-  //
-  // expression:	a	k<=b/a
-  //			0	k> b/a
-}
+//static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
+//{ return ( k<=b/a ? a : 0);
+//  //
+//  // expression:	a	k<=b/a
+//  //			0	k> b/a
+//}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -157,12 +159,12 @@ static qreal pf_leontiev_prime ( qreal k, qreal a, qreal b, qreal , qreal )
 // By:			Marc Mueller
 //
 ///////////////////////////////////////////////////////////////////////////////
-static qreal pf_app ( qreal k, qreal a, qreal b, qreal c, qreal alpha )
-{
- return (a*k+alpha*a*(log((1+exp(-b/(alpha*a)))/(1+exp((1/alpha)*(k-b/a)))))+c);
-}
+//static qreal pf_app ( qreal k, qreal a, qreal b, qreal c, qreal alpha )
+//{
+// return (a*k+alpha*a*(log((1+exp(-b/(alpha*a)))/(1+exp((1/alpha)*(k-b/a)))))+c);
+//}
 
-static qreal pf_app_prime ( qreal k, qreal a, qreal b, qreal , qreal alpha )
-{
- return ( a/( 1+exp( (1/alpha)*(k-b/a) ) ) );
-}
+//static qreal pf_app_prime ( qreal k, qreal a, qreal b, qreal , qreal alpha )
+//{
+// return ( a/( 1+exp( (1/alpha)*(k-b/a) ) ) );
+//}

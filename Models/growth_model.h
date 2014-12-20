@@ -186,7 +186,8 @@ public:
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-class pasinetti : public growth_model {
+class pasinetti : public growth_model
+{
 private:
     //// k_0                               initial value shareholder
     qreal k_1;                           // initial value worker
@@ -203,20 +204,20 @@ private:
     qreal E_n;
     qreal E_f_pr_n, bif_point;
     qreal E_steady_leon;
-    qreal E_steady_quad;
+//    qreal E_steady_quad;
     qreal E_steady_leon_prime;
-    qreal E_steady_quad_prime;
+//    qreal E_steady_quad_prime;
     qreal y_ini,y_ini_prime;
-    qreal y_quad,y_quad_prime,y_quad_prime2;
-    qreal y_leon,y_leon_prime,y_leon_prime2;
+//    qreal y_quad,y_quad_prime,y_quad_prime2;
+//    qreal y_leon,y_leon_prime,y_leon_prime2;
     qreal xBundle;
-    qreal YBundle;
-    qreal steady_quad;
+//    qreal YBundle;
+//    qreal steady_quad;
     qreal steady_leon;
-    qreal steady_kc_leon;
-    qreal steady_kw_leon;
-    qreal steady_kc_quad;
-    qreal steady_kw_quad;
+//    qreal steady_kc_leon;
+//    qreal steady_kw_leon;
+//    qreal steady_kc_quad;
+//    qreal steady_kw_quad;
     qreal steady_kc;
     qreal steady_kw;
     qreal steady_cd;

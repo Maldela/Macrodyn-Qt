@@ -250,7 +250,7 @@ void rOLG_wt::iteration(const qint64& )
   c1=M_olg-S_olg;
   c2=(1-delta_olg+r)*(1-alpha_olg)*S_olg;  
 
-qreal x2;
+//qreal x2;
 ran_rec = rand_dis->rectangular();
 
 
@@ -453,7 +453,7 @@ void rOLG_wt::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 
 void rOLG_wt::read_sim(QTextStream& inFile, st_olg_paramset *temp_paramset){
    
-  int	i,j;			// Index
+  int	i;			// Index
 
   	inFile >> temp_paramset->type;
 
@@ -608,7 +608,7 @@ void rOLG_wt::receiveParameters(const QList<qreal>&)
 
 void rOLG_wt::save_st_olg_Paramset(QTextStream& outFile, st_olg_paramset *temp_paramset){
 
-   int	i,j;			// Index
+   int	i;			// Index
   
     	outFile << temp_paramset->type << "\t";
 	
@@ -713,7 +713,7 @@ outFile << "Length = " << length;
 ////////////////////////////////////////////////////////////////////////////////
 void rOLG_wt::save_st_olg_ParamsetWithNames(QTextStream& outFile, st_olg_paramset *temp_paramset)	
 {
-   int	i,j;			// Index
+   int	i;			// Index
   	
     	outFile << "type = " << temp_paramset->type << "\t";
 	
@@ -771,7 +771,7 @@ void rOLG_wt::save_st_olg_ParamsetWithNames(QTextStream& outFile, st_olg_paramse
 ///////////////////////////////////////////////////////////////////////////////
 void rOLG_wt::print_st_olg_Paramset(st_olg_paramset *temp_paramset){
 
-    int	i,j;			// Index
+    int	i;			// Index
       	
       log() << temp_paramset->type;
       

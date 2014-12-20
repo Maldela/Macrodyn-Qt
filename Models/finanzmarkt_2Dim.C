@@ -406,7 +406,7 @@ void finanzmarkt_2Dim::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 // Funktionsname:	iteration
 // Beschreibung:	Durchlauf einer Periode
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_2Dim::iteration(const long& t)
+void finanzmarkt_2Dim::iteration(const qint64& t)
 {
 
 if(t>1)	{ //in Periode 1 werden die Startwerte genommen

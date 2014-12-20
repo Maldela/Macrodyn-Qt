@@ -6,7 +6,7 @@
 const uint  l_max = 40;  // qMaximal l_max/2 iterations in each loop
 
 
-const double  gam=0.57721566490153286060651209;// Euler-Mac-Laurin'sche constant
+//const double  gam=0.57721566490153286060651209;// Euler-Mac-Laurin'sche constant
 //  bern[2k] = Zeta(2k) 2* (2k)! * cos(k*Pi) / (2*Pi)^(2k)
 const double  bern[] = { 1.0, -1.0/2.0, 1.0/6.0, 0.0, -1.0/30.0, 0.0, 1.0/42.0,
              0.0, -1.0/30.0, 0.0, 5.0/66.0, 0.0, -691.0/2730.0, 0.0, 7.0/6.0,

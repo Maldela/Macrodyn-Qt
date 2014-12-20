@@ -21,7 +21,7 @@
 /*                                                                            */
 /******************************************************************************/
 
-static qreal sf_1 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal rho)
+static qreal sf_1 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal)
 {
 
     qreal theta_aut = delta*w1/w2;
@@ -36,7 +36,7 @@ static qreal sf_2 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal rho)
 	return w1-(w1+w2*theta_e) / (1+exp ((rho/(rho-1))*log(theta_e/delta))    ) ;
 }
 
-static qreal sf_3 (qreal theta_e, qreal w1, qreal w2, qreal delta, qreal rho)
+static qreal sf_3 (qreal theta_e, qreal, qreal, qreal, qreal rho)
 {
 
  	return 1/(exp(cos(10/(1+exp(rho/(rho-1)*log(theta_e))))));
@@ -160,7 +160,7 @@ void pureExchange::expInflRateYoung()
 /*                                                                            */
 /******************************************************************************/
 
-void pureExchange::iteration(const qint64& t)
+void pureExchange::iteration(const qint64&)
 {
 
 theta_t = gamma *  (*savingsFunc)(theE_Old, w1, w2, delta, rho)

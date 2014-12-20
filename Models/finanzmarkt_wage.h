@@ -18,11 +18,12 @@
 #include <stdlib.h>
 #include "rand_var.h"
 
-class finanzmarkt_wage : public baseModel {
+class finanzmarkt_wage : public baseModel
+{
 
 protected:
 	
-    static const qreal  epsilon=1e-16;
+    static const qreal epsilon;
 
 /**** production function ****/
 

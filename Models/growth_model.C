@@ -974,14 +974,14 @@ void depreciate::loadParamset(QTextStream& inputFile)
   inputFile >> _z_0;
   inputFile >> _z_var_name;
 
-  int	i,j;			// Index
-  i=0;
-  while(i<trans_x_max) {
+  int i = 0;			// Index
+  while (i<trans_x_max)
+  {
 	 inputFile >> trans_x[i];
 	//printf("x[%i]=%f\n",i,trans_x[i]); 
 	 if(trans_x[i]==1) break;
 	 i++;
-	}
+  }
 	//printf("i=%i\n",i); 
  	
   if(i==trans_x_max)
@@ -1016,22 +1016,22 @@ void depreciate::loadParamset(QTextStream& inputFile)
 ///////////////////////////////////////////////////////////////////////////////
 void depreciate::saveParamset(QTextStream& outFile)
 {
-    int i,j;
+    int i = 0;
     outFile << theta_type << "\t";
     outFile << my;
     outFile << _z_0 << "\t";
     outFile << _z_var_name;
-    i=0;
-    while(i<trans_x_max) {
-	 outFile << trans_x[i] << "\t";
-	 if(trans_x[i]==1) break;
-	 i++;
+    while(i<trans_x_max)
+    {
+        outFile << trans_x[i] << "\t";
+        if(trans_x[i]==1) break;
+        i++;
 	}
     for (int j=0;j<i;j++) {
-	 outFile << trans_a[i] << "\t";
-	}
+        outFile << trans_a[i] << "\t";
+    }
     for (int j=0;j<i;j++) {
-	 outFile << trans_b[i] << "\t";
+        outFile << trans_b[i] << "\t";
 	}
     growth_model::saveParamset(outFile);
 }
@@ -1050,12 +1050,11 @@ void depreciate::saveParamset(QTextStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 void depreciate::printParamset()
 {
-    int i,j;
+    int i = 0;
     log() << theta_type;
     log() << my;
     log() << _z_0;
     log() << _z_var_name;
-    i=0;
     while(i<trans_x_max) {
      log() << trans_x[i] << "\t";
 	 if(trans_x[i]==1) break;

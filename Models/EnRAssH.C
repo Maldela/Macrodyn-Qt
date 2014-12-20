@@ -235,7 +235,6 @@ void EnRAssH::initialize()
 ///////////////////////////////////////////////////////////////////////////////
 void EnRAssH::loadParamset(QTextStream& inFile)
 {
-	int i;
 //	inFile >> ni;
 //	for (int i=0;i<ni;i++) inFile >> alpha[i];
 	inFile >> x_;

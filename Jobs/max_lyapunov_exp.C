@@ -270,7 +270,7 @@ void max_lyapunov_exp_t::simulation()
     qreal l_max=0;
     qint64 l_len = length;
     qreal * l_vals = new double[l_len];
-    int    l = 0;
+//    int    l = 0;
     qreal   t_qreal;
 
     

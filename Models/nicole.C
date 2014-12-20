@@ -115,7 +115,7 @@ void nicole::printParamset()
 /* Purpose:         unused                                                    */
 /*                                                                            */
 /******************************************************************************/
-void nicole::sendParameters(int& amount,qreal** parameters)
+void nicole::sendParameters(int&, qreal **)
 {
 }
 /******************************************************************************/
@@ -125,7 +125,7 @@ void nicole::sendParameters(int& amount,qreal** parameters)
 /* Purpose:         unused                                                    */
 /*                                                                            */
 /******************************************************************************/
-void nicole::receiveParameters(const QList<qreal>& parameters)
+void nicole::receiveParameters(const QList<qreal>&)
 {
 }
 /******************************************************************************/
@@ -190,7 +190,7 @@ qreal* nicole::sendModelVar()
 /*                  returns the dimension of the system for rho=0             */
 /*                                                                            */
 /******************************************************************************/
-void nicole::sendStateSpace(int &quantity, QList<qreal *> *stateSpace)
+void nicole::sendStateSpace(int&, QList<qreal *> *)
 {
     log() << "nicole::sendStateSpace is not implemented";
 }
@@ -240,7 +240,7 @@ void nicole::dynamics()
 /* Last modified:   21.04.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void nicole::iteration(const qint64& t)
+void nicole::iteration(const qint64&)
 {
 	getD();
 	dynamics();

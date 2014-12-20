@@ -320,7 +320,7 @@ void toniadp::dynamics(qreal &a)
 /* Last modified:   04.02.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toniadp::iteration(const qint64& t)
+void toniadp::iteration(const qint64&)
 {
     qreal add=0;
     qreal ev=0;

@@ -24,7 +24,7 @@ protected:
     qreal psi1,psi2;                     // price adjustment parameters
     qreal nu1,nu2;                       // wage adjustment parameters      
     qreal alfa0,mqreal0,pg0,z0;    // initial values                  
-    qreal alfa,mqreal,pgt,rqreal,zt,mtr,wtr,rtr;       // wage, money stock,profit,interest,interest rate   
+    qreal alfa,mqreal,pgt,rreal,zt,mtr,wtr,rtr;       // wage, money stock,profit,interest,interest rate   
     qreal Ls;                            // qMaximal aggregate labour supply
     qreal h;                             // utility function parameters
     qreal G,tax;                         // government demand, tax rate

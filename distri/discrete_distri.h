@@ -25,9 +25,9 @@
 class discrete_Distri : public prob_Distri {
     public:
         discrete_Distri(const int wid, const int sta =1);  //  constructor
-        qreal density( const int) const;    // probability density function
-        qreal cumulat( const int) const;    // cumulative probability function
-        qreal inverse( const qreal) const;   // inverse cumulative prob. function
+        qreal density(const qreal) const;    // probability density function
+        qreal cumulat(const qreal) const;    // cumulative probability function
+        qreal inverse(const qreal) const;   // inverse cumulative prob. function
         int random();                      // random prob. distributed variable
         int random(const int, const int); // random prob. distributed variable
     private:

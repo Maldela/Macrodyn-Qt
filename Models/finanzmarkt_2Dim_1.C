@@ -12,6 +12,8 @@
 #include "../error.h"
 #include "finanzmarkt_2Dim_1.h"
 
+const qreal finanzmarkt_2Dim_1::epsilon = 1e-16;
+
 ///////////////////////////////////////////////////////////////////////////////
 // Funktionsname:	finanzmarkt_2Dim_1
 // Beschreibung:	constructor
@@ -429,8 +431,6 @@ void finanzmarkt_2Dim_1::initialize()
 	XN->m[0][0] = 0;
 	XN->m[1][0] = 0;
 
-	p1=p1;			//Erstellen des Startvektors der Wertpapierpreise
-	p2=p2;
 	P->m[0][0]= p1;
 	P->m[1][0]= p2;
 	

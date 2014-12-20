@@ -147,9 +147,9 @@ void defbudba::notProd(qreal &ztnot,qreal &ytnot)
 /*                                                                            */
 /******************************************************************************/
 
-void defbudba::notCom(qreal &xtnot,qreal &ct,qreal &ptratex)
+void defbudba::notCom(qreal &xtnot,qreal &ct,qreal&)
 {
-    qreal sigma = rhoTilda / (rhoTilda-1);
+//    qreal sigma = rhoTilda / (rhoTilda-1);
   
  /*    ct =   1/ ( 1 + exp( log(delta)/(1-rhoTilda) + sigma*log(ptratex) ) );*/
      ct = 0.5;   // Änderung von Leo (kann mir den Einfluss von rho, tau nicht

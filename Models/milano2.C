@@ -109,8 +109,8 @@ qreal milano2::virtual_s4employment()
 {
      qreal s4_emp;
 
-     if(b/(a*(1-h))>rqreal)
-        s4_emp=((1-h)*((1-tax)*pgt+zt))/((alfa*b)/(rqreal*a)-(1-h)*alfa);
+     if(b/(a*(1-h))>rreal)
+        s4_emp=((1-h)*((1-tax)*pgt+zt))/((alfa*b)/(rreal*a)-(1-h)*alfa);
      else
         s4_emp=Ls+1;
      return s4_emp;
@@ -129,7 +129,7 @@ qreal milano2::labour_demand()
 {
     qreal l_dem;
     
-    l_dem=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rqreal));
+    l_dem=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rreal));
     return l_dem;
 }
 
@@ -193,20 +193,20 @@ void milano2::system_1(const qreal& s1_emp)
 
     empl=s1_emp;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rqreal*a);
+    capital=alfa*b*empl/(rreal*a);
     lambdas=empl/Ls;
     mus=capital/((1-h)*(alfa*empl+(1-tax)*pgt+zt));
     gammas=exp((1-a-b)*log(output/n1))*exp((-a)*log(a/alfa))*exp((-b)*
-    log(b/rqreal));
+    log(b/rreal));
     mtr=mqreal;
     wtr=alfa;
-    rtr=rqreal;
+    rtr=rreal;
     teta=exp(psi1*log(gammas));
-    pgt=(output-alfa*empl-rqreal*capital)/teta;
-    zt=capital*rqreal/teta;
+    pgt=(output-alfa*empl-rreal*capital)/teta;
+    zt=capital*rreal/teta;
     mqreal=(mqreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
-    rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
+    rreal=(exp(omikron1*log(mus))*rreal)/teta;
     if (pgt<0) log() << "  Gewinn ist negativ.";
     if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ.";
 
@@ -237,7 +237,7 @@ void milano2::system_2(const qreal& l_dem)
 
     empl=l_dem;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rqreal*a);
+    capital=alfa*b*empl/(rreal*a);
     lambdas=empl/Ls;
     mus=capital/((1-h)*(alfa*empl+(1-tax)*pgt+zt));
     if (output<G){
@@ -259,13 +259,13 @@ void milano2::system_2(const qreal& l_dem)
     }
     mtr=mqreal;
     wtr=alfa;
-    rtr=rqreal;
+    rtr=rreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rqreal*capital)/teta;
-    zt=capital*rqreal/teta;
+    pgt=(output-alfa*empl-rreal*capital)/teta;
+    zt=capital*rreal/teta;
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
-    rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
+    rreal=(exp(omikron1*log(mus))*rreal)/teta;
     if (pgt<0) log() << "  Gewinn ist negativ.";
     if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ.";
 
@@ -285,7 +285,7 @@ void milano2::system_2(const qreal& l_dem)
 void milano2::system_4(const qreal& s4_emp)
 {
     qreal lambdas;
-    qreal mud;
+    qreal mud = 0;
     qreal gammad;
     qreal delta;
     qreal beta;
@@ -296,10 +296,10 @@ void milano2::system_4(const qreal& s4_emp)
 
     empl=s4_emp;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rqreal*a);
+    capital=alfa*b*empl/(rreal*a);
     lambdas=empl/Ls;
 
-    c=exp((1-a-b)*log(capital/n1))*exp((-1+a)*log(b/rqreal))*
+    c=exp((1-a-b)*log(capital/n1))*exp((-1+a)*log(b/rreal))*
     exp(-a*log(a/alfa));
 
     if(c>=exp(b*log(1-epsilon)) && c<=1)
@@ -314,12 +314,12 @@ void milano2::system_4(const qreal& s4_emp)
       }
     else
       {
-    if ( n1*exp(b/(1-a-b)*log(b/rqreal))
+    if ( n1*exp(b/(1-a-b)*log(b/rreal))
 	     *exp((1-b)/(1-a-b)*log(a/alfa))
 	     *exp(b/(1-a-b)*log(1-epsilon)) > s4_emp
 	     )
 	  {
-        rqreal=f*rqreal;
+        rreal = f * rreal;
 	    return;
 	  }
 	else
@@ -349,13 +349,13 @@ void milano2::system_4(const qreal& s4_emp)
     }
     mtr=mqreal;
     wtr=alfa;
-    rtr=rqreal;
+    rtr=rreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rqreal*capital)/teta;
-    zt=capital*rqreal/teta;
+    pgt=(output-alfa*empl-rreal*capital)/teta;
+    zt=capital*rreal/teta;
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
-    rqreal=(exp(-omikron2*log(mud))*rqreal)/teta;
+    rreal=(exp(-omikron2*log(mud))*rreal)/teta;
     if (pgt<0) log() << "  Gewinn ist negativ.";
     if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ.";
 
@@ -385,7 +385,7 @@ void milano2::system_6(const qreal& l_dem)
     
     empl=Ls;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rqreal*a);
+    capital=alfa*b*empl/(rreal*a);
     lambdad=empl/l_dem;
     mus=capital/((1-h)*(alfa*empl+(1-tax)*pgt+zt));
     if (output<G){
@@ -406,13 +406,13 @@ void milano2::system_6(const qreal& l_dem)
     }
     mtr=mqreal;
     wtr=alfa;
-    rtr=rqreal;
+    rtr=rreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rqreal*capital)/teta;
-    zt=capital*rqreal/teta;
+    pgt=(output-alfa*empl-rreal*capital)/teta;
+    zt=capital*rreal/teta;
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(-nu2*log(lambdad))*alfa)/teta;
-    rqreal=(exp(omikron1*log(mus))*rqreal)/teta;
+    rreal=(exp(omikron1*log(mus))*rreal)/teta;
     if (pgt<0) log() << "  Gewinn ist negativ.";
     if ( ((1-tax)*pgt + zt)<0 ) log() << "  Anfangsausstattung ist negativ.";
 
@@ -430,7 +430,7 @@ void milano2::system_6(const qreal& l_dem)
 
 
 
-void milano2::iteration(const qint64& t)
+void milano2::iteration(const qint64&)
 {
 /*
     qreal s1_emp;
@@ -455,7 +455,7 @@ void milano2::loadParamset(QTextStream& inFile)
     inFile >> a >> b;
     inFile >> psi1 >> psi2 >> nu1 >> nu2 >> omikron1 >> omikron2;
     inFile >> n1 >> simd;
-    inFile >> h >> pg0 >> alfa0 >> mqreal0 >> rqreal0 >> z0;
+    inFile >> h >> pg0 >> alfa0 >> mqreal0 >> rreal0 >> z0;
     inFile >> Ls >> G >> tax >> epsilon >> f;
 
     initialize();
@@ -475,7 +475,7 @@ void milano2::printParamset()
 {
     log() << "a      :  " << a <<"\talpha0 : " << alfa0;
     log() << "b      :  " << b <<"\tmqreal0 : " << mqreal0;
-    log() << "rqreal0 :  " << rqreal0 <<"\tz0 : " << z0;
+    log() << "rreal0 :  " << rreal0 <<"\tz0 : " << z0;
     log() << "epsilon : " << epsilon;
     log() << "f      :  " << f;
     log() << "n1     :  " << n1;
@@ -501,7 +501,7 @@ void milano2::saveParamset(QTextStream& outFile)
     outFile << nu1 << " " << nu2 << " " << omikron1 << " " << omikron2;
     outFile << n1 << " " << simd;
     outFile << h << " " << epsilon << " " << f;
-    outFile << rqreal0 << " " << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0;
+    outFile << rreal0 << " " << pg0 << " " << alfa0 << " " << mqreal0 << " " << z0;
     outFile << Ls << " " << G << " " << tax;
 }
 
@@ -536,8 +536,8 @@ qreal* milano2::setLabels(const QString& name)
     return( &mqreal );
     if (name == "pgt")
 	return( &pgt );
-    if (name == "rqreal")
-        return( &rqreal );
+    if (name == "rreal")
+        return( &rreal );
     if (name == "teta")
          return( &teta );
    if (name == "zt")
@@ -572,8 +572,8 @@ qreal* milano2::setLabels(const QString& name)
     return( &mqreal0 );
     if (name == "pg0")
 	return( &pg0 );
-    if (name == "rqreal0")
-        return( &rqreal0 );
+    if (name == "rreal0")
+        return( &rreal0 );
     if (name == "z0")
         return( &z0 );
     if (name == "epsilon")
@@ -590,7 +590,7 @@ void milano2::initialize()
     alfa=alfa0;
     pgt=pg0;
     mqreal=mqreal0;
-    rqreal=rqreal0;
+    rreal=rreal0;
     zt=z0;
 }
 
@@ -610,7 +610,7 @@ void milano2::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
     *stateSpace << &alfa;
 /*    *stateSpace << &pt;*/
     *stateSpace << &pgt;
-    *stateSpace << &rqreal;
+    *stateSpace << &rreal;
     *stateSpace << &zt; 
 }
 
@@ -643,7 +643,7 @@ void milano2::receiveParameters(const QList<qreal> &parameters)
         pg0 = parameters.at(11);
         alfa0 = parameters.at(12);
         mqreal0 = parameters.at(13);
-        rqreal0 = parameters.at(14);
+        rreal0 = parameters.at(14);
         z0 = parameters.at(15);
         Ls = parameters.at(16);
         G = parameters.at(17);

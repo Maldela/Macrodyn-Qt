@@ -33,6 +33,6 @@ public:
     void sendParameters(int&,qreal**); // write all parameters
                                 // into an array and return the numbers
 				// of parameters
-    void receiveParameters(const QList<qreal>);// receive parameter values
+    void receiveParameters(const QList<qreal>&);// receive parameter values
 };
 #endif

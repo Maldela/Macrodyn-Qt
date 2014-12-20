@@ -397,7 +397,7 @@ void ExchangeRateModel::ratioRegime(qreal &ydt,qreal &yLt,char *x1)
 /*                                                                            */
 /******************************************************************************/
 
-void ExchangeRateModel::wageAndpriceAdjust(qreal &ydt, qreal &yLt, qreal &Lnt, char *state)
+void ExchangeRateModel::wageAndpriceAdjust(qreal &ydt, qreal &yLt, qreal &Lnt, char *)
 {
 /*    if( (!strcmp(state,"K ")) || (!strcmp(state,"IK ")))
 		part = 1+kappa*((yt-yLt)/yLt) ;

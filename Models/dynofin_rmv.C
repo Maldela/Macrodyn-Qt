@@ -488,7 +488,7 @@ void dynofin_rmv::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 
 void dynofin_rmv::read_sim(QTextStream& inFile, st_fin_paramset *temp_paramset){
 
-  int	i,j;			// Index
+  int	i;			// Index
 
   	inFile >> temp_paramset->type;
 
@@ -645,7 +645,7 @@ void dynofin_rmv::receiveParameters(const QList<qreal>&)
 
 void dynofin_rmv::save_st_fin_paramset(QTextStream& outFile, st_fin_paramset *temp_paramset){
 
-   int	i,j;			// Index
+   int	i;			// Index
   
     	outFile << temp_paramset->type << "\t";
 	
@@ -759,7 +759,7 @@ outFile << "Length = " << length;
 ////////////////////////////////////////////////////////////////////////////////
 void dynofin_rmv::save_st_fin_paramsetWithNames(QTextStream& outFile, st_fin_paramset *temp_paramset)	
 {
-   int	i,j;			// Index
+   int	i;			// Index
   	
     	outFile << "type = " << temp_paramset->type << "\t";
 	
@@ -817,7 +817,7 @@ void dynofin_rmv::save_st_fin_paramsetWithNames(QTextStream& outFile, st_fin_par
 ///////////////////////////////////////////////////////////////////////////////
 void dynofin_rmv::print_st_fin_paramset(st_fin_paramset *temp_paramset){
 
-    int	i,j;			// Index
+    int	i;			// Index
       	
       log() << temp_paramset->type;
       

@@ -355,7 +355,7 @@ void hetoni::dynamics(qreal &a, qreal &b)
 /* Last modified:   20.04.1997 (Marc Mueller, Toni Stiefenhofer)              */
 /*                                                                            */
 /******************************************************************************/
-void hetoni::iteration(const qint64& t)
+void hetoni::iteration(const qint64&)
 {
     qreal addlo=0;
     qreal addso=0;

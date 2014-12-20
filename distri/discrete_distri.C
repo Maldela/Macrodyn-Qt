@@ -44,9 +44,9 @@ discrete_Distri::discrete_Distri(const int wid, const int sta ) :
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-inline qreal discrete_Distri::density(const int arg) const
+inline qreal discrete_Distri::density(const qreal arg) const
 {
-    if ( arg < start || arg > start+int(width))
+    if ( arg < start || arg > start + width)
         return  0.0;
     else
         return  1.0 / qreal(width);
@@ -69,11 +69,11 @@ inline qreal discrete_Distri::density(const int arg) const
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-inline qreal discrete_Distri::cumulat(const int arg) const
+inline qreal discrete_Distri::cumulat(const qreal arg) const
 {
     if ( arg < start )
         return  0.0;
-    else if  (arg > start+int(width))
+    else if  (arg > start + width)
         return  1.0;
     else
         return  qreal(arg-start+1) / qreal(width);

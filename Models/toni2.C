@@ -320,7 +320,7 @@ void toni2::dynamics(qreal &a)
 /* Last modified:   04.02.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void toni2::iteration(const qint64& t)
+void toni2::iteration(const qint64&)
 {
     qreal add=0;
     qreal ev=0;

@@ -326,7 +326,7 @@ void density_1d_var::save_current_picture(qint64 how_many)
 {
 	int  k;
 	qreal dummyx;
-	int  color = 9;	// color used for the density plot
+//	int  color = 9;	// color used for the density plot
 	qreal d;
 	qreal y_plot;
 	

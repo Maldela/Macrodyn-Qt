@@ -214,7 +214,7 @@ void milano::classical_unemployment(const qreal& l_dem)
 /*                                                                            */
 /******************************************************************************/
 
-void milano::iteration(const qint64& t)
+void milano::iteration(const qint64&)
 {
     qreal K_emp;
     qreal l_dem;

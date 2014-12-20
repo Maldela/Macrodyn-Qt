@@ -235,7 +235,7 @@ void linFimaErwRueck::iteration(const qint64& t)
 {
 // Die Prognosen der Chartisten und Fundamentalisten ist extern vorgeschaltet !
 
-qreal beta=1.03;qreal L=2;
+//qreal beta=1.03;qreal L=2;
 //if(t>1)
 // { pC=(beta/L)*(p+pOld);
 //	  pCperf=(beta/L)*(pPerf+pPerfOld); 

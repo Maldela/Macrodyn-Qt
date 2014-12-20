@@ -174,16 +174,16 @@ const qreal& r3)
     if ( rr1<=rr2 )
       {
 	if (rr1<=rr3) 
-      rqreal=rr1;
+      rreal=rr1;
 	else
-      rqreal=rr3;
+      rreal=rr3;
       }
     else
       {
 	if (rr2<=rr3)
-      rqreal=rr2;
+      rreal=rr2;
 	else
-      rqreal=rr3;
+      rreal=rr3;
       }
 }
    
@@ -211,19 +211,19 @@ void milano3::system_3(const qreal& r2)
 
  //   log() << "Hi! System 3" 
     
-   rqreal=r2;
+   rreal=r2;
     empl=1/(alfa*(1/a-h))*(h*((1-tax)*pgt+zt)+mqreal+G);
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rqreal*a);
+    capital=alfa*b*empl/(rreal*a);
     lambdas=empl/Ls;
     gammas=exp((1-a-b)*log(output/n1))*exp((-a)*log(a/alfa))*exp((-b)*
-    log(b/rqreal));
+    log(b/rreal));
     mtr=mqreal;
     wtr=alfa;
-    rtr=rqreal;
+    rtr=rreal;
     teta=exp(psi1*log(gammas));
-    pgt=(output-alfa*empl-rqreal*capital)/teta;
-    zt=capital*rqreal/teta;
+    pgt=(output-alfa*empl-rreal*capital)/teta;
+    zt=capital*rreal/teta;
     mqreal=(mqreal+G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
    
@@ -266,10 +266,10 @@ void milano3::system_G6(const qreal& r3)
 
   //  log() << "Hi! System G6" 
 
-    rqreal=r3;
-    empl=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rqreal));
+    rreal=r3;
+    empl=n1*exp((1-b)/(1-a-b)*log(a/alfa))*exp(b/(1-a-b)*log(b/rreal));
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rqreal*a);
+    capital=alfa*b*empl/(rreal*a);
     lambdas=empl/Ls;
     if (output<G){
 	beta=output/G;
@@ -290,10 +290,10 @@ void milano3::system_G6(const qreal& r3)
     }
     mtr=mqreal;
     wtr=alfa;
-    rtr=rqreal;
+    rtr=rreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-   pgt=(output-alfa*empl-rqreal*capital)/teta;
-    zt=capital*rqreal/teta;
+   pgt=(output-alfa*empl-rreal*capital)/teta;
+    zt=capital*rreal/teta;
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(nu1*log(lambdas))*alfa)/teta;
    
@@ -336,12 +336,12 @@ void milano3::system_8(const qreal& r1)
 
 //    log() << "Hi! System 8" 
     
-    rqreal=r1;
+    rreal=r1;
     empl=Ls;
     output=alfa*empl/a;
-    capital=alfa*b*empl/(rqreal*a);
+    capital=alfa*b*empl/(rreal*a);
     lambdad=empl/(n1*exp((1-b)/(1-a-b)*log(a/alfa))*
-            exp(b/(1-a-b)*log(b/rqreal)));
+            exp(b/(1-a-b)*log(b/rreal)));
 
     if (output<G){
 	beta=output/G;
@@ -362,10 +362,10 @@ void milano3::system_8(const qreal& r1)
 
     mtr=mqreal;
     wtr=alfa;
-    rtr=rqreal;
+    rtr=rreal;
     teta=exp(-psi2*log((gammad+delta+beta)/3.0));
-    pgt=(output-alfa*empl-rqreal*capital)/teta;
-    zt=capital*rqreal/teta;
+    pgt=(output-alfa*empl-rreal*capital)/teta;
+    zt=capital*rreal/teta;
     mqreal=(delta*mqreal+beta*G+(1-tax)*oldpgt+oldzt)/teta-pgt-zt;
     alfa=(exp(-nu2*log(lambdad))*alfa)/teta;
   
@@ -396,7 +396,7 @@ void milano3::system_8(const qreal& r1)
 /*                                                                            */
 /******************************************************************************/
 
-void milano3::iteration(const qint64& t)
+void milano3::iteration(const qint64&)
 {
 /*
     qreal r1;
@@ -501,8 +501,8 @@ qreal* milano3::setLabels(const QString& name)
     return( &mqreal );
     if (name == "pgt")
 	return( &pgt );
-    if (name == "rqreal")
-        return( &rqreal );
+    if (name == "rreal")
+        return( &rreal );
     if (name == "teta")
          return( &teta );
     if (name == "zt")
@@ -554,16 +554,16 @@ void milano3::initialize()
     if ( r1<=r2 )
       {
 	if (r1<=r3) 
-      rqreal=r1;
+      rreal=r1;
 	else
-      rqreal=r3;
+      rreal=r3;
       }
     else
       {
 	if (r2<=r3)
-      rqreal=r2;
+      rreal=r2;
 	else
-      rqreal=r3;
+      rreal=r3;
       }
 }
 
@@ -582,7 +582,7 @@ void milano3::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
     *stateSpace << &mqreal;
         *stateSpace << &alfa;
         *stateSpace << &pgt;
-        *stateSpace << &rqreal;
+        *stateSpace << &rreal;
         *stateSpace << &zt;      
 
 }

@@ -667,7 +667,7 @@ void rSolow::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 
 void rSolow::read_sim(QTextStream& inFile, st_paramset *temp_paramset){
 
-  int	i,j;			// Index
+  int	i;			// Index
 
   	inFile >> temp_paramset->type;
 
@@ -837,7 +837,7 @@ void rSolow::receiveParameters(const QList<qreal>&)
 
 void rSolow::save_st_Paramset(QTextStream& outFile, st_paramset *temp_paramset){
 
-   int	i,j;			// Index
+   int	i;			// Index
   
     	outFile << temp_paramset->type << "\t";
 	
@@ -958,7 +958,7 @@ void rSolow::saveParamsetWithNames(QTextStream& outFile)
 ////////////////////////////////////////////////////////////////////////////////
 void rSolow::save_st_ParamsetWithNames(QTextStream& outFile, st_paramset *temp_paramset)
 {
-   int	i,j;			// Index
+   int	i;			// Index
   	
     	outFile << "type = " << temp_paramset->type << "\t";
 	
@@ -1016,7 +1016,7 @@ void rSolow::save_st_ParamsetWithNames(QTextStream& outFile, st_paramset *temp_p
 ///////////////////////////////////////////////////////////////////////////////
 void rSolow::print_st_Paramset(st_paramset *temp_paramset){
 
-    int	i,j;			// Index
+    int	i;			// Index
       	
       log() << temp_paramset->type;
       

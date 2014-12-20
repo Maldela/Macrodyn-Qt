@@ -44,7 +44,7 @@ prob_Distri(0), prob(pro)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-inline qreal geometric_Distri::density( const int arg) const
+inline qreal geometric_Distri::density( const qreal arg) const
 {
     return  arg <= 0 ? 0.0 : (1.0-prob) * pow(prob,arg-1);
 }
@@ -66,7 +66,7 @@ inline qreal geometric_Distri::density( const int arg) const
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-inline qreal geometric_Distri::cumulat(const int arg) const
+inline qreal geometric_Distri::cumulat(const qreal arg) const
 {
     return  arg <= 0 ? 0.0 : 1.0 - pow(prob,arg);
 }

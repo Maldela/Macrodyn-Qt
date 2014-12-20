@@ -42,7 +42,7 @@ cobweb::cobweb() : baseModel(1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::iteration(const qint64& t)
+void cobweb::iteration(const qint64&)
 {
 	p_e = (1.0-w)*p_e_old + w*1.0/b*(a-atan(lambda*p_e_old));
 	q = atan(lambda*p_e);
@@ -190,11 +190,11 @@ void cobweb::loadParamset(QTextStream& inFile)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb::saveParamset(QTextStream& outFile)
+void cobweb::saveParamset(QTextStream&)
 {
-/*	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
-	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
-	outFile << "\t" << length;*/
+//	outFile << c0 << "\t" << c1 << "\t" << qreal_money << "\t";
+//	outFile << G << "\t" << T << "\t" << alpha  << "\t" << y0;
+//	outFile << "\t" << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -210,14 +210,14 @@ void cobweb::saveParamset(QTextStream& outFile)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void cobweb::saveParamsetWithNames(QTextStream& outFile)
+void cobweb::saveParamsetWithNames(QTextStream&)
 {
-/*	outFile << "c0 = " << c0;
-	outFile << "\nc1 = " << c1;
-    outFile << "\nqreal_money = " << qreal_money;
-	outFile << "\nG = " << G << "\tT = " << T;
-	outFile << "\nalpha = " << alpha << "\ty0 = " << y0;
-	outFile << "length = " << length */
+//	outFile << "c0 = " << c0;
+//	outFile << "\nc1 = " << c1;
+//    outFile << "\nqreal_money = " << qreal_money;
+//	outFile << "\nG = " << G << "\tT = " << T;
+//	outFile << "\nalpha = " << alpha << "\ty0 = " << y0;
+//	outFile << "length = " << length;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -311,7 +311,7 @@ rdemand_cobweb::rdemand_cobweb()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void rdemand_cobweb::iteration( const qint64& t )
+void rdemand_cobweb::iteration( const qint64&)
 {
 	*zvar_ptr = zvar->dice();
 	p_e = (1.0-w)*p_e_old + w*1.0/b*(a-atan(lambda*p_e_old));
@@ -415,7 +415,7 @@ void cobweb_RLS::initialize()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void cobweb_RLS::iteration(const qint64& t)
+void cobweb_RLS::iteration(const qint64&)
 {
 	p_e_old = p_e;
 	p_e = theta_t * p;

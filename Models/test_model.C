@@ -55,7 +55,7 @@ test_model::~test_model()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void test_model::iteration(const qint64& time)
+void test_model::iteration(const qint64&)
 {
 // 	d = distri.st_normal();
 //	d2 = distri.st_normal();

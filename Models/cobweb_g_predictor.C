@@ -320,7 +320,7 @@ void cobweb_g_predictor::dynamics(qreal &a)
 /* Last modified:   04.02.1997 (Marc Mueller)                                 */
 /*                                                                            */
 /******************************************************************************/
-void cobweb_g_predictor::iteration(const qint64& t)
+void cobweb_g_predictor::iteration(const qint64&)
 {
     qreal add=0;
     qreal ev=0;

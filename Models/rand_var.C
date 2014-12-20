@@ -18,8 +18,8 @@
 #include "rand_var.h"
 #include <time.h>
 //default seed:
-static const qint64 sd1 = 2036452194;
-static const qint64 sd2 = 1194132260;
+//static const qint64 sd1 = 2036452194;
+//static const qint64 sd2 = 1194132260;
 
 //alternative seed1 (omega_1)
 

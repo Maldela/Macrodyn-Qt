@@ -264,9 +264,7 @@ void finanzmarkt_Jan::initialize()
 	
     qreal koeff;
 	R = 1+r;
-	eta_C = 1-eta_F;
-	e_N = e_N;
-	e_F = e_F;
+    eta_C = 1-eta_F;
 	(*x_all)(0,0) = x_all1;
 	(*x_all)(1,0) = x_all2;
 	(*x_N)(0,0) = 0;

@@ -58,7 +58,7 @@ demog_model::~demog_model()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void demog_model::iteration(const qint64& time)
+void demog_model::iteration(const qint64&)
 {
 	switch ( type ){
 	case 1 :

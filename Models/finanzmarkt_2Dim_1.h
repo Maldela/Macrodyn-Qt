@@ -18,12 +18,13 @@
 #include <stdlib.h>
 #include "rand_var.h"
 
-class finanzmarkt_2Dim_1 : public baseModel {
+class finanzmarkt_2Dim_1 : public baseModel
+{
 
 protected:
 	
 	
-    static const qreal  epsilon=1e-16;
+    static const qreal epsilon;
 	
     int noise;
     qreal R;

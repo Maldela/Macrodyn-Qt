@@ -391,7 +391,8 @@ void MerA::saveParamsetWithNames(QTextStream& outputFile)
     outputFile << "perfectPredictor";
     outputFile << "R = " << R;
     outputFile << "K = " << K;
-    for(int i=0;i<K;i++) {
+    for (int i=0;i<K;i++)
+    {
      	outputFile << "xAll[" << i << "] = " << xAll[i] << " ";
         outputFile << "dmin[" << i << "] = " << dmin[i] << " ";
         outputFile << "dmax[" << i << "] = " << dmin[i] << " ";

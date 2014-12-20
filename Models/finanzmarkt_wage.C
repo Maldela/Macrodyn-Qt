@@ -12,6 +12,7 @@
 #include "../error.h"
 #include "finanzmarkt_wage.h"
 
+const qreal finanzmarkt_wage::epsilon = 1e-16;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -594,7 +595,7 @@ void finanzmarkt_wage::Dividende()
 // Funktionsname:	iteration
 // Beschreibung:	Durchlauf einer Periode
 ///////////////////////////////////////////////////////////////////////////////
-void finanzmarkt_wage::iteration(const qint64& t)
+void finanzmarkt_wage::iteration(const qint64&)
 {
 
 Wagebill();
