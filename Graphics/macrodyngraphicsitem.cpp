@@ -465,6 +465,32 @@ void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, in
     update();
 }
 
+
+/******************************************************************************/
+/*                                                                            */
+/* Class name:      graphics                                                  */
+/* Member function: drawRect                                              */
+/* Purpose:         draw a rectangle on the screen with variable size and color             */
+/* Modified:        JTiwisina                			              */
+/* Last modified:   Mon Jan 11 12:00:14 METDST 2015                           */
+/*                                                                            */
+/******************************************************************************/
+void MacrodynGraphicsItem::drawRect(qreal v, qreal w, qreal width, qreal height, const QColor& color)
+{
+    int pixv = transformX(v);
+    int pixw = transformY(w); /* coordinates in pixels */
+    int pixwidth = width *wid/(axis.max[0]-axis.min[0]);
+    int pixheight = -height *hig/(axis.max[1]-axis.min[1]); /* coordinates in pixels */
+
+////	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
+
+        QRect rect(pixv, pixw, pixwidth, pixheight);
+        QPainter painter(&image);
+        painter.fillRect(rect, color);
+
+    update();
+}
+
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      graphics                                                  */

@@ -60,7 +60,7 @@ void bif2D::simulation()
         for(t=0;t<length;t++)
         {
             model->iteration(t+1);
-            if( t >= limit && inRange(dummy_x,*yParam) )
+            if( t >= limit )
             {
                             // only points inside the state space
                 // section under consideration are

@@ -368,6 +368,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
             m_runJob->setStepX(stepX);
             break;
         case DENSITY_1D:
+            //m_axes=conParam2xyRange(m_conBlock,3);
             m_runJob = new density_1d(m_modelPointer,*m_axes,m_graph);
             break;
         case DENSITY_1D_1P:
@@ -564,12 +565,14 @@ void SimLoader::runSimulation()
     {
         log() << "starting simulation...";
         m_runJob->simulation();
-        delete m_runJob;
+//        log() << "before delete m_runJob...";
+//        delete m_runJob;
+//        log() << "after delete m_runJob...";
         m_runJob = NULL;
     }
     else log() << "job misspecified...";
 
-//	log() << "closing job...\n";
+    log() << "closing job...\n";
 
     if( m_axes )
     delete m_axes;

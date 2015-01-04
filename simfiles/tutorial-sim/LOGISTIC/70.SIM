@@ -1,0 +1,28 @@
+logistic
+
+0.1
+4.0
+
+10000
+
+70
+
+x       0.0     1.0
+x       0.0     1.0
+alpha   4       4
+
+0 70.xpm
+
+1
+
+
+// x_0
+// alpha
+
+// t_end
+
+// tag
+// ...
+// output only on display
+
+// tau

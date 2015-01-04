@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Log.qml</file>
+        <file>oeffnen.png</file>
+        <file>run.png</file>
     </qresource>
 </RCC>

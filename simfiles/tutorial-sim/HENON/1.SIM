@@ -1,0 +1,21 @@
+henon
+0.5	0.5	1.5	0.3	1000
+1
+beta	-0.2	0.2
+x	-2	2
+alpha	1.0	1.4
+10	1.xpm
+
+
+//////////////////////////////////////////////
+modelTyp
+
+x0      y0      alpha   beta    length 
+
+jobNumber
+
+xLabel  xmin    xmax
+yLabel  ymin    ymax
+zLabel  zmin    zmax
+
+printer printFileName   [#x     #y      (if printer==11 only!)  ]

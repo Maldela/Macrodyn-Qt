@@ -1,6 +1,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.0
 import MacrodynQML 1.0
 
 ApplicationWindow {
@@ -30,6 +31,26 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
+            }
+        }
+    }
+
+    toolBar:ToolBar {
+        RowLayout {
+            anchors.fill: parent
+            ToolButton {
+                iconSource: "oeffnen.png"
+                onClicked: fileDialog.open();
+            }
+            ToolButton {
+                iconSource: "run.png"
+                onClicked: loader.runSimulation();
+            }
+            Item { Layout.fillWidth: true }
+            CheckBox {
+                text: "Enabled"
+                checked: true
+                Layout.alignment: Qt.AlignRight
             }
         }
     }

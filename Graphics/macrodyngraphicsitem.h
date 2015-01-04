@@ -40,6 +40,7 @@ public:
                     // according to the given point
 
     void setBigPoint(qreal, qreal, const QColor&, int);
+    void drawRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
     void drawLine(qreal, qreal, qreal, qreal, const QColor&);
                         // draw a line on the screen
     void drawString(qreal, qreal, const QString&, const QColor&, bool = true);

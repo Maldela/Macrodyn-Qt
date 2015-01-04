@@ -267,12 +267,12 @@ qreal* laborMarketFirstTax::setLabels(const QString& name)
     if (name == "theta0")
         return( &theta0 );
 
-    if (name == "wtqreal")
-        return( &wtqreal );
-    if (name == "mtqrealS")
-        return( &mtqrealS );
-    if (name == "mtqrealW")
-        return( &mtqrealW );
+    if (name == "wtreal")
+        return( &wtreal );
+    if (name == "mtrealS")
+        return( &mtrealS );
+    if (name == "mtrealW")
+        return( &mtrealW );
     if (name == "omegat")
         return( &omegat );
     if (name == "dt")
@@ -322,20 +322,20 @@ void laborMarketFirstTax::iteration(const qint64& t)
   qreal xtS,xtW;		// actual consum of the young S and W
      
   setTax();				//()
-  ztnot=laborDemand();		        //(A,B,wtqreal)
+  ztnot=laborDemand();		        //(A,B,wtreal)
   employment=actualEmployment(ztnot);	//(ztnot,Lmax)
   sigmaL=detSigmaL(ztnot);		//(ztnot,Lmax,employment)
   wtrate=detWtRate(sigmaL);		//(sigmaL,Lmax,employment,lambda,mu)
   ptrateexW=expectedInflationRateW(t);  //(t,tauW,theta)
   cpsW=consumptionPropensityW(ptrateexW);//(ptrateexW,rhoTildaW,deltaW)
-  ytW=demandYoungW(cpsW);	        //(cpsW,taxW,wtqreal,employment)
+  ytW=demandYoungW(cpsW);	        //(cpsW,taxW,wtreal,employment)
   ptrateexS=expectedInflationRateS(t);  //(t,tauS,theta)                
   cpsS=consumptionPropensityS(ptrateexS);//(ptrateexS,rhoTildaS,deltaS)
   ytS=demandYoungS(cpsS);	        //(cpsS,taxS,dt)
-  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtqrealW,mtqrealS,g,ytW,ytS)
+  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtrealW,mtrealS,g,ytW,ytS)
   yteff=productionFunction(employment);	//(A,B,employment,deltaP,omagat)
   output=actualOutput(ytD,yteff);	//(ytD,yteff)
-  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtqrealW,mtqrealS)
+  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtrealW,mtrealS)
   xtS=actualConsumptionYoungS(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   xtW=actualConsumptionYoungW(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   sigmaC=detSigmaC(yteff,ytD);	        //(yteff,ytD,output)

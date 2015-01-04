@@ -93,8 +93,8 @@ void defbudba::thetaInit(qreal *theta)
 void defbudba::initialize()
 {
     thetaInit(theta);
-    mtqreal=m0/p0;
-    wtqreal=w0/p0;
+    mtreal=m0/p0;
+    wtreal=w0/p0;
     g=g0;
     ymax=prodFunction(Lmax);
     rhoTilda=1-rho/(1-rho);
@@ -133,7 +133,7 @@ qreal defbudba::expectedInflationRate(const qint64 t)
 
 void defbudba::notProd(qreal &ztnot,qreal &ytnot)
 {
-    ztnot= exp( log(A/wtqreal) / (1-B) ) ;
+    ztnot= exp( log(A/wtreal) / (1-B) ) ;
     ytnot= prodFunction(ztnot);
 }
 
@@ -155,7 +155,7 @@ void defbudba::notCom(qreal &xtnot,qreal &ct,qreal&)
      ct = 0.5;   // Änderung von Leo (kann mir den Einfluss von rho, tau nicht
          // erklären !!)   27.2.97
      
-    xtnot=( g + beta * mtqreal ) / (1 - ct * (1-tax) ) ;
+    xtnot=( g + beta * mtreal ) / (1 - ct * (1-tax) ) ;
 }
 
 /******************************************************************************/
@@ -264,8 +264,8 @@ void defbudba::wageAndPrice(qreal &xtnot, qreal &ytnot,
 
 void defbudba::dynamics()
 {
-    mtqreal  = ( qMin( y,g+mtqreal) - tax*y ) / ptrate;
-    wtqreal  = wtqreal * (wtrate / ptrate);
+    mtreal  = ( qMin( y,g+mtreal) - tax*y ) / ptrate;
+    wtreal  = wtreal * (wtrate / ptrate);
     g       = tax*y/ptrate; // NEW Tue Jul 16 10:42:51 MESZ 1996
     for(int i=0; i<=tau; i++ )
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
@@ -325,10 +325,10 @@ qreal* defbudba::setLabels(const QString& name)
         return( &A );
     if (name == "B")
         return( &B );
-    if (name == "wtqreal")
-        return( &wtqreal );
-    if (name == "mtqreal")
-        return( &mtqreal );
+    if (name == "wtreal")
+        return( &wtreal );
+    if (name == "mtreal")
+        return( &mtreal );
     if (name == "theta")
         return( theta );
     if (name == "gamma")
@@ -399,7 +399,7 @@ void defbudba::getTheta(qreal* newTheta)
 
 qreal* defbudba::sendModelVar()
 {
-    return &wtqreal;
+    return &wtreal;
 }
 
 /******************************************************************************/
@@ -416,8 +416,8 @@ void defbudba::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
     stateSpace->clear();
     quantity = dimension;
-    *stateSpace << &mtqreal;
-    *stateSpace << &wtqreal;
+    *stateSpace << &mtreal;
+    *stateSpace << &wtreal;
     *stateSpace << theta;
     *stateSpace << &g;
 }

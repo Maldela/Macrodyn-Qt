@@ -33,8 +33,8 @@ class laborMarketFirst : public baseModel {
   //Initial state
     qreal w0,mS0,mW0,omega0,d0,theta0;     // initial values                
   //Condition variables
-    qreal wtqreal;			// qreal wage
-    qreal mtqrealS,mtqrealW;	        // qreal moneybalance ShareholderWorker
+    qreal wtreal;			// qreal wage
+    qreal mtrealS,mtrealW;	        // qreal moneybalance ShareholderWorker
     qreal omegat,dt;    			// unsold output,qreal dividend
     qreal ptrate,wtrate;                 // qreal wage, qreal balance       
     qreal employment;                    // actual employment   

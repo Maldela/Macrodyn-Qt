@@ -32,10 +32,10 @@
 density_1d::density_1d(baseModel* const bMod, xyRange & axes, 
                    MacrodynGraphicsItem* const graph)
                       :geometricJob(bMod,axes,graph),
-                       h(axes.min[0],axes.max[0],axes.res[0])
+                       h(axes.min[0],axes.max[0],(axes.res[0]>0?axes.res[0]:100.0))
 {
-    stepX=(xmax-xmin) / (1.0*axes.res[0]);
-    stepY=(ymax-ymin) / (1.0*axes.res[1]);
+    stepX=(xmax-xmin) / (1.0*(axes.res[0]>0?axes.res[0]:100.0));
+    stepY=(ymax-ymin) / (1.0*(axes.res[1]>0?axes.res[1]:100.0));
     n_axes = & axes;
     length=model->getLength();
     limit=(qint64)(0.2*length);			// 20% are thrown away
@@ -60,7 +60,6 @@ void density_1d::simulation()
 {
     qint64 t;
     int  k;
-    int  color = 9;	// color used for the density plot
     qreal d;
     qreal dy;
 
@@ -76,24 +75,28 @@ void density_1d::simulation()
   if( screenGraphics ) {
     screenGraphics->reset(*n_axes);
   }
-  
+
   for( *xParam=xmin, k=0 ;*xParam<=xmax; *xParam+=stepX, k++) {
     // d=((double) h(k))/h.get_no_hits();
-    
+
     // Introducing new density calculation for qreal probability
     d= ((double) h(k))/double(length - limit);
     d= d/stepX;
-    for( dy=0; dy<d; dy+=stepY ) {	// draw a vertical line with points
-      if( screenGraphics ) {
-        screenGraphics->setPoint(*xParam,dy,color);
-      }
-    }
-    if( screenGraphics ) {		// draw the end point
-      screenGraphics->setPoint(*xParam,d,color);
-    }
+
+    screenGraphics->drawRect(*xParam,0,stepX*1.2,d,QColor(0,0,150));
+//    for( dy=0; dy<d; dy+=stepY ) {	// draw a vertical line with points
+//      if( screenGraphics ) {
+//        //log() << *xParam << "   " << dy << "   " << color;
+//        screenGraphics->setBigPoint(*xParam,dy,color,5);
+//      }
+//    }
+//    if( screenGraphics ) {		// draw the end point
+//      screenGraphics->setBigPoint(*xParam,d,color,5);
+//    }
+
   }
-  log() << "class width = " << stepX;
-  log() << "possible number of hits = " << length - limit;
+  //log() << "class width = " << stepX;
+ // log() << "possible number of hits = " << length - limit;
   for( k=0 ; k< h.get_x_res() ; k++) {
   // d=((double) h(k))/h.get_no_hits();
     d=((double) h(k))/double(length - limit);

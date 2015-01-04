@@ -39,8 +39,8 @@ geoExp::geoExp()
 void geoExp::initialize()
 {
     thetaInit(theta);
-    mtqreal=m0/p0;
-    wtqreal=w0/p0;
+    mtreal=m0/p0;
+    wtreal=w0/p0;
     ymax=prodFunction(Lmax);
     rhoTilda=1-rho/(1-rho);
     etaTilda=eta/(1-eta);
@@ -123,10 +123,10 @@ qreal* geoExp::setLabels(const QString& name)
         return( &A );
     if (name == "B")
         return( &B );
-    if (name == "wtqreal")
-        return( &wtqreal );
-    if (name == "mtqreal")
-        return( &mtqreal );
+    if (name == "wtreal")
+        return( &wtreal );
+    if (name == "mtreal")
+        return( &mtreal );
     if (name == "theta")
         return( theta );
     if (name == "gamma")

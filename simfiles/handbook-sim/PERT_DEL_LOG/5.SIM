@@ -1,0 +1,37 @@
+perturbedDelayedLogisticMap
+0.5 	0.5	2.2	0.0784	500
+5
+x0	0.0	2.0
+y0	0.0	2.0
+beta	0.0	1.0
+10	5.xpm
+2
+x	-2.0	2.0	100
+y	-2.0	2.0	100
+
+//////////////////////////////////////////////
+modelTyp
+
+x0	y0	alpha	beta	length 
+
+jobNumber
+
+xLabel	xmin	xmax
+yLabel	ymin	ymax
+zLabel	zmin	zmax
+
+printer	printFileName	[#x 	#y	(if printer==11 only!)	]
+
+[dimension	(if jobNumber==PARSPACE only!!!)
+ label	min	max	resolution	(for each dimension!)	]
+
+[stateDimension	(if jobNumber==NPARMAP only!!!)
+ label	min	max	resolution	(for each stateDimension!)
+ xDimension
+ label	min	max	resolution	(for each xDimension!)
+ yDimension
+ label	min	max	resolution	(for each yDimension!)	]
+
+[pp_lag_size  (if jobNumber==PHASE_PLOT only!!!)]
+
+[n_values ts_init_values...  (if jobNumber==M_TSPLOT only!!!)]

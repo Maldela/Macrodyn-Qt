@@ -24,7 +24,7 @@ class defbudba : public baseModel {
     qreal gamm,kappa;                      // price adjustment parameters   
     qreal my,lambda;                       // wage adjustment parameters    
     qreal w0,p0,m0;                        // initial values                
-    qreal wtqreal,mtqreal,ptrate,wtrate;     // qreal wage, qreal balance       
+    qreal wtreal,mtreal,ptrate,wtrate;     // qreal wage, qreal balance       
     qreal Lmax;                            // qMaximum labour supply
     qreal ymax;                            // qMaximum capacity output
     qreal rho, delta;                      // utility function parameters   

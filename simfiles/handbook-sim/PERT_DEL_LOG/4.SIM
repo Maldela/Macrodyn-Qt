@@ -1,0 +1,22 @@
+perturbedDelayedLogisticMap
+0.5	0.5	2.05	0.0	300
+4
+x	0.25	0.75
+y	0.25	0.75
+beta	0.0	0.1
+10	4.xpm
+
+
+//////////////////////////////////////////////
+modelTyp
+
+x0      y0      alpha   beta    length 
+
+jobNumber
+
+xLabel  xmin    xmax
+yLabel  ymin    ymax
+zLabel  zmin    zmax
+
+printer printFileName   [#x     #y      (if printer==11 only!)  ]
+

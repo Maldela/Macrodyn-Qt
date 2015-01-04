@@ -95,8 +95,8 @@ void defaultModel::thetaInit(qreal *theta)
 void defaultModel::initialize()
 {
     thetaInit(theta);
-    mtqreal=m0/p0;
-    wtqreal=w0/p0;
+    mtreal=m0/p0;
+    wtreal=w0/p0;
     ymax=prodFunction(Lmax);
     rhoTilda=1-rho/(1-rho);
 //    kappa=lambda=my=gamm;
@@ -134,7 +134,7 @@ qreal defaultModel::expectedInflationRate(const qint64 t)
 
 void defaultModel::notProd(qreal &ztnot,qreal &ytnot)
 {
-    ztnot= exp( log(A/wtqreal) / (1-B) ) ;
+    ztnot= exp( log(A/wtreal) / (1-B) ) ;
     ytnot= prodFunction(ztnot);
 }
 
@@ -153,7 +153,7 @@ void defaultModel::notCom(qreal &xtnot,qreal &ct,qreal &ptratex)
     qreal sigma = rhoTilda / (rhoTilda-1);
   
     ct =   1/ ( 1 + exp( log(delta)/(1-rhoTilda) + sigma*log(ptratex) ) );
-    xtnot=( g + beta * mtqreal ) / (1 - ct * (1-tax) ) ;
+    xtnot=( g + beta * mtreal ) / (1 - ct * (1-tax) ) ;
 }
 
 /******************************************************************************/
@@ -263,8 +263,8 @@ void defaultModel::wageAndPrice(qreal &xtnot, qreal &ytnot,
 
 void defaultModel::dynamics()
 {
-    mtqreal  = ( qMin( output,g+mtqreal) - tax*output ) / ptrate;
-    wtqreal  = wtqreal * (wtrate / ptrate);
+    mtreal  = ( qMin( output,g+mtreal) - tax*output ) / ptrate;
+    wtreal  = wtreal * (wtrate / ptrate);
     for(int i=0; i<=tau; i++ )
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
     theta[0]=ptrate;
@@ -324,12 +324,12 @@ qreal* defaultModel::setLabels(const QString& name)
         return( &ymax );
     if (name == "B")
         return( &B );
-    if (name == "wtqreal")
-        return( &wtqreal );
+    if (name == "wtreal")
+        return( &wtreal );
     if (name == "wtrate")
         return( &wtrate );
-    if (name == "mtqreal")
-        return( &mtqreal );
+    if (name == "mtreal")
+        return( &mtreal );
     if (name == "theta")
         return( theta );
     if (name == "gamma")
@@ -400,7 +400,7 @@ void defaultModel::getTheta(qreal* newTheta)
 
 qreal* defaultModel::sendModelVar()
 {
-    return &wtqreal;
+    return &wtreal;
 }
 
 /******************************************************************************/
@@ -417,8 +417,8 @@ void defaultModel::sendStateSpace(int &quantity, QList<qreal *> *stateSpace)
 {
     stateSpace->clear();
     quantity = dimension;
-    *stateSpace << &mtqreal;
-    *stateSpace << &wtqreal;
+    *stateSpace << &mtreal;
+    *stateSpace << &wtreal;
     *stateSpace << theta;
 }
     

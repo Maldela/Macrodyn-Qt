@@ -100,10 +100,10 @@ qreal* adaptExp::setLabels(const QString& name)
         return( &A );
     if (name == "B")
         return( &B );
-    if (name == "wtqreal")
-        return( &wtqreal );
-    if (name == "mtqreal")
-        return( &mtqreal );
+    if (name == "wtreal")
+        return( &wtreal );
+    if (name == "mtreal")
+        return( &mtreal );
     if (name == "theta")
         return( theta );
     if (name == "gamma")

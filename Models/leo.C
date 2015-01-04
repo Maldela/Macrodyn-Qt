@@ -51,10 +51,10 @@ qreal* leo::setLabels(const QString& name)
         return( &A );
     if (name == "B")
         return( &B );
-    if (name == "wtqreal")
-        return( &wtqreal );
-    if (name == "mtqreal")
-        return( &mtqreal );
+    if (name == "wtreal")
+        return( &wtreal );
+    if (name == "mtreal")
+        return( &mtreal );
     if (name == "theta")
         return( theta );
     if (name == "gamma")
@@ -237,9 +237,9 @@ void leo::leoDynamics()
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
     theta[0]=eta*theta[0]+(1-eta)*(ptrate*exp(zeta*log(theta[0])));
 
-    wtqreal  = wtqreal * (wtrate / ptrate);
+    wtreal  = wtreal * (wtrate / ptrate);
 
-    mtqreal  = ( qMin(output,g+mtqreal) -tax*output ) / ptrate /
+    mtreal  = ( qMin(output,g+mtreal) -tax*output ) / ptrate /
                                                 exp(zeta*log(theta[0]));
 }
 

@@ -1,0 +1,33 @@
+default
+
+1	0.9	
+0.6	0.6	0.6	0.6
+10	100000
+1	1	
+0.6     1	4
+1	0.5	0.27     0.25
+
+41
+
+wtreal	0.0     2
+wtreal	0.0     5.0
+p0	0.01	1.0
+
+0      41.xpm
+
+2
+mtreal     -2.0    2.0    3000
+wtreal     -2.0    2.0    3000
+
+
+A >> B;
+gamm >> kappa >> lambda >> my;
+tau >> length;
+delta >> beta;
+w0 >> p0 >> m0;
+Lmax >> rho >> g >> tax;
+STANDARDSET!!!!
+
+--------------2E3D180D45B4--
+
+

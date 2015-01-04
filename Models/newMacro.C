@@ -23,7 +23,7 @@
 
 void newMacro::notProd(qreal &ztnot,qreal &yteff)
 {
-    ztnot= exp( log(A/wtqreal) / (1-B) );
+    ztnot= exp( log(A/wtreal) / (1-B) );
     employment = qMin(Lmax,ztnot);
     yteff= prodFunction(employment);
 }
@@ -43,7 +43,7 @@ void newMacro::notCom(qreal &xteff,qreal &ct,qreal &ptratex)
     qreal sigma = rho / (rho-1);
   
     ct =  1/ ( 1 + exp( log(delta)/(1-rho) + sigma*log(ptratex) ) );
-    xteff=( g + beta * mtqreal ) +  ct*wtqreal*employment*(1-tax);
+    xteff=( g + beta * mtreal ) +  ct*wtreal*employment*(1-tax);
 }
 
 /******************************************************************************/
@@ -89,9 +89,9 @@ void newMacro::wageAndPrice(qreal &xteff, qreal &yteff,qreal &ztnot,
 
 void newMacro::dynamics()
 {
-    mtqreal  = ( qMin(output,g+mtqreal) + (1-tax)*wtqreal*employment - output )
+    mtreal  = ( qMin(output,g+mtreal) + (1-tax)*wtreal*employment - output )
 	      / ptrate;
-    wtqreal  = wtqreal * (wtrate / ptrate);
+    wtreal  = wtreal * (wtrate / ptrate);
     for(int i=0; i<=tau; i++ )
 	theta[tau+1-i]=theta[tau-i];     /* p(t) -> price[t+1] */
     theta[0]=ptrate;

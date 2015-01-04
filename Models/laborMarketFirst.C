@@ -65,12 +65,12 @@ void laborMarketFirst::thetaInit(qreal *theta)
 /******************************************************************************/
 void laborMarketFirst::initialize()
 {
-    wtqreal=w0;
+    wtreal=w0;
     omegat=omega0;
     thetaInit(theta);
     dt=d0;
-    mtqrealW=mW0;
-    mtqrealS=mS0;
+    mtrealW=mW0;
+    mtrealS=mS0;
     rhoTildaW=1-rhoW/(1-rhoW);
     rhoTildaS=1-rhoS/(1-rhoS);
 }
@@ -297,12 +297,12 @@ qreal* laborMarketFirst::setLabels(const QString& name)
     if (name == "theta0")
         return( &theta0 );
 
-    if (name == "wtqreal")
-        return( &wtqreal );
-    if (name == "mtqrealS")
-        return( &mtqrealS );
-    if (name == "mtqrealW")
-        return( &mtqrealW );
+    if (name == "wtreal")
+        return( &wtreal );
+    if (name == "mtrealS")
+        return( &mtrealS );
+    if (name == "mtrealW")
+        return( &mtrealW );
     if (name == "omegat")
         return( &omegat );
     if (name == "dt")
@@ -325,7 +325,7 @@ qreal* laborMarketFirst::setLabels(const QString& name)
 /******************************************************************************/
 qreal* laborMarketFirst::sendModelVar()
 {
-    return &wtqreal;
+    return &wtreal;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -340,12 +340,12 @@ void laborMarketFirst::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 {
     stateSpace->clear();
     quantity = dimension;
-    *stateSpace << &wtqreal;
+    *stateSpace << &wtreal;
     *stateSpace << &omegat;
     *stateSpace << theta;
     *stateSpace << &dt;
-    *stateSpace << &mtqrealS;
-    *stateSpace << &mtqrealW;
+    *stateSpace << &mtrealS;
+    *stateSpace << &mtrealW;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -357,7 +357,7 @@ void laborMarketFirst::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 /******************************************************************************/
 qreal laborMarketFirst::laborDemand()
 {
-	return( exp(log(A/wtqreal) /(1-B)) ); 
+	return( exp(log(A/wtreal) /(1-B)) ); 
 }
 /******************************************************************************/
 /*                                                                            */
@@ -443,7 +443,7 @@ qreal laborMarketFirst::consumptionPropensityW(qreal& ptrateexW)
 /******************************************************************************/
 qreal laborMarketFirst::demandYoungW(qreal& cpsW)
 {
-	return( cpsW*(1-taxW)*wtqreal*employment );
+	return( cpsW*(1-taxW)*wtreal*employment );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -501,7 +501,7 @@ qreal laborMarketFirst::demandYoungS(qreal& cpsS)
 /******************************************************************************/
 qreal laborMarketFirst::aggregateDemand(qreal& ytW,qreal& ytS)
 {
-	return( betaW*mtqrealW + betaS*mtqrealS + g + ytW + ytS );
+	return( betaW*mtrealW + betaS*mtrealS + g + ytW + ytS );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -537,7 +537,7 @@ qreal laborMarketFirst::actualOutput(qreal& ytD,qreal& yteff)
 /******************************************************************************/
 qreal laborMarketFirst::remainingOutputYoung()
 {
-    return( qMax( 0.0,( output - g - betaS*mtqrealS - betaW*mtqrealW ) ) );
+    return( qMax( 0.0,( output - g - betaS*mtrealS - betaW*mtrealW ) ) );
 }
 /******************************************************************************/
 /*                                                                            */
@@ -608,10 +608,10 @@ void laborMarketFirst::dynamics(qreal& yteff,qreal& xtS,qreal& xtW)
 		theta[tau+1-i]=theta[tau-i];
 	theta[0]=ptrate;
 	omegat = yteff-output;
-	mtqrealW = ( (1-taxW)*wtqreal*employment - xtW )/ptrate;
-	mtqrealS = ( dt - xtS )/ptrate;
-    dt = (1-taxS)*(qMax(0.0,(output-wtqreal*employment)) /ptrate);
-	wtqreal *= wtrate/ptrate;
+	mtrealW = ( (1-taxW)*wtreal*employment - xtW )/ptrate;
+	mtrealS = ( dt - xtS )/ptrate;
+    dt = (1-taxS)*(qMax(0.0,(output-wtreal*employment)) /ptrate);
+	wtreal *= wtrate/ptrate;
 }
 /******************************************************************************/
 /*                                                                            */
@@ -635,20 +635,20 @@ void laborMarketFirst::iteration(const qint64& t)
   qreal xYoung;		// what the young may consume 
   qreal xtS,xtW;		// actual consum of the young S and W
      
-  ztnot=laborDemand();		         //(A,B,wtqreal)
+  ztnot=laborDemand();		         //(A,B,wtreal)
   employment=actualEmployment(ztnot);	 //(ztnot,Lmax)
   sigmaL=detSigmaL(ztnot);		 //(ztnot,Lmax,employment)
   wtrate=detWtRate(sigmaL);		 //(sigmaL,Lmax,employment,lambda,mu)
   ptrateexW=expectedInflationRateW(t);   //(t,tauW,theta)
   cpsW=consumptionPropensityW(ptrateexW);//(ptrateexW,rhoTildaW,deltaW)
-  ytW=demandYoungW(cpsW);	         //(cpsW,taxW,wtqreal,employment)
+  ytW=demandYoungW(cpsW);	         //(cpsW,taxW,wtreal,employment)
   ptrateexS=expectedInflationRateS(t);   //(t,tauS,theta)                
   cpsS=consumptionPropensityS(ptrateexS);//(ptrateexS,rhoTildaS,deltaS)
   ytS=demandYoungS(cpsS);	         //(cpsS,taxS,dt)
-  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtqrealW,mtqrealS,g,ytW,ytS)
+  ytD=aggregateDemand(ytW,ytS);        //(betaW,betaS,mtrealW,mtrealS,g,ytW,ytS)
   yteff=productionFunction(employment);	 //(A,B,employment,deltaP,omagat)
   output=actualOutput(ytD,yteff);	 //(ytD,yteff)
-  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtqrealW,mtqrealS)
+  xYoung=remainingOutputYoung();        //(output,g,betaW,betaS,mtrealW,mtrealS)
   xtS=actualConsumptionYoungS(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   xtW=actualConsumptionYoungW(ytW,ytS,xYoung);//(ytW,ytS,xYoung)
   sigmaC=detSigmaC(yteff,ytD);	         //(yteff,ytD,output)
