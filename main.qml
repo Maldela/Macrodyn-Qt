@@ -47,11 +47,11 @@ ApplicationWindow {
                 onClicked: loader.runSimulation();
             }
             Item { Layout.fillWidth: true }
-            CheckBox {
-                text: "Enabled"
-                checked: true
-                Layout.alignment: Qt.AlignRight
-            }
+//            CheckBox {
+//                text: "Enabled"
+//                checked: true
+//                Layout.alignment: Qt.AlignRight
+//            }
         }
     }
 
