@@ -1,0 +1,45 @@
+manipulate
+rdefault
+g       0.333[0.495,0.495];0.333[0.5,0.5];0.333[0.505,0.505]; 
+
+1	0.7
+0.6	0.6	0.6	0.6	
+10	10000
+0.3	1	
+1	1	1
+1	0.5	0.5	0.35
+
+1
+
+	210	wtreal -1
+
+16
+
+
+multiplot 2	mean(wtreal) var(wtreal)   
+t  		0	100
+wtreal	0.9	1.1
+wtreal 	0.8	1.1
+
+0	rdefault_16_wtreal_mean_t_1000_1500_giid_B0_7.xpm
+
+//
+// first: modelname
+//
+// next: parameters of the model above
+//
+// A >> B;
+// gamm >> kappa >> lambda >> mu;
+// tau >> length;
+// delta >> beta;
+// w0 >> p0 >> m0;
+// Lmax >> rho >> g >> tax;
+//
+// last: what macrodyn shall do
+//
+// tag of the job
+// x-axis  min  max
+// y-axis  min  max
+// z-axis  min  max
+// tag of the printer  printername
+

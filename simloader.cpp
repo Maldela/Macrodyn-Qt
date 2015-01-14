@@ -485,6 +485,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
             if( m_axes )
                 delete m_axes;
             m_axes=conParam2xyRange(m_conBlock,3);
+            log()<< "ts_init_values = " << ts_init_values[1];
             m_runJob = new m_timeSeriesPlot(ts_init_values,
                                         m_modelPointer,m_axes->label[1],m_graph);
             break;

@@ -421,7 +421,7 @@ growth_model::growth_model() : baseModel(1)
 ///////////////////////////////////////////////////////////////////////////////
 
 void growth_model::iteration(const qint64& )
-{ 
+{
   qreal k_n;		// value of k for the next period
 //  y = (*pf)(k,a,b,c,alpha);
 //  w = (*pf)(k,a,b,c,alpha) - k * (*pf_prime)(k,a,b,c,alpha);
@@ -436,6 +436,17 @@ void growth_model::iteration(const qint64& )
   sav_r = k * sf_r(r) * r;
   k_n = 1 / (1+n) * ( (1-delta_p) * k + sav_w + sav_r + sav_y);
   k = k_n;
+
+  log() << "a = " << a;
+  log() << "b = " << b;
+  log() << "c = " << c;
+  log() << "alpha = " << alpha;
+  log() << "y = " << y;
+  log() << "r = " << r;
+  log() << "n = " << n;
+  log() << "delta_p = " << delta_p;
+  log() << "sav_w = " << sav_w;
+  log() << "k = " << k;
   
 // How about the qreal model?!?!
 //  qreal K_old = K;
@@ -465,6 +476,7 @@ void growth_model::iteration(const qint64& )
 void growth_model::initialize()
 {
   k = k_0;
+  log() << "k anfang = " << k;
   K = k_0;
   L = 1;
   k_fix = pow( a*syr/(b*(delta_p+n)),(1.0/(1.0-b)));

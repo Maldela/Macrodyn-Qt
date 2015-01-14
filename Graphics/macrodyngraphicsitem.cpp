@@ -499,10 +499,12 @@ void MacrodynGraphicsItem::drawRect(qreal v, qreal w, qreal width, qreal height,
 /* Last modified:   18.01.2005 (Andreas Starke)                               */
 /*                                                                            */
 /******************************************************************************/
-void MacrodynGraphicsItem::drawLine(qreal x0, qreal y0, qreal x1, qreal y1, const QColor& color)
+void MacrodynGraphicsItem::drawLine(qreal x0, qreal y0, qreal x1, qreal y1, int colorInt)
 {
     int pixX0,pixY0,pixX1,pixY1; // pixel coordinates
 
+    QColor color;
+    colorFromInt(color,colorInt);
 //    if ( (x0>axis.max[0]) || (x1>axis.max[0]) || (x0<axis.min[0]) || (x1<axis.min[0])
 //         || (y0>axis.max[1]) || (y1>axis.max[1]) || (y0<axis.min[1]) || (y1<axis.min[1]) )
 //    {
@@ -598,17 +600,17 @@ void MacrodynGraphicsItem::drawLine(qreal x0, qreal y0, qreal x1, qreal y1, cons
 /******************************************************************************/
 int MacrodynGraphicsItem::transformX(qreal v)
 {
-    qDebug() << "v:" << v;
+    //qDebug() << "v:" << v;
     int r = (v-axis.min[0]) * wid / (axis.max[0]-axis.min[0]) + lmargin;
-    qDebug() << "x:" << r;
+    //qDebug() << "x:" << r;
     return r;
 }
 
 int MacrodynGraphicsItem::transformY(qreal w)
 {
-    qDebug() << "w:" << w;
+    //qDebug() << "w:" << w;
     int r = height() - ((w-axis.min[1]) * hig / (axis.max[1]-axis.min[1]) + lowmargin);
-    qDebug() << "y:" << r;
+    //qDebug() << "y:" << r;
     return r;
 }
 
@@ -749,5 +751,29 @@ void MacrodynGraphicsItem::setBackgroundColor(const QColor& c)
     {
         backgroundColor = c;
         emit backgroundColorChanged();
+    }
+}
+
+void MacrodynGraphicsItem::colorFromInt(QColor& color, int colorInt)
+{
+    switch(colorInt){
+    case 0:
+        color = Qt::black;
+        break;
+    case 1:
+        color = Qt::red;
+        break;
+    case 2:
+        color = Qt::blue;
+        break;
+    case 3:
+        color = Qt::green;
+        break;
+    case 4:
+        color = Qt::yellow;
+        break;
+    case 5:
+        color = Qt::cyan;
+        break;
     }
 }

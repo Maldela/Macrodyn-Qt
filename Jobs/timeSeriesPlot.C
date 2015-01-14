@@ -209,27 +209,26 @@ void m_timeSeriesPlot::simulation()
     int  k;
     QTextStream stream(&outFile);
 
-  for( k=0; k<n_i_vals; k++) {
-    model->initialize();                // initialize the model
-    *modelVar = i_vals[k];		// pick the next initial value
-    oldX=0;
-    oldY=*modelVar;
-    stream << oldX << "\t" << oldY;
-    for(t=1;t<length+1;t++) {
-	model->iteration(t);          // compute the orbit
-	if( t >= limit )  {
-	    saveSeries(t);                  
-              if( screenGraphics ) {
-	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
-		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
-          }
-//	    }
-        stream << t << "\t" << timeSeriesqreal[t];
-	    oldX=t;
-	    oldY=timeSeriesqreal[t];
-	}
+    for( k=0; k<n_i_vals; k++) {
+        model->initialize();                // initialize the model
+        *modelVar = i_vals[k];		// pick the next initial value
+        oldX=0;
+        oldY=*modelVar;
+        stream << oldX << "\t" << oldY;
+        for(t=1;t<length+1;t++) {
+            model->iteration(t);          // compute the orbit
+            if( t >= limit )  {
+                saveSeries(t);
+                if( screenGraphics ) {
+                    screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k);
+                    screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k,pointsize);
+                }
+                stream << t << "\t" << timeSeriesqreal[t];
+                oldX=t;
+                oldY=timeSeriesqreal[t];
+            }
+        }
     }
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -298,6 +297,7 @@ void m_timeSeriesPlot_v::simulation()
 
   for( k=0; k<n_i_vals; k++) {
     *modelVar2 = i_vals[k];		// pick the next initial value
+    log() << "i_vals[k] = "<<i_vals[k]<< "\n";
     model->initialize();                // initialize the model
     oldX=0;
     oldY=*modelVar;

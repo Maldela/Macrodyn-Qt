@@ -524,7 +524,7 @@ void rSolow::iteration(const qint64& )
   k_n = 1 / (1+ n) * ( (1- delta_p) * k + s * y );
   k = k_n;
   
-  
+  log()<<"k = "<<k;
 
 }
     

@@ -41,7 +41,7 @@ public:
 
     void setBigPoint(qreal, qreal, const QColor&, int);
     void drawRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
-    void drawLine(qreal, qreal, qreal, qreal, const QColor&);
+    void drawLine(qreal, qreal, qreal, qreal, int);
                         // draw a line on the screen
     void drawString(qreal, qreal, const QString&, const QColor&, bool = true);
     void reset(const xyRange&);         // reset domain under consideration that
@@ -56,6 +56,7 @@ public:
     void closeGraphics();
     void setXYRange(const xyRange& range);
 
+    void colorFromInt(QColor& color, int colorInt);
 
 signals:
 

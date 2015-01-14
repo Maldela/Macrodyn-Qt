@@ -1,0 +1,46 @@
+rdefault
+A       1.0[0.99,1.01];
+1	0.7
+0.6	0.6	0.6	0.6	
+10	1000000	
+0.3	1	
+0.6	1	4	
+1	0.5	0.5	0.35
+
+41
+
+wtreal  0.8	1.1
+wtreal	0	0.025
+wtreal 	0.8	1.1
+
+10	rdefault_41_wtreal_Aiid_uni_B0_7.xpm
+
+//
+// first: modelname
+//
+// next: parameters of the model above
+//
+// A >> B;
+// gamm >> kappa >> lambda >> mu;
+// tau >> length;
+// delta >> beta;
+// w0 >> p0 >> m0;
+// Lmax >> rho >> g >> tax;
+//
+// last: what macrodyn shall do
+//
+// tag of the job
+// x-axis  min  max
+// y-axis  min  max
+// z-axis  min  max
+// tag of the printer  printername
+//
+STATISTICS:
+
+skewness=-0.667982
+kurtosis=-0.493506
+mean=0.98149
+variance=0.00149129
+standardDeviation=0.0386172
+
+
