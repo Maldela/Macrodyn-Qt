@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QTimer>
+#include <QPair>
 
 #include "../sim.h"
 #include "../axes.h"
@@ -40,8 +41,9 @@ public:
                     // according to the given point
 
     void setBigPoint(qreal, qreal, const QColor&, int);
-    void drawRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
-    void drawLine(qreal, qreal, qreal, qreal, int);
+    void setBigPoint(qreal, qreal, int, int);
+    void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
+    void setLine(qreal, qreal, qreal, qreal, int);
                         // draw a line on the screen
     void drawString(qreal, qreal, const QString&, const QColor&, bool = true);
     void reset(const xyRange&);         // reset domain under consideration that
@@ -58,6 +60,12 @@ public:
 
     void colorFromInt(QColor& color, int colorInt);
 
+
+public slots:
+
+    Q_INVOKABLE void redraw();
+
+
 signals:
 
     void backgroundColorChanged();
@@ -72,6 +80,9 @@ protected slots:
 protected:
 
     void paint(QPainter *painter);
+    void drawPoint(QPair<QPointF, QColor>);
+    void drawRect(QPair<QRectF, QColor>);
+    void drawLine(QPair<QLineF, QColor>);
 
     QImage image;
     QTimer timer;
@@ -79,9 +90,9 @@ protected:
     xyRange axis;
     QColor backgroundColor;
     QRect zoomRect;
-    QList<QLine> m_lines;
-    QList<QPoint> m_points;
-    QList<QPoint> m_bigPoints;
+    QList<QPair<QLineF, QColor> > m_lines;
+    QList<QPair<QPointF, QColor> > m_points;
+    QList<QPair<QRectF, QColor> > m_rects;
     uint lmargin;
     uint rmargin;
     uint upmargin;
@@ -91,6 +102,7 @@ protected:
     uint xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
     uint right;
     uint down;
+    uint bigPointSize;
     int transformX(qreal);
     int transformY(qreal);
     QPoint transform(const QPointF&);

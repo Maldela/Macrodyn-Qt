@@ -125,16 +125,16 @@ void timeSeriesPlot_Loop::simulation()
      			if( screenGraphics ) {
                 	if (multiplotAdr) {
                   		for(j=0;j<multiplot_num;j++)
-                     		screenGraphics->drawLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],9+j);	
+                     		screenGraphics->setLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],9+j);	
                		}
-	        		screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],6);
+	        		screenGraphics->setLine(oldX,oldY,(double)t,timeSeriesqreal[t],6);
 	    		}
 	      		if( printDev ) {
         			if (multiplotAdr) {
           				for(j=0;j<multiplot_num;j++)
-	             			printDev->drawLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],9+j);
+	             			printDev->setLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],9+j);
                 	}
-	        		printDev->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],6);
+	        		printDev->setLine(oldX,oldY,(double)t,timeSeriesqreal[t],6);
 	      		}
 	    		outFile << t << "\t" << timeSeriesqreal[t] 
         }

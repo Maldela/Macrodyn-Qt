@@ -19,11 +19,11 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     rmargin = RMARGIN;
     lowmargin = LOWMARGIN;
     upmargin = UPMARGIN;
-    timer.setInterval(50);
+    timer.setInterval(500);
     timer.setSingleShot(true);
     backgroundColor = QColor(Qt::white);
 
-//    connect(&timer, SIGNAL(timeout()), this, SLOT(resizeImage()));
+    connect(&timer, SIGNAL(timeout()), this, SLOT(redraw()));
     connect(this, SIGNAL(widthChanged()), this, SLOT(handleSizeChanged()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(handleSizeChanged()));
 }
@@ -41,10 +41,33 @@ void MacrodynGraphicsItem::handleSizeChanged()
 {
     wid = width() - lmargin - rmargin;
     hig = height() - upmargin - lowmargin;
+    timer.start();
+    update();
+}
+
+void MacrodynGraphicsItem::redraw()
+{
     image = QImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
     image.fill(backgroundColor);
     if (!axis.label.isEmpty() && !axis.max.isEmpty() && !axis.min.isEmpty()) drawAxis();
-    update();
+
+    QPair<QPointF, QColor> point;
+    foreach (point, m_points)
+    {
+        drawPoint(point);
+    }
+
+    QPair<QRectF, QColor> rect;
+    foreach (rect, m_rects)
+    {
+        drawRect(rect);
+    }
+
+    QPair<QLineF, QColor> line;
+    foreach (line, m_lines)
+    {
+        drawLine(line);
+    }
 }
 
 void MacrodynGraphicsItem::resizeImage()
@@ -370,9 +393,9 @@ void MacrodynGraphicsItem::drawString(qreal x, qreal y, const QString& text, con
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void MacrodynGraphicsItem::set_axis(int which, qreal to_qMin, qreal to_max)
+void MacrodynGraphicsItem::set_axis(int which, qreal to_min, qreal to_max)
 {
-    axis.min[which] = to_qMin;
+    axis.min[which] = to_min;
     axis.max[which] = to_max;
 }
 
@@ -386,9 +409,9 @@ void MacrodynGraphicsItem::set_axis(int which, qreal to_qMin, qreal to_max)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void MacrodynGraphicsItem::get_axis(int which, qreal *to_qMin, qreal *to_max)
+void MacrodynGraphicsItem::get_axis(int which, qreal *to_min, qreal *to_max)
 {
-    *to_qMin = axis.min[which];
+    *to_min = axis.min[which];
     *to_max = axis.max[which];
 }
 
@@ -404,8 +427,10 @@ void MacrodynGraphicsItem::get_axis(int which, qreal *to_qMin, qreal *to_max)
 
 void MacrodynGraphicsItem::clear_window()
 {
-    image = QImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
-    image.fill(backgroundColor);
+    m_lines.clear();
+    m_rects.clear();
+    m_points.clear();
+    redraw();
     update();
 }
 
@@ -420,20 +445,19 @@ void MacrodynGraphicsItem::clear_window()
 /******************************************************************************/
 void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 {
-    int pixv = transformX(v);
-    int pixw = transformY(w); /* coordinates in pixels */
+    QPair<QPointF, QColor> pair = QPair<QPointF, QColor>(QPointF(v, w), color);
+    m_points << pair;
+    drawPoint(pair);
+}
 
-//    if (pixv <= (int)lmargin || pixv > ((width()) - (int)rmargin) ||
-//        pixw < (int)upmargin || pixw >= ((height()) - (int)lowmargin) )
-//    {
-//    }
-////	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
-//    else
-//    {
-        QPainter painter(&image);
-        painter.setPen(color);
-        painter.drawPoint(pixv, pixw);
-//    }
+void MacrodynGraphicsItem::drawPoint(QPair<QPointF, QColor> pair)
+{
+    QPoint point = transform(pair.first);
+
+    QPainter painter(&image);
+    painter.setPen(pair.second);
+    painter.drawPoint(point);
+
     update();
 }
 
@@ -442,53 +466,51 @@ void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 /* Class name:      graphics                                                  */
 /* Member function: setBigPoint                                               */
 /* Purpose:         draw a point on the screen with variable size             */
-/* Modified:        mhoffmann                  			              */
+/* Modified:        mhoffmann                                                 */
 /* Last modified:   Mon Sep 11 12:00:14 METDST 2000                           */
 /*                                                                            */
 /******************************************************************************/
 void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, int size)
 {
-    int pixv = transformX(v);
-    int pixw = transformY(w); /* coordinates in pixels */
-
-//    if (pixv <= (int)lmargin || pixv > ((width()) - (int)rmargin) ||
-//        pixw < (int)upmargin || pixw >= ((height()) - (int)lowmargin) )
-//    {
-//    }
-////	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
-//    else
-//    {
-        QRect rect(pixv-size/2, pixw-size/2, size, size);
-        QPainter painter(&image);
-        painter.fillRect(rect, color);
-//    }
-    update();
+    QPair<QRectF, QColor> pair = QPair<QRectF, QColor>(QRectF(v-size/2, w-size/2, size, size), color);
+    m_rects << pair;
+    drawRect(pair);
 }
 
+void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, int colorInt, int size)
+{
+    QColor color;
+    colorFromInt(color,colorInt);
+    setBigPoint(v, w, color, size);
+}
+
+void MacrodynGraphicsItem::drawRect(QPair<QRectF, QColor> pair)
+{
+    QPoint topleft = transform(pair.first.topLeft());
+    QPoint bottomright = transform(pair.first.bottomRight());
+
+    QRect rect(topleft, bottomright);
+    QPainter painter(&image);
+    painter.fillRect(rect, pair.second);
+
+    update();
+}
 
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      graphics                                                  */
-/* Member function: drawRect                                              */
+/* Member function: setRect                                              */
 /* Purpose:         draw a rectangle on the screen with variable size and color             */
 /* Modified:        JTiwisina                			              */
 /* Last modified:   Mon Jan 11 12:00:14 METDST 2015                           */
 /*                                                                            */
 /******************************************************************************/
-void MacrodynGraphicsItem::drawRect(qreal v, qreal w, qreal width, qreal height, const QColor& color)
+void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, const QColor& color)
 {
-    int pixv = transformX(v);
-    int pixw = transformY(w); /* coordinates in pixels */
-    int pixwidth = width *wid/(axis.max[0]-axis.min[0]);
-    int pixheight = -height *hig/(axis.max[1]-axis.min[1]); /* coordinates in pixels */
+    QPair<QRect, QColor> pair = QPair<QRect, QColor>(QRect(v, w, width, height), color);
+    m_rects << pair;
 
-////	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
-
-        QRect rect(pixv, pixw, pixwidth, pixheight);
-        QPainter painter(&image);
-        painter.fillRect(rect, color);
-
-    update();
+    drawRect(pair);
 }
 
 /******************************************************************************/
@@ -499,94 +521,25 @@ void MacrodynGraphicsItem::drawRect(qreal v, qreal w, qreal width, qreal height,
 /* Last modified:   18.01.2005 (Andreas Starke)                               */
 /*                                                                            */
 /******************************************************************************/
-void MacrodynGraphicsItem::drawLine(qreal x0, qreal y0, qreal x1, qreal y1, int colorInt)
+void MacrodynGraphicsItem::setLine(qreal x0, qreal y0, qreal x1, qreal y1, int colorInt)
 {
-    int pixX0,pixY0,pixX1,pixY1; // pixel coordinates
-
     QColor color;
     colorFromInt(color,colorInt);
-//    if ( (x0>axis.max[0]) || (x1>axis.max[0]) || (x0<axis.min[0]) || (x1<axis.min[0])
-//         || (y0>axis.max[1]) || (y1>axis.max[1]) || (y0<axis.min[1]) || (y1<axis.min[1]) )
-//    {
-//        if ( (y0>axis.max[1]) && (y1<=axis.max[1]) )
-//        {
-//            qreal a,b;
-//            a=y0;
-//            b=(y1-y0)/(x1-x0);
-//            x0=(axis.max[1]-a)/b+x0;
-//            y2=axis.max[1];
-//        }
-//        if ( (y1>axis.max[1]) && (y0<=axis.max[1]) ){
-//            qreal a,b;
-//            a=y0;
-//            b=(y1-y0)/(x1-x0);
-//            x1=(axis.max[1]-a)/b+x0;
-//            y3=axis.max[1];
-//        }
-//        if ( (y0<axis.min[1]) && (y1>=axis.min[1]) ){
-//            qreal a,b;
-//            a=y0;
-//            b=(y1-y0)/(x1-x0);
-//            x0=(axis.min[1]-a)/b+x0;
-//            y2=axis.min[1];
-//        }
-//        if ( (y1<axis.min[1]) && (y0>=axis.min[1]) ){
-//            qreal a,b;
-//            a=y0;
-//            b=(y1-y0)/(x1-x0);
-//            x1=(axis.min[1]-a)/b+x0;
-//            y3=axis.min[1];
-//        }
-//        if ( (x0>axis.max[0]) && (x1<=axis.max[0]) ){
-//            qreal a,b;
-//            a=x0;
-//            b=(x1-x0)/(y1-y0);
-//            y2=(axis.max[0]-a)/b+y0;
-//            x0=axis.max[0];
-//        }
-//        if ( (x1>axis.max[0]) && (x0<=axis.max[0]) ){
-//            qreal a,b;
-//            a=x0;
-//            b=(x1-x0)/(y1-y0);
-//            y3=(axis.max[0]-a)/b+y0;
-//            x1=axis.max[0];
-//        }
-//        if ( (x0<axis.min[0]) && (x1>=axis.min[0]) ){
-//            qreal a,b;
-//            a=x0;
-//            b=(x1-x0)/(y1-y0);
-//            y2=(axis.min[0]-a)/b+y0;
-//            x0=axis.min[0];
-//        }
-//        if ( (x1<axis.min[0]) && (x0>=axis.min[0]) ){
-//            qreal a,b;
-//            a=x0;
-//            b=(x1-x0)/(y1-y0);
-//            y3=(axis.min[0]-a)/b+y0;
-//            x1=axis.min[0];
-//        }
-//    }
-    //log() << "coordinates: ("<<x0<<","<<y2<<") ("<<x1<<","<<y3<<")"<<"\n";
-    pixX0 = transformX(x0);
-    pixY0 = transformY(y0);
-    pixX1 = transformX(x1);
-    pixY1 = transformY(y1);
 
-//    if (pixX0 < (int)lmargin || pixX0 > ((width()) - (int)rmargin) ||
-//        pixY0 < (int)upmargin || pixY0 > ((height()) - (int)lowmargin) )
-//    {
-//        log() << "Warning: Pixel not available. pix0:" << pixX0 << pixY0;
-//        return;
-//    }
-//    if( pixX1 < (int)lmargin || pixX1 > ((width()) - (int)rmargin) ||
-//        pixY1 < (int)upmargin || pixY1 > ((height()) - (int)lowmargin) )
-//    {
-//        log() << "Warning: Pixel not available. pix1:" << pixX1 << pixY1;
-//        return;
-//    }
+    QPair<QLine, QColor> pair = QPair<QLine, QColor>(QLine(x0, y0, x1, y1), color);
+    m_lines << pair;
+    drawLine(pair);
+}
+
+void MacrodynGraphicsItem::drawLine(QPair<QLineF, QColor> pair)
+{
+    QPoint p1 = transform(pair.first.p1());
+    QPoint p2 = transform(pair.first.p2());
+
     QPainter painter(&image);
-    painter.setPen(color);
-    painter.drawLine(pixX0, pixY0, pixX1, pixY1);
+    painter.setPen(pair.second);
+    painter.drawLine(p1, p2);
+
     update();
 }
 

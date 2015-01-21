@@ -6,11 +6,15 @@ import MacrodynQML 1.0
 
 ApplicationWindow {
 
-    id: applicationWindow1
+    property int minLogWidth: 200
+
+    id: applicationWindow
     visible: true
     width: 1024
     height: 768
     title: qsTr("Macrodyn-Qt5")
+
+    onWidthChanged: graph.width = Math.min(graph.width, width - minLogWidth)
 
     menuBar: MenuBar {
         Menu {
@@ -37,6 +41,7 @@ ApplicationWindow {
 
     toolBar:ToolBar {
         RowLayout {
+            anchors.topMargin: 0
             anchors.fill: parent
             ToolButton {
                 iconSource: "oeffnen.png"
@@ -86,6 +91,29 @@ ApplicationWindow {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         backgroundColor: "white"
+
+        MouseArea {
+           id: mouseAreaRight
+
+           property int oldMouseX
+
+           anchors.horizontalCenter: parent.right
+           anchors.top: parent.top
+           anchors.bottom: parent.bottom
+           width: 10
+           hoverEnabled: true
+           cursorShape: Qt.SizeHorCursor
+
+           onPressed: {
+               oldMouseX = mouseX
+           }
+
+           onPositionChanged: {
+               if (pressed) {
+                   parent.width = Math.min(parent.width + (mouseX - oldMouseX), applicationWindow.width - minLogWidth)
+               }
+           }
+       }
     }
     Log {
         id: log

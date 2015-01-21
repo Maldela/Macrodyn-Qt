@@ -98,11 +98,11 @@ old_y = relativeSum;
 
 
 /*	    if( screenGraphics ) 
-		screenGraphics->drawLine(old_x,old_y,xstep,relativeSum,col);
+		screenGraphics->setLine(old_x,old_y,xstep,relativeSum,col);
 					
 	                                                 // and draw them
 	    if( printDev )
-		printDev->drawLine(old_x,old_y,xStep,relativeSum,col);
+		printDev->setLine(old_x,old_y,xStep,relativeSum,col);
 */			  	 
 }
 }

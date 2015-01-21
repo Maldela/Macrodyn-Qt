@@ -55,7 +55,7 @@ void discreteBif2D::simulation()
 		    nextX=*xInt+stepX;
             if( nextX > xmax )
             nextX=xmax;
-		    screenGraphics->drawLine((qreal)*xInt,*yParam,
+		    screenGraphics->setLine((qreal)*xInt,*yParam,
                                      nextX,*yParam,6);
 	    
 	

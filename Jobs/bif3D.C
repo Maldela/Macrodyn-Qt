@@ -9,7 +9,7 @@
 
 void bif3D_1par::progress( qint64 state, qint64 range )
 {
-    screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
+    screenGraphics->setLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
                               (xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
                               (ymax-ymin)*0.5+ymin, 9 );
 }
@@ -17,7 +17,7 @@ void bif3D_1par::progress( qint64 state, qint64 range )
 
 void bif3D_2par::progress( qint64 state, qint64 range )
 {
-    screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
+    screenGraphics->setLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.5+ymin,
                               (xmax-xmin)*0.25+xmin+double(state+1)/double(range)*(xmax-xmin)*0.5,
                               (ymax-ymin)*0.5+ymin, 9 );
 }
@@ -55,9 +55,9 @@ bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes,
     screenGraphics->clear_window();
     screenGraphics->drawString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
     "progress", 9 );
-    screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
+    screenGraphics->setLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
     (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.55+ymin, 9);
-    screenGraphics->drawLine( (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.45+ymin,
+    screenGraphics->setLine( (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.45+ymin,
     (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.55+ymin, 9);
     }
 }
@@ -87,9 +87,9 @@ bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes,
         screenGraphics->clear_window();
         screenGraphics->drawString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
         "progress", 9 );
-        screenGraphics->drawLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
+        screenGraphics->setLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
         (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.55+ymin, 9);
-        screenGraphics->drawLine( (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.45+ymin,
+        screenGraphics->setLine( (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.45+ymin,
         (xmax-xmin)*0.75+xmin, (ymax-ymin)*0.55+ymin, 9);
     }
 }

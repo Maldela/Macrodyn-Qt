@@ -361,7 +361,7 @@ void powerSpec::simulation()
 	dummy=log10(timeSeriesqreal[t]);
 	if( screenGraphics ) 
 //	    screenGraphics->setPoint(timeSeriesImag[t],dummy,9);
-	    screenGraphics->drawLine(oldX,oldY,timeSeriesImag[t],dummy,9);
+	    screenGraphics->setLine(oldX,oldY,timeSeriesImag[t],dummy,9);
 	oldX=timeSeriesImag[t];
     oldY=dummy;
     }

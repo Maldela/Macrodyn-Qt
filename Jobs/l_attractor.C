@@ -58,7 +58,7 @@ void l_attractor::simulation()
 	model->iteration(t+1);
 	if( t >= limit /*&& inRange(*xParam,*yParam)*/ ) {
 	    if( screenGraphics ){
-		screenGraphics->drawLine(old_x,old_y,*xParam,*yParam,
+		screenGraphics->setLine(old_x,old_y,*xParam,*yParam,
                     (int)((t/colChange)+1));
 		if ( pointsize > 1 )
 		screenGraphics->setBigPoint(old_x,old_y,
