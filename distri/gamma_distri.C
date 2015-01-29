@@ -2,7 +2,7 @@
 #include "normal_distri.h"
 #include "gamma_distri.h"
 #include <math.h>
-#include "error.h"
+#include "logger.h"
 const uint  l_max = 40;  // qMaximal l_max/2 iterations in each loop
 
 

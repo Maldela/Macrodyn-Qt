@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "matrix_neu.h"
-#include "error.h"
+#include "logger.h"
 #include <math.h>
 #include <stdio.h>
 

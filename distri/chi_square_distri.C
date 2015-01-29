@@ -2,7 +2,7 @@
 #include "normal_distri.h"
 #include "chi_square_distri.h"
 #include <math.h>
-#include "error.h"
+#include "logger.h"
 const uint  n_max = 32;  // qMaximal n_max/2 iterations in each loop
 
 

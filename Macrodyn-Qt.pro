@@ -101,7 +101,6 @@ SOURCES += main.cpp \
     distri/cauchy_distri.C \
     distri/chi_square_distri.C \
     distri/discrete_distri.C \
-    distri/error.C \
     distri/exponential_distri.C \
     distri/finite_distri.C \
     distri/gamma_distri.C \
@@ -112,7 +111,6 @@ SOURCES += main.cpp \
     distri/prob_distri.C \
     distri/random_bits.C \
     distri/uniform_distri.C \
-    error.C \
     eval_expr.C \
     get_expr.C \
     Jobs/3d_attractor.C \
@@ -270,13 +268,12 @@ HEADERS += \
     PublicModels/perturbedDelayedLogisticMap.h \
     PublicModels/rand_var.h \
     sim.h \
-    error.h \
     matrix_neu.h \
     matrix.h \
     distri/cauchy_distri.h \
     distri/chi_square_distri.h \
     distri/discrete_distri.h \
-    distri/error.h \
+    distri/logger.h \
     distri/exponential_distri.h \
     distri/finite_distri.h \
     distri/gamma_distri.h \

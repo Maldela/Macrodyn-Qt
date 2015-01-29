@@ -9,7 +9,7 @@
 /******************************************************************************/
 
 #include "capOlg.h"             
-#include "../error.h"
+#include "../logger.h"
 
 //extern void fatalError(const char*, const char*);
 

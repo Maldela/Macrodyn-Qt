@@ -12,7 +12,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "../error.h"
+#include "../logger.h"
 #include "armax.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1067,12 +1067,15 @@ void armax::sendStateSpace(int &quantity,QList<qreal *> *stateSpace)
 //
 ///////////////////////////////////////////////////////////////////////////////
 qreal* armax::sendModelVar(void)
-{ error("macrodyn::armax::sendModelVar is not implemented");
+{
+    error("macrodyn::armax::sendModelVar is not implemented");
   return NULL;
 } 
 void armax::sendParameters(int& ,qreal** )
-{ error("macrodyn::armax::sendParameters is not implemented");
+{
+    error("macrodyn::armax::sendParameters is not implemented");
 }
 void armax::receiveParameters(const QList<qreal>&)
-{ error("macrodyn::armax::receiveParameters is not implemented");
+{
+    error("macrodyn::armax::receiveParameters is not implemented");
 } 

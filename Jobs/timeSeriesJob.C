@@ -5,7 +5,7 @@
 // last modified:   Thu Jun  3 14:45:49 CEST 1999 Marc Mueller
 
 #include	"timeSeriesJob.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */

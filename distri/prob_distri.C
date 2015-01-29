@@ -1,5 +1,5 @@
 #include "prob_distri.h"
-#include "error.h"
+#include "logger.h"
 #include <algorithm>   // qMin
 
 const char * NOT_IMPLEMENTED = " is not implemented\n";

@@ -1,4 +1,4 @@
-import QtQuick 2.3
+import QtQuick 2.4
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.0
@@ -81,6 +81,11 @@ ApplicationWindow {
     }
 
     MacrodynGraphicsItem {
+        property int x1
+        property int x2
+        property int y1
+        property int y2
+
         id: graph
         width: 640
         anchors.top: parent.top
@@ -93,25 +98,61 @@ ApplicationWindow {
         backgroundColor: "white"
 
         MouseArea {
-           id: mouseAreaRight
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressed: {
+                if (mouse.button == Qt.RightButton) {
+                    graph.unzoom();
+                }
+                else {
+                    graph.x1 = graph.x2 = mouse.x;
+                    graph.y1 = graph.y2 = mouse.y;
+                    zoomRect.visible = true;
+                }
+            }
+            onPositionChanged: {
+                graph.x2 = mouse.x;
+                graph.y2 = mouse.y;
+            }
+            onReleased: {
+                if (mouse.button == Qt.LeftButton) {
+                    zoomRect.visible = false;
+                    graph.zoom(graph.x1, graph.x2, graph.y1, graph.y2);
+                }
+            }
+        }
 
-           property int oldMouseX
+        Rectangle {
+            id: zoomRect
+            color: "transparent"
+            border.color: "black"
+            border.width: 1
+            y: (graph.y1 < graph.y2) ? graph.y1 : graph.y2;
+            width: Math.abs(graph.x1 - graph.x2);
+            x: (graph.x1 < graph.x2) ? graph.x1 : graph.x2;
+            height: Math.abs(graph.y1 - graph.y2);
+            visible: false
+        }
+    }
+    MouseArea {
+       id: mouseAreaRight
 
-           anchors.horizontalCenter: parent.right
-           anchors.top: parent.top
-           anchors.bottom: parent.bottom
-           width: 10
-           hoverEnabled: true
-           cursorShape: Qt.SizeHorCursor
+       property int oldMouseX
 
-           onPressed: {
-               oldMouseX = mouseX
-           }
+       anchors.horizontalCenter: graph.right
+       anchors.top: graph.top
+       anchors.bottom: graph.bottom
+       width: 10
+       hoverEnabled: true
+       cursorShape: Qt.SizeHorCursor
 
-           onPositionChanged: {
-               if (pressed) {
-                   parent.width = Math.min(parent.width + (mouseX - oldMouseX), applicationWindow.width - minLogWidth)
-               }
+       onPressed: {
+           oldMouseX = mouseX
+       }
+
+       onPositionChanged: {
+           if (pressed) {
+               graph.width = Math.min(graph.width + (mouseX - oldMouseX), applicationWindow.width - minLogWidth)
            }
        }
     }

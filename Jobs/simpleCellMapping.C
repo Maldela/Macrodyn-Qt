@@ -6,7 +6,7 @@
 // Changes:	
 
 #include	"simpleCellMapping.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */

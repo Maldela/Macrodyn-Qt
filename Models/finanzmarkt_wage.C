@@ -9,7 +9,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "../error.h"
+#include "../logger.h"
 #include "finanzmarkt_wage.h"
 
 const qreal finanzmarkt_wage::epsilon = 1e-16;

@@ -5,7 +5,7 @@
 // Modified:	
 
 #include	"geometry3D.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */

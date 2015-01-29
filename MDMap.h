@@ -12,7 +12,7 @@
 #ifndef MD___MAP_INCLUDED
 #define MD___MAP_INCLUDED
 
-#include "error.h"
+#include "logger.h"
 #include "PublicModels/baseModel.h"
 
 class md_Map {

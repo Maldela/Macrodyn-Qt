@@ -8,7 +8,7 @@
 /******************************************************************************/
 
 #include "hashTab.h"
-#include "error.h"
+#include "logger.h"
 #include "logger.h"
 
 extern void fatalError(const QString&, const QString&);

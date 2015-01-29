@@ -25,7 +25,7 @@
 #include "../Models/onozaki_et_al.h"
 #include "../Models/rSolow.h"
 
-#include "../error.h"
+#include "../logger.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //

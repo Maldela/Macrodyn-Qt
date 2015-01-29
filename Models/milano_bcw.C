@@ -8,7 +8,7 @@
 /******************************************************************************/
 
 #include "milano_bcw.h"
-#include "../error.h"
+#include "../logger.h"
 
 /******************************************************************************/
 milano_bcw::milano_bcw() : baseModel(3) {		    // default constructor

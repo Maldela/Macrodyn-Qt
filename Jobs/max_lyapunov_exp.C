@@ -15,7 +15,7 @@
 
 #include	"max_lyapunov_exp.h"
 #include	"math.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //

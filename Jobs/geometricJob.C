@@ -5,7 +5,7 @@
 // Modified:	98/08/21 (Marc Mueller) 
 
 #include	"geometricJob.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */

@@ -19,11 +19,11 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     rmargin = RMARGIN;
     lowmargin = LOWMARGIN;
     upmargin = UPMARGIN;
-    timer.setInterval(500);
-    timer.setSingleShot(true);
+    redrawTimer.setInterval(1000);
+    redrawTimer.setSingleShot(true);
     backgroundColor = QColor(Qt::white);
 
-    connect(&timer, SIGNAL(timeout()), this, SLOT(redraw()));
+    connect(&redrawTimer, SIGNAL(timeout()), this, SLOT(redraw()));
     connect(this, SIGNAL(widthChanged()), this, SLOT(handleSizeChanged()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(handleSizeChanged()));
 }
@@ -34,14 +34,14 @@ MacrodynGraphicsItem::~MacrodynGraphicsItem()
 
 void MacrodynGraphicsItem::paint(QPainter *painter)
 {
-    painter->drawImage(boundingRect(), image);
+    painter->drawImage(boundingRect(), image, zoomRect);
 }
 
 void MacrodynGraphicsItem::handleSizeChanged()
 {
     wid = width() - lmargin - rmargin;
     hig = height() - upmargin - lowmargin;
-    timer.start();
+    redrawTimer.start();
     update();
 }
 
@@ -49,6 +49,7 @@ void MacrodynGraphicsItem::redraw()
 {
     image = QImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
     image.fill(backgroundColor);
+    zoomRect = image.rect();
     if (!axis.label.isEmpty() && !axis.max.isEmpty() && !axis.min.isEmpty()) drawAxis();
 
     QPair<QPointF, QColor> point;
@@ -70,15 +71,9 @@ void MacrodynGraphicsItem::redraw()
     }
 }
 
-void MacrodynGraphicsItem::resizeImage()
-{
-//    if (width() != image.width()) image = image.scaledToWidth(width());
-//    if (height() != image.height()) image = image.scaledToHeight(height());
-    update();
-}
-
 void MacrodynGraphicsItem::setXYRange(const xyRange &range)
 {
+    origAxis = range;
     axis = range;
     qDebug() << "New yxRange set";
     clear_window();
@@ -685,17 +680,21 @@ void MacrodynGraphicsItem::draw_zoom_rect(int& xcurr, int& ycurr)
  * function to convert
  * pixel values on x-values
  *********************************/
-double MacrodynGraphicsItem::pixel_to_x(int xpix)
+double MacrodynGraphicsItem::pixel_to_x(int xpix) const
 {
-    return (xpix-lmargin) * (axis.max[0] - axis.min[0]) / wid + axis.min[0];
+    if (axis)
+        return (xpix-lmargin) * (axis.max.at(0) - axis.min.at(0)) / wid + axis.min.at(0);
+    else return 0.0;
 }
 /*********************************
  * function to convert
  * pixel values on y-values
  *********************************/
-double MacrodynGraphicsItem::pixel_to_y(int ypix)
+double MacrodynGraphicsItem::pixel_to_y(int ypix) const
 {
-    return (height()-lowmargin-ypix) * (axis.max[1]-axis.min[1]) / hig + axis.min[1];
+    if (axis)
+        return (height()-lowmargin-ypix) * (axis.max.at(1)-axis.min.at(1)) / hig + axis.min.at(1);
+    else return 0.0;
 }
 
 void MacrodynGraphicsItem::setBackgroundColor(const QColor& c)
@@ -707,7 +706,7 @@ void MacrodynGraphicsItem::setBackgroundColor(const QColor& c)
     }
 }
 
-void MacrodynGraphicsItem::colorFromInt(QColor& color, int colorInt)
+void MacrodynGraphicsItem::colorFromInt(QColor& color, int colorInt) const
 {
     switch(colorInt){
     case 0:
@@ -729,4 +728,31 @@ void MacrodynGraphicsItem::colorFromInt(QColor& color, int colorInt)
         color = Qt::cyan;
         break;
     }
+}
+
+void MacrodynGraphicsItem::zoom(int x1, int x2, int y1, int y2)
+{
+//    qDebug() << "zoom:" << zoom;
+    if (axis && origAxis)
+    {
+        qreal xmin = pixel_to_x(qMin(x1, x2));
+        qreal ymin = pixel_to_y(qMax(y1, y2));
+        axis.max[0] = pixel_to_x(qMax(x1, x2));
+        axis.max[1] = pixel_to_y(qMin(y1, y2));
+        axis.min[0] = xmin;
+        axis.min[1] = ymin;
+        redraw();
+        //redrawTimer.start();
+    }
+    else qDebug() << "axis or origAxis invalid!";
+}
+
+qreal MacrodynGraphicsItem::getZoom() const
+{
+    qreal zoom = 1.0;
+    if (axis && origAxis)
+    {
+        zoom = (origAxis.max.at(0) - origAxis.min.at(0)) / (axis.max.at(0) - axis.min.at(0));
+    }
+    return zoom;
 }
