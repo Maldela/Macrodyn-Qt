@@ -37,7 +37,7 @@ public:
     void get_axis(int, qreal*, qreal*); // get qMax & qMin of axis
     void clear_window();		// clear output window
 
-    void setPoint(qreal, qreal, int colorInt);
+    void setPoint(qreal, qreal, QColor color);
                     // highlights a pixel on the screen
                     // according to the given point
 

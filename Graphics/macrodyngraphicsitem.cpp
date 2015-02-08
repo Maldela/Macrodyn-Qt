@@ -438,7 +438,7 @@ void MacrodynGraphicsItem::clear_window()
 /* Last modified:   Wed Jun 16 16:56:38 CEST 1999 Marc Mueller                */
 /*                                                                            */
 /******************************************************************************/
-void MacrodynGraphicsItem::setPoint(qreal v, qreal w, int colorInt)
+void MacrodynGraphicsItem::setPoint(qreal v, qreal w, QColor color)
 {
     QPair<QPointF, QColor> pair = QPair<QPointF, QColor>(QPointF(v, w), color);
     m_points << pair;
@@ -453,23 +453,19 @@ void MacrodynGraphicsItem::drawPoint(QPair<QPointF, QColor> pair)
     painter.setPen(pair.second);
     painter.drawPoint(point);
 
-<<<<<<< HEAD
-    QColor color;
-    colorFromInt(color,colorInt);
 
 //    if (pixv <= (int)lmargin || pixv > ((width()) - (int)rmargin) ||
 //        pixw < (int)upmargin || pixw >= ((height()) - (int)lowmargin) )
 //    {
 //    }
-////	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
+//	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
 //    else
 //    {
-        QPainter painter(&image);
-        painter.setPen(color);
-        painter.drawPoint(pixv, pixw);
+//        QPainter painter(&image);
+//        painter.setPen(color);
+//        painter.drawPoint(pixv, pixw);
 //    }
-=======
->>>>>>> FETCH_HEAD
+
     update();
 }
 
@@ -519,7 +515,6 @@ void MacrodynGraphicsItem::drawRect(QPair<QRectF, QColor> pair)
 /******************************************************************************/
 void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, const QColor& color)
 {
-<<<<<<< HEAD
     int pixv = transformX(v);
     int pixw = transformY(w); /* coordinates in pixels */
     int pixwidth = width *wid/(axis.max[0]-axis.min[0]);
@@ -531,10 +526,9 @@ void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, 
         QRect rect(pixv, pixw, pixwidth, pixheight);
         QPainter painter(&image);
         painter.fillRect(rect, color);
-=======
+
     QPair<QRect, QColor> pair = QPair<QRect, QColor>(QRect(v, w, width, height), color);
     m_rects << pair;
->>>>>>> FETCH_HEAD
 
     drawRect(pair);
 }
