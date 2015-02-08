@@ -1,7 +1,7 @@
 #include "uniform_distri.h"
 #include "exponential_distri.h"
 #include <math.h>
-#include "error.h"
+#include "logger.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////

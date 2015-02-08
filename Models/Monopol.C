@@ -10,7 +10,7 @@
 
 #include "Monopol.h"
 //extern void fatalError(const char*, const char*);
-#include "../error.h"
+#include "../logger.h"
 
 
 /******************************************************************************/

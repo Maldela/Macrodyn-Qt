@@ -6,7 +6,7 @@
 // Changes:	
 
 #include	"nParameterAnalysis.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */

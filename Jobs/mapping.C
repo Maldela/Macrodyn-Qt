@@ -6,7 +6,7 @@
 // Changes:	
 
 #include	"mapping.h"
-#include 	"../error.h"
+#include 	"../logger.h"
 #include 	"../MDMap.h"
 
 /******************************************************************************/

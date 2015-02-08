@@ -130,11 +130,11 @@ void timeSeriesPlot::simulation()
                 {
                     for(j=0;j<multiplot_num;j++)
                     {
-                        screenGraphics->drawLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],41+j);
+                        screenGraphics->setLine(oldX,multiplotOld[j],(double)t,*multiplotAdr[j],41+j);
                         screenGraphics->setBigPoint(double(t),*multiplotAdr[j],41+j,pointsize);
                     }
                 }
-                screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],40);
+                screenGraphics->setLine(oldX,oldY,(double)t,timeSeriesqreal[t],40);
                 screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
             }
             QTextStream(&outFile) << t << "\t" << timeSeriesqreal[t];
@@ -220,7 +220,7 @@ void m_timeSeriesPlot::simulation()
             if( t >= limit )  {
                 saveSeries(t);
                 if( screenGraphics ) {
-                    screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k);
+                    screenGraphics->setLine(oldX,oldY,(double)t,timeSeriesqreal[t],k);
                     screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k,pointsize);
                 }
                 stream << t << "\t" << timeSeriesqreal[t];
@@ -307,7 +307,7 @@ void m_timeSeriesPlot_v::simulation()
 	if( t >= limit )  {
 	    saveSeries(t);                  
               if( screenGraphics ) {
-	        screenGraphics->drawLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
+	        screenGraphics->setLine(oldX,oldY,(double)t,timeSeriesqreal[t],k+6);
 		screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],k+6,pointsize);
           }
         stream << t << "\t" << timeSeriesqreal[t];

@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QTimer>
+#include <QPair>
 
 #include "../sim.h"
 #include "../axes.h"
@@ -21,6 +22,7 @@ class MacrodynGraphicsItem : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(qreal zoomFactor READ getZoom NOTIFY zoomChanged CONSTANT)
 
 public:
 
@@ -40,48 +42,69 @@ public:
                     // according to the given point
 
     void setBigPoint(qreal, qreal, const QColor&, int);
-    void drawRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
-    void drawLine(qreal, qreal, qreal, qreal, int);
+    void setBigPoint(qreal, qreal, int, int);
+    void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
+    void setLine(qreal, qreal, qreal, qreal, int);
                         // draw a line on the screen
     void drawString(qreal, qreal, const QString&, const QColor&, bool = true);
     void reset(const xyRange&);         // reset domain under consideration that
                     // should be displayed on the screen
     void dumpGraphics(const QString&) const; // dump output window
-    QColor getBackgroundColor() const { return backgroundColor; }
+    inline QColor getBackgroundColor() const { return backgroundColor; }
     void setBackgroundColor(const QColor&);
-    QColor get_color(int);
+    qreal getZoom() const;
+//    QColor get_color(int) const;
 
     void clearColumn(qreal);	// clear a specified column of the
                     // output window
     void closeGraphics();
     void setXYRange(const xyRange& range);
 
-    void colorFromInt(QColor& color, int colorInt);
+    void colorFromInt(QColor& color, int colorInt) const;
+
+
+public slots:
+
+    Q_INVOKABLE void redraw();
+    Q_INVOKABLE void zoom(int, int, int, int);
+    Q_INVOKABLE inline void unzoom() { axis = origAxis; redraw(); qDebug() << "unzoom"; }
+    Q_INVOKABLE void click(int x, int y) const { qDebug() << QPointF(pixel_to_x(x), pixel_to_y(y)); }
+
 
 signals:
 
     void backgroundColorChanged();
+    void zoomChanged();
 
 
 protected slots:
 
     void handleSizeChanged();
-    void resizeImage();
 
 
 protected:
 
     void paint(QPainter *painter);
+    void drawPoint(QPair<QPointF, QColor>);
+    void drawRect(QPair<QRectF, QColor>);
+    void drawLine(QPair<QLineF, QColor>);
+    int transformX(qreal);
+    int transformY(qreal);
+    QPoint transform(const QPointF&);
+    void draw_zoom_rect(int&, int&);
+    double pixel_to_x(int) const;
+    double pixel_to_y(int) const;
 
     QImage image;
-    QTimer timer;
+    QRect zoomRect;
+    QTimer redrawTimer;
     int job;
+    xyRange origAxis;
     xyRange axis;
     QColor backgroundColor;
-    QRect zoomRect;
-    QList<QLine> m_lines;
-    QList<QPoint> m_points;
-    QList<QPoint> m_bigPoints;
+    QList<QPair<QLineF, QColor> > m_lines;
+    QList<QPair<QPointF, QColor> > m_points;
+    QList<QPair<QRectF, QColor> > m_rects;
     uint lmargin;
     uint rmargin;
     uint upmargin;
@@ -91,12 +114,7 @@ protected:
     uint xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
     uint right;
     uint down;
-    int transformX(qreal);
-    int transformY(qreal);
-    QPoint transform(const QPointF&);
-    void draw_zoom_rect(int&, int&);
-    double pixel_to_x(int);
-    double pixel_to_y(int);
+    uint bigPointSize;
 
     qint64 colorCount[95];
 };

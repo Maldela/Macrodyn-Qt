@@ -6,7 +6,7 @@
 // Changes:	
 
 #include	"parameterSpace.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */

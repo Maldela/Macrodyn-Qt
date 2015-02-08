@@ -1,5 +1,5 @@
 #include "random_bits.h"
-#include "error.h"
+#include "logger.h"
 
 const uint  state_size = 25;
 

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "milano3.h"
-#include "../error.h"
+#include "../logger.h"
 
 static const uint qMax_iter=10000;
 static const uint iter_prec=1;

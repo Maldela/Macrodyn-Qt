@@ -10,7 +10,7 @@
 //                                                                             
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "../error.h"
+#include "../logger.h"
 #include "manipulate.h"
 #include "getModel.h"
 #include "../PublicModels/getPubModel.h"

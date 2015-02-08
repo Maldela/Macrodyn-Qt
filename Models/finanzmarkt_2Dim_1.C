@@ -9,7 +9,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "../error.h"
+#include "../logger.h"
 #include "finanzmarkt_2Dim_1.h"
 
 const qreal finanzmarkt_2Dim_1::epsilon = 1e-16;

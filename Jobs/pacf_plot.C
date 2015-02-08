@@ -6,7 +6,7 @@
 // Changes:	
 
 #include	"pacf_plot.h"
-#include 	"../error.h"
+#include 	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */
@@ -53,7 +53,7 @@ void pacf_plot::drawBox(qreal lo_x, qreal lo_y, qreal ru_x, qreal ru_y, int colo
     qreal draw_step = double((l_max - l_min))/double(500);
 	if ( screenGraphics ){
 		for (qreal dummy = lo_x; dummy<= ru_x; dummy+=draw_step){
-			screenGraphics->drawLine(dummy, ru_y, dummy, lo_y, color);
+			screenGraphics->setLine(dummy, ru_y, dummy, lo_y, color);
 		}
     }
 }
@@ -78,9 +78,9 @@ void pacf_plot::simulation()
 	model->initialize();
     if( screenGraphics )
     {
-        screenGraphics->drawLine(l_min,0,l_max,0,24);
-        screenGraphics->drawLine(l_min,low_bound,l_max,low_bound,6);
-        screenGraphics->drawLine(l_min,high_bound,l_max,high_bound,6);
+        screenGraphics->setLine(l_min,0,l_max,0,24);
+        screenGraphics->setLine(l_min,low_bound,l_max,low_bound,6);
+        screenGraphics->setLine(l_min,high_bound,l_max,high_bound,6);
     }
 		
 	for(t=0;t<limit;t++) {
@@ -110,9 +110,9 @@ void pacf_plot::simulation()
 		acf = acv / acv_0;
 		(*v_correlations)(i,0) = acf;		
 /*		if( screenGraphics )
-			screenGraphics->drawLine(i,0,i,acf,9);
+			screenGraphics->setLine(i,0,i,acf,9);
 		if( printDev )
-			printDev->drawLine(i,0,i,acf,9);*/
+			printDev->setLine(i,0,i,acf,9);*/
 	}
 //	log() << "vector of correlations: " << (*v_correlations) 
 	// drawing zero pacf value
@@ -154,7 +154,7 @@ void pacf_plot::simulation()
         log() << l << ": " << (*v_YW_estimators)(l-1,0) 
 		// drawing value
 		if ( screenGraphics )
-			screenGraphics->drawLine(l,0,l,(*v_YW_estimators)(l-1,0),9);
+			screenGraphics->setLine(l,0,l,(*v_YW_estimators)(l-1,0),9);
 		
         delete v_int_correlations;
 		delete m_correlations;
@@ -197,9 +197,9 @@ void pacf_plot::simulation()
 //		log() << "value: " << coef 
 		
 		if ( screenGraphics )
-			screenGraphics->drawLine(l+1,0,l+1,coef,9);
+			screenGraphics->setLine(l+1,0,l+1,coef,9);
 		if ( printDev )
-			printDev->drawLine(l+1,0,l+1,coef,9);
+			printDev->setLine(l+1,0,l+1,coef,9);
 		
 		delete m_kappa1;
 		delete m_kappa2;

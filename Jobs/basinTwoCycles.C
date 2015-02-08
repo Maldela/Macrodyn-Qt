@@ -6,7 +6,7 @@
 // Changes:	
 
 #include	"basinTwoCycles.h"
-#include	"../error.h"
+#include	"../logger.h"
 
 /******************************************************************************/
 /*                                                                            */

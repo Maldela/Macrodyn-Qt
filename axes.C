@@ -132,14 +132,33 @@ bool xyRange::inRange(const QList<qreal *>& toCheck) const
     bool result = true;
     int i = 0;
 
-    if (toCheck.size() < dimension - 1)
+    if (toCheck.size() != dimension)
     {
-        log() << "xyRange::inRange: QList<qreal *> toCheck does not contain enough elements!";
+        log() << "xyRange::inRange: QList<qreal *> toCheck does not have the right size:" << toCheck.size();
+        log() << "It should be: " << dimension;
+        result = false;
     }
-    while (result && i < dimension)
+    else if (min.length() != dimension || max.length() != dimension)
     {
-        result = (*toCheck.at(i) >= min[i]) && (*toCheck.at(i) <= max[i]);
-        i++;
+        log() << "xyRange::inRange: min[] or max[] do not have the right size!";
+        log() << "It should be: " << dimension;
+        result = false;
+    }
+    else
+    {
+        while (result && i < dimension)
+        {
+            if (toCheck.at(i))
+            {
+                result = (*toCheck.at(i) >= min[i]) && (*toCheck.at(i) <= max[i]);
+            }
+            else
+            {
+                log() << "xyRange::inRange: QList<qreal *> toCheck contains nullptr at position " << i;
+                result = false;
+            }
+            i++;
+        }
     }
     return result;
 }

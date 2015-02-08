@@ -6,9 +6,16 @@ int LoggerHelper::ref = 0;
 
 QList<Logger *> Logger::m_logger = QList<Logger *>();
 
-LoggerHelper::LoggerHelper()
+LoggerHelper::LoggerHelper(enum MacrodynError::type e)
 {
     ref++;
+    if (e != MacrodynError::noError)
+    {
+        for (int i=0; i < Logger::m_logger.size(); i++)
+        {
+            Logger::m_logger.at(i)->error(e);
+        }
+    }
 }
 
 LoggerHelper::~LoggerHelper()
@@ -23,18 +30,18 @@ LoggerHelper::~LoggerHelper()
 
 LoggerHelper& LoggerHelper::operator <<(const QString& str)
 {
-    for (int i=0; i<Logger::m_logger.size(); i++)
+    for (int i=0; i < Logger::m_logger.size(); i++)
     {
-        Logger::m_logger[i]->print(str);
+        Logger::m_logger.at(i)->print(str);
     }
     return *this;
 }
 
 LoggerHelper& LoggerHelper::operator <<(qreal n)
 {
-    for (int i=0; i<Logger::m_logger.size(); i++)
+    for (int i=0; i < Logger::m_logger.size(); i++)
     {
-        Logger::m_logger[i]->print(n);
+        Logger::m_logger.at(i)->print(n);
     }
     return *this;
 }

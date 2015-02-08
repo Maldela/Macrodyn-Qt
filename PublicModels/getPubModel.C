@@ -26,7 +26,7 @@
 #include "../Models/rSolow.h"
 #include "../Models/boehmhuels.h"
 
-#include "../error.h"
+#include "../logger.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //

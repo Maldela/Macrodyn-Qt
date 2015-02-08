@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include	<unistd.h>
-#include	"../error.h"
+#include	"../logger.h"
 #include	"density.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ void density_1d::simulation()
     d= ((double) h(k))/double(length - limit);
     d= d/stepX;
 
-    screenGraphics->drawRect(*xParam,0,stepX*1.2,d,QColor(0,0,150));
+    screenGraphics->setRect(*xParam,0,stepX*1.2,d,QColor(0,0,150));
 //    for( dy=0; dy<d; dy+=stepY ) {	// draw a vertical line with points
 //      if( screenGraphics ) {
 //        //log() << *xParam << "   " << dy << "   " << color;
@@ -306,7 +306,7 @@ void density_1d_var::plot_current_data(qint64 how_many)
 		d= ((double) h(k))/double(how_many);
 // plotting pseudo density
 //		d= d/stepX;
-		screenGraphics->drawLine(dummyx,0,dummyx,d,color);
+		screenGraphics->setLine(dummyx,0,dummyx,d,color);
   	}
 }
 

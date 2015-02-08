@@ -1,5 +1,5 @@
 #include "milano2.h"
-#include "../error.h"
+#include "../logger.h"
 
 //$Header: /home/vwlt1/mmeyer/macrodyn_dmdyn/src/Models/RCS/milano2.C,v 1.1 2000/08/31 16:06:32 mmeyer Exp $
 
