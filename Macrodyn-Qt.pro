@@ -338,4 +338,5 @@ HEADERS += \
     Jobs/distributionJob.h \
     block.h \
     simloader.h \
-    Models/boehmhuels.h
+    Models/boehmhuels.h \
+    distri/logger.h

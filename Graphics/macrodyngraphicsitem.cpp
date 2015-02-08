@@ -515,19 +515,7 @@ void MacrodynGraphicsItem::drawRect(QPair<QRectF, QColor> pair)
 /******************************************************************************/
 void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, const QColor& color)
 {
-    int pixv = transformX(v);
-    int pixw = transformY(w); /* coordinates in pixels */
-    int pixwidth = width *wid/(axis.max[0]-axis.min[0]);
-    int pixheight = -height *hig/(axis.max[1]-axis.min[1]); /* coordinates in pixels */
-
-
-////	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
-
-        QRect rect(pixv, pixw, pixwidth, pixheight);
-        QPainter painter(&image);
-        painter.fillRect(rect, color);
-
-    QPair<QRect, QColor> pair = QPair<QRect, QColor>(QRect(v, w, width, height), color);
+    QPair<QRectF, QColor> pair = QPair<QRectF, QColor>(QRectF(v, w, width, height), color);
     m_rects << pair;
 
     drawRect(pair);
