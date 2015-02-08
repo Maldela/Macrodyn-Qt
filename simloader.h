@@ -47,6 +47,7 @@ public slots:
 
 protected:
 
+    QString lastFileName;
     QString m_modelName;
     baseModel *m_modelPointer;
     conParam m_conBlock;

@@ -24,6 +24,7 @@
 #include "../Models/logiDelay.h"
 #include "../Models/onozaki_et_al.h"
 #include "../Models/rSolow.h"
+#include "../Models/boehmhuels.h"
 
 #include "../error.h"
 
@@ -103,6 +104,9 @@ baseModel* getPubModel(const QString& modelTyp)
     if (modelTyp == "rSolow")
 	return new rSolow;
 
+    if (modelTyp == "boehmhuels")
+    return new boehmhuels;
+
     error("macrodyn::getPubModel(const char*): Model %s not implemented yet", modelTyp);
     return NULL;
 } 
@@ -155,6 +159,9 @@ baseModel* getPubModel(const QString& modelTyp, const baseModel* sourceModel)
 	return new onozaki_et_al(*((onozaki_et_al*)sourceModel));
     if (modelTyp == "rSolow")
 	return new rSolow(*((rSolow*)sourceModel));
+
+    if (modelTyp == "boehmhuels")
+    return new boehmhuels(*((boehmhuels*)sourceModel));
 
     error("macrodyn::getPubModel(const char*, const baseModel*): Model %s not implemented yet", modelTyp);
     return NULL;		// not reached

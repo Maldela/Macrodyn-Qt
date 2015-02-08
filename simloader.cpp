@@ -82,7 +82,7 @@ xyRange* conParam2xyRange(const conParam& m_conBlock, const int dim)
     qMinList << m_conBlock.xmin << m_conBlock.ymin << m_conBlock.zmin;
     qMaxList << m_conBlock.xmax << m_conBlock.ymax << m_conBlock.zmax;
     zeroList << m_conBlock.zerox << m_conBlock.zeroy << m_conBlock.zeroz;
-    resList << xDim << yDim << zDim;
+    resList << m_conBlock.xRes << m_conBlock.yRes << m_conBlock.zRes;
 
     return( new xyRange(dim,labelList,qMinList,qMaxList,resList,zeroList) );
 }
@@ -113,8 +113,9 @@ SimLoader::~SimLoader()
 
 void SimLoader::loadSimulationfromFile(const QString& fileName)
 {
+    lastFileName = fileName;
     QFile file(fileName);
-    int divisor = 1;
+    int divisor = 1000;
 
     if (!file.open(QFile::ReadOnly))
     {
@@ -183,7 +184,9 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
         stream >> m_conBlock.xLabel;
     }
 
-    stream >> m_conBlock.xmin >> m_conBlock.xmax;
+    stream >> m_conBlock.xmin >> m_conBlock.xmax >> m_conBlock.xRes;
+
+    log()<<"m_conBlock.xRes = "<<m_conBlock.xRes;
 
     stream >> m_conBlock.yLabel;
 
@@ -192,7 +195,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
         m_conBlock.zeroy=1; // any positive number; different colors in graphics.C not supported yet
         stream >> m_conBlock.yLabel;
     }
-    stream >> m_conBlock.ymin >> m_conBlock.ymax;
+    stream >> m_conBlock.ymin >> m_conBlock.ymax >> m_conBlock.yRes;
 
     stream >> m_conBlock.zLabel;
 
@@ -207,7 +210,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     log() << "Y:" << m_conBlock.yLabel << "from" << m_conBlock.ymin << "to" << m_conBlock.ymax;
     log() << "Z:" << m_conBlock.zLabel << "from" << m_conBlock.zmin << "to" << m_conBlock.zmax;
 
-    qreal stepX = (m_conBlock.xmax-m_conBlock.xmin) / divisor;
+    qreal stepX = (m_conBlock.xmax-m_conBlock.xmin) / m_conBlock.xRes;
 
     if (stateSpace) delete stateSpace;
     stateSpace = NULL;
@@ -357,7 +360,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
             break;
         case D_BIF2D:
             m_runJob = new d_bif2D(m_modelPointer,*m_axes,m_graph);
-            m_runJob->setStepX(stepX);
+            //m_runJob->setStepX(stepX);
             break;
         case D_BIF2D_F2:
             m_runJob = new d_bif2D_f2(m_modelPointer,*m_axes,m_graph);
@@ -560,6 +563,8 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
 
 void SimLoader::runSimulation()
 {
+    if( !m_runJob )
+        SimLoader::loadSimulationfromFile(lastFileName);  //if there is no new Job specified, load the last .sim File again
     qDebug() << "Run simulation";
 
     if( m_runJob )

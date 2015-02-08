@@ -208,7 +208,7 @@ int hashTable::storePoint(const QList<qreal*>& stateVars)
     }
 
     hashTab[bucket].hits++;		// increment the # of hits for the
-					// cell under considerations
+                    // cell under considerations
     noHits++;				// increment the # of hits at all
 
     return 0;

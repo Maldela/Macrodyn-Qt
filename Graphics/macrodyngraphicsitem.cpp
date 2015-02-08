@@ -418,10 +418,13 @@ void MacrodynGraphicsItem::clear_window()
 /* Last modified:   Wed Jun 16 16:56:38 CEST 1999 Marc Mueller                */
 /*                                                                            */
 /******************************************************************************/
-void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
+void MacrodynGraphicsItem::setPoint(qreal v, qreal w, int colorInt)
 {
     int pixv = transformX(v);
     int pixw = transformY(w); /* coordinates in pixels */
+
+    QColor color;
+    colorFromInt(color,colorInt);
 
 //    if (pixv <= (int)lmargin || pixv > ((width()) - (int)rmargin) ||
 //        pixw < (int)upmargin || pixw >= ((height()) - (int)lowmargin) )
@@ -481,6 +484,7 @@ void MacrodynGraphicsItem::drawRect(qreal v, qreal w, qreal width, qreal height,
     int pixw = transformY(w); /* coordinates in pixels */
     int pixwidth = width *wid/(axis.max[0]-axis.min[0]);
     int pixheight = -height *hig/(axis.max[1]-axis.min[1]); /* coordinates in pixels */
+
 
 ////	cerr << "Warning: Not available pixel: " << pixv << " " << pixw
 

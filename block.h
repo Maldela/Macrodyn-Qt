@@ -22,6 +22,9 @@ struct conParam
     qreal ymax;                              /* maximum Y-value                */
     qreal zmin;                              /* minimum Z-value                */
     qreal zmax;                              /* maximum Z-value                */
+    qint64 xRes;
+    qint64 yRes;
+    qint64 zRes;
     qreal realYmin;                          /* qreal minimum Y-value          */
     qreal realYmax;                          /* qreal maximum Y-value          */
     qreal realZmin;                          /* qreal minimum Z-value          */

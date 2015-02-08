@@ -163,7 +163,8 @@ SOURCES += main.cpp \
     logger.cpp \
     Jobs/distributionJob.C \
     block.C \
-    simloader.cpp
+    simloader.cpp \
+    Models/boehmhuels.C
 
 RESOURCES += qml.qrc
 
@@ -339,4 +340,5 @@ HEADERS += \
     logger.h \
     Jobs/distributionJob.h \
     block.h \
-    simloader.h
+    simloader.h \
+    Models/boehmhuels.h

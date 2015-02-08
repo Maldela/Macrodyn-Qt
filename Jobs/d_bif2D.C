@@ -30,7 +30,7 @@
 d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes, 
          MacrodynGraphicsItem* const graph)
           :geometricJob(bMod,axes,graph),
-           h(axes.min[1],axes.max[1],axes.res[1])
+           h(axes.min[1],axes.max[1],(axes.res[0]>0?axes.res[0]:100.0))
 {
 //    if( fileName )
 //	outFile.open(fileName,ios::out);
@@ -40,9 +40,14 @@ d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes,
 
     length=model->getLength();
     limit=(qint64)(0.2*length);			// 20% are thrown away
-    stepX=(xmax-xmin) / (axes.res[0]-1);
-    stepY=(ymax-ymin) / (axes.res[1]-1);
-    x_res = axes.res[0];
+//    stepX=(xmax-xmin) / (axes.res[0]-1);
+//    stepY=(ymax-ymin) / (axes.res[1]-1);
+    stepX=(xmax-xmin) / 10.0;
+    stepY=(ymax-ymin) / 10.0;
+    log() << "stepX = " <<stepX;
+    log() << "stepY = " <<stepY;
+//    x_res = axes.res[0];
+    x_res = 10;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,6 +123,8 @@ void d_bif2D::simulation()
         // only points inside the state space
 	// section under consideration are
 	// analysed
+//          log() << "xParam = " <<*xParam;
+//          log() << "yParam = " <<*yParam;
         h.inc(*yParam);
       }
     }

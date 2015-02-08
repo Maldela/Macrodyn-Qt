@@ -25,7 +25,12 @@ parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes,
     hash->resetDomain(stateSpace);        // save bounderies of the state
 					  // space section
     stepY=(ymax-ymin)/(axes.res[1]-1);
+    log()<<"stepX = "<<stepX;
+    log()<<"stepY = "<<stepY;
+//    stepY=(ymax-ymin)/50.0;
+//    stepX=(xmax-xmin)/50.0;
     stateVars.clear();
+    log()<<"stateSpace.dimension = "<<stateSpace.dimension;
     for (int i=0;i<stateSpace.dimension;i++) {
     stateVars << model->setLabels(stateSpace.label[i]);
                                           // get pointer to the model var.
@@ -70,7 +75,6 @@ void parameterSpace::simulation()
 					// is done every tDiv periods until
 					// length is reached or a cycle has
 					// been detected
-
     for(*xParam=xmin;*xParam<=xmax; *xParam+=stepX) {
     for(*yParam=ymin;*yParam<=ymax;*yParam+=stepY) {
 	    model->initialize();
@@ -101,7 +105,9 @@ void parameterSpace::simulation()
             }
 	    }
 	    if( screenGraphics ) 
-        screenGraphics->setPoint(*xParam,*yParam,order+1);
+            screenGraphics->drawRect(*xParam,*yParam,stepX*1.05,stepY*1.05,QColor((1234*(order+1))%255,(12345*(order+1))%255,(123456*(order+1))%255));
+            //log() << "xParam = " <<*xParam<<"    yParam = "<<*yParam<<"    order = "<<order;
+        //screenGraphics->setPoint(*xParam,*yParam,order+1);
 	}
     }
 }
