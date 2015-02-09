@@ -7,6 +7,9 @@
 
 #ifndef Job_H
 #define Job_H
+
+#include <QObject>
+
 #include "../Models/baseModel.h"
 #include "../Graphics/macrodyngraphicsitem.h"
 
@@ -21,19 +24,24 @@
 /*                                                                            */
 /******************************************************************************/
 
-class Job {
-  protected:
+class Job : public QObject
+{
+    Q_OBJECT
+
+protected:
     qint64 length;                       // length of simulation
     qint64 limit;                        // for limit <t<= length the simulations
                                        // output is exaqMined
     baseModel* const model;            // model to analysed
     MacrodynGraphicsItem* screenGraphics;    // the output of the simulation can be
                                        // drawn on the screen ..
-  public:
+public:
     Job(baseModel * const, MacrodynGraphicsItem * = NULL);
     Job(baseModel * const, const qint64&, const qint64&, MacrodynGraphicsItem * = NULL);
     virtual ~Job()=0;
     virtual void setStepX(const qreal&);
+
+public slots:
     virtual void simulation()=0;
 };
 #endif

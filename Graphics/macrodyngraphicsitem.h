@@ -6,6 +6,8 @@
 #include <QPainter>
 #include <QTimer>
 #include <QPair>
+#include <QReadWriteLock>
+#include <QThread>
 
 #include "../sim.h"
 #include "../axes.h"
@@ -16,20 +18,53 @@
 // - draw zoomRect
 // - beautify setBigPoint
 // - drawColorCount?
+class MacrodynGraphicsItem;
+
+class ImagePainter : public QObject
+{
+    Q_OBJECT
+
+public:
+
+    ImagePainter(MacrodynGraphicsItem *, QImage *, QReadWriteLock *, QReadWriteLock *);
+
+
+signals:
+
+    void imageChanged();
+    void imageFinished();
+
+
+protected slots:
+
+    void drawPoint(const QPointF&, const QColor&, bool = true);
+    void drawRect(const QRectF&, const QColor&, bool = true);
+    void drawLine(const QLineF&, const QColor&, bool = true);
+    void redraw();
+
+
+protected:
+
+    QImage *m_image;
+    QReadWriteLock *m_imageLock, *m_listLock;
+    MacrodynGraphicsItem *m_parent;
+};
 
 
 class MacrodynGraphicsItem : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
-    Q_PROPERTY(qreal zoomFactor READ getZoom NOTIFY zoomChanged CONSTANT)
+    Q_PROPERTY(qreal zoomFactor READ getZoom NOTIFY zoomChanged)
+
+    friend class ImagePainter;
 
 public:
 
     explicit MacrodynGraphicsItem(QQuickItem *parent = 0);
     virtual ~MacrodynGraphicsItem();
 
-    int drawAxis();                     // draw axis according to the domain
+    void drawAxis(QPainter * = NULL);                     // draw axis according to the domain
 
     void draw_mp_names(const QStringList&);// write multiple names in the window
 //    void draw_color_count();	// Job color_map
@@ -61,13 +96,17 @@ public:
     void setXYRange(const xyRange& range);
 
     void colorFromInt(QColor& color, int colorInt) const;
+    int transformX(qreal) const;
+    int transformY(qreal) const;
+    QPoint transform(const QPointF&) const;
+    double pixel_to_x(int) const;
+    double pixel_to_y(int) const;
 
 
 public slots:
 
-    Q_INVOKABLE void redraw();
     Q_INVOKABLE void zoom(int, int, int, int);
-    Q_INVOKABLE inline void unzoom() { axis = origAxis; redraw(); qDebug() << "unzoom"; }
+    Q_INVOKABLE inline void unzoom() { axis = origAxis; emit needRedraw(); qDebug() << "unzoom"; }
     Q_INVOKABLE void click(int x, int y) const { qDebug() << QPointF(pixel_to_x(x), pixel_to_y(y)); }
 
 
@@ -75,6 +114,10 @@ signals:
 
     void backgroundColorChanged();
     void zoomChanged();
+    void newPoint(QPointF, QColor);
+    void newRect(QRectF, QColor);
+    void newLine(QLineF, QColor);
+    void needRedraw();
 
 
 protected slots:
@@ -85,26 +128,18 @@ protected slots:
 protected:
 
     void paint(QPainter *painter);
-    void drawPoint(QPair<QPointF, QColor>);
-    void drawRect(QPair<QRectF, QColor>);
-    void drawLine(QPair<QLineF, QColor>);
-    int transformX(qreal);
-    int transformY(qreal);
-    QPoint transform(const QPointF&);
-    void draw_zoom_rect(int&, int&);
-    double pixel_to_x(int) const;
-    double pixel_to_y(int) const;
 
-    QImage image;
-    QRect zoomRect;
-    QTimer redrawTimer;
+    QImage image, backupImage;
+    ImagePainter *m_imagePainter;
+    QThread *imageThread;
+    QList<QPair<QLineF, QColor> > m_lines;
+    QList<QPair<QPointF, QColor> > m_points;
+    QList<QPair<QRectF, QColor> > m_rects;    QTimer redrawTimer;
+    QReadWriteLock lock, imageLock;
     int job;
     xyRange origAxis;
     xyRange axis;
     QColor backgroundColor;
-    QList<QPair<QLineF, QColor> > m_lines;
-    QList<QPair<QPointF, QColor> > m_points;
-    QList<QPair<QRectF, QColor> > m_rects;
     uint lmargin;
     uint rmargin;
     uint upmargin;

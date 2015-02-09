@@ -16,8 +16,8 @@
 /*                                                                            */
 /******************************************************************************/
 
-Job::Job(baseModel * const bMod, MacrodynGraphicsItem *graph)
-    : model(bMod),screenGraphics(graph)
+Job::Job(baseModel * const bMod, MacrodynGraphicsItem *graph) : QObject(),
+    model(bMod),screenGraphics(graph)
 {
     length=model->getLength();
     limit=0;
@@ -35,8 +35,8 @@ Job::~Job()
 /******************************************************************************/
 
 Job::Job(baseModel * const bMod, const qint64& len, const qint64& lim,
-      MacrodynGraphicsItem *graph)
-    : length(len),limit(lim), model(bMod), screenGraphics(graph)
+      MacrodynGraphicsItem *graph) : QObject(),
+      length(len),limit(lim), model(bMod), screenGraphics(graph)
 {
 }
 

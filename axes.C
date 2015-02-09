@@ -186,3 +186,13 @@ QTextStream& operator<<(QTextStream& os,const xyRange& axes)
     }
     return os;
 }
+
+xyRange::operator bool() const
+{
+    if (!dimension || dimension < 2) return false;
+    if (label.size() < dimension) return false;
+    if (min.size() < dimension) return false;
+    if (max.size() < dimension) return false;
+    if (zeroline.size() < dimension) return false;
+    return true;
+}

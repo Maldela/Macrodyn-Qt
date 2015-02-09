@@ -27,7 +27,8 @@
 /*                                                                            */
 /******************************************************************************/
 
-class models2D : public baseModel {
+class models2D : public baseModel
+{
   protected:
     qreal alpha;			        // parameter
     qreal beta;

@@ -74,9 +74,6 @@ xyRange* conParam2xyRange(const conParam& m_conBlock, const int dim)
     QList<qreal> qMaxList;
     QList<qint64> resList;
     QList<QColor> zeroList;
-    int xDim = 0;
-    int yDim = 0;
-    int zDim = 0;
 
     labelList << m_conBlock.xLabel << m_conBlock.yLabel << m_conBlock.zLabel;
     qMinList << m_conBlock.xmin << m_conBlock.ymin << m_conBlock.zmin;
@@ -98,24 +95,29 @@ SimLoader::SimLoader(QObject *parent) : QObject(parent)
     xDef = NULL;
     yDef = NULL;
     plotLines = NULL;
+    simThread = new QThread();
+    QObject::connect(simThread, SIGNAL(finished()), this, SLOT(jobFinished()));
+    simThread->start();
 }
 
 SimLoader::~SimLoader()
 {
-    if (m_modelPointer) delete m_modelPointer;
+    if (m_modelPointer) m_modelPointer->deleteLater();
     if (m_axes) delete m_axes;
-    if (m_runJob) delete m_runJob;
+    if (m_runJob) m_runJob->deleteLater();
     if (stateSpace) delete stateSpace;
     if (xDef) delete xDef;
     if (yDef) delete yDef;
     if (plotLines) delete plotLines;
+    simThread->quit();
+    simThread->wait();
+    delete simThread;
 }
 
 void SimLoader::loadSimulationfromFile(const QString& fileName)
 {
     lastFileName = fileName;
     QFile file(fileName);
-    int divisor = 1000;
 
     if (!file.open(QFile::ReadOnly))
     {
@@ -192,7 +194,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
 
     if (m_conBlock.yLabel == "zeroline")
     {
-        m_conBlock.zeroy=1; // any positive number; different colors in graphics.C not supported yet
+        m_conBlock.zeroy = QColor(Qt::yellow);
         stream >> m_conBlock.yLabel;
     }
     stream >> m_conBlock.ymin >> m_conBlock.ymax >> m_conBlock.yRes;
@@ -297,7 +299,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     window wind = HANNING; // only case Power, leave it here
 
     qDebug() << "switch reached...\n";
-    if (m_runJob) delete m_runJob;
+    if (m_runJob) m_runJob->deleteLater();
     switch( m_conBlock.graphTyp )
     {
         case ATTRA:
@@ -563,26 +565,19 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
 
 void SimLoader::runSimulation()
 {
-    if( !m_runJob )
-        SimLoader::loadSimulationfromFile(lastFileName);  //if there is no new Job specified, load the last .sim File again
+    if (!m_runJob)
+        loadSimulationfromFile(lastFileName);  //if there is no new Job specified, load the last .sim File again
     qDebug() << "Run simulation";
 
-    if( m_runJob )
+    if (m_runJob)
     {
         log() << "starting simulation...";
-        m_runJob->simulation();
-//        log() << "before delete m_runJob...";
-//        delete m_runJob;
-//        log() << "after delete m_runJob...";
-        m_runJob = NULL;
+        m_runJob->moveToThread(simThread);
+        m_modelPointer->moveToThread(simThread);
+        connect(this, SIGNAL(simulate()), m_runJob, SLOT(simulation()));
+        emit simulate();
     }
     else log() << "job misspecified...";
-
-    log() << "closing job...\n";
-
-    if( m_axes )
-    delete m_axes;
-    m_axes = NULL;
 }
 
 void SimLoader::setModel(const QString &model)
@@ -591,16 +586,18 @@ void SimLoader::setModel(const QString &model)
     {
         if (m_modelPointer)
         {
-            delete m_modelPointer;
+            m_modelPointer->deleteLater();
         }
-        if ((m_modelPointer = getModel(model)))
+        m_modelPointer = getModel(model);
+        if (m_modelPointer)
         {
             m_modelName = model;
             emit modelChanged();
         }
         else
         {
-            if ((m_modelPointer = getPubModel(model)))
+            m_modelPointer = getPubModel(model);
+            if (m_modelPointer)
             {
                 m_modelName = model;
                 emit modelChanged();
@@ -644,4 +641,16 @@ void SimLoader::setGraphItem(QObject *object)
         m_graph = graph;
         emit graphItemChanged();
     }
+}
+
+void SimLoader::jobFinished()
+{
+    if (m_axes)
+        delete m_axes;
+    if (m_runJob)
+        m_runJob->deleteLater();
+    if (m_modelPointer)
+        m_modelPointer->deleteLater();
+    m_axes = NULL;
+    log() << "job finished!";
 }

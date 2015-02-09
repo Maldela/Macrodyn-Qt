@@ -32,7 +32,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-class logistic : public baseModel {
+class logistic : public baseModel
+{
 
 protected:
     qreal alpha;				// parameter

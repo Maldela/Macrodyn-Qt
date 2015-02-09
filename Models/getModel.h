@@ -29,19 +29,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 baseModel* getModel(const QString& modelTyp);
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-// Function:		getModel(const char*, const baseModel*)
-// Purpose:		returns a new model for type modelTyp from sourceModel
-//
-// Author:		Uli Middelberg
-// Last modified:	Mon Mar 10 14:44:08 MET 1997
-// By:			Uli Middelberg
-//
-///////////////////////////////////////////////////////////////////////////////
-baseModel* getModel(const QString& modelTyp, const baseModel* sourceModel);
-
 #endif // _GETMODEL_INCLUDED
 
 // eof

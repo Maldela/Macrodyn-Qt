@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QThread>
 
 #include "block.h"
 #include "Models/baseModel.h"
@@ -26,7 +27,7 @@ public:
     void setModel(const QString&);
     inline int graphTyp() const { return m_graphTyp; }
     void setGraphTyp(int);
-    inline QObject * graphItem() const { return qobject_cast<QObject *>(m_graph); }
+    inline QObject *graphItem() const { return qobject_cast<QObject *>(m_graph); }
     void setGraphItem(QObject *);
 
 
@@ -35,6 +36,7 @@ signals:
     void modelChanged();
     void graphTypChanged();
     void graphItemChanged();
+    void simulate();
 
 
 public slots:
@@ -45,8 +47,14 @@ public slots:
     Q_INVOKABLE void printModelParameters() const { if (m_modelPointer) m_modelPointer->printParamset(); }
 
 
+protected slots:
+
+    void jobFinished();
+
+
 protected:
 
+    QThread *simThread;
     QString lastFileName;
     QString m_modelName;
     baseModel *m_modelPointer;

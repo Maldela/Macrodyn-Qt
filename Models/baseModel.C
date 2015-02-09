@@ -11,8 +11,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-baseModel::baseModel(const uint &dim) : dimension(dim)
+baseModel::baseModel(const uint &dim) : QObject()
 {
+    dimension = dim;
 }
 
 baseModel::~baseModel()

@@ -14,18 +14,25 @@
 /******************************************************************************/
 
 #include <QTextStream>
+#include <QObject>
+
 #include "../sim.h"
 #include "logger.h"
 
-class baseModel
+class baseModel : public QObject
 {
+    Q_OBJECT
+
 protected:
+
     qint64 length;                            // length of simulation
     uint dimension;	                    // dimension of the system
     qreal xBundle;		            // dummy variables used as default
-    qreal yBundle;                           //   settings in an analysis
+    qreal yBundle;                  //   settings in an analysis
+
 public:
-    baseModel(const uint&);	            // constructor
+
+    baseModel(const uint&);     // constructor
     virtual ~baseModel()=0;
     virtual qreal* setLabels(const QString&)=0;       // return pointer to a specified
 				            //   parameter or variable

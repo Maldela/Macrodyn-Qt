@@ -29,19 +29,6 @@ void PrintPubModelDate(void);
 ///////////////////////////////////////////////////////////////////////////////
 baseModel* getPubModel(const QString& modelTyp);
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-// Function:		getModel(const char*, const baseModel*)
-// Purpose:		returns a new model for type modelTyp from sourceModel
-//
-// Author:		Marc Mueller 98/07/26
-// Last modified:	Sun Jul 26 13:29:21 METDST 1998
-// By:			Marc Mueller
-//
-///////////////////////////////////////////////////////////////////////////////
-baseModel* getPubModel(const QString& modelTyp, const baseModel* sourceModel);
-
 #endif // _GETPUBMODEL_INCLUDED
 
 // eof

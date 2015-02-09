@@ -32,7 +32,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-class boehmhuels : public baseModel {
+class boehmhuels : public baseModel
+{
+    Q_OBJECT
 
 protected:
     qreal alpha,delta,beta,ybar,r;	// parameter

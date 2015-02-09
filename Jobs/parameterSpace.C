@@ -75,40 +75,46 @@ void parameterSpace::simulation()
 					// is done every tDiv periods until
 					// length is reached or a cycle has
 					// been detected
-    for(*xParam=xmin;*xParam<=xmax; *xParam+=stepX) {
-    for(*yParam=ymin;*yParam<=ymax;*yParam+=stepY) {
-	    model->initialize();
-	    for(t=0;t<length;t++) {
-            model->iteration(t+1);
-            if( t > limit ) {
-                if( hash->storePoint(stateVars) ) {
-                    hash->resetHashTable();
-                    order=-1;    // out of domain, leave it blue
-    //			    log() << *(stateVars[0]) 
-                    break;
-                }
-                if( !(t % tDiv) || (t==(length-1)) ) {
-                    if ( (order=hash->orderOfCycle()) ) {
+    for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX)
+    {
+        for(*yParam=ymin;*yParam<=ymax;*yParam+=stepY)
+        {
+            model->initialize();
+            for(t=0;t<length;t++)
+            {
+                model->iteration(t+1);
+                if( t > limit ) {
+                    if( hash->storePoint(stateVars) )
+                    {
                         hash->resetHashTable();
-                        break;	// a cycle has been detected
-                            // so the analysis of this parameterset
-                            // can be terqMinated and the hash table
-                            // should be initialized for the next
-                            // parameterset
+                        order=-1;    // out of domain, leave it blue
+        //			    log() << *(stateVars[0])
+                        break;
                     }
-                    else
-                    hash->resetHashTable();
-                        // a new analysis has to be done
-                        // clean the hash table for the new
-                        // simulation results
+                    if( !(t % tDiv) || (t==(length-1)) )
+                    {
+                        if ( (order=hash->orderOfCycle()) )
+                        {
+                            hash->resetHashTable();
+                            break;	// a cycle has been detected
+                                // so the analysis of this parameterset
+                                // can be terqMinated and the hash table
+                                // should be initialized for the next
+                                // parameterset
+                        }
+                        else
+                        hash->resetHashTable();
+                            // a new analysis has to be done
+                            // clean the hash table for the new
+                            // simulation results
+                    }
                 }
             }
-	    }
-	    if( screenGraphics ) 
-            screenGraphics->setRect(*xParam,*yParam,stepX*1.05,stepY*1.05,QColor((1234*(order+1))%255,(12345*(order+1))%255,(123456*(order+1))%255));
-            //log() << "xParam = " <<*xParam<<"    yParam = "<<*yParam<<"    order = "<<order;
-        //screenGraphics->setPoint(*xParam,*yParam,order+1);
-	}
+            if( screenGraphics )
+                screenGraphics->setRect(*xParam,*yParam,stepX*1.05,stepY*1.05,QColor((1234*(order+1))%255,(12345*(order+1))%255,(123456*(order+1))%255));
+                //log() << "xParam = " <<*xParam<<"    yParam = "<<*yParam<<"    order = "<<order;
+            //screenGraphics->setPoint(*xParam,*yParam,order+1);
+        }
     }
 }
     

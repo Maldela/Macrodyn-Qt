@@ -34,7 +34,7 @@ friend QTextStream& operator<<(QTextStream&, const xyRange&);
 
 public:
 
-    inline operator bool() const { return (dimension && dimension >= 2); }
+    operator bool() const;
 
     int dimension;		// dimension of the state space or parameter
 				// space under consideration

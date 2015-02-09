@@ -44,15 +44,15 @@ void attractor::simulation()
     state[1]=yParam;
     model->initialize();
 
-    for(qint64 t=0;t<length;t++) {
+    for(qint64 t=0;t<length;t++)
+    {
         model->iteration(t+1);
-        if( t >= limit && inRange(*xParam,*yParam) ) {
+        if( t >= limit && inRange(*xParam,*yParam) )
+        {
     //	    hash->storePoint(state);     // save the results
             if( screenGraphics )
-            screenGraphics->setPoint(*xParam,*yParam,
-                         (int)((t/colChange)+1));
+                screenGraphics->setPoint(*xParam,*yParam,(int)((t/colChange)+1));
                                                          // and draw them
-
         }
     }
 				       // look if the orbit shows a periodic
