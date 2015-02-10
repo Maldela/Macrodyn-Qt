@@ -17,6 +17,22 @@
 //TODO:
 // - beautify setBigPoint
 // - drawColorCount?
+struct MacroString
+{
+    MacroString(const QString& s, const QPointF& p, const QColor& c, bool t)
+    {
+        string = s;
+        point = p;
+        color = c;
+        transform = t;
+    }
+
+    QString string;
+    QPointF point;
+    QColor color;
+    bool transform;
+};
+
 class MacrodynGraphicsItem;
 
 class ImagePainter : public QObject
@@ -39,6 +55,7 @@ protected slots:
     void drawPoint(const QPointF&, const QColor&, bool = false);
     void drawRect(const QRectF&, const QColor&, bool = false);
     void drawLine(const QLineF&, const QColor&, bool = false);
+    void drawString(const QPointF&, const QString&, const QColor&, bool, bool = false);
     void clearColumn(qreal, bool = false);
     void redraw();
 
@@ -65,12 +82,10 @@ public:
     explicit MacrodynGraphicsItem(QQuickItem *parent = 0);
     virtual ~MacrodynGraphicsItem();
 
-    void drawAxis(QPainter * = NULL);                     // draw axis according to the domain
-
     void draw_mp_names(const QStringList&);// write multiple names in the window
 //    void draw_color_count();	// Job color_map
-    void set_axis(int, qreal, qreal);	// set qMax & qMin of axis
-    void get_axis(int, qreal*, qreal*); // get qMax & qMin of axis
+    void set_axis(int, qreal, qreal);	// set max & min of axis
+    void get_axis(int, qreal*, qreal*) const; // get max & min of axis
     void clear_window();		// clear output window
     void setPoint(qreal, qreal, const QColor&);
                     // highlights a pixel on the screen
@@ -79,7 +94,7 @@ public:
     void setBigPoint(qreal, qreal, int, int);
     void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
     void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen
-    void drawString(qreal, qreal, const QString&, const QColor&, bool = true);  // should be displayed on the screen
+    void setString(qreal, qreal, const QString&, const QColor&, bool = true);  // should be displayed on the screen
     void dumpGraphics(const QString&) const; // dump output window
     inline QColor getBackgroundColor() const { return backgroundColor; }
     void setBackgroundColor(const QColor&);
@@ -91,8 +106,8 @@ public:
     int transformX(qreal) const;
     int transformY(qreal) const;
     QPoint transform(const QPointF&) const;
-    double pixel_to_x(int) const;
-    double pixel_to_y(int) const;
+    double pixel_to_x(int, bool = true) const;
+    double pixel_to_y(int, bool = true) const;
 
 
 public slots:
@@ -110,6 +125,7 @@ signals:
     void newRect(QRectF, QColor);
     void newLine(QLineF, QColor);
     void newClearColumn(qreal);
+    void newString(QPointF, QString, QColor, bool);
     void needRedraw();
 
 
@@ -122,16 +138,18 @@ protected slots:
 protected:
 
     void paint(QPainter *painter);
+    void drawAxis(QPainter * = NULL);    // needs locking of axisLock before calling!
 
     QImage *image;
     ImagePainter *m_imagePainter;
-    QThread *imageThread;
+    QThread imageThread;
     QList<QPair<QLineF, QColor> > m_lines;
     QList<QPair<QPointF, QColor> > m_points;
     QList<QPair<QRectF, QColor> > m_rects;
     QList<qreal> m_clearColumns;
-    QReadWriteLock lock;
-    QMutex imageMutex;
+    QList<MacroString> m_strings;
+    mutable QReadWriteLock listLock, axisLock;
+    mutable QMutex imageMutex;
     int job;
     xyRange origAxis;
     xyRange axis;

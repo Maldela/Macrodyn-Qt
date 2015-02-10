@@ -18,7 +18,8 @@
 
 #include "prob_distri.h"
 
-class finite_Distri : public prob_Distri {
+class finite_Distri : public prob_Distri
+{
     public:
         finite_Distri(const uint n, const qreal *prob, const int first=0);
                                            // constructor

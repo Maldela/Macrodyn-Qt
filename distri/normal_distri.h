@@ -18,7 +18,8 @@
 
 #include "prob_distri.h"
 
-class normal_Distri : public prob_Distri {
+class normal_Distri : public prob_Distri
+{
     public:
         normal_Distri(const qreal med =0.0, const qreal var =1.0);  // constructor
         qreal density(const qreal) const; // probability density function

@@ -20,16 +20,11 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     lowmargin = LOWMARGIN;
     upmargin = UPMARGIN;
     backgroundColor = QColor(Qt::white);
-
     image = new QImage();
 
-    imageThread = new QThread();
-    imageThread->start();
-    m_imagePainter = new ImagePainter(this, image, &lock, &imageMutex);
-    m_imagePainter->moveToThread(imageThread);
-
-
-//    connect(&redrawTimer, SIGNAL(timeout()), m_imagePainter, SLOT(redraw()));
+    imageThread.start();
+    m_imagePainter = new ImagePainter(this, image, &listLock, &imageMutex);
+    m_imagePainter->moveToThread(&imageThread);
 
     connect(this, SIGNAL(widthChanged()), this, SLOT(handleSizeChanged()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(handleSizeChanged()));
@@ -38,6 +33,7 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     connect(this, SIGNAL(newLine(QLineF,QColor)), m_imagePainter, SLOT(drawLine(QLineF,QColor)));
     connect(this, SIGNAL(newRect(QRectF,QColor)), m_imagePainter, SLOT(drawRect(QRectF,QColor)));
     connect(this, SIGNAL(newClearColumn(qreal)), m_imagePainter, SLOT(clearColumn(qreal)));
+    connect(this, SIGNAL(newString(QPointF,QString,QColor,bool)), m_imagePainter, SLOT(drawString(QPointF,QString,QColor,bool)));
     connect(this, SIGNAL(needRedraw()), m_imagePainter, SLOT(redraw()));
     connect(m_imagePainter, SIGNAL(imageChanged()), this, SLOT(update()));
     connect(m_imagePainter, SIGNAL(imageFinished(QImage *)), this, SLOT(newImage(QImage *)));
@@ -46,26 +42,27 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
 MacrodynGraphicsItem::~MacrodynGraphicsItem()
 {
     m_imagePainter->deleteLater();
-    imageThread->quit();
-    imageThread->wait();
-    delete imageThread;
-    delete image;
+    imageThread.quit();
+    imageThread.wait();
+    if (image) delete image;
 }
 
 void MacrodynGraphicsItem::paint(QPainter *painter)
 {
     imageMutex.lock();
-    if (!image->isNull()) painter->drawImage(boundingRect(), *image);
+    if (image && !image->isNull()) painter->drawImage(boundingRect(), *image);
     imageMutex.unlock();
 
+    axisLock.lockForRead();
     if (axis) drawAxis(painter);
     else qDebug() << "axis invalid!";
+    axisLock.unlock();
 }
 
 void MacrodynGraphicsItem::newImage(QImage *newImage)
 {
     imageMutex.lock();
-    delete image;
+    if (image) delete image;
     image = newImage;
     imageMutex.unlock();
     update();
@@ -80,8 +77,10 @@ void MacrodynGraphicsItem::handleSizeChanged()
 
 void MacrodynGraphicsItem::setXYRange(const xyRange& range)
 {
+    axisLock.lockForWrite();
     origAxis = range;
     axis = range;
+    axisLock.unlock();
     qDebug() << "New yxRange set";
     emit needRedraw();
 }
@@ -104,6 +103,7 @@ void MacrodynGraphicsItem::setXYRange(const xyRange& range)
 /* Last modified:   Mon Jan 31 14:59:06 MET 2000  Michael Meyer               */
 /*                                                                            */
 /******************************************************************************/
+
 void MacrodynGraphicsItem::drawAxis(QPainter *painter)
 {
     int i;
@@ -267,6 +267,7 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
 // Author:		Marc Mueller May 30 1999
 // Last modified:	Sun May 30 23:47:21 CEST 1999 Marc Mueller
 ///////////////////////////////////////////////////////////////////////////////
+
 void MacrodynGraphicsItem::draw_mp_names(const QStringList& names)
 {
     QString string;
@@ -279,24 +280,6 @@ void MacrodynGraphicsItem::draw_mp_names(const QStringList& names)
     QPainter painter(image);
     //TODO
     //painter->setPen(QBrush(QColor(jnngfvtdxljn)));
-    update();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Class name:          graphics
-// Member function:	drawString
-// Purpose:		write a string in the window
-//
-// Author:		Andreas Starke
-// Last modified:
-///////////////////////////////////////////////////////////////////////////////
-void MacrodynGraphicsItem::drawString(qreal x, qreal y, const QString& text, const QColor& color, bool transform)
-{
-    int pixX = transform ? transformX(x) : x;
-    int pixY = transform ? transformY(y) : y; // pixel coordinates
-    QPainter painter(image);
-    painter.setPen(color);
-    painter.drawText(pixX, pixY, text);
     update();
 }
 
@@ -376,8 +359,10 @@ void MacrodynGraphicsItem::drawString(qreal x, qreal y, const QString& text, con
 
 void MacrodynGraphicsItem::set_axis(int which, qreal to_min, qreal to_max)
 {
+    axisLock.lockForWrite();
     axis.min[which] = to_min;
     axis.max[which] = to_max;
+    axisLock.unlock();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -390,10 +375,12 @@ void MacrodynGraphicsItem::set_axis(int which, qreal to_min, qreal to_max)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void MacrodynGraphicsItem::get_axis(int which, qreal *to_min, qreal *to_max)
+void MacrodynGraphicsItem::get_axis(int which, qreal *to_min, qreal *to_max) const
 {
-    *to_min = axis.min[which];
-    *to_max = axis.max[which];
+    axisLock.lockForRead();
+    *to_min = axis.min.at(which);
+    *to_max = axis.max.at(which);
+    axisLock.unlock();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -408,12 +395,13 @@ void MacrodynGraphicsItem::get_axis(int which, qreal *to_min, qreal *to_max)
 
 void MacrodynGraphicsItem::clear_window()
 {
-    lock.lockForWrite();
+    listLock.lockForWrite();
     m_lines.clear();
     m_rects.clear();
     m_points.clear();
     m_clearColumns.clear();
-    lock.unlock();
+    m_strings.clear();
+    listLock.unlock();
     emit needRedraw();
 }
 
@@ -429,9 +417,9 @@ void MacrodynGraphicsItem::clear_window()
 void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 {
     QPair<QPointF, QColor> pair = QPair<QPointF, QColor>(QPointF(v, w), color);
-    lock.lockForWrite();
+    listLock.lockForWrite();
     m_points << pair;
-    lock.unlock();
+    listLock.unlock();
     emit newPoint(pair.first, pair.second);
 }
 
@@ -447,16 +435,16 @@ void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, int size)
 {
     QPair<QRectF, QColor> pair = QPair<QRectF, QColor>(QRectF(v-size/2, w-size/2, size, size), color);
-    lock.lockForWrite();
+    listLock.lockForWrite();
     m_rects << pair;
-    lock.unlock();
+    listLock.unlock();
     emit newRect(pair.first, pair.second);
 }
 
 void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, int colorInt, int size)
 {
     QColor color;
-    colorFromInt(color,colorInt);
+    colorFromInt(color, colorInt);
     setBigPoint(v, w, color, size);
 }
 
@@ -472,9 +460,9 @@ void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, int colorInt, int size)
 void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, const QColor& color)
 {
     QPair<QRectF, QColor> pair = QPair<QRectF, QColor>(QRectF(v, w, width, height), color);
-    lock.lockForWrite();
+    listLock.lockForWrite();
     m_rects << pair;
-    lock.unlock();
+    listLock.unlock();
 
     emit newRect(pair.first, pair.second);
 }
@@ -493,17 +481,26 @@ void MacrodynGraphicsItem::setLine(qreal x0, qreal y0, qreal x1, qreal y1, int c
     colorFromInt(color, colorInt);
 
     QPair<QLineF, QColor> pair = QPair<QLineF, QColor>(QLineF(x0, y0, x1, y1), color);
-    lock.lockForWrite();
+    listLock.lockForWrite();
     m_lines << pair;
-    lock.unlock();
+    listLock.unlock();
     emit newLine(pair.first, pair.second);
+}
+
+void MacrodynGraphicsItem::setString(qreal x, qreal y, const QString& s, const QColor& color, bool transform)
+{
+    MacroString string(s, QPointF(x, y), color, transform);
+    listLock.lockForWrite();
+    m_strings << string;
+    listLock.unlock();
+    emit newString(QPointF(x, y), s, color, transform);
 }
 
 void MacrodynGraphicsItem::clearColumn(qreal column)
 {
-    lock.lockForWrite();
+    listLock.lockForWrite();
     m_clearColumns << column;
-    lock.unlock();
+    listLock.unlock();
     emit newClearColumn(column);
 }
 
@@ -517,21 +514,21 @@ void MacrodynGraphicsItem::clearColumn(qreal column)
 /******************************************************************************/
 int MacrodynGraphicsItem::transformX(qreal v) const
 {
-    //qDebug() << "v:" << v;
+    axisLock.lockForRead();
     int r = (v-axis.min.at(0)) * wid / (axis.max.at(0)-axis.min.at(0)) + lmargin;
-    //qDebug() << "x:" << r;
+    axisLock.unlock();
     return r;
 }
 
 int MacrodynGraphicsItem::transformY(qreal w) const
 {
-    //qDebug() << "w:" << w;
+    axisLock.lockForRead();
     int r = height() - ((w-axis.min.at(1)) * hig / (axis.max.at(1)-axis.min.at(1)) + lowmargin);
-    //qDebug() << "y:" << r;
+    axisLock.unlock();
     return r;
 }
 
-QPoint MacrodynGraphicsItem::transform(const QPointF &old) const
+QPoint MacrodynGraphicsItem::transform(const QPointF& old) const
 {
     return QPoint(transformX(old.x()), transformY(old.y()));
 }
@@ -554,21 +551,25 @@ void MacrodynGraphicsItem::dumpGraphics(const QString& fileName) const
  * function to convert
  * pixel values on x-values
  *********************************/
-double MacrodynGraphicsItem::pixel_to_x(int xpix) const
+double MacrodynGraphicsItem::pixel_to_x(int xpix, bool lock) const
 {
+    if (lock) axisLock.lockForRead();
     if (axis)
         return (xpix-lmargin) * (axis.max.at(0) - axis.min.at(0)) / wid + axis.min.at(0);
     else return 0.0;
+    if (lock) axisLock.unlock();
 }
 /*********************************
  * function to convert
  * pixel values on y-values
  *********************************/
-double MacrodynGraphicsItem::pixel_to_y(int ypix) const
+double MacrodynGraphicsItem::pixel_to_y(int ypix, bool lock) const
 {
+    if (lock) axisLock.lockForRead();
     if (axis)
         return (height()-lowmargin-ypix) * (axis.max.at(1)-axis.min.at(1)) / hig + axis.min.at(1);
     else return 0.0;
+    if (lock) axisLock.unlock();
 }
 
 void MacrodynGraphicsItem::setBackgroundColor(const QColor& c)
@@ -606,28 +607,31 @@ void MacrodynGraphicsItem::colorFromInt(QColor& color, int colorInt) const
 
 void MacrodynGraphicsItem::zoom(int x1, int x2, int y1, int y2)
 {
-//    qDebug() << "zoom:" << zoom;
+    axisLock.lockForWrite();
     if (axis && origAxis)
     {
-        qreal xmin = pixel_to_x(qMin(x1, x2));
-        qreal ymin = pixel_to_y(qMax(y1, y2));
-        axis.max[0] = pixel_to_x(qMax(x1, x2));
-        axis.max[1] = pixel_to_y(qMin(y1, y2));
+        qreal xmin = pixel_to_x(qMin(x1, x2), false);
+        qreal ymin = pixel_to_y(qMax(y1, y2), false);
+        axis.max[0] = pixel_to_x(qMax(x1, x2), false);
+        axis.max[1] = pixel_to_y(qMin(y1, y2), false);
         axis.min[0] = xmin;
         axis.min[1] = ymin;
         emit needRedraw();
     }
     else qDebug() << "axis or origAxis invalid!";
+    axisLock.unlock();
 }
 
 qreal MacrodynGraphicsItem::getZoom() const
 {
     qreal zoom = 1.0;
+    axisLock.lockForRead();
     if (axis && origAxis)
     {
         zoom = (origAxis.max.at(0) - origAxis.min.at(0)) / (axis.max.at(0) - axis.min.at(0));
     }
     return zoom;
+    axisLock.unlock();
 }
 
 ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, QImage *parentImage, QReadWriteLock *listLock, QMutex *imageMutex) : QObject()
@@ -646,26 +650,31 @@ void ImagePainter::redraw()
 
     m_listLock->lockForRead();
     QPair<QPointF, QColor> pointPair;
-    foreach (pointPair, m_parent->m_points)
+    foreach(pointPair, m_parent->m_points)
     {
         drawPoint(pointPair.first, pointPair.second, true);
     }
 
     QPair<QRectF, QColor> rectPair;
-    foreach (rectPair, m_parent->m_rects)
+    foreach(rectPair, m_parent->m_rects)
     {
         drawRect(rectPair.first, rectPair.second, true);
     }
 
     QPair<QLineF, QColor> linePair;
-    foreach (linePair, m_parent->m_lines)
+    foreach(linePair, m_parent->m_lines)
     {
         drawLine(linePair.first, linePair.second, true);
     }
 
-    foreach (qreal column, m_parent->m_clearColumns)
+    foreach(qreal column, m_parent->m_clearColumns)
     {
         clearColumn(column);
+    }
+
+    foreach(MacroString string, m_parent->m_strings)
+    {
+        drawString(string.point, string.string, string.color, string.transform, true);
     }
     m_listLock->unlock();
 
@@ -750,6 +759,27 @@ void ImagePainter::clearColumn(qreal x, bool redraw)
     }
     painter.setPen(m_parent->getBackgroundColor());
     painter.drawLine(col, 0, col, m_image->height());
+
+    if (!redraw)
+    {
+        m_imageMutex->unlock();
+        emit imageChanged();
+    }
+}
+
+void ImagePainter::drawString(const QPointF& point, const QString& text, const QColor& color, bool transform, bool redraw)
+{
+    QPoint pointTransformed = transform ? m_parent->transform(point) : point.toPoint();
+
+    QPainter painter;
+    if (redraw) painter.begin(m_image);
+    else
+    {
+        m_imageMutex->lock();
+        painter.begin(m_parentImage);
+    }
+    painter.setPen(color);
+    painter.drawText(pointTransformed, text);
 
     if (!redraw)
     {

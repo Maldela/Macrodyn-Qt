@@ -61,7 +61,7 @@ void density_1d::simulation()
     qint64 t;
     int  k;
     qreal d;
-    qreal dy;
+//    qreal dy;
 
   model->initialize();		// run only one simulation with a fixed
   for(t=0;t<length;t++) {	// parameter set

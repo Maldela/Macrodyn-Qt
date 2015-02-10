@@ -24,7 +24,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-class prob_Distri {
+class prob_Distri
+{
 public:
     prob_Distri() {}
     uint state_size() const;            // # needed internal variables

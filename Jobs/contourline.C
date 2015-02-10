@@ -195,7 +195,6 @@ void contourline::simulation()
 	
 	screenGraphics->clear_window();
     screenGraphics->set_axis(2,min,max);
-    screenGraphics->drawAxis();
 
     qreal scala=(max-min)/double(cmax); // 34 colors for complete range of values
     qreal dummy_value;

@@ -53,7 +53,7 @@ bif3D_2par::bif3D_2par(baseModel* const bMod, const xyRange& axes,
     stepZ=(zmax-zmin) / (resolution_z-1);
     if ( screenGraphics ){
     screenGraphics->clear_window();
-    screenGraphics->drawString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
+    screenGraphics->setString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
     "progress", 9 );
     screenGraphics->setLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
     (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.55+ymin, 9);
@@ -85,7 +85,7 @@ bif3D_1par::bif3D_1par(baseModel* const bMod, const xyRange& axes,
     if ( screenGraphics )
     {
         screenGraphics->clear_window();
-        screenGraphics->drawString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
+        screenGraphics->setString( (xmax-xmin)*0.3+xmin, (ymax-ymin)*0.25+ymin,
         "progress", 9 );
         screenGraphics->setLine( (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.45+ymin,
         (xmax-xmin)*0.25+xmin, (ymax-ymin)*0.55+ymin, 9);
