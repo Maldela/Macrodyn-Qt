@@ -19,8 +19,6 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     rmargin = RMARGIN;
     lowmargin = LOWMARGIN;
     upmargin = UPMARGIN;
-    redrawTimer.setInterval(100);
-    redrawTimer.setSingleShot(true);
     backgroundColor = QColor(Qt::white);
 
     image = new QImage();

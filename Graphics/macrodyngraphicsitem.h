@@ -128,7 +128,7 @@ protected:
     QThread *imageThread;
     QList<QPair<QLineF, QColor> > m_lines;
     QList<QPair<QPointF, QColor> > m_points;
-    QList<QPair<QRectF, QColor> > m_rects;    QTimer redrawTimer;
+    QList<QPair<QRectF, QColor> > m_rects;
     QList<qreal> m_clearColumns;
     QReadWriteLock lock;
     QMutex imageMutex;
