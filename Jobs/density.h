@@ -38,7 +38,7 @@ class density_1d : public geometricJob {
     histo_1d	h;
     qreal        stepX;
     qreal        stepY;
-    xyRange     * n_axes;	// we have to manipulate the xy_range
+    xyRange     *n_axes;	// we have to manipulate the xy_range
 				// because, the y-axes is always reserved
 				// for the relative count        
     

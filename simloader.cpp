@@ -292,7 +292,11 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     }
 
     m_axes = conParam2xyRange(m_conBlock, 2);
-    if (m_graph) m_graph->setXYRange(*m_axes);
+    if (m_graph)
+    {
+        m_graph->clear_window();
+        m_graph->setXYRange(*m_axes);
+    }
 
     qDebug() << "New m_runJob*";
 

@@ -72,9 +72,8 @@ void density_1d::simulation()
   }
 
   n_axes->label[1] = "den";	// relabel the y-axis
-  if( screenGraphics ) {
-    screenGraphics->reset(*n_axes);
-  }
+  if( screenGraphics )
+    screenGraphics->setXYRange(*n_axes);
 
   for( *xParam=xmin, k=0 ;*xParam<=xmax; *xParam+=stepX, k++) {
     // d=((double) h(k))/h.get_no_hits();
@@ -158,7 +157,7 @@ void density_1d_1p::simulation()
 
   n_axes->label[1] = "den";		// relabel the y-axis
   if( screenGraphics ) {
-    screenGraphics->reset(*n_axes);
+    screenGraphics->setXYRange(*n_axes);
   }
   
   for(*zParam=zmin;*zParam<=zmax; *zParam+=stepZ) {
@@ -289,15 +288,15 @@ void density_1d_var::plot_current_data(qint64 how_many)
 	qreal d;
 	qreal y_plot;
 	
-    y_plot = double(h.get_max_hits()) / double(how_many);
+    y_plot = qreal(h.get_max_hits()) / qreal(how_many);
 // plotting pseudo density
 //	y_plot = y_plot/stepX*1.01;
 // plotting relative occurence
-	y_plot = y_plot*1.01;
+    y_plot *= 1.01;
 
     n_axes->max[1] = y_plot;
 	
-	screenGraphics->reset(*n_axes);
+    screenGraphics->setXYRange(*n_axes);
 	
     for( dummyx=xmin, k=0 ;dummyx<=xmax; dummyx+=stepX, k++) {
         // d=((double) h(k))/h.get_no_hits();

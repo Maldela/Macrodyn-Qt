@@ -65,46 +65,45 @@ void probability::simulation()
 	model->initialize();
 
 	for(t=0;t<length;t++) 
-       {
-	    model->iteration(t+1);
-        col=9;        
-           for(i=1;i<cqMax;i+=1)
-              {
-                 if(*xParam <= ((i*intervall)+xmin))
-                   {  
-                    Count[i]+=1;
-			        break;
-                   }
-              }
-        }
-n_axes->label[1] = "1-F()";	// relabel the y-axis
-if( screenGraphics ) 
-{
- screenGraphics->reset(*n_axes);
-}
+   {
+    model->iteration(t+1);
+    col=9;
+       for(i=1;i<cqMax;i+=1)
+          {
+             if(*xParam <= ((i*intervall)+xmin))
+               {
+                Count[i]+=1;
+                break;
+               }
+          }
+    }
+    n_axes->label[1] = "1-F()";	// relabel the y-axis
+    if( screenGraphics )
+        screenGraphics->setXYRange(*n_axes);// search for qMinimal and qMaximal(*n_axes);
 
-for(i=0;i<=100000;i++){	
-old_x = relativeSum;
-	relativeCount=Count[i] / double (length);
-	relativeSum+=relativeCount;
-old_y = relativeSum;
-    xStep=(i*intervall)+xmin;
-	prob=1-relativeSum; 
+    for(i=0;i<=100000;i++)
+    {
+        old_x = relativeSum;
+        relativeCount=Count[i] / double (length);
+        relativeSum+=relativeCount;
+        old_y = relativeSum;
+        xStep=(i*intervall)+xmin;
+        prob=1-relativeSum;
 
-//	    if( screenGraphics ) 
+//	    if( screenGraphics )
 //			screenGraphics->setPoint(xStep,prob,col);
-	    if( screenGraphics ) 
-			screenGraphics->setBigPoint(xStep,prob,col,psize);
+        if( screenGraphics )
+            screenGraphics->setBigPoint(xStep,prob,col,psize);
 
 
-/*	    if( screenGraphics ) 
-		screenGraphics->setLine(old_x,old_y,xStep,relativeSum,col);
-					
-	                                                 // and draw them
-	    if( printDev )
-		printDev->setLine(old_x,old_y,xStep,relativeSum,col);
-*/			  	 
-}
+/*	    if( screenGraphics )
+        screenGraphics->setLine(old_x,old_y,xStep,relativeSum,col);
+
+                                                     // and draw them
+        if( printDev )
+        printDev->setLine(old_x,old_y,xStep,relativeSum,col);
+*/
+    }
 }
 
 

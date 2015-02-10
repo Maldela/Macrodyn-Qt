@@ -108,9 +108,8 @@ void max_lyapunov_exp_1d::simulation()
 //  n_axes->max[1]=l_max;
   n_axes->label[1] = "lyap";
 
-  if( screenGraphics ) {
-    screenGraphics->reset(*n_axes);
-  }
+  if( screenGraphics )
+    screenGraphics->setXYRange(*n_axes);
 
 
   for( *xParam=xmin, l=0; *xParam<=xmax ;*xParam += stepX, l++) {
@@ -296,9 +295,8 @@ void max_lyapunov_exp_t::simulation()
 //  n_axes->max[1]=l_max;
   n_axes->label[1] = "lyap";
 
-  if( screenGraphics ) {
-    screenGraphics->reset(*n_axes);
-  }
+  if( screenGraphics )
+    screenGraphics->setXYRange(*n_axes);
 
   for( t=0;t<length;t++ ) {
     t_qreal=t;

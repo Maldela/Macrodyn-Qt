@@ -48,22 +48,26 @@ void bif2Param::simulation()
     qreal dummy_x;
     qreal dummy_z;
 
-    for(dummy_z=zmin;dummy_z<=zmax; dummy_z+=stepZ) {
-    for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
-	    *xParam = dummy_x;
-	    *zParam = dummy_z;
-	    model->initialize();
-        screenGraphics->clearColumn(dummy_x);   // clear column of the
-                                                // old picture
-	    for(t=0;t<length;t++) {
-		model->iteration(t+1);
-		if( t > limit && inRange(dummy_x,*yParam) ) {
-            if( screenGraphics )
-            screenGraphics->setPoint(dummy_x,*yParam,9);
+    for(dummy_z=zmin;dummy_z<=zmax; dummy_z+=stepZ)
+    {
+        for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX)
+        {
+            *xParam = dummy_x;
+            *zParam = dummy_z;
+            model->initialize();
+            screenGraphics->clearColumn(dummy_x);   // clear column of the
+                                                    // old picture
+            for(t=0;t<length;t++)
+            {
+                model->iteration(t+1);
+                if( t > limit && inRange(dummy_x,*yParam) )
+                {
+                    if( screenGraphics )
+                        screenGraphics->setPoint(dummy_x,*yParam,9);
 
-		}
-	    }
-	}
+                }
+            }
+        }
     }
 }
 

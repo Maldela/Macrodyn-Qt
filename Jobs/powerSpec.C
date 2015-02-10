@@ -323,47 +323,49 @@ void powerSpec::simulation()
     qreal oldX, oldY;
     
     model->initialize();                // initialize the model
-    for(t=0;t<length;t++) {
-	model->iteration(t+1);          // compute and save the
-	saveSeries(t);                  // orbit
+    for(t=0;t<length;t++)
+    {
+        model->iteration(t+1);          // compute and save the
+        saveSeries(t);                  // orbit
     }
     windowData(timeSeriesqreal);         // compute a window of the data
     powerSpecCalc(1.0);                 // compute the powerspectrum
 
-    for(t=0;t<=length/2;t++){           // search for qMinimal and qMaximal
-	dummy = log10(timeSeriesqreal[t]);   // values in the results
-    ymax = dummy > ymax ? dummy : ymax;
-    ymin = dummy < ymin ? dummy : ymin;
+    for(t=0;t<=length/2;t++)            // search for qMinimal and qMaximal
+    {
+        dummy = log10(timeSeriesqreal[t]);   // values in the results
+        ymax = dummy > ymax ? dummy : ymax;
+        ymin = dummy < ymin ? dummy : ymin;
     }
-    if( screenGraphics ) {
-    QList<qreal> min;
-    min[0]=0.0;
-    min[1]=ymin;
+    if( screenGraphics )
+    {
+        QList<qreal> min;
+        min[0]=0.0;
+        min[1]=ymin;
 
-    QList<qreal> max;
-    max[0]=0.5;
-    max[1]=ymax;
-	
-    QList<qint64> res;
-	res[0]=res[1]=0;
-    QStringList string;
-	string[0]="1/t";
-	string[1]="N";
-    xyRange range(2,string,min,max,res);
-	if( screenGraphics ) 
-	    screenGraphics->reset(range);
-	
+        QList<qreal> max;
+        max[0]=0.5;
+        max[1]=ymax;
 
+        QList<qint64> res;
+        res[0]=res[1]=0;
+        QStringList string;
+        string[0]="1/t";
+        string[1]="N";
+        xyRange range(2,string,min,max,res);
+        if( screenGraphics )
+            screenGraphics->setXYRange(range);
     }
     oldX=timeSeriesImag[0];
     oldY=log10(timeSeriesqreal[0]);
-    for(t=1;t<=length/2;t++) {
-	dummy=log10(timeSeriesqreal[t]);
-	if( screenGraphics ) 
-//	    screenGraphics->setPoint(timeSeriesImag[t],dummy,9);
-	    screenGraphics->setLine(oldX,oldY,timeSeriesImag[t],dummy,9);
-	oldX=timeSeriesImag[t];
-    oldY=dummy;
+    for(t=1;t<=length/2;t++)
+    {
+        dummy=log10(timeSeriesqreal[t]);
+        if( screenGraphics )
+    //	    screenGraphics->setPoint(timeSeriesImag[t],dummy,9);
+            screenGraphics->setLine(oldX,oldY,timeSeriesImag[t],dummy,9);
+        oldX=timeSeriesImag[t];
+        oldY=dummy;
     }
 }
 
