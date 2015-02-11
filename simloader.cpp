@@ -564,17 +564,19 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
 
 void SimLoader::runSimulation()
 {
+    if (simThread.isRunning())
+    {
+        log() << "Simulation already running!";
+        return;
+    }
+
     if (!m_runJob)
         loadSimulationfromFile(lastFileName);  //if there is no new Job specified, load the last .sim File again
+
     qDebug() << "Run simulation";
 
     if (m_runJob)
     {
-        if (simThread.isRunning())
-        {
-            log() << "Simulation already running!";
-            return;
-        }
         log() << "starting simulation...";
         simThread.setJob(m_runJob);
         simThread.start();
