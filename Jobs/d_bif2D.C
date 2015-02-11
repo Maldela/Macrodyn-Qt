@@ -41,10 +41,10 @@ d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes,
 
     length=model->getLength();
     limit=(qint64)(0.2*length);			// 20% are thrown away
-//    stepX=(xmax-xmin) / (axes.res[0]-1);
-//    stepY=(ymax-ymin) / (axes.res[1]-1);
-    stepX=(xmax-xmin) / 10.0;
-    stepY=(ymax-ymin) / 10.0;
+    stepX=(xmax-xmin) / (axes.res[0]-1);
+    stepY=(ymax-ymin) / (axes.res[1]-1);
+//    stepX=(xmax-xmin) / 10.0;
+//    stepY=(ymax-ymin) / 10.0;
     log() << "stepX = " <<stepX;
     log() << "stepY = " <<stepY;
 //    x_res = axes.res[0];
@@ -81,6 +81,24 @@ void d_bif2D::setStepX(const qreal& toSet)
 // By:			Uli Middelberg
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+int redFromUnit(double x){
+    if(x<0.333) return (0.333-x)*3*255;
+    if(x>0.666) return (x-0.666)*3*255;
+    return 0;
+}
+
+int greenFromUnit(double x){
+    if(x<0.333) return 255;
+    if(x>0.333&&x<0.666) return (0.666-x)*3*255;
+    return 0;
+}
+
+int blueFromUnit(double x){
+    if(x<0.333) return (0.333-x)*3*255;
+    if(x>0.333&&x<0.666) return (x-0.333)*3*255;
+    return (1.0-x)*3*255;
+}
 
 void d_bif2D::simulation()
 {
@@ -160,7 +178,7 @@ void d_bif2D::simulation()
   
     QTextStream(&outFile) << char( color );
       if( screenGraphics ) {
-        screenGraphics->setPoint(dummy_x,dy,color); 
+        screenGraphics->setRect(dummy_x,dy,stepX,stepY,QColor(redFromUnit(hitpoint),greenFromUnit(hitpoint),blueFromUnit(hitpoint)));
       }
 
     //outFile << *xParam << "\t" << dy << "\t" << hitpoint 
@@ -174,6 +192,7 @@ void d_bif2D::simulation()
   outFile.flush();
   outFile.close();
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //

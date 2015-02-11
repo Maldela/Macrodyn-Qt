@@ -434,7 +434,9 @@ void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 /******************************************************************************/
 void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, int size)
 {
-    QPair<QRectF, QColor> pair = QPair<QRectF, QColor>(QRectF(v-size/2, w-size/2, size, size), color);
+    qreal transformedSizeX = (double)size /  (wid / (axis.max.at(0)-axis.min.at(0)));
+    qreal transformedSizeY = (double)size /  (hig / (axis.max.at(1)-axis.min.at(1)));
+    QPair<QRectF, QColor> pair = QPair<QRectF, QColor>(QRectF(v-transformedSizeX/2, w-transformedSizeY/2, transformedSizeX, transformedSizeY), color);
     listLock.lockForWrite();
     m_rects << pair;
     listLock.unlock();
@@ -729,7 +731,8 @@ void ImagePainter::drawPoint(const QPointF& point, const QColor& color, bool red
 void ImagePainter::drawRect(const QRectF& rect, const QColor& color, bool redraw)
 {
     QRect rectTransformed = QRect(m_parent->transform(rect.topLeft()), m_parent->transform(rect.bottomRight()));
-
+    rectTransformed.setHeight(rectTransformed.height()-1);
+    //log()<<rectTransformed.topLeft().x()<<"  "<<rectTransformed.topLeft().y()<<"  "<<rectTransformed.bottomRight().x()<<"  "<<rectTransformed.bottomRight().y();
     QPainter painter;
     if (redraw) painter.begin(m_image);
     else

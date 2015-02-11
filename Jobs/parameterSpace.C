@@ -111,7 +111,7 @@ void parameterSpace::simulation()
                 }
             }
             if( screenGraphics )
-                screenGraphics->setRect(*xParam,*yParam,stepX*1.05,stepY*1.05,QColor((1234*(order+1))%255,(12345*(order+1))%255,(123456*(order+1))%255));
+                screenGraphics->setRect(*xParam,*yParam,stepX,stepY,QColor((1234*(order+1))%255,(12345*(order+1))%255,(123456*(order+1))%255));
                 //log() << "xParam = " <<*xParam<<"    yParam = "<<*yParam<<"    order = "<<order;
             //screenGraphics->setPoint(*xParam,*yParam,order+1);
         }
