@@ -95,9 +95,7 @@ SimLoader::SimLoader(QObject *parent) : QObject(parent)
     xDef = NULL;
     yDef = NULL;
     plotLines = NULL;
-    simThread = new QThread();
-    QObject::connect(simThread, SIGNAL(finished()), this, SLOT(jobFinished()));
-    simThread->start();
+    QObject::connect(&simThread, SIGNAL(finished()), this, SLOT(jobFinished()));
 }
 
 SimLoader::~SimLoader()
@@ -109,9 +107,6 @@ SimLoader::~SimLoader()
     if (xDef) delete xDef;
     if (yDef) delete yDef;
     if (plotLines) delete plotLines;
-    simThread->quit();
-    simThread->wait();
-    delete simThread;
 }
 
 void SimLoader::loadSimulationfromFile(const QString& fileName)
@@ -576,10 +571,9 @@ void SimLoader::runSimulation()
     if (m_runJob)
     {
         log() << "starting simulation...";
-        m_runJob->moveToThread(simThread);
-        m_modelPointer->moveToThread(simThread);
-        connect(this, SIGNAL(simulate()), m_runJob, SLOT(simulation()));
-        emit simulate();
+        simThread.setJob(m_runJob);
+        m_runJob = NULL;
+        simThread.start();
     }
     else log() << "job misspecified...";
 }
@@ -650,11 +644,14 @@ void SimLoader::setGraphItem(QObject *object)
 void SimLoader::jobFinished()
 {
     if (m_axes)
+    {
         delete m_axes;
-    if (m_runJob)
-        m_runJob->deleteLater();
+        m_axes = NULL;
+    }
     if (m_modelPointer)
-        m_modelPointer->deleteLater();
-    m_axes = NULL;
+    {
+        delete m_modelPointer;
+        m_modelPointer = NULL;
+    }
     log() << "job finished!";
 }

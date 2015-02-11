@@ -3,12 +3,12 @@
 
 #include <QObject>
 #include <QUrl>
-#include <QThread>
 
 #include "block.h"
 #include "Models/baseModel.h"
 #include "Graphics/macrodyngraphicsitem.h"
 #include "Jobs/job.h"
+#include "simthread.h"
 
 
 class SimLoader : public QObject
@@ -54,7 +54,7 @@ protected slots:
 
 protected:
 
-    QThread *simThread;
+    SimThread simThread;
     QString lastFileName;
     QString m_modelName;
     baseModel *m_modelPointer;
