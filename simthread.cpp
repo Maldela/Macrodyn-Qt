@@ -4,7 +4,6 @@
 
 SimThread::~SimThread()
 {
-    if (m_job) delete m_job;
 }
 
 void SimThread::run()
@@ -15,6 +14,5 @@ void SimThread::run()
         return;
     }
     m_job->simulation();
-    delete m_job;
     m_job = NULL;
 }

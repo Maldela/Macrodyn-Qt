@@ -570,9 +570,13 @@ void SimLoader::runSimulation()
 
     if (m_runJob)
     {
+        if (simThread.isRunning())
+        {
+            log() << "Simulation already running!";
+            return;
+        }
         log() << "starting simulation...";
         simThread.setJob(m_runJob);
-        m_runJob = NULL;
         simThread.start();
     }
     else log() << "job misspecified...";
@@ -647,6 +651,11 @@ void SimLoader::jobFinished()
     {
         delete m_axes;
         m_axes = NULL;
+    }
+    if (m_runJob)
+    {
+        delete m_runJob;
+        m_runJob = NULL;
     }
     if (m_modelPointer)
     {
