@@ -1,6 +1,7 @@
 TEMPLATE = app
 
 QT += qml quick widgets
+QT += widgets
 
 #QMAKE_CXXFLAGS += -Wno-unused-parameter \
 #                  -Wno-unused-but-set-variable \
