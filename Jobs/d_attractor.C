@@ -14,6 +14,7 @@
 
 #include	"d_attractor.h"
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // member function:	d_attractor
@@ -31,6 +32,8 @@ d_attractor::d_attractor(baseModel* const bMod,const xyRange& axes,
              h(axes.min[0],axes.max[0],axes.res[0],
                axes.min[1],axes.max[1],axes.res[1])
 {
+    log()<<"axes.res[0] = "<<axes.res[0];
+    log()<<"axes.res[1] = "<<axes.res[1];
 //    if( fileName )
 //	outFile.open(fileName,ios::out);
  //   else
@@ -38,6 +41,7 @@ d_attractor::d_attractor(baseModel* const bMod,const xyRange& axes,
     outFile.open(QFile::WriteOnly);
 
     limit= length / 10;			// 10% are thrown away
+
     stepX=(xmax-xmin) / (axes.res[0]-1);
     stepY=(ymax-ymin) / (axes.res[1]-1);
 }                                      
@@ -94,12 +98,12 @@ void d_attractor::simulation()
 
   h_max = double (h.get_max_hits());
   log() << "h_max = " << h_max;
-  log() << "color step every " << h_max/94 << " hits in cell";
+  //log() << "color step every " << h_max/94 << " hits in cell";
   if( h_max == 0 ) {
     h_max = 1;
   }
 
-	double dummy2=94.0;	
+    //double dummy2=94.0;
 	double hitshilf;
 	double hitpoint;
 
@@ -114,25 +118,25 @@ void d_attractor::simulation()
     if (hitshilf==h_max)
     log() << "qMaximal hitcounts at: "<< dx << " , " << dy;
 
-	if(hitpoint>0){
-/*		for(int i=0;i<=dummy2;i++){
-			if(hitpoint>=i*intervall){
-				color=i+1;
-			}
-		}*/
-		color=int (ceil (hitpoint*dummy2));
-//	    outFile << dx << "\t" << dy << "\t" << hitpoint 
-	} else color=0;
+//	if(hitpoint>0){
+///*		for(int i=0;i<=dummy2;i++){
+//			if(hitpoint>=i*intervall){
+//				color=i+1;
+//			}
+//		}*/
+//		color=int (ceil (hitpoint*dummy2));
+////	    outFile << dx << "\t" << dy << "\t" << hitpoint
+//	} else color=0;
 	
-    if ( color>94 ) log() << "warning: color > 94\n";
-     //   outFile << dx << "\t" << dy << "\t" << hitpoint 
-    QTextStream(&outFile) << color;
-/*Ende neu*/
+//    if ( color>94 ) log() << "warning: color > 94\n";
+//     //   outFile << dx << "\t" << dy << "\t" << hitpoint
+//    QTextStream(&outFile) << color;
+///*Ende neu*/
 
 
 
      if( screenGraphics ) {
-        screenGraphics->setPoint(dx,dy,color);
+         screenGraphics->setRect(dx,dy,stepX,stepY,QColor(redFromUnit(hitpoint),greenFromUnit(hitpoint),blueFromUnit(hitpoint)));
       }
     }
     //outFile 

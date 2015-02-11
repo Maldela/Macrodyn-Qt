@@ -7,15 +7,15 @@ boehmhuels
 
 31
 
-alpha	-0.12	0.0
-xt	-0.4	0.4
+alpha	-0.12	0.0 1000
+xt	-0.4	0.4 1000
 beta 	0	0
 
 0	boehmhuels31.xpm
 
 2
-xt	-20.0	20.0	10000
-yt	0	20.0	10000
+xt	-20.0	20.0	1000
+yt	0	20.0	1000
 
 
 alpha	>> delta

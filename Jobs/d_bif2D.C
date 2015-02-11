@@ -32,7 +32,6 @@ d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes,
           :geometricJob(bMod,axes,graph),
            h(axes.min[1],axes.max[1],(axes.res[0]>0?axes.res[0]:100.0))
 {
-    log()<<"axes.res[0] = "<<axes.res[0];
 //    if( fileName )
 //	outFile.open(fileName,ios::out);
  //   else
@@ -82,23 +81,6 @@ void d_bif2D::setStepX(const qreal& toSet)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-int redFromUnit(double x){
-    if(x<0.333) return (0.333-x)*3*255;
-    if(x>0.666) return (x-0.666)*3*255;
-    return 0;
-}
-
-int greenFromUnit(double x){
-    if(x<0.333) return 255;
-    if(x>0.333&&x<0.666) return (0.666-x)*3*255;
-    return 0;
-}
-
-int blueFromUnit(double x){
-    if(x<0.333) return (0.333-x)*3*255;
-    if(x>0.333&&x<0.666) return (x-0.333)*3*255;
-    return (1.0-x)*3*255;
-}
 
 void d_bif2D::simulation()
 {

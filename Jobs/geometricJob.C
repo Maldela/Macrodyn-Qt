@@ -78,3 +78,21 @@ uint geometricJob::inRange(const qreal&x,const qreal& y)
     return( ((x >= xmin)&&(x <= xmax)&&(y >= ymin)&&(y <= ymax)) ? 1:0 );
 }
 
+int geometricJob:: redFromUnit(double x){
+    if(x<0.333) return (0.333-x)*3*255;
+    if(x>0.666) return (x-0.666)*3*255;
+    return 0;
+}
+
+int geometricJob:: greenFromUnit(double x){
+    if(x<0.333) return 255;
+    if(x>0.333&&x<0.666) return (0.666-x)*3*255;
+    return 0;
+}
+
+int geometricJob:: blueFromUnit(double x){
+    if(x<0.333) return (0.333-x)*3*255;
+    if(x>0.333&&x<0.666) return (x-0.333)*3*255;
+    return (1.0-x)*3*255;
+}
+

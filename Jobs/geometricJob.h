@@ -43,6 +43,10 @@ class geometricJob : public Job
     geometricJob(baseModel* const, const xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~geometricJob();
     virtual void simulation()=0;
+
+    int redFromUnit(double x);
+    int greenFromUnit(double x);
+    int blueFromUnit(double x);
 };
 #endif
 //eof

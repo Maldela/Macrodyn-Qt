@@ -72,7 +72,7 @@ enum window { NOWINDOW,PARZEN,HANNING,WELCH,HAMqMinG,EXACTBLACKMAN };
 #define PHASE_PLOT		70	// plot x_t vs x_{t+k}
 
 #define COLOR_PLOT		80	// rainbow with variable size of points
-#define COLOR_PLOT_B	81	        // rainbow with black line with variable size of points
+#define COLOR_PLOT_B	81	// rainbow with black line with variable size of points
 #define CONTOURLINE		82	// plot of contour lines
 #define CONTOURLINE_B	83	// plot of contour lines with black line
 #define CONTOURLINE_C   84	// plot of contour lines without colorrange
