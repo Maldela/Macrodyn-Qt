@@ -32,6 +32,7 @@ d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes,
           :geometricJob(bMod,axes,graph),
            h(axes.min[1],axes.max[1],(axes.res[0]>0?axes.res[0]:100.0))
 {
+    log()<<"axes.res[0] = "<<axes.res[0];
 //    if( fileName )
 //	outFile.open(fileName,ios::out);
  //   else

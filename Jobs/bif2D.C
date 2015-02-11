@@ -72,4 +72,5 @@ void bif2D::simulation()
             }
         }
     }
+    log()<<"simulation ended";
 }

@@ -7,8 +7,8 @@ boehmhuels
 
 09
 
-delta	0.0	1.0 20
-alpha	-0.16	0.0 20
+delta	0.0	1.0 1000
+alpha	-0.16	0.0 1000
 beta 	0	0
 
 2
