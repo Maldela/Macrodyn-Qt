@@ -56,12 +56,15 @@ void bif2Param::simulation()
             *zParam = dummy_z;
             model->initialize();
             screenGraphics->clearColumn(dummy_x);   // clear column of the
-                                                    // old picture
-            for(t=0;t<length;t++)
-            {
+//                                                    // old picture
+//          log()<<"1";
+          for(t=0;t<length;t++)
+          {
+//              log()<<"2";
                 model->iteration(t+1);
+//              log()<<"3";
                 if( t > limit && inRange(dummy_x,*yParam) )
-                {
+              {
                     if( screenGraphics )
                         screenGraphics->setPoint(dummy_x,*yParam,9);
 

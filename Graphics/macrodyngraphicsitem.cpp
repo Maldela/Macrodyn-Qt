@@ -761,7 +761,7 @@ void ImagePainter::clearColumn(qreal x, bool redraw)
         painter.begin(m_parentImage);
     }
     painter.setPen(m_parent->getBackgroundColor());
-    painter.drawLine(col, 0, col, m_image->height());
+    painter.drawLine(col, 0, col, m_parent->height());
 
     if (!redraw)
     {
