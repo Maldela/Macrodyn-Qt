@@ -636,6 +636,7 @@ qreal MacrodynGraphicsItem::getZoom() const
     axisLock.unlock();
 }
 
+
 ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, QImage *parentImage, QReadWriteLock *listLock, QMutex *imageMutex) : QObject()
 {
     m_parent = parent;
@@ -643,6 +644,11 @@ ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, QImage *parentImage, QR
     m_listLock = listLock;
     m_imageMutex = imageMutex;
     m_image = NULL;
+}
+
+ImagePainter::~ImagePainter()
+{
+    delete m_image;
 }
 
 void ImagePainter::redraw()
@@ -752,16 +758,22 @@ void ImagePainter::drawRect(const QRectF& rect, const QColor& color, bool redraw
 void ImagePainter::clearColumn(qreal x, bool redraw)
 {
     int col = m_parent->transformX(x);
+    int height;
 
     QPainter painter;
-    if (redraw) painter.begin(m_image);
+    if (redraw)
+    {
+        painter.begin(m_image);
+        height = m_image->height();
+    }
     else
     {
         m_imageMutex->lock();
         painter.begin(m_parentImage);
+        height = m_parentImage->height();
     }
     painter.setPen(m_parent->getBackgroundColor());
-    painter.drawLine(col, 0, col, m_parent->height());
+    painter.drawLine(col, 0, col, height);
 
     if (!redraw)
     {

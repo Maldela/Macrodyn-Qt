@@ -42,6 +42,7 @@ class ImagePainter : public QObject
 public:
 
     ImagePainter(MacrodynGraphicsItem *, QImage *, QReadWriteLock *, QMutex *);
+    virtual ~ImagePainter();
 
 
 signals:
