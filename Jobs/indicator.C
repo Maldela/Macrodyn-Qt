@@ -76,9 +76,12 @@ void indicator_2d::simulation()
           for( t=0;t<T;t++ ) {
             model->iteration(t+1);
           }
-        color=get_encoding();
+        //color=get_encoding();
+        double unitColor = (*zParam-zmin)/(zmax-zmin);
+        QColor color = QColor(redFromUnit(unitColor),greenFromUnit(unitColor),blueFromUnit(unitColor));
         if( screenGraphics ) {
-          screenGraphics->setPoint(rx,ry,color);
+            screenGraphics->setRect(rx,ry,stepX,stepY,color);
+            //screenGraphics->setPoint(rx,ry,color);
         }
       }
     }

@@ -6,9 +6,9 @@ default
 0.6     1	4
 1	0.5	0.45     0.25    
 51
-mtreal	0.0	1.0
-wtreal	0.0    1.6
-wtreal	0.0    1.6   
+mtreal	0.0	1.0     300
+wtreal	0.0    1.6  300
+wtreal	0.0    1.6  300
 10      51c.xpm	
 2
 mtreal     -2.0    2.0    3000

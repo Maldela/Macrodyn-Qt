@@ -100,7 +100,7 @@ void density_1d::simulation()
   // d=((double) h(k))/h.get_no_hits();
     d=((double) h(k))/double(length - limit);
     d=d/stepX;
-    log() << "\t" << d;
+//    log() << "\t" << d;
   }
 }
 
@@ -243,15 +243,15 @@ void density_1d_var::simulation()
             if ( how_many%(qint64(var_res/100))==0 ){
 				plot_current_data(how_many);
 				percent+=1;
-                log() << "percent: " << percent;
+//                log() << "percent: " << percent;
 			}
 			}
 	}
 	// make final picture and file
 	if ( screenGraphics ) plot_current_data(how_many);
 
-    log() << "class width = " << stepX;
-    log() << "possible number of hits = " << var_res;
+//    log() << "class width = " << stepX;
+//    log() << "possible number of hits = " << var_res;
 	int k;
 	double d;
 	double d_cum = 0;
@@ -260,8 +260,8 @@ void density_1d_var::simulation()
 		d=((double) h(k))/double(var_res);
 		d_cum+=d;
 		d=d/stepX;		
-        log() << "F(" << double(k)*stepX+xmin << ")= " << d_cum << "\t"
-        << "f()= " << d;
+//        log() << "F(" << double(k)*stepX+xmin << ")= " << d_cum << "\t"
+//        << "f()= " << d;
 	}
 }
 

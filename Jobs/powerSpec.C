@@ -339,22 +339,15 @@ void powerSpec::simulation()
     }
     if( screenGraphics )
     {
-        QList<qreal> min;
-        min[0]=0.0;
-        min[1]=ymin;
+        QList<qreal> min = QList<qreal>() << 0.0 << ymin;
+        QList<qreal> max = QList<qreal>() << 0.5 << ymax;
+        QList<qint64> res = QList<qint64>() << 2 << 2;
+        QStringList string = QList<QString>() << "1/t" << "N";
+        QList<QColor> zeroList = QList<QColor>() << QColor(Qt::black) << QColor(Qt::black) << QColor(Qt::black);
 
-        QList<qreal> max;
-        max[0]=0.5;
-        max[1]=ymax;
-
-        QList<qint64> res;
-        res[0]=res[1]=0;
-        QStringList string;
-        string[0]="1/t";
-        string[1]="N";
-        xyRange range(2,string,min,max,res);
+        xyRange* range = new xyRange(2,string,min,max,res,zeroList);
         if( screenGraphics )
-            screenGraphics->setXYRange(range);
+            screenGraphics->setXYRange(*range);
     }
     oldX=timeSeriesImag[0];
     oldY=log10(timeSeriesqreal[0]);
