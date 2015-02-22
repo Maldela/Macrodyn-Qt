@@ -36,11 +36,16 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod, const QString& label,
 {
     log() << "constructing time series plot..."<<"\n";
     qreal xmin, xmax;
+
+    QString location =QDir::currentPath();
+
     if(!fileName.isEmpty())
         outFile.setFileName(fileName);
     else
-        outFile.setFileName("timeSeries.asc");
-    outFile.open(QFile::WriteOnly);
+        outFile.setFileName(location+"/timeSeries.asc");
+
+    if (!outFile.open(QIODevice::WriteOnly | QIODevice::Text)) qDebug() << "Failed to open:" << outFile.errorString();
+
     graph->get_axis(0, &xmin, &xmax);
     limit = qint64( xmin );
 
@@ -137,7 +142,7 @@ void timeSeriesPlot::simulation()
                 screenGraphics->setLine(oldX,oldY,(double)t,timeSeriesqreal[t],40);
                 screenGraphics->setBigPoint((double)t,timeSeriesqreal[t],40,pointsize);
             }
-            QTextStream(&outFile) << t << "\t" << timeSeriesqreal[t];
+            QTextStream(&outFile) << t << "\t" << timeSeriesqreal[t]<<"\n";
         }
         oldX = t;
         oldY = timeSeriesqreal[t];
