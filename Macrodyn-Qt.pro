@@ -1,13 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets
-QT += widgets
-
-#QMAKE_CXXFLAGS += -Wno-unused-parameter \
-#                  -Wno-unused-but-set-variable \
-#                  -Wno-unused-variable \
-#                  -Wno-unused-function
-
+QT += qml quick widgets printsupport
 QMAKE_MAC_SDK = macosx10.9
 
 SOURCES += main.cpp \

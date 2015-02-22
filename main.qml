@@ -28,6 +28,11 @@ ApplicationWindow {
                 onTriggered: loader.runSimulation();
             }
             MenuItem {
+                text: "Print Graph"
+                onTriggered: graph.print();
+            }
+
+            MenuItem {
                 text: "Print parameters"
                 onTriggered: loader.printModelParameters();
             }
@@ -39,7 +44,7 @@ ApplicationWindow {
         }
     }
 
-    toolBar:ToolBar {
+    toolBar: ToolBar {
         RowLayout {
             anchors.topMargin: 0
             anchors.fill: parent
