@@ -139,6 +139,7 @@ ApplicationWindow {
             visible: false
         }
     }
+
     MouseArea {
        id: mouseAreaRight
 
@@ -161,6 +162,7 @@ ApplicationWindow {
            }
        }
     }
+
     Log {
         id: log
         anchors.left: graph.right

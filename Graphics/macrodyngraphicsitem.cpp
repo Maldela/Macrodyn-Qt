@@ -643,10 +643,7 @@ void MacrodynGraphicsItem::print()
         painter.scale(scale, scale);
         painter.translate(-width()/2, -height()/2);
 
-        imageMutex.lock();
-        painter.drawImage(0, 0, *image);
-        imageMutex.unlock();
-        drawAxis(&painter);
+        paint(&painter);
     }
 }
 
