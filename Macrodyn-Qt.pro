@@ -151,7 +151,7 @@ SOURCES += main.cpp \
     Graphics/macrodyngraphicsitem.cpp \
     axes.C \
     hashTab.C \
-    MDMap.C \
+    MDMap.cpp \
     logger.cpp \
     Jobs/distributionJob.C \
     block.C \
