@@ -4,7 +4,6 @@
 #include <QQuickPaintedItem>
 #include <QImage>
 #include <QPainter>
-#include <QTimer>
 #include <QPair>
 #include <QReadWriteLock>
 #include <QMutex>
