@@ -4,12 +4,15 @@
 #include "Graphics/macrodyngraphicsitem.h"
 #include "logger.h"
 #include "simloader.h"
+//#include "documenthandler.h"
 
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     qmlRegisterType<MacrodynGraphicsItem>("MacrodynQML", 1, 0, "MacrodynGraphicsItem");
+    //qmlRegisterType<DocumentHandler>("MacrodynQML", 1, 0, "DocumentHandler");
+    //qmlRegisterType<SimEditor>("MacrodynQML", 1, 0, "SimEditor");
     qmlRegisterType<Logger>("MacrodynQML", 1, 0, "Logger");
     qmlRegisterType<SimLoader>("MacrodynQML", 1, 0, "SimLoader");
     QQmlApplicationEngine engine;

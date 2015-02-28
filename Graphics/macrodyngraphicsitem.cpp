@@ -587,22 +587,22 @@ void MacrodynGraphicsItem::colorFromInt(QColor& color, int colorInt) const
 {
     switch(colorInt){
     case 0:
-        color = Qt::black;
+        color = QColor(255,255,0,255);
         break;
     case 1:
-        color = Qt::red;
+        color = QColor(0,255,255,255);
         break;
     case 2:
-        color = Qt::blue;
+        color = QColor(0,0,255,100);
         break;
     case 3:
-        color = Qt::green;
+        color = QColor(0,255,0,100);
         break;
     case 4:
-        color = Qt::yellow;
+        color = QColor(255,0,0,100);
         break;
     case 5:
-        color = Qt::cyan;
+        color = QColor(0,0,0,255);
         break;
     }
 }

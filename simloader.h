@@ -10,6 +10,14 @@
 #include "Jobs/job.h"
 #include "simthread.h"
 
+#include <QQuickTextDocument>
+#include <QtGui/QTextCharFormat>
+#include <QtCore/QTextCodec>
+#include <qqmlfile.h>
+
+QT_BEGIN_NAMESPACE
+class QTextDocument;
+QT_END_NAMESPACE
 
 class SimLoader : public QObject
 {
@@ -18,6 +26,9 @@ class SimLoader : public QObject
     Q_PROPERTY(QString model READ model WRITE setModel NOTIFY modelChanged)
     Q_PROPERTY(int graphTyp READ graphTyp WRITE setGraphTyp NOTIFY graphTypChanged)
     Q_PROPERTY(QObject *graphItem READ graphItem WRITE setGraphItem NOTIFY graphItemChanged)
+    Q_PROPERTY(QQuickItem *target READ target WRITE setTarget NOTIFY targetChanged)
+    Q_PROPERTY(QUrl fileUrl READ fileUrl WRITE setFileUrl NOTIFY fileUrlChanged)
+    Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
 
 public:
 
@@ -30,6 +41,15 @@ public:
     inline QObject *graphItem() const { return qobject_cast<QObject *>(m_graph); }
     void setGraphItem(QObject *);
 
+    QQuickItem *target() { return m_target; }
+    void setTarget(QQuickItem *target);
+    QUrl fileUrl() const;
+    QString text() const;
+
+    QQuickItem *m_target;
+    QTextDocument *m_doc;
+    QUrl m_fileUrl;
+    QString m_text;
 
 signals:
 
@@ -38,13 +58,24 @@ signals:
     void graphItemChanged();
     void simulate();
 
+Q_SIGNALS:
+    void targetChanged();
+    void textChanged();
+    void fileUrlChanged();
+
 
 public slots:
 
     Q_INVOKABLE void runSimulation();
     Q_INVOKABLE void loadSimulationfromFile(const QString&);
+    Q_INVOKABLE void saveSimulationfromFile(/*const QString&*/);
     Q_INVOKABLE void loadSimulationfromUrl(const QUrl& url) { loadSimulationfromFile(url.toLocalFile()); }
+    Q_INVOKABLE void saveSimulationfromUrl(const QUrl& url) { saveSimulationfromFile(/*url.toLocalFile()*/); }
     Q_INVOKABLE void printModelParameters() const { if (m_modelPointer) m_modelPointer->printParamset(); }
+
+public Q_SLOTS:
+    void setFileUrl(const QUrl &arg);
+    void setText(const QString &arg);
 
 
 protected slots:

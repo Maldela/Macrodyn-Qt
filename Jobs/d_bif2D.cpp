@@ -131,8 +131,8 @@ void d_bif2D::simulation()
     }
     
     h_max = double (h.get_max_hits());
-    log() << "h_max = " << h_max;
-    log() << "color step every " << h_max/94 << " hits in cell";
+//    log() << "h_max = " << h_max;
+//    log() << "color step every " << h_max/94 << " hits in cell";
     if( h_max == 0 ) {
       h_max = 1;
     }
@@ -149,7 +149,7 @@ void d_bif2D::simulation()
 	hitshilf=h(k);
     hitpoint = hitshilf/h_max;
     if (hitshilf==h_max)
-    log() << "qMaximal hitcounts at: " << dy;
+//    log() << "qMaximal hitcounts at: " << dy;
 	if(hitpoint>0){ 
 		color=int(ceil(hitpoint*dummy2));
 //	    outFile << *xParam << "\t" << *yParam << "\t" << hitpoint 

@@ -190,7 +190,7 @@ inline qreal  prob_Distri::inverse(const qreal) const
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <time.h>
-#include <sys/times.h>
+//#include <sys/times.h>
 
 void  prob_Distri::seed(const uint *array = 0, const uint no = 1)
 {
@@ -210,13 +210,13 @@ void  prob_Distri::seed(const uint *array = 0, const uint no = 1)
             state.word[0] = uint( time(NULL) );
             state.availible_bits = bits_per_word;
         }
-        if (count > 1)
-        {   struct tms  dummy;
-// number of TICKS since boot
-            state.word[1] = uint( times(&dummy) );
-            for (uint  i= state.word[1]; i; i>>=1)
-                state.availible_bits += 1;
-        }
+//        if (count > 1)
+//        {   struct tms  dummy;
+//// number of TICKS since boot
+//            state.word[1] = uint( times(&dummy) );
+//            for (uint  i= state.word[1]; i; i>>=1)
+//                state.availible_bits += 1;
+//        }
     }
 }
 

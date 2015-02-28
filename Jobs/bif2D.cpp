@@ -53,7 +53,7 @@ void bif2D::simulation()
     qreal dummy_x;
 
 //    for(*xParam=xmin;*xParam<=xmax; *xParam+=stepX) {
-    log()<<"stepX = "<<stepX;
+    //log()<<"stepX = "<<stepX;
     for (dummy_x=xmin; dummy_x<=xmax; dummy_x+=stepX)
     {
     	*xParam=dummy_x;
