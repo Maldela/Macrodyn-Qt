@@ -32,6 +32,11 @@ ApplicationWindow {
                 onTriggered: loader.runSimulation();
             }
             MenuItem {
+                text: "Print Graph"
+                onTriggered: graph.print();
+            }
+
+            MenuItem {
                 text: "Print parameters"
                 onTriggered: loader.printModelParameters();
             }
@@ -43,7 +48,7 @@ ApplicationWindow {
         }
     }
 
-    toolBar:ToolBar {
+    toolBar: ToolBar {
         RowLayout {
             anchors.topMargin: 0
             anchors.fill: parent
@@ -161,6 +166,7 @@ ApplicationWindow {
             visible: false
         }
     }
+
     MouseArea {
        id: mouseAreaRight
 
@@ -184,6 +190,7 @@ ApplicationWindow {
        }
     }
 
+<<<<<<< HEAD
 //    SimEditor {
 //        id: simeditor
 //        width: 400
@@ -240,6 +247,8 @@ ApplicationWindow {
 //    }
 
 
+=======
+>>>>>>> origin/master
     Log {
         id: log
 

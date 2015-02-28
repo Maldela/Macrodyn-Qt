@@ -1,6 +1,9 @@
 #include "macrodyngraphicsitem.h"
 #include "../logger.h"
 
+#include <QPrinter>
+#include <QPrintDialog>
+
 
 #define LMARGIN 40
 #define LOWMARGIN 20
@@ -535,31 +538,18 @@ QPoint MacrodynGraphicsItem::transform(const QPointF& old) const
     return QPoint(transformX(old.x()), transformY(old.y()));
 }
 
-void MacrodynGraphicsItem::dumpGraphics(const QString& fileName) const
-{
-    QFile file(fileName);
-    if (file.exists()) log() << "Overwriting file " << fileName;
-    if (!file.open(QIODevice::WriteOnly))
-    {
-        log() << "Can't open file " << fileName;
-        return;
-    }
-    QDataStream stream(&file);
-    stream << image;
-    log() << "Graph stored in " << fileName;
-}
-
 /*********************************
  * function to convert
  * pixel values on x-values
  *********************************/
 double MacrodynGraphicsItem::pixel_to_x(int xpix, bool lock) const
 {
+    double r = 0.0;
     if (lock) axisLock.lockForRead();
     if (axis)
-        return (xpix-lmargin) * (axis.max.at(0) - axis.min.at(0)) / wid + axis.min.at(0);
-    else return 0.0;
+        r = (xpix-lmargin) * (axis.max.at(0) - axis.min.at(0)) / wid + axis.min.at(0);
     if (lock) axisLock.unlock();
+    return r;
 }
 /*********************************
  * function to convert
@@ -567,11 +557,12 @@ double MacrodynGraphicsItem::pixel_to_x(int xpix, bool lock) const
  *********************************/
 double MacrodynGraphicsItem::pixel_to_y(int ypix, bool lock) const
 {
+    double r = 0.0;
     if (lock) axisLock.lockForRead();
     if (axis)
-        return (height()-lowmargin-ypix) * (axis.max.at(1)-axis.min.at(1)) / hig + axis.min.at(1);
-    else return 0.0;
+        r = (height()-lowmargin-ypix) * (axis.max.at(1)-axis.min.at(1)) / hig + axis.min.at(1);
     if (lock) axisLock.unlock();
+    return r;
 }
 
 void MacrodynGraphicsItem::setBackgroundColor(const QColor& c)
@@ -636,6 +627,27 @@ qreal MacrodynGraphicsItem::getZoom() const
     axisLock.unlock();
 }
 
+void MacrodynGraphicsItem::print()
+{
+    QPrinter printer;
+    QPrintDialog dialog(&printer);
+    dialog.setWindowTitle(tr("Print Graph"));
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QPainter painter(&printer);
+        double xscale = printer.pageRect().width()/double(width());
+        double yscale = printer.pageRect().height()/double(height());
+        double scale = qMin(xscale, yscale);
+        painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+                           printer.paperRect().y() + printer.pageRect().height()/2);
+        painter.scale(scale, scale);
+        painter.translate(-width()/2, -height()/2);
+
+        paint(&painter);
+    }
+}
+
+
 ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, QImage *parentImage, QReadWriteLock *listLock, QMutex *imageMutex) : QObject()
 {
     m_parent = parent;
@@ -643,6 +655,11 @@ ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, QImage *parentImage, QR
     m_listLock = listLock;
     m_imageMutex = imageMutex;
     m_image = NULL;
+}
+
+ImagePainter::~ImagePainter()
+{
+    delete m_image;
 }
 
 void ImagePainter::redraw()
@@ -752,16 +769,22 @@ void ImagePainter::drawRect(const QRectF& rect, const QColor& color, bool redraw
 void ImagePainter::clearColumn(qreal x, bool redraw)
 {
     int col = m_parent->transformX(x);
+    int height;
 
     QPainter painter;
-    if (redraw) painter.begin(m_image);
+    if (redraw)
+    {
+        painter.begin(m_image);
+        height = m_image->height();
+    }
     else
     {
         m_imageMutex->lock();
         painter.begin(m_parentImage);
+        height = m_parentImage->height();
     }
     painter.setPen(m_parent->getBackgroundColor());
-    painter.drawLine(col, 0, col, m_parent->height());
+    painter.drawLine(col, 0, col, height);
 
     if (!redraw)
     {

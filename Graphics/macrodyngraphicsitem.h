@@ -42,6 +42,7 @@ class ImagePainter : public QObject
 public:
 
     ImagePainter(MacrodynGraphicsItem *, QImage *, QReadWriteLock *, QMutex *);
+    virtual ~ImagePainter();
 
 
 signals:
@@ -95,7 +96,6 @@ public:
     void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
     void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen
     void setString(qreal, qreal, const QString&, const QColor&, bool = true);  // should be displayed on the screen
-    void dumpGraphics(const QString&) const; // dump output window
     inline QColor getBackgroundColor() const { return backgroundColor; }
     void setBackgroundColor(const QColor&);
     qreal getZoom() const;
@@ -115,6 +115,7 @@ public slots:
     Q_INVOKABLE void zoom(int, int, int, int);
     Q_INVOKABLE inline void unzoom() { axis = origAxis; emit needRedraw(); qDebug() << "unzoom"; }
     Q_INVOKABLE void click(int x, int y) const { qDebug() << QPointF(pixel_to_x(x), pixel_to_y(y)); }
+    Q_INVOKABLE void print();
 
 
 signals:
@@ -154,16 +155,16 @@ protected:
     xyRange origAxis;
     xyRange axis;
     QColor backgroundColor;
-    uint lmargin;
-    uint rmargin;
-    uint upmargin;
-    uint lowmargin;
-    uint wid;
-    uint hig;
-    uint xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
-    uint right;
-    uint down;
-    uint bigPointSize;
+    int rmargin;
+    int lmargin;
+    int upmargin;
+    int lowmargin;
+    int wid;
+    int hig;
+    int xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
+    int right;
+    int down;
+    int bigPointSize;
 
     qint64 colorCount[95];
 };
