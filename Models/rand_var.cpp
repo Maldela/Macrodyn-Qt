@@ -62,10 +62,10 @@ extern "C" { void inrgcm(void); }
 
 static base_gen_t identify ( const QString& gen )
 {
-    if (gen == "drand48")
-    {
-      return drand48;
-    }
+//    if (gen == "drand48")
+//    {
+//      return drand48;
+//    }
     if (gen == "ranf")
     {
 //      (void) ignlgi(); 		// initialize the generator

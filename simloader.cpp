@@ -109,6 +109,30 @@ SimLoader::~SimLoader()
     if (plotLines) delete plotLines;
 }
 
+void SimLoader::saveSimulationfromFile(/*const QString& fileName*/)
+{
+    QString fileName = lastFileName;
+    if(lastFileName=="") return;
+
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        log()<<"Cannot write file";
+        return;
+    }
+
+    QTextStream out(&file);
+
+    out << m_doc->toPlainText();
+    QVariant doc = m_target->property("textDocument");
+    if (doc.canConvert<QQuickTextDocument*>()) {
+        QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
+        if (qqdoc)
+            m_doc = qqdoc->textDocument();
+    }
+//    log()<<m_doc->toPlainText();
+
+}
+
 void SimLoader::loadSimulationfromFile(const QString& fileName)
 {
     lastFileName = fileName;
@@ -570,8 +594,10 @@ void SimLoader::runSimulation()
         return;
     }
 
-    if (!m_runJob)
+    if (!m_runJob){
+        saveSimulationfromFile();
         loadSimulationfromFile(lastFileName);  //if there is no new Job specified, load the last .sim File again
+    }
 
     qDebug() << "Run simulation";
 
@@ -665,4 +691,66 @@ void SimLoader::jobFinished()
         m_modelPointer = NULL;
     }
     log() << "job finished!";
+}
+
+void SimLoader::setTarget(QQuickItem *target)
+{
+    m_doc = 0;
+    m_target = target;
+    if (!m_target)
+        return;
+
+    QVariant doc = m_target->property("textDocument");
+    if (doc.canConvert<QQuickTextDocument*>()) {
+        QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
+        if (qqdoc)
+            m_doc = qqdoc->textDocument();
+    }
+    emit targetChanged();
+}
+
+void SimLoader::setFileUrl(const QUrl &arg)
+{
+    if (m_fileUrl != arg) {
+        m_fileUrl = arg;
+        QString fileName = QQmlFile::urlToLocalFileOrQrc(arg);
+        if (QFile::exists(fileName)) {
+            QFile file(fileName);
+            if (file.open(QFile::ReadOnly)) {
+                QByteArray data = file.readAll();
+                QTextCodec *codec = QTextCodec::codecForUtfText(data);
+                setText(codec->toUnicode(data));
+                if (m_doc)
+                    m_doc->setModified(false);
+//                if (fileName.isEmpty())
+//                    m_documentTitle = QStringLiteral("untitled.txt");
+//                else
+//                    m_documentTitle = QFileInfo(fileName).fileName();
+
+                emit textChanged();
+//                emit documentTitleChanged();
+
+//                reset();
+            }
+        }
+        emit fileUrlChanged();
+    }
+}
+
+void SimLoader::setText(const QString &arg)
+{
+    if (m_text != arg) {
+        m_text = arg;
+        emit textChanged();
+    }
+}
+
+QUrl SimLoader::fileUrl() const
+{
+    return m_fileUrl;
+}
+
+QString SimLoader::text() const
+{
+    return m_text;
 }

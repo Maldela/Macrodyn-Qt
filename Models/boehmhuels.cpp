@@ -51,10 +51,15 @@ void boehmhuels::iteration(const qint64&)
 {
     qreal x=xt;
     qreal y=yt;
+    qreal p=pt;
 
     xt= x*(delta+(1.-delta)/(alpha-y));
     yt= delta*y+(1.-delta)*x*x*((1./(alpha-y))-1.)*((1./(alpha-y))-1.);
-    //log()<<"delta = "<<alpha;
+
+    pt= (ybar/r)+(1./exp(0.5*log(-beta)))*(x/(alpha-y));
+    rett= pt/p-1;
+    if(rett>0.){absrett= rett;}else{absrett= -rett;}
+    sqrett= rett*rett;
 }
     
     
@@ -75,6 +80,7 @@ void boehmhuels::initialize()
 {
 	xt = x0;
 	yt = y0;
+    pt = 1.0;
 }
  
     
@@ -128,7 +134,15 @@ qreal* boehmhuels::setLabels(const QString& label)
     if( label=="x0" )
 		return( &x0 );
     if( label=="y0" )
-		return( &y0 );
+        return( &y0 );
+    if( label=="pt" )
+        return( &pt );
+    if( label=="rett" )
+        return( &rett );
+    if( label=="absrett" )
+        return( &absrett );
+    if( label=="sqrett" )
+        return( &sqrett );
     return NULL;
 }
 

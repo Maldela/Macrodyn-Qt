@@ -40,6 +40,8 @@ protected:
     qreal alpha,delta,beta,ybar,r;	// parameter
     qreal xt,yt;			// state variables
     qreal x0,y0;			// initial values for x, y
+    qreal pt,rett,absrett,sqrett;    // statistics (prices, returns, absolute returns, sqared returns)
+
 
 public:
 	boehmhuels();				// constructor

@@ -32,6 +32,7 @@ class parameterSpace : public bif2D {
     parameterSpace(baseModel* const, const xyRange&, const xyRange&, MacrodynGraphicsItem* const=NULL);
     virtual ~parameterSpace();
     void simulation();
+    QColor colorFromOrder(int order);
 };    
 
 #endif

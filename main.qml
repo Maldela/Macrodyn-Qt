@@ -10,7 +10,7 @@ ApplicationWindow {
 
     id: applicationWindow
     visible: true
-    width: 1024
+    width: 1424
     height: 768
     title: qsTr("Macrodyn-Qt5")
 
@@ -21,7 +21,11 @@ ApplicationWindow {
             title: qsTr("File")
             MenuItem {
                 text: qsTr("Open simulation")
-                onTriggered: fileDialog.open();
+                onTriggered: fileDialogOpen.open();
+            }
+            MenuItem {
+                text: qsTr("Save simulation")
+                onTriggered: fileDialogSave.open();
             }
             MenuItem {
                 text: qsTr("Run Simulation")
@@ -50,7 +54,11 @@ ApplicationWindow {
             anchors.fill: parent
             ToolButton {
                 iconSource: "oeffnen.png"
-                onClicked: fileDialog.open();
+                onClicked: fileDialogOpen.open();
+            }
+            ToolButton {
+                iconSource: "speichern.png"
+                onClicked: loader.saveSimulationfromFile(); //fileDialogSave.open();
             }
             ToolButton {
                 iconSource: "run.png"
@@ -66,13 +74,30 @@ ApplicationWindow {
     }
 
     FileDialog {
-        id: fileDialog
+        id: fileDialogOpen
         title: "Please choose a simulation"
         modality: Qt.NonModal
         nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
         selectedNameFilter: "Macrodyn simulation"
         onAccepted: {
-            loader.loadSimulationfromUrl(fileDialog.fileUrl);
+            loader.loadSimulationfromUrl(fileDialogOpen.fileUrl);
+            loader.fileUrl = fileUrl;
+            close();
+        }
+        onRejected: {
+            close();
+        }
+    }
+
+    FileDialog {
+        id: fileDialogSave
+        title: "Please choose a simulation"
+        modality: Qt.NonModal
+        nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
+        selectedNameFilter: "Macrodyn simulation"
+        onAccepted: {
+            loader.saveSimulationfromUrl(fileDialogSave.fileUrl);
+            loader.fileUrl = fileUrl;
             close();
         }
         onRejected: {
@@ -83,6 +108,7 @@ ApplicationWindow {
     SimLoader {
         id: loader
         graphItem: graph
+        target: simeditor
     }
 
     MacrodynGraphicsItem {
@@ -92,10 +118,11 @@ ApplicationWindow {
         property int y2
 
         id: graph
-        width: 640
+        //width: 640
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
+        anchors.right: simeditor.left
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
@@ -163,9 +190,69 @@ ApplicationWindow {
        }
     }
 
+<<<<<<< HEAD
+//    SimEditor {
+//        id: simeditor
+//        width: 400
+//        anchors.top: parent.top
+//        anchors.bottom: parent.bottom
+//        anchors.left: parent.left
+//        anchors.rightMargin: 0
+//        anchors.bottomMargin: 0
+//        anchors.leftMargin: 0
+//        anchors.topMargin: 0
+//    }
+
+    TextArea{
+        id: simeditor
+        //anchors.fill:parent
+        width: 400
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.right: log.left
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
+        focus: true
+        text: loader.text
+
+        wrapMode: TextEdit.Wrap
+
+        //onCursorRectangleChanged: ensureVisible(cursorRectangle)
+    }
+
+//    DocumentHandler {
+//        id: document
+//        target: simeditor
+//        cursorPosition: simeditor.cursorPosition
+//        selectionStart: simeditor.selectionStart
+//        selectionEnd: simeditor.selectionEnd
+//        Component.onCompleted: document.fileUrl = "qrc:/example.html"
+//        onFontSizeChanged: {
+//            fontSizeSpinBox.valueGuard = false
+//            fontSizeSpinBox.value = document.fontSize
+//            fontSizeSpinBox.valueGuard = true
+//        }
+//        onFontFamilyChanged: {
+//            var index = Qt.fontFamilies().indexOf(document.fontFamily)
+//            if (index == -1) {
+//                fontFamilyComboBox.currentIndex = 0
+//                fontFamilyComboBox.special = true
+//            } else {
+//                fontFamilyComboBox.currentIndex = index
+//                fontFamilyComboBox.special = false
+//            }
+//        }
+//    }
+
+
+=======
+>>>>>>> origin/master
     Log {
         id: log
-        anchors.left: graph.right
+
+        //anchors.left: simeditor.right
         anchors.leftMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0

@@ -4,5 +4,6 @@
         <file>Log.qml</file>
         <file>oeffnen.png</file>
         <file>run.png</file>
+        <file>speichern.png</file>
     </qresource>
 </RCC>
