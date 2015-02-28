@@ -5,12 +5,9 @@ QMAKE_MAC_SDK = macosx10.9
 
 SOURCES += main.cpp \
     Graphics/macrodyngraphicsitem.cpp \
-<<<<<<< HEAD
-=======
-    axes.C \
-    hashTab.C \
+    axes.cpp \
+    hashTab.cpp \
     MDMap.cpp \
->>>>>>> origin/master
     logger.cpp \
     simloader.cpp \
     simthread.cpp \
@@ -28,7 +25,6 @@ SOURCES += main.cpp \
     distri/prob_distri.cpp \
     distri/random_bits.cpp \
     distri/uniform_distri.cpp \
-    axes.cpp \
     Jobs/3d_attractor.cpp \
     Jobs/3d_cyclogram.cpp \
     Jobs/acf_plot.cpp \
@@ -156,10 +152,8 @@ SOURCES += main.cpp \
     block.cpp \
     eval_expr.cpp \
     get_expr.cpp \
-    hashTab.cpp \
     matrix.cpp \
     matrix_neu.cpp \
-    MDMap.cpp \
     PublicModels/cobweb.cpp \
     PublicModels/defaultModel.cpp \
     PublicModels/getPubModel.cpp \

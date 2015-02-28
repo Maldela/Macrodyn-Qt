@@ -190,7 +190,6 @@ ApplicationWindow {
        }
     }
 
-<<<<<<< HEAD
 //    SimEditor {
 //        id: simeditor
 //        width: 400
@@ -247,8 +246,6 @@ ApplicationWindow {
 //    }
 
 
-=======
->>>>>>> origin/master
     Log {
         id: log
 
