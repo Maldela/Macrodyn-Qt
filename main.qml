@@ -170,34 +170,8 @@ ApplicationWindow {
         }
     }
 
-<<<<<<< Updated upstream
-    TextArea {
-=======
-    MouseArea {
-       id: mouseAreaRight
-
-       property int oldMouseX
-
-       anchors.horizontalCenter: graph.right
-       anchors.top: graph.top
-       anchors.bottom: graph.bottom
-       width: 10
-       hoverEnabled: true
-       cursorShape: Qt.SizeHorCursor
-
-       onPressed: {
-           oldMouseX = mouseX
-       }
-
-       onPositionChanged: {
-           if (pressed) {
-               graph.width = Math.min(graph.width + (mouseX - oldMouseX), applicationWindow.width - minLogWidth)
-           }
-       }
-    }
 
     TextArea{
->>>>>>> Stashed changes
         id: simeditor
         width: 400
         anchors.top: parent.top
