@@ -7,6 +7,8 @@ import MacrodynQML 1.0
 ApplicationWindow {
 
     property int minLogWidth: 200
+    property int minEditorWidth: 200
+    property int minGraphWidth: 100
 
     id: applicationWindow
     visible: true
@@ -118,7 +120,6 @@ ApplicationWindow {
         property int y2
 
         id: graph
-        //width: 640
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
@@ -128,6 +129,8 @@ ApplicationWindow {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         backgroundColor: "white"
+
+//        onWidthChanged: if (width < minGraphWidth) width = minGraphWidth;
 
         MouseArea {
             anchors.fill: parent
@@ -167,44 +170,8 @@ ApplicationWindow {
         }
     }
 
-    MouseArea {
-       id: mouseAreaRight
-
-       property int oldMouseX
-
-       anchors.horizontalCenter: graph.right
-       anchors.top: graph.top
-       anchors.bottom: graph.bottom
-       width: 10
-       hoverEnabled: true
-       cursorShape: Qt.SizeHorCursor
-
-       onPressed: {
-           oldMouseX = mouseX
-       }
-
-       onPositionChanged: {
-           if (pressed) {
-               graph.width = Math.min(graph.width + (mouseX - oldMouseX), applicationWindow.width - minLogWidth)
-           }
-       }
-    }
-
-//    SimEditor {
-//        id: simeditor
-//        width: 400
-//        anchors.top: parent.top
-//        anchors.bottom: parent.bottom
-//        anchors.left: parent.left
-//        anchors.rightMargin: 0
-//        anchors.bottomMargin: 0
-//        anchors.leftMargin: 0
-//        anchors.topMargin: 0
-//    }
-
-    TextArea{
+    TextArea {
         id: simeditor
-        //anchors.fill:parent
         width: 400
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -218,7 +185,7 @@ ApplicationWindow {
 
         wrapMode: TextEdit.Wrap
 
-        //onCursorRectangleChanged: ensureVisible(cursorRectangle)
+        onWidthChanged: if (width < minEditorWidth) width = minEditorWidth;
     }
 
 //    DocumentHandler {
@@ -257,6 +224,60 @@ ApplicationWindow {
         anchors.bottomMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
+        width: 400
         precision: 7
+
+        onWidthChanged: if (width < minLogWidth) width = minLogWidth;
+    }
+
+    MouseArea {
+       id: mouseAreaRight
+
+       property int oldMouseX
+       property int oldWidth
+
+       anchors.horizontalCenter: simeditor.right
+       anchors.top: simeditor.top
+       anchors.bottom: simeditor.bottom
+       width: 10
+       hoverEnabled: true
+       cursorShape: Qt.SizeHorCursor
+
+       onPressed: {
+           oldMouseX = mouseX;
+           oldWidth = log.width + simeditor.width;
+       }
+
+       onPositionChanged: {
+           if (pressed) {
+               log.width -= mouseX - oldMouseX;
+               simeditor.width = oldWidth - log.width;
+           }
+       }
+    }
+
+    MouseArea {
+       id: mouseAreaLeft
+
+       property int oldMouseX
+
+       anchors.horizontalCenter: graph.right
+       anchors.top: graph.top
+       anchors.bottom: graph.bottom
+       width: 10
+       hoverEnabled: true
+       cursorShape: Qt.SizeHorCursor
+
+       onPressed: {
+           oldMouseX = mouseX
+       }
+
+       onPositionChanged: {
+           if (pressed) {
+               simeditor.width -= mouseX - oldMouseX;
+           }
+       }
     }
 }
+
+
