@@ -170,7 +170,34 @@ ApplicationWindow {
         }
     }
 
+<<<<<<< Updated upstream
     TextArea {
+=======
+    MouseArea {
+       id: mouseAreaRight
+
+       property int oldMouseX
+
+       anchors.horizontalCenter: graph.right
+       anchors.top: graph.top
+       anchors.bottom: graph.bottom
+       width: 10
+       hoverEnabled: true
+       cursorShape: Qt.SizeHorCursor
+
+       onPressed: {
+           oldMouseX = mouseX
+       }
+
+       onPositionChanged: {
+           if (pressed) {
+               graph.width = Math.min(graph.width + (mouseX - oldMouseX), applicationWindow.width - minLogWidth)
+           }
+       }
+    }
+
+    TextArea{
+>>>>>>> Stashed changes
         id: simeditor
         width: 400
         anchors.top: parent.top
@@ -187,30 +214,6 @@ ApplicationWindow {
 
         onWidthChanged: if (width < minEditorWidth) width = minEditorWidth;
     }
-
-//    DocumentHandler {
-//        id: document
-//        target: simeditor
-//        cursorPosition: simeditor.cursorPosition
-//        selectionStart: simeditor.selectionStart
-//        selectionEnd: simeditor.selectionEnd
-//        Component.onCompleted: document.fileUrl = "qrc:/example.html"
-//        onFontSizeChanged: {
-//            fontSizeSpinBox.valueGuard = false
-//            fontSizeSpinBox.value = document.fontSize
-//            fontSizeSpinBox.valueGuard = true
-//        }
-//        onFontFamilyChanged: {
-//            var index = Qt.fontFamilies().indexOf(document.fontFamily)
-//            if (index == -1) {
-//                fontFamilyComboBox.currentIndex = 0
-//                fontFamilyComboBox.special = true
-//            } else {
-//                fontFamilyComboBox.currentIndex = index
-//                fontFamilyComboBox.special = false
-//            }
-//        }
-//    }
 
 
     Log {
