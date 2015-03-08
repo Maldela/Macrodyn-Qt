@@ -69,7 +69,7 @@ public slots:
     Q_INVOKABLE void print();
     void setSimulating(bool sim) { m_simulating = sim; }
 
-    Q_INVOKABLE void savePdf(const QUrl&);
+    Q_INVOKABLE void savePdf(const QString&);
 
 
 signals:

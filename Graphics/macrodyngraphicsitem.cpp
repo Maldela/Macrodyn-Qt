@@ -4,9 +4,6 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QtWidgets>
-#include "../libboard/Board.h"
-
-using namespace LibBoard;
 
 #define LMARGIN 40
 #define LOWMARGIN 30
@@ -645,12 +642,19 @@ void MacrodynGraphicsItem::print()
     }
 }
 
-void MacrodynGraphicsItem::savePdf(const QUrl& path)
+void MacrodynGraphicsItem::savePdf(const QString& path)
 {
+    log()<<"test";
+    QFileDialog dialog;
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.exec();
+    QStringList files = dialog.selectedFiles();
+
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QSizeF(800, 800), QPrinter::Millimeter);
-    printer.setOutputFileName(path.toLocalFile());
+    printer.setOutputFileName(path);
     QPainter painter(&printer);
     double xscale = printer.pageRect().width()/double(width());
     double yscale = printer.pageRect().height()/double(height());

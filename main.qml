@@ -43,7 +43,7 @@ ApplicationWindow {
             }
             MenuItem {
                 text: "Save pdf"
-                onTriggered: fileDialogSavePdf.open();
+                onTriggered: loader.savePdf();
             }
 
             MenuItem {

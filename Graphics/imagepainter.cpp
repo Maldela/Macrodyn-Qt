@@ -1,6 +1,10 @@
 #include <QScopedPointer>
 
 #include "imagepainter.h"
+#include "../libboard/Board.h"
+#include "../logger.h"
+
+using namespace LibBoard;
 
 
 ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, const QSharedPointer<QImage>& parentImage, QReadWriteLock *listLock, QMutex *imageMutex) : QObject()
@@ -288,4 +292,81 @@ QPoint ImagePainter::transform(const QPointF& old) const
 QLine ImagePainter::transform(const QLineF &old) const
 {
     return QLine (transform(old.p1()), transform(old.p2()));
+}
+
+void ImagePainter::redrawEPS()
+{
+//    log() << "redrawEPS()";
+//    m_image = QSharedPointer<QImage>(new QImage(m_parentMarginedSize, QImage::Format_RGB32));
+//    m_image->fill(m_parent->getBackgroundColor());
+
+//    m_listLock->lockForRead();
+
+//    Board board;
+//    board << Text( -0.45, -0.2, "MacroDy",
+//                  Fonts::Helvetica, "'Bookman Old Style',Verdana", 64.0f, Color::Green );
+//    board.setLineWidth( 1 ).setPenColorRGBi( 255, 100, 0 );
+//    board.setLineStyle( Shape::SolidStyle );
+//    board.setLineJoin( Shape::MiterJoin );
+//    board.setLineCap( Shape::RoundCap );
+//    board.drawLine( -0.5, -0.27, 0.5, -0.27 );
+//    board.addDuplicates( board.last(), 10, 0, -0.02 );
+
+//    Point p = board.last<Line>().boundingBox().topLeft();
+//    int n = 20;
+//    double angle = -M_PI/(2*n);
+//    while ( n-- )
+//        board << board.last<Line>().rotated( angle, p );
+
+//    n = 30;
+//    angle = -M_PI/(n);
+//    while ( n-- )
+//        board << board.last<Line>().scaled( 0.95 ).rotated( angle, p );
+
+
+//    QPair<QPointF, QColor> pointPair;
+//    foreach(pointPair, m_parent->m_points)
+//    {
+//        QPoint pointTransformed = m_parent->transform(pointPair.first);
+//        board.setPenColorRGBi( pointPair.second.red(), pointPair.second.green(), pointPair.second.blue(), pointPair.second.alpha() );
+//        board.drawDot(pointTransformed.x(),pointTransformed.y());
+//        //drawPoint(pointPair.first, pointPair.second, true);
+//    }
+
+//    QPair<QRectF, QColor> rectPair;
+
+//    foreach(rectPair, m_parent->m_rects)
+//    {
+//        QRect rectTransformed = QRect(m_parent->transform(rectPair.first.topLeft()), m_parent->transform(rectPair.first.bottomRight()));
+//        rectTransformed.setHeight(rectTransformed.height()-1);
+//        //board.setPenColorRGBi( rectPair.second.red(), rectPair.second.green(), rectPair.second.blue(), rectPair.second.alpha() );
+//        //board.drawDot(rectTransformed.x(),rectTransformed.y());
+//        board.fillRectangle(rectTransformed.x(),rectTransformed.y(),rectTransformed.width(),rectTransformed.height());
+//        //drawRect(rectPair.first, rectPair.second, true);
+//    }
+
+//    QPair<QLineF, QColor> linePair;
+//    foreach(linePair, m_parent->m_lines)
+//    {
+//        QPoint p1 = m_parent->transform(linePair.first.p1());
+//        QPoint p2 = m_parent->transform(linePair.first.p2());
+//        board.setLineWidth( 1 ).setPenColorRGBi( linePair.second.red(), linePair.second.green(), linePair.second.blue(), linePair.second.alpha() );
+//        board.drawLine( p1.x(), p1.y(), p2.x(), p2.y());
+//        //drawLine(linePair.first, linePair.second, true);
+//    }
+
+//    foreach(qreal column, m_parent->m_clearColumns)
+//    {
+//        clearColumn(column);
+//    }
+
+//    foreach(MacroString string, m_parent->m_strings)
+//    {
+//        drawString(string.point, string.string, string.color, string.transform, true);
+//    }
+//    m_listLock->unlock();
+
+//    board.saveEPS( "/Users/jtiwi/Documents/build-Macrodyn-Qt-Desktop_Qt_5_3_clang_64bit-Debug/testBild7.eps", Board::A4 );
+//    emit imageFinished(m_image);
+//    m_parentImage = m_image;
 }

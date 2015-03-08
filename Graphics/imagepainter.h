@@ -43,6 +43,7 @@ protected slots:
     void updateAxis(xyRange);
     void updateParentSize(QSize, bool = false);
     void updateSupersamplingFactor(int newFactor) { m_superSamplingFactor = newFactor; }
+    void redrawEPS();
 
 
 protected:

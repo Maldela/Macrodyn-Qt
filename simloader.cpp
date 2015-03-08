@@ -755,7 +755,8 @@ QString SimLoader::text() const
     return m_text;
 }
 
-void SimLoader::savePdf(){
+void SimLoader::savePdf()
+{
     QString path = lastFileName;
     path.chop(lastFileName.length()-lastFileName.lastIndexOf("/"));
     path.append("/Figures/");
