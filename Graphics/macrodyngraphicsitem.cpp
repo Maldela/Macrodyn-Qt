@@ -4,7 +4,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QtWidgets>
-#include "Libboard/Board.h"
+#include "../libboard/Board.h"
 
 using namespace LibBoard;
 
