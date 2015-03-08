@@ -43,7 +43,7 @@ ApplicationWindow {
             }
             MenuItem {
                 text: "Save pdf"
-                onTriggered: loader.savePdf();
+                onTriggered: fileDialogSavePdf.open();
             }
 
             MenuItem {
@@ -96,15 +96,15 @@ ApplicationWindow {
 
     FileDialog {
         id: fileDialogSavePdf
-        title: ""
+        title: "Save as PDF"
         modality: Qt.NonModal
         selectMultiple: false
         selectExisting: false
         //accepted: QFileDialog.AcceptSave
-        //nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
-        //selectedNameFilter: "Macrodyn simulation"
+        nameFilters: [ "PDF (*.pdf)", "All files (*)" ]
+        selectedNameFilter: "PDF"
         onAccepted: {
-            graph.savePdfToUrl(fileDialogOpen.fileUrl);
+            graph.savePdf(fileDialogSavePdf.fileUrl);
             close();
         }
         onRejected: {
