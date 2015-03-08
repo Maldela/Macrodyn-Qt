@@ -37,10 +37,13 @@ ApplicationWindow {
                 text: "Print Graph"
                 onTriggered: graph.print();
             }
-
             MenuItem {
                 text: "Print parameters"
                 onTriggered: loader.printModelParameters();
+            }
+            MenuItem {
+                text: "Save pdf"
+                onTriggered: loader.savePdf();
             }
 
             MenuItem {
@@ -84,6 +87,24 @@ ApplicationWindow {
         onAccepted: {
             loader.loadSimulationfromUrl(fileDialogOpen.fileUrl);
             loader.fileUrl = fileUrl;
+            close();
+        }
+        onRejected: {
+            close();
+        }
+    }
+
+    FileDialog {
+        id: fileDialogSavePdf
+        title: ""
+        modality: Qt.NonModal
+        selectMultiple: false
+        selectExisting: false
+        //accepted: QFileDialog.AcceptSave
+        //nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
+        //selectedNameFilter: "Macrodyn simulation"
+        onAccepted: {
+            graph.savePdfToUrl(fileDialogOpen.fileUrl);
             close();
         }
         onRejected: {

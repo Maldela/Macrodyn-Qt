@@ -159,7 +159,16 @@ SOURCES += main.cpp \
     PublicModels/getPubModel.cpp \
     PublicModels/perturbedDelayedLogisticMap.cpp \
     Models/adaptExp.cpp \
-    Graphics/imagepainter.cpp
+    Graphics/imagepainter.cpp \
+    libboard/Board.cpp \
+    libboard/Color.cpp \
+    libboard/Path.cpp \
+    libboard/PSFonts.cpp \
+    libboard/Rect.cpp \
+    libboard/ShapeList.cpp \
+    libboard/Shapes.cpp \
+    libboard/Tools.cpp \
+    libboard/Transforms.cpp
 
 RESOURCES += qml.qrc
 
@@ -340,4 +349,14 @@ HEADERS += \
     simthread.h \
     documenthandler.h \
     Graphics/macrostring.h \
-    Graphics/imagepainter.h
+    Graphics/imagepainter.h \
+    libboard/board/Color.h \
+    libboard/board/Path.h \
+    libboard/board/Point.h \
+    libboard/board/PSFonts.h \
+    libboard/board/Rect.h \
+    libboard/board/ShapeList.h \
+    libboard/board/Shapes.h \
+    libboard/board/Tools.h \
+    libboard/board/Transforms.h \
+    libboard/Board.h

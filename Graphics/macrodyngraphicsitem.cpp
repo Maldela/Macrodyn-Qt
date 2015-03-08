@@ -3,6 +3,10 @@
 
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QtWidgets>
+#include "Libboard/Board.h"
+
+using namespace LibBoard;
 
 #define LMARGIN 40
 #define LOWMARGIN 30
@@ -11,7 +15,7 @@
 #define MAXLABELLENGTH 8
 #define AXISCOLOR QColor(Qt::black)
 #define AXISLABELCOLOR QColor(Qt::red)
-#define XICSMARKSCOLOR QColor(Qt::darkGreen)
+#define XICSMARKSCOLOR QColor(Qt::black)
 #define ZEROLINECOLOR QColor(Qt::yellow)
 
 
@@ -40,6 +44,7 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     connect(this, SIGNAL(needRedraw()), m_imagePainter, SLOT(redraw()));
     connect(this, SIGNAL(axisChanged(xyRange)), m_imagePainter, SLOT(updateAxis(xyRange)));
     connect(this, SIGNAL(sizeChanged(QSize, bool)), m_imagePainter, SLOT(updateParentSize(QSize, bool)));
+    connect(this, SIGNAL(needRedrawEPS()), m_imagePainter, SLOT(redrawEPS()));
     connect(m_imagePainter, SIGNAL(imageChanged()), this, SLOT(update()));
     connect(m_imagePainter, SIGNAL(imageFinished(QSharedPointer<QImage>)), this, SLOT(newImage(QSharedPointer<QImage>)));
     connect(m_imagePainter, SIGNAL(startRedraw()), this, SLOT(redrawingStarted()));
@@ -605,6 +610,23 @@ qreal MacrodynGraphicsItem::getZoom() const
 
 void MacrodynGraphicsItem::print()
 {
+    //emit needRedrawEPS();
+
+//    QPrinter printer(QPrinter::HighResolution);
+//    //printer.setOutputFormat(QPrinter::);
+//    printer.setPaperSize(QSizeF(80, 80), QPrinter::Millimeter);
+//    printer.setOutputFileName("/Users/jtiwi/Documents/build-Macrodyn-Qt-Desktop_Qt_5_3_clang_64bit-Debug/testBild2.eps");
+//    QPainter painter(&printer);
+//    double xscale = printer.pageRect().width()/double(width());
+//    double yscale = printer.pageRect().height()/double(height());
+//    double scale = qMin(xscale, yscale);
+//    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+//                       printer.paperRect().y() + printer.pageRect().height()/2);
+//    painter.scale(scale, scale);
+//    painter.translate(-width()/2, -height()/2);
+//    paint(&painter);
+
+
     QPrinter printer;
     QPrintDialog dialog(&printer);
     dialog.setWindowTitle(tr("Print Graph"));
@@ -621,4 +643,30 @@ void MacrodynGraphicsItem::print()
 
         paint(&painter);
     }
+}
+
+void MacrodynGraphicsItem::savePdf(const QString& path){
+    log()<<"test";
+    QFileDialog dialog;
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.exec();
+    QStringList files = dialog.selectedFiles();
+
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QSizeF(800, 800), QPrinter::Millimeter);
+    printer.setOutputFileName(path);
+    QPainter painter(&printer);
+    double xscale = printer.pageRect().width()/double(width());
+    double yscale = printer.pageRect().height()/double(height());
+    double scale = qMin(xscale, yscale);
+    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+                       printer.paperRect().y() + printer.pageRect().height()/2);
+    painter.scale(scale, scale);
+    painter.translate(-width()/2, -height()/2);
+    QFont font=painter.font() ;
+    font.setPixelSize(12);
+    painter.setFont(font);
+    paint(&painter);
 }

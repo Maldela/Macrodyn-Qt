@@ -69,6 +69,8 @@ public slots:
     Q_INVOKABLE void print();
     void setSimulating(bool sim) { m_simulating = sim; }
 
+    Q_INVOKABLE void savePdf(const QString&);
+
 
 signals:
 
@@ -84,6 +86,7 @@ signals:
     void axisChanged(xyRange);
     void sizeChanged(QSize, bool);
     void redrawingChanged();
+    void needRedrawEPS();
 
 
 protected slots:

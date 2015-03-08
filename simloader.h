@@ -72,6 +72,7 @@ public slots:
     Q_INVOKABLE void loadSimulationfromUrl(const QUrl& url) { loadSimulationfromFile(url.toLocalFile()); }
     Q_INVOKABLE void saveSimulationfromUrl(const QUrl& url) { saveSimulationfromFile(/*url.toLocalFile()*/); }
     Q_INVOKABLE void printModelParameters() const { if (m_modelPointer) m_modelPointer->printParamset(); }
+    Q_INVOKABLE void savePdf();
 
 public Q_SLOTS:
     void setFileUrl(const QUrl &arg);
@@ -97,6 +98,7 @@ protected:
     xyRange *xDef;
     xyRange *yDef;
     qreal *plotLines;
+    QString figureName;
 
     int m_graphTyp;
     int m_paramCount;

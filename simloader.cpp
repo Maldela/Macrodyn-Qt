@@ -233,6 +233,11 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
 
     qreal stepX = (m_conBlock.xmax-m_conBlock.xmin) / m_conBlock.xRes;
 
+    QString saveFigureYesNo;
+    stream>>saveFigureYesNo;
+    stream>>figureName;
+    log()<<"figureName = "<<figureName;
+
     if (stateSpace) delete stateSpace;
     stateSpace = NULL;
     if (xDef) delete xDef;
@@ -720,20 +725,12 @@ void SimLoader::setFileUrl(const QUrl &arg)
         if (QFile::exists(fileName)) {
             QFile file(fileName);
             if (file.open(QFile::ReadOnly)) {
-                QByteArray data = file.readAll();
-                QTextCodec *codec = QTextCodec::codecForUtfText(data);
-                setText(codec->toUnicode(data));
-                if (m_doc)
-                    m_doc->setModified(false);
-//                if (fileName.isEmpty())
-//                    m_documentTitle = QStringLiteral("untitled.txt");
-//                else
-//                    m_documentTitle = QFileInfo(fileName).fileName();
-
+                QTextStream in(&file);
+                QString text;
+                text = in.readAll();
+                file.close();
+                setText(text);
                 emit textChanged();
-//                emit documentTitleChanged();
-
-//                reset();
             }
         }
         emit fileUrlChanged();
@@ -756,4 +753,16 @@ QUrl SimLoader::fileUrl() const
 QString SimLoader::text() const
 {
     return m_text;
+}
+
+void SimLoader::savePdf(){
+    QString path = lastFileName;
+    path.chop(lastFileName.length()-lastFileName.lastIndexOf("/"));
+    path.append("/Figures/");
+    path.append(lastFileName.right(lastFileName.length()-lastFileName.lastIndexOf("/")-1));
+    path.chop(4);
+    path.append(figureName);
+//    path.append("pdf");
+    log()<<path;
+    m_graph->savePdf(path);
 }
