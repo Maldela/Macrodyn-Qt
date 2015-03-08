@@ -158,7 +158,8 @@ SOURCES += main.cpp \
     PublicModels/defaultModel.cpp \
     PublicModels/getPubModel.cpp \
     PublicModels/perturbedDelayedLogisticMap.cpp \
-    Models/adaptExp.cpp
+    Models/adaptExp.cpp \
+    Graphics/imagepainter.cpp
 
 RESOURCES += qml.qrc
 
@@ -337,4 +338,6 @@ HEADERS += \
     Models/boehmhuels.h \
     distri/logger.h \
     simthread.h \
-    documenthandler.h
+    documenthandler.h \
+    Graphics/macrostring.h \
+    Graphics/imagepainter.h

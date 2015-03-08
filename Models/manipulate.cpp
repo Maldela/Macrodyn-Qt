@@ -79,7 +79,7 @@ manipulate::~manipulate()
 	if( tstart ) delete [] tstart;
 
 	if( statvar ) delete statvar;
-	if( quanvar ) delete quanvar;
+//    if( quanvar ) delete quanvar;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

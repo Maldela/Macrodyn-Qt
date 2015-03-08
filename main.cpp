@@ -10,6 +10,8 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    qRegisterMetaType<QSharedPointer<QImage> >();
+    qRegisterMetaType<xyRange>();
     qmlRegisterType<MacrodynGraphicsItem>("MacrodynQML", 1, 0, "MacrodynGraphicsItem");
     //qmlRegisterType<DocumentHandler>("MacrodynQML", 1, 0, "DocumentHandler");
     //qmlRegisterType<SimEditor>("MacrodynQML", 1, 0, "SimEditor");

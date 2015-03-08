@@ -8,72 +8,25 @@
 #include <QReadWriteLock>
 #include <QMutex>
 #include <QThread>
+#include <QSharedPointer>
 
 #include "../sim.h"
 #include "../axes.h"
+#include "macrostring.h"
+#include "imagepainter.h"
+
+Q_DECLARE_METATYPE(QSharedPointer<QImage>)
+Q_DECLARE_METATYPE(xyRange)
 
 
-//TODO:
-// - beautify setBigPoint
-// - drawColorCount?
-struct MacroString
-{
-    MacroString(const QString& s, const QPointF& p, const QColor& c, bool t)
-    {
-        string = s;
-        point = p;
-        color = c;
-        transform = t;
-    }
-
-    QString string;
-    QPointF point;
-    QColor color;
-    bool transform;
-};
-
-class MacrodynGraphicsItem;
-
-class ImagePainter : public QObject
-{
-    Q_OBJECT
-
-public:
-
-    ImagePainter(MacrodynGraphicsItem *, QImage *, QReadWriteLock *, QMutex *);
-    virtual ~ImagePainter();
-
-
-signals:
-
-    void imageChanged();
-    void imageFinished(QImage *);
-
-
-protected slots:
-
-    void drawPoint(const QPointF&, const QColor&, bool = false);
-    void drawRect(const QRectF&, const QColor&, bool = false);
-    void drawLine(const QLineF&, const QColor&, bool = false);
-    void drawString(const QPointF&, const QString&, const QColor&, bool, bool = false);
-    void clearColumn(qreal, bool = false);
-    void redraw();
-
-
-protected:
-
-    QImage *m_image, *m_parentImage;
-    QReadWriteLock *m_listLock;
-    QMutex *m_imageMutex;
-    MacrodynGraphicsItem *m_parent;
-};
-
+class ImagePainter;
 
 class MacrodynGraphicsItem : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(qreal zoomFactor READ getZoom NOTIFY zoomChanged)
+    Q_PROPERTY(bool redrawing READ redrawing NOTIFY redrawingChanged)
 
     friend class ImagePainter;
 
@@ -95,26 +48,26 @@ public:
     void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
     void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen
     void setString(qreal, qreal, const QString&, const QColor&, bool = true);  // should be displayed on the screen
-    inline QColor getBackgroundColor() const { return backgroundColor; }
+    inline QColor getBackgroundColor() const { return m_backgroundColor; }
     void setBackgroundColor(const QColor&);
     qreal getZoom() const;
 //    QColor get_color(int) const;
     void clearColumn(qreal);	// clear a specified column of the output window
     void setXYRange(const xyRange& range);
     void colorFromInt(QColor& color, int colorInt) const;
-    int transformX(qreal) const;
-    int transformY(qreal) const;
-    QPoint transform(const QPointF&) const;
-    double pixel_to_x(int, bool = true) const;
-    double pixel_to_y(int, bool = true) const;
+    double pixel_to_x(int) const;
+    double pixel_to_y(int) const;
+    QSize sizeMargined() const { return QSize(wid, hig); }
+    bool redrawing() const { return m_redrawing; }
 
 
 public slots:
 
     Q_INVOKABLE void zoom(int, int, int, int);
-    Q_INVOKABLE inline void unzoom() { axis = origAxis; emit needRedraw(); qDebug() << "unzoom"; }
+    Q_INVOKABLE void unzoom();
     Q_INVOKABLE void click(int x, int y) const { qDebug() << QPointF(pixel_to_x(x), pixel_to_y(y)); }
     Q_INVOKABLE void print();
+    void setSimulating(bool sim) { m_simulating = sim; }
 
 
 signals:
@@ -122,17 +75,22 @@ signals:
     void backgroundColorChanged();
     void zoomChanged();
     void newPoint(QPointF, QColor);
+    void newBigPoint(QPointF, QColor);
     void newRect(QRectF, QColor);
     void newLine(QLineF, QColor);
     void newClearColumn(qreal);
     void newString(QPointF, QString, QColor, bool);
     void needRedraw();
+    void axisChanged(xyRange);
+    void sizeChanged(QSize, bool);
+    void redrawingChanged();
 
 
 protected slots:
 
     void handleSizeChanged();
-    void newImage(QImage *);
+    void newImage(QSharedPointer<QImage>);
+    void redrawingStarted() { if (!m_redrawing) { m_redrawing = true; emit redrawingChanged(); } }
 
 
 protected:
@@ -140,20 +98,20 @@ protected:
     void paint(QPainter *painter);
     void drawAxis(QPainter * = NULL);    // needs locking of axisLock before calling!
 
-    QImage *image;
+    QSharedPointer<QImage> m_image;
     ImagePainter *m_imagePainter;
-    QThread imageThread;
+    QThread m_imageThread;
     QList<QPair<QLineF, QColor> > m_lines;
-    QList<QPair<QPointF, QColor> > m_points;
+    QList<QPair<QPointF, QColor> > m_points, m_bigPoints;
     QList<QPair<QRectF, QColor> > m_rects;
     QList<qreal> m_clearColumns;
     QList<MacroString> m_strings;
-    mutable QReadWriteLock listLock, axisLock;
-    mutable QMutex imageMutex;
-    int job;
-    xyRange origAxis;
-    xyRange axis;
-    QColor backgroundColor;
+    mutable QReadWriteLock m_listLock;
+    mutable QMutex m_imageMutex;
+    int m_job;
+    xyRange m_origAxis;
+    xyRange m_axis;
+    QColor m_backgroundColor;
     int rmargin;
     int lmargin;
     int upmargin;
@@ -164,6 +122,7 @@ protected:
     int right;
     int down;
     int bigPointSize;
+    bool m_redrawing, m_simulating;
 
     qint64 colorCount[95];
 };

@@ -95,7 +95,7 @@ SimLoader::SimLoader(QObject *parent) : QObject(parent)
     xDef = NULL;
     yDef = NULL;
     plotLines = NULL;
-    QObject::connect(&simThread, SIGNAL(finished()), this, SLOT(jobFinished()));
+    connect(&simThread, SIGNAL(finished()), this, SLOT(jobFinished()));
 }
 
 SimLoader::~SimLoader()
@@ -606,6 +606,7 @@ void SimLoader::runSimulation()
         log() << "starting simulation...";
         simThread.setJob(m_runJob);
         simThread.start();
+        if (m_graph) m_graph->setSimulating(true);
     }
     else log() << "job misspecified...";
 }
@@ -675,6 +676,8 @@ void SimLoader::setGraphItem(QObject *object)
 
 void SimLoader::jobFinished()
 {
+    if (m_graph)
+        m_graph->setSimulating(false);
     if (m_axes)
     {
         delete m_axes;

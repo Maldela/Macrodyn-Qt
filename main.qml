@@ -157,6 +157,12 @@ ApplicationWindow {
             }
         }
 
+        BusyIndicator {
+            id: busyIndicator
+            running: parent.redrawing
+            anchors.centerIn: parent
+        }
+
         Rectangle {
             id: zoomRect
             color: "transparent"

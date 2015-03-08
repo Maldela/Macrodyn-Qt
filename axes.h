@@ -36,6 +36,9 @@ public:
 
     operator bool() const;
 
+//    inline qreal width() const { return (*this) ? max.at(0) - min.at(0) : 0; }
+//    inline qreal height() const { return (*this) ? max.at(1) - min.at(1) : 0; }
+
     int dimension;		// dimension of the state space or parameter
 				// space under consideration
     QList<QString> label;		// array for the labels
