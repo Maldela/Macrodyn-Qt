@@ -141,7 +141,7 @@ void d_bif2D::simulation()
 	double hitshilf;
 	double hitpoint;
 	   
-    for( dy=ymin, k=0; k<h.get_x_res(); dy+=stepY, k++) {
+    for( dy=ymin, k=0; k<(ymax-ymin)/stepY; dy+=stepY, k++) {
     
       // color = h(k) % 32;
 /*neu*/

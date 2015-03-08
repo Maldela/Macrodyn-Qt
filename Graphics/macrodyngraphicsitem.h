@@ -58,6 +58,7 @@ protected slots:
     void drawString(const QPointF&, const QString&, const QColor&, bool, bool = false);
     void clearColumn(qreal, bool = false);
     void redraw();
+    void redrawEPS();
 
 
 protected:
@@ -116,6 +117,8 @@ public slots:
     Q_INVOKABLE void click(int x, int y) const { qDebug() << QPointF(pixel_to_x(x), pixel_to_y(y)); }
     Q_INVOKABLE void print();
 
+    Q_INVOKABLE void savePdf(const QString&);
+
 
 signals:
 
@@ -127,6 +130,7 @@ signals:
     void newClearColumn(qreal);
     void newString(QPointF, QString, QColor, bool);
     void needRedraw();
+    void needRedrawEPS();
 
 
 protected slots:

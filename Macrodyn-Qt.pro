@@ -158,7 +158,16 @@ SOURCES += main.cpp \
     PublicModels/defaultModel.cpp \
     PublicModels/getPubModel.cpp \
     PublicModels/perturbedDelayedLogisticMap.cpp \
-    Models/adaptExp.cpp
+    Models/adaptExp.cpp \
+    libboard/Board.cpp \
+    libboard/Color.cpp \
+    libboard/Path.cpp \
+    libboard/PSFonts.cpp \
+    libboard/Rect.cpp \
+    libboard/ShapeList.cpp \
+    libboard/Shapes.cpp \
+    libboard/Tools.cpp \
+    libboard/Transforms.cpp
 
 RESOURCES += qml.qrc
 
@@ -337,4 +346,14 @@ HEADERS += \
     Models/boehmhuels.h \
     distri/logger.h \
     simthread.h \
-    documenthandler.h
+    documenthandler.h \
+    libboard/board/Color.h \
+    libboard/board/Path.h \
+    libboard/board/Point.h \
+    libboard/board/PSFonts.h \
+    libboard/board/Rect.h \
+    libboard/board/ShapeList.h \
+    libboard/board/Shapes.h \
+    libboard/board/Tools.h \
+    libboard/board/Transforms.h \
+    libboard/Board.h

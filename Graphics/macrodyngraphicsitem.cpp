@@ -3,7 +3,10 @@
 
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QtWidgets>
+#include "Libboard/Board.h"
 
+using namespace LibBoard;
 
 #define LMARGIN 40
 #define LOWMARGIN 20
@@ -12,7 +15,7 @@
 #define MAXLABELLENGTH 8
 #define AXISCOLOR QColor(Qt::black)
 #define AXISLABELCOLOR QColor(Qt::red)
-#define XICSMARKSCOLOR QColor(Qt::darkGreen)
+#define XICSMARKSCOLOR QColor(Qt::black)
 #define ZEROLINECOLOR QColor(Qt::yellow)
 
 
@@ -38,6 +41,7 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     connect(this, SIGNAL(newClearColumn(qreal)), m_imagePainter, SLOT(clearColumn(qreal)));
     connect(this, SIGNAL(newString(QPointF,QString,QColor,bool)), m_imagePainter, SLOT(drawString(QPointF,QString,QColor,bool)));
     connect(this, SIGNAL(needRedraw()), m_imagePainter, SLOT(redraw()));
+    connect(this, SIGNAL(needRedrawEPS()), m_imagePainter, SLOT(redrawEPS()));
     connect(m_imagePainter, SIGNAL(imageChanged()), this, SLOT(update()));
     connect(m_imagePainter, SIGNAL(imageFinished(QImage *)), this, SLOT(newImage(QImage *)));
 }
@@ -58,7 +62,7 @@ void MacrodynGraphicsItem::paint(QPainter *painter)
 
     axisLock.lockForRead();
     if (axis) drawAxis(painter);
-    else qDebug() << "axis invalid!";
+    //else qDebug() << "axis invalid!";
     axisLock.unlock();
 }
 
@@ -125,7 +129,7 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
 
     /* Draw Axis + ar(height()) */
     if (!painter) painter = new QPainter(image);
-    painter->setPen(AXISCOLOR);
+    painter->setPen(QPen(AXISCOLOR,1));
     painter->setBrush(QColor(AXISCOLOR));
     painter->drawLine(lmargin, height()-lowmargin, width()-rmargin+5, height()-lowmargin); /* X */
     pointsX.translate(width()-rmargin+10, height()-lowmargin);/*set starting point for x-arrow*/
@@ -137,13 +141,13 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     /*draw y-arrow */
     painter->drawPolygon(pointsY);
 
-    // draw zeroline
-    if ((axis.zeroline[1].isValid()) && (axis.min[1] < 0))
-    {
-        painter->setPen(ZEROLINECOLOR);
-        int zl = upmargin+((height())-lowmargin-upmargin) * axis.max[1] / (axis.max[1]-axis.min[1]);
-        painter->drawLine(lmargin, zl, width()-rmargin+5, zl);
-    }
+//    // draw zeroline
+//    if ((axis.zeroline[1].isValid()) && (axis.min[1] < 0))
+//    {
+//        painter->setPen(ZEROLINECOLOR);
+//        int zl = upmargin+((height())-lowmargin-upmargin) * axis.max[1] / (axis.max[1]-axis.min[1]);
+//        painter->drawLine(lmargin, zl, width()-rmargin+5, zl);
+//    }
 
     painter->setPen(AXISLABELCOLOR);
 
@@ -179,14 +183,14 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
            axisMark = ii*(height()-upmargin-lowmargin-zerow)/j;
            painter->drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
            QString markLabel = QString::number(axis.min[1]+ii*(-axis.min[1])/j);
-           painter->drawText(lmargin-17, height()-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-33, height()-lowmargin-axisMark+5, markLabel);
        }
        for (ii=0;ii<=i;ii++)
        {
            axisMark = ii*zerow/i;
            painter->drawLine(lmargin-5, upmargin+zerow-axisMark, lmargin, upmargin+zerow-axisMark);
            QString markLabel = QString::number(ii*axis.max[1]/i);
-           painter->drawText(lmargin-17, upmargin+zerow-axisMark+5, markLabel);
+           painter->drawText(lmargin-33, upmargin+zerow-axisMark+5, markLabel);
        }
     }
     else
@@ -196,7 +200,7 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
            axisMark = i*(height()-upmargin-lowmargin)/4;
            painter->drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
            QString markLabel = QString::number(axis.min[1]+i*(axis.max[1]-axis.min[1])/4);
-           painter->drawText(lmargin-17, height()-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-33, height()-lowmargin-axisMark+5, markLabel);
        }
     }
 // draw color ranges for contourline plot into window
@@ -629,6 +633,23 @@ qreal MacrodynGraphicsItem::getZoom() const
 
 void MacrodynGraphicsItem::print()
 {
+    //emit needRedrawEPS();
+
+//    QPrinter printer(QPrinter::HighResolution);
+//    //printer.setOutputFormat(QPrinter::);
+//    printer.setPaperSize(QSizeF(80, 80), QPrinter::Millimeter);
+//    printer.setOutputFileName("/Users/jtiwi/Documents/build-Macrodyn-Qt-Desktop_Qt_5_3_clang_64bit-Debug/testBild2.eps");
+//    QPainter painter(&printer);
+//    double xscale = printer.pageRect().width()/double(width());
+//    double yscale = printer.pageRect().height()/double(height());
+//    double scale = qMin(xscale, yscale);
+//    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+//                       printer.paperRect().y() + printer.pageRect().height()/2);
+//    painter.scale(scale, scale);
+//    painter.translate(-width()/2, -height()/2);
+//    paint(&painter);
+
+
     QPrinter printer;
     QPrintDialog dialog(&printer);
     dialog.setWindowTitle(tr("Print Graph"));
@@ -645,6 +666,32 @@ void MacrodynGraphicsItem::print()
 
         paint(&painter);
     }
+}
+
+void MacrodynGraphicsItem::savePdf(const QString& path){
+    log()<<"test";
+    QFileDialog dialog;
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.exec();
+    QStringList files = dialog.selectedFiles();
+
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QSizeF(800, 800), QPrinter::Millimeter);
+    printer.setOutputFileName(path);
+    QPainter painter(&printer);
+    double xscale = printer.pageRect().width()/double(width());
+    double yscale = printer.pageRect().height()/double(height());
+    double scale = qMin(xscale, yscale);
+    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+                       printer.paperRect().y() + printer.pageRect().height()/2);
+    painter.scale(scale, scale);
+    painter.translate(-width()/2, -height()/2);
+    QFont font=painter.font() ;
+    font.setPixelSize(12);
+    painter.setFont(font);
+    paint(&painter);
 }
 
 
@@ -701,6 +748,85 @@ void ImagePainter::redraw()
     m_parentImage = m_image;
     m_image = NULL;
 }
+
+void ImagePainter::redrawEPS()
+{
+    log()<<"redrawEPS()";
+    m_image = new QImage(m_parent->width(), m_parent->height(), QImage::Format_ARGB32_Premultiplied);
+    m_image->fill(m_parent->getBackgroundColor());
+
+    m_listLock->lockForRead();
+
+    Board board;
+//    board << Text( -0.45, -0.2, "MacroDy",
+//                  Fonts::Helvetica, "'Bookman Old Style',Verdana", 64.0f, Color::Green );
+//    board.setLineWidth( 1 ).setPenColorRGBi( 255, 100, 0 );
+//    board.setLineStyle( Shape::SolidStyle );
+//    board.setLineJoin( Shape::MiterJoin );
+//    board.setLineCap( Shape::RoundCap );
+//    board.drawLine( -0.5, -0.27, 0.5, -0.27 );
+//    board.addDuplicates( board.last(), 10, 0, -0.02 );
+
+//    Point p = board.last<Line>().boundingBox().topLeft();
+//    int n = 20;
+//    double angle = -M_PI/(2*n);
+//    while ( n-- )
+//        board << board.last<Line>().rotated( angle, p );
+
+//    n = 30;
+//    angle = -M_PI/(n);
+//    while ( n-- )
+//        board << board.last<Line>().scaled( 0.95 ).rotated( angle, p );
+
+
+    QPair<QPointF, QColor> pointPair;
+    foreach(pointPair, m_parent->m_points)
+    {
+        QPoint pointTransformed = m_parent->transform(pointPair.first);
+        board.setPenColorRGBi( pointPair.second.red(), pointPair.second.green(), pointPair.second.blue(), pointPair.second.alpha() );
+        board.drawDot(pointTransformed.x(),pointTransformed.y());
+        //drawPoint(pointPair.first, pointPair.second, true);
+    }
+
+    QPair<QRectF, QColor> rectPair;
+
+    foreach(rectPair, m_parent->m_rects)
+    {
+        QRect rectTransformed = QRect(m_parent->transform(rectPair.first.topLeft()), m_parent->transform(rectPair.first.bottomRight()));
+        rectTransformed.setHeight(rectTransformed.height()-1);
+        //board.setPenColorRGBi( rectPair.second.red(), rectPair.second.green(), rectPair.second.blue(), rectPair.second.alpha() );
+        //board.drawDot(rectTransformed.x(),rectTransformed.y());
+        board.fillRectangle(rectTransformed.x(),rectTransformed.y(),rectTransformed.width(),rectTransformed.height());
+        //drawRect(rectPair.first, rectPair.second, true);
+    }
+
+    QPair<QLineF, QColor> linePair;
+    foreach(linePair, m_parent->m_lines)
+    {
+        QPoint p1 = m_parent->transform(linePair.first.p1());
+        QPoint p2 = m_parent->transform(linePair.first.p2());
+        board.setLineWidth( 1 ).setPenColorRGBi( linePair.second.red(), linePair.second.green(), linePair.second.blue(), linePair.second.alpha() );
+        board.drawLine( p1.x(), p1.y(), p2.x(), p2.y());
+        //drawLine(linePair.first, linePair.second, true);
+    }
+
+    foreach(qreal column, m_parent->m_clearColumns)
+    {
+        clearColumn(column);
+    }
+
+    foreach(MacroString string, m_parent->m_strings)
+    {
+        drawString(string.point, string.string, string.color, string.transform, true);
+    }
+    m_listLock->unlock();
+
+    board.saveEPS( "/Users/jtiwi/Documents/build-Macrodyn-Qt-Desktop_Qt_5_3_clang_64bit-Debug/testBild7.eps", Board::A4 );
+    emit imageFinished(m_image);
+    m_parentImage = m_image;
+    m_image = NULL;
+}
+
 
 void ImagePainter::drawLine(const QLineF& line, const QColor& color, bool redraw)
 {
@@ -805,6 +931,9 @@ void ImagePainter::drawString(const QPointF& point, const QString& text, const Q
         painter.begin(m_parentImage);
     }
     painter.setPen(color);
+    QFont font=painter.font() ;
+    font.setPointSize(30);
+    painter.setFont(font);
     painter.drawText(pointTransformed, text);
 
     if (!redraw)

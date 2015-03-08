@@ -82,7 +82,7 @@ void density_1d::simulation()
     d= ((double) h(k))/double(length - limit);
     d= d/stepX;
 
-    screenGraphics->setRect(*xParam,0,stepX*1.2,d,QColor(0,0,150));
+    screenGraphics->setRect(*xParam,0,stepX,d,QColor(0,0,150));
 //    for( dy=0; dy<d; dy+=stepY ) {	// draw a vertical line with points
 //      if( screenGraphics ) {
 //        //log() << *xParam << "   " << dy << "   " << color;
