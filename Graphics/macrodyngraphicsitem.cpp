@@ -671,7 +671,6 @@ void MacrodynGraphicsItem::zoom(int x1, int x2, int y1, int y2)
 
         qreal xtemp = pixel_to_x(xmin);
         qreal ytemp = pixel_to_y(ymax);
-
         m_axis.max[0] = pixel_to_x(xmax);
         m_axis.max[1] = pixel_to_y(ymin);
         m_axis.min[0] = xtemp;
