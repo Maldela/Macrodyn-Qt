@@ -168,7 +168,8 @@ SOURCES += main.cpp \
     libboard/ShapeList.cpp \
     libboard/Shapes.cpp \
     libboard/Tools.cpp \
-    libboard/Transforms.cpp
+    libboard/Transforms.cpp \
+    Models/tiwisina.cpp
 
 RESOURCES += qml.qrc
 
@@ -360,4 +361,5 @@ HEADERS += \
     libboard/board/Tools.h \
     libboard/board/Transforms.h \
     libboard/Board.h \
-    Graphics/transform.h
+    Graphics/transform.h \
+    Models/tiwisina.h

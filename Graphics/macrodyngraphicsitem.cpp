@@ -85,7 +85,8 @@ void MacrodynGraphicsItem::handleSizeChanged()
 
 void MacrodynGraphicsItem::setXYRange(const xyRange& newAxis)
 {
-    if (newAxis && newAxis != m_origAxis)
+    qDebug() << "setyxRange";
+    if (newAxis/* && newAxis != m_origAxis*/)
     {
         m_origAxis = newAxis;
         m_axis = newAxis;
