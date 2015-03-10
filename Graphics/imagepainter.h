@@ -33,25 +33,21 @@ signals:
 
 protected slots:
 
-    void drawPoint(const QPointF&, const QColor&, bool = false, QPainter * = NULL);
-    void drawBigPoint(const QPointF&, const QColor&, bool = false, QPainter * = NULL);
-    void drawRect(const QRectF&, const QColor&, bool = false, QPainter * = NULL);
-    void drawLine(const QLineF&, const QColor&, bool = false, QPainter * = NULL);
-    void drawString(const QPointF&, const QString&, const QColor&, bool, bool = false, QPainter * = NULL);
-    void clearColumn(qreal, bool = false, QPainter * = NULL);
     void redraw();
-    void updateAxis(xyRange);
-    void updateParentSize(QSize, bool = false);
-    void updateSupersamplingFactor(int newFactor) { m_superSamplingFactor = newFactor; }
+    void updateAxis(const xyRange&);
+    void updateParentSize(const QSize&, bool = false);
+    void updateSupersamplingFactor(qreal newFactor) { m_superSamplingFactor = newFactor; }
     void redrawEPS();
 
 
 protected:
 
-    int transformX(qreal) const;
-    int transformY(qreal) const;
-    QPoint transform(const QPointF&) const;
-    QLine transform(const QLineF&) const;
+    void drawPoint(const QPointF&, const QColor&, QPainter * = NULL);
+    void drawBigPoint(const QPointF&, const QColor&, QPainter * = NULL);
+    void drawRect(const QRectF&, const QColor&, QPainter * = NULL);
+    void drawLine(const QLineF&, const QColor&, QPainter * = NULL);
+    void drawString(const QPointF&, const QString&, const QColor&, bool, QPainter * = NULL);
+    void clearColumn(qreal, QPainter * = NULL);
 
     QSharedPointer<QImage> m_image, m_parentImage;
     QReadWriteLock *m_listLock;
@@ -59,7 +55,7 @@ protected:
     MacrodynGraphicsItem *m_parent;
     xyRange m_axis;
     QSize m_parentMarginedSize;
-    int m_superSamplingFactor;
+    qreal m_superSamplingFactor;
     qreal m_bigPointRadius;
 };
 

@@ -359,4 +359,5 @@ HEADERS += \
     libboard/board/Shapes.h \
     libboard/board/Tools.h \
     libboard/board/Transforms.h \
-    libboard/Board.h
+    libboard/Board.h \
+    Graphics/transform.h

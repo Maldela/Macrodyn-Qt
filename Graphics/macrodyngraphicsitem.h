@@ -27,6 +27,8 @@ class MacrodynGraphicsItem : public QQuickPaintedItem
     Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(qreal zoomFactor READ getZoom NOTIFY zoomChanged)
     Q_PROPERTY(bool redrawing READ redrawing NOTIFY redrawingChanged)
+    Q_PROPERTY(qreal bigPointSize READ bigPointSize WRITE setBigPointSize NOTIFY bigPointSizeChanged)
+    Q_PROPERTY(qreal supersampling READ supersampling WRITE setSupersampling NOTIFY supersamplingChanged)
 
     friend class ImagePainter;
 
@@ -59,6 +61,10 @@ public:
     double pixel_to_y(int) const;
     QSize sizeMargined() const { return QSize(wid, hig); }
     bool redrawing() const { return m_redrawing; }
+    qreal bigPointSize() const { return m_bigPointSize; }
+    void setBigPointSize(qreal size) { if (size != m_bigPointSize) { m_bigPointSize = size; emit bigPointSizeChanged(size); } }
+    qreal supersampling() const { return m_supersampling; }
+    void setSupersampling(qreal super) { if (super != m_supersampling) { m_supersampling = super; emit supersamplingChanged(super); } }
 
 
 public slots:
@@ -76,17 +82,13 @@ signals:
 
     void backgroundColorChanged();
     void zoomChanged();
-    void newPoint(QPointF, QColor);
-    void newBigPoint(QPointF, QColor);
-    void newRect(QRectF, QColor);
-    void newLine(QLineF, QColor);
-    void newClearColumn(qreal);
-    void newString(QPointF, QString, QColor, bool);
     void needRedraw();
     void axisChanged(xyRange);
     void sizeChanged(QSize, bool);
     void redrawingChanged();
     void needRedrawEPS();
+    void bigPointSizeChanged(qreal);
+    void supersamplingChanged(qreal);
 
 
 protected slots:
@@ -124,8 +126,9 @@ protected:
     int xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
     int right;
     int down;
-    int bigPointSize;
+    int m_bigPointSize;
     bool m_redrawing, m_simulating;
+    qreal m_supersampling;
 
     qint64 colorCount[95];
 };
