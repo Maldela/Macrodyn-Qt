@@ -39,6 +39,7 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     connect(this, SIGNAL(sizeChanged(QSize, bool)), m_imagePainter, SLOT(updateParentSize(QSize, bool)));
     connect(this, SIGNAL(needRedrawEPS()), m_imagePainter, SLOT(redrawEPS()));
     connect(this, SIGNAL(supersamplingChanged(qreal)), m_imagePainter, SLOT(updateSupersamplingFactor(qreal)));
+    connect(this, SIGNAL(bigPointSizeChanged(qreal)), m_imagePainter, SLOT(updateBigPointSize(qreal)));
     connect(m_imagePainter, SIGNAL(imageChanged()), this, SLOT(update()));
     connect(m_imagePainter, SIGNAL(imageFinished(QSharedPointer<QImage>)), this, SLOT(newImage(QSharedPointer<QImage>)));
     connect(m_imagePainter, SIGNAL(startRedraw()), this, SLOT(redrawingStarted()));

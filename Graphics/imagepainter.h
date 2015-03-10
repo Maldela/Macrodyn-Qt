@@ -37,6 +37,7 @@ protected slots:
     void updateAxis(const xyRange&);
     void updateParentSize(const QSize&, bool = false);
     void updateSupersamplingFactor(qreal newFactor) { m_superSamplingFactor = newFactor; }
+    void updateBigPointSize(qreal size) { m_bigPointRadius = size; }
     void redrawEPS();
 
 
