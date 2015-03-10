@@ -143,13 +143,13 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     /*draw y-arrow */
     painter->drawPolygon(pointsY);
 
-    // draw zeroline
-    if ((m_axis && m_axis.zeroline[1].isValid()) && (m_axis.min[1] < 0))
-    {
-        painter->setPen(ZEROLINECOLOR);
-        int zl = upmargin+((height())-lowmargin-upmargin) * m_axis.max[1] / (m_axis.max[1]-m_axis.min[1]);
-        painter->drawLine(lmargin, zl, width()-rmargin+5, zl);
-    }
+//    // draw zeroline
+//    if ((m_axis && m_axis.zeroline[1].isValid()) && (m_axis.min[1] < 0))
+//    {
+//        painter->setPen(ZEROLINECOLOR);
+//        int zl = upmargin+((height())-lowmargin-upmargin) * m_axis.max[1] / (m_axis.max[1]-m_axis.min[1]);
+//        painter->drawLine(lmargin, zl, width()-rmargin+5, zl);
+//    }
 
     painter->setPen(AXISLABELCOLOR);
 
@@ -185,14 +185,14 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
            axisMark = ii*(height()-upmargin-lowmargin-zerow)/j;
            painter->drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
            QString markLabel = QString::number(m_axis.min[1]+ii*(-m_axis.min[1])/j);
-           painter->drawText(lmargin-17, height()-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-40, height()-lowmargin-axisMark+5, markLabel);
        }
        for (ii=0;ii<=i;ii++)
        {
            axisMark = ii*zerow/i;
            painter->drawLine(lmargin-5, upmargin+zerow-axisMark, lmargin, upmargin+zerow-axisMark);
            QString markLabel = QString::number(ii*m_axis.max[1]/i);
-           painter->drawText(lmargin-17, upmargin+zerow-axisMark+5, markLabel);
+           painter->drawText(lmargin-40, upmargin+zerow-axisMark+5, markLabel);
        }
     }
     else
@@ -202,7 +202,7 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
            axisMark = i*(height()-upmargin-lowmargin)/4;
            painter->drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
            QString markLabel = m_axis ? QString::number(m_axis.min[1]+i*(m_axis.max[1]-m_axis.min[1])/4) : "";
-           painter->drawText(lmargin-17, height()-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-40, height()-lowmargin-axisMark+5, markLabel);
        }
     }
 // draw color ranges for contourline plot into window
@@ -743,12 +743,11 @@ void MacrodynGraphicsItem::print()
 
 void MacrodynGraphicsItem::savePdf(const QString& path)
 {
-    log()<<"test";
-    QFileDialog dialog;
-    dialog.setWindowModality(Qt::WindowModal);
-    dialog.setAcceptMode(QFileDialog::AcceptSave);
-    dialog.exec();
-    QStringList files = dialog.selectedFiles();
+//    QFileDialog dialog;
+//    dialog.setWindowModality(Qt::WindowModal);
+//    dialog.setAcceptMode(QFileDialog::AcceptSave);
+//    dialog.exec();
+//    QStringList files = dialog.selectedFiles();
 
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);

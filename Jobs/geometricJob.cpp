@@ -41,6 +41,8 @@ geometricJob::geometricJob(baseModel* const bMod,const xyRange& axes,
     if( !yParam )
     fatalError("geometricJob::geometricJob  Can not find y label ",yLabel);
 
+    log()<<"axes.res[0] = "<<axes.res[0];
+    log()<<"axes.res[1] = "<<axes.res[1];
     hash = new hashTable(entries,axes);
     if( !hash )
     fatalError("geometricJob::geometricJob","Can't allocate hash table");

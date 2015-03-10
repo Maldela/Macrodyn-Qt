@@ -184,7 +184,7 @@ int hashTable::storePoint(const QList<qreal*>& stateVars)
     cell=whichCell(stateVars);    		// transform the coordinates into a
 				        // cell id
     bucket=hashFunction(cell);		// perform the hashing
-//    srand48(bucket);			// initialize the random number
+    srand(bucket);			// initialize the random number
 					// generator to solve possible 
                                         // collisions
 
@@ -199,7 +199,7 @@ int hashTable::storePoint(const QList<qreal*>& stateVars)
 	    if( (*value) != cell ) {    // collision
 		if( noBuckets == noEntries )
 		    fatalError("hashTable::storePoint","Hash table overflow");
-//        bucket=(uint)(drand48()*noEntries);	// compute the new
+        bucket=(uint)(((double)rand()/RAND_MAX)*noEntries);	// compute the new
 							// bucket
 		collisions++;
 	    }

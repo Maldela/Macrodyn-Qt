@@ -599,10 +599,10 @@ void SimLoader::runSimulation()
         return;
     }
 
-    if (!m_runJob){
-        saveSimulationfromFile();
+//    if (!m_runJob){
+//        saveSimulationfromFile();
         loadSimulationfromFile(lastFileName);  //if there is no new Job specified, load the last .sim File again
-    }
+//    }
 
     qDebug() << "Run simulation";
 

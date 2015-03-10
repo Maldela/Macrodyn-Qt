@@ -84,11 +84,10 @@ void parameterSpace::simulation()
             {
                 model->iteration(t+1);
                 if( t > limit ) {
-                    if( hash->storePoint(stateVars) )
+                    if( hash->storePoint(stateVars))
                     {
                         hash->resetHashTable();
                         order=-1;    // out of domain, leave it blue
-        //			    log() << *(stateVars[0])
                         break;
                     }
                     if( !(t % tDiv) || (t==(length-1)) )
@@ -103,11 +102,12 @@ void parameterSpace::simulation()
                                 // parameterset
                         }
                         else
-                        hash->resetHashTable();
+                            hash->resetHashTable();
                             // a new analysis has to be done
                             // clean the hash table for the new
                             // simulation results
                     }
+
                 }
             }
             if( screenGraphics )
