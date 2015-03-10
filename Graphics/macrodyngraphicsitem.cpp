@@ -28,21 +28,11 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     m_image = QSharedPointer<QImage>(new QImage);
 
     m_imageThread.start();
-    m_imagePainter = new ImagePainter(this, m_image, &m_listLock, &m_imageMutex);
+    m_imagePainter = new ImagePainter(this, &m_listLock);
     m_imagePainter->moveToThread(&m_imageThread);
 
     connect(this, SIGNAL(widthChanged()), this, SLOT(handleSizeChanged()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(handleSizeChanged()));
-
-    connect(this, SIGNAL(needRedraw()), m_imagePainter, SLOT(redraw()));
-    connect(this, SIGNAL(axisChanged(xyRange)), m_imagePainter, SLOT(updateAxis(xyRange)));
-    connect(this, SIGNAL(sizeChanged(QSize, bool)), m_imagePainter, SLOT(updateParentSize(QSize, bool)));
-    connect(this, SIGNAL(needRedrawEPS()), m_imagePainter, SLOT(redrawEPS()));
-    connect(this, SIGNAL(supersamplingChanged(qreal)), m_imagePainter, SLOT(updateSupersamplingFactor(qreal)));
-    connect(this, SIGNAL(bigPointSizeChanged(qreal)), m_imagePainter, SLOT(updateBigPointSize(qreal)));
-    connect(m_imagePainter, SIGNAL(imageChanged()), this, SLOT(update()));
-    connect(m_imagePainter, SIGNAL(imageFinished(QSharedPointer<QImage>)), this, SLOT(newImage(QSharedPointer<QImage>)));
-    connect(m_imagePainter, SIGNAL(startRedraw()), this, SLOT(redrawingStarted()));
 }
 
 MacrodynGraphicsItem::~MacrodynGraphicsItem()
@@ -71,8 +61,8 @@ void MacrodynGraphicsItem::newImage(QSharedPointer<QImage> newImage)
     m_imageMutex.unlock();
 
     m_redrawing = false;
-
     emit redrawingChanged();
+
     update();
 }
 
@@ -471,7 +461,8 @@ void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, in
     {
         painter->begin(m_image.data());
         painter->setPen(color);
-        path.addEllipse(::transform(m_axis, m_image->size(), pair.first), m_bigPointSize, m_bigPointSize);
+        qreal size = m_bigPointSize * m_supersampling;
+        path.addEllipse(::transform(m_axis, m_image->size(), pair.first), size, size);
         painter->fillPath(path, color);
         painter->end();
     }
@@ -636,7 +627,7 @@ void MacrodynGraphicsItem::setBackgroundColor(const QColor& c)
     if (m_backgroundColor != c)
     {
         m_backgroundColor = c;
-        emit backgroundColorChanged();
+        emit backgroundColorChanged(c);
     }
 }
 

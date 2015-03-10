@@ -80,11 +80,11 @@ public slots:
 
 signals:
 
-    void backgroundColorChanged();
+    void backgroundColorChanged(const QColor&);
     void zoomChanged();
     void needRedraw();
-    void axisChanged(xyRange);
-    void sizeChanged(QSize, bool);
+    void axisChanged(const xyRange&);
+    void sizeChanged(const QSize&, bool);
     void redrawingChanged();
     void needRedrawEPS();
     void bigPointSizeChanged(qreal);

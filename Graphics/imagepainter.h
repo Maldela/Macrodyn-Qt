@@ -21,7 +21,7 @@ class ImagePainter : public QObject
 
 public:
 
-    ImagePainter(MacrodynGraphicsItem *, const QSharedPointer<QImage>&, QReadWriteLock *, QMutex *);
+    ImagePainter(MacrodynGraphicsItem *, QReadWriteLock *);
 
 
 signals:
@@ -38,6 +38,7 @@ protected slots:
     void updateParentSize(const QSize&, bool = false);
     void updateSupersamplingFactor(qreal newFactor) { m_superSamplingFactor = newFactor; redraw(); }
     void updateBigPointSize(qreal size) { m_bigPointRadius = size; redraw(); }
+    void updateBackgroundColor(const QColor& color) { m_backgroundColor = color; redraw(); }
     void redrawEPS();
 
 
@@ -50,14 +51,14 @@ protected:
     void drawString(const QPointF&, const QString&, const QColor&, bool, QPainter * = NULL);
     void clearColumn(qreal, QPainter * = NULL);
 
-    QSharedPointer<QImage> m_image, m_parentImage;
+    QSharedPointer<QImage> m_image;
     QReadWriteLock *m_listLock;
-    QMutex *m_imageMutex;
     MacrodynGraphicsItem *m_parent;
     xyRange m_axis;
     QSize m_parentMarginedSize;
     qreal m_superSamplingFactor;
     qreal m_bigPointRadius;
+    QColor m_backgroundColor;
 };
 
 #endif // IMAGEPAINTER_H

@@ -8,14 +8,24 @@
 using namespace LibBoard;
 
 
-ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, const QSharedPointer<QImage>& parentImage, QReadWriteLock *listLock, QMutex *imageMutex) : QObject()
+ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, QReadWriteLock *listLock) : QObject()
 {
     m_parent = parent;
-    m_parentImage = parentImage;
     m_listLock = listLock;
-    m_imageMutex = imageMutex;
     m_bigPointRadius = 3;
     m_superSamplingFactor = 1;
+    m_backgroundColor = QColor(Qt::white);
+
+    connect(m_parent, SIGNAL(needRedraw()), this, SLOT(redraw()));
+    connect(m_parent, SIGNAL(axisChanged(const xyRange&)), this, SLOT(updateAxis(const xyRange&)));
+    connect(m_parent, SIGNAL(sizeChanged(const QSize&, bool)), this, SLOT(updateParentSize(const QSize&, bool)));
+    connect(m_parent, SIGNAL(needRedrawEPS()), this, SLOT(redrawEPS()));
+    connect(m_parent, SIGNAL(supersamplingChanged(qreal)), this, SLOT(updateSupersamplingFactor(qreal)));
+    connect(m_parent, SIGNAL(bigPointSizeChanged(qreal)), this, SLOT(updateBigPointSize(qreal)));
+    connect(m_parent, SIGNAL(backgroundColorChanged(const QColor&)), this, SLOT(updateBackgroundColor(const QColor&)));
+    connect(this, SIGNAL(imageChanged()), m_parent, SLOT(update()));
+    connect(this, SIGNAL(imageFinished(QSharedPointer<QImage>)), m_parent, SLOT(newImage(QSharedPointer<QImage>)));
+    connect(this, SIGNAL(startRedraw()), m_parent, SLOT(redrawingStarted()));
 }
 
 void ImagePainter::redraw()
@@ -31,7 +41,7 @@ void ImagePainter::redraw()
     if (m_parentMarginedSize.isValid())
     {
         m_image = QSharedPointer<QImage>(new QImage(m_parentMarginedSize, QImage::Format_RGB32));
-        m_image->fill(m_parent->getBackgroundColor());
+        m_image->fill(m_backgroundColor);
         QScopedPointer<QPainter> painter(new QPainter(m_image.data()));
         painter->setRenderHint(QPainter::TextAntialiasing);
 
@@ -76,7 +86,6 @@ void ImagePainter::redraw()
         }
 
         emit imageFinished(m_image);
-        m_parentImage = m_image;
     }
 }
 
@@ -124,7 +133,8 @@ void ImagePainter::drawBigPoint(const QPointF& point, const QColor& color, QPain
 
     QPointF pointTransformed(transform(m_axis, m_parentMarginedSize, point));
     QPainterPath path;
-    path.addEllipse(pointTransformed, m_bigPointRadius, m_bigPointRadius);
+    qreal size = m_bigPointRadius * m_superSamplingFactor;
+    path.addEllipse(pointTransformed, size, size);
     painter->fillPath(path, color);
 
     if (deletePainter) delete painter;
@@ -159,7 +169,7 @@ void ImagePainter::clearColumn(qreal x, QPainter *painter)
 
     int col = transformX(m_axis, m_parentMarginedSize, x);
     int height = m_image->height();
-    painter->setPen(m_parent->getBackgroundColor());
+    painter->setPen(m_backgroundColor);
     painter->drawLine(col, 0, col, height);
 
     if (deletePainter) delete painter;

@@ -150,8 +150,8 @@ ApplicationWindow {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         backgroundColor: "white"
-        supersampling: 1
-        bigPointSize: 10
+        supersampling: 2
+        bigPointSize: 5
 
 //        onWidthChanged: if (width < minGraphWidth) width = minGraphWidth;
 
