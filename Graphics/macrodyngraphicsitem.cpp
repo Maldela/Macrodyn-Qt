@@ -433,10 +433,13 @@ void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
-    painter->begin(m_image.data());
-    painter->setPen(color);
-    painter->drawPoint(::transform(m_axis, m_image->size(), pair.first));
-    painter->end();
+    if (!m_image->isNull())
+    {
+        painter->begin(m_image.data());
+        painter->setPen(color);
+        painter->drawPoint(::transform(m_axis, m_image->size(), pair.first));
+        painter->end();
+    }
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
@@ -463,11 +466,14 @@ void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, in
     QPainterPath path;
 
     m_imageMutex.lock();
-    painter->begin(m_image.data());
-    painter->setPen(color);
-    path.addEllipse(::transform(m_axis, m_image->size(), pair.first), m_bigPointSize, m_bigPointSize);
-    painter->fillPath(path, color);
-    painter->end();
+    if (!m_image->isNull())
+    {
+        painter->begin(m_image.data());
+        painter->setPen(color);
+        path.addEllipse(::transform(m_axis, m_image->size(), pair.first), m_bigPointSize, m_bigPointSize);
+        painter->fillPath(path, color);
+        painter->end();
+    }
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
@@ -499,10 +505,13 @@ void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, 
 
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
-    painter->begin(m_image.data());
-    painter->setPen(color);
-    painter->drawRect(::transform(m_axis, m_image->size(), pair.first));
-    painter->end();
+    if (!m_image->isNull())
+    {
+        painter->begin(m_image.data());
+        painter->setPen(color);
+        painter->drawRect(::transform(m_axis, m_image->size(), pair.first));
+        painter->end();
+    }
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
@@ -550,11 +559,14 @@ void MacrodynGraphicsItem::setString(qreal x, qreal y, const QString& s, const Q
 
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
-    painter->begin(m_image.data());
-    painter->setRenderHint(QPainter::TextAntialiasing);
-    painter->setPen(color);
-    painter->drawText(pointTransformed, s);
-    painter->end();
+    if (!m_image->isNull())
+    {
+        painter->begin(m_image.data());
+        painter->setRenderHint(QPainter::TextAntialiasing);
+        painter->setPen(color);
+        painter->drawText(pointTransformed, s);
+        painter->end();
+    }
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
@@ -569,10 +581,13 @@ void MacrodynGraphicsItem::clearColumn(qreal column)
 {
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
-    painter->begin(m_image.data());
-    painter->setPen(m_backgroundColor);
-    painter->drawLine(transformX(m_axis, m_image->size(), column), 0, transformX(m_axis, m_image->size(), column), m_image->height());
-    painter->end();
+    if (!m_image->isNull())
+    {
+        painter->begin(m_image.data());
+        painter->setPen(m_backgroundColor);
+        painter->drawLine(transformX(m_axis, m_image->size(), column), 0, transformX(m_axis, m_image->size(), column), m_image->height());
+        painter->end();
+    }
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);

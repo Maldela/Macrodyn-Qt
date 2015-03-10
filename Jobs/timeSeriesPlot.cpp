@@ -35,6 +35,8 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod, const QString& label,
           :timeSeriesJob(bMod,label,graph)
 {
     log() << "constructing time series plot..."<<"\n";
+
+    multiplotAdr = NULL;
     qreal xmin, xmax;
 
     QString location =QDir::currentPath();
