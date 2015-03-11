@@ -77,7 +77,7 @@ void MacrodynGraphicsItem::handleSizeChanged()
 void MacrodynGraphicsItem::setXYRange(const xyRange& newAxis)
 {
     qDebug() << "setyxRange";
-    if (newAxis/* && newAxis != m_origAxis*/)
+    if (newAxis)
     {
         m_origAxis = newAxis;
         m_axis = newAxis;
@@ -403,6 +403,7 @@ void MacrodynGraphicsItem::clear_window()
     m_listLock.unlock();
 
     m_imageMutex.lock();
+    *m_image = QImage(wid, hig, QImage::Format_RGB32);
     m_image->fill(m_backgroundColor);
     m_imageMutex.unlock();
 
@@ -500,8 +501,7 @@ void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, 
     if (!m_image->isNull())
     {
         painter->begin(m_image.data());
-        painter->setPen(color);
-        painter->drawRect(::transform(m_axis, m_image->size(), pair.first));
+        painter->fillRect(::transform(m_axis, m_image->size(), pair.first), color);
         painter->end();
     }
     m_imageMutex.unlock();

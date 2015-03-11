@@ -73,7 +73,7 @@ public slots:
     Q_INVOKABLE void unzoom();
     Q_INVOKABLE void click(int x, int y) const { qDebug() << QPointF(pixel_to_x(x), pixel_to_y(y)); }
     Q_INVOKABLE void print();
-    void setSimulating(bool sim) { m_simulating = sim; }
+    void setSimulating(bool sim) { m_simulating = sim; if (!sim) emit needRedraw(); }
 
     Q_INVOKABLE void savePdf(const QString&);
 
