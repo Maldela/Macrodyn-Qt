@@ -216,7 +216,7 @@ void m_timeSeriesPlot::simulation()
     qreal oldX, oldY;
     int  k;
     QTextStream stream(&outFile);
-
+    log()<<"n_i_vals"<<n_i_vals<<"\n";
     for( k=0; k<n_i_vals; k++) {
         model->initialize();                // initialize the model
         *modelVar = i_vals[k];		// pick the next initial value
