@@ -6,17 +6,20 @@
 #include "baseModel.h"
 #include "rand_var.h"
 #include "markov_chain.h"
+#include <gmpxx.h>
 
 
 class tiwisina : public baseModel
 {
     Q_OBJECT
+    mpz_class binomial[101];
+    mpz_t factTemp;
 
 protected:
-    qreal alpha,delta,beta,ybar,r;	// parameter
+    qreal a1,a2,a3,a4,a5,a6,a7,a8;	// parameter
     qreal xt,yt;			// state variables
     qreal x0,y0;			// initial values for x, y
-    qreal pt,rett,absrett,sqrett;    // statistics (prices, returns, absolute returns, sqared returns)
+    qreal x_prime;
 
 
 public:
@@ -34,6 +37,9 @@ public:
                         // numbers of parameters
 
     void receiveParameters(const QList<qreal>&);	// receive parameter values
+
+    mpz_class fact(int n);
+    void bin();
 };
 
 #endif	// _TIWISINAMAP_INCLUDED

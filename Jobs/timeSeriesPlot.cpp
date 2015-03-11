@@ -78,6 +78,7 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod, const QString& label,
       }
 
     }
+    multiplotAdr = NULL;
     log() << "finished";
 }
 
@@ -94,8 +95,8 @@ timeSeriesPlot::timeSeriesPlot(baseModel* const bMod, const QString& label,
 ///////////////////////////////////////////////////////////////////////////////
 timeSeriesPlot::~timeSeriesPlot() {
     if (multiplotAdr) {
-	delete [] multiplotAdr;
-	delete [] multiplotOld;
+    delete [] multiplotAdr;
+    delete [] multiplotOld;
     }
 }
 ///////////////////////////////////////////////////////////////////////////////
