@@ -112,7 +112,7 @@ void tiwisina::iteration(const qint64&)
 
     //printf("%s \n", binomial[2].get_str().c_str());
     for(int i=100; i>59; i--){
-        //x1+=mpz_pow
+        //x1+=mpz_pow_ui(x)
     }
 
 
