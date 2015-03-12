@@ -54,16 +54,13 @@ void MacrodynGraphicsItem::paint(QPainter *painter)
 //    else qDebug() << "axis invalid!";
 }
 
-void MacrodynGraphicsItem::newImage(QSharedPointer<QImage> newImage)
+void MacrodynGraphicsItem::setImage(QSharedPointer<QImage> newImage)
 {
     m_imageMutex.lock();
     m_image = newImage;
     m_imageMutex.unlock();
 
-    m_redrawing = false;
-    emit redrawingChanged();
-
-    update();
+    QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
 }
 
 void MacrodynGraphicsItem::handleSizeChanged()
@@ -422,6 +419,9 @@ void MacrodynGraphicsItem::clear_window()
 void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 {
     QPair<QPointF, QColor> pair(QPointF(v, w), color);
+    m_listLock.lockForWrite();
+    m_points << pair;
+    m_listLock.unlock();
 
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
@@ -435,10 +435,6 @@ void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
-
-    m_listLock.lockForWrite();
-    m_points << pair;
-    m_listLock.unlock();
 }
 
 /******************************************************************************/
@@ -453,6 +449,9 @@ void MacrodynGraphicsItem::setPoint(qreal v, qreal w, const QColor& color)
 void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, int size)
 {
     QPair<QPointF, QColor> pair(QPointF(v, w), color);
+    m_listLock.lockForWrite();
+    m_bigPoints << pair;
+    m_listLock.unlock();
 
     QScopedPointer<QPainter>painter(new QPainter);
     QPainterPath path;
@@ -470,10 +469,6 @@ void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, const QColor& color, in
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
-
-    m_listLock.lockForWrite();
-    m_bigPoints << pair;
-    m_listLock.unlock();
 }
 
 void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, int colorInt, int size)
@@ -495,6 +490,9 @@ void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, int colorInt, int size)
 void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, const QColor& color)
 {
     QPair<QRectF, QColor> pair(QRectF(v, w, width, height), color);
+    m_listLock.lockForWrite();
+    m_rects << pair;
+    m_listLock.unlock();
 
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
@@ -507,10 +505,6 @@ void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, 
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
-
-    m_listLock.lockForWrite();
-    m_rects << pair;
-    m_listLock.unlock();
 }
 
 /******************************************************************************/
@@ -526,6 +520,9 @@ void MacrodynGraphicsItem::setLine(qreal x0, qreal y0, qreal x1, qreal y1, int c
     QColor color;
     colorFromInt(color, colorInt);
     QPair<QLineF, QColor> pair(QLineF(x0, y0, x1, y1), color);
+    m_listLock.lockForWrite();
+    m_lines << pair;
+    m_listLock.unlock();
 
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
@@ -539,15 +536,14 @@ void MacrodynGraphicsItem::setLine(qreal x0, qreal y0, qreal x1, qreal y1, int c
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
-
-    m_listLock.lockForWrite();
-    m_lines << pair;
-    m_listLock.unlock();
 }
 
 void MacrodynGraphicsItem::setString(qreal x, qreal y, const QString& s, const QColor& color, bool trans)
 {
-    QPoint pointTransformed = trans ? ::transform(m_axis, m_image->size(), QPointF(x, y)) : QPoint(x, y);
+    MacroString string(s, QPointF(x, y), color, trans);
+    m_listLock.lockForWrite();
+    m_strings << string;
+    m_listLock.unlock();
 
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
@@ -556,21 +552,21 @@ void MacrodynGraphicsItem::setString(qreal x, qreal y, const QString& s, const Q
         painter->begin(m_image.data());
         painter->setRenderHint(QPainter::TextAntialiasing);
         painter->setPen(color);
+        QPoint pointTransformed = trans ? ::transform(m_axis, m_image->size(), QPointF(x, y)) : QPoint(x, y);
         painter->drawText(pointTransformed, s);
         painter->end();
     }
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
-
-    MacroString string(s, QPointF(x, y), color, trans);
-    m_listLock.lockForWrite();
-    m_strings << string;
-    m_listLock.unlock();
 }
 
 void MacrodynGraphicsItem::clearColumn(qreal column)
 {
+    m_listLock.lockForWrite();
+    m_clearColumns << column;
+    m_listLock.unlock();
+
     QScopedPointer<QPainter>painter(new QPainter);
     m_imageMutex.lock();
     if (!m_image->isNull())
@@ -583,10 +579,6 @@ void MacrodynGraphicsItem::clearColumn(qreal column)
     m_imageMutex.unlock();
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
-
-    m_listLock.lockForWrite();
-    m_clearColumns << column;
-    m_listLock.unlock();
 }
 
 /******************************************************************************/
