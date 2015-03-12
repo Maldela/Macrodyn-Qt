@@ -3,7 +3,13 @@ TEMPLATE = app
 QT += qml quick widgets printsupport
 QMAKE_MAC_SDK = macosx10.9
 INCLUDEPATH += $$PWD/include
-LIBS += -L$$PWD/lib -lgmp
+
+unix:macx {
+    LIBS += -L$$PWD/lib -lgmp
+}
+unix:!macx {
+    LIBS += -lgmp
+}
 
 SOURCES += main.cpp \
     Graphics/macrodyngraphicsitem.cpp \
