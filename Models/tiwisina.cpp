@@ -119,8 +119,6 @@ void tiwisina::iteration(const qint64&)
         temp2=1.0-xtCopy;
         mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
         temp3+=temp1*temp2*binomial[i];
-<<<<<<< HEAD
-<<<<<<< HEAD
     }
     x+=temp3*a1;
     temp3=0;
@@ -182,132 +180,7 @@ void tiwisina::iteration(const qint64&)
         temp3+=temp1*temp2*binomial[i];
         temp2=1.0-xtCopy;
     }
-=======
-    }
-    x+=temp3*a1;
-    temp3=0;
-    for(int i=0; i<=70; i++){
-        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
-        temp2=1.0-xtCopy;
-        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
-        temp3+=temp1*temp2*binomial[i];
-    }
-    x+=(1-temp3)*a2 + a3;
-    xt=x.get_d();
 
-
-    mpf_class xprime = 0;
-
-    for(int i=0; i<=60; i++){
-        if(i-1<0)
-            temp1=0;
-        else{
-            mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i-1);
-            temp1*=i;
-        }
-        temp2=1.0-xtCopy;
-        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
-        temp3+=temp1*temp2*binomial[i];
-
-        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
-        if(99-i<0)
-            temp2=0;
-        else{
-            temp2=1.0-xtCopy;
-            mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(99-i));
-            temp2*=-(100-i);
-        }
-        temp3+=temp1*temp2*binomial[i];
-        temp2=1.0-xtCopy;
-    }
-    xprime+=temp3*a1;
-    temp3=0;
-    for(int i=0; i<=70; i++){
-        if(i-1<0)
-            temp1=0;
-        else{
-            mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i-1);
-            temp1*=i;
-        }
-        temp2=1.0-xtCopy;
-        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
-        temp3+=temp1*temp2*binomial[i];
-
-        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
-        if(99-i<0)
-            temp2=0;
-        else{
-            temp2=1.0-xtCopy;
-            mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(99-i));
-            temp2*=-(100-i);
-        }
-        temp3+=temp1*temp2*binomial[i];
-        temp2=1.0-xtCopy;
-    }
->>>>>>> origin/master
-=======
-    }
-    x+=temp3*a1;
-    temp3=0;
-    for(int i=0; i<=70; i++){
-        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
-        temp2=1.0-xtCopy;
-        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
-        temp3+=temp1*temp2*binomial[i];
-    }
-    x+=(1-temp3)*a2 + a3;
-    xt=x.get_d();
-
-
-    mpf_class xprime = 0;
-
-    for(int i=0; i<=60; i++){
-        if(i-1<0)
-            temp1=0;
-        else{
-            mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i-1);
-            temp1*=i;
-        }
-        temp2=1.0-xtCopy;
-        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
-        temp3+=temp1*temp2*binomial[i];
-
-        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
-        if(99-i<0)
-            temp2=0;
-        else{
-            temp2=1.0-xtCopy;
-            mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(99-i));
-            temp2*=-(100-i);
-        }
-        temp3+=temp1*temp2*binomial[i];
-        temp2=1.0-xtCopy;
-    }
-    xprime+=temp3*a1;
-    temp3=0;
-    for(int i=0; i<=70; i++){
-        if(i-1<0)
-            temp1=0;
-        else{
-            mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i-1);
-            temp1*=i;
-        }
-        temp2=1.0-xtCopy;
-        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
-        temp3+=temp1*temp2*binomial[i];
-
-        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
-        if(99-i<0)
-            temp2=0;
-        else{
-            temp2=1.0-xtCopy;
-            mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(99-i));
-            temp2*=-(100-i);
-        }
-        temp3+=temp1*temp2*binomial[i];
-        temp2=1.0-xtCopy;
-    }
->>>>>>> origin/master
     xprime+=-(1-temp3)*a2 + a3;
     x_prime=xprime.get_d();
 

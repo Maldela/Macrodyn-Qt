@@ -10,18 +10,8 @@ TextArea {
     id: textarea
     readOnly: true
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-//    font.family: "Arial"
-//    font.pointSize: 10
-=======
     font.family: "Arial"
     font.pointSize: 12
->>>>>>> origin/master
-=======
-    font.family: "Arial"
-    font.pointSize: 12
->>>>>>> origin/master
 
     Logger {
         property bool error: false

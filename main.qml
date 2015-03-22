@@ -217,15 +217,8 @@ ApplicationWindow {
         //focus: true
         text: loader.text
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        font.family: "typewriter"
-=======
+
         font.family: "Arial"
->>>>>>> origin/master
-=======
-        font.family: "Arial"
->>>>>>> origin/master
         font.pointSize: 12
 
         //wrapMode: TextEdit.Wrap
