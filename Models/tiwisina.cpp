@@ -46,7 +46,7 @@ tiwisina::tiwisina() : baseModel(1)
 //    //mpz_clear(temp1);
 //}
 
-mpz_class tiwisina::fact(int n){
+mpf_class tiwisina::fact(int n){
   int i;
   mpz_class p = 1;
 
@@ -57,7 +57,7 @@ mpz_class tiwisina::fact(int n){
 }
 
 void tiwisina::bin(){
-    mpz_class temp1 = fact(100);
+    mpf_class temp1 = fact(100);
 
     for(int i=0; i<101; i++){
         binomial[i] = temp1/fact(i)/fact(100-i);
@@ -67,7 +67,7 @@ void tiwisina::bin(){
 
 void tiwisina::iteration(const qint64&)
 {
-    qreal x=xt;
+//    qreal x=xt;
 //    qreal y=yt;
 
 //    xt = a1*(1-pow(x,2));
@@ -110,10 +110,78 @@ void tiwisina::iteration(const qint64&)
 
 
 
-    //printf("%s \n", binomial[2].get_str().c_str());
-    for(int i=100; i>59; i--){
-        //x1+=mpz_pow_ui(x)
+    mpf_class x = 0;
+    mpf_class xtCopy = xt;
+    //printf("vorher xtCopy = %s \n", xtCopy.get_str(1).c_str());
+    mpf_class temp1,temp2,temp3 = 0;
+    for(int i=0; i<=60; i++){
+        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
+        temp2=1.0-xtCopy;
+        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
+        temp3+=temp1*temp2*binomial[i];
     }
+    x+=temp3*a1;
+    temp3=0;
+    for(int i=0; i<=70; i++){
+        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
+        temp2=1.0-xtCopy;
+        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
+        temp3+=temp1*temp2*binomial[i];
+    }
+    x+=(1-temp3)*a2 + a3;
+    xt=x.get_d();
+
+
+    mpf_class xprime = 0;
+
+    for(int i=0; i<=60; i++){
+        if(i-1<0)
+            temp1=0;
+        else{
+            mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i-1);
+            temp1*=i;
+        }
+        temp2=1.0-xtCopy;
+        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
+        temp3+=temp1*temp2*binomial[i];
+
+        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
+        if(99-i<0)
+            temp2=0;
+        else{
+            temp2=1.0-xtCopy;
+            mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(99-i));
+            temp2*=-(100-i);
+        }
+        temp3+=temp1*temp2*binomial[i];
+        temp2=1.0-xtCopy;
+    }
+    xprime+=temp3*a1;
+    temp3=0;
+    for(int i=0; i<=70; i++){
+        if(i-1<0)
+            temp1=0;
+        else{
+            mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i-1);
+            temp1*=i;
+        }
+        temp2=1.0-xtCopy;
+        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
+        temp3+=temp1*temp2*binomial[i];
+
+        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
+        if(99-i<0)
+            temp2=0;
+        else{
+            temp2=1.0-xtCopy;
+            mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(99-i));
+            temp2*=-(100-i);
+        }
+        temp3+=temp1*temp2*binomial[i];
+        temp2=1.0-xtCopy;
+    }
+    xprime+=-(1-temp3)*a2 + a3;
+    x_prime=xprime.get_d();
 
 
 //    xt = a3 + a1*(Power(1 - x,100) + 100*Power(1 - x,99)*x + 4950*Power(1 - x,98)*Power(x,2) + 161700*Power(1 - x,97)*Power(x,3) + 3921225*Power(1 - x,96)*Power(x,4) + 75287520*Power(1 - x,95)*Power(x,5) +

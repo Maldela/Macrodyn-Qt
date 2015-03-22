@@ -10,6 +10,9 @@ TextArea {
     id: textarea
     readOnly: true
 
+    font.family: "Arial"
+    font.pointSize: 12
+
     Logger {
         property bool error: false
 
