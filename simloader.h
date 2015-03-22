@@ -99,6 +99,7 @@ protected:
     xyRange *yDef;
     qreal *plotLines;
     QString figureName;
+    QString modelName;
 
     int m_graphTyp;
     int m_paramCount;

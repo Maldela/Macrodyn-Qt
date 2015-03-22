@@ -1,0 +1,303 @@
+\subsection{Approximation of stable and unstable sets}
+Stable and unstable sets of the fixed point $\xi$ give important
+information on the underlying dynamics. These sets are defined as 
+\begin{eqnarray*}
+W^s(\xi) &=& \{ p \in \R^2: \lim_{t \to \infty}\|F^t(p) - \xi\| = 0\},\\
+W^u(\xi) &=& \{ p \in \R^2: \exists (p_t)_{t\in\Z_-}: p_{t} =
+F(p_{t-1}),\ p_0 = p,\ \lim_{t \to -\infty}\|p_t - \xi\| = 0\}.   
+\end{eqnarray*}
+Here $F^t$ denotes the $t$-th iteration of the map $F$.
+
+For computing these objects numerically we first observe that one
+immediately gets an approximation of the unstable set, by iterating
+points from 
+the unstable subspace of the fixed point $\xi$ in forward time. Due to
+the lack of an inverse, we cannot apply the same approach for
+computing the stable set. However, the following proposition shows an
+alternative. 
+
+\begin{proposition}\label{prop1}
+Let $\delta \in (0,1)$.
+For the map $F$, defined in \eqref{final}, the set
+$$
+S_0 = \left\{
+  \begin{pmatrix}
+   0\\y 
+  \end{pmatrix}
+  : y \in \R \right\}
+$$
+is $F$-invariant in forward time,
+and part of the stable set of the fixed point $\xi$.
+
+Furthermore, the following sets are also part of the stable set:
+$$
+S_t = \left\{p \in \R^2: (F^{t-1}(p))_1 \neq 0 \text{ and } (F^t(p))_1
+  = 0\right\},\quad t = 1,2,\dots, 
+$$
+where $(F^t(p))_1$ denotes the first component of $F^t(p)$.
+\end{proposition}
+
+\begin{proof}
+For $y \in \R$ we get
+$$
+F^t
+\begin{pmatrix}
+0\\y  
+\end{pmatrix}
+= 
+\begin{pmatrix}
+0\\\delta^t y  
+\end{pmatrix}
+\to \xi \ \text{as}\ t \to \infty. 
+$$
+Consequently, $S_0$ is invariant and part of the stable set.
+
+Let $p\in S_t$ for a $t \ge 1$, $t\in \N$. Then $F(p)\in S_{t-1}$
+and thus, $F^{t}(p) \in S_0$, which proves that $p$ lies in the stable
+set.
+ 
+\end{proof}
+
+For computing these sets explicitly, we observe that 
+$$
+\left( F
+\begin{pmatrix}
+x \\ y  
+\end{pmatrix}
+\right)_1 = 0
+\Leftrightarrow
+x = 0 \quad \text{or}\quad y = \alpha+\frac {1-\delta}{\delta},
+$$
+therefore $S_1=\left\{
+  \begin{pmatrix}
+  x  \\ \alpha+\frac {1-\delta}{\delta} 
+  \end{pmatrix}: x \in \R\setminus 0 \right\}$.
+
+Let $x_t = (F^t(x,y))_1$,  $y_t = (F^t(x,y))_2$, $t\in \N$, then
+we can iterate this process further and obtain
+$$
+x_2 = x_1\left(\delta +\frac {1-\delta}{\alpha - y_1}\right) 
+= x_0\left(\delta +\frac {1-\delta}{\alpha - y_0}\right)
+\left(\delta +\frac {1-\delta}{\alpha - y_1}\right).
+$$
+The zeros of the last factor (that are no zeros of the first terms) 
+define $S_2$. 
+The computation of $S_t$ requires to solve  $\left(\delta +\frac
+  {1-\delta}{\alpha - y_{t-1}}\right) = 0$ which is rather involved,
+since one has to replace $y_{t-1}$ iteratively by $y_0$ which gives
+highly nonlinear equations. Figure \ref{F2} shows the results of the
+corresponding algorithm.
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{S0}{$S_0$}
+\psfrag{S1}{$S_1$}
+\psfrag{S2}{$S_2$}
+\psfrag{S3}{$S_3$}
+\psfrag{S4}{$S_4$}
+\psfrag{S5}{$S_5$}
+\psfrag{S6}{$S_6$}
+\psfrag{x}{$x$}
+\psfrag{y}{$y$}
+\epsfig{width = 14cm, file=bilder/stab.eps}  
+\end{center}
+\caption{Stable sets $S_t$ for $t=0,\dots,8$ (left) and $t=0,\dots,40$
+  (right) for the parameters $\delta = 0.8$, $\alpha = -0.04$.\label{F2}}
+\end{figure}
+
+\subsection{Homoclinic orbits}
+The plot (of parts) of the stable and unstable set in Figure \ref{F3} exhibits
+transversal intersections at the parameter $\delta = 0.8$,
+$\alpha = -0.03$. Points $p \in
+W^s(\xi)\cap W^u(\xi)$ are called homoclinic and a corresponding 
+trajectory $(p_t)_{t\in \Z}$ that satisfies $p_0 = p$ and 
+$\lim_{t\to \pm \infty} \|p_t - \xi\| = 0$ is called a homoclinic orbit.
+Numerically, we find these objects by solving boundary value
+problems, cf.\ \cite{bk97b, bhkz04}.
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{x}{$x$}
+\psfrag{y}{$y$}
+\psfrag{xi}{$\xi$}
+\epsfig{width = 10cm, file=bilder/hom1.eps}  
+\end{center}
+\caption{Approximation of stable (green) and unstable (red) sets of the
+  fixed point $\xi$ and a homoclinic orbit for 
+  $\delta = 0.8$, $\alpha = -0.03$. On the blue line $LC_{-1}$
+  the Jacobian $DF(p)$ is non-invertible.\label{F3}}
+\end{figure}
+
+It is well known from the celebrated
+Smale-{\v{S}}il'nikov-Birkhoff-Theorem that the dynamics in a
+neighborhood of a homoclinic orbit is chaotic, cf.\ \cite{sm67, sh67}.
+In case the dynamical system is invertible, the Shadowing Lemma, cf.\
+\cite{py99, p00}, guarantees the existence of 
+multi-humped orbits with short and long moderate phases, see Figure
+\ref{F4}. 
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{xn}{$\|p_t\|$}
+\psfrag{n}{$t$}
+\psfrag{s}{\small{short}}
+\psfrag{l}{\ \hspace{-5mm} \small{long moderate phase}}
+\epsfig{width=10cm, file=bilder/orb2.eps}
+\end{center}
+\caption{Multi-humped orbits $(p_t)_{t\in\Z}$ exist 
+  in a neighborhood of a homoclinic orbit that revisits a small neighborhood
+  of the fixed point infinitely many times.\label{F4}}
+\end{figure}
+
+In non-invertible systems, similar results hold true as long as the
+Jacobian $DF(p_t)$, $t\in \Z$ is invertible along all points of the
+homoclinic orbit, see \cite{sw90, ka94, sa00}. This condition is
+satisfied in Figure \ref{F3} since there is no intersection between
+the blue line and the points of the orbit. 
+Consequently, transversal intersections at
+one point of the orbit result in transversal intersections at each
+point (this is not true if $DF(p_t)$ is non-invertible for at
+least one $t \in \Z$). 
+
+We detect the parameter range, for
+which homoclinic orbits exist. For this task, we start with the orbit,
+shown in Figure \ref{F3}, and apply for fixed $\delta =
+0.8$ pseudo-arclength-continuation \cite{ag90} w.r.t.\ the parameter
+$\alpha$. Figure \ref{F5} displays the 
+ resulting orbits $p_t(\alpha)$ over their amplitude
+$$
+\mathrm{amp} (p_t)_{t\in\Z} := \left(\sum_{t\in\Z} \|p_t-\xi\|^2\right)^\frac
+12.
+$$
+Consequently, one can read off from Figure \ref{F5} that homoclinic
+orbits exist for $\alpha > \bar \alpha \approx -0.046$.
+
+\begin{figure}
+\begin{center}
+\psfrag{amp}{$\mathrm{amp}$}
+\psfrag{l}{$\alpha$}
+\epsfig{width=10cm, file=bilder/cont2.eps}
+\end{center}
+\caption{Continuation of homoclinic orbits.\label{F5}}
+\end{figure}
+ 
+Note that homoclinic orbits w.r.t.\ the hyperbolic fixed point $\xi$
+are unstable objects that will typically not show up in simulations.
+But, as we will see, this situation changes with the occurrence of a chaotic
+attractor. 
+
+\subsection{An invariant curve and its breakdown}
+At the Neimark-Sacker bifurcation, see Figure \ref{F1}, an invariant
+curve is born that takes over the stability from the two-periodic
+orbit. For $\delta = 0.8$ and $\alpha = -0.042$ an
+attracting invariant curve exists, see Figure \ref{F6}. Thus,
+orbits that return to a small neighborhood of the fixed point $\xi$
+cannot be observed via numerical simulation. 
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{x}{$x$}
+\psfrag{y}{$y$}
+\epsfig{width = 10cm, file=bilder/invar.eps}  
+\end{center}
+\caption{Parts of the stable set of $\xi$ (green) and an attracting
+  invariant curve (black) for $\delta = 0.8$, $\alpha = -0.042$.\label{F6}}
+\end{figure}
+
+If we increase $\alpha$ further, the invariant curve starts to break up. 
+Figure \ref{F7} shows in red a hyperbolic orbit of period $30$
+together with its unstable manifold. This manifold converges towards a
+stable orbit of period $30$ (black points). 
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{x}{$x$}
+\psfrag{y}{$y$}
+\epsfig{width = 12cm, file=bilder/aufbruch.eps}  
+\end{center}
+\caption{A hyperbolic orbit of period $30$ (red), its stable manifold
+  (green) and a stable orbit of period $30$ (black) for $\delta =
+  0.8$, $\alpha = -0.0397$.\label{F7}} 
+\end{figure}
+
+For this parameter setup, we also find orbits of period 16, see Figure
+\ref{F8} and \ref{F9} for the corresponding bifurcation diagrams.
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{a}{$\alpha$}
+\psfrag{p}{period}
+\epsfig{width = 8cm, file=bilder/zunge1d.eps}  
+\end{center}
+\caption{Occurrence of periodic orbits for $\delta = 0.8$.\label{F8}} 
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{a}{$\alpha$}
+\psfrag{d}{$\delta$}
+\epsfig{width = 10cm, file=bilder/zunge2.eps}  
+\end{center}
+\caption{Periodic orbits for various values of $\alpha$ and
+  $\delta$.\label{F9}}  
+\end{figure}
+
+
+
+
+Finally this leads to a breakup of the invariant curve.
+After this breakup, the stable set of the fixed point $0$ conquers any
+neighborhood of the two-periodic orbit and thus, a heteroclinic
+connection between these two objects exists, see Figure \ref{F16}.
+Note that this connection is not possible in the presents of an
+attracting invariant curve. 
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{a}{$\alpha$}
+\psfrag{d}{$\delta$}
+\epsfig{width = 12cm, file=bilder/het2.eps}  
+\end{center}
+\caption{Heteroclinic connection between the
+  two-periodic orbit and 
+  the fixed point $0$ w.r.t. $F^2$ for $\delta = 0.8$, $\alpha =
+  -0.03$ and parts of the stable set $S_i$ for $i \in \{0,\dots,
+  40\}$.\label{F16}}    
+\end{figure}
+
+The breakup of the invariant curve results in the occurrence  of a (chaotic)
+attractor and the unstable set of the fixed point $\xi$
+is part of this attractor. Consequently, all homoclinic
+orbits lie in this attracting set as well. 
+The homoclinic structure is now visible via forward iteration
+and orbits approach repeatedly a small neighborhood of the fixed
+point $\xi$, cf.\ Figure \ref{F15}.
+
+\begin{figure}[H]
+\begin{center}
+\epsfig{width = 12cm, file=bilder/chaos.eps}  
+\end{center}
+\caption{Stable set (green) unstable set (red) and the orbit with
+  starting point $(0.01, 0.01)$ (black) for $\delta = 0.8$, $\alpha =
+  -0.038$. \label{F15}} 
+\end{figure}
+
+
+For the parameters $\delta = 0.8$, $\alpha = -0.038$, we compute an
+orbit $(x_t)_{t \le T}$ of length $T=5\cdot 10^{10}$. A moderate
+interval $[a,b]\subset \N$ is maximal with respect to $\|x_t\| \le
+0.02$ for all $t \in [a,b]$. In Figure \ref{F10}, we count the number
+$I(\ell)$ of moderate intervals of length $\ell$ for the trajectory
+$(x_t)_{n \le T}$.  
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{n}{$\ell$}
+\psfrag{t}{$I(\ell)$}
+\epsfig{width=10cm, file=bilder/chart.eps}  
+\end{center}
+\caption{Number of moderate intervals of length $\ell$, dented by $I(\ell)$ 
+ for an orbit of length $N=5\cdot 10^{10}$ and $\delta =
+  0.8$, $\alpha = -0.038$.\label{F10}}  
+\end{figure}
+

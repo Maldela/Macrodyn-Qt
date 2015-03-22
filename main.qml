@@ -66,6 +66,10 @@ ApplicationWindow {
                 onClicked: loader.saveSimulationfromFile(); //fileDialogSave.open();
             }
             ToolButton {
+                iconSource: "pdfspeichern.png"
+                onClicked:  loader.savePdf();
+            }
+            ToolButton {
                 iconSource: "run.png"
                 onClicked: loader.runSimulation();
             }
@@ -210,10 +214,17 @@ ApplicationWindow {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
-        focus: true
+        //focus: true
         text: loader.text
 
-        wrapMode: TextEdit.Wrap
+<<<<<<< HEAD
+        font.family: "typewriter"
+=======
+        font.family: "Arial"
+>>>>>>> origin/master
+        font.pointSize: 12
+
+        //wrapMode: TextEdit.Wrap
 
         onWidthChanged: if (width < minEditorWidth) width = minEditorWidth;
     }

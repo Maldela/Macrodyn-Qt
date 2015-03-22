@@ -99,8 +99,10 @@ baseModel* getPubModel(const QString& modelTyp)
         return new rSolow;
     if (modelTyp == "boehmhuels")
         return new boehmhuels;
+    #ifndef Q_WS_WIN
     if (modelTyp == "tiwisina")
         return new tiwisina;
+    #endif
 
     error("macrodyn::getPubModel(const char*): Model %s not implemented yet", modelTyp);
 
