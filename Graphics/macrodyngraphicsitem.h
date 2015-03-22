@@ -42,14 +42,14 @@ public:
     void set_axis(int, qreal, qreal);	// set max & min of axis
     void get_axis(int, qreal*, qreal*) const; // get max & min of axis
     void clear_window();		// clear output window
-    void setPoint(qreal, qreal, const QColor&);
+    void setPoint(qreal, qreal, const QColor&);                                         //Threadsafe
                     // highlights a pixel on the screen
                     // according to the given point
-    void setBigPoint(qreal, qreal, const QColor&, int);
-    void setBigPoint(qreal, qreal, int, int);
-    void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
-    void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen
-    void setString(qreal, qreal, const QString&, const QColor&, bool = true);  // should be displayed on the screen
+    void setBigPoint(qreal, qreal, const QColor&, int);                                 //Threadsafe
+    void setBigPoint(qreal, qreal, int, int);                                           //Threadsafe
+    void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);     //Threadsafe
+    void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen         //Threadsafe
+    void setString(qreal, qreal, const QString&, const QColor&, bool = true);           //Threadsafe
     inline QColor getBackgroundColor() const { return m_backgroundColor; }
     void setBackgroundColor(const QColor&);
     qreal getZoom() const;
@@ -73,7 +73,7 @@ public slots:
     Q_INVOKABLE void unzoom();
     Q_INVOKABLE void click(int x, int y) const { qDebug() << QPointF(pixel_to_x(x), pixel_to_y(y)); }
     Q_INVOKABLE void print();
-    void setSimulating(bool sim) { m_simulating = sim; if (!sim) emit needRedraw(); }
+    void setSimulating(bool sim) { m_simulating = sim; }
 
     Q_INVOKABLE void savePdf(const QString&);
 
@@ -94,14 +94,14 @@ signals:
 protected slots:
 
     void handleSizeChanged();
-    void newImage(QSharedPointer<QImage>);
-    void redrawingStarted() { if (!m_redrawing) { m_redrawing = true; emit redrawingChanged(); } }
+    void updateRedrawing(bool redrawing) { if (redrawing != m_redrawing) { m_redrawing = redrawing; emit redrawingChanged(); } }
 
 
 protected:
 
     void paint(QPainter *painter);
-    void drawAxis(QPainter * = NULL);    // needs locking of axisLock before calling!
+    void drawAxis(QPainter * = NULL);
+    void setImage(QSharedPointer<QImage> image); //Threadsafe
 
     QSharedPointer<QImage> m_image;
     ImagePainter *m_imagePainter;
@@ -112,7 +112,7 @@ protected:
     QList<qreal> m_clearColumns;
     QList<MacroString> m_strings;
     mutable QReadWriteLock m_listLock;
-    mutable QMutex m_imageMutex;
+    mutable QMutex m_imageMutex, m_redrawingMutex;
     int m_job;
     xyRange m_origAxis;
     xyRange m_axis;

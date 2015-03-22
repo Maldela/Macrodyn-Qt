@@ -24,8 +24,7 @@ ImagePainter::ImagePainter(MacrodynGraphicsItem *parent, QReadWriteLock *listLoc
     connect(m_parent, SIGNAL(bigPointSizeChanged(qreal)), this, SLOT(updateBigPointSize(qreal)));
     connect(m_parent, SIGNAL(backgroundColorChanged(const QColor&)), this, SLOT(updateBackgroundColor(const QColor&)));
     connect(this, SIGNAL(imageChanged()), m_parent, SLOT(update()));
-    connect(this, SIGNAL(imageFinished(QSharedPointer<QImage>)), m_parent, SLOT(newImage(QSharedPointer<QImage>)));
-    connect(this, SIGNAL(startRedraw()), m_parent, SLOT(redrawingStarted()));
+    connect(this, SIGNAL(redrawingChanged(bool)), m_parent, SLOT(updateRedrawing(bool)));
 }
 
 void ImagePainter::redraw()
@@ -36,10 +35,10 @@ void ImagePainter::redraw()
         return;
     }
 
-    emit startRedraw();
-
     if (m_parentMarginedSize.isValid())
     {
+        emit redrawingChanged(true);
+
         m_image = QSharedPointer<QImage>(new QImage(m_parentMarginedSize, QImage::Format_RGB32));
         m_image->fill(m_backgroundColor);
         QScopedPointer<QPainter> painter(new QPainter(m_image.data()));
@@ -85,7 +84,9 @@ void ImagePainter::redraw()
             drawString(string.point, string.string, string.color, string.transform, painter.data());
         }
 
-        emit imageFinished(m_image);
+        listLocker.unlock();
+        m_parent->setImage(m_image);
+        emit redrawingChanged(false);
     }
 }
 

@@ -27,8 +27,7 @@ public:
 signals:
 
     void imageChanged();
-    void imageFinished(QSharedPointer<QImage>);
-    void startRedraw();
+    void redrawingChanged(bool);
 
 
 protected slots:

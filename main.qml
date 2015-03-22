@@ -218,7 +218,11 @@ ApplicationWindow {
         text: loader.text
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         font.family: "typewriter"
+=======
+        font.family: "Arial"
+>>>>>>> origin/master
 =======
         font.family: "Arial"
 >>>>>>> origin/master
