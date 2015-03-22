@@ -122,12 +122,12 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     if (!painter) painter = new QPainter(m_image.data());
     painter->setPen(AXISCOLOR);
     painter->setBrush(AXISCOLOR);
-    painter->drawLine(lmargin, height()-lowmargin, width()-rmargin+5, height()-lowmargin); /* X */
-    pointsX.translate(width()-rmargin+10, height()-lowmargin);/*set starting point for x-arrow*/
+    painter->drawLine(lmargin, hig+upmargin+lowmargin-lowmargin, wid+lmargin+rmargin-rmargin+5, hig+upmargin+lowmargin-lowmargin); /* X */
+    pointsX.translate(wid+lmargin+rmargin-rmargin+10, hig+upmargin+lowmargin-lowmargin);/*set starting point for x-arrow*/
     /*draw x-arrow */
     painter->drawPolygon(pointsX);
 
-    painter->drawLine(lmargin, height()-lowmargin, lmargin, upmargin-10); /* Y */
+    painter->drawLine(lmargin, hig+upmargin+lowmargin-lowmargin, lmargin, upmargin-10); /* Y */
     pointsY.translate(lmargin, upmargin-10);/*set starting point for y-arrow*/
     /*draw y-arrow */
     painter->drawPolygon(pointsY);
@@ -137,13 +137,13 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
 //    {
 //        painter->setPen(ZEROLINECOLOR);
 //        int zl = upmargin+((height())-lowmargin-upmargin) * m_axis.max[1] / (m_axis.max[1]-m_axis.min[1]);
-//        painter->drawLine(lmargin, zl, width()-rmargin+5, zl);
+//        painter->drawLine(lmargin, zl, wid+lmargin+rmargin-rmargin+5, zl);
 //    }
 
     painter->setPen(AXISLABELCOLOR);
 
     /* Put Label on axis */
-    painter->drawText(width()-rmargin+2, height()-lowmargin-5, intxLabel);
+    painter->drawText(wid+lmargin+rmargin-rmargin+2, hig+upmargin+lowmargin-lowmargin-5, intxLabel);
     painter->drawText(5, upmargin-15, intyLabel);
 
     painter->setPen(XICSMARKSCOLOR);
@@ -151,17 +151,17 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     /* Draw Marks on horizontal axis */
     for (i=0; i<=4; i++)
     {
-        axisMark = i*((width())-lmargin-rmargin)/4;
+        axisMark = i*((wid+lmargin+rmargin)-lmargin-rmargin)/4;
         QString markLabel = m_axis ? QString::number(m_axis.min[0]+i*(m_axis.max[0]-m_axis.min[0])/4) : "";
-        painter->drawLine(lmargin+axisMark, height()-lowmargin, lmargin+axisMark, height()-lowmargin+5);
-        painter->drawText(lmargin+axisMark-10, height()-lowmargin+18, markLabel);
+        painter->drawLine(lmargin+axisMark, hig+upmargin+lowmargin-lowmargin, lmargin+axisMark, hig+upmargin+lowmargin-lowmargin+5);
+        painter->drawText(lmargin+axisMark-10, hig+upmargin+lowmargin-lowmargin+18, markLabel);
     }
 
     /* Draw Marks on vertical axis */
     int j,ii;
     if (m_axis && m_axis.zeroline.at(1).isValid() && m_axis.min.at(1) < 0)
     {
-       int zerow = (int)(((height())-lowmargin-upmargin)*m_axis.max[1]/(m_axis.max[1]-m_axis.min[1]));
+       int zerow = (int)(((hig+upmargin+lowmargin)-lowmargin-upmargin)*m_axis.max[1]/(m_axis.max[1]-m_axis.min[1]));
        if ((m_axis.max[1]/(-m_axis.min[1]))>3.8) {i=4;j=1;}
        else if((m_axis.max[1]/(-m_axis.min[1]))>1.9) {i=4;j=2;}
        else if((m_axis.max[1]/(-m_axis.min[1]))>1.3) {i=3;j=2;}
@@ -171,10 +171,10 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
        else {i=1;j=4;}
        for (ii=0;ii<j;ii++)
        {
-           axisMark = ii*(height()-upmargin-lowmargin-zerow)/j;
-           painter->drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
+           axisMark = ii*(hig+upmargin+lowmargin-upmargin-lowmargin-zerow)/j;
+           painter->drawLine(lmargin-5, hig+upmargin+lowmargin-lowmargin-axisMark, lmargin, hig+upmargin+lowmargin-lowmargin-axisMark);
            QString markLabel = QString::number(m_axis.min[1]+ii*(-m_axis.min[1])/j);
-           painter->drawText(lmargin-40, height()-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-40, hig+upmargin+lowmargin-lowmargin-axisMark+5, markLabel);
        }
        for (ii=0;ii<=i;ii++)
        {
@@ -188,10 +188,10 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     {
        for (i=0; i<=4; i++)
        {
-           axisMark = i*(height()-upmargin-lowmargin)/4;
-           painter->drawLine(lmargin-5, height()-lowmargin-axisMark, lmargin, height()-lowmargin-axisMark);
+           axisMark = i*(hig+upmargin+lowmargin-upmargin-lowmargin)/4;
+           painter->drawLine(lmargin-5, hig+upmargin+lowmargin-lowmargin-axisMark, lmargin, hig+upmargin+lowmargin-lowmargin-axisMark);
            QString markLabel = m_axis ? QString::number(m_axis.min[1]+i*(m_axis.max[1]-m_axis.min[1])/4) : "";
-           painter->drawText(lmargin-40, height()-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-40, hig+upmargin+lowmargin-lowmargin-axisMark+5, markLabel);
        }
     }
 // draw color ranges for contourline plot into window
@@ -209,7 +209,7 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
 //        int yPosStep=(WINHEIGHT-upmargin-lowmargin)/(cqMax+17-cqMin+1+1);
 //        char_chain = QString("color scale of").append(axis.label[2]);
 //        XDrawString(base->displ,buffer_pix,base->ColorGC[29],
-//                (width()),yPosCount,
+//                (wid+lmargin+rmargin),yPosCount,
 //                char_chain,strlen(char_chain));
 //        for (i=cqMin;i<=cqMax+17;i++)
 //        { // paint color map
@@ -749,21 +749,28 @@ void MacrodynGraphicsItem::savePdf(const QString& path)
 //    dialog.setAcceptMode(QFileDialog::AcceptSave);
 //    dialog.exec();
 //    QStringList files = dialog.selectedFiles();
+    int widTemp = wid;
+    int higTemp = hig;
+    wid = 800;
+    hig= 800;
 
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QSizeF(800, 800), QPrinter::Millimeter);
     printer.setOutputFileName(path);
     QPainter painter(&printer);
-    double xscale = printer.pageRect().width()/double(width());
-    double yscale = printer.pageRect().height()/double(height());
+    double xscale = 0.9*printer.pageRect().width()/double(wid);
+    double yscale = 0.9*printer.pageRect().height()/double(hig);
     double scale = qMin(xscale, yscale);
-    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
-                       printer.paperRect().y() + printer.pageRect().height()/2);
+////    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+////                       printer.paperRect().y() + printer.pageRect().height()/2);
     painter.scale(scale, scale);
-    painter.translate(-width()/2, -height()/2);
+    painter.translate(10, 20);
     QFont font = painter.font();
     font.setPixelSize(12);
     painter.setFont(font);
+
     paint(&painter);
+    wid = widTemp;
+    hig = higTemp;
 }

@@ -1,4 +1,4 @@
-
+#ifndef Q_WS_WIN
 
 #ifndef _TIWISINAMAP_INCLUDED
 #define _TIWISINAMAP_INCLUDED
@@ -12,14 +12,14 @@
 class tiwisina : public baseModel
 {
     Q_OBJECT
-    mpz_class binomial[101];
-    mpz_t factTemp;
 
 protected:
     qreal a1,a2,a3,a4,a5,a6,a7,a8;	// parameter
     qreal xt,yt;			// state variables
     qreal x0,y0;			// initial values for x, y
     qreal x_prime;
+    mpf_class binomial[101];
+    mpf_t factTemp;
 
 
 public:
@@ -38,10 +38,10 @@ public:
 
     void receiveParameters(const QList<qreal>&);	// receive parameter values
 
-    mpz_class fact(int n);
+    mpf_class fact(int n);
     void bin();
 };
 
 #endif	// _TIWISINAMAP_INCLUDED
-
+#endif  //Q_WS_WIN
 // eof

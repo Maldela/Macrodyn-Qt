@@ -145,9 +145,9 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     }
 
     QTextStream stream(&file);
-    QString model;
-    stream >> model;
-    setModel(model);
+
+    stream >> modelName;
+    setModel(modelName);
 
     if (m_modelPointer)
     {
@@ -760,8 +760,12 @@ void SimLoader::savePdf()
     QString path = lastFileName;
     path.chop(lastFileName.length()-lastFileName.lastIndexOf("/"));
     path.append("/Figures/");
-    path.append(lastFileName.right(lastFileName.length()-lastFileName.lastIndexOf("/")-1));
-    path.chop(4);
+    //path.append(lastFileName.right(lastFileName.length()-lastFileName.lastIndexOf("/")-1));
+    path.append(modelName);
+    char tag[3];
+    sprintf(tag, "%d", m_conBlock.graphTyp);
+    path.append(tag);
+    //path.chop(4);
     path.append(figureName);
 //    path.append("pdf");
     log()<<path;
