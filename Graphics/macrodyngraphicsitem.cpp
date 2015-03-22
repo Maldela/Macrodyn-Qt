@@ -499,7 +499,9 @@ void MacrodynGraphicsItem::setRect(qreal v, qreal w, qreal width, qreal height, 
     if (!m_image->isNull())
     {
         painter->begin(m_image.data());
-        painter->fillRect(::transform(m_axis, m_image->size(), pair.first), color);
+        QRect rectTransformed = ::transform(m_axis, m_image->size(), pair.first);
+        rectTransformed.setHeight(rectTransformed.height()-1);
+        painter->fillRect(rectTransformed, color);
         painter->end();
     }
     m_imageMutex.unlock();
