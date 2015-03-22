@@ -1,0 +1,24 @@
+boehmhuels
+
+-0.060	0.5
+-0.5	0.5	0.01
+0.2	0.5
+10000
+
+31
+
+alpha	-0.05988	-0.05980 500
+xt	-.7	.7 500
+beta 	0	0
+
+0	delta05alpha06x0.pdf
+
+2
+xt	-20.0	20.0	1000
+yt	0	20.0	1000
+
+
+alpha	>> delta
+beta	>> ybar		>> r
+x0	>> y0
+length
