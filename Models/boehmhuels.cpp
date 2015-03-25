@@ -60,6 +60,20 @@ void boehmhuels::iteration(const qint64&)
     rett= pt/p-1;
     if(rett>0.){absrett= rett;}else{absrett= -rett;}
     sqrett= rett*rett;
+
+    qreal dummyx;
+    qreal dummychi;
+    t= t+1;
+    long int T0;
+    T0= floor(0.05*length);
+    if(t>=T0){
+    if(alpha+((1-delta)/(1+delta))>=0){
+        dummyx= 0.5*(1-delta)*sqrt(alpha+(1-delta)/(1+delta));
+        if(-dummyx<=xt && xt<=dummyx){dummychi=1;}else{dummychi=0;}
+        rotxtcnt= rotxtcnt+dummychi;
+        if(t>T0){rotxt= rotxtcnt/(1.0*(t-T0));}
+    }else{rotxt= 0.0;}
+    }
 }
     
     
@@ -81,6 +95,9 @@ void boehmhuels::initialize()
 	xt = x0;
 	yt = y0;
     pt = 1.0;
+    t  = 0;
+    rotxtcnt= 0;
+    rotxt= 0.0;
 }
  
     
@@ -143,6 +160,8 @@ qreal* boehmhuels::setLabels(const QString& label)
         return( &absrett );
     if( label=="sqrett" )
         return( &sqrett );
+    if( label=="rotxt" )
+        return( &rotxt );
     return NULL;
 }
 

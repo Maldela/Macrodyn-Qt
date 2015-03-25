@@ -7,8 +7,8 @@ boehmhuels
 
 31
 
-alpha	-0.05988	-0.05980 500
-xt	-.7	.7 500
+alpha	-0.6	0.7 500
+rotxt	0	10 500
 beta 	0	0
 
 0	delta05alpha06x0.pdf

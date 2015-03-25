@@ -41,6 +41,8 @@ protected:
     qreal xt,yt;			// state variables
     qreal x0,y0;			// initial values for x, y
     qreal pt,rett,absrett,sqrett;    // statistics (prices, returns, absolute returns, sqared returns)
+    qreal rotxt,rotxtcnt;            // rotation no of xt; approx. limit
+    long int t;                     // iteration
 
 
 public:
