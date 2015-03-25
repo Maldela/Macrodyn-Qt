@@ -23,6 +23,8 @@ MacrodynGraphicsItem::MacrodynGraphicsItem(QQuickItem *parent) : QQuickPaintedIt
     rmargin = RMARGIN;
     lowmargin = LOWMARGIN;
     upmargin = UPMARGIN;
+    pdfTextMarginx = 0;
+    pdfTextMarginy = 0;
     m_supersampling = 1;
     m_backgroundColor = QColor(Qt::white);
     m_image = QSharedPointer<QImage>(new QImage);
@@ -122,12 +124,12 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     if (!painter) painter = new QPainter(m_image.data());
     painter->setPen(AXISCOLOR);
     painter->setBrush(AXISCOLOR);
-    painter->drawLine(lmargin, hig+upmargin+lowmargin-lowmargin, wid+lmargin+rmargin-rmargin+5, hig+upmargin+lowmargin-lowmargin); /* X */
-    pointsX.translate(wid+lmargin+rmargin-rmargin+10, hig+upmargin+lowmargin-lowmargin);/*set starting point for x-arrow*/
+    painter->drawLine(lmargin, hig+upmargin, wid+lmargin+5, hig+upmargin); /* X */
+    pointsX.translate(wid+lmargin+10, hig+upmargin);/*set starting point for x-arrow*/
     /*draw x-arrow */
     painter->drawPolygon(pointsX);
 
-    painter->drawLine(lmargin, hig+upmargin+lowmargin-lowmargin, lmargin, upmargin-10); /* Y */
+    painter->drawLine(lmargin, hig+upmargin, lmargin, upmargin-10); /* Y */
     pointsY.translate(lmargin, upmargin-10);/*set starting point for y-arrow*/
     /*draw y-arrow */
     painter->drawPolygon(pointsY);
@@ -143,7 +145,7 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     painter->setPen(AXISLABELCOLOR);
 
     /* Put Label on axis */
-    painter->drawText(wid+lmargin+rmargin-rmargin+2, hig+upmargin+lowmargin-lowmargin-5, intxLabel);
+    painter->drawText(wid+lmargin+2, hig+upmargin-5, intxLabel);
     painter->drawText(5, upmargin-15, intyLabel);
 
     painter->setPen(XICSMARKSCOLOR);
@@ -153,15 +155,15 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
     {
         axisMark = i*((wid+lmargin+rmargin)-lmargin-rmargin)/4;
         QString markLabel = m_axis ? QString::number(m_axis.min[0]+i*(m_axis.max[0]-m_axis.min[0])/4) : "";
-        painter->drawLine(lmargin+axisMark, hig+upmargin+lowmargin-lowmargin, lmargin+axisMark, hig+upmargin+lowmargin-lowmargin+5);
-        painter->drawText(lmargin+axisMark-10, hig+upmargin+lowmargin-lowmargin+18, markLabel);
+        painter->drawLine(lmargin+axisMark, hig+upmargin, lmargin+axisMark, hig+upmargin+5);
+        painter->drawText(lmargin+axisMark-10, hig+upmargin+18+pdfTextMarginy, markLabel);
     }
 
     /* Draw Marks on vertical axis */
     int j,ii;
     if (m_axis && m_axis.zeroline.at(1).isValid() && m_axis.min.at(1) < 0)
     {
-       int zerow = (int)(((hig+upmargin+lowmargin)-lowmargin-upmargin)*m_axis.max[1]/(m_axis.max[1]-m_axis.min[1]));
+       int zerow = (int)((hig)*m_axis.max[1]/(m_axis.max[1]-m_axis.min[1]));
        if ((m_axis.max[1]/(-m_axis.min[1]))>3.8) {i=4;j=1;}
        else if((m_axis.max[1]/(-m_axis.min[1]))>1.9) {i=4;j=2;}
        else if((m_axis.max[1]/(-m_axis.min[1]))>1.3) {i=3;j=2;}
@@ -171,27 +173,27 @@ void MacrodynGraphicsItem::drawAxis(QPainter *painter)
        else {i=1;j=4;}
        for (ii=0;ii<j;ii++)
        {
-           axisMark = ii*(hig+upmargin+lowmargin-upmargin-lowmargin-zerow)/j;
-           painter->drawLine(lmargin-5, hig+upmargin+lowmargin-lowmargin-axisMark, lmargin, hig+upmargin+lowmargin-lowmargin-axisMark);
+           axisMark = ii*(hig-zerow)/j;
+           painter->drawLine(lmargin-5, hig+upmargin-axisMark, lmargin, hig+upmargin-axisMark);
            QString markLabel = QString::number(m_axis.min[1]+ii*(-m_axis.min[1])/j);
-           painter->drawText(lmargin-40, hig+upmargin+lowmargin-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-40+pdfTextMarginx, hig+upmargin-axisMark+5, markLabel);
        }
        for (ii=0;ii<=i;ii++)
        {
            axisMark = ii*zerow/i;
            painter->drawLine(lmargin-5, upmargin+zerow-axisMark, lmargin, upmargin+zerow-axisMark);
            QString markLabel = QString::number(ii*m_axis.max[1]/i);
-           painter->drawText(lmargin-40, upmargin+zerow-axisMark+5, markLabel);
+           painter->drawText(lmargin-40+pdfTextMarginx, upmargin+zerow-axisMark+5, markLabel);
        }
     }
     else
     {
        for (i=0; i<=4; i++)
        {
-           axisMark = i*(hig+upmargin+lowmargin-upmargin-lowmargin)/4;
-           painter->drawLine(lmargin-5, hig+upmargin+lowmargin-lowmargin-axisMark, lmargin, hig+upmargin+lowmargin-lowmargin-axisMark);
+           axisMark = i*(hig)/4;
+           painter->drawLine(lmargin-5, hig+upmargin-axisMark, lmargin, hig+upmargin-axisMark);
            QString markLabel = m_axis ? QString::number(m_axis.min[1]+i*(m_axis.max[1]-m_axis.min[1])/4) : "";
-           painter->drawText(lmargin-40, hig+upmargin+lowmargin-lowmargin-axisMark+5, markLabel);
+           painter->drawText(lmargin-40+pdfTextMarginx, hig+upmargin-axisMark+5, markLabel);
        }
     }
 // draw color ranges for contourline plot into window
@@ -759,18 +761,21 @@ void MacrodynGraphicsItem::savePdf(const QString& path)
     printer.setPaperSize(QSizeF(800, 800), QPrinter::Millimeter);
     printer.setOutputFileName(path);
     QPainter painter(&printer);
-    double xscale = 0.9*printer.pageRect().width()/double(wid);
-    double yscale = 0.9*printer.pageRect().height()/double(hig);
+    double xscale = 0.86*printer.pageRect().width()/double(wid);
+    double yscale = 0.86*printer.pageRect().height()/double(hig);
     double scale = qMin(xscale, yscale);
 ////    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
 ////                       printer.paperRect().y() + printer.pageRect().height()/2);
     painter.scale(scale, scale);
-    painter.translate(10, 20);
+    painter.translate(25, 25);
     QFont font = painter.font();
-    font.setPixelSize(12);
+    font.setPixelSize(24);
     painter.setFont(font);
-
+    pdfTextMarginx = -21;
+    pdfTextMarginy = 20;
     paint(&painter);
+    pdfTextMarginx = 0;
+    pdfTextMarginy = 0;
     wid = widTemp;
     hig = higTemp;
 }

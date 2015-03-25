@@ -121,6 +121,8 @@ protected:
     int lmargin;
     int upmargin;
     int lowmargin;
+    int pdfTextMarginx;  //additional margin for the axis drawing into .pdf
+    int pdfTextMarginy;
     int wid;
     int hig;
     int xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
