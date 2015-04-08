@@ -58,7 +58,7 @@ ApplicationWindow {
             anchors.topMargin: 0
             anchors.fill: parent
             ToolButton {
-                iconSource: "/oeffnen.png"
+                iconSource: "/Icons/oeffnen.png"
                 onClicked: fileDialogOpen.open();
             }
             ToolButton {
