@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include "Graphics/macrodyngraphicsitem.h"
 #include "logger.h"
@@ -16,8 +17,9 @@ int main(int argc, char *argv[])
     //qmlRegisterType<DocumentHandler>("MacrodynQML", 1, 0, "DocumentHandler");
     //qmlRegisterType<SimEditor>("MacrodynQML", 1, 0, "SimEditor");
     qmlRegisterType<Logger>("MacrodynQML", 1, 0, "Logger");
-    qmlRegisterType<SimLoader>("MacrodynQML", 1, 0, "SimLoader");
     QQmlApplicationEngine engine;
+    SimLoader loader;
+    engine.rootContext()->setContextProperty("loader", &loader);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     return app.exec();
 }

@@ -63,7 +63,7 @@ ApplicationWindow {
             }
             ToolButton {
                 iconSource: "speichern.png"
-                onClicked: loader.saveSimulationfromFile(); //fileDialogSave.open();
+                onClicked: loader.saveSimulationToFile(); //fileDialogSave.open();
             }
             ToolButton {
                 iconSource: "pdfspeichern.png"
@@ -89,8 +89,8 @@ ApplicationWindow {
         nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
         selectedNameFilter: "Macrodyn simulation"
         onAccepted: {
-            loader.loadSimulationfromUrl(fileDialogOpen.fileUrl);
-            loader.fileUrl = fileUrl;
+            loader.setGraphItem(graph);
+            loader.loadSimulationfromUrl(fileUrl);
             close();
         }
         onRejected: {
@@ -132,12 +132,6 @@ ApplicationWindow {
         }
     }
 
-    SimLoader {
-        id: loader
-        graphItem: graph
-        target: simeditor
-    }
-
     MacrodynGraphicsItem {
         property int x1
         property int x2
@@ -156,8 +150,6 @@ ApplicationWindow {
         backgroundColor: "white"
         supersampling: 2
         bigPointSize: 5
-
-//        onWidthChanged: if (width < minGraphWidth) width = minGraphWidth;
 
         MouseArea {
             anchors.fill: parent
@@ -204,7 +196,7 @@ ApplicationWindow {
     }
 
 
-    TextArea{
+    TextArea {
         id: simeditor
         width: 400
         anchors.top: parent.top
@@ -216,13 +208,10 @@ ApplicationWindow {
         anchors.topMargin: 0
         //focus: true
         text: loader.text
-
-
         font.family: "Arial"
         font.pointSize: 12
 
-        //wrapMode: TextEdit.Wrap
-
+        onTextChanged: loader.text = text;
         onWidthChanged: if (width < minEditorWidth) width = minEditorWidth;
     }
 
