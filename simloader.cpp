@@ -109,27 +109,31 @@ SimLoader::~SimLoader()
     if (plotLines) delete plotLines;
 }
 
-void SimLoader::saveSimulationfromFile(/*const QString& fileName*/)
+void SimLoader::saveSimulationToFile()
 {
     QString fileName = lastFileName;
     if(lastFileName=="") return;
 
     QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+    if (!file.open(QFile::WriteOnly | QFile::Text))
+    {
         log()<<"Cannot write file";
         return;
     }
 
-    QTextStream out(&file);
+//    QVariant var = target->property("textDocument");
+//    QTextDocument *doc;
+//    if (var.canConvert<QQuickTextDocument*>())
+//    {
+//        QQuickTextDocument *qqdoc = var.value<QQuickTextDocument*>();
+//        if (qqdoc)
+//            doc = qqdoc->textDocument();
+//    }
 
-    out << m_doc->toPlainText();
-    QVariant doc = m_target->property("textDocument");
-    if (doc.canConvert<QQuickTextDocument*>()) {
-        QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
-        if (qqdoc)
-            m_doc = qqdoc->textDocument();
-    }
-//    log()<<m_doc->toPlainText();
+    QTextStream out(&file);
+    out << m_text;
+
+//    log() << doc->toPlainText();
 
 }
 
@@ -138,7 +142,7 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
     lastFileName = fileName;
     QFile file(fileName);
 
-    if (!file.open(QFile::ReadOnly))
+    if (!file.open(QFile::ReadOnly | QFile::Text))
     {
         log() << "macrodyn.C::loadSimulation  Can't open input file " << fileName;
         return;
@@ -146,6 +150,16 @@ void SimLoader::loadSimulationfromFile(const QString& fileName)
 
     QTextStream stream(&file);
 
+    QString text;
+    text = stream.readAll();
+    setText(text);
+}
+
+void SimLoader::loadSimulation()
+{
+    m_lastText = m_text;
+
+    QTextStream stream(&m_text);
     stream >> modelName;
     setModel(modelName);
 
@@ -599,21 +613,33 @@ void SimLoader::runSimulation()
         return;
     }
 
-//    if (!m_runJob){
-//        saveSimulationfromFile();
-        loadSimulationfromFile(lastFileName);  //if there is no new Job specified, load the last .sim File again
-//    }
+    if (m_text != m_lastText)
+    {
+        if (m_lastText != "")
+        {
+            log() << "Simulation has changed.";
+            log() << "Reloading simulation...";
+        }
+        else log() << "Loading simulation...";
 
-    qDebug() << "Run simulation";
+        loadSimulation();
+    }
+    else
+    {
+        log() << "Simulation already finished!";
+        return;
+    }
+
+    qDebug() << "Running simulation...";
 
     if (m_runJob)
     {
-        log() << "starting simulation...";
+        log() << "Starting simulation...";
         simThread.setJob(m_runJob);
         simThread.start();
         if (m_graph) m_graph->setSimulating(true);
     }
-    else log() << "job misspecified...";
+    else log() << "Job misspecified...";
 }
 
 void SimLoader::setModel(const QString &model)
@@ -675,7 +701,6 @@ void SimLoader::setGraphItem(QObject *object)
     if (m_graph != graph)
     {
         m_graph = graph;
-        emit graphItemChanged();
     }
 }
 
@@ -701,53 +726,12 @@ void SimLoader::jobFinished()
     log() << "job finished!";
 }
 
-void SimLoader::setTarget(QQuickItem *target)
-{
-    m_doc = 0;
-    m_target = target;
-    if (!m_target)
-        return;
-
-    QVariant doc = m_target->property("textDocument");
-    if (doc.canConvert<QQuickTextDocument*>()) {
-        QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
-        if (qqdoc)
-            m_doc = qqdoc->textDocument();
-    }
-    emit targetChanged();
-}
-
-void SimLoader::setFileUrl(const QUrl &arg)
-{
-    if (m_fileUrl != arg) {
-        m_fileUrl = arg;
-        QString fileName = QQmlFile::urlToLocalFileOrQrc(arg);
-        if (QFile::exists(fileName)) {
-            QFile file(fileName);
-            if (file.open(QFile::ReadOnly)) {
-                QTextStream in(&file);
-                QString text;
-                text = in.readAll();
-                file.close();
-                setText(text);
-                emit textChanged();
-            }
-        }
-        emit fileUrlChanged();
-    }
-}
-
 void SimLoader::setText(const QString &arg)
 {
     if (m_text != arg) {
         m_text = arg;
         emit textChanged();
     }
-}
-
-QUrl SimLoader::fileUrl() const
-{
-    return m_fileUrl;
 }
 
 QString SimLoader::text() const
