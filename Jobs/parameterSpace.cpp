@@ -111,7 +111,7 @@ void parameterSpace::simulation()
                 }
             }
             if( screenGraphics )
-                screenGraphics->setRect(*xParam,*yParam,stepX,stepY,colorFromOrder(order));
+                screenGraphics->setRect(*xParam,*yParam,stepX,stepY,colorFromOrder(/*((*xParam-xmin)/(xmax-xmin))*34*/order));
                 //screenGraphics->setRect(*xParam,*yParam,stepX,stepY,QColor((1234*(order+1))%255,(12345*(order+1))%255,(123456*(order+1))%255));
         }
     }
@@ -120,38 +120,38 @@ void parameterSpace::simulation()
 QColor parameterSpace::colorFromOrder(int order) {
     switch (order) {
     case -1: return QColor(255,255,255);
-    case 1: return QColor(185,82,159);
-    case 2: return QColor(111,204,221);
-    case 3: return QColor(210,185,210);
-    case 4: return QColor(105,189,69);
-    case 5: return QColor(237,32,36);
-    case 6: return QColor(245,172,189);
-    case 7: return QColor(161,157,157);
-    case 8: return QColor(57,83,164);
-    case 9: return QColor(244,121,33);
-    case 10: return QColor(243,219,171);
-    case 11: return QColor(131,197,99);
-    case 12: return QColor(233,54,137);
-    case 13: return QColor(114,142,199);
-    case 14: return QColor(242,100,66);
-    case 15: return QColor(36,56,59);
-    case 16: return QColor(40,65,29);
-    case 17: return QColor(184,59,143);
-    case 18: return QColor(239,60,36);
-    case 19: return QColor(72,194,217);
+    case 1: return QColor(255,0,255);
+    case 2: return QColor(0,255,255);
+    case 3: return QColor(211,186,211);
+    case 4: return QColor(0,255,0);
+    case 5: return QColor(255,0,0);
+    case 6: return QColor(251,174,190);
+    case 7: return QColor(162,158,158);
+    case 8: return QColor(0,0,255);
+    case 9: return QColor(251,121,20);
+    case 10: return QColor(243,219,170);
+    case 11: return QColor(121,219,101);
+    case 12: return QColor(235,52,138);
+    case 13: return QColor(113,142,207);
+    case 14: return QColor(247,101,65);
+    case 15: return QColor(37,56,60);
+    case 16: return QColor(37,65,23);
+    case 17: return QColor(185,59,143);
+    case 18: return QColor(255,56,23);
+    case 19: return QColor(67,198,219);
     case 20: return QColor(48,103,84);
-    case 21: return QColor(71,99,160);
-    case 22: return QColor(129,22,67);
+    case 21: return QColor(72,99,160);
+    case 22: return QColor(129,5,65);
     case 23: return QColor(0,0,0);
     case 24: return QColor(216,175,121);
-    case 25: return QColor(122,40,124);
-    case 26: return QColor(68,182,184);
-    case 27: return QColor(113,143,201);
-    case 28: return QColor(209,159,42);
-    case 29: return QColor(31,31,82);
-    case 30: return QColor(151,27,21);
+    case 25: return QColor(125,27,126);
+    case 26: return QColor(67,183,186);
+    case 27: return QColor(102,152,255);
+    case 28: return QColor(212,160,23);
+    case 29: return QColor(21,27,84);
+    case 30: return QColor(152,5,23);
     }
-    return QColor(246,235,20);
+    return QColor(255,255,0);
 }
     
 //eof

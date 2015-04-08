@@ -67,7 +67,8 @@ void bif2D::simulation()
                 // section under consideration are
                 // analysed
                 if( screenGraphics )
-                    screenGraphics->setPoint(dummy_x,*yParam,9);
+                    //screenGraphics->setPoint(dummy_x,*yParam,9);
+                    screenGraphics->setRectangularBigPoint(dummy_x,*yParam,QColor(0,0,0),3);
 
             }
         }

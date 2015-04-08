@@ -114,8 +114,10 @@ void max_lyapunov_exp_1d::simulation()
 
   for( *xParam=xmin, l=0; *xParam<=xmax ;*xParam += stepX, l++) {
     if( screenGraphics ) {
-      screenGraphics->setPoint(*xParam,l_vals[l],color);
-      screenGraphics->setPoint(*xParam,zero,z_color);
+//      screenGraphics->setPoint(*xParam,l_vals[l],color);
+//      screenGraphics->setPoint(*xParam,zero,z_color);
+      screenGraphics->setRectangularBigPoint(*xParam,l_vals[l],color,2);
+      screenGraphics->setRectangularBigPoint(*xParam,zero,z_color,2);
     }
   }
   delete [] l_vals;

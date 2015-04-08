@@ -64,6 +64,29 @@ void tiwisina::bin(){
     }
 }
 
+double tiwisina::funktion(double xti) {
+    mpf_class x = 0;
+    mpf_class xtCopy = xti;
+    //printf("vorher xtCopy = %s \n", xtCopy.get_str(1).c_str());
+    mpf_class temp1,temp2,temp3 = 0;
+    for(int i=0; i<=60; i++){
+        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
+        temp2=1.0-xtCopy;
+        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
+        temp3+=temp1*temp2*binomial[i];
+    }
+    x+=temp3*a3;
+    temp3=0;
+    for(int i=0; i<=70; i++){
+        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
+        temp2=1.0-xtCopy;
+        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
+        temp3+=temp1*temp2*binomial[i];
+    }
+    x+=(1-temp3)*a4 + a1;
+    return x.get_d();
+}
+
 
 void tiwisina::iteration(const qint64&)
 {
@@ -108,9 +131,10 @@ void tiwisina::iteration(const qint64&)
 //        mpz_add(temp3,temp3,temp1);
 //    }
 
-    xt=a2*xt*xt + a3*2*xt*(1-xt) + a4*(2*xt*(1-xt)+xt*xt) + a5*(1-xt)*(1-xt) + a6*((1-xt)*(1-xt)+xt*xt) + a7*((1-xt)*(1-xt)+2*xt*(1-xt)) + a8;
+//    xt = a2*(1-xt)*(1-xt) + a3*2*xt*(1-xt) + a4*((1-xt)*(1-xt)+2*xt*(1-xt)) + a5*xt*xt + a6*((1-xt)*(1-xt)+xt*xt) + a7*(2*xt*(1-xt)+xt*xt) + a8;
 
-
+xt=funktion(xt);
+x_prime=(funktion(xt+0.005)-funktion(xt-0.005))/0.01;
 
 //    mpf_class x = 0;
 //    mpf_class xtCopy = xt;
@@ -122,7 +146,7 @@ void tiwisina::iteration(const qint64&)
 //        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
 //        temp3+=temp1*temp2*binomial[i];
 //    }
-//    x+=temp3*a1;
+//    x+=temp3*a3;
 //    temp3=0;
 //    for(int i=0; i<=70; i++){
 //        mpf_pow_ui(temp1.get_mpf_t(),xtCopy.get_mpf_t(),i);
@@ -130,7 +154,7 @@ void tiwisina::iteration(const qint64&)
 //        mpf_pow_ui(temp2.get_mpf_t(),temp2.get_mpf_t(),(100-i));
 //        temp3+=temp1*temp2*binomial[i];
 //    }
-//    x+=(1-temp3)*a2 + a3;
+//    x+=(1-temp3)*a4 + a1;
 //    xt=x.get_d();
 
 
@@ -158,9 +182,9 @@ void tiwisina::iteration(const qint64&)
 //        temp3+=temp1*temp2*binomial[i];
 //        temp2=1.0-xtCopy;
 //    }
-//    xprime+=temp3*a1;
+//    xprime+=temp3*a3;
 //    temp3=0;
-//    for(int i=0; i<=70; i++){
+//    for(int i=71; i<=100; i++){
 //        if(i-1<0)
 //            temp1=0;
 //        else{
@@ -183,7 +207,7 @@ void tiwisina::iteration(const qint64&)
 //        temp2=1.0-xtCopy;
 //    }
 
-//    xprime+=-(1-temp3)*a2 + a3;
+//    xprime+=temp3*a4;
 //    x_prime=xprime.get_d();
 
 

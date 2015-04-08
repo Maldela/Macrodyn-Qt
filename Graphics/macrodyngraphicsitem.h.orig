@@ -18,6 +18,64 @@
 Q_DECLARE_METATYPE(QSharedPointer<QImage>)
 Q_DECLARE_METATYPE(xyRange)
 
+<<<<<<< HEAD
+=======
+//TODO:
+// - beautify setBigPoint
+// - drawColorCount?
+struct MacroString
+{
+    MacroString(const QString& s, const QPointF& p, const QColor& c, bool t)
+    {
+        string = s;
+        point = p;
+        color = c;
+        transform = t;
+    }
+
+    QString string;
+    QPointF point;
+    QColor color;
+    bool transform;
+};
+
+class MacrodynGraphicsItem;
+
+class ImagePainter : public QObject
+{
+    Q_OBJECT
+
+public:
+
+    ImagePainter(MacrodynGraphicsItem *, QImage *, QReadWriteLock *, QMutex *);
+    virtual ~ImagePainter();
+
+
+signals:
+
+    void imageChanged();
+    void imageFinished(QImage *);
+
+
+protected slots:
+
+    void drawPoint(const QPointF&, const QColor&, bool = false);
+    void drawRect(const QRectF&, const QColor&, bool = false);
+    void drawLine(const QLineF&, const QColor&, bool = false);
+    void drawString(const QPointF&, const QString&, const QColor&, bool, bool = false);
+    void clearColumn(qreal, bool = false);
+    void redraw();
+    void redrawEPS();
+
+
+protected:
+
+    QImage *m_image, *m_parentImage;
+    QReadWriteLock *m_listLock;
+    QMutex *m_imageMutex;
+    MacrodynGraphicsItem *m_parent;
+};
+>>>>>>> a17ea44d47253bfa081ecf7a3bb8080156fbf19a
 
 class ImagePainter;
 
@@ -27,8 +85,6 @@ class MacrodynGraphicsItem : public QQuickPaintedItem
     Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(qreal zoomFactor READ getZoom NOTIFY zoomChanged)
     Q_PROPERTY(bool redrawing READ redrawing NOTIFY redrawingChanged)
-    Q_PROPERTY(qreal bigPointSize READ bigPointSize WRITE setBigPointSize NOTIFY bigPointSizeChanged)
-    Q_PROPERTY(qreal supersampling READ supersampling WRITE setSupersampling NOTIFY supersamplingChanged)
 
     friend class ImagePainter;
 
@@ -42,15 +98,14 @@ public:
     void set_axis(int, qreal, qreal);	// set max & min of axis
     void get_axis(int, qreal*, qreal*) const; // get max & min of axis
     void clear_window();		// clear output window
-    void setPoint(qreal, qreal, const QColor&);                                         //Threadsafe
+    void setPoint(qreal, qreal, const QColor&);
                     // highlights a pixel on the screen
                     // according to the given point
-    void setBigPoint(qreal, qreal, const QColor&, int);                                 //Threadsafe
-    void setBigPoint(qreal, qreal, int, int);                                           //Threadsafe
-    void setRectangularBigPoint(qreal v, qreal w, const QColor& color, int size);
-    void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);     //Threadsafe
-    void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen         //Threadsafe
-    void setString(qreal, qreal, const QString&, const QColor&, bool = true);           //Threadsafe
+    void setBigPoint(qreal, qreal, const QColor&, int);
+    void setBigPoint(qreal, qreal, int, int);
+    void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);
+    void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen
+    void setString(qreal, qreal, const QString&, const QColor&, bool = true);  // should be displayed on the screen
     inline QColor getBackgroundColor() const { return m_backgroundColor; }
     void setBackgroundColor(const QColor&);
     qreal getZoom() const;
@@ -62,10 +117,6 @@ public:
     double pixel_to_y(int) const;
     QSize sizeMargined() const { return QSize(wid, hig); }
     bool redrawing() const { return m_redrawing; }
-    qreal bigPointSize() const { return m_bigPointSize; }
-    void setBigPointSize(qreal size) { if (size != m_bigPointSize) { m_bigPointSize = size; emit bigPointSizeChanged(size); } }
-    qreal supersampling() const { return m_supersampling; }
-    void setSupersampling(qreal super) { if (super != m_supersampling) { m_supersampling = super; emit supersamplingChanged(super); } }
 
 
 public slots:
@@ -81,28 +132,35 @@ public slots:
 
 signals:
 
-    void backgroundColorChanged(const QColor&);
+    void backgroundColorChanged();
     void zoomChanged();
+    void newPoint(QPointF, QColor);
+    void newBigPoint(QPointF, QColor);
+    void newRect(QRectF, QColor);
+    void newLine(QLineF, QColor);
+    void newClearColumn(qreal);
+    void newString(QPointF, QString, QColor, bool);
     void needRedraw();
-    void axisChanged(const xyRange&);
-    void sizeChanged(const QSize&, bool);
+<<<<<<< HEAD
+    void axisChanged(xyRange);
+    void sizeChanged(QSize, bool);
     void redrawingChanged();
+=======
     void needRedrawEPS();
-    void bigPointSizeChanged(qreal);
-    void supersamplingChanged(qreal);
+>>>>>>> a17ea44d47253bfa081ecf7a3bb8080156fbf19a
 
 
 protected slots:
 
     void handleSizeChanged();
-    void updateRedrawing(bool redrawing) { if (redrawing != m_redrawing) { m_redrawing = redrawing; emit redrawingChanged(); } }
+    void newImage(QSharedPointer<QImage>);
+    void redrawingStarted() { if (!m_redrawing) { m_redrawing = true; emit redrawingChanged(); } }
 
 
 protected:
 
     void paint(QPainter *painter);
-    void drawAxis(QPainter * = NULL);
-    void setImage(QSharedPointer<QImage> image); //Threadsafe
+    void drawAxis(QPainter * = NULL);    // needs locking of axisLock before calling!
 
     QSharedPointer<QImage> m_image;
     ImagePainter *m_imagePainter;
@@ -113,7 +171,7 @@ protected:
     QList<qreal> m_clearColumns;
     QList<MacroString> m_strings;
     mutable QReadWriteLock m_listLock;
-    mutable QMutex m_imageMutex, m_redrawingMutex;
+    mutable QMutex m_imageMutex;
     int m_job;
     xyRange m_origAxis;
     xyRange m_axis;
@@ -122,16 +180,13 @@ protected:
     int lmargin;
     int upmargin;
     int lowmargin;
-    int pdfTextMarginx;  //additional margin for the axis drawing into .pdf
-    int pdfTextMarginy;
     int wid;
     int hig;
     int xinit, yinit, xpix_min, ypix_min, xpix_max, ypix_max;
     int right;
     int down;
-    int m_bigPointSize;
+    int bigPointSize;
     bool m_redrawing, m_simulating;
-    qreal m_supersampling;
 
     qint64 colorCount[95];
 };

@@ -30,7 +30,7 @@
 d_bif2D::d_bif2D(baseModel* const bMod, const xyRange& axes, 
          MacrodynGraphicsItem* const graph)
           :geometricJob(bMod,axes,graph),
-           h(axes.min[1],axes.max[1],(axes.res[0]>0?axes.res[0]:100.0))
+           h(axes.min[1],axes.max[1],(axes.res[1]>0?axes.res[1]:100.0))
 {
 //    if( fileName )
 //	outFile.open(fileName,ios::out);
@@ -115,6 +115,7 @@ void d_bif2D::simulation()
   outFile.write((char*)&length_of_label, 4);
   outFile.write((char*)&yLabel, length_of_label);
 
+  log()<<"ymin = "<<ymin;
   for(dummy_x=xmin;dummy_x<=xmax; dummy_x+=stepX) {
     *xParam = dummy_x;
     model->initialize();
@@ -161,6 +162,7 @@ void d_bif2D::simulation()
     QTextStream(&outFile) << char( color );
       if( screenGraphics ) {
         screenGraphics->setRect(dummy_x,dy,stepX,stepY,QColor(redFromUnit(hitpoint),greenFromUnit(hitpoint),blueFromUnit(hitpoint)));
+        //screenGraphics->setRectangularBigPoint(dummy_x,dy,QColor(redFromUnit(hitpoint),greenFromUnit(hitpoint),blueFromUnit(hitpoint)),3);
       }
 
     //outFile << *xParam << "\t" << dy << "\t" << hitpoint 
