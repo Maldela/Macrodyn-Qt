@@ -106,7 +106,7 @@ ApplicationWindow {
         nameFilters: [ "PDF (*.pdf)", "All files (*)" ]
         selectedNameFilter: "PDF"
         onAccepted: {
-            graph.savePdf(fileDialogSavePdf.fileUrl);
+            graph.savePdf(fileUrl);
             close();
         }
         onRejected: {
@@ -121,8 +121,7 @@ ApplicationWindow {
         nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
         selectedNameFilter: "Macrodyn simulation"
         onAccepted: {
-            loader.saveSimulationfromUrl(fileDialogSave.fileUrl);
-            loader.fileUrl = fileUrl;
+            loader.saveSimulationToUrl(fileUrl);
             close();
         }
         onRejected: {

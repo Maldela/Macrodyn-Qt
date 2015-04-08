@@ -718,7 +718,7 @@ void SimLoader::jobFinished()
         delete m_modelPointer;
         m_modelPointer = NULL;
     }
-    log() << "job finished!";
+    log() << "Simulation finished!";
 }
 
 void SimLoader::setText(const QString &arg)
