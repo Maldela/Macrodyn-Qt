@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>QML/Log.qml</file>
         <file>QML/main.qml</file>
+        <file>QML/MacrodynGraphicsItem.qml</file>
     </qresource>
 </RCC>

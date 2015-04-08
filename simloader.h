@@ -35,7 +35,8 @@ public:
     void setModel(const QString&);
     inline int graphTyp() const { return m_graphTyp; }
     void setGraphTyp(int);
-    Q_INVOKABLE void setGraphItem(QObject *);
+    void setText(const QString &arg);
+    Q_INVOKABLE void setGraphItem(MacrodynGraphicsItem *);
 
     QString text() const;
 
@@ -56,11 +57,6 @@ public slots:
     Q_INVOKABLE void loadSimulationfromUrl(const QUrl& url) { loadSimulationfromFile(url.toLocalFile()); }
     Q_INVOKABLE void printModelParameters() const { if (m_modelPointer) m_modelPointer->printParamset(); }
     Q_INVOKABLE void savePdf();
-
-
-public Q_SLOTS:
-
-    void setText(const QString &arg);
 
 
 protected slots:

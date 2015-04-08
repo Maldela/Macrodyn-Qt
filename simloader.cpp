@@ -691,9 +691,8 @@ void SimLoader::setGraphTyp(int graphTyp)
     }
 }
 
-void SimLoader::setGraphItem(QObject *object)
+void SimLoader::setGraphItem(MacrodynGraphicsItem *graph)
 {
-    MacrodynGraphicsItem *graph = qobject_cast<MacrodynGraphicsItem *>(object);
     if (m_graph != graph)
     {
         m_graph = graph;
