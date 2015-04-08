@@ -480,6 +480,30 @@ void MacrodynGraphicsItem::setBigPoint(qreal v, qreal w, int colorInt, int size)
     setBigPoint(v, w, color, size);
 }
 
+void MacrodynGraphicsItem::setRectangularBigPoint(qreal v, qreal w, const QColor& color, int size)
+{
+    QPair<QRectF, QColor> pair(QRectF(v, w, (double)size*(m_axis.max.at(0)-m_axis.min.at(0))/m_image->size().width(), (double)size*(m_axis.max.at(1)-m_axis.min.at(1))/m_image->size().height()), color);
+    m_listLock.lockForWrite();
+    m_rects << pair;
+    m_listLock.unlock();
+
+    QScopedPointer<QPainter>painter(new QPainter);
+    m_imageMutex.lock();
+    if (!m_image->isNull())
+    {
+        painter->begin(m_image.data());
+        QRect rectTransformed =  ::transform(m_axis, m_image->size(), pair.first);
+//        rectTransformed.setHeight(size);
+//        rectTransformed.setWidth(4);
+        //log()<<si;
+        painter->fillRect(rectTransformed, color);
+        painter->end();
+    }
+    m_imageMutex.unlock();
+
+    QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
+}
+
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      graphics                                                  */

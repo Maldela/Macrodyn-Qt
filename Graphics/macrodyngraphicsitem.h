@@ -47,6 +47,7 @@ public:
                     // according to the given point
     void setBigPoint(qreal, qreal, const QColor&, int);                                 //Threadsafe
     void setBigPoint(qreal, qreal, int, int);                                           //Threadsafe
+    void setRectangularBigPoint(qreal v, qreal w, const QColor& color, int size);
     void setRect(qreal x, qreal w, qreal width, qreal height, const QColor& color);     //Threadsafe
     void setLine(qreal, qreal, qreal, qreal, int); // draw a line on the screen         //Threadsafe
     void setString(qreal, qreal, const QString&, const QColor&, bool = true);           //Threadsafe

@@ -27,6 +27,7 @@ public:
     void loadParamset(QTextStream& );
     void saveParamset(QTextStream& );
     void printParamset();
+    double funktion(double xti);
     void iteration(const qint64&);
     void initialize();
     qreal* sendModelVar();
