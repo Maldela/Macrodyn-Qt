@@ -613,24 +613,20 @@ void SimLoader::runSimulation()
         return;
     }
 
-    if (m_text != m_lastText)
-    {
-        if (m_lastText != "")
-        {
-            log() << "Simulation has changed.";
-            log() << "Reloading simulation...";
-        }
-        else log() << "Loading simulation...";
-
-        loadSimulation();
-    }
-    else
+    if (m_text == m_lastText)
     {
         log() << "Simulation already finished!";
         return;
     }
 
-    qDebug() << "Running simulation...";
+    if (m_lastText != "")
+    {
+        log() << "Simulation has changed.";
+        log() << "Reloading simulation...";
+    }
+    else log() << "Loading simulation...";
+
+    loadSimulation();
 
     if (m_runJob)
     {

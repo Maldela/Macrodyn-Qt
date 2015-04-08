@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="oeffnen.png">Icons/oeffnen.png</file>
+        <file>Icons/pdfspeichern.png</file>
+        <file>Icons/run.png</file>
+        <file>Icons/speichern.png</file>
+    </qresource>
+</RCC>

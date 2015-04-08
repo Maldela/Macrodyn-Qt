@@ -58,19 +58,19 @@ ApplicationWindow {
             anchors.topMargin: 0
             anchors.fill: parent
             ToolButton {
-                iconSource: "oeffnen.png"
+                iconSource: "/oeffnen.png"
                 onClicked: fileDialogOpen.open();
             }
             ToolButton {
-                iconSource: "speichern.png"
+                iconSource: "/Icons/speichern.png"
                 onClicked: loader.saveSimulationToFile(); //fileDialogSave.open();
             }
             ToolButton {
-                iconSource: "pdfspeichern.png"
+                iconSource: "/Icons/pdfspeichern.png"
                 onClicked:  loader.savePdf();
             }
             ToolButton {
-                iconSource: "run.png"
+                iconSource: "/Icons/run.png"
                 onClicked: loader.runSimulation();
             }
             Item { Layout.fillWidth: true }
