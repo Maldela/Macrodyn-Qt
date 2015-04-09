@@ -143,9 +143,8 @@ ApplicationWindow {
         supersampling: 2
         bigPointSize: 5
 
-        Component.onCompleted: loader.setGraphItem(graph);
+        Component.onCompleted: loader.setGraphItem(this);
     }
-
 
     TextArea {
         id: simeditor
@@ -165,7 +164,6 @@ ApplicationWindow {
         onTextChanged: loader.text = text;
         onWidthChanged: if (width < minEditorWidth) width = minEditorWidth;
     }
-
 
     Log {
         id: log

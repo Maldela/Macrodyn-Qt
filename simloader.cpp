@@ -248,9 +248,9 @@ void SimLoader::loadSimulation()
     qreal stepX = (m_conBlock.xmax-m_conBlock.xmin) / m_conBlock.xRes;
 
     QString saveFigureYesNo;
-    stream>>saveFigureYesNo;
-    stream>>figureName;
-    log()<<"figureName = "<<figureName;
+    stream >> saveFigureYesNo;
+    stream >> figureName;
+    log() << "figureName = " << figureName;
 
     if (stateSpace) delete stateSpace;
     stateSpace = NULL;
@@ -747,6 +747,6 @@ void SimLoader::savePdf()
     //path.chop(4);
     path.append(figureName);
 //    path.append("pdf");
-    log()<<path;
+    log() << path;
     m_graph->savePdf(path);
 }

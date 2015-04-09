@@ -4,6 +4,7 @@ import MacrodynQML 1.0
 
 
 MacrodynGraphicsItem {
+
     property int x1
     property int x2
     property int y1

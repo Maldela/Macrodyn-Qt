@@ -10,10 +10,6 @@
 #include "Jobs/job.h"
 #include "simthread.h"
 
-#include <QQuickTextDocument>
-#include <QtGui/QTextCharFormat>
-#include <QtCore/QTextCodec>
-#include <qqmlfile.h>
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;
