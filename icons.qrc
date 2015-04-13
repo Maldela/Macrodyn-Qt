@@ -4,5 +4,6 @@
         <file>Icons/pdfspeichern.png</file>
         <file>Icons/run.png</file>
         <file>Icons/speichern.png</file>
+        <file>Icons/Logo.png</file>
     </qresource>
 </RCC>
