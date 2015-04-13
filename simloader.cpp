@@ -248,9 +248,9 @@ void SimLoader::loadSimulation()
     qreal stepX = (m_conBlock.xmax-m_conBlock.xmin) / m_conBlock.xRes;
 
     QString saveFigureYesNo;
-    stream>>saveFigureYesNo;
-    stream>>figureName;
-    log()<<"figureName = "<<figureName;
+    stream >> saveFigureYesNo;
+    stream >> figureName;
+    log() << "figureName = " << figureName;
 
     if (stateSpace) delete stateSpace;
     stateSpace = NULL;
@@ -613,24 +613,20 @@ void SimLoader::runSimulation()
         return;
     }
 
-    if (m_text != m_lastText)
-    {
-        if (m_lastText != "")
-        {
-            log() << "Simulation has changed.";
-            log() << "Reloading simulation...";
-        }
-        else log() << "Loading simulation...";
-
-        loadSimulation();
-    }
-    else
+    if (m_text == m_lastText)
     {
         log() << "Simulation already finished!";
         return;
     }
 
-    qDebug() << "Running simulation...";
+    if (m_lastText != "")
+    {
+        log() << "Simulation has changed.";
+        log() << "Reloading simulation...";
+    }
+    else log() << "Loading simulation...";
+
+    loadSimulation();
 
     if (m_runJob)
     {
@@ -695,9 +691,8 @@ void SimLoader::setGraphTyp(int graphTyp)
     }
 }
 
-void SimLoader::setGraphItem(QObject *object)
+void SimLoader::setGraphItem(MacrodynGraphicsItem *graph)
 {
-    MacrodynGraphicsItem *graph = qobject_cast<MacrodynGraphicsItem *>(object);
     if (m_graph != graph)
     {
         m_graph = graph;
@@ -723,7 +718,7 @@ void SimLoader::jobFinished()
         delete m_modelPointer;
         m_modelPointer = NULL;
     }
-    log() << "job finished!";
+    log() << "Simulation finished!";
 }
 
 void SimLoader::setText(const QString &arg)
@@ -752,6 +747,6 @@ void SimLoader::savePdf()
     //path.chop(4);
     path.append(figureName);
 //    path.append("pdf");
-    log()<<path;
+    log() << path;
     m_graph->savePdf(path);
 }
