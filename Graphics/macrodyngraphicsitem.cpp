@@ -775,31 +775,34 @@ void MacrodynGraphicsItem::savePdf(const QString& path)
 //    dialog.setAcceptMode(QFileDialog::AcceptSave);
 //    dialog.exec();
 //    QStringList files = dialog.selectedFiles();
-    int widTemp = wid;
-    int higTemp = hig;
-    wid = 800;
-    hig= 800;
 
-    QPrinter printer(QPrinter::HighResolution);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setPaperSize(QSizeF(800, 800), QPrinter::Millimeter);
-    printer.setOutputFileName(path);
-    QPainter painter(&printer);
-    double xscale = 0.86*printer.pageRect().width()/double(wid);
-    double yscale = 0.86*printer.pageRect().height()/double(hig);
-    double scale = qMin(xscale, yscale);
-////    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
-////                       printer.paperRect().y() + printer.pageRect().height()/2);
-    painter.scale(scale, scale);
-    painter.translate(25, 25);
-    QFont font = painter.font();
-    font.setPixelSize(24);
-    painter.setFont(font);
-    pdfTextMarginx = -21;
-    pdfTextMarginy = 20;
-    paint(&painter);
-    pdfTextMarginx = 0;
-    pdfTextMarginy = 0;
-    wid = widTemp;
-    hig = higTemp;
+    system("/usr/local/texlive/2011/bin/x86_64-darwin/pdflatex --interaction=nonstopmode --output-directory=/Users/jtiwi/Desktop/LatexTest /Users/jtiwi/Desktop/LatexTest/lt.tex");
+
+//    int widTemp = wid;
+//    int higTemp = hig;
+//    wid = 800;
+//    hig= 800;
+
+//    QPrinter printer(QPrinter::HighResolution);
+//    printer.setOutputFormat(QPrinter::PdfFormat);
+//    printer.setPaperSize(QSizeF(800, 800), QPrinter::Millimeter);
+//    printer.setOutputFileName(path);
+//    QPainter painter(&printer);
+//    double xscale = 0.86*printer.pageRect().width()/double(wid);
+//    double yscale = 0.86*printer.pageRect().height()/double(hig);
+//    double scale = qMin(xscale, yscale);
+//////    painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+//////                       printer.paperRect().y() + printer.pageRect().height()/2);
+//    painter.scale(scale, scale);
+//    painter.translate(25, 25);
+//    QFont font = painter.font();
+//    font.setPixelSize(24);
+//    painter.setFont(font);
+//    pdfTextMarginx = -21;
+//    pdfTextMarginy = 20;
+//    paint(&painter);
+//    pdfTextMarginx = 0;
+//    pdfTextMarginy = 0;
+//    wid = widTemp;
+//    hig = higTemp;
 }

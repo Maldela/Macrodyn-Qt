@@ -6,5 +6,6 @@
         <file>run.png</file>
         <file>speichern.png</file>
         <file>pdfspeichern.png</file>
+        <file>Logo.png</file>
     </qresource>
 </RCC>

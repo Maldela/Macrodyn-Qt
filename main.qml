@@ -14,7 +14,7 @@ ApplicationWindow {
     visible: true
     width: 1424
     height: 768
-    title: qsTr("Macrodyn-Qt5")
+    title: qsTr("MacroDyn")
 
     onWidthChanged: graph.width = Math.min(graph.width, width - minLogWidth)
 
@@ -72,6 +72,12 @@ ApplicationWindow {
             ToolButton {
                 iconSource: "run.png"
                 onClicked: loader.runSimulation();
+            }
+            Image {
+                source: "Logo.png"
+                anchors {
+                    right: parent.right
+                }
             }
             Item { Layout.fillWidth: true }
 //            CheckBox {
