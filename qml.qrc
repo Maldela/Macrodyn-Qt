@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-<<<<<<< HEAD
         <file>main.qml</file>
         <file>Log.qml</file>
         <file>oeffnen.png</file>
@@ -8,10 +7,5 @@
         <file>speichern.png</file>
         <file>pdfspeichern.png</file>
         <file>Logo.png</file>
-=======
-        <file>QML/Log.qml</file>
-        <file>QML/main.qml</file>
-        <file>QML/MacrodynGraphicsItem.qml</file>
->>>>>>> origin/master
     </qresource>
 </RCC>

@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.0
+import MacrodynQML 1.0
 
 ApplicationWindow {
 
@@ -57,19 +58,19 @@ ApplicationWindow {
             anchors.topMargin: 0
             anchors.fill: parent
             ToolButton {
-                iconSource: "/Icons/oeffnen.png"
+                iconSource: "oeffnen.png"
                 onClicked: fileDialogOpen.open();
             }
             ToolButton {
-                iconSource: "/Icons/speichern.png"
+                iconSource: "speichern.png"
                 onClicked: loader.saveSimulationToFile(); //fileDialogSave.open();
             }
             ToolButton {
-                iconSource: "/Icons/pdfspeichern.png"
+                iconSource: "pdfspeichern.png"
                 onClicked:  loader.savePdf();
             }
             ToolButton {
-                iconSource: "/Icons/run.png"
+                iconSource: "run.png"
                 onClicked: loader.runSimulation();
             }
             Image {
@@ -94,6 +95,7 @@ ApplicationWindow {
         nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
         selectedNameFilter: "Macrodyn simulation"
         onAccepted: {
+            loader.setGraphItem(graph);
             loader.loadSimulationfromUrl(fileUrl);
             close();
         }
@@ -112,7 +114,7 @@ ApplicationWindow {
         nameFilters: [ "PDF (*.pdf)", "All files (*)" ]
         selectedNameFilter: "PDF"
         onAccepted: {
-            graph.savePdf(fileUrl);
+            graph.savePdf(fileDialogSavePdf.fileUrl);
             close();
         }
         onRejected: {
@@ -127,7 +129,8 @@ ApplicationWindow {
         nameFilters: [ "Macrodyn simulation (*.sim)", "All files (*)" ]
         selectedNameFilter: "Macrodyn simulation"
         onAccepted: {
-            loader.saveSimulationToUrl(fileUrl);
+            loader.saveSimulationfromUrl(fileDialogSave.fileUrl);
+            loader.fileUrl = fileUrl;
             close();
         }
         onRejected: {
@@ -136,6 +139,11 @@ ApplicationWindow {
     }
 
     MacrodynGraphicsItem {
+        property int x1
+        property int x2
+        property int y1
+        property int y2
+
         id: graph
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -149,8 +157,50 @@ ApplicationWindow {
         supersampling: 2
         bigPointSize: 5
 
-        Component.onCompleted: loader.setGraphItem(this);
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressed: {
+                if (mouse.button == Qt.RightButton) {
+                    graph.unzoom();
+                }
+                else {
+                    graph.x1 = graph.x2 = mouse.x;
+                    graph.y1 = graph.y2 = mouse.y;
+                    zoomRect.visible = true;
+                }
+            }
+            onPositionChanged: {
+                graph.x2 = mouse.x;
+                graph.y2 = mouse.y;
+            }
+            onReleased: {
+                if (mouse.button == Qt.LeftButton) {
+                    zoomRect.visible = false;
+                    graph.zoom(graph.x1, graph.x2, graph.y1, graph.y2);
+                }
+            }
+        }
+
+        BusyIndicator {
+            id: busyIndicator
+            running: parent.redrawing
+            anchors.centerIn: parent
+        }
+
+        Rectangle {
+            id: zoomRect
+            color: "transparent"
+            border.color: "black"
+            border.width: 1
+            y: (graph.y1 < graph.y2) ? graph.y1 : graph.y2;
+            width: Math.abs(graph.x1 - graph.x2);
+            x: (graph.x1 < graph.x2) ? graph.x1 : graph.x2;
+            height: Math.abs(graph.y1 - graph.y2);
+            visible: false
+        }
     }
+
 
     TextArea {
         id: simeditor
@@ -170,6 +220,7 @@ ApplicationWindow {
         onTextChanged: loader.text = text;
         onWidthChanged: if (width < minEditorWidth) width = minEditorWidth;
     }
+
 
     Log {
         id: log

@@ -10,6 +10,10 @@
 #include "Jobs/job.h"
 #include "simthread.h"
 
+#include <QQuickTextDocument>
+#include <QtGui/QTextCharFormat>
+#include <QtCore/QTextCodec>
+#include <qqmlfile.h>
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;
@@ -31,8 +35,7 @@ public:
     void setModel(const QString&);
     inline int graphTyp() const { return m_graphTyp; }
     void setGraphTyp(int);
-    void setText(const QString &arg);
-    Q_INVOKABLE void setGraphItem(MacrodynGraphicsItem *);
+    Q_INVOKABLE void setGraphItem(QObject *);
 
     QString text() const;
 
@@ -53,6 +56,11 @@ public slots:
     Q_INVOKABLE void loadSimulationfromUrl(const QUrl& url) { loadSimulationfromFile(url.toLocalFile()); }
     Q_INVOKABLE void printModelParameters() const { if (m_modelPointer) m_modelPointer->printParamset(); }
     Q_INVOKABLE void savePdf();
+
+
+public Q_SLOTS:
+
+    void setText(const QString &arg);
 
 
 protected slots:

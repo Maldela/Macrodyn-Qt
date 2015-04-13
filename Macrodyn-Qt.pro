@@ -179,8 +179,7 @@ SOURCES += main.cpp \
     libboard/Transforms.cpp \
     Models/tiwisina.cpp
 
-RESOURCES += qml.qrc \
-    icons.qrc
+RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =/opt/qt5/imports
