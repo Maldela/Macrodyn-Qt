@@ -51,7 +51,8 @@ void attractor::simulation()
         {
     //	    hash->storePoint(state);     // save the results
             if( screenGraphics )
-                screenGraphics->setPoint(*xParam,*yParam,(int)((t/colChange)+1));
+                //screenGraphics->setPoint(*xParam,*yParam,(int)((t/colChange)+1));
+                screenGraphics->setRectangularBigPoint(*xParam,*yParam,(int)((t/colChange)+1),2);
                                                          // and draw them
         }
     }

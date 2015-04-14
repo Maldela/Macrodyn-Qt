@@ -493,9 +493,6 @@ void MacrodynGraphicsItem::setRectangularBigPoint(qreal v, qreal w, const QColor
     {
         painter->begin(m_image.data());
         QRect rectTransformed =  ::transform(m_axis, m_image->size(), pair.first);
-//        rectTransformed.setHeight(size);
-//        rectTransformed.setWidth(4);
-        //log()<<si;
         painter->fillRect(rectTransformed, color);
         painter->end();
     }
@@ -504,6 +501,12 @@ void MacrodynGraphicsItem::setRectangularBigPoint(qreal v, qreal w, const QColor
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
 }
 
+void MacrodynGraphicsItem::setRectangularBigPoint(qreal v, qreal w, int colorInt, int size)
+{
+    QColor color;
+    colorFromInt(color, colorInt);
+    setRectangularBigPoint(v, w, color, size);
+}
 /******************************************************************************/
 /*                                                                            */
 /* Class name:      graphics                                                  */
