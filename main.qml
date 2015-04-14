@@ -74,7 +74,7 @@ ApplicationWindow {
                 onClicked: loader.runSimulation();
             }
             Image {
-                source: "/Icons/Logo.png"
+                source: "Logo.png"
                 anchors {
                     right: parent.right
                 }
