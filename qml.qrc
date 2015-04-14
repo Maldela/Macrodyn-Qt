@@ -1,17 +1,12 @@
 <RCC>
     <qresource prefix="/">
-<<<<<<< HEAD
-        <file>main.qml</file>
-        <file>Log.qml</file>
-        <file>oeffnen.png</file>
-        <file>run.png</file>
-        <file>speichern.png</file>
-        <file>pdfspeichern.png</file>
-        <file>Logo.png</file>
-=======
+        <file>Icons/oeffnen.png</file>
+        <file>Icons/run.png</file>
+        <file>Icons/speichern.png</file>
+        <file>Icons/pdfspeichern.png</file>
+        <file>Icons/Logo.png</file>
         <file>QML/Log.qml</file>
         <file>QML/MacrodynGraphicsItem.qml</file>
         <file>QML/main.qml</file>
->>>>>>> origin/master
     </qresource>
 </RCC>
