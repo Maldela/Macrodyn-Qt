@@ -59,8 +59,8 @@ bifnParam::bifnParam(baseModel* const bMod,
 
 bifnParam::~bifnParam()
 {
-    if( xVars )
-	delete xVars;
+//    if( xVars )
+//	delete xVars;
 }
 
 /******************************************************************************/
