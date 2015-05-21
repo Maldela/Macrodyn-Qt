@@ -43,8 +43,8 @@ d_bifnParam::d_bifnParam(baseModel* const bMod,
 
 d_bifnParam::~d_bifnParam()
 {
-    if( xVars )
-	delete xVars;
+//    if( xVars )
+//	delete xVars;
 }
 
 /******************************************************************************/
@@ -101,25 +101,26 @@ void d_bifnParam::simulation()
 	}
 	
     h_max = double (h.get_max_hits());
-    log() << "h_max = " << h_max;
-    log() << "color step every " << h_max/94 << " hits in cell\n";
+//    log() << "h_max = " << h_max;
+//    log() << "color step every " << h_max/94 << " hits in cell\n";
     if ( h_max == 0 ) h_max=1;
 	
 	double dummy2=94;
 	double hitshilf;
 	double hitpoint;
 	
-    for ( dy=ymin, k=0; k<h.get_x_res(); dy+=stepY, k++ ){
+    for ( dy=ymin, k=0; k<(ymax-ymin)/stepY; dy+=stepY, k++ ){
 		hitshilf = h(k);
         hitpoint = hitshilf/h_max;
         if ( hitshilf==h_max )
-            log() << "qMaximal hitcounts at: (" << x << " , " << dy <<")\n";
+            //log() << "qMaximal hitcounts at: (" << x << " , " << dy <<")\n";
 		if ( hitpoint>0 ){
 			color = int(ceil(hitpoint*dummy2));
 		} else color = 0;
 		
 	if( screenGraphics ) 
-		screenGraphics->setPoint(x,dy,color);
+        screenGraphics->setRect(x,dy,stepX,stepY,QColor(redFromUnit(hitpoint),greenFromUnit(hitpoint),blueFromUnit(hitpoint)));
+        //screenGraphics->setPoint(x,dy,color);
 
     QTextStream(&outFile) << char( color );
 	}
@@ -127,5 +128,6 @@ void d_bifnParam::simulation()
     }
     outFile.flush();
     outFile.close();
+    log() << "fin";
 }
 //eof
