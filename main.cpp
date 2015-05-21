@@ -20,6 +20,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     SimLoader loader;
     engine.rootContext()->setContextProperty("loader", &loader);
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/QML/main.qml")));
     return app.exec();
 }

@@ -1,11 +1,12 @@
-// $Header: /home/vwlt1/mmeyer/macrodyn_dmdyn/src/RCS/get_expr.h,v 1.1 2000/09/15 10:15:34 mhoffman Exp $
+#ifndef GET_EXPR_INCLUDED
+#define GET_EXPR_INCLUDED
 
-#ifndef _GET_EXPR_INCLUDED
-#define _GET_EXPR_INCLUDED
+#include <QString>
 
-extern const char * get_expr(const char * pos, char * expr, char upto);
+QString get_expr(QString expr, QString &token, const QRegExp &upto, QChar *ch = NULL);
 
-extern const char * get_expr(const char * pos, char * expr, char * upto);
+QString get_expr(QString expr, QString &token, const QChar &upto, QChar *ch = NULL);
 
-#endif // _GET_EXPR_INCLUDED
-// eof
+QString get_expr(QString expr, QString &token, const QString &upto, QChar *ch = NULL);
+
+#endif // GET_EXPR_INCLUDED

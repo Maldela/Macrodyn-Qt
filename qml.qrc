@@ -6,7 +6,7 @@
         <file>Icons/pdfspeichern.png</file>
         <file>Icons/Logo.png</file>
         <file>QML/Log.qml</file>
-        <file>QML/MacrodynGraphicsItem.qml</file>
+        <file>QML/MacrodynGraphics.qml</file>
         <file>QML/main.qml</file>
     </qresource>
 </RCC>

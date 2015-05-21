@@ -96,16 +96,11 @@ static base_gen_t identify ( const QString& gen )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-rand_var::rand_var ( baseModel * model, const QString& gen, const QString& zvar_expr )
+rand_var::rand_var (baseModel * model, const QString& gen, QString zvar_expr)
 {
     int n=0;
-    QByteArray qba = zvar_expr.toLatin1();
-    const char *pos  = qba.data();
-    QByteArray qba2 = zvar_expr.toLatin1();
-    char *expr = qba2.data();
-    const char * tpos, * tmark;
-    QByteArray qba3 = zvar_expr.toLatin1();
-    char *token  = qba3.data();
+    QString expr, token, tpos;
+    QChar tmark;
 
     double sum = 0.0;
 
@@ -115,20 +110,20 @@ rand_var::rand_var ( baseModel * model, const QString& gen, const QString& zvar_
   prob = new double[n_events];
   range_min = new double[n_events];
   range_max = new double[n_events];
-  while ( n < n_events && (pos = get_expr(pos,expr,';') ) ){	// the event
+  while (n < n_events && !(zvar_expr = get_expr(zvar_expr, expr, QRegExp(";"))).isEmpty())// the event
+  {
     tpos = expr;
-    tpos = get_expr(tpos,token,'[');			// the probability
+    tpos = get_expr(tpos, token, QRegExp("["));			// the probability
     prob[n] = eval_expr(model, token);
 
-    tpos = get_expr(tpos,token,",:");			// the qMin value
-    tmark = tpos-1;
+    tpos = get_expr(tpos, token, ",:", &tmark);			// the qMin value
     range_min[n] = eval_expr(model, token);
  
-    tpos = get_expr(tpos,token,']');			// the qMax value
+    tpos = get_expr(tpos, token, ']');			// the qMax value
     range_max[n] = eval_expr(model, token);
 
-    switch (*tmark) {			// postprocessing
-
+    switch (tmark.toLatin1())			// postprocessing
+    {
       case ':' :			// in case of `:' , the qMax value
         range_min[n]-=range_max[n];	// defines the radius of the interval
         range_max[n]+=range_max[n]+range_min[n];	// and the qMin value

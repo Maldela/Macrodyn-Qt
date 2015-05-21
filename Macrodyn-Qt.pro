@@ -158,8 +158,6 @@ SOURCES += main.cpp \
     Models/toniLag.cpp \
     Models/toniRV.cpp \
     block.cpp \
-    eval_expr.cpp \
-    get_expr.cpp \
     matrix.cpp \
     matrix_neu.cpp \
     PublicModels/cobweb.cpp \
@@ -177,7 +175,9 @@ SOURCES += main.cpp \
     libboard/Shapes.cpp \
     libboard/Tools.cpp \
     libboard/Transforms.cpp \
-    Models/tiwisina.cpp
+    Models/tiwisina.cpp \
+    get_expr.cpp \
+    eval_expr.cpp
 
 RESOURCES += qml.qrc
 

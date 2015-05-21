@@ -18,8 +18,9 @@
 
 #include "rand_var.h"
 
-class markov_chain {
-  protected:
+class markov_chain
+{
+protected:
     int          n_states;	// number of states of the process
     int          state;		// the current state
     double     * qrealization;	// the qrealization for each state
@@ -28,18 +29,18 @@ class markov_chain {
     QString      r_gen;		//
     
     void set_row ( int row,		// set the probabilities in this row
-                  const char * expr);	// according to the expression
+                  QString expr);	// according to the expression
     
-  public:
+public:
     markov_chain			// constructor 
              ( baseModel* model, 	// to resolve names
                const QString& gen, 	// the basic random generator
-               const QString& states,	// definition of the states and their qrealisations
-               const QString& matrix);    // the transition matrix
+               QString states,	// definition of the states and their qrealisations
+               QString matrix);    // the transition matrix
                				
-    ~markov_chain ( void );		//  distructor
+    ~markov_chain();		//  distructor
  
-    double dice (void);			// returns the next dice
+    double dice();			// returns the next dice
 };
 
 

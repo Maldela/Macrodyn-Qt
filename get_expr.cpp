@@ -1,32 +1,27 @@
-// $Header: /home/vwlt1/mmeyer/macrodyn_dmdyn/src/RCS/get_expr.C,v 1.1 2000/09/15 10:15:33 mhoffman Exp $
-
-#include "string.h"
 #include "get_expr.h"
 
-const char * get_expr(const char * pos, char * expr, char upto)
-{   const char * old = pos;
+#include <QRegExp>
 
-  if ( (pos = strchr(old,upto)) == NULL ) {	// end of string reached
-    return (NULL);
-  }
-  while ( old != pos ) {			// copy the expression
-    *expr++ = *old++;				// without the 'upto'
-  }
-  *expr = '\0';					// terqMination
-  return (pos+1);				// skip the 'upto'
+QString get_expr(QString expr, QString &token, const QRegExp &upto, QChar *ch)
+{
+    int pos = expr.indexOf(upto);
+
+    if (pos == -1)  // end of string reached
+        return QString();
+    else if (ch != NULL)
+        *ch = expr.at(pos);
+
+    token = expr.left(pos);
+
+    return expr.remove(0, pos+1);			// skip the 'upto'
 }
 
-const char * get_expr(const char * pos, char * expr, char * upto)
-{   const char * old = pos;
-
-  if ( (pos = strpbrk(old,upto)) == NULL ) {	// end of string reached
-    return (NULL);
-  }
-  while ( old != pos ) {			// copy the expression
-    *expr++ = *old++;				// without the 'upto'
-  }
-  *expr = '\0';					// terqMination
-  return (pos+1);				// skip the 'upto'
+QString get_expr(QString expr, QString &token, const QChar &upto, QChar *ch)
+{
+    return get_expr(expr, token, QRegExp(upto), ch);
 }
 
-// eof
+QString get_expr(QString expr, QString &token, const QString &upto, QChar *ch)
+{
+    return get_expr(expr, token, QRegExp(upto), ch);
+}
