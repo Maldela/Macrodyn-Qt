@@ -140,7 +140,6 @@ SOURCES += main.cpp \
     Models/nicole.cpp \
     Models/OlgRat.cpp \
     Models/onozaki_et_al.cpp \
-    Models/pf_type.cpp \
     Models/pureExchange.cpp \
     Models/radio.cpp \
     Models/rand_var.cpp \
@@ -258,7 +257,6 @@ HEADERS += \
     Models/nicole.h \
     Models/OlgRat.h \
     Models/onozaki_et_al.h \
-    Models/pf_type.h \
     Models/pureExchange.h \
     Models/radio.h \
     Models/rand_var.h \
