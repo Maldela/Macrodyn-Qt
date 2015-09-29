@@ -140,7 +140,6 @@ SOURCES += main.cpp \
     Models/nicole.cpp \
     Models/OlgRat.cpp \
     Models/onozaki_et_al.cpp \
-    Models/pf_type.cpp \
     Models/pureExchange.cpp \
     Models/radio.cpp \
     Models/rand_var.cpp \
@@ -158,8 +157,6 @@ SOURCES += main.cpp \
     Models/toniLag.cpp \
     Models/toniRV.cpp \
     block.cpp \
-    eval_expr.cpp \
-    get_expr.cpp \
     matrix.cpp \
     matrix_neu.cpp \
     PublicModels/cobweb.cpp \
@@ -177,7 +174,13 @@ SOURCES += main.cpp \
     libboard/Shapes.cpp \
     libboard/Tools.cpp \
     libboard/Transforms.cpp \
+<<<<<<< HEAD
     Models/defaultStarModel.cpp
+=======
+    Models/tiwisina.cpp \
+    get_expr.cpp \
+    eval_expr.cpp
+>>>>>>> origin/master
 
 RESOURCES += qml.qrc
 
@@ -258,7 +261,6 @@ HEADERS += \
     Models/nicole.h \
     Models/OlgRat.h \
     Models/onozaki_et_al.h \
-    Models/pf_type.h \
     Models/pureExchange.h \
     Models/radio.h \
     Models/rand_var.h \

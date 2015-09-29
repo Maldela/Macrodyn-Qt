@@ -58,23 +58,23 @@ ApplicationWindow {
             anchors.topMargin: 0
             anchors.fill: parent
             ToolButton {
-                iconSource: "oeffnen.png"
+                iconSource: "qrc:/Icons/oeffnen.png"
                 onClicked: fileDialogOpen.open();
             }
             ToolButton {
-                iconSource: "speichern.png"
+                iconSource: "qrc:/Icons/speichern.png"
                 onClicked: loader.saveSimulationToFile(); //fileDialogSave.open();
             }
             ToolButton {
-                iconSource: "pdfspeichern.png"
+                iconSource: "qrc:/Icons/pdfspeichern.png"
                 onClicked:  loader.savePdf();
             }
             ToolButton {
-                iconSource: "run.png"
+                iconSource: "qrc:/Icons/run.png"
                 onClicked: loader.runSimulation();
             }
             Image {
-                source: "Logo.png"
+                source: "qrc:/Icons/Logo.png"
                 anchors {
                     right: parent.right
                 }
@@ -138,7 +138,7 @@ ApplicationWindow {
         }
     }
 
-    MacrodynGraphicsItem {
+    MacrodynGraphics {
         property int x1
         property int x2
         property int y1
@@ -156,49 +156,6 @@ ApplicationWindow {
         backgroundColor: "white"
         supersampling: 2
         bigPointSize: 5
-
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
-            onPressed: {
-                if (mouse.button == Qt.RightButton) {
-                    graph.unzoom();
-                }
-                else {
-                    graph.x1 = graph.x2 = mouse.x;
-                    graph.y1 = graph.y2 = mouse.y;
-                    zoomRect.visible = true;
-                }
-            }
-            onPositionChanged: {
-                graph.x2 = mouse.x;
-                graph.y2 = mouse.y;
-            }
-            onReleased: {
-                if (mouse.button == Qt.LeftButton) {
-                    zoomRect.visible = false;
-                    graph.zoom(graph.x1, graph.x2, graph.y1, graph.y2);
-                }
-            }
-        }
-
-        BusyIndicator {
-            id: busyIndicator
-            running: parent.redrawing
-            anchors.centerIn: parent
-        }
-
-        Rectangle {
-            id: zoomRect
-            color: "transparent"
-            border.color: "black"
-            border.width: 1
-            y: (graph.y1 < graph.y2) ? graph.y1 : graph.y2;
-            width: Math.abs(graph.x1 - graph.x2);
-            x: (graph.x1 < graph.x2) ? graph.x1 : graph.x2;
-            height: Math.abs(graph.y1 - graph.y2);
-            visible: false
-        }
     }
 
 

@@ -11,9 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <stdlib.h>
-#include <string.h>
-
 #include "../logger.h"
 
 #include "../eval_expr.h"
@@ -41,13 +38,10 @@
 markov_chain::markov_chain
     ( baseModel  * model, 	// to resolve names
       const QString& gen, 	// the basic random generator
-      const QString& states, 	// definition of the states and their qrealisations
-      const QString& matrix )	// the transition matrix
+      QString states, 	// definition of the states and their qrealisations
+      QString matrix )	// the transition matrix
 {
-    QByteArray qba = states.toLatin1();
-    const char * pos    = qba.data();
-    QByteArray qba2 = states.toLatin1();
-    char       * token  = qba2.data();
+    QString token;
     int          n;
 
   b_model = model;
@@ -58,20 +52,17 @@ markov_chain::markov_chain
   trans = new rand_var * [n_states];
   state = 0;
   
-  pos = get_expr(pos,token,'{');	// skip the leading {
+  states = get_expr(states, token, QRegExp("{"));	// skip the leading {
 
-  for( n=0; n < n_states && (pos = get_expr(pos,token,';')) ; n ++ ) {
-    qrealization[n] = eval_expr(b_model, token);
-    trans[n] = NULL;
+  for (n=0; n < n_states && !(states = get_expr(states, token, QRegExp(";"))).isEmpty() ; n ++)
+  {
+      qrealization[n] = eval_expr(b_model, token);
+      trans[n] = NULL;
   }
-
-  qba = matrix.toLatin1();
-  token = qba.data();
-  qba2 = matrix.toLatin1();
-  pos = qba2.data();
   
-  for( n=0; n < n_states && (pos = get_expr(pos,token,' ')) ; n ++ ) {
-    set_row(n, token);
+  for (n=0; n < n_states && !(matrix = get_expr(matrix, token, QRegExp(" "))).isEmpty() ; n ++)
+  {
+      set_row(n, token);
   }  
 }
 
@@ -113,31 +104,25 @@ markov_chain::~markov_chain ( void )
 // Usage:		set_row("0.3;0.4;0.3;")
 //
 ///////////////////////////////////////////////////////////////////////////////
-void markov_chain::set_row ( int row, const char * expr)
-{   const char * pos    = expr;
-    char * token = strdup(expr);
+void markov_chain::set_row(int row, QString expr)
+{
+    QString token;
     
     QString zvar_expr;
-    char * buf = new char [1024];
 
-  if( row < 0 || row >=n_states ) {
-    error("markov_chain::set_row: value for row %d is not in 0..%d", QString::number(row) += QString::number(n_states));
-  }
-
-  zvar_expr[0]='\0';
+    if (row < 0 || row >= n_states)
+        error("markov_chain::set_row: value for row %d is not in 0..%d", QString::number(row) += QString::number(n_states));
   
-  for( int n = 0; n < n_states && (pos = get_expr(pos,token,';')); n++) {
-    zvar_expr.sprintf("%s[%d,%d];",token, n, n);
-  }
+    for (int n = 0; n < n_states && !(expr = get_expr(expr, token, QRegExp(";"))).isEmpty(); n++)
+    {
+        const char *pointer = token.toLatin1().data();
+        zvar_expr.sprintf("%s[%d,%d];", pointer, n, n);
+    }
 
-  if( trans[row] != NULL ) {
-    delete trans[row];
-  }
+    if( trans[row] != NULL )
+        delete trans[row];
   
-  trans[row] = new rand_var(b_model, r_gen, zvar_expr);
-
-  free(token);
-  delete [] buf;
+    trans[row] = new rand_var(b_model, r_gen, zvar_expr);
 }
     
 ///////////////////////////////////////////////////////////////////////////////

@@ -113,7 +113,7 @@ void d_bifnParam::simulation()
 		hitshilf = h(k);
         hitpoint = hitshilf/h_max;
         if ( hitshilf==h_max )
-            //log() << "qMaximal hitcounts at: (" << x << " , " << dy <<")\n";
+            log() << "maximal hitcounts at: (" << x << " , " << dy <<")\n";
 		if ( hitpoint>0 ){
 			color = int(ceil(hitpoint*dummy2));
 		} else color = 0;

@@ -150,8 +150,9 @@ void d_bif2D::simulation()
 	hitshilf=h(k);
     hitpoint = hitshilf/h_max;
     if (hitshilf==h_max)
-//    log() << "qMaximal hitcounts at: " << dy;
-	if(hitpoint>0){ 
+        log() << "maximal hitcounts at: " << dy;
+    if (hitpoint>0)
+    {
 		color=int(ceil(hitpoint*dummy2));
 //	    outFile << *xParam << "\t" << *yParam << "\t" << hitpoint 
 	}
