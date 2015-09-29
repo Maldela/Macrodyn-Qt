@@ -16,6 +16,7 @@ struct conParam
     QString xLabel;                          /* X-label                        */
     QString yLabel;                          /* Y-label                        */
     QString zLabel;                          /* Z-label                        */
+    QString multiPlotLabel;                  /* this parameter will be varied during the simulation   */
     qreal xmin;                              /* minimum X-value                */
     qreal xmax;                              /* maximum X-value                */
     qreal ymin;                              /* minimum Y-value                */

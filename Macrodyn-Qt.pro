@@ -177,7 +177,7 @@ SOURCES += main.cpp \
     libboard/Shapes.cpp \
     libboard/Tools.cpp \
     libboard/Transforms.cpp \
-    Models/tiwisina.cpp
+    Models/defaultStarModel.cpp
 
 RESOURCES += qml.qrc
 
@@ -370,4 +370,4 @@ HEADERS += \
     libboard/board/Transforms.h \
     libboard/Board.h \
     Graphics/transform.h \
-    Models/tiwisina.h
+    Models/defaultStarModel.h

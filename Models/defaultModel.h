@@ -41,7 +41,7 @@ protected:
     qreal g,tax;                           // government demand, tax rate
     qreal employment;                      // actual employment
     qreal beta;
-    qreal *theta;
+    qreal theta[1000];
     qreal output;                          // actual output
 
     qreal prodFunction(const qreal&);

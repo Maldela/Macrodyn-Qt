@@ -1,0 +1,27 @@
+defaultStar
+1	0.9	0.0
+0.6	0.6	0.6	0.6
+10	1000	
+1	1	
+0.6       1	4	
+1	0.5	0.9     0.1     
+
+31
+tax	0.2	0.8   1000
+wtreal	0.3       1.4     1000 
+wtreal	0       1.5    
+
+0      tax02-08-wtreal-standard.pdf
+
+2
+mtreal     -2.0    2.0    3000
+wtreal     -2.0    2.0    3000
+
+
+A >> B >> D;
+gamm >> kappa >> lambda >> my;
+tau >> length;
+delta >> beta;
+w0 >> p0 >> m0;
+Lmax >> rho >> g >> tax;
+STANDARDSET!!!!

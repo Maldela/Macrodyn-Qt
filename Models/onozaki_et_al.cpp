@@ -50,6 +50,8 @@ void onozaki_et_al::iteration(const qint64& )
   qreal z_n;				// value of z for the next period
 	z_n = (1-alpha)*z + alpha/exp(log(z)*beta); 
  	// z_n=(1-alpha)z+alpha/zt^beta
+    x_prime = (1-alpha) - alpha*beta/exp(log(z)*(beta+1));
+    //x_prime = (((1-alpha)*(z+0.005) + alpha/exp(log(z+0.005)*beta)) - ((1-alpha)*(z-0.005) + alpha/exp(log(z-0.005)*beta)))/0.01;
   z = z_n;
 }
     
@@ -91,6 +93,7 @@ qreal* onozaki_et_al::setLabels(const QString& label)
     if (label == "z_0") return(&z_0);
 	if (label == "alpha") return(&alpha);
     if (label == "beta") return(&beta);
+    if (label == "x_prime") return( &x_prime );
     return NULL;
 }
 

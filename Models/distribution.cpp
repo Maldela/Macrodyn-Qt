@@ -94,7 +94,7 @@ void distribution::newseed(){
 
 void distribution::setseed( uint val )
 {
-	srand ( val );
+    srand ( val );
 }
 
 //////////////////////////////////////////////////////////////////////////////

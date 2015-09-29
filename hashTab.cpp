@@ -298,8 +298,10 @@ uint hashTable::orderOfCycle()
             ok = 0;
         }
     }
-    if( ok )
+    //log()<<noBuckets;
+    if( ok ){
 	return noBuckets;
+    }
     else
 	return 0;
 }

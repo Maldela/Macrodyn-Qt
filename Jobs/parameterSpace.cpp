@@ -19,7 +19,7 @@
 
 parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes, 
                    const xyRange& stateSpaceLim,
-                   MacrodynGraphicsItem* const graph)
+                   MacrodynGraphicsItem* const graph, int maxLag, double autocorrelationBound)
                :bif2D(bMod,axes,graph), stateSpace(stateSpaceLim)
 {
     hash->resetDomain(stateSpace);        // save bounderies of the state
@@ -39,6 +39,13 @@ parameterSpace::parameterSpace(baseModel* const bMod, const xyRange& axes,
 		       "illegal state variable specified");
     }
     limit = length / 10;		  // 10% are thrown away
+    ts_data = new qreal*[stateVars.length()];
+    for(int i = 0; i < stateVars.length(); ++i)
+        ts_data[i] = new qreal[length-limit];
+    mean_x = new qreal[stateVars.length()];
+    log()<<"stateVars.length() = "<<stateVars.length();
+    m_maxLag = maxLag;
+    m_autocorrelationBound = autocorrelationBound;
 }
 
 /******************************************************************************/
@@ -74,7 +81,8 @@ void parameterSpace::simulation()
     quint64 tDiv=(uint)(length/10);// analysis of the simulation results
 					// is done every tDiv periods until
 					// length is reached or a cycle has
-					// been detected
+                    // been detected
+
     for(*xParam=xmin; *xParam<=xmax; *xParam+=stepX)
     {
         for(*yParam=ymin;*yParam<=ymax;*yParam+=stepY)
@@ -83,6 +91,10 @@ void parameterSpace::simulation()
             for(t=0;t<length;t++)
             {
                 model->iteration(t+1);
+                if( t>=limit ) {
+                    for(int varNr = 0; varNr < stateVars.length(); ++varNr)
+                        ts_data[varNr][t-limit]=*stateVars[varNr];
+                }
                 if( t > limit ) {
                     if( hash->storePoint(stateVars))
                     {
@@ -110,8 +122,53 @@ void parameterSpace::simulation()
 
                 }
             }
+
+            qreal acfMax=0;
+            if(order==0){
+                // computing empirical mean slow but more accurate
+                for(int varNr=0; varNr<stateVars.length(); varNr++){
+                    mean_x[varNr]=0;
+                    for( int j=0; j<(length-limit); j++ ){
+                        mean_x[varNr] += ts_data[varNr][j] / (length-limit);
+                    }
+                }
+                //log()<<(length-limit-1000)<<"  "<<ts_data[(length-limit)-1000];
+                //log()<<"mean_x[0] = "<<mean_x[0];
+                //log()<<"mean_x[1] = "<<mean_x[1];
+                // computing covariance for lag zero
+                qreal acv_0=0;
+                for(int varNr=0; varNr<stateVars.length(); varNr++){
+                    for( int j=0; j<(length-limit); j++){
+                        acv_0 += (ts_data[varNr][j]-mean_x[varNr])*(ts_data[varNr][j]-mean_x[varNr])/(length-limit);
+                    }
+                }
+                // computing autocorrelations for all lags ymin tqMaxmax
+                qreal acv;
+                qreal acf;
+                for( int i=1;i<m_maxLag;i++ ){
+                    acv = 0;
+                    for(int varNr=0; varNr<stateVars.length(); varNr++){
+                        for( int j=0; j<(length-limit)-i; j++ ){
+                            acv += (ts_data[varNr][j]-mean_x[varNr])*(ts_data[varNr][j+i]-mean_x[varNr])/(length-limit-i);
+                        }
+                    }
+
+                    //log() << "acv = " << acv;
+                    //log() << "acv_0 = " << acv_0;
+
+                    acf = acv / acv_0;
+                    if(acf>acfMax)
+                        acfMax=acf;
+                    //log() << "lag " << i << ":\t" << acf;
+                }
+                //log() << "acfMax = " << acfMax;
+            }
+
             if( screenGraphics )
-                screenGraphics->setRect(*xParam,*yParam,stepX,stepY,colorFromOrder(/*((*xParam-xmin)/(xmax-xmin))*34*/order));
+                if(fabsf(acfMax-1)<(1.0-m_autocorrelationBound))
+                    screenGraphics->setRect(*xParam,*yParam,stepX,stepY,QColor(255,255,0));
+                else
+                    screenGraphics->setRect(*xParam,*yParam,stepX,stepY,colorFromOrder(/*((*xParam-xmin)/(xmax-xmin))*34*/order));
                 //screenGraphics->setRect(*xParam,*yParam,stepX,stepY,QColor((1234*(order+1))%255,(12345*(order+1))%255,(123456*(order+1))%255));
         }
     }
@@ -119,7 +176,8 @@ void parameterSpace::simulation()
 
 QColor parameterSpace::colorFromOrder(int order) {
     switch (order) {
-    case -1: return QColor(255,255,255);
+    case -1: return QColor(0,0,0);
+    case 0: return QColor(255,255,255);
     case 1: return QColor(255,0,255);
     case 2: return QColor(0,255,255);
     case 3: return QColor(211,186,211);
@@ -142,7 +200,7 @@ QColor parameterSpace::colorFromOrder(int order) {
     case 20: return QColor(48,103,84);
     case 21: return QColor(72,99,160);
     case 22: return QColor(129,5,65);
-    case 23: return QColor(0,0,0);
+    case 23: return QColor(255,40,91);
     case 24: return QColor(216,175,121);
     case 25: return QColor(125,27,126);
     case 26: return QColor(67,183,186);
@@ -151,7 +209,7 @@ QColor parameterSpace::colorFromOrder(int order) {
     case 29: return QColor(21,27,84);
     case 30: return QColor(152,5,23);
     }
-    return QColor(255,255,0);
+    return QColor(152,5,23);
 }
     
 //eof

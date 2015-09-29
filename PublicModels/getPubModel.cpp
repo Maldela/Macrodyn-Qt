@@ -25,7 +25,8 @@
 #include "../Models/onozaki_et_al.h"
 #include "../Models/rSolow.h"
 #include "../Models/boehmhuels.h"
-#include "../Models/tiwisina.h"
+//#include "../Models/tiwisina.h"
+#include "../Models/defaultStarModel.h"
 
 #include "../logger.h"
 
@@ -99,10 +100,12 @@ baseModel* getPubModel(const QString& modelTyp)
         return new rSolow;
     if (modelTyp == "boehmhuels")
         return new boehmhuels;
-    #ifndef Q_WS_WIN
-    if (modelTyp == "tiwisina")
-        return new tiwisina;
-    #endif
+    if (modelTyp == "defaultStar")
+        return new defaultStarModel;
+//    #ifndef Q_WS_WIN
+//    if (modelTyp == "tiwisina")
+//        return new tiwisina;
+//    #endif
 
     error("macrodyn::getPubModel(const char*): Model %s not implemented yet", modelTyp);
 

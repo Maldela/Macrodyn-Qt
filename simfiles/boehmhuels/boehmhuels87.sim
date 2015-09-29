@@ -1,43 +1,44 @@
-<<<<<<< HEAD
 boehmhuels
 
--0.036	0.5
+-0.056	0.2675
 -0.5	0.5	0.01
-0.2	0.1
+0.2	0.2
 100000
 
 87
 
-lag	9000	100000
-absrett	9000	10000
+lag	100	2000
+xt	900	1000
 beta	0.0	1.0
 
 0	delta05alpha036absrett.pdf
 
 2
 xt	-20.0	20.0	10000
-yt	0	20.0	10000
+yt	-20.0	20.0	10000
 
 
 alpha	>> delta
 beta	>> ybar		>> r
 x0	>> y0
 length
-=======
+
+
+
 boehmhuels
 
--0.0395	0.8
--0.5	0.5	0.01
-0.2	0.1
+-0.056	0.2675	
+-0.5	0.5     0.01
+0.2         0.2
 100000
 
 87
 
-lag	9000	100000
-yt	0	10000
+lag	900	10000
+xt	900                  6000
 beta	0.0	1.0
 
-0	test4.pdf
+0	alpha056delta0170x002y005rett.pdf
 
 2
 xt	-20.0	20.0	10000
@@ -48,4 +49,3 @@ alpha	>> delta
 beta	>> ybar		>> r
 x0	>> y0
 length
->>>>>>> origin/master

@@ -119,13 +119,16 @@ rand_var::rand_var ( baseModel * model, const QString& gen, const QString& zvar_
     tpos = expr;
     tpos = get_expr(tpos,token,'[');			// the probability
     prob[n] = eval_expr(model, token);
+    //log()<<"prob[n]"<<prob[n];
 
     tpos = get_expr(tpos,token,",:");			// the qMin value
     tmark = tpos-1;
     range_min[n] = eval_expr(model, token);
+    //log()<<"range_min[n]"<<range_min[n];
  
     tpos = get_expr(tpos,token,']');			// the qMax value
     range_max[n] = eval_expr(model, token);
+    //log()<<"range_max[n]"<<range_max[n];
 
     switch (*tmark) {			// postprocessing
 

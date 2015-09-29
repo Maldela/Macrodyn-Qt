@@ -1,0 +1,25 @@
+onozaki_et_al
+0.5	0.7	3.1	
+
+1000
+
+21
+
+alpha	  0 	1.0     500
+z     -2.0 	2      500
+beta	-0.4	-0.2           
+
+0	alpha07beta31x01-5.pdf
+
+
+//////////////////////////////////////////////
+modelType
+z0  alpha   beta    
+
+length 
+
+jobNumber
+
+xLabel  xmin    xmax
+yLabel  ymin    ymax
+zLabel  zmin    zmax

@@ -1,0 +1,21 @@
+affine1
+ 1[.5,.7];
+
+0.3
+1.0
+1000
+
+16
+
+t       0.0     50    100
+x       0.0     2.0  100
+alpha   4       4
+
+0    aiid05-07r1.pdf
+
+//random parameter 0<=<a<=1  zvar-expr
+// x_0
+// r
+// length
+
+// tag

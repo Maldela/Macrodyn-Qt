@@ -26,6 +26,7 @@ class SimLoader : public QObject
     Q_PROPERTY(QString model READ model WRITE setModel NOTIFY modelChanged)
     Q_PROPERTY(int graphTyp READ graphTyp WRITE setGraphTyp NOTIFY graphTypChanged)
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
+    Q_PROPERTY(QString documentTitle READ documentTitle WRITE setDocumentTitle NOTIFY documentTitleChanged)
 
 public:
 
@@ -38,6 +39,7 @@ public:
     Q_INVOKABLE void setGraphItem(QObject *);
 
     QString text() const;
+    QString documentTitle() const;
 
 
 signals:
@@ -61,13 +63,20 @@ public slots:
 public Q_SLOTS:
 
     void setText(const QString &arg);
+    void setDocumentTitle(QString arg);
 
+Q_SIGNALS:
+
+    void documentTitleChanged();
 
 protected slots:
 
     void jobFinished();
     void loadSimulation();
 
+private:
+
+    QString m_documentTitle;
 
 protected:
 
@@ -87,6 +96,9 @@ protected:
     QString modelName;
     QString m_text;
     QString m_lastText;
+
+    int maxLag;
+    double autocorrelationBound;
 
     int m_graphTyp;
     int m_paramCount;

@@ -37,6 +37,7 @@ protected:
     qreal z_0;		// initial value
     qreal z;			// argument
     qreal alpha, beta;	// original parameters
+    qreal x_prime;
     
 public:
     onozaki_et_al();			// constructor

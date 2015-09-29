@@ -1,0 +1,11 @@
+\begin{macrodyntikz}{%   
+ \empty   
+ }{%   
+ xmin=900,xmax=1000,ymin=-0.8,ymax=0.8,   
+ xtick={900,925,950,975,1000},
+ ytick={-0.8,-0.4,0,0.4,0.8},
+ xlabel=$t$,ylabel=$xt$,
+  }{%
+ xmin=900,xmax=1000,ymin=-0.8,ymax=0.8,
+ }
+  \end{macrodyntikz}

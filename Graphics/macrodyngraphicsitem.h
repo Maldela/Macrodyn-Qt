@@ -37,6 +37,7 @@ public:
     explicit MacrodynGraphicsItem(QQuickItem *parent = 0);
     virtual ~MacrodynGraphicsItem();
 
+    void drawThirdAxis();
     void draw_mp_names(const QStringList&);// write multiple names in the window
 //    void draw_color_count();	// Job color_map
     void set_axis(int, qreal, qreal);	// set max & min of axis
@@ -78,6 +79,7 @@ public slots:
     void setSimulating(bool sim) { m_simulating = sim; }
 
     Q_INVOKABLE void savePdf(const QString&);
+    Q_INVOKABLE void savePdfInterior(const QString&);
 
 
 signals:

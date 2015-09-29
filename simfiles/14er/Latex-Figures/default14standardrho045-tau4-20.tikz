@@ -1,0 +1,11 @@
+\begin{macrodyntikz}{%   
+ \empty   
+ }{%   
+ xmin=4,xmax=15,ymin=0.3,ymax=1.8,   
+ xtick={4,6.75,9.5,12.25,15},
+ ytick={0.3,0.675,1.05,1.425,1.8},
+ xlabel=$tau$,ylabel=$wtreal$,
+  }{%
+ xmin=4,xmax=15,ymin=0.3,ymax=1.8,
+ }
+  \end{macrodyntikz}

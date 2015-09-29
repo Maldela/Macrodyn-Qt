@@ -1,33 +1,24 @@
-manipulate
 rdefault
 A       0.333[0.95,0.95];0.333[1.0,1.0];0.333[1.05,1.05];
 
-1	0.7
+1	0.4
 0.6	0.6	0.6	0.6	
 10	10000
 0.3	1	
 0.6 1 4
 1	0.5	0.5	0.2
 
-1
-
-	210	wtreal -1
-
-17
+18
 
 
 multiplot 2	mean(wtreal) var(wtreal)   
 t  		0	100
-wtreal	0.725	0.85
+wtreal	0.725	0.99
 wtreal 	0.8	1.1
 
-4
-0.7
-0.75
-0.8
-0.85
-
 0	rdefault_16_wtreal_mean_t_1000_1500_giid_B0_7.xpm
+
+3
 
 //
 // first: modelname

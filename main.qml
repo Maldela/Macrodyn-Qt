@@ -14,7 +14,7 @@ ApplicationWindow {
     visible: true
     width: 1424
     height: 768
-    title: qsTr("MacroDyn")
+    title: "MacroDyn   -   " + loader.documentTitle
 
     onWidthChanged: graph.width = Math.min(graph.width, width - minLogWidth)
 
